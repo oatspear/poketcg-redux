@@ -297,7 +297,7 @@
 
 #### Raticate
 - **Thief**: removed.
-- New Pokémon Power: **Quick Search**: once per turn, choose a card from the top 5 deck cards and add it to the hand.
+- New Pokémon Power: **Quick Search**: once per turn, choose a card from the top 3 deck cards and add it to the hand.
 
 #### Doduo
 - **Double Edge**: renamed to **Reckless Charge**.
