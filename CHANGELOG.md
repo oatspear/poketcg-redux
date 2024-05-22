@@ -295,6 +295,10 @@
 - **Gale**: removed.
 - New attack: **Hurricane** (CCC): 40 damage; you may return 1 of the opponent's Pokémon and all attached cards to their hand.
 
+#### Rattata
+- **Scavenge**: removed.
+- New attack: **Lucky Find** (C): add an Item from deck to hand.
+
 #### Raticate
 - **Thief**: removed.
 - New Pokémon Power: **Quick Search**: once per turn, choose a card from the top 3 deck cards and add it to the hand.

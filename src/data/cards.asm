@@ -8574,16 +8574,16 @@ RattataCard:
 
 	; attack 1
 	energy COLORLESS, 1 ; energies
-	tx ScavengeName ; name
-	tx ScavengeDescription ; description
+	tx LuckyFindName ; name
+	tx SearchingMagnetDescription ; description
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category
-	dw ScavengeEffectCommands ; effect commands
-	db NONE ; flags 1
+	dw SearchingMagnetEffectCommands ; effect commands
+	db DRAW_CARD ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
-	db 2
+	db 0
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
 	; attack 2

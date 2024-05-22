@@ -1553,3 +1553,7 @@ SurpriseBiteDescription:
 ConcentrationName:
 	text "Concentration"
 	done
+
+LuckyFindName:
+	text "Lucky Find"
+	done
