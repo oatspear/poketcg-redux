@@ -1,5 +1,37 @@
 ;
 
+ThiefEffectCommands:
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Thief_PlayerHandCardSelection
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, ThiefEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, Thief_AIHandCardSelection
+	db  $00
+
+
+Thief_PlayerHandCardSelection:
+	call SwapTurn
+	ldtx hl, ChooseCardToPutOnTheBottomOfTheDeckText
+	call HandlePlayerSelection1HandCardToDiscard.got_text
+	ldh [hTemp_ffa0], a
+	jp SwapTurn
+
+Thief_AIHandCardSelection:
+	call Get1RandomCardFromOpponentsHand
+	ldh [hTemp_ffa0], a
+	ret
+
+ThiefEffect:
+	ldh a, [hTemp_ffa0]
+	cp $ff
+	ret z  ; no card was chosen to put on the bottom of the deck
+	call SwapTurn
+	call RemoveCardFromHand
+	call ReturnCardToBottomOfDeck
+	ldtx hl, PutOnTheBottomOfTheDeckText
+	bank1call DisplayCardDetailScreen
+	jp SwapTurn
+
+
+
 CrabhammerEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Crabhammer_DamageBoostEffect
 	dbw EFFECTCMDTYPE_AI, Crabhammer_AIEffect

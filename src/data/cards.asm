@@ -8624,18 +8624,18 @@ RaticateCard:
 	tx RattataName ; pre-evo name
 
 	; attack 1
-	energy COLORLESS, 1 ; energies
-	tx ThiefName ; name
-	tx ThiefDescription ; description
-	dw NONE ; description (cont)
-	db 10 ; damage
-	db DAMAGE_NORMAL ; category
-	dw ThiefEffectCommands ; effect commands
+	energy 0 ; energies
+	tx QuickSearchName ; name
+	tx QuickSearchDescription ; description
+	tx PokemonPowerDescriptionCont ; description (cont)
+	db 0 ; damage
+	db POKEMON_POWER ; category
+	dw QuickSearchEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_HIT ; animation
+	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
 	energy COLORLESS, 1 ; energies

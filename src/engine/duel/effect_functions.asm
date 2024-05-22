@@ -330,6 +330,7 @@ WaveRider_PreconditionCheck:
 	; fallthrough
 
 Synthesis_PreconditionCheck:
+DeckSearchAbility_PreconditionCheck:
 	call CheckDeckIsNotEmpty
 	ret c
 	jp CheckPokemonPowerCanBeUsed
@@ -1269,30 +1270,6 @@ PoisonPaybackEffect:
 	jp PoisonEffect
 
 
-Thief_PlayerHandCardSelection:
-	call SwapTurn
-	ldtx hl, ChooseCardToPutOnTheBottomOfTheDeckText
-	call HandlePlayerSelection1HandCardToDiscard.got_text
-	ldh [hTemp_ffa0], a
-	jp SwapTurn
-
-Thief_AIHandCardSelection:
-	call Get1RandomCardFromOpponentsHand
-	ldh [hTemp_ffa0], a
-	ret
-
-ThiefEffect:
-	ldh a, [hTemp_ffa0]
-	cp $ff
-	ret z  ; no card was chosen to put on the bottom of the deck
-	call SwapTurn
-	call RemoveCardFromHand
-	call ReturnCardToBottomOfDeck
-	ldtx hl, PutOnTheBottomOfTheDeckText
-	bank1call DisplayCardDetailScreen
-	jp SwapTurn
-
-
 ShadowClawEffect:
 	ldh a, [hTemp_ffa0]
 	cp $ff
@@ -1504,6 +1481,14 @@ Sprout_AISelectEffect:
 	ldh [hTemp_ffa0], a
 	ret
 
+
+; Looks at the top 5 cards and allows the Player to choose a card.
+QuickSearch_PlayerSelectEffect:
+	ld b, 5
+	call CreateDeckCardListTopNCards
+	call HandlePlayerSelectionAnyCardFromDeckListToHand
+	ldh [hAIPkmnPowerEffectParam], a
+	ret
 
 ; Looks at the top 4 cards and allows the Player to choose a card.
 Ultravision_PlayerSelectEffect:
@@ -6368,6 +6353,16 @@ SelectedCards_Discard1AndAdd1ToHandFromDeck:
 Synthesis_AddToHandEffect:
 	call SetUsedPokemonPowerThisTurn
 	ldh a, [hEnergyTransEnergyCard]
+	ldh [hTemp_ffa0], a
+	jr SelectedCard_AddToHandFromDeckEffect
+
+
+; Pokémon Powers should not use [hTemp_ffa0]
+; adds a card in [hEnergyTransEnergyCard] from the deck to the hand
+; Note: Pokémon Power no longer needs to preserve [hTemp_ffa0] at this point
+DeckSearchAbility_AddToHandEffect:
+	call SetUsedPokemonPowerThisTurn
+	ldh a, [hAIPkmnPowerEffectParam]
 	ldh [hTemp_ffa0], a
 	jr SelectedCard_AddToHandFromDeckEffect
 

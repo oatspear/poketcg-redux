@@ -1549,16 +1549,6 @@ NotInTheActiveSpotText:
 	line "Active Spot."
 	done
 
-ThiefName:
-	text "Thief"
-	done
-
-ThiefDescription:
-	text "Your opponent reveals their hand."
-	line "Choose a card you find there and"
-	line "put it on the bottom of their deck."
-	done
-
 ChooseCardToPutOnTheBottomOfTheDeckText:
 	text "Choose the card to put on"
 	line "the bottom of the Deck."

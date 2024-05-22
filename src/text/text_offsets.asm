@@ -2764,8 +2764,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer FleetFootedName
 	textpointer FleetFootedDescription
 	textpointer NotInTheActiveSpotText
-	textpointer ThiefName
-	textpointer ThiefDescription
 	textpointer ChooseCardToPutOnTheBottomOfTheDeckText
 	textpointer PutOnTheBottomOfTheDeckText
 	textpointer IfActiveThisTurn20BonusDamageDescription
@@ -3134,6 +3132,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PsychicNovaDescription
 	textpointer DragOffName
 	textpointer DragOffDescription
+	textpointer QuickSearchName
+	textpointer QuickSearchDescription
 
 	; unused
 	; textpointer VaporEssenceName

@@ -295,6 +295,10 @@
 - **Gale**: removed.
 - New attack: **Hurricane** (CCC): 40 damage; you may return 1 of the opponent's Pokémon and all attached cards to their hand.
 
+#### Raticate
+- **Thief**: removed.
+- New Pokémon Power: **Quick Search**: once per turn, choose a card from the top 5 deck cards and add it to the hand.
+
 #### Doduo
 - **Double Edge**: renamed to **Reckless Charge**.
 

@@ -1,3 +1,18 @@
+; attack 1
+energy COLORLESS, 1 ; energies
+tx ThiefName ; name
+tx ThiefDescription ; description
+dw NONE ; description (cont)
+db 10 ; damage
+db DAMAGE_NORMAL ; category
+dw ThiefEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_HIT ; animation
+
+
 
 ; attack 1
 energy WATER, 1, COLORLESS, 1 ; energies

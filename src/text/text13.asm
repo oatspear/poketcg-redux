@@ -166,9 +166,30 @@ DragOffDescription:
 	line "new Active Pokémon."
 	done
 
+QuickSearchName:
+	text "Quick Search"
+	done
+
+QuickSearchDescription:
+	text "Once during your turn, you may"
+	line "choose a card from the top 5 cards"
+	line "of your deck and add it to your"
+	line "hand. Shuffle your deck afterwards."
+	done
+
 ; ------------------------------------------------------------------------------
 ; Unused Text
 ; ------------------------------------------------------------------------------
+
+; ThiefName:
+; 	text "Thief"
+; 	done
+
+; ThiefDescription:
+; 	text "Your opponent reveals their hand."
+; 	line "Choose a card you find there and"
+; 	line "put it on the bottom of their deck."
+; 	done
 
 ; DiscardMysteriousFossilText:
 ; 	text "Discard Mysterious Fossil?"

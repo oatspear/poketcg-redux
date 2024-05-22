@@ -711,6 +711,13 @@ DoubleDamageIfUserIsDamagedEffectCommands:
 	dbw EFFECTCMDTYPE_AI, DoubleDamageIfUserIsDamaged_AIEffect
 	db  $00
 
+QuickSearchEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, DeckSearchAbility_PreconditionCheck
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, DeckSearchAbility_AddToHandEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, QuickSearch_PlayerSelectEffect
+	; dbw EFFECTCMDTYPE_AI_SELECTION, Ultravision_AISelectEffect
+	db  $00
+
 CourierEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, PassivePowerEffect
 	dbw EFFECTCMDTYPE_PKMN_POWER_TRIGGER, Courier_SearchAndAddToHandEffect
@@ -741,12 +748,6 @@ ShadowClawEffectCommands:
 	dbw EFFECTCMDTYPE_DISCARD_ENERGY, SelectedCards_Discard1FromHand
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, ShadowClawEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, ShadowClaw_AISelectEffect
-	db  $00
-
-ThiefEffectCommands:
-	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Thief_PlayerHandCardSelection
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, ThiefEffect
-	dbw EFFECTCMDTYPE_AI_SELECTION, Thief_AIHandCardSelection
 	db  $00
 
 SurpriseBiteEffectCommands:
