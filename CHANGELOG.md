@@ -159,7 +159,7 @@
 #### Omanyte
 - Increased HP from 70 to 80.
 - **Constrict**: removed.
-- New attack: **Ancient Call** (WC): 20 damage; add a Pokémon card from the deck to hand.
+- New attack: **Revival Wave** (CC): 20 damage; put a Pokémon card from the discard pile onto the bench; +20 damage if the bench was already full.
 
 #### Omastar
 - Increased HP from 100 to 110.

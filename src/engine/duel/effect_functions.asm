@@ -7906,6 +7906,23 @@ Revive_BenchCheck:
 	ret
 
 
+RevivalWave_PlayerSelectEffect:
+; create Pokémon card list from Discard Pile
+	ldtx hl, ChoosePokemonToPlaceInPlayText
+	call DrawWideTextBox_WaitForInput
+	call HandlePlayerSelectionFromDiscardPile_AnyPokemon
+	ldh [hTemp_ffa0], a
+	ret
+
+
+RevivalWave_AISelectEffect:
+; create Pokémon card list from Discard Pile
+	call CreatePokemonCardListFromDiscardPile
+	ld a, [wDuelTempList]
+	ldh [hTemp_ffa0], a
+	ret
+
+
 Revive_PlayerSelection:
 ; create Basic Pokemon card list from Discard Pile
 	ldtx hl, ChooseBasicPokemonToPlaceOnBenchText
@@ -7914,7 +7931,7 @@ Revive_PlayerSelection:
 	ldh [hTemp_ffa0], a
 	ret
 
-Revive_PlaceInPlayAreaEffect: ; 2fbb0 (b:7bb0)
+Revive_PlaceInPlayAreaEffect:
 ; place selected Pokemon in the Bench
 	ldh a, [hTemp_ffa0]
 	call MoveDiscardPileCardToHand
@@ -7923,6 +7940,21 @@ Revive_PlaceInPlayAreaEffect: ; 2fbb0 (b:7bb0)
 ; display card
 	ldtx hl, PlacedOnTheBenchText
 	jp SelectedCard_ShowDetailsIfOpponentsTurn
+
+
+RevivalWave_PlaceInPlayAreaEffect:
+	ldh a, [hTemp_ffa0]
+	cp $ff
+	ret z
+	call MoveDiscardPileCardToHand
+	call AddCardToHand
+	call PutHandPokemonCardInPlayArea
+	; a: PLAY_AREA_* of the new Pokémon
+	add DUELVARS_ARENA_CARD_STAGE
+	call GetTurnDuelistVariable
+	xor a  ; BASIC
+	ld [hl], a
+	ret
 
 
 ; input:

@@ -66,11 +66,18 @@ StressPheromonesEffectCommands:
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, StressPheromones_PlayerSelectEffect
 	db  $00
 
-AncientCallEffectCommands:
 PrimalHuntEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, SelectedCard_AddToHandFromDeckEffect
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, ChoosePokemonFromDeck_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, ChoosePokemonFromDeck_AISelectEffect
+	db  $00
+
+RevivalWaveEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, RevivalWave_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, RevivalWave_PlaceInPlayAreaEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, RevivalWave_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, RevivalWave_AISelectEffect
+	dbw EFFECTCMDTYPE_AI, RevivalWave_AIEffect
 	db  $00
 
 AbilityLureEffectCommands:

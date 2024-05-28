@@ -636,6 +636,17 @@ Swarm_AIEffect:
   jp SetDefiniteAIDamage
 
 
+RevivalWave_DamageBoostEffect:
+	call CheckBenchIsNotFull
+	ret nc
+	ld a, 20
+	jp AddToDamage
+
+RevivalWave_AIEffect:
+  call RevivalWave_DamageBoostEffect
+  jp SetDefiniteAIDamage
+
+
 ; 10 damage for each (C) in the retreat costs of the turn holder's Pokémon
 Avalanche_DamageBoostEffect:
   ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
