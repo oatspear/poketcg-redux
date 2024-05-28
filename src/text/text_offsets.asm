@@ -3009,8 +3009,9 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PoisonOrConfusionIfPoisonedDescription
 	textpointer PrimordialDreamName
 	textpointer PrimordialDreamDescription
-	textpointer PrimalSwirlName
-	textpointer PrimalSwirlDescription
+	textpointer PrimalTentacleName
+	textpointer PrimalTentacleDescription
+	textpointer PrimalTentacleDescriptionCont
 	textpointer PrimalScytheName
 	; textpointer FossilFangsName
 	textpointer SpeedImpactName

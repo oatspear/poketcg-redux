@@ -513,12 +513,14 @@ IsBodyguardActive:
 
 ; return carry if a Pokémon Power capable Aerodactyl
 ; is found in either player's Active Spot.
-; preserves: hl, bc, de
+; preserves: bc, de
 IsPrehistoricPowerActive:
 	push bc
 	ld c, AERODACTYL
 	call IsActiveSpotPokemonPowerActive
 	pop bc
+	ret nc
+	ldtx hl, UnableToEvolveDueToPrehistoricPowerText
 	ret
 
 
@@ -606,6 +608,17 @@ IsSpecialEnergyPowerActive:
 	ld a, [hl]
 	cp 1
 	ccf
+	ret
+
+
+; return carry if the Active Pokémon is unable to evolve due to substatus
+; preserves: bc, de
+IsUnableToEvolve:
+	ld a, DUELVARS_ARENA_CARD_SUBSTATUS2
+	call GetTurnDuelistVariable
+	cp SUBSTATUS2_PRIMAL_TENTACLE
+	ret nz
+	scf
 	ret
 
 
@@ -788,6 +801,8 @@ CheckCantRetreatDueToAcid:
 	or a
 	ret z
 	cp SUBSTATUS2_UNABLE_RETREAT
+	jr z, .cant_retreat
+	cp SUBSTATUS2_PRIMAL_TENTACLE
 	jr z, .cant_retreat
 	or a
 	ret

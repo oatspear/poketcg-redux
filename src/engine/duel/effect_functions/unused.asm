@@ -1,5 +1,9 @@
 ;
 
+PrimalSwirlEffectCommands:
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DevolveDefendingPokemonEffect
+	db  $00
+
 ThiefEffectCommands:
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Thief_PlayerHandCardSelection
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, ThiefEffect

@@ -2357,6 +2357,13 @@ DragOff_SwitchAndDamageEffect:
 	jp DealDamageToArenaPokemon_CustomAnim
 
 
+PrimalTentacle_SwitchTrapAndDevolveEffect:
+	call Lure_SwitchDefendingPokemon
+	call DevolveDefendingPokemonEffect
+	ld a, SUBSTATUS2_PRIMAL_TENTACLE
+	jp ApplySubstatus2ToDefendingCard
+
+
 ; If heads, defending Pokemon becomes poisoned. If tails, defending Pokemon becomes confused
 FoulGas_PoisonOrConfusionEffect:
 	ldtx de, PoisonedIfHeadsConfusedIfTailsText

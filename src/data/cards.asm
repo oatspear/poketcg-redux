@@ -4779,7 +4779,7 @@ OmastarCard:
 	db TYPE_PKMN_WATER ; type
 	gfx OmastarCardGfx ; gfx
 	tx OmastarName ; name
-	db DIAMOND ; rarity
+	db STAR ; rarity
 	db MYSTERY | FOSSIL ; sets
 	db OMASTAR
 	db 110 ; hp
@@ -4829,31 +4829,31 @@ OmastarCard:
 
 	; attack 1
 	energy COLORLESS, 2 ; energies
-	tx DragOffName ; name
-	tx DragOffDescription ; description
-	dw NONE ; description (cont)
+	tx PrimalTentacleName ; name
+	tx PrimalTentacleDescription ; description
+	tx PrimalTentacleDescriptionCont ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category
-	dw DragOffEffectCommands ; effect commands
-	db DAMAGE_TO_OPPONENT_BENCH ; flags 1
+	dw PrimalTentacleEffectCommands ; effect commands
+	db NONE ; flags 1
 	db SWITCH_OPPONENT_POKEMON ; flags 2
 	db NONE ; flags 3
-	db 2
-	db ATK_ANIM_GLOW_EFFECT ; animation
+	db 0
+	db ATK_ANIM_WHIP_NO_HIT ; animation
 
 	; attack 2
 	energy WATER, 1, COLORLESS, 2 ; energies
-	tx PrimalSwirlName ; name
-	tx PrimalSwirlDescription ; description
+	tx SpiralDrainName ; name
+	tx Heal20DamageDescription ; description
 	dw NONE ; description (cont)
-	db 50 ; damage
+	db 60 ; damage
 	db DAMAGE_NORMAL ; category
-	dw PrimalSwirlEffectCommands ; effect commands
+	dw Leech20DamageEffectCommands ; effect commands
 	db NONE ; flags 1
-	db NONE ; flags 2
+	db HEAL_USER ; flags 2
 	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_WHIRLPOOL ; animation
+	db 2
+	db ATK_ANIM_DRAIN ; animation
 
 	db 2 ; retreat cost
 	db WR_GRASS ; weakness

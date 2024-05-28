@@ -1,3 +1,18 @@
+; attack 2
+energy WATER, 1, COLORLESS, 2 ; energies
+tx PrimalSwirlName ; name
+tx PrimalSwirlDescription ; description
+dw NONE ; description (cont)
+db 50 ; damage
+db DAMAGE_NORMAL ; category
+dw PrimalSwirlEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_WHIRLPOOL ; animation
+
+
 ; attack 1
 energy COLORLESS, 1 ; energies
 tx ThiefName ; name

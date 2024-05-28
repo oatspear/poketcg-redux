@@ -163,9 +163,10 @@
 
 #### Omastar
 - Increased HP from 100 to 110.
-- **Spiral Drain**: removed.
-- **Primal Swirl**: increased damage from 40 to 50.
-- New attack: **Drag Off**: switch in 1 of the opponent's Benched Pokémon; 30 damage to the new Active Pokémon.
+- Changed rarity from Uncommon to Rare.
+- **Spiral Drain**: increased cost from (WC) to (WCC) and damage from 30 to 60.
+- **Primal Swirl**: removed.
+- New attack: **Primal Tentacle** (CC): switch in 1 of the opponent's Benched Pokémon; devolve the new Active Pokémon; the new Active Pokémon is unable to evolve or retreat.
 
 #### Articuno Lv35
 - **Freeze**: increased cost from (C) to (W); heals 20 HP.

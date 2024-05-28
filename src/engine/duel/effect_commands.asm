@@ -97,6 +97,13 @@ DragOffEffectCommands:
 	dbw EFFECTCMDTYPE_AI_SELECTION, Lure_GetOpponentBenchPokemonWithLowestHP
 	db  $00
 
+PrimalTentacleEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckOpponentBenchIsNotEmpty
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, PrimalTentacle_SwitchTrapAndDevolveEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Lure_SelectSwitchPokemon
+	dbw EFFECTCMDTYPE_AI_SELECTION, Lure_GetOpponentBenchPokemonWithLowestHP
+	db  $00
+
 ConstrictEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Constrict_TrapDamageBoostEffect
 	dbw EFFECTCMDTYPE_AI, Constrict_AIEffect
@@ -970,10 +977,6 @@ MewDevolutionBeamEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, DevolutionBeam_LoadAnimation
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DevolutionBeam_DevolveEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, DevolutionBeam_AISelectEffect
-	db  $00
-
-PrimalSwirlEffectCommands:
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DevolveDefendingPokemonEffect
 	db  $00
 
 UnstableEvolutionEffectCommands:

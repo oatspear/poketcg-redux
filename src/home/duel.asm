@@ -898,6 +898,12 @@ EvolvePokemonCard:
 CheckIfCanEvolveInto:
 	push de
 	ld a, e
+	or a  ; PLAY_AREA_ARENA
+	jr nz, .bench
+	call IsUnableToEvolve
+	jr c, .cant_evolve
+	ld a, e
+.bench
 	add DUELVARS_ARENA_CARD
 	call GetTurnDuelistVariable
 	call LoadCardDataToBuffer2_FromDeckIndex
@@ -940,6 +946,12 @@ CheckIfCanEvolveInto:
 ; return carry if not basic to stage 2 evolution, or if evolution not possible this turn.
 CheckIfCanEvolveInto_BasicToStage2:
 	ld a, e
+	or a  ; PLAY_AREA_ARENA
+	jr nz, .bench
+	call IsUnableToEvolve
+	jr c, .cant_evolve
+	ld a, e
+.bench
 	add DUELVARS_ARENA_CARD_FLAGS
 	call GetTurnDuelistVariable
 	and CAN_EVOLVE_THIS_TURN
