@@ -1482,9 +1482,9 @@ Sprout_AISelectEffect:
 	ret
 
 
-; Looks at the top 3 cards and allows the Player to choose a card.
+; Looks at the top 2 cards and allows the Player to choose a card.
 QuickSearch_PlayerSelectEffect:
-	ld b, 3
+	ld b, 2
 	call CreateDeckCardListTopNCards
 	call HandlePlayerSelectionAnyCardFromDeckListToHand
 	ldh [hAIPkmnPowerEffectParam], a

@@ -172,7 +172,7 @@ QuickSearchName:
 
 QuickSearchDescription:
 	text "Once during your turn, you may"
-	line "choose a card from the top 3 cards"
+	line "choose a card from the top 2 cards"
 	line "of your deck and add it to your"
 	line "hand. Shuffle your deck afterwards."
 	done
