@@ -853,6 +853,7 @@ CardTypeTest_FunctionTable:
 	dw CardTypeTest_IsEvolutionOfPlayArea  ; CARDTEST_EVOLUTION_OF_PLAY_AREA
 	dw CardTypeTest_IsGrassCard            ; CARDTEST_GRASS_CARD
 	dw CardTypeTest_FullHPPokemon          ; CARDTEST_FULL_HP_POKEMON
+	dw CardTypeTest_EvolvedPokemon         ; CARDTEST_EVOLVED_POKEMON
 
 
 CardTypeTest_Pokemon:
@@ -1158,6 +1159,30 @@ IsFullHPPokemon:
 	call GetCardDamageAndMaxHP
 	cp 1
 	ret  ; carry if no damage
+
+
+; input:
+;   [hTempPlayAreaLocation_ff9d]: PLAY_AREA_* of the Pokémon to check
+CardTypeTest_EvolvedPokemon:
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	push hl
+	call IsEvolvedPokemon  ; preserves bc, de
+	pop hl
+	ret
+
+
+; input:
+;   a: PLAY_AREA_* of the Pokémon to check
+; output:
+;   carry: set if the Pokémon at the given location is an evolved Pokémon
+; preserves: bc, de
+IsEvolvedPokemon:
+	add DUELVARS_ARENA_CARD_STAGE
+	call GetTurnDuelistVariable
+	or a
+	ret z  ; BASIC
+	scf
+	ret
 
 
 ; ------------------------------------------------------------------------------

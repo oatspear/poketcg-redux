@@ -519,7 +519,7 @@ HandlePlayerSelectionOpponentPokemonInBench:
 DevolvePlayAreaPokemon_PlayerSelectEffect:
 	ldtx hl, ChooseEvolvedPokemonInPlayAreaText
 	call DrawWideTextBox_WaitForInput
-	ld a, CARDTEST_EVOLUTION_POKEMON
+	ld a, CARDTEST_EVOLVED_POKEMON
 	call HandlePlayerSelectionMatchingPokemonInPlayArea_AllowCancel
 	; a: PLAY_AREA_* of the selected card | $ff
 	ldh [hTempPlayAreaLocation_ffa1], a
