@@ -7169,7 +7169,7 @@ KabutoCard:
 	; attack 2
 	energy FIGHTING, 1, COLORLESS, 1 ; energies
 	tx PrimalHuntName ; name
-	tx PrimalHuntDescription ; description
+	tx Tutor1PokemonDescription ; description
 	dw NONE ; description (cont)
 	db 20 ; damage
 	db DAMAGE_NORMAL ; category
@@ -8778,12 +8778,12 @@ ClefairyCard:
 
 	; attack 1
 	energy COLORLESS, 1 ; energies
-	tx CallForFamilyName ; name
-	tx CallForFamilyDescription ; description
+	tx FindAFriendName ; name
+	tx Tutor1PokemonDescription ; description
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category
-	dw CallForFamilyEffectCommands ; effect commands
+	dw Tutor1PokemonEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db SPECIAL_AI_HANDLING ; flags 3

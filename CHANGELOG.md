@@ -233,7 +233,7 @@
 #### Clefairy
 - **Lead**: removed.
 - **Friend Tackle**: removed.
-- New attack: **Call For Family** (C): put up to 2 Basic Pokémon from deck onto Bench.
+- New attack: **Find A Friend** (C): add a Pokémon from the deck to the hand.
 - New attack: **Mimic** (C): shuffle hand into deck; draw as many cards as the opponent has in hand.
 
 #### Jigglypuff Lv13

@@ -995,14 +995,18 @@ FossilEnergyDescription:
 	line "your Pokémon count as <FIGHTING> Energy."
 	done
 
+FindAFriendName:
+	text "Find A Friend"
+	done
+
 PrimalHuntName:
 	text "Primal Hunt"
 	done
 
-PrimalHuntDescription:
-	text "You may search your Deck for"
-	line "a Pokémon card and add it to"
-	line "your hand."
+Tutor1PokemonDescription:
+	text "Search your deck for a Pokémon card"
+	line "and add it to your hand."
+	line "Then, shuffle your deck."
 	done
 
 SharpSickleName:
