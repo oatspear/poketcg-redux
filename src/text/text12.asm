@@ -832,13 +832,22 @@ MimicDescription:
 	line "in your opponent's hand."
 	done
 
+MindRulerName:
+	text "Mind Ruler"
+	done
+
+MindRulerDescription:
+	text "This attack does 20 damage for"
+	line "each card in your opponent's hand."
+	done
+
 MindBlastName:
 	text "Mind Blast"
 	done
 
 MindBlastDescription:
-	text "This attack does 20 damage for"
-	line "each card in your opponent's hand."
+	text "This attack does 10 more damage for"
+	line "each card in both players' hands."
 	done
 
 HandPressName:

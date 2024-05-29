@@ -950,6 +950,11 @@ PsyshockEffectCommands:
 	dbw EFFECTCMDTYPE_AI, Psyshock_AIEffect
 	db  $00
 
+MindRulerEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, MindRuler_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AI, MindRuler_AIEffect
+	db  $00
+
 MindBlastEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, MindBlast_DamageBoostEffect
 	dbw EFFECTCMDTYPE_AI, MindBlast_AIEffect

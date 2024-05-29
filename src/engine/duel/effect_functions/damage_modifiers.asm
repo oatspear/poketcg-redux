@@ -502,12 +502,28 @@ MegaMind_AIEffect:
 
 
 ; 20 damage for each card in opponent's hand
-MindBlast_DamageBoostEffect:
+MindRuler_DamageBoostEffect:
   ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND
 	call GetNonTurnDuelistVariable
 	call ATimes10
   add a  ; double
 	jp SetDefiniteDamage
+
+MindRuler_AIEffect:
+  call MindRuler_DamageBoostEffect
+  jp SetDefiniteAIDamage
+
+
+; +10 damage for each card in both players' hands
+MindBlast_DamageBoostEffect:
+  ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND
+	call GetTurnDuelistVariable
+	ld c, a
+  ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND
+	call GetNonTurnDuelistVariable
+	add c
+	call ATimes10
+  jp AddToDamage
 
 MindBlast_AIEffect:
   call MindBlast_DamageBoostEffect

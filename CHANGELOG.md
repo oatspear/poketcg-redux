@@ -234,7 +234,11 @@
 - **Prophecy**: removed.
 - **Invade Mind**: removed.
 - New Pokémon Power: **Clairvoyant Sense**: attach a Psychic Energy from the hand to 1 Benched Pokémon; draw 2 cards.
-- New attack: **Psychic** (P): 10 damage; +10 damage for each energy attached to the Defending Pokémon.
+- New attack: **Teleport Blast** (P): 30 damage; switch with another Pokémon.
+
+#### Alakazam
+- **Psychic**: increased base damage from 10 to 20.
+- **Mind Blast**: reduced cost from (PCC) to (PC); increased base damage from zero to 10; changed bonus damage from 20 per card in the opponent's hand to 10 per card in both players' hands.
 
 #### Clefairy
 - **Lead**: removed.

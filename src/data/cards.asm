@@ -7415,12 +7415,12 @@ KadabraCard:
 
 	; attack 2
 	energy PSYCHIC, 1 ; energies
-	tx PsychicName ; name
-	tx PsychicDescription ; description
+	tx TeleportBlastName ; name
+	tx SwitchThisPokemonDescription ; description
 	dw NONE ; description (cont)
-	db 10 ; damage
-	db DAMAGE_PLUS ; category
-	dw PsychicEffectCommands ; effect commands
+	db 30 ; damage
+	db DAMAGE_NORMAL ; category
+	dw SwitchUserEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -7455,7 +7455,7 @@ AlakazamCard:
 	tx PsychicName ; name
 	tx PsychicDescription ; description
 	dw NONE ; description (cont)
-	db 10 ; damage
+	db 20 ; damage
 	db DAMAGE_PLUS ; category
 	dw PsychicEffectCommands ; effect commands
 	db NONE ; flags 1
@@ -7465,12 +7465,12 @@ AlakazamCard:
 	db ATK_ANIM_PSYCHIC_HIT ; animation
 
 	; attack 2
-	energy PSYCHIC, 1, COLORLESS, 2 ; energies
+	energy PSYCHIC, 1, COLORLESS, 1 ; energies
 	tx MindBlastName ; name
 	tx MindBlastDescription ; description
 	dw NONE ; description (cont)
-	db 20 ; damage
-	db DAMAGE_X ; category
+	db 10 ; damage
+	db DAMAGE_PLUS ; category
 	dw MindBlastEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2

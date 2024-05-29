@@ -1185,7 +1185,7 @@ PainBurstDescription:
 	line "Defending Pokémon."
 	done
 
-PsychicName: ; 60ee0 (18:4ee0)
+PsychicName:
 	text "Psychic"
 	done
 
