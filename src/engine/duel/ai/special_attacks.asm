@@ -68,7 +68,7 @@ HandleSpecialAIAttacks:
 	cp KANGASKHAN
 	jr z, .CallForFamily
 	cp CLEFAIRY
-	jr z, .Clefairy
+	jr z, .TutorPokemon
 	cp ODDISH
 	jr z, .Sprout
 	cp BULBASAUR
@@ -137,11 +137,10 @@ HandleSpecialAIAttacks:
 	jp z, .Collect
 	jr .Teleport
 
-.Clefairy
-	ld a, [wSelectedAttack]
-	or a
-	jr z, .CallForFamily
-	jr .Mimic
+.TutorPokemon:
+	call CheckIfAnyBasicPokemonInDeck
+	jr nc, .zero_score
+	ret
 
 ; if any basic cards are found in deck,
 ; return a score of $80 + slots available in bench.

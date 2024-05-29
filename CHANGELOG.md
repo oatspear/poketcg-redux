@@ -234,7 +234,7 @@
 - **Lead**: removed.
 - **Friend Tackle**: removed.
 - New attack: **Find A Friend** (C): add a Pokémon from the deck to the hand.
-- New attack: **Mimic** (C): shuffle hand into deck; draw as many cards as the opponent has in hand.
+- New attack: **Light Steps** (C): 10 damage; may move an energy to another Pokémon.
 
 #### Jigglypuff Lv13
 - **Call for Family**: removed.
