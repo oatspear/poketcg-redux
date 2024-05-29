@@ -1680,3 +1680,15 @@ IceBeamDescriptionCont:
 	text "If there are none, the Defending"
 	line "Pokémon is now Paralyzed."
 	done
+
+ClairvoyantSenseName:
+	text "Clairvoyant Sense"
+	done
+
+ClairvoyantSenseDescriptionCont:
+	text "Once during your turn, you may"
+	line "attach a <PSYCHIC> Energy card from your"
+	line "hand to 1 of your Benched Pokémon."
+	line "If you attached Energy to a Pokémon"
+	line "in this way, draw 2 cards."
+	done

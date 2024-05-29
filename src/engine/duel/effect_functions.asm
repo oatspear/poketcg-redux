@@ -5035,6 +5035,17 @@ EnergyLift_PreconditionCheck:
 	ret c
 	jp CheckPokemonPowerCanBeUsed_StoreTrigger
 
+
+ClairvoyantSense_PreconditionCheck:
+	call CheckBenchIsNotEmpty
+	ret c  ; no bench
+	call CreateHandCardList_OnlyPsychicEnergy
+	ldtx hl, NoEnergyCardsText
+	ret c
+	call CheckDeckSizeGreaterThan1
+	ret c
+	jp CheckPokemonPowerCanBeUsed_StoreTrigger
+
 ;	ld a, [wAlreadyPlayedEnergyOrSupporter]
 ;	and USED_FIRESTARTER_THIS_TURN
 ;	jr nz, .already_used
@@ -5710,6 +5721,21 @@ EnergyLift_PlayerSelectEffect:
 	jr .loop
 
 
+ClairvoyantSense_PlayerSelectEffect:
+	ldtx hl, ChoosePokemonToAttachEnergyCardText
+	call DrawWideTextBox_WaitForInput
+
+	call HandlePlayerSelectionPokemonInBench_AllowCancel
+	ret c  ; cancelled
+	ldh [hTempPlayAreaLocation_ffa1], a
+
+; choose the first card, there's only 1 type
+	call CreateHandCardList_OnlyPsychicEnergy
+	ld a, [wDuelTempList]
+	ldh [hEnergyTransEnergyCard], a
+	ret
+
+
 AttachEnergyFromHand_AISelectEffect:
 ; AI doesn't select any card
 	ld a, $ff
@@ -5751,6 +5777,11 @@ AttachEnergyFromHand_AttachEnergyEffect:
 ; not Player, so show detail screen
 ; and which Pokemon was chosen to attach Energy.
 	jp Helper_ShowAttachedEnergyToPokemon
+
+
+ClairvoyantSense_AttachEnergyEffect:
+	call EnergyLift_AttachEnergyEffect
+	jp Draw2CardsEffect
 
 
 Morph_PlayerSelectEffect:

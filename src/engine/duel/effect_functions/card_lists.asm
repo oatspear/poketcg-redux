@@ -517,6 +517,18 @@ CreateHandCardList_OnlyWaterEnergy:
 	ret
 
 
+; Just like CreateHandCardList, returns carry if there are no cards in hand,
+; and returns in a the number of cards in wDuelTempList.
+CreateHandCardList_OnlyPsychicEnergy:
+	call CreateHandCardList
+	ret c  ; no cards
+	ld c, TYPE_ENERGY_PSYCHIC
+	call KeepOnlyCardTypeInCardList
+	call CountCardsInDuelTempList
+	cp 1
+	ret
+
+
 ; ------------------------------------------------------------------------------
 ; Play Area Lists
 ; ------------------------------------------------------------------------------

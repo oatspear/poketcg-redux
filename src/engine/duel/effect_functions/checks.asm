@@ -31,6 +31,36 @@ CheckDeckIsNotEmpty:
 	ret
 
 
+; returns carry if there are less than 2 cards in deck
+CheckDeckSizeGreaterThan1:
+;	ld c, 2
+;	jr CheckDeckSizeIsAtLeastC
+	ld a, DUELVARS_NUMBER_OF_CARDS_NOT_IN_DECK
+	call GetTurnDuelistVariable
+	ldtx hl, NoCardsLeftInTheDeckText
+	cp DECK_SIZE - 1
+	ccf
+	ret
+
+; returns carry if there are less than c cards in deck
+; input:
+;   c: threshold number of cards
+; output:
+;   a: number of cards in deck
+;   carry: set if the number of cards in deck is less than input c
+;   hl: error text
+; CheckDeckSizeIsAtLeastC:
+; 	ld a, DECK_SIZE + 1
+; 	sub c
+; 	ld c, a
+; 	ld a, DUELVARS_NUMBER_OF_CARDS_NOT_IN_DECK
+; 	call GetTurnDuelistVariable
+; 	cp c
+; 	ldtx hl, NoCardsLeftInTheDeckText
+; 	ccf
+; 	ret
+
+
 ; input:
 ;   wDataTableIndex: function index in CardTypeTest_FunctionTable
 ; output:

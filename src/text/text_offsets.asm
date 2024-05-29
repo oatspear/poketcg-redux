@@ -2788,6 +2788,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer DragonArrowDescription
 	textpointer IceBeamName
 	textpointer IceBeamDescriptionCont
+	textpointer ClairvoyantSenseName
+	textpointer ClairvoyantSenseDescriptionCont
 
 ; ------------------------------------------------------------------------------
 ; text12.asm

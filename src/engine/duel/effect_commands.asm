@@ -1541,6 +1541,13 @@ EnergyLiftEffectCommands:
 	; dbw EFFECTCMDTYPE_AI_SELECTION, AttachEnergyFromHand_AISelectEffect
 	db  $00
 
+ClairvoyantSenseEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, ClairvoyantSense_PreconditionCheck
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ClairvoyantSense_AttachEnergyEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, ClairvoyantSense_PlayerSelectEffect
+	; dbw EFFECTCMDTYPE_AI_SELECTION, AttachEnergyFromHand_AISelectEffect
+	db  $00
+
 MorphEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDiscardPileHasBasicPokemonCards
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, MorphEffect
