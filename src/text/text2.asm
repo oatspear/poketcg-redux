@@ -334,22 +334,6 @@ ChooseAnEnergyCardText: ; 38d5a (e:4d5a)
 	line "card."
 	done
 
-ProcedureForProphecyText: ; 38d72 (e:4d72)
-	text "Procedure for Prophecy:"
-	line ""
-	line "1. Choose either your Deck"
-	line "   or your opponent's Deck"
-	line ""
-	line "2. Choose the cards you wish to"
-	line "   place on top and press the"
-	line "   A Button."
-	line ""
-	line "3. Select Yes after you choose"
-	line "   the 3 cards and their order."
-	line ""
-	line "4. Press the B Button to cancel."
-	done
-
 ChooseTheOrderOfTheCardsText: ; 38e70 (e:4e70)
 	text "Choose the order"
 	line "of the cards."

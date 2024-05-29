@@ -1153,16 +1153,6 @@ ShadowName: ; 60a5f (18:4a5f)
 	text "Shadow"
 	done
 
-ProphecyName:
-	text "Prophecy"
-	done
-
-ProphecyDescription:
-	text "Look at up to 3 cards from the top"
-	line "of either player's deck and"
-	line "rearrange them as you like."
-	done
-
 InvisibleWallName:
 	text "Invisible Wall"
 	done
@@ -1685,7 +1675,7 @@ ClairvoyantSenseName:
 	text "Clairvoyant Sense"
 	done
 
-ClairvoyantSenseDescriptionCont:
+ClairvoyantSenseDescription:
 	text "Once during your turn, you may"
 	line "attach a <PSYCHIC> Energy card from your"
 	line "hand to 1 of your Benched Pokémon."

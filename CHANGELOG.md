@@ -230,6 +230,12 @@
 - **Teleport**: reduced cost from (P) to (C).
 - **Confuse Ray**: reduced cost from (PC) to (P).
 
+#### Kadabra
+- **Prophecy**: removed.
+- **Invade Mind**: removed.
+- New Pokémon Power: **Clairvoyant Sense**: attach a Psychic Energy from the hand to 1 Benched Pokémon; draw 2 cards.
+- New attack: **Psychic** (P): 10 damage; +10 damage for each energy attached to the Defending Pokémon.
+
 #### Clefairy
 - **Lead**: removed.
 - **Friend Tackle**: removed.

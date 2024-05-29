@@ -300,7 +300,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer Choose2EnergyCardsFromDiscardPileToAttachText      ; 0x0132
 	textpointer Choose2EnergyCardsFromDiscardPileForHandText       ; 0x0133
 	textpointer ChooseAnEnergyCardText                             ; 0x0134
-	textpointer ProcedureForProphecyText                           ; 0x0135
 	textpointer ChooseTheOrderOfTheCardsText                       ; 0x0136
 	textpointer ProcedureForDamageSwapText                         ; 0x0137
 	textpointer ProcedureForDevolutionBeamText                     ; 0x0138
@@ -2687,8 +2686,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PainAmplifierDescription                           ; 0x0aa7
 	textpointer DarkMindName                                       ; 0x0aa8
 	textpointer ShadowName                                         ; 0x0aaa
-	textpointer ProphecyName
-	textpointer ProphecyDescription
 	textpointer InvisibleWallName
 	textpointer InvisibleWallDescription
 	textpointer MeditateName
@@ -2789,7 +2786,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer IceBeamName
 	textpointer IceBeamDescriptionCont
 	textpointer ClairvoyantSenseName
-	textpointer ClairvoyantSenseDescriptionCont
+	textpointer ClairvoyantSenseDescription
 
 ; ------------------------------------------------------------------------------
 ; text12.asm
@@ -3142,6 +3139,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer RevivalWaveDescription
 
 	; unused
+	; textpointer ProphecyName
+	; textpointer ProphecyDescription
 	; textpointer VaporEssenceName
 	; textpointer VaporEssenceDescription
 	; textpointer JoltEssenceName

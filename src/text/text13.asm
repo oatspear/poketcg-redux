@@ -192,6 +192,16 @@ RevivalWaveDescription:
 ; Unused Text
 ; ------------------------------------------------------------------------------
 
+; ProphecyName:
+; 	text "Prophecy"
+; 	done
+
+; ProphecyDescription:
+; 	text "Look at up to 3 cards from the top"
+; 	line "of either player's deck and"
+; 	line "rearrange them as you like."
+; 	done
+
 ; PrimalSwirlName:
 ; 	text "Primal Swirl"
 ; 	done

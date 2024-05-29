@@ -881,13 +881,6 @@ InflictSleepEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SleepEffect
 	db  $00
 
-ProphecyEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Prophecy_CheckDeck
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Prophecy_ReorderDeckEffect
-	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Prophecy_PlayerSelectEffect
-	; dbw EFFECTCMDTYPE_AI_SELECTION, Prophecy_AISelectEffect
-	db  $00
-
 RendEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Rend_DamageBoostEffect
 	dbw EFFECTCMDTYPE_AI, Rend_AIEffect
@@ -967,7 +960,7 @@ HandPressEffectCommands:
 	dbw EFFECTCMDTYPE_AI, HandPress_AIEffect
 	db  $00
 
-InvadeMindEffectCommands:
+InvadeMindEffectCommands:  ; unreferenced
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, InvadeMind_DamageBoostEffect
 	dbw EFFECTCMDTYPE_AI, InvadeMind_AIEffect
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, CheckOpponentHandEffect
