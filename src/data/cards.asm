@@ -8823,23 +8823,23 @@ ClefableCard:
 	db STAR ; rarity
 	db LABORATORY | JUNGLE ; sets
 	db CLEFABLE
-	db 70 ; hp
+	db 80 ; hp
 	db STAGE1 ; stage
 	tx ClefairyName ; pre-evo name
 
 	; attack 1
-	energy COLORLESS, 1 ; energies
-	tx LunarPowerName ; name
-	tx PokemonBreederDescription ; description
-	dw NONE ; description (cont)
+	energy 0 ; energies
+	tx MischiefName ; name
+	tx MischiefDescription ; description
+	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db RESIDUAL ; category
-	dw LunarPowerEffectCommands ; effect commands
+	db POKEMON_POWER ; category
+	dw MischiefEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
-	db SPECIAL_AI_HANDLING ; flags 3
+	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_GLOW_EFFECT ; animation
+	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
 	energy COLORLESS, 2 ; energies

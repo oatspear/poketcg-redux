@@ -328,7 +328,8 @@ DEF PRIZES_6    EQU $06
 	const CARDTEST_EVOLUTION_OF_PLAY_AREA       ; $0b
 	const CARDTEST_GRASS_CARD                   ; $0c
 	const CARDTEST_FULL_HP_POKEMON              ; $0d
-	const CARDTEST_EVOLVED_POKEMON              ; $0e
+	const CARDTEST_DAMAGED_POKEMON              ; $0e
+	const CARDTEST_EVOLVED_POKEMON              ; $0f
 
 ; [wAIAttackLogicFlags] constants
 DEF AI_LOGIC_MIN_DAMAGE_CAN_KO_F     EQU 0

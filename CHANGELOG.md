@@ -236,6 +236,11 @@
 - New attack: **Find A Friend** (C): add a Pokémon from the deck to the hand.
 - New attack: **Light Steps** (C): 10 damage; may move an energy to another Pokémon.
 
+#### Clefable
+- Increased HP from 70 to 80.
+- **Lunar Power**: removed.
+- New Pokémon Power: **Mischief**: once per turn, if this Pokémon has any attached energies, move 1 damage counter from 1 of the player's Pokémon to 1 of the opponent's Pokémon.
+
 #### Jigglypuff Lv13
 - **Call for Family**: removed.
 - **Light Steps**: removed.

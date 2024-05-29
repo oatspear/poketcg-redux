@@ -12,9 +12,6 @@ AdaptiveEvolution_AllowEvolutionEffect:
 
 ; deck search is not cancellable
 PokemonBreeder_PlayerSelectEffect:
-	; fallthrough
-
-LunarPower_PlayerSelectEffect:
 	call CreateDeckCardList
 	ld e, CARDTEST_EVOLUTION_POKEMON
 	call PlayerSelectEvolutionFromDeck_Preamble
@@ -117,14 +114,6 @@ PlayerSelectEvolutionFromDeck_Preamble:
 	ld a, e
 	call LookForCardsInDeckList
 	ret  ; carry: none in deck, Player refused to look
-
-
-; FIXME
-LunarPower_AISelectEffect:
-	ld a, $ff
-	ldh [hTemp_ffa0], a
-	ldh [hTempPlayAreaLocation_ffa1], a
-	ret
 
 
 EvolveArenaPokemonFromDeck_AISelectEffect:

@@ -1113,6 +1113,18 @@ DreamEaterDescription:
 	line "for each Pokémon that is Asleep."
 	done
 
+MischiefName:
+	text "Mischief"
+	done
+
+MischiefDescription:
+	text "Once during your turn, if this"
+	line "Pokémon has any attached Energies,"
+	line "you may move a damage counter"
+	line "from 1 of your Pokémon to 1 of"
+	line "your opponent's Pokémon."
+	done
+
 CurseName:
 	text "Curse"
 	done

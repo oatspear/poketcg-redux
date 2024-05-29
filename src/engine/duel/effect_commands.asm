@@ -771,6 +771,12 @@ SurpriseBiteEffectCommands:
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, SurpriseBite_PlayerSelectEffect
 	db  $00
 
+MischiefEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Mischief_PreconditionCheck
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Mischief_DamageTransferEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Mischief_PlayerSelectEffect
+	db  $00
+
 CurseEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, CheckPokemonPowerCanBeUsed_StoreTrigger
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Curse_DamageEffect
@@ -1408,14 +1414,6 @@ MetronomeEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, Metronome_CheckAttacks
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Metronome_UseAttackEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, Metronome_AISelectEffect
-	db  $00
-
-LunarPowerEffectCommands:
-	; dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, PokemonBreeder_PreconditionCheck
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDeckIsNotEmpty
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, EvolutionFromDeck_EvolveEffect
-	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, LunarPower_PlayerSelectEffect
-	dbw EFFECTCMDTYPE_AI_SELECTION, LunarPower_AISelectEffect
 	db  $00
 
 FlyEffectCommands:

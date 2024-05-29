@@ -853,6 +853,7 @@ CardTypeTest_FunctionTable:
 	dw CardTypeTest_IsEvolutionOfPlayArea  ; CARDTEST_EVOLUTION_OF_PLAY_AREA
 	dw CardTypeTest_IsGrassCard            ; CARDTEST_GRASS_CARD
 	dw CardTypeTest_FullHPPokemon          ; CARDTEST_FULL_HP_POKEMON
+	dw CardTypeTest_DamagedPokemon         ; CARDTEST_DAMAGED_POKEMON
 	dw CardTypeTest_EvolvedPokemon         ; CARDTEST_EVOLVED_POKEMON
 
 
@@ -1159,6 +1160,20 @@ IsFullHPPokemon:
 	call GetCardDamageAndMaxHP
 	cp 1
 	ret  ; carry if no damage
+
+
+; input:
+;   [hTempPlayAreaLocation_ff9d]: PLAY_AREA_* of the Pokémon to check
+; output:
+;   carry: set if the Pokémon at the given location is damaged
+; preserves: hl, bc, de
+CardTypeTest_DamagedPokemon:
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	push de
+	call IsFullHPPokemon  ; preserves hl, bc
+	pop de
+	ccf
+	ret
 
 
 ; input:

@@ -297,7 +297,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ChooseGrassCardFromDeckText
 	textpointer ProcedureForEnergyTransferText                     ; 0x012d
 	textpointer ChoosePkmnToHealText
-	textpointer ProcedureForCurseText                              ; 0x0131
 	textpointer Choose2EnergyCardsFromDiscardPileToAttachText      ; 0x0132
 	textpointer Choose2EnergyCardsFromDiscardPileForHandText       ; 0x0133
 	textpointer ChooseAnEnergyCardText                             ; 0x0134
@@ -2680,6 +2679,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer NightmareName                                      ; 0x0aa1
 	textpointer DreamEaterName
 	textpointer DreamEaterDescription
+	textpointer MischiefName
+	textpointer MischiefDescription
 	textpointer CurseName
 	textpointer CurseDescription
 	textpointer PainAmplifierName                                  ; 0x0aa6

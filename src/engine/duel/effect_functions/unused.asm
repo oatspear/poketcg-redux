@@ -1,5 +1,63 @@
 ;
 
+
+LunarPowerEffectCommands:
+	; dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, PokemonBreeder_PreconditionCheck
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDeckIsNotEmpty
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, EvolutionFromDeck_EvolveEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, LunarPower_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, LunarPower_AISelectEffect
+	db  $00
+
+
+LunarPower_PlayerSelectEffect:
+	call CreateDeckCardList
+	ld e, CARDTEST_EVOLUTION_POKEMON
+	call PlayerSelectEvolutionFromDeck_Preamble
+	ret c  ; none in deck, Player refused to look
+
+; select an Evolution card from the deck
+.loop_deck
+	call HandlePlayerSelectionEvolutionPokemonFromDeckList
+	ret c  ; no Pokémon | Player cancelled
+	; [hTempCardIndex_ff98]: deck index of the Evolution card
+	ld a, CARDTEST_EVOLVES_INTO
+	call CheckSomeMatchingPokemonInPlayArea
+	jr nc, .got_valid_card
+	call PlaySFX_InvalidChoice
+	jr .loop_deck
+
+; store the selected Evolution card
+.got_valid_card
+	ldh a, [hTempCardIndex_ff98]
+	ldh [hTemp_ffa0], a
+
+; choose a Pokémon in the play area to evolve
+.loop_play_area
+	; ldh a, [hTemp_ffa0]
+	; ldh [hTempCardIndex_ff98], a
+	ld a, CARDTEST_EVOLVES_INTO
+	call HandlePlayerSelectionMatchingPokemonInPlayArea_AllowCancel
+	jr nc, .can_evolve
+	call PlaySFX_InvalidChoice
+	ldtx hl, ChoosePokemonToEvolveText
+	call DrawWideTextBox_WaitForInput
+	jr .loop_play_area  ; not a valid Pokémon
+
+.can_evolve
+	ldh [hTempPlayAreaLocation_ffa1], a
+	or a
+	ret
+
+
+; FIXME
+LunarPower_AISelectEffect:
+	ld a, $ff
+	ldh [hTemp_ffa0], a
+	ldh [hTempPlayAreaLocation_ffa1], a
+	ret
+
+
 PrimalSwirlEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DevolveDefendingPokemonEffect
 	db  $00

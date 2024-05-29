@@ -279,6 +279,14 @@ StoreDefendingPokemonHPEffect:
 INCLUDE "engine/duel/effect_functions/checks.asm"
 
 
+Mischief_PreconditionCheck:
+	call CheckPokemonPowerCanBeUsed_StoreTrigger
+	ret c
+	call CheckPlayAreaPokemonHasAnyEnergiesAttached
+	ret c
+	jp CheckIfPlayAreaHasAnyDamage
+
+
 CheckIfPlayAreaHasAnyDamageOrStatus:
 	call CheckIfPlayAreaHasAnyDamage
 	ret nc  ; there is damage to heal
@@ -1005,6 +1013,16 @@ TryGiveDamageCounter_StrangeBehavior:
 .set_carry
 	scf
 	ret
+
+
+Mischief_DamageTransferEffect:
+; heal the selected Pokémon
+	ldh a, [hPlayAreaEffectTarget]
+	ld e, a   ; location
+	ld d, 10  ; damage
+	call HealPlayAreaCardHP
+	call Curse_DamageEffect
+	jp ExchangeRNG
 
 
 Curse_DamageEffect:
@@ -2834,7 +2852,10 @@ Heal_RemoveDamageEffect:
 ; player
 	ldtx hl, ChoosePkmnToHealText
 	call DrawWideTextBox_WaitForInput
-	call HandlePlayerSelectionDamagedPokemonInPlayArea
+.loop
+	ld a, CARDTEST_DAMAGED_POKEMON
+	call HandlePlayerSelectionMatchingPokemonInPlayArea_AllowCancel
+	jr c, .loop
 	ldh [hPlayAreaEffectTarget], a
 	call SerialSend8Bytes
 	jr .done
@@ -6150,6 +6171,16 @@ NaturalRemedy_PlayerSelection:
 	jr z, .read_input ; no damage, no status, loop back to start
 .done
 	ret
+
+
+Mischief_PlayerSelectEffect:
+	ldtx hl, ChoosePkmnToHealText
+	call DrawWideTextBox_WaitForInput
+	ld a, CARDTEST_DAMAGED_POKEMON
+	call HandlePlayerSelectionMatchingPokemonInPlayArea_AllowCancel
+	ret c
+	ldh [hPlayAreaEffectTarget], a
+	jp DamageTargetPokemon_PlayerSelectEffect
 
 
 OptionalDiscard_PlayerHandCardSelection:

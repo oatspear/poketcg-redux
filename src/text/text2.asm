@@ -319,20 +319,6 @@ ChoosePkmnToHealText:
 	text "Choose a Pokémon to heal."
 	done
 
-ProcedureForCurseText: ; 38bfe (e:4bfe)
-	text "Procedure for Curse:"
-	line ""
-	line "1. Choose a Pokémon to move the"
-	line "   Damage counter from and press"
-	line "   the A Button."
-	line ""
-	line "2. Choose a Pokémon to move the"
-	line "   Damage counter to and press"
-	line "   the A Button."
-	line ""
-	line "3. Press the B Button to cancel."
-	done
-
 Choose2EnergyCardsFromDiscardPileToAttachText:
 	text "Choose 2 Energy cards from the"
 	line "Discard Pile to attach to a Pokémon."
