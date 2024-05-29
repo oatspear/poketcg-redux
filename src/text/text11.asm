@@ -1190,8 +1190,9 @@ PsychicName: ; 60ee0 (18:4ee0)
 	done
 
 PsychicDescription:
-	text "Does 10 more damage for each Energy"
-	line "attached to the Defending Pokémon."
+	text "This attack does 10 more damage"
+	line "for each Energy attached to"
+	line "the Defending Pokémon."
 	done
 
 BarrierDescription:
