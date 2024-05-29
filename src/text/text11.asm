@@ -1004,8 +1004,8 @@ PrimalHuntName:
 	done
 
 Tutor1PokemonDescription:
-	text "Search your deck for a Pokémon card"
-	line "and add it to your hand."
+	text "Search your deck for a Pokémon"
+	line "card and add it to your hand."
 	line "Then, shuffle your deck."
 	done
 
