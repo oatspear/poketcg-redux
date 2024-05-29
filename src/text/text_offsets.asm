@@ -2721,7 +2721,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer Heal10DamageFromAllDescription
 	textpointer LunarPowerName
 	textpointer FriendshipSongName
-	textpointer FriendshipSongDescription
+	textpointer Tutor1SupporterDescription
 	textpointer TransportDescription
 	textpointer LightStepsName
 	textpointer EnergySlideName

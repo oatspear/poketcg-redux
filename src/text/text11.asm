@@ -1320,12 +1320,10 @@ FriendshipSongName:
 	text "Friendship Song"
 	done
 
-FriendshipSongDescription:
+Tutor1SupporterDescription:
 	text "Search your deck for a Supporter"
 	line "card, reveal it, and put it into"
-	line "your hand. Then, shuffle your deck"
-	line "and heal 10 damage from each of"
-	line "your Pokémon."
+	line "your hand. Then, shuffle your deck."
 	done
 
 TransportDescription:

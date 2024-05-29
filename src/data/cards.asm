@@ -8963,8 +8963,8 @@ JigglypuffCard:
 	; attack 1
 	energy COLORLESS, 1 ; energies
 	tx FriendshipSongName ; name
-	tx FriendshipSongDescription ; description
-	dw NONE ; description (cont)
+	tx Tutor1SupporterDescription ; description
+	tx Heal10DamageFromAllDescription ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category
 	dw FriendshipSongEffectCommands ; effect commands
