@@ -1,5 +1,20 @@
 
 ; attack 2
+energy PSYCHIC, 1 ; energies
+tx ConfuseRayName ; name
+tx InflictConfusionDescription ; description
+dw NONE ; description (cont)
+db 10 ; damage
+db DAMAGE_NORMAL ; category
+dw InflictConfusionEffectCommands ; effect commands
+db INFLICT_CONFUSION ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_CONFUSE_RAY ; animation
+
+
+; attack 2
 energy PSYCHIC, 1, COLORLESS, 1 ; energies
 tx InvadeMindName ; name
 tx InvadeMindDescription ; description

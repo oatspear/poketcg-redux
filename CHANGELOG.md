@@ -228,7 +228,8 @@
 
 #### Abra
 - **Teleport**: reduced cost from (P) to (C).
-- **Confuse Ray**: reduced cost from (PC) to (P).
+- **Confuse Ray**: removed.
+- New attack: **Energy Loop** (P): 20 damage; put an Energy attached to the Pokémon back into the hand.
 
 #### Kadabra
 - **Prophecy**: removed.
