@@ -1108,9 +1108,11 @@ DreamEaterName:
 	done
 
 DreamEaterDescription:
-	text "At the end of your turns,"
-	line "heal 10 damage from this Pokémon"
-	line "for each Pokémon that is Asleep."
+	text "At the end of your turns, put 1"
+	line "damage counter on each of your"
+	line "opponent's Pokémon that is Asleep."
+	line "Heal 10 damage from this Pokémon"
+	line "for each Pokémon damaged this way."
 	done
 
 MischiefName:
@@ -1171,8 +1173,9 @@ MeditateName:
 	done
 
 MeditateDescription:
-	text "Does 20 more damage if you have"
-	line "at least 5 cards in your hand."
+	text "This attack does 20 more"
+	line "damage if you have 5 or more"
+	line "cards in your hand."
 	done
 
 PainBurstName:

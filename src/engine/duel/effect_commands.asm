@@ -941,6 +941,7 @@ MimicEffectCommands:
 	db  $00
 
 MeditateEffectCommands:
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, Draw1CardEffect
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Meditate_DamageBoostEffect
 	dbw EFFECTCMDTYPE_AI, Meditate_AIEffect
 	db  $00

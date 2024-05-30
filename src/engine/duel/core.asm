@@ -7409,7 +7409,7 @@ HandleEndOfTurnEvents:
 	; ld a, HYPNO
 	; call CountPokemonIDInPlayArea
 	; jr nc, .done
-	farcall DreamEater_CountPokemonAndSetHealingAmount
+	farcall DreamEater_CountSleepingPokemon
 
 	; ld a, HAUNTER_LV22
 	; call CountPokemonIDInPlayArea
@@ -7458,7 +7458,7 @@ HandleBetweenTurnsEvents:
 	call DrawWideTextBox_WaitForInput
 
 ; handle Hypno's Dream Eater
-	farcall DreamEater_HealEffect
+	farcall DreamEater_HealAndDamageEffect
 	farcall Affliction_DamageEffect
 
 ; handle status conditions

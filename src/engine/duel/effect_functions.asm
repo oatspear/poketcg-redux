@@ -666,6 +666,26 @@ Affliction_DamageEffect:
 	jp SwapTurn
 
 
+DreamEater_DamageEffect:
+	call SwapTurn
+	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+	call GetTurnDuelistVariable
+	ld c, a  ; loop counter
+	ld d, 10  ; damage
+	ld e, PLAY_AREA_ARENA  ; target
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetTurnDuelistVariable
+.loop_play_area
+	ld a, [hli]
+	and CNF_SLP_PRZ
+	cp ASLEEP
+	call z, ApplyDirectDamage_RegularAnim
+	inc e
+	dec c
+	jr nz, .loop_play_area
+	jp SwapTurn
+
+
 PrimalThunder_DrawbackEffect:
 	call CheckOpponentHasMorePrizeCardsRemaining
 	ret c  ; opponent Prizes < user Prizes (losing)
@@ -835,43 +855,26 @@ GarbageEater_HealEffect:
 ; Stores in [wDreamEaterDamageToHeal] the amount of damage to heal
 ; from sleeping Pokémon in play area.
 ; Stores 0 if there are no Dream Eater capable Pokémon in play.
-DreamEater_CountPokemonAndSetHealingAmount:
+DreamEater_CountSleepingPokemon:
 	xor a
 	ld [wDreamEaterDamageToHeal], a
 
 	ld a, HYPNO
-	call ListPowerCapablePokemonIDInPlayArea
+	call GetFirstPokemonWithAvailablePower
 	ret nc  ; none found
 
-	ld hl, hTempList
-.loop_play_area
-	ld a, [hli]
-	cp $ff
-	ret z  ; done
-
-	ld e, a  ; location
-	call GetCardDamageAndMaxHP
-	or a
-	jr z, .loop_play_area  ; not damaged
-	; fallthrough
-
-; stores in [wDreamEaterDamageToHeal] the amount of damage to heal
-; from sleeping Pokémon in play area
-DreamEater_SetHealingAmount:
-	call CountSleepingPokemonInPlayArea
-	ld [wDreamEaterDamageToHeal], a
 	call SwapTurn
 	call CountSleepingPokemonInPlayArea
 	call SwapTurn
-	ld a, [wDreamEaterDamageToHeal]
-	add c
 	call ATimes10
 	ld [wDreamEaterDamageToHeal], a
 	ret
 
+
 ; heals the amount of damage in [wDreamEaterDamageToHeal] from every
 ; Pokémon Power capable Hypno in the turn holder's play area
-DreamEater_HealEffect:
+; damages all of the opponent's Sleeping Pokémon
+DreamEater_HealAndDamageEffect:
 	ld a, [wDreamEaterDamageToHeal]
 	or a
 	ret z  ; nothing to do
@@ -879,6 +882,8 @@ DreamEater_HealEffect:
 	ld a, HYPNO
 	call ListPowerCapablePokemonIDInPlayArea
 	ret nc  ; none found
+
+	call DreamEater_DamageEffect  ; preserves hTempList
 
 	ld hl, hTempList
 .loop_play_area

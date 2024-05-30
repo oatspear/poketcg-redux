@@ -7873,10 +7873,10 @@ DrowzeeCard:
 	db ATK_ANIM_HYPNOSIS ; animation
 
 	; attack 2
-	energy COLORLESS, 2 ; energies
+	energy PSYCHIC, 1, COLORLESS, 1 ; energies
 	tx MeditateName ; name
-	tx MeditateDescription ; description
-	dw NONE ; description (cont)
+	tx Draw1CardDescription ; description
+	tx MeditateDescription ; description (cont)
 	db 10 ; damage
 	db DAMAGE_PLUS ; category
 	dw MeditateEffectCommands ; effect commands
@@ -7905,7 +7905,7 @@ HypnoCard:
 	db STAR ; rarity
 	db LABORATORY | FOSSIL ; sets
 	db HYPNO
-	db 70 ; hp
+	db 80 ; hp
 	db STAGE1 ; stage
 	tx DrowzeeName ; pre-evo name
 
@@ -7924,11 +7924,11 @@ HypnoCard:
 	db ATK_ANIM_NONE ; animation
 
 	; attack 2
-	energy PSYCHIC, 1, COLORLESS, 2 ; energies
+	energy PSYCHIC, 1, COLORLESS, 1 ; energies
 	tx HypnoblastName ; name
 	tx InflictSleepDescription ; description
 	dw NONE ; description (cont)
-	db 40 ; damage
+	db 20 ; damage
 	db DAMAGE_NORMAL ; category
 	dw InflictSleepEffectCommands ; effect commands
 	db INFLICT_SLEEP ; flags 1

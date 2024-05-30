@@ -241,6 +241,14 @@
 - **Psychic**: increased base damage from 10 to 20.
 - **Mind Blast**: reduced cost from (PCC) to (PC); increased base damage from zero to 10; changed bonus damage from 20 per card in the opponent's hand to 10 per card in both players' hands.
 
+#### Drowzee
+- **Meditate**: increased cost from (CC) to (PC); draws 1 card in addition to the previous effect.
+
+#### Hypno
+- Increased HP from 70 to 80.
+- **Dream Eater**: only affects the opponent's Pokémon; puts 1 damage counter on each Sleeping Pokémon in addition to the healing effect.
+- **Hypnoblast**: reduced cost from (PCC) to (PC) and damage from 40 to 20.
+
 #### Clefairy
 - **Lead**: removed.
 - **Friend Tackle**: removed.

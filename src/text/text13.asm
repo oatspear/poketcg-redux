@@ -119,6 +119,7 @@ RagingStormDescription:
 	line "of your opponent's Benched Pokémon"
 	line "if you have more Prize cards"
 	line "remaining than your opponent."
+	done
 
 IcicleSpearsName:
 	text "Icicle Spears"

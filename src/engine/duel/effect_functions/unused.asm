@@ -1,5 +1,72 @@
 ;
 
+
+; Stores in [wDreamEaterDamageToHeal] the amount of damage to heal
+; from sleeping Pokémon in play area.
+; Stores 0 if there are no Dream Eater capable Pokémon in play.
+DreamEater_CountPokemonAndSetHealingAmount:
+	xor a
+	ld [wDreamEaterDamageToHeal], a
+
+	ld a, HYPNO
+	call ListPowerCapablePokemonIDInPlayArea
+	ret nc  ; none found
+
+	ld hl, hTempList
+.loop_play_area
+	ld a, [hli]
+	cp $ff
+	ret z  ; done
+
+	ld e, a  ; location
+	call GetCardDamageAndMaxHP
+	or a
+	jr z, .loop_play_area  ; not damaged
+	; fallthrough
+
+; stores in [wDreamEaterDamageToHeal] the amount of damage to heal
+; from sleeping Pokémon in play area
+DreamEater_SetHealingAmount:
+	call CountSleepingPokemonInPlayArea
+	ld [wDreamEaterDamageToHeal], a
+	call SwapTurn
+	call CountSleepingPokemonInPlayArea
+	call SwapTurn
+	ld a, [wDreamEaterDamageToHeal]
+	add c
+	call ATimes10
+	ld [wDreamEaterDamageToHeal], a
+	ret
+
+; heals the amount of damage in [wDreamEaterDamageToHeal] from every
+; Pokémon Power capable Hypno in the turn holder's play area
+DreamEater_HealEffect:
+	ld a, [wDreamEaterDamageToHeal]
+	or a
+	ret z  ; nothing to do
+
+	ld a, HYPNO
+	call ListPowerCapablePokemonIDInPlayArea
+	ret nc  ; none found
+
+	ld hl, hTempList
+.loop_play_area
+	ld a, [hli]
+	cp $ff
+	ret z  ; done
+
+	ld e, a  ; location
+	ld a, [wDreamEaterDamageToHeal]
+	ld d, a  ; damage
+	push hl
+	call HealPlayAreaCardHP
+	pop hl
+	jr .loop_play_area
+
+
+
+;
+
 ProphecyEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Prophecy_CheckDeck
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Prophecy_ReorderDeckEffect
