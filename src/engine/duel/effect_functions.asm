@@ -314,7 +314,7 @@ PrimordialDream_PreconditionCheck:
 
 
 Trade_PreconditionCheck:
-	call CheckHandSizeGreaterThan1
+	call CheckHandIsNotEmpty
 	ret c
 	jr Synthesis_PreconditionCheck
 
