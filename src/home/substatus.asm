@@ -617,8 +617,9 @@ IsUnableToEvolve:
 	ld a, DUELVARS_ARENA_CARD_SUBSTATUS2
 	call GetTurnDuelistVariable
 	cp SUBSTATUS2_PRIMAL_TENTACLE
-	ret nz
 	scf
+	ret z
+	or a  ; reset carry
 	ret
 
 
