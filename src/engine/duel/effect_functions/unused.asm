@@ -1,6 +1,104 @@
 ;
 
 
+; Dream Eater Version 2
+
+
+HandleEndOfTurnEvents:
+; reset end of turn variables
+	xor a
+	ld [wDreamEaterDamageToHeal], a
+
+; return if Pokémon Powers are disabled
+	call ArePokemonPowersDisabled
+	ret c
+
+; check for Hypno's Dream Eater Power
+	; ld a, HYPNO
+	; call CountPokemonIDInPlayArea
+	; jr nc, .done
+	farcall DreamEater_CountSleepingPokemon
+
+	; ld a, HAUNTER_LV22
+	; call CountPokemonIDInPlayArea
+	; jr nc, .done
+	farcall Affliction_CountPokemonAndSetVariable
+.done
+	ret
+
+
+; Stores in [wDreamEaterDamageToHeal] the amount of damage to heal
+; from sleeping Pokémon in play area.
+; Stores 0 if there are no Dream Eater capable Pokémon in play.
+DreamEater_CountSleepingPokemon:
+	xor a
+	ld [wDreamEaterDamageToHeal], a
+
+	ld a, HYPNO
+	call GetFirstPokemonWithAvailablePower
+	ret nc  ; none found
+
+	call SwapTurn
+	call CountSleepingPokemonInPlayArea
+	call SwapTurn
+	call ATimes10
+	ld [wDreamEaterDamageToHeal], a
+	ret
+
+
+; heals the amount of damage in [wDreamEaterDamageToHeal] from every
+; Pokémon Power capable Hypno in the turn holder's play area
+; damages all of the opponent's Sleeping Pokémon
+DreamEater_HealAndDamageEffect:
+	ld a, [wDreamEaterDamageToHeal]
+	or a
+	ret z  ; nothing to do
+
+	ld a, HYPNO
+	call ListPowerCapablePokemonIDInPlayArea
+	ret nc  ; none found
+
+	call DreamEater_DamageEffect  ; preserves hTempList
+
+	ld hl, hTempList
+.loop_play_area
+	ld a, [hli]
+	cp $ff
+	ret z  ; done
+
+	ld e, a  ; location
+	ld a, [wDreamEaterDamageToHeal]
+	ld d, a  ; damage
+	push hl
+	call HealPlayAreaCardHP
+	pop hl
+	jr .loop_play_area
+
+
+DreamEater_DamageEffect:
+	call SwapTurn
+	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+	call GetTurnDuelistVariable
+	ld c, a  ; loop counter
+	ld d, 10  ; damage
+	ld e, PLAY_AREA_ARENA  ; target
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetTurnDuelistVariable
+.loop_play_area
+	ld a, [hli]
+	and CNF_SLP_PRZ
+	cp ASLEEP
+	call z, ApplyDirectDamage_RegularAnim
+	inc e
+	dec c
+	jr nz, .loop_play_area
+	jp SwapTurn
+
+
+
+; Dream Eater version 1
+
+
 ; Stores in [wDreamEaterDamageToHeal] the amount of damage to heal
 ; from sleeping Pokémon in play area.
 ; Stores 0 if there are no Dream Eater capable Pokémon in play.

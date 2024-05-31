@@ -26,6 +26,30 @@ IceBeam_ParalysisEffect:
 	ret
 
 
+HyperHypnosis_DiscardSleepEffect:
+	ldh a, [hEnergyTransEnergyCard]
+	cp $ff
+	ret z
+; discard energy
+	call PutCardInDiscardPile
+; inflict status
+	call SwapTurn
+	ld e, PLAY_AREA_ARENA
+	call SleepEffect_PlayArea
+	call SwapTurn
+; handle failure
+	jr c, .animation
+	ldtx hl, ThereWasNoEffectFromSleepText
+	jp DrawWideTextBox_WaitForInput
+.animation
+	; bank1call DrawDuelMainScene
+	xor a
+	ld [wDuelAnimLocationParam], a
+	ld a, ATK_ANIM_SLEEP
+	bank1call PlayAdhocAnimationOnPlayAreaArena_NoEffectiveness
+	ret
+
+
 ; ------------------------------------------------------------------------------
 ; Coin Flip
 ; ------------------------------------------------------------------------------
@@ -277,6 +301,12 @@ StoreDefendingPokemonHPEffect:
 ; ------------------------------------------------------------------------------
 
 INCLUDE "engine/duel/effect_functions/checks.asm"
+
+
+HyperHypnosis_PreconditionCheck:
+	call CheckPokemonPowerCanBeUsed_StoreTrigger
+	ret c
+	jp CheckPlayAreaPokemonHasAnyEnergiesAttached
 
 
 Mischief_PreconditionCheck:
@@ -666,26 +696,6 @@ Affliction_DamageEffect:
 	jp SwapTurn
 
 
-DreamEater_DamageEffect:
-	call SwapTurn
-	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
-	call GetTurnDuelistVariable
-	ld c, a  ; loop counter
-	ld d, 10  ; damage
-	ld e, PLAY_AREA_ARENA  ; target
-	ld a, DUELVARS_ARENA_CARD_STATUS
-	call GetTurnDuelistVariable
-.loop_play_area
-	ld a, [hli]
-	and CNF_SLP_PRZ
-	cp ASLEEP
-	call z, ApplyDirectDamage_RegularAnim
-	inc e
-	dec c
-	jr nz, .loop_play_area
-	jp SwapTurn
-
-
 PrimalThunder_DrawbackEffect:
 	call CheckOpponentHasMorePrizeCardsRemaining
 	ret c  ; opponent Prizes < user Prizes (losing)
@@ -850,55 +860,6 @@ GarbageEater_HealEffect:
 	call HealPlayAreaCardHP
 	pop hl
 	jr .loop_play_area
-
-
-; Stores in [wDreamEaterDamageToHeal] the amount of damage to heal
-; from sleeping Pokémon in play area.
-; Stores 0 if there are no Dream Eater capable Pokémon in play.
-DreamEater_CountSleepingPokemon:
-	xor a
-	ld [wDreamEaterDamageToHeal], a
-
-	ld a, HYPNO
-	call GetFirstPokemonWithAvailablePower
-	ret nc  ; none found
-
-	call SwapTurn
-	call CountSleepingPokemonInPlayArea
-	call SwapTurn
-	call ATimes10
-	ld [wDreamEaterDamageToHeal], a
-	ret
-
-
-; heals the amount of damage in [wDreamEaterDamageToHeal] from every
-; Pokémon Power capable Hypno in the turn holder's play area
-; damages all of the opponent's Sleeping Pokémon
-DreamEater_HealAndDamageEffect:
-	ld a, [wDreamEaterDamageToHeal]
-	or a
-	ret z  ; nothing to do
-
-	ld a, HYPNO
-	call ListPowerCapablePokemonIDInPlayArea
-	ret nc  ; none found
-
-	call DreamEater_DamageEffect  ; preserves hTempList
-
-	ld hl, hTempList
-.loop_play_area
-	ld a, [hli]
-	cp $ff
-	ret z  ; done
-
-	ld e, a  ; location
-	ld a, [wDreamEaterDamageToHeal]
-	ld d, a  ; damage
-	push hl
-	call HealPlayAreaCardHP
-	pop hl
-	jr .loop_play_area
-
 
 
 ; Stores in [wAfflictionAffectedPlayArea] whether there are Pokémon to damage
@@ -1171,6 +1132,19 @@ VoltSwitchEffect:
 ; ------------------------------------------------------------------------------
 ; Compound Attacks
 ; ------------------------------------------------------------------------------
+
+
+; return carry if the Defending Pokémon is not asleep
+DreamEaterEffect:
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetNonTurnDuelistVariable
+	and CNF_SLP_PRZ
+	cp ASLEEP
+	ret z ; return if asleep
+; not asleep, set carry and load text
+	ldtx hl, OpponentIsNotAsleepText
+	scf
+	ret
 
 
 Freeze_EnergyHealingEffect:
@@ -3871,6 +3845,11 @@ Recover_CheckEnergyHP:
 ; ------------------------------------------------------------------------------
 ; Energy Discard
 ; ------------------------------------------------------------------------------
+
+DiscardEnergyAbility_PlayerSelectEffect:
+	bank1call HandleDiscardArenaEnergy
+	ldh [hEnergyTransEnergyCard], a
+	ret
 
 DiscardEnergy_PlayerSelectEffect:
 	bank1call HandleDiscardArenaEnergy

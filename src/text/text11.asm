@@ -1103,16 +1103,24 @@ NightmareName: ; 60801 (18:4801)
 	text "Nightmare"
 	done
 
+HyperHypnosisName:
+	text "Hyper Hypnosis"
+	done
+
+HyperHypnosisDescription:
+	text "Once during your turn, you may"
+	line "discard an Energy attached to this"
+	line "Pokémon. If you do, the opponent's"
+	line "Active Pokémon is now Asleep."
+	done
+
 DreamEaterName:
 	text "Dream Eater"
 	done
 
 DreamEaterDescription:
-	text "At the end of your turns, put 1"
-	line "damage counter on each of your"
-	line "opponent's Pokémon that is Asleep."
-	line "Heal 10 damage from this Pokémon"
-	line "for each Pokémon damaged this way."
+	text "If the Defending Pokémon is not"
+	line "Asleep, this attack does nothing."
 	done
 
 MischiefName:

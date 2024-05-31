@@ -881,6 +881,17 @@ InflictSleepEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SleepEffect
 	db  $00
 
+HyperHypnosisEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, HyperHypnosis_PreconditionCheck
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, HyperHypnosis_DiscardSleepEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, DiscardEnergyAbility_PlayerSelectEffect
+	db  $00
+
+DreamEaterEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, DreamEaterEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Leech20DamageEffect
+	db  $00
+
 RendEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Rend_DamageBoostEffect
 	dbw EFFECTCMDTYPE_AI, Rend_AIEffect

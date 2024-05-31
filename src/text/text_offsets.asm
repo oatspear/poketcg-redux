@@ -2676,6 +2676,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer EnergyConversionName                               ; 0x0a9b
 	textpointer EnergyConversionDescription                        ; 0x0a9c
 	textpointer NightmareName                                      ; 0x0aa1
+	textpointer HyperHypnosisName
+	textpointer HyperHypnosisDescription
 	textpointer DreamEaterName
 	textpointer DreamEaterDescription
 	textpointer MischiefName

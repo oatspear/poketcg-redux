@@ -7398,19 +7398,11 @@ HandleOnRetreatEffects:
 
 HandleEndOfTurnEvents:
 ; reset end of turn variables
-	xor a
-	ld [wDreamEaterDamageToHeal], a
-
 ; return if Pokémon Powers are disabled
 	call ArePokemonPowersDisabled
 	ret c
 
-; check for Hypno's Dream Eater Power
-	; ld a, HYPNO
-	; call CountPokemonIDInPlayArea
-	; jr nc, .done
-	farcall DreamEater_CountSleepingPokemon
-
+; check for Haunter's Affliction Ability
 	; ld a, HAUNTER_LV22
 	; call CountPokemonIDInPlayArea
 	; jr nc, .done
@@ -7425,9 +7417,6 @@ HandleBetweenTurnsEvents:
 	jr c, .something_to_handle
 	cp PARALYZED
 	jr z, .something_to_handle
-	ld a, [wDreamEaterDamageToHeal]
-	or a
-	jr nz, .something_to_handle
 	ld a, [wAfflictionAffectedPlayArea]
 	or a
 	jr nz, .something_to_handle
@@ -7457,8 +7446,7 @@ HandleBetweenTurnsEvents:
 	ldtx hl, BetweenTurnsText
 	call DrawWideTextBox_WaitForInput
 
-; handle Hypno's Dream Eater
-	farcall DreamEater_HealAndDamageEffect
+; handle Haunter's Affliction
 	farcall Affliction_DamageEffect
 
 ; handle status conditions

@@ -1,3 +1,18 @@
+; attack 2
+energy PSYCHIC, 1, COLORLESS, 1 ; energies
+tx HypnoblastName ; name
+tx InflictSleepDescription ; description
+dw NONE ; description (cont)
+db 20 ; damage
+db DAMAGE_NORMAL ; category
+dw InflictSleepEffectCommands ; effect commands
+db INFLICT_SLEEP ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_HYPNOSIS ; animation
+
+
 
 ; attack 2
 energy PSYCHIC, 1 ; energies

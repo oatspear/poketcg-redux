@@ -193,6 +193,14 @@ RevivalWaveDescription:
 ; Unused Text
 ; ------------------------------------------------------------------------------
 
+; DreamEaterDescription:
+; 	text "At the end of your turns, put 1"
+; 	line "damage counter on each of your"
+; 	line "opponent's Pokémon that is Asleep."
+; 	line "Heal 10 damage from this Pokémon"
+; 	line "for each Pokémon damaged this way."
+; 	done
+
 ; ProphecyName:
 ; 	text "Prophecy"
 ; 	done

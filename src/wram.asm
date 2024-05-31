@@ -1123,7 +1123,6 @@ ENDU
 ; End of Turn Pokémon Power variables
 wEndOfTurnPowerVariables::
 wGarbageEaterDamageToHeal:: ; cdc0
-wDreamEaterDamageToHeal:: ; cdc0
 	ds $1
 
 wAfflictionAffectedPlayArea:: ; cdc1

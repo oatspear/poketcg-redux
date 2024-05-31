@@ -7911,31 +7911,31 @@ HypnoCard:
 
 	; attack 1
 	energy 0 ; energies
-	tx DreamEaterName ; name
-	tx DreamEaterDescription ; description
+	tx HyperHypnosisName ; name
+	tx HyperHypnosisDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKEMON_POWER ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw HyperHypnosisEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_NONE ; animation
+	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
 	energy PSYCHIC, 1, COLORLESS, 1 ; energies
-	tx HypnoblastName ; name
-	tx InflictSleepDescription ; description
-	dw NONE ; description (cont)
-	db 20 ; damage
+	tx DreamEaterName ; name
+	tx DreamEaterDescription ; description
+	tx Heal20DamageDescription ; description (cont)
+	db 60 ; damage
 	db DAMAGE_NORMAL ; category
-	dw InflictSleepEffectCommands ; effect commands
-	db INFLICT_SLEEP ; flags 1
+	dw DreamEaterEffectCommands ; effect commands
+	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_HYPNOSIS ; animation
+	db ATK_ANIM_DARK_MIND ; animation
 
 	db 1 ; retreat cost
 	db WR_DARKNESS ; weakness

@@ -246,8 +246,10 @@
 
 #### Hypno
 - Increased HP from 70 to 80.
-- **Dream Eater**: only affects the opponent's Pokémon; puts 1 damage counter on each Sleeping Pokémon in addition to the healing effect.
-- **Hypnoblast**: reduced cost from (PCC) to (PC) and damage from 40 to 20.
+- **Dream Eater**: reworked.
+- **Hypnoblast**: removed.
+- New Pokémon Power: **Hyper Hypnosis**: discard an attached Energy; the opponent's Active Pokémon is Asleep.
+- New attack: **Dream Eater** (PC): 60 damage; heal 20 damage; fails if the Defending Pokémon is not Asleep.
 
 #### Clefairy
 - **Lead**: removed.
