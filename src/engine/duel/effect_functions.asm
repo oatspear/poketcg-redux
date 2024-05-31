@@ -5280,6 +5280,14 @@ Metronome_UseAttackEffect:
 ;	a = amount of colorless energy needed for Metronome
 HandlePlayerMetronomeEffect:
 	ld [wMetronomeEnergyCost], a
+
+	ld hl, wTxRam2
+	ld de, wLoadedAttackName
+	ld a, [de]
+	inc de
+	ld [hli], a
+	ld a, [de]
+	ld [hl], a
 	ldtx hl, ChooseOppAttackToBeUsedWithMetronomeText
 	call DrawWideTextBox_WaitForInput
 

@@ -387,7 +387,7 @@ ProcedureForStrangeBehaviorText:
 
 ChooseOppAttackToBeUsedWithMetronomeText: ; 391dc (e:51dc)
 	text "Choose the opponent's Attack"
-	line "to be used with Metronome."
+	line "to be used with <RAMTEXT>."
 	done
 
 ThereIsNoInTheDeckText: ; 39215 (e:5215)
