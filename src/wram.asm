@@ -460,6 +460,7 @@ wNumRetreatEnergiesSelected:: ; cbcd
 	ds $1
 
 ; used in CheckIfEnoughEnergiesToAttack for the calculation
+; OATS: potential multipurpose byte
 wAttachedEnergiesAccum:: ; cbce
 	ds $1
 
