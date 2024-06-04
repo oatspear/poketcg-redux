@@ -2692,10 +2692,10 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer InvisibleWallDescription
 	textpointer MeditateName
 	textpointer MeditateDescription
-	textpointer PainBurstName
-	textpointer PainBurstDescription
-	textpointer PsychicName                                        ; 0x0ac1
-	textpointer PsychicDescription                                 ; 0x0ac2
+	textpointer PainBurstName                                      ; unused
+	textpointer PainBurstDescription                               ; unused
+	textpointer PsychicName
+	textpointer PsychicDescription
 	textpointer BarrierDescription                                 ; 0x0ac3
 	textpointer EnergyAbsorptionName                               ; 0x0ac6
 	textpointer EnergyAbsorptionDescription                        ; 0x0ac7
