@@ -5042,7 +5042,6 @@ Hurricane_ReturnToHandEffect:
 	jp SwapTurn
 
 
-; FIXME bug goes to discard pile
 Fly_ReturnToHandEffect:
 	ld a, DUELVARS_ARENA_CARD_HP
 	call GetTurnDuelistVariable
@@ -5064,6 +5063,7 @@ ReturnPokemonAndAttachedCardsToHandEffect:
 	add DUELVARS_ARENA_CARD
 	call GetTurnDuelistVariable
 	push af
+	ldh a, [hTempPlayAreaLocation_ffa1]
 	call ReturnPokemonAndAttachedCardsToHand  ; preserves de
 	call EmptyPlayAreaSlot  ; input e
 	pop af
