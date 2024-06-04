@@ -1968,8 +1968,8 @@ AIPickAttackForAmnesia: ; 2c532 (b:4532)
 	ld e, SECOND_ATTACK
 .chosen
 	ld a, e
-	call SwapTurn
-	ret
+	jp SwapTurn
+
 
 ; Return in a the PLAY_AREA_* of the non-turn holder's Pokemon card
 ; in bench with the lowest (remaining) HP.
