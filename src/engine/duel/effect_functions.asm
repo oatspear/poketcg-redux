@@ -5042,6 +5042,7 @@ Hurricane_ReturnToHandEffect:
 	jp SwapTurn
 
 
+; FIXME bug goes to discard pile
 Fly_ReturnToHandEffect:
 	ld a, DUELVARS_ARENA_CARD_HP
 	call GetTurnDuelistVariable
