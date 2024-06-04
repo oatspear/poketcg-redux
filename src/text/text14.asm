@@ -375,9 +375,9 @@ DevolutionSprayDescription:
 	line "Pokémon can't evolve this turn.)"
 	done
 
-DevolutionSprayDescriptionCont: ; 644cb (19:44cb)
-	text "That Pokémon is no longer Asleep,"
-	line "Confused, Paralyzed, Poisoned, or"
+DevolutionSprayDescriptionCont:
+	text "That Pokémon is no longer affected"
+	line "with any Special Conditions, or"
 	line "anything else that might be the"
 	line "result of an attack (just as if you"
 	line "had evolved it)."

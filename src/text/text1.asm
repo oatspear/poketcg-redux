@@ -173,15 +173,29 @@ Received20DamageDueToBurnText:
 	line "20 damage due to Burn."
 	done
 
-IsStillAsleepText: ; 3650f (d:650f)
+IF SLEEP_WITH_COIN_FLIP
+IsStillAsleepText:  ; FIXME unreferenced?
 	text "<RAMTEXT> is"
 	line "still Asleep."
 	done
+ELSE
+IsStillAsleepText:
+	text "<RAMTEXT> is"
+	line "still Drowsy."
+	done
+ENDC
 
-IsCuredOfSleepText: ; 36523 (d:6523)
+IF SLEEP_WITH_COIN_FLIP
+IsCuredOfSleepText:
 	text "<RAMTEXT> is"
 	line "cured of Sleep."
 	done
+ELSE
+IsCuredOfSleepText:
+	text "<RAMTEXT> is"
+	line "cured of Drowsiness."
+	done
+ENDC
 
 IsCuredOfParalysisText: ; 36539 (d:6539)
 	text "<RAMTEXT> is"
@@ -691,7 +705,11 @@ Text0095: ; 36ffc (d:6ffc)
 Text0096: ; 37025 (d:7025)
 	text "Other"
 	line "Poison"
+IF SLEEP_WITH_COIN_FLIP
 	line "Sleep"
+ELSE
+	line "Drowsiness"
+ENDC
 	line "Payalysis"
 	line "Confusion"
 	line "Double Poison"
@@ -972,10 +990,17 @@ OnlyOncePerTurnText: ; 378a7 (d:78a7)
 	text "Only once per turn."
 	done
 
-CannotUseDueToStatusText: ; 378bc (d:78bc)
+IF SLEEP_WITH_COIN_FLIP
+CannotUseDueToStatusText:
 	text "Cannot use due to Sleep, Paralysis,"
 	line "or Confusion."
 	done
+ELSE
+CannotUseDueToStatusText:
+	text "Cannot use due to Drowsiness,"
+	line "Paralysis or Confusion."
+	done
+ENDC
 
 CannotBeUsedInTurnWhichWasPlayedText: ; 378ef (d:78ef)
 	text "Cannot be used in the turn in"
@@ -1008,9 +1033,15 @@ ThereAreNoPokemonOnBenchText: ; 379ce (d:79ce)
 	text "There are no Pokémon on the Bench."
 	done
 
-OpponentIsNotAsleepText: ; 379f2 (d:79f2)
-	text "Opponent is not Asleep"
+IF SLEEP_WITH_COIN_FLIP
+OpponentIsNotAsleepText:
+	text "Opponent is not Asleep."
 	done
+ELSE
+OpponentIsNotAsleepText:
+	text "Opponent is not Drowsy."
+	done
+ENDC
 
 UnableToUsePkmnPowerText:
 	text "Unable to use Pokémon Powers."
@@ -1068,7 +1099,7 @@ ParalysisCheckText: ; 37c15 (d:7c15)
 	line "If Heads, opponent is Paralyzed."
 	done
 
-SleepCheckText: ; 37c48 (d:7c48)
+SleepCheckText: ; FIXME unreferenced?
 	text "Sleep check!"
 	line "If Heads, opponent becomes Asleep."
 	done
@@ -1082,11 +1113,6 @@ ConfusionCheckText: ; 37ca8 (d:7ca8)
 	text "Confusion check! If Heads,"
 	line "opponent becomes Confused."
 	done
-
-; ParalysisSleepCheckText:
-; 	text "Status check! If Heads, opponent"
-; 	line "is Paralyzed. If tails, Asleep."
-; 	done
 
 FlipUntilFailAppears10DamageForEachHeadsText: ; 37d92 (d:7d92)
 	text "Flip until Tails appears."

@@ -579,21 +579,38 @@ Text04e4: ; 46331 (11:6331)
 	line "Psychic Energy cards to attack."
 	done
 
-Text04e5: ; 463d5 (11:63d5)
+IF SLEEP_WITH_COIN_FLIP
+Text04e5:
 	text "Sleep"
 	done
+ELSE
+Text04e5:
+	text "Drowsiness"
+	done
+ENDC
 
-Text04e6: ; 463dc (11:63dc)
+IF SLEEP_WITH_COIN_FLIP
+Text04e6:
 	text "When a Pokémon is asleep,"
-	line "it is unable to do anything."
-	line "It cannot attack, retreat or use"
+	line "it is unable to attack or use"
 	line "Pokémon Power. A coin will be "
-	line "flipped at the end of each player's "
-	line "turn. If the coin comes up heads, "
+	line "flipped before attacking."
+	line "If the coin comes up heads,"
 	line "the Pokémon will wake up. If it's"
 	line "tails, the Pokémon remains asleep."
 	line "Use Full Heal to wake it up!"
 	done
+ELSE
+Text04e6:
+	text "When a Pokémon is drowsy,"
+	line "it needs more energy to attack"
+	line "or retreat, and it cannot use"
+	line "Pokémon Power. When it goes back"
+	line "to the Bench, it will wake up at "
+	line "the end of the player's turn."
+	line "Use Full Heal to wake it up sooner!"
+	done
+ENDC
 
 Text04e7: ; 464fe (11:64fe)
 	text "Pokémon Power"
@@ -614,16 +631,29 @@ Text04e9: ; 46611 (11:6611)
 	text "Science Club Pokémon"
 	done
 
-Text04ea: ; 46627 (11:6627)
+IF SLEEP_WITH_COIN_FLIP
+Text04ea:
 	text "Characteristics of Pokémon used"
 	line "in the Science Club:"
-	line "Strong against Rock Pokémon."
-	line "Weak against Psychic Pokémon."
+	line "Strong against Psychic Pokémon."
+	line "Weak against Fighting Pokémon."
 	line "Many cards have attacks with "
 	line "poison and sleep effects."
-	line "Require Grass Energy cards"
+	line "Require Darkness Energy cards"
 	line "to attack."
 	done
+ELSE
+Text04ea:
+	text "Characteristics of Pokémon used"
+	line "in the Science Club:"
+	line "Strong against Psychic Pokémon."
+	line "Weak against Fighting Pokémon."
+	line "Many cards have attacks with "
+	line "poison and drowsiness effects."
+	line "Require Darkness Energy cards"
+	line "to attack."
+	done
+ENDC
 
 Text04eb: ; 466f6 (11:66f6)
 	text "Confusion"

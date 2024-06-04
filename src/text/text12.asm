@@ -52,12 +52,21 @@ PollenFrenzyName:
 	text "Pollen Frenzy"
 	done
 
+IF SLEEP_WITH_COIN_FLIP
 PollenFrenzyDescription:
 	text "Flip a coin. If heads, the Defending"
 	line "Pokémon is now Paralyzed and"
 	line "Poisoned. If tails, the Defending"
 	line "Pokémon is now Asleep and Poisoned."
 	done
+ELSE
+PollenFrenzyDescription:
+	text "Flip a coin. If heads, the Defending"
+	line "Pokémon is now Paralyzed and"
+	line "Poisoned. If tails, the Defending"
+	line "Pokémon is now Drowsy and Poisoned."
+	done
+ENDC
 
 SolarBeamName: ; 57a51 (15:7a51)
 	text "Solarbeam"
@@ -305,13 +314,23 @@ SilverWhirlwindName:
 	text "Silver Whirlwind"
 	done
 
+IF SLEEP_WITH_COIN_FLIP
 SilverWhirlwindDescription:
 	text "Flip a coin. If heads, the Defending"
-	line "Pokémon is Asleep. If tails, it is"
-	line "Poisoned. Then, your opponent"
+	line "Pokémon is now Asleep. If tails, it"
+	line "is now Poisoned. Then, your opponent"
 	line "switches their Active Pokémon with"
 	line "one of their Benched Pokémon."
 	done
+ELSE
+SilverWhirlwindDescription:
+	text "Flip a coin. If heads, the Defending"
+	line "Pokémon is now Drowsy. If tails, it"
+	line "is now Poisoned. Then, your opponent"
+	line "switches their Active Pokémon with"
+	line "one of their Benched Pokémon."
+	done
+ENDC
 
 HatchName:
 	text "Hatch"
@@ -543,13 +562,23 @@ ThickSkinnedName:
 	text "Thick Skinned"
 	done
 
+IF SLEEP_WITH_COIN_FLIP
 ThickSkinnedDescription:
-	text "This Pokémon can't become Asleep,"
-	line "Confused, Paralyzed, or Poisoned."
+	text "This Pokémon can't become affected"
+	line "with any Special Conditions."
 	line "This power can't be used if this"
 	line "Pokémon is already Asleep, Confused,"
 	line "or Paralyzed."
 	done
+ELSE
+ThickSkinnedDescription:
+	text "This Pokémon can't become affected"
+	line "with any Special Conditions."
+	line "This power can't be used if this"
+	line "Pokémon is already Drowsy, Confused,"
+	line "or Paralyzed."
+	done
+ENDC
 
 BodySlamName: ; 63088 (18:7088)
 	text "Body Slam"

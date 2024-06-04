@@ -193,6 +193,7 @@ RevivalWaveDescription:
 ; Unused Text
 ; ------------------------------------------------------------------------------
 
+IF SLEEP_WITH_COIN_FLIP
 ; DreamEaterDescription:
 ; 	text "At the end of your turns, put 1"
 ; 	line "damage counter on each of your"
@@ -200,6 +201,15 @@ RevivalWaveDescription:
 ; 	line "Heal 10 damage from this Pokémon"
 ; 	line "for each Pokémon damaged this way."
 ; 	done
+ELSE
+; DreamEaterDescription:
+; 	text "At the end of your turns, put 1"
+; 	line "damage counter on each of your"
+; 	line "opponent's Pokémon that is Drowsy."
+; 	line "Heal 10 damage from this Pokémon"
+; 	line "for each Pokémon damaged this way."
+; 	done
+ENDC
 
 ; ProphecyName:
 ; 	text "Prophecy"

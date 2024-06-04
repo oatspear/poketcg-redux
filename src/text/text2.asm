@@ -42,7 +42,7 @@ ConfusionCheckRetreatText: ; 380ac (e:40ac)
 	line "If Tails, unable to Retreat."
 	done
 
-PokemonsSleepCheckText: ; 380db (e:40db)
+PokemonsSleepCheckText:
 	; text "<RAMTEXT>'s Sleep check."
 	text "Sleep check!"
 	line "If Heads, wake up and attack."
@@ -53,10 +53,17 @@ PoisonedIfHeadsConfusedIfTailsText: ; 380ed (e:40ed)
 	line "Tails: Opponent is Confused"
 	done
 
+IF SLEEP_WITH_COIN_FLIP
 AsleepIfHeadsPoisonedIfTailsText:
 	text "Heads: Opponent is Asleep"
 	line "Tails: Opponent is Poisoned"
 	done
+ELSE
+AsleepIfHeadsPoisonedIfTailsText:
+	text "Heads: Opponent is Drowsy"
+	line "Tails: Opponent is Poisoned"
+	done
+ENDC
 
 IfHeadsDoNotReceiveDamageOrEffectText: ; 38124 (e:4124)
 	text "If Heads, do not receive damage"
@@ -731,10 +738,17 @@ ThereWasNoEffectFromPoisonText: ; 39bcd (e:5bcd)
 	line "from Poison."
 	done
 
-ThereWasNoEffectFromSleepText: ; 39bef (e:5bef)
+IF SLEEP_WITH_COIN_FLIP
+ThereWasNoEffectFromSleepText:
 	text "There was no effect"
 	line "from Sleep."
 	done
+ELSE
+ThereWasNoEffectFromSleepText:
+	text "There was no effect"
+	line "from Drowsiness."
+	done
+ENDC
 
 ThereWasNoEffectFromParalysisText: ; 39c10 (e:5c10)
 	text "There was no effect"

@@ -6,9 +6,15 @@ SporeName: ; 58ee2 (16:4ee2)
 	text "Spore"
 	done
 
-InflictSleepDescription: ; 58ee9 (16:4ee9)
+IF SLEEP_WITH_COIN_FLIP
+InflictSleepDescription:
 	text "The Defending Pokémon is now Asleep."
 	done
+ELSE
+InflictSleepDescription:
+	text "The Defending Pokémon is now Drowsy."
+	done
+ENDC
 
 SlashName: ; 58f87 (16:4f87)
 	text "Slash"
@@ -447,7 +453,8 @@ CowardiceName: ; 5b885 (16:7885)
 	text "Cowardice"
 	done
 
-CowardiceDescription: ; 5b890 (16:7890)
+IF SLEEP_WITH_COIN_FLIP
+CowardiceDescription:
 	text "At any time during your turn"
 	line "(before your attack), you may return"
 	line "this Pokémon to your hand. (Discard"
@@ -456,6 +463,17 @@ CowardiceDescription: ; 5b890 (16:7890)
 	line "this Pokémon into play or if it is"
 	line "Asleep, Confused, or Paralyzed."
 	done
+ELSE
+CowardiceDescription:
+	text "At any time during your turn"
+	line "(before your attack), you may return"
+	line "this Pokémon to your hand. (Discard"
+	line "all cards attached to it.) This"
+	line "power can't be used the turn you put"
+	line "this Pokémon into play or if it is"
+	line "Drowsy, Confused, or Paralyzed."
+	done
+ENDC
 
 JellyfishStingName: ; 5ba02 (16:7a02)
 	text "Jellyfish Sting"
@@ -494,11 +512,19 @@ RestName:
 	text "Rest"
 	done
 
+IF SLEEP_WITH_COIN_FLIP
 RestDescription:
 	text "Remove all Special Conditions and"
 	line "3 damage counters from this Pokémon."
 	line "This Pokémon is now Asleep."
 	done
+ELSE
+RestDescription:
+	text "Remove all Special Conditions and"
+	line "3 damage counters from this Pokémon."
+	line "This Pokémon is now Drowsy."
+	done
+ENDC
 
 HornAttackName: ; 5c1f5 (17:41f5)
 	text "Horn Attack"
@@ -1107,21 +1133,37 @@ HyperHypnosisName:
 	text "Hyper Hypnosis"
 	done
 
+IF SLEEP_WITH_COIN_FLIP
 HyperHypnosisDescription:
 	text "Once during your turn, you may"
 	line "discard an Energy attached to this"
 	line "Pokémon. If you do, the opponent's"
 	line "Active Pokémon is now Asleep."
 	done
+ELSE
+HyperHypnosisDescription:
+	text "Once during your turn, you may"
+	line "discard an Energy attached to this"
+	line "Pokémon. If you do, the opponent's"
+	line "Active Pokémon is now Drowsy."
+	done
+ENDC
 
 DreamEaterName:
 	text "Dream Eater"
 	done
 
+IF SLEEP_WITH_COIN_FLIP
 DreamEaterDescription:
 	text "If the Defending Pokémon is not"
 	line "Asleep, this attack does nothing."
 	done
+ELSE
+DreamEaterDescription:
+	text "If the Defending Pokémon is not"
+	line "Drowsy, this attack does nothing."
+	done
+ENDC
 
 MischiefName:
 	text "Mischief"
@@ -1317,12 +1359,6 @@ SynthesisDescription:
 
 SoothingMelodyName:
 	text "Soothing Melody"
-	done
-
-SoothingMelodyDescription:
-	text "Heal 10 damage from each of your"
-	line "Pokémon. The Defending Pokémon"
-	line "is now Asleep."
 	done
 
 Heal10DamageFromAllDescription:
