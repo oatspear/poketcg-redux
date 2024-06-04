@@ -8328,6 +8328,10 @@ PrintThereWasNoEffectFromStatusText:
 	and DOUBLE_POISONED
 	jr nz, .poison
 	ld a, c
+	ldtx hl, ThereWasNoEffectFromBurnText
+	and BURNED
+	ret nz
+	ld a, c
 	and CNF_SLP_PRZ
 	ldtx hl, ThereWasNoEffectFromParalysisText
 	cp PARALYZED

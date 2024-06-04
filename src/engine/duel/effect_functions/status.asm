@@ -41,11 +41,6 @@ ConfusionEffect: ; 2c024 (b:4024)
 	lb bc, PSN_DBLPSN_BRN, CONFUSED
 	jr ApplyStatusEffect
 
-Sleep50PercentEffect: ; 2c029 (b:4029)
-	ldtx de, SleepCheckText
-	call TossCoin_BankB
-	ret nc
-
 SleepEffect: ; 2c030 (b:4030)
 	lb bc, PSN_DBLPSN_BRN, ASLEEP
 	jr ApplyStatusEffect

@@ -6004,7 +6004,12 @@ WithdrawEffect: ; 2d120 (b:5120)
 
 ;
 
-;
+IfTailsDamageToYourselfTooText: ; 37e92 (d:7e92)
+	text "If Tails, <RAMNUM> damage"
+	line "to yourself, too."
+	done
+
+
 ThunderJolt_Recoil50PercentEffect: ; 2e51a (b:651a)
 	ld hl, 10
 	call LoadTxRam3
@@ -6428,6 +6433,11 @@ FurySwipes_AIEffect:
 
 
 ;
+
+FlipUntilFailAppears10DamageForEachHeadsText: ; 37d92 (d:7d92)
+	text "Flip until Tails appears."
+	line "10 damage for each Heads!!!"
+	done
 
 
 FurySwipes_MultiplierEffect:

@@ -738,6 +738,11 @@ ThereWasNoEffectFromPoisonText: ; 39bcd (e:5bcd)
 	line "from Poison."
 	done
 
+ThereWasNoEffectFromBurnText:
+	text "There was no effect"
+	line "from Burn."
+	done
+
 IF SLEEP_WITH_COIN_FLIP
 ThereWasNoEffectFromSleepText:
 	text "There was no effect"

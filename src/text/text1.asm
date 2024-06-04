@@ -174,7 +174,7 @@ Received20DamageDueToBurnText:
 	done
 
 IF SLEEP_WITH_COIN_FLIP
-IsStillAsleepText:  ; FIXME unreferenced?
+IsStillAsleepText:
 	text "<RAMTEXT> is"
 	line "still Asleep."
 	done
@@ -1099,29 +1099,9 @@ ParalysisCheckText: ; 37c15 (d:7c15)
 	line "If Heads, opponent is Paralyzed."
 	done
 
-SleepCheckText: ; FIXME unreferenced?
-	text "Sleep check!"
-	line "If Heads, opponent becomes Asleep."
-	done
-
-PoisonCheckText: ; 37c79 (d:7c79)
-	text "Poison check!"
-	line "If Heads, opponent is Poisoned."
-	done
-
 ConfusionCheckText: ; 37ca8 (d:7ca8)
 	text "Confusion check! If Heads,"
 	line "opponent becomes Confused."
-	done
-
-FlipUntilFailAppears10DamageForEachHeadsText: ; 37d92 (d:7d92)
-	text "Flip until Tails appears."
-	line "10 damage for each Heads!!!"
-	done
-
-IfTailsDamageToYourselfTooText: ; 37e92 (d:7e92)
-	text "If Tails, <RAMNUM> damage"
-	line "to yourself, too."
 	done
 
 CardCheckIfHeads8CardsIfTails1CardText: ; 37f24 (d:7f24)

@@ -228,11 +228,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer CardPopCannotBePlayedWithTheGameBoyText            ; 0x00dd
 	textpointer AccuracyCheckText
 	textpointer ParalysisCheckText                                 ; 0x00e0
-	textpointer SleepCheckText                                     ; 0x00e1
-	textpointer PoisonCheckText                                    ; 0x00e2
 	textpointer ConfusionCheckText                                 ; 0x00e3
-	textpointer FlipUntilFailAppears10DamageForEachHeadsText       ; 0x00e8
-	textpointer IfTailsDamageToYourselfTooText                     ; 0x00ed
 	textpointer CardCheckIfHeads8CardsIfTails1CardText             ; 0x00f0
 	textpointer IfHeadsNoDamageNextTurnText                        ; 0x00f1
 	textpointer DamageCheckIfHeadsPlusDamageText                   ; 0x00f3
@@ -376,6 +372,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ThereWasNoEffectText                               ; 0x017d
 	textpointer ThereWasNoEffectFromToxicText                      ; 0x017e
 	textpointer ThereWasNoEffectFromPoisonText                     ; 0x017f
+	textpointer ThereWasNoEffectFromBurnText
 	textpointer ThereWasNoEffectFromSleepText                      ; 0x0180
 	textpointer ThereWasNoEffectFromParalysisText                  ; 0x0181
 	textpointer ThereWasNoEffectFromConfusionText                  ; 0x0182
