@@ -480,6 +480,11 @@ Psyshock_AIEffect:
 MindRuler_DamageBoostEffect:
   ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND
 	call GetNonTurnDuelistVariable
+	cp (MAX_DAMAGE / 20) + 1
+	jr c, .capped
+	ld a, MAX_DAMAGE
+	jp SetDefiniteDamage
+.capped
 	call ATimes10
   add a  ; double
 	jp SetDefiniteDamage
@@ -497,6 +502,11 @@ MindBlast_DamageBoostEffect:
   ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND
 	call GetNonTurnDuelistVariable
 	add c
+	cp (MAX_DAMAGE / 10)
+	jr c, .capped
+	ld a, MAX_DAMAGE
+	jp SetDefiniteDamage
+.capped
 	call ATimes10
   jp AddToDamage
 
