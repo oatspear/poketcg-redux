@@ -1414,8 +1414,11 @@ PrintAndLoadAttacksToDuelTempList:
 	inc c
 	push hl
 	push bc
-	ld e, b
-	ld hl, wLoadedCard1Atk1Name
+	ld hl, wLoadedCard1Atk1EnergyCost  ; wLoadedCard1Atk1Name
+	call HandleModifiedAttackCost_PointToAttackName
+	pop bc
+	push bc
+	ld e, b  ; Y coordinate
 	call PrintAttackOrPkmnPowerInformation
 	pop bc
 	pop hl
@@ -1433,8 +1436,11 @@ PrintAndLoadAttacksToDuelTempList:
 	inc c
 	push hl
 	push bc
-	ld e, b
-	ld hl, wLoadedCard1Atk2Name
+	ld hl, wLoadedCard1Atk2EnergyCost  ; wLoadedCard1Atk2Name
+	call HandleModifiedAttackCost_PointToAttackName
+	pop bc
+	push bc
+	ld e, b  ; Y coordinate
 	call PrintAttackOrPkmnPowerInformation
 	pop bc
 	pop hl
@@ -1523,6 +1529,15 @@ _CheckIfEnoughEnergiesToAttack:
 	ld a, [hl]
 	cp POKEMON_POWER
 	jr z, .not_usable_or_not_enough_energies
+
+; usable attack
+	push de
+	ld l, e
+	ld h, d
+	ld e, PLAY_AREA_ARENA
+	call OverwriteLoadedAttackCost
+	pop de
+; check attached energies
 	xor a
 	ld [wAttachedEnergiesAccum], a
 	ld hl, wAttachedEnergies
@@ -6345,6 +6360,22 @@ DrawHPBar:
 	jr nz, .tile_loop
 	ret
 
+
+; input:
+;   hl: pointer to attack energy cost (e.g. wLoadedCard1Atk1EnergyCost)
+; output:
+;   hl: pointer to respective attack name (e.g. wLoadedCard1Atk1Name)
+HandleModifiedAttackCost_PointToAttackName:
+	push hl
+	ld e, PLAY_AREA_ARENA
+	call OverwriteLoadedAttackCost
+	pop hl
+; apply offset to point to the attack's name
+	ld de, CARD_DATA_ATTACK1_NAME - CARD_DATA_ATTACK1_ENERGY_COST
+	add hl, de
+	ret
+
+
 ; when an opponent's Pokemon card attacks, this displays a screen
 ; containing the description and information of the used attack
 DisplayOpponentUsedAttackScreen:
@@ -6358,13 +6389,14 @@ DisplayOpponentUsedAttackScreen:
 	call LoadCardDataToBuffer1_FromCardID
 	ld a, CARDPAGE_POKEMON_OVERVIEW
 	ld [wCardPageNumber], a
-	ld hl, wLoadedCard1Atk1Name
+	ld hl, wLoadedCard1Atk1EnergyCost  ; wLoadedCard1Atk1Name
 	ld a, [wSelectedAttack]
 	or a
 	jr z, .first_atk
-	ld hl, wLoadedCard1Atk2Name
+	ld hl, wLoadedCard1Atk2EnergyCost  ; wLoadedCard1Atk2Name
 .first_atk
-	ld e, 1
+	call HandleModifiedAttackCost_PointToAttackName
+	ld e, 1  ; Y coordinate
 	call PrintAttackOrPkmnPowerInformation
 	lb de, 1, 4
 	ld hl, wLoadedAttackDescription

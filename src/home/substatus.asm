@@ -762,6 +762,101 @@ GetFirstPokemonWithAvailablePower:
 	ret
 
 
+; input:
+;   e: PLAY_AREA_* of the target Pokémon
+; output:
+;   a: number of Colorless energy to add to the attack's cost
+;   c: number of Colorless energy to add to the attack's cost
+; preserves: hl, b, de
+GetAttackCostPenalty:
+	push hl
+	ld c, 0
+; check for status
+	ld a, e
+	add DUELVARS_ARENA_CARD_STATUS
+	call GetTurnDuelistVariable
+	and CNF_SLP_PRZ
+	cp ASLEEP
+	jr nz, .substatus
+	inc c
+.substatus
+	ld a, e
+	or a
+	jr nz, .tally
+.tally
+	ld a, c
+	pop hl
+	ret
+
+
+; input:
+;   e: PLAY_AREA_* of the target Pokémon
+; output:
+;   a: number of Colorless energy to discount from the attack's cost
+;   c: number of Colorless energy to discount from the attack's cost
+; preserves: hl, b, de
+GetAttackCostDiscount:
+	push hl
+	ld c, 0
+; check for substatus
+	ld a, e
+	add DUELVARS_ARENA_CARD_SUBSTATUS1
+	call GetTurnDuelistVariable
+	cp $ff  ; TODO
+	jr nz, .tally
+	inc c
+.tally
+	ld a, c
+	pop hl
+	ret
+
+
+; input:
+;   hl: pointer to loaded attack struct energy cost
+;   e: PLAY_AREA_* of the target
+; output:
+;   updated colorless attack cost in the struct pointed by hl
+; preserves: de
+OverwriteLoadedAttackCost:
+; skip to colorless energy
+	ld bc, (NUM_TYPES - 1) / 2
+	add hl, bc
+; check whether there are any cost modifiers
+	call GetAttackCostDiscount
+	ld b, a
+	call GetAttackCostPenalty
+	add b
+	ret z  ; no modifiers
+; apply attack cost modifiers
+	ld a, [hl]
+IF (NUM_TYPES % 2) == 1
+	swap a
+ENDC
+	and $0f
+	add c  ; penalty
+	ret z  ; no Colorless required
+	sub b  ; discount
+	jr nc, .overwrite
+	xor a  ; no Colorless required
+	; jr .capped
+.overwrite
+	cp $10
+	jr c, .capped
+	ld a, $0f
+.capped
+IF (NUM_TYPES % 2) == 1
+	swap a
+ELSE
+; retain colored cost
+	ld c, a
+	ld a, [hl]
+	and $f0
+	or c
+ENDC
+	ld [hl], a
+	ret
+
+
 ; return, in a, the retreat cost of the card in wLoadedCard1,
 ; adjusting for any Pokémon Power that is active
 GetLoadedCard1RetreatCost:

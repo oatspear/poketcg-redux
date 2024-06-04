@@ -398,8 +398,12 @@ CheckEnergyNeededForAttack:
 	ret
 
 .is_attack
+; process attack cost modifiers
+	ld hl, wLoadedAttackEnergyCost
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	ld e, a
+	call OverwriteLoadedAttackCost  ; preserves de
+; process energy counting logic
 	call GetPlayAreaCardAttachedEnergies
 	call HandleEnergyColorOverride
 	jp CheckIfEnoughAttachedEnergyAllBasicTypes
@@ -894,6 +898,12 @@ CheckEnergyNeededForAttackAfterDiscard:
 	ret
 
 .is_attack
+; process attack cost modifiers
+	ld hl, wLoadedAttackEnergyCost
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	ld e, a
+	call OverwriteLoadedAttackCost
+; process energy discard logic
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	farcall AIPickEnergyCardToDiscard
 	call LoadCardDataToBuffer1_FromDeckIndex
@@ -923,6 +933,7 @@ CheckEnergyNeededForAttackAfterDiscard:
 .asm_1570c
 	call HandleEnergyColorOverride
 	jp CheckIfEnoughAttachedEnergyAllBasicTypes
+
 
 ; zeroes a bytes starting at hl
 ClearMemory_Bank5:
@@ -2237,8 +2248,12 @@ CheckIfNoSurplusEnergyForAttack:
 .is_attack
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	ld e, a
-	call GetPlayAreaCardAttachedEnergies
-	call HandleEnergyColorOverride
+	call GetPlayAreaCardAttachedEnergies  ; preserves de
+	call HandleEnergyColorOverride  ; preserves de
+; ----------------------------
+	ld hl, wLoadedAttackEnergyCost
+	call OverwriteLoadedAttackCost
+; ----------------------------
 	xor a
 	ld [wTempLoadedAttackEnergyCost], a
 	ld [wTempLoadedAttackEnergyNeededAmount], a
