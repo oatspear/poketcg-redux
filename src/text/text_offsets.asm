@@ -2718,7 +2718,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer SynthesisName
 	textpointer SynthesisDescription
 	textpointer SoothingMelodyName
-	textpointer SoothingMelodyDescription
 	textpointer Heal10DamageFromAllDescription
 	textpointer LunarPowerName
 	textpointer FriendshipSongName

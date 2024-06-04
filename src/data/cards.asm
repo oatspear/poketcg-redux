@@ -9014,8 +9014,8 @@ WigglytuffLv28Card:
 	; attack 1
 	energy PSYCHIC, 1 ; energies
 	tx SoothingMelodyName ; name
-	tx SoothingMelodyDescription ; description
-	dw NONE ; description (cont)
+	tx Heal10DamageFromAllDescription ; description
+	tx InflictSleepDescription ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category
 	dw SoothingMelodyEffectCommands ; effect commands
