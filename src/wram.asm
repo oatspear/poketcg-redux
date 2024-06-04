@@ -453,6 +453,7 @@ wBenchSelectedPokemon:: ; cbcb
 	ds $1
 
 ; used by CheckIfEnoughEnergiesToRetreat and DisplayRetreatScreen
+; OATS: potential multipurpose byte
 wEnergyCardsRequiredToRetreat:: ; cbcc
 	ds $1
 
