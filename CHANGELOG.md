@@ -328,7 +328,7 @@
 
 #### Raticate
 - **Thief**: removed.
-- **Rend**: increased cost from (C) to (CC) and base damage from 10 to 20.
+- **Rend**: increased cost from (C) to (CC) and base damage from 10 to 30.
 - New Pokémon Power: **Quick Search**: once per turn, choose a card from the top 2 deck cards and add it to the hand.
 
 #### Doduo

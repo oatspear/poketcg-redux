@@ -8642,7 +8642,7 @@ RaticateCard:
 	tx RendName ; name
 	tx Bonus20IfOpponentIsDamagedDescription ; description
 	dw NONE ; description (cont)
-	db 20 ; damage
+	db 30 ; damage
 	db DAMAGE_PLUS ; category
 	dw RendEffectCommands ; effect commands
 	db NONE ; flags 1
