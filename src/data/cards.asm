@@ -8638,11 +8638,11 @@ RaticateCard:
 	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy COLORLESS, 1 ; energies
+	energy COLORLESS, 2 ; energies
 	tx RendName ; name
 	tx Bonus20IfOpponentIsDamagedDescription ; description
 	dw NONE ; description (cont)
-	db 10 ; damage
+	db 20 ; damage
 	db DAMAGE_PLUS ; category
 	dw RendEffectCommands ; effect commands
 	db NONE ; flags 1
