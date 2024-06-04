@@ -1240,8 +1240,10 @@ DuelMenu_Attack:
 	call DoPracticeDuelAction
 	; if player did something wrong in the practice duel, jump in order to restart turn
 	jp c, RestartPracticeDuelTurn
+IF SLEEP_WITH_COIN_FLIP
 	call HandleSleepCheck
 	jr c, .skip_attack
+ENDC
 	call UseAttackOrPokemonPower
 	jp c, DuelMainInterface
 .skip_attack
@@ -1642,6 +1644,7 @@ CheckIfActiveCardParalyzed:
 ; 	done
 
 
+IF SLEEP_WITH_COIN_FLIP
 ; handles the sleep check for the Turn Duelist
 ; heals sleep status if coin is heads, else
 ; it plays sleeping animation
@@ -1696,6 +1699,8 @@ HandleSleepCheck:
 	ret nz
 	scf
 	ret
+ENDC
+
 
 ; return carry if the turn holder's arena card is asleep
 ;CheckSleepStatus:
@@ -7097,9 +7102,11 @@ OppAction_BeginUseAttack:
 	and CNF_SLP_PRZ
 	cp CONFUSED
 	jr z, .has_status
+IF SLEEP_WITH_COIN_FLIP
 ; OATS sleep also requires a coin flip
 	cp ASLEEP
 	jr z, .has_status
+ENDC
 	jp ExchangeRNG
 
 
@@ -7111,8 +7118,10 @@ OppAction_BeginUseAttack:
 	call PrintPokemonsAttackText
 	call WaitForWideTextBoxInput
 	call ExchangeRNG
+IF SLEEP_WITH_COIN_FLIP
 	call HandleSleepCheck
 	jr c, .failed
+ENDC
 	call HandleReducedAccuracySubstatus
 	ret nc ; return if attack is successful (won the coin toss)
 .failed
@@ -7461,7 +7470,7 @@ HandleBetweenTurnsEvents:
 	; call SwapTurn
 	; jr c, .something_to_handle
 ;.nothing_to_handle
-	call ClearParalysisFromBenchedPokemon
+	call ClearStatusFromBenchedPokemon
 	call DiscardAttachedPluspowers
 	call SwapTurn
 	call DiscardAttachedDefenders
@@ -7507,7 +7516,7 @@ HandleBetweenTurnsEvents:
 	cp PARALYZED
 	jr nz, .discard_pluspower
 	; heal paralysis
-	ld a, DOUBLE_POISONED
+	ld a, PSN_DBLPSN_BRN
 	and [hl]
 	ld [hl], a
 	call Func_6c7e
@@ -7518,7 +7527,7 @@ HandleBetweenTurnsEvents:
 	call WaitForWideTextBoxInput
 
 .discard_pluspower
-	call ClearParalysisFromBenchedPokemon
+	call ClearStatusFromBenchedPokemon
 	call DiscardAttachedPluspowers
 	call SwapTurn
 	ld a, DUELVARS_ARENA_CARD
@@ -7641,23 +7650,31 @@ HandleBetweenTurnsEvents:
 ;	jr nz, .loop_play_area
 ;	ret
 
-ClearParalysisFromBenchedPokemon:
+ClearStatusFromBenchedPokemon:
 	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
 	call GetTurnDuelistVariable
 	ld e, a
 	dec a
 	ret z  ; no Pokémon on the bench
 
-	ld a, DUELVARS_ARENA_CARD_STATUS
-	call GetTurnDuelistVariable
+	ld l, DUELVARS_ARENA_CARD_STATUS
 	jr .next  ; skip arena Pokémon
 .loop
-; preserve Poison and Sleep (and Confusion?) on the Bench
+; preserve Poison and Burn on the Bench
 	ld a, [hl]
 	and CNF_SLP_PRZ
+IF SLEEP_WITH_COIN_FLIP == 0
+	cp ASLEEP
+	jr z, .clear
+ENDC
+IF CLEAR_CONFUSION_ON_SWITCH == 0
+	cp CONFUSED
+	jr z, .clear
+ENDC
 	cp PARALYZED
 	jr nz, .next
-	ld a, DOUBLE_POISONED
+.clear
+	ld a, PSN_DBLPSN_BRN
 	and [hl]
 	ld [hl], a
 .next

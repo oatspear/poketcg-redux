@@ -988,6 +988,7 @@ CheckIfCanEvolveInto_BasicToStage2:
 	ret
 
 
+IF CLEAR_CONFUSION_ON_SWITCH
 ; OATS similar to ClearAllArenaStatusAndEffects
 ; but does not remove POISONED, ASLEEP or PARALYZED.
 ClearStatusOnSwitch:
@@ -1006,6 +1007,7 @@ ClearStatusOnSwitch:
 .skip_confusion
 	pop hl
 	jr ClearAllArenaEffectsAndSubstatus
+ENDC
 
 
 ; Clears the status, all substatuses, and temporary duelvars
@@ -1265,7 +1267,11 @@ ShiftTurnPokemonToFirstPlayAreaSlots:
 ; e is the play area location offset of the bench Pokemon (PLAY_AREA_*).
 SwapArenaWithBenchPokemon:
 ; OATS switching no longer clears all status conditions
-	call ClearStatusOnSwitch  ; ClearAllArenaStatusAndEffects
+IF CLEAR_CONFUSION_ON_SWITCH
+	call ClearStatusOnSwitch
+ELSE
+	call ClearAllArenaEffectsAndSubstatus
+ENDC
 	ld d, PLAY_AREA_ARENA
 	call SwapPlayAreaPokemon
 ; OATS trigger "on Active" Pokémon Powers

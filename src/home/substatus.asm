@@ -771,6 +771,7 @@ GetFirstPokemonWithAvailablePower:
 GetAttackCostPenalty:
 	push hl
 	ld c, 0
+IF SLEEP_WITH_COIN_FLIP == 0
 ; check for status
 	ld a, e
 	add DUELVARS_ARENA_CARD_STATUS
@@ -780,6 +781,7 @@ GetAttackCostPenalty:
 	jr nz, .substatus
 	inc c
 .substatus
+ENDC
 	ld a, e
 	or a
 	jr nz, .tally

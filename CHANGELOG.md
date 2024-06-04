@@ -6,7 +6,22 @@
 - Jigglypuff Lv12
 
 ### Status Conditions Changes
-- New status condition: **Burn**.
+
+#### Confusion
+- Confusion no longer clears immediately on Retreat.
+- Benched Pokémon recover from Confusion at the end of the owner's turn.
+
+#### Sleep
+- Replaced with **Drowsiness**.
+
+#### Drowsiness
+- New status condition.
+- A Drowsy Pokémon pays (C) more to Attack and to Retreat.
+- A Drowsy Pokémon's Abilities cannot be used.
+- Benched Pokémon recover from Drowsiness at the end of the owner's turn.
+
+#### Burn
+- New status condition.
 - A Burned Pokémon may discard an attached energy after attacking to heal the status condition.
 - A Burned Active Pokémon takes 20 damage at the end of the owner's turns.
 - Burn status remains on the Pokémon after switching out to the Bench; the condition has no effect while Benched.
