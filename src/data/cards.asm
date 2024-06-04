@@ -7873,12 +7873,12 @@ DrowzeeCard:
 	db ATK_ANIM_HYPNOSIS ; animation
 
 	; attack 2
-	energy PSYCHIC, 1, COLORLESS, 1 ; energies
+	energy PSYCHIC, 1 ; energies
 	tx MeditateName ; name
-	tx Draw1CardDescription ; description
-	tx MeditateDescription ; description (cont)
-	db 10 ; damage
-	db DAMAGE_PLUS ; category
+	tx MeditateDescription ; description
+	dw NONE ; description (cont)
+	db 30 ; damage
+	db DAMAGE_NORMAL ; category
 	dw MeditateEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2

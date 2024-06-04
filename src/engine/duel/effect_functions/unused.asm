@@ -1,6 +1,39 @@
 ;
 
 
+; +10 damage for each card in turn holder's hand
+MegaMind_DamageBoostEffect:
+  ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND
+	call GetTurnDuelistVariable
+	call ATimes10
+	jp AddToDamage
+
+MegaMind_AIEffect:
+  call MegaMind_DamageBoostEffect
+  jp SetDefiniteAIDamage
+
+
+
+
+MeditateEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Meditate_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AI, Meditate_AIEffect
+	db  $00
+
+
+; +20 damage if the player has at least 5 cards in hand
+Meditate_DamageBoostEffect:
+  ld c, 5
+	call CheckHandSizeIsLessThanC
+	ret nc  ; hand size < 5
+	ld a, 20
+	jp AddToDamage
+
+Meditate_AIEffect:
+  call Meditate_DamageBoostEffect
+  jp SetDefiniteAIDamage
+
+
 ; Dream Eater Version 2
 
 

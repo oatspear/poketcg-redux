@@ -242,7 +242,8 @@
 - **Mind Blast**: reduced cost from (PCC) to (PC); increased base damage from zero to 10; changed bonus damage from 20 per card in the opponent's hand to 10 per card in both players' hands.
 
 #### Drowzee
-- **Meditate**: increased cost from (CC) to (PC); draws 1 card in addition to the previous effect.
+- **Meditate**: reworked.
+- New attack: **Meditate** (P): 30 damage; fails if the player has less than 5 cards in hand.
 
 #### Hypno
 - Increased HP from 70 to 80.

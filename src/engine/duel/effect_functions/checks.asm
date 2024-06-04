@@ -115,14 +115,9 @@ CheckOpponentHasMorePrizeCardsRemaining:
 ; ------------------------------------------------------------------------------
 
 
-; returns carry if there are less than 4 cards in hand
-CheckHandSizeGreaterThan3:
-	ld c, 4
-	jr CheckHandSizeIsAtLeastC
-
-; returns carry if there are less than 3 cards in hand
-CheckHandSizeGreaterThan2:
-	ld c, 3
+; returns carry if there are less than 5 cards in hand
+CheckHandSizeGreaterThan4:
+	ld c, 5
 	jr CheckHandSizeIsAtLeastC
 
 ; returns carry if there are less than 2 cards in hand

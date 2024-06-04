@@ -940,6 +940,7 @@ GetMadEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, GetMad_MoveDamageCountersEffect
 	db  $00
 
+; unused unreferenced
 PsychicAssaultEffectCommands:
 PainBurstEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PsychicAssault_DamageBoostEffect
@@ -952,9 +953,7 @@ MimicEffectCommands:
 	db  $00
 
 MeditateEffectCommands:
-	dbw EFFECTCMDTYPE_DISCARD_ENERGY, Draw1CardEffect
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Meditate_DamageBoostEffect
-	dbw EFFECTCMDTYPE_AI, Meditate_AIEffect
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckHandSizeGreaterThan4
 	db  $00
 
 PsyshockEffectCommands:

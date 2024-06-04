@@ -1181,9 +1181,9 @@ MeditateName:
 	done
 
 MeditateDescription:
-	text "This attack does 20 more"
-	line "damage if you have 5 or more"
-	line "cards in your hand."
+	text "This attack can only be used"
+	line "if you have 5 or more cards"
+	line "in your hand."
 	done
 
 PainBurstName:
