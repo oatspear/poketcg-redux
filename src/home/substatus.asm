@@ -859,38 +859,63 @@ ENDC
 	ret
 
 
-; return, in a, the retreat cost of the card in wLoadedCard1,
-; adjusting for any Pokémon Power that is active
-GetLoadedCard1RetreatCost:
-	call ArePokemonPowersDisabled
-	jr c, .powers_disabled
+; return any applicable retreat cost penalties
+; input:
+;   a: PLAY_AREA_* of the Pokémon to check
+; output:
+;   a: number of Colorless energy to add to the Retreat Cost
+;   c: number of Colorless energy to add to the Retreat Cost
+; preserves: b, de
+GetRetreatCostPenalty:
 	ld c, 0
-	ld a, DUELVARS_BENCH
-	call GetTurnDuelistVariable
-.check_bench_loop
-	ld a, [hli]
-	cp $ff
-	jr z, .no_more_bench
-	call GetCardIDFromDeckIndex  ; preserves bc
-	ld a, e
-	cp DODRIO
-	jr nz, .check_bench_loop  ; not Dodrio
-	inc c
-	jr .check_bench_loop
-
-.no_more_bench
-	ld a, c
 	or a
-	jr nz, .modified_cost
-.powers_disabled
-	ld a, [wLoadedCard1RetreatCost] ; return regular retreat cost
+	jr nz, .bench
+; increased Retreat Cost substatus (Arena)
+	ld a, DUELVARS_ARENA_CARD_SUBSTATUS2
+	call GetTurnDuelistVariable
+	cp SUBSTATUS2_RETREAT_PLUS_1
+	jr nz, .no_substatus
+	inc c
+.no_substatus
+	xor a  ; PLAY_AREA_ARENA
+.bench
+	add DUELVARS_ARENA_CARD_STATUS
+	call GetTurnDuelistVariable
+; Drowsiness status
+IF SLEEP_WITH_COIN_FLIP == 0
+	and CNF_SLP_PRZ
+	cp ASLEEP
+	jr nz, .not_drowsy
+	inc c
+.not_drowsy
+	ld a, [hl]
+ENDC
+	or a
+	jr z, .tally  ; no status
+; Dark Prison ability
+	call SwapTurn
+	call IsDarkPrisonActive  ; preserves bc, de
+	call SwapTurn
+	jr nc, .tally
+	inc c
+.tally
+	ld c, a
 	ret
-.modified_cost
-	ld a, [wLoadedCard1RetreatCost]
-	sub c  ; apply Retreat Aid for each Pkmn Power-capable Dodrio
-	ret nc
+
+
+; return any applicable retreat cost discounts
+; output:
+;   a: number of Colorless energy to discount from Retreat Cost
+; preserves: bc, de
+GetRetreatCostDiscount:
+	call ArePokemonPowersDisabled  ; preserves bc, de
+	jr nc, .abilities_enabled
 	xor a
 	ret
+.abilities_enabled
+	ld a, DODRIO  ; Retreat Aid
+	jp CountPokemonIDInPlayArea  ; preserves hl, bc, de
+
 
 ; return carry if the turn holder's arena Pokemon is affected by Acid and can't retreat
 CheckCantRetreatDueToAcid:
