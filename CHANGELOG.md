@@ -112,7 +112,9 @@
 
 #### Dewgong
 - **Deep Dive**: removed.
-- New attack: **Ice Beam** (WC): 20 damage; discard 1 Energy from the Defending Pokémon; if there are none, inflict Paralysis.
+- **Blizzard**: removed.
+- New Pokémon Power: **Swim Freely**: if Benched, switch in; if Active, switch out.
+- New attack: **Riptide** (CC): 10 damage; shuffle 4 Energy cards from discard pile into deck; +10 damage for each returned Energy.
 
 #### Shellder
 - **Clamp**: reworked.

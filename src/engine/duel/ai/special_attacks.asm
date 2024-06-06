@@ -61,8 +61,6 @@ HandleSpecialAIAttacks:
 	jp z, .HyperBeam
 	cp NINETALES_LV35
 	jp z, .HyperBeam
-	cp DEWGONG
-	jp z, .HyperBeam
 	cp NIDORANF
 	jr z, .CallForFamily
 	cp KANGASKHAN

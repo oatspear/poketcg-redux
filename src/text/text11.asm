@@ -1534,16 +1534,6 @@ RiptideDescription:
 	line "each Energy card returned this way."
 	done
 
-DeepDiveName:
-	text "Deep Dive"
-	done
-
-DeepDiveDescription:
-	text "Heal 30 damage from this Pokémon"
-	line "and Switch it with 1 of your"
-	line "Benched Pokémon."
-	done
-
 ; DefensiveStanceName:
 ; 	text "Defensive Stance"
 ; 	done

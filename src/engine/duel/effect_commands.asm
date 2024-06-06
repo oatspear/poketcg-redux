@@ -609,13 +609,6 @@ Discard1EnergyFromOpponentEffectCommands:
 	dbw EFFECTCMDTYPE_AI_SELECTION, DiscardOpponentEnergy_AISelectEffect
 	db  $00
 
-IceBeamEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, IceBeam_ParalysisEffect
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DiscardOpponentEnergy_DiscardEffect
-	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, DiscardOpponentEnergy_PlayerSelectEffect
-	dbw EFFECTCMDTYPE_AI_SELECTION, DiscardOpponentEnergy_AISelectEffect
-	db  $00
-
 EvolutionaryFlameEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, PassivePowerEffect
 	dbw EFFECTCMDTYPE_PKMN_POWER_TRIGGER, EvolutionaryFlame_DamageBurnEffect

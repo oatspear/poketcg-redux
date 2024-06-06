@@ -1,3 +1,35 @@
+
+
+; attack 1
+energy WATER, 1, COLORLESS, 1 ; energies
+tx IceBeamName ; name
+tx Discard1EnergyFromTargetDescription ; description
+tx IceBeamDescriptionCont ; description (cont)
+db 20 ; damage
+db DAMAGE_NORMAL ; category
+dw IceBeamEffectCommands ; effect commands
+db INFLICT_PARALYSIS ; flags 1
+db NONE ; flags 2
+db SPECIAL_AI_HANDLING ; flags 3
+db 3
+db ATK_ANIM_BEAM ; animation
+
+; attack 2
+energy WATER, 2, COLORLESS, 1 ; energies
+tx BlizzardName ; name
+tx DamageOpponentBench10Description ; description
+tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
+db 30 ; damage
+db DAMAGE_NORMAL ; category
+dw DamageAllOpponentBenched10EffectCommands ; effect commands
+db DAMAGE_TO_OPPONENT_BENCH ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 10
+db ATK_ANIM_BLIZZARD ; animation
+
+
+
 ; attack 2
 energy PSYCHIC, 1, COLORLESS, 1 ; energies
 tx HypnoblastName ; name
@@ -152,6 +184,17 @@ db ATK_ANIM_MULTIPLE_SLASH ; animation
 
 
 
+
+
+DeepDiveName:
+	text "Deep Dive"
+	done
+
+DeepDiveDescription:
+	text "Heal 30 damage from this Pokémon"
+	line "and Switch it with 1 of your"
+	line "Benched Pokémon."
+	done
 
 ; attack 1
 energy WATER, 1 ; energies

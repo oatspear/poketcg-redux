@@ -1,6 +1,23 @@
 ;
 
 
+; New attack: **Ice Beam** (WC): 20 damage; discard 1 Energy from the Defending Pokémon; if there are none, inflict Paralysis.
+
+IceBeamEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, IceBeam_ParalysisEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DiscardOpponentEnergy_DiscardEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, DiscardOpponentEnergy_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, DiscardOpponentEnergy_AISelectEffect
+	db  $00
+
+; paralyze if no energy card was discarded
+IceBeam_ParalysisEffect:
+	ldh a, [hEnergyTransEnergyCard]
+	cp $ff
+	jp z, ParalysisEffect
+	ret
+
+
 ; +10 damage for each card in turn holder's hand
 MegaMind_DamageBoostEffect:
   ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND

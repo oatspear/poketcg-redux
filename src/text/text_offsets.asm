@@ -2748,8 +2748,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer WaterReserveDescription
 	textpointer RiptideName
 	textpointer RiptideDescription
-	textpointer DeepDiveName
-	textpointer DeepDiveDescription
 	; textpointer DefensiveStanceName
 	; textpointer DefensiveStanceDescription
 	textpointer ColdCrushName

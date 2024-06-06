@@ -31,14 +31,6 @@ DreamEaterEffect:
 	ret
 
 
-; paralyze if no energy card was discarded
-IceBeam_ParalysisEffect:
-	ldh a, [hEnergyTransEnergyCard]
-	cp $ff
-	jp z, ParalysisEffect
-	ret
-
-
 HyperHypnosis_DiscardSleepEffect:
 	ldh a, [hEnergyTransEnergyCard]
 	cp $ff
