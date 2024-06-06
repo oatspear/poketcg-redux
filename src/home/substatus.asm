@@ -804,11 +804,21 @@ GetAttackCostDiscount:
 	ld c, 0
 ; check for substatus
 	ld a, e
-	add DUELVARS_ARENA_CARD_SUBSTATUS1
+	or a
+	jr nz, .bench
+	ld a, DUELVARS_ARENA_CARD_SUBSTATUS1
 	call GetTurnDuelistVariable
 	cp $ff  ; TODO
-	jr nz, .tally
+	jr nz, .bench
 	inc c
+	ld a, e
+.bench
+;	add DUELVARS_ARENA_CARD
+;	call GetTurnDuelistVariable
+;	call _GetCardIDFromDeckIndex  ; preserves bc, de
+;	cp SEAKING
+;	jr nz, .tally
+	; TODO
 .tally
 	ld a, c
 	pop hl
