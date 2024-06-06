@@ -899,22 +899,26 @@ ENDC
 	jr nc, .tally
 	inc c
 .tally
-	ld c, a
+	ld a, c
 	ret
 
 
 ; return any applicable retreat cost discounts
+; input:
+;   a: PLAY_AREA_* of the Pokémon to check
 ; output:
 ;   a: number of Colorless energy to discount from Retreat Cost
 ; preserves: bc, de
 GetRetreatCostDiscount:
+	or a
+	jr nz, .no_discount
 	call ArePokemonPowersDisabled  ; preserves bc, de
-	jr nc, .abilities_enabled
-	xor a
-	ret
-.abilities_enabled
+	jr c, .no_discount
 	ld a, DODRIO  ; Retreat Aid
 	jp CountPokemonIDInPlayArea  ; preserves hl, bc, de
+.no_discount
+	xor a
+	ret
 
 
 ; return carry if the turn holder's arena Pokemon is affected by Acid and can't retreat

@@ -350,6 +350,9 @@
 #### Doduo
 - **Double Edge**: renamed to **Reckless Charge**.
 
+#### Dodrio
+- **Retreat Aid**: now also affects itself.
+
 #### Tauros
 - **Take Down**: removed.
 - **Rampage**: reduced cost from (CCC) to (CC).

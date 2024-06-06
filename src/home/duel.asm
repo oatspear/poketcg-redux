@@ -2585,8 +2585,13 @@ PrintNoEffectTextOrUnsuccessfulText:
 	ret
 
 
-; return in a the retreat cost of the turn holder's arena or bench Pokemon
-; given the PLAY_AREA_* value in hTempPlayAreaLocation_ff9d
+; Returns and overwrites the retreat cost of the turn holder's arena
+; or bench Pokémon, taking modifiers into account.
+; input:
+;   [hTempPlayAreaLocation_ff9d]: PLAY_AREA_* of the Pokémon to check
+; output:
+;   a: retreat cost of the given Pokémon, accounting for modifiers
+;   [wLoadedCard1RetreatCost]: modified Retreat Cost of the given Pokémon
 GetPlayAreaCardRetreatCost:
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	add DUELVARS_ARENA_CARD
@@ -2596,14 +2601,15 @@ GetPlayAreaCardRetreatCost:
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	call GetRetreatCostPenalty
 	; ld c, a
+	ldh a, [hTempPlayAreaLocation_ff9d]
 	call GetRetreatCostDiscount  ; preserves bc, de
 	ld b, a  ; discount
 	add c
 	ld a, [wLoadedCard1RetreatCost]
 	ret z  ; no modifiers
 ; apply modifiers
-	add c
-	sub c
+	add c  ; penalty
+	sub b  ; discount
 	jr nc, .capped
 	xor a
 .capped

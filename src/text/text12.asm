@@ -490,9 +490,9 @@ RetreatAidName:
 	done
 
 RetreatAidDescription:
-	text "As long as this Pokémon is Benched,"
-	line "pay <COLORLESS> less to retreat your"
-	line "Active Pokémon."
+	text "Your Active Pokémon pays <COLORLESS> less"
+	line "to retreat for each Pokémon you"
+	line "have in play with Retreat Aid."
 	done
 
 TongueStretchName: ; 628aa (18:68aa)
