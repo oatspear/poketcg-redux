@@ -400,21 +400,41 @@ CreateDiscardPileCardList:
 	scf
 	ret
 
-; fill wDuelTempList with the turn holder's remaining deck cards (their 0-59 deck indexes)
-; return carry if the turn holder has no cards left in the deck
-CreateDeckCardList:
+; helper function
+; output:
+;   a: number of cards left in the deck
+;   c: number of cards left in the deck
+;   hl: DUELVARS_NUMBER_OF_CARDS_NOT_IN_DECK
+;   carry: set if the turn holder has no cards left in the deck
+PrepareNewDeckCardList:
 	ld a, DUELVARS_NUMBER_OF_CARDS_NOT_IN_DECK
 	call GetTurnDuelistVariable
 	cp DECK_SIZE
 	jr nc, .no_cards_left_in_deck
 	ld a, DECK_SIZE
-	sub [hl]
-	ld c, a
-	ld b, a ; c = b = DECK_SIZE - [DUELVARS_NUMBER_OF_CARDS_NOT_IN_DECK]
+	sub [hl] ; a = number of cards in deck
+	ld c, a  ; c = DECK_SIZE - [DUELVARS_NUMBER_OF_CARDS_NOT_IN_DECK]
+	ret
+.no_cards_left_in_deck
+	ld a, $ff
+	ld [wDuelTempList], a
+	scf
+	ret
+
+
+; fill wDuelTempList with the turn holder's remaining deck cards (their 0-59 deck indexes)
+; return carry if the turn holder has no cards left in the deck
+; TODO FIXME loop could be refactored to work also for discard pile list
+CreateDeckCardList:
+	call PrepareNewDeckCardList
+	ret c
+	ld b, a  ; c = b = DECK_SIZE - [DUELVARS_NUMBER_OF_CARDS_NOT_IN_DECK]
 .got_number_cards
-	ld a, [hl]
+	ld a, [hl]  ; a = [DUELVARS_NUMBER_OF_CARDS_NOT_IN_DECK]
 	add DUELVARS_DECK_CARDS
-	ld l, a ; l = DUELVARS_DECK_CARDS + [DUELVARS_NUMBER_OF_CARDS_NOT_IN_DECK]
+	; a: pointing to the top deck card
+.got_top_deck_card
+	ld l, a  ; l = DUELVARS_DECK_CARDS + [DUELVARS_NUMBER_OF_CARDS_NOT_IN_DECK]
 	inc b
 	ld de, wDuelTempList
 	jr .begin_loop
@@ -430,11 +450,6 @@ CreateDeckCardList:
 	ld a, c
 	or a
 	ret
-.no_cards_left_in_deck
-	ld a, $ff
-	ld [wDuelTempList], a
-	scf
-	ret
 
 ; Stores the top N cards of deck in wDuelTempList
 ; (or however many cards are left in the deck).
@@ -448,13 +463,8 @@ CreateDeckCardList:
 ; assumes:
 ;   - input: 0 < b < $80
 CreateDeckCardListTopNCards:
-	ld a, DUELVARS_NUMBER_OF_CARDS_NOT_IN_DECK
-	call GetTurnDuelistVariable
-	cp DECK_SIZE
-	jr nc, CreateDeckCardList.no_cards_left_in_deck
-	ld a, DECK_SIZE
-	sub [hl] ; a = number of cards in deck
-	ld c, a  ; c = DECK_SIZE - [DUELVARS_NUMBER_OF_CARDS_NOT_IN_DECK]
+	call PrepareNewDeckCardList
+	ret c
 	cp b
 	push bc
 	jr nc, .got_number_cards

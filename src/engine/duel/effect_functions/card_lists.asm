@@ -411,6 +411,34 @@ CreateListOfEnergiesAttachedToArena:
 ; Deck Lists
 ; ------------------------------------------------------------------------------
 
+
+; Stores the bottom N cards of deck in wDuelTempList
+; (or however many cards are left in the deck).
+; input:
+;   b: number of cards to look at
+; output:
+;   c: number of cards in deck
+;   b: number of cards to look at (capped by deck size)
+;   a: number of cards to look at (capped by deck size)
+;   carry: set if the turn holder has no cards left in the deck
+; assumes:
+;   - input: 0 < b < $80
+CreateDeckCardListBottomNCards:
+	call PrepareNewDeckCardList
+	ret c
+	cp b
+	push bc
+	jr nc, .got_number_cards
+	ld b, a  ; number of cards left in the deck
+.got_number_cards
+	ld a, DUELVARS_DECK_CARDS + DECK_SIZE  ; position after the last card
+	sub b  ; pointing to b-th card from the bottom
+	call CreateDeckCardList.got_top_deck_card
+	pop bc
+	ld a, b
+	ret
+
+
 CreateItemCardListFromDeck:
 	ld c, TYPE_TRAINER
 	jr CreateTrainerCardListFromDeck_
