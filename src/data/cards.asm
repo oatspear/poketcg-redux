@@ -1593,7 +1593,7 @@ VenonatCard:
 	; attack 1
 	energy COLORLESS, 1 ; energies
 	tx UltravisionName ; name
-	tx UltravisionDescription ; description
+	tx TutorAnyCardFromTop4DeckDescription ; description
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category
@@ -3845,18 +3845,18 @@ SeelCard:
 	db DIAMOND ; rarity
 	db COLOSSEUM | NONE ; sets
 	db SEEL
-	db 60 ; hp
+	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
 
 	; attack 1
 	energy COLORLESS, 1 ; energies
-	tx FindIceName ; name
-	tx WaterReserveDescription ; description
+	tx FetchName ; name
+	tx TutorAnyCardFromTop4DeckDescription ; description
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category
-	dw WaterReserveEffectCommands ; effect commands
+	dw UltravisionEffectCommands ; effect commands
 	db DRAW_CARD ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -3864,18 +3864,18 @@ SeelCard:
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
 	; attack 2
-	energy WATER, 1 ; energies
-	tx EnergySlideName ; name
-	tx EnergySlideDescription ; description
+	energy COLORLESS, 1 ; energies
+	tx RestName ; name
+	tx RestDescription ; description
 	dw NONE ; description (cont)
-	db 10 ; damage
-	db DAMAGE_NORMAL ; category
-	dw EnergySlideEffectCommands ; effect commands
+	db 0 ; damage
+	db RESIDUAL ; category
+	dw RestEffectCommands ; effect commands
 	db NONE ; flags 1
-	db DISCARD_ENERGY ; flags 2
+	db HEAL_USER ; flags 2
 	db NONE ; flags 3
 	db 3
-	db ATK_ANIM_GLOW_EFFECT ; animation
+	db ATK_ANIM_RECOVER ; animation
 
 	db 0 ; retreat cost
 	db WR_LIGHTNING ; weakness
@@ -6099,7 +6099,7 @@ SandshrewCard:
 	; attack 1
 	energy COLORLESS, 1 ; energies
 	tx ExcavateName ; name
-	tx UltravisionDescription ; description
+	tx TutorAnyCardFromTop4DeckDescription ; description
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category

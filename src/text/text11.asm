@@ -1508,10 +1508,6 @@ SharpshooterName:
 	text "Sharpshooter"
 	done
 
-FindIceName:
-	text "Find Ice"
-	done
-
 WaterReserveName:
 	text "Water Reserve"
 	done

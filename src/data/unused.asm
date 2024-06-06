@@ -1,5 +1,25 @@
 
 
+FindIceName:
+	text "Find Ice"
+	done
+
+; attack 1
+energy COLORLESS, 1 ; energies
+tx FindIceName ; name
+tx WaterReserveDescription ; description
+dw NONE ; description (cont)
+db 0 ; damage
+db RESIDUAL ; category
+dw WaterReserveEffectCommands ; effect commands
+db DRAW_CARD ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_GLOW_EFFECT ; animation
+
+
+
 ; attack 1
 energy WATER, 1, COLORLESS, 1 ; energies
 tx IceBeamName ; name

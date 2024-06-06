@@ -721,7 +721,7 @@ UltravisionName:
 	text "Ultravision"
 	done
 
-UltravisionDescription:
+TutorAnyCardFromTop4DeckDescription:
 	text "Choose a card from the top 4 cards"
 	line "of your deck and add it to your"
 	line "hand. Shuffle your deck afterwards."

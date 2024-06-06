@@ -110,6 +110,13 @@
 - **Jellyfish Sting**: increased damage from 20 to 30.
 - New Pokémon Power: **Dark Prison**: increases the Retreat Cost of the opponent's Pokémon with a Status Condition by 1.
 
+#### Seel
+- Reduced HP from 60 to 50.
+- **Find Ice**: removed.
+- **Energy Slide**: removed.
+- New attack: **Fetch** (C): choose a card from the top 4 deck cards and add it to the hand.
+- New attack: **Rest** (C): heal 30 damage and status from self; becomes Drowsy.
+
 #### Dewgong
 - **Deep Dive**: removed.
 - **Blizzard**: removed.

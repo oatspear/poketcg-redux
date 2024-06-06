@@ -2743,7 +2743,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer AfflictionName
 	textpointer AfflictionDescription
 	textpointer SharpshooterName
-	textpointer FindIceName
+	; textpointer FindIceName
 	textpointer WaterReserveName
 	textpointer WaterReserveDescription
 	textpointer RiptideName
@@ -2887,7 +2887,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer RetreatAidName                                     ; 0x0b2b
 	textpointer RetreatAidDescription                              ; 0x0b2c
 	textpointer TongueStretchName                                  ; 0x0b31
-	textpointer FetchName                                          ; 0x0b3a
+	textpointer FetchName
 	textpointer Draw1CardDescription                               ; 0x0b3b
 	textpointer Draw2CardsDescription
 	textpointer PlasmaName
@@ -2933,7 +2933,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PanicVineName
 	textpointer PanicVineDescription
 	textpointer UltravisionName
-	textpointer UltravisionDescription
+	textpointer TutorAnyCardFromTop4DeckDescription
 	textpointer TropicalStormName
 	textpointer TropicalStormDescription
 	textpointer ParalysisIfBasicDescription
