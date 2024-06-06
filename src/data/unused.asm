@@ -1,5 +1,30 @@
 
 
+
+ReduceDamageTakenBy20Description:
+	text "Reduce all damage done by attacks"
+	line "to this Pokémon during your"
+	line "opponent's next turn by 20 (after"
+	line "applying Weakness and Resistance)."
+	done
+
+; attack 1
+energy COLORLESS, 1 ; energies
+tx WithdrawName ; name
+tx ReduceDamageTakenBy20Description ; description
+dw NONE ; description (cont)
+db 0 ; damage
+db RESIDUAL ; category
+dw ReduceDamageTakenBy20EffectCommands ; effect commands
+db NONE ; flags 1
+db NULLIFY_OR_WEAKEN_ATTACK ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_PROTECT ; animation
+
+
+
+
 FindIceName:
 	text "Find Ice"
 	done
@@ -18,6 +43,16 @@ db NONE ; flags 3
 db 0
 db ATK_ANIM_GLOW_EFFECT ; animation
 
+
+
+IceBeamName:
+	text "Ice Beam"
+	done
+
+IceBeamDescriptionCont:
+	text "If there are none, the Defending"
+	line "Pokémon is now Paralyzed."
+	done
 
 
 ; attack 1

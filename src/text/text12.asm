@@ -359,7 +359,7 @@ ExoskeletonName:
 	text "Exoskeleton"
 	done
 
-ExoskeletonDescription:
+Exoskeleton20Description:
 	text "This Pokémon takes 20 less damage"
 	line "from attacks (after applying"
 	line "Weakness and Resistance)."

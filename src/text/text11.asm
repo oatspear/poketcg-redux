@@ -104,13 +104,6 @@ FlytrapDescription:
 	line "during your opponent's next turn."
 	done
 
-ReduceDamageTakenBy20Description:
-	text "Reduce all damage done by attacks"
-	line "to this Pokémon during your"
-	line "opponent's next turn by 20 (after"
-	line "applying Weakness and Resistance)."
-	done
-
 ToxicGasName:
 	text "Toxic Gas"
 	done
@@ -1694,15 +1687,6 @@ DragonArrowDescription:
 	line "for each Energy discarded this way."
 	done
 
-IceBeamName:
-	text "Ice Beam"
-	done
-
-IceBeamDescriptionCont:
-	text "If there are none, the Defending"
-	line "Pokémon is now Paralyzed."
-	done
-
 ClairvoyantSenseName:
 	text "Clairvoyant Sense"
 	done
@@ -1713,4 +1697,10 @@ ClairvoyantSenseDescription:
 	line "hand to 1 of your Benched Pokémon."
 	line "If you attached Energy to a Pokémon"
 	line "in this way, draw 2 cards."
+	done
+
+Exoskeleton10Description:
+	text "This Pokémon takes 10 less damage"
+	line "from attacks (after applying"
+	line "Weakness and Resistance)."
 	done

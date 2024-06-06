@@ -2477,7 +2477,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer AcidDescription
 	textpointer FlytrapName
 	textpointer FlytrapDescription
-	textpointer ReduceDamageTakenBy20Description
 	textpointer ToxicGasName                                       ; 0x08aa
 	textpointer ToxicGasDescription                                ; 0x08ab
 	textpointer HypnoblastName                                     ; 0x08ae
@@ -2779,10 +2778,9 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ReactivePoisonDescription
 	textpointer DragonArrowName
 	textpointer DragonArrowDescription
-	textpointer IceBeamName
-	textpointer IceBeamDescriptionCont
 	textpointer ClairvoyantSenseName
 	textpointer ClairvoyantSenseDescription
+	textpointer Exoskeleton10Description
 
 ; ------------------------------------------------------------------------------
 ; text12.asm
@@ -2856,7 +2854,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PoisonEvolutionName
 	textpointer PoisonEvolutionDescription
 	textpointer ExoskeletonName
-	textpointer ExoskeletonDescription
+	textpointer Exoskeleton20Description
 	textpointer FinishingBiteName
 	textpointer FinishingBiteDescription
 	; textpointer SuperFangName

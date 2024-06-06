@@ -124,7 +124,9 @@
 - New attack: **Riptide** (CC): 10 damage; shuffle 4 Energy cards from discard pile into deck; +10 damage for each returned Energy.
 
 #### Shellder
+- **Withdraw**: removed.
 - **Clamp**: reworked.
+- New Pokémon Power: **Exoskeleton**: reduces damage taken by 10.
 - New attack: **Clamp** (CC): 10 damage; increase opponent's retreat cost by 1 and deal +10 damage for each (C) in retreat cost.
 
 #### Cloyster

@@ -64,6 +64,8 @@ HandleDefenderDamageReduction_PokemonPowers:
 	jp z, ReduceDamageBy20_DE ; Exoskeleton
 	cp CLOYSTER
 	jp z, ReduceDamageBy20_DE ; Exoskeleton
+	cp SHELLDER
+	jp z, ReduceDamageBy10_DE ; Exoskeleton
 	; cp KABUTO
 	; jp z, HalveDamage_DE ; kabuto armor
 	ret

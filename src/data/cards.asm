@@ -500,7 +500,7 @@ MetapodCard:
 	; depends: HandleDefenderDamageReductionEffects
 	energy 0 ; energies
 	tx ExoskeletonName ; name
-	tx ExoskeletonDescription ; description
+	tx Exoskeleton20Description ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKEMON_POWER ; category
@@ -656,7 +656,7 @@ KakunaCard:
 	; depends: HandleDefenderDamageReductionEffects
 	energy 0 ; energies
 	tx ExoskeletonName ; name
-	tx ExoskeletonDescription ; description
+	tx Exoskeleton20Description ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKEMON_POWER ; category
@@ -3952,18 +3952,19 @@ ShellderCard:
 	dw NONE ; pre-evo name
 
 	; attack 1
-	energy COLORLESS, 1 ; energies
-	tx WithdrawName ; name
-	tx ReduceDamageTakenBy20Description ; description
-	dw NONE ; description (cont)
+	; depends: HandleDefenderDamageReductionEffects
+	energy 0 ; energies
+	tx ExoskeletonName ; name
+	tx Exoskeleton10Description ; description
+	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db RESIDUAL ; category
-	dw ReduceDamageTakenBy20EffectCommands ; effect commands
+	db POKEMON_POWER ; category
+	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
-	db NULLIFY_OR_WEAKEN_ATTACK ; flags 2
+	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_PROTECT ; animation
+	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
 	energy COLORLESS, 2 ; energies
@@ -4006,7 +4007,7 @@ CloysterCard:
 	; depends: HandleDefenderDamageReductionEffects
 	energy 0 ; energies
 	tx ExoskeletonName ; name
-	tx ExoskeletonDescription ; description
+	tx Exoskeleton20Description ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKEMON_POWER ; category
@@ -6844,7 +6845,7 @@ MarowakLv26Card:
 	; depends: HandleDefenderDamageReductionEffects
 	energy 0 ; energies
 	tx BattleArmorName ; name
-	tx ExoskeletonDescription ; description
+	tx Exoskeleton20Description ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKEMON_POWER ; category
