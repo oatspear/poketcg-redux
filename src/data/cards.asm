@@ -4019,11 +4019,11 @@ CloysterCard:
 	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy COLORLESS, 3 ; energies
+	energy COLORLESS, 2 ; energies
 	tx IcicleSpearsName ; name
 	tx IcicleSpearsDescription ; description
 	tx Counter20DamageDescription ; description (cont)
-	db 30 ; damage
+	db 10 ; damage
 	db DAMAGE_NORMAL ; category
 	dw IcicleSpearsEffectCommands ; effect commands
 	db DAMAGE_TO_OPPONENT_BENCH ; flags 1

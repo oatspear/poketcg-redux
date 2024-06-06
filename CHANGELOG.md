@@ -131,7 +131,7 @@
 
 #### Cloyster
 - **Cold Crush**: removed.
-- New attack: **Icicle Spears** (CCC): 30 damage; 10 damage to 2 of the opponent's Benched Pokémon; until next turn, do 20 damage back to attackers.
+- New attack: **Icicle Spears** (CC): 10 damage; 10 damage to 2 of the opponent's Benched Pokémon; until next turn, do 20 damage back to attackers.
 
 #### Krabby
 - **Bubble**: removed.
