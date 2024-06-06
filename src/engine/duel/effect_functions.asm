@@ -316,6 +316,12 @@ StoreDefendingPokemonHPEffect:
 INCLUDE "engine/duel/effect_functions/checks.asm"
 
 
+SwimFreely_PreconditionCheck:
+	call CheckPokemonPowerCanBeUsed_StoreTrigger
+	ret c
+	jp CheckBenchIsNotEmpty
+
+
 HyperHypnosis_PreconditionCheck:
 	call CheckPokemonPowerCanBeUsed_StoreTrigger
 	ret c
@@ -738,6 +744,19 @@ INCLUDE "engine/duel/effect_functions/damage_modifiers.asm"
 ; ------------------------------------------------------------------------------
 ; Pokémon Powers
 ; ------------------------------------------------------------------------------
+
+
+SwimFreely_PlayerSelectEffect:
+	ldh a, [hTemp_ffa0]
+	or a
+	jp z, Switch_PlayerSelection
+	ldh [hTempPlayAreaLocation_ffa1], a
+	ret
+
+
+SwimFreely_SwitchEffect:
+	call SetUsedPokemonPowerThisTurn_RestoreTrigger
+	jp Switch_SwitchEffect
 
 
 ; Choose a Pokémon to deal damage to.
@@ -2373,9 +2392,7 @@ SwitchUser_PlayerSelectEffect:
 OldTeleport_PlayerSelectEffect:
 	ld a, $ff
 	ldh [hTemp_ffa0], a
-	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
-	call GetTurnDuelistVariable
-	cp 2
+	call CheckBenchIsNotEmpty
 	jr c, .done
 
 	ldtx hl, SelectPkmnOnBenchToSwitchWithActiveText
@@ -7048,8 +7065,7 @@ Switch_PlayerSelection:
 Switch_SwitchEffect:
 	ldh a, [hTempPlayAreaLocation_ffa1]
 	ld e, a
-	call SwapArenaWithBenchPokemon
-	ret
+	jp SwapArenaWithBenchPokemon
 
 
 ; return carry if non-Turn Duelist has full Bench

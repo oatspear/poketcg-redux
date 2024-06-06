@@ -189,6 +189,18 @@ RevivalWaveDescription:
 	line "this attack does 20 more damage."
 	done
 
+SwimFreelyName:
+	text "Swim Freely"
+	done
+
+SwimFreelyDescription:
+	text "Once during your turn, if this is"
+	line "your Active Pokémon, you may switch"
+	line "it with 1 of your Benched Pokémon."
+	line "Otherwise, switch your Active"
+	line "Pokémon with this Pokémon."
+	done
+
 ; ------------------------------------------------------------------------------
 ; Unused Text
 ; ------------------------------------------------------------------------------

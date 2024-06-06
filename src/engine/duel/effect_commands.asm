@@ -1310,6 +1310,12 @@ Damage1FriendlyBenchedPokemon30EffectCommands:
 	dbw EFFECTCMDTYPE_AI_SELECTION, DamageFriendlyBenchedPokemonIfAny_AISelectEffect
 	db  $00
 
+SwimFreelyEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, SwimFreely_PreconditionCheck
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SwimFreely_SwitchEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, SwimFreely_PlayerSelectEffect
+	db  $00
+
 StepInEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, StepIn_PreconditionCheck
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, StepIn_SwitchEffect
