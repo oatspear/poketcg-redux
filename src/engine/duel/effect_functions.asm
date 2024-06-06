@@ -7042,11 +7042,11 @@ Switch_PlayerSelection:
 	ldtx hl, SelectPkmnOnBenchToSwitchWithActiveText
 	call DrawWideTextBox_WaitForInput
 	call HandlePlayerSelectionPokemonInBench_AllowCancel
-	ldh [hTemp_ffa0], a
+	ldh [hTempPlayAreaLocation_ffa1], a
 	ret
 
 Switch_SwitchEffect:
-	ldh a, [hTemp_ffa0]
+	ldh a, [hTempPlayAreaLocation_ffa1]
 	ld e, a
 	call SwapArenaWithBenchPokemon
 	ret
