@@ -3967,18 +3967,18 @@ ShellderCard:
 	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy COLORLESS, 2 ; energies
-	tx ClampName ; name
-	tx ConstrictDescription ; description
+	energy COLORLESS, 1 ; energies
+	tx DeepSeaTreasureName ; name
+	tx ScavengeDescription ; description
 	dw NONE ; description (cont)
-	db 10 ; damage
-	db DAMAGE_PLUS ; category
-	dw ConstrictEffectCommands ; effect commands
+	db 0 ; damage
+	db RESIDUAL ; category
+	dw ScavengeEffectCommands ; effect commands
 	db NONE ; flags 1
-	db FLAG_2_BIT_6 ; flags 2
+	db NONE ; flags 2
 	db NONE ; flags 3
-	db 1
-	db ATK_ANIM_HIT ; animation
+	db 2
+	db ATK_ANIM_GLOW_EFFECT ; animation
 
 	db 0 ; retreat cost
 	db WR_LIGHTNING ; weakness

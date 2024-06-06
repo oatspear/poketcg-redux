@@ -342,6 +342,22 @@ db 0
 db ATK_ANIM_GLOW_EFFECT ; animation
 
 
+; New attack: **Clamp** (CC): 10 damage; increase opponent's retreat cost by 1 and deal +10 damage for each (C) in retreat cost.
+; attack 2
+energy COLORLESS, 2 ; energies
+tx ClampName ; name
+tx ConstrictDescription ; description
+dw NONE ; description (cont)
+db 10 ; damage
+db DAMAGE_PLUS ; category
+dw ConstrictEffectCommands ; effect commands
+db NONE ; flags 1
+db FLAG_2_BIT_6 ; flags 2
+db NONE ; flags 3
+db 1
+db ATK_ANIM_HIT ; animation
+
+
 ; attack 2
 energy WATER, 1, COLORLESS, 1 ; energies
 tx ClampName ; name

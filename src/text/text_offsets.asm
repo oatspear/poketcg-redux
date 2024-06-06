@@ -2549,7 +2549,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer CowardiceName                                      ; 0x094f
 	textpointer CowardiceDescription                               ; 0x0950
 	textpointer JellyfishStingName                                 ; 0x0954
-	textpointer ClampName
+	textpointer DeepSeaTreasureName
 	textpointer FlailName                                          ; 0x096d
 	textpointer FlailDescription                                   ; 0x096e
 	textpointer CrabhammerName

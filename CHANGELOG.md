@@ -127,7 +127,7 @@
 - **Withdraw**: removed.
 - **Clamp**: reworked.
 - New Pokémon Power: **Exoskeleton**: reduces damage taken by 10.
-- New attack: **Clamp** (CC): 10 damage; increase opponent's retreat cost by 1 and deal +10 damage for each (C) in retreat cost.
+- New attack: **Deep Sea Treasure** (C): put an Item from discard pile into hand.
 
 #### Cloyster
 - **Cold Crush**: removed.

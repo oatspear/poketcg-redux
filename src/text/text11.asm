@@ -470,8 +470,8 @@ JellyfishStingName: ; 5ba02 (16:7a02)
 	text "Jellyfish Sting"
 	done
 
-ClampName:
-	text "Clamp"
+DeepSeaTreasureName:
+	text "Deep Sea Treasure"
 	done
 
 FlailName: ; 5be7c (16:7e7c)
