@@ -7037,13 +7037,6 @@ PlusPowerEffect:
 	ld [hl], POKEMON_TOOL_PLUSPOWER
 	ret
 
-; return carry if no Pokemon in the Bench.
-Switch_BenchCheck:
-	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
-	call GetTurnDuelistVariable
-	ldtx hl, EffectNoPokemonOnTheBenchText
-	cp 2
-	ret
 
 Switch_PlayerSelection:
 	ldtx hl, SelectPkmnOnBenchToSwitchWithActiveText

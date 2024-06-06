@@ -1796,7 +1796,7 @@ PlusPowerEffectCommands:
 	db  $00
 
 SwitchEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, Switch_BenchCheck
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckBenchIsNotEmpty
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Switch_PlayerSelection
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Switch_SwitchEffect
 	db  $00
