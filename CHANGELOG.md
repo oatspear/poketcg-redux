@@ -195,6 +195,7 @@
 #### Articuno Lv35
 - **Freeze**: increased cost from (C) to (W); heals 20 HP.
 - **Sheer Cold**: reduced base damage from 10 to 0; increased damage bonus from 10 to 20 per discarded energy.
+- **Sheer Cold**: no longer discards an Energy from the Defending Pokémon; now inflicts Drowsiness.
 
 ### Lightning Changes
 

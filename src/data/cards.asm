@@ -4892,11 +4892,12 @@ ArticunoLv35Card:
 	db 20
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
+IF SLEEP_WITH_COIN_FLIP
 	; attack 2
 	energy WATER, 1 ; energies
 	tx SheerColdName ; name
 	tx SheerColdDescription ; description
-	dw NONE ; description (cont)
+	tx Discard1EnergyFromTargetDescription ; description (cont)
 	db 20 ; damage
 	db DAMAGE_X ; category
 	dw SheerColdEffectCommands ; effect commands
@@ -4905,6 +4906,21 @@ ArticunoLv35Card:
 	db NONE ; flags 3  | SPECIAL_AI_HANDLING
 	db 10
 	db ATK_ANIM_BLIZZARD ; animation
+ELSE
+	; attack 2
+	energy WATER, 1 ; energies
+	tx SheerColdName ; name
+	tx SheerColdDescription ; description
+	tx InflictSleepDescription ; description (cont)
+	db 20 ; damage
+	db DAMAGE_X ; category
+	dw SheerColdEffectCommands ; effect commands
+	db INFLICT_SLEEP ; flags 1
+	db ATTACHED_ENERGY_BOOST ; flags 2
+	db NONE ; flags 3  | SPECIAL_AI_HANDLING
+	db 10
+	db ATK_ANIM_BLIZZARD ; animation
+ENDC
 
 	; energy WATER, 2, COLORLESS, 2 ; energies
 	; tx BlizzardName ; name

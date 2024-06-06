@@ -1197,6 +1197,7 @@ WildfireEffectCommands:
 	dbw EFFECTCMDTYPE_AI, Wildfire_AIEffect
 	db  $00
 
+IF SLEEP_WITH_COIN_FLIP
 SheerColdEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasEnergy_Water
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, SheerCold_PlayerSelectEffect
@@ -1207,6 +1208,16 @@ SheerColdEffectCommands:
 	dbw EFFECTCMDTYPE_AI_SELECTION, SheerCold_AISelectEffect
 	dbw EFFECTCMDTYPE_AI, SheerCold_AIEffect
 	db  $00
+ELSE
+SheerColdEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasEnergy_Water
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, SheerCold_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SheerCold_SleepDamageMultiplierEffect
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, SheerCold_DiscardEnergyEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, SheerCold_AISelectEffect
+	dbw EFFECTCMDTYPE_AI, SheerCold_AIEffect
+	db  $00
+ENDC
 
 ThunderstormEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasEnergy_Lightning

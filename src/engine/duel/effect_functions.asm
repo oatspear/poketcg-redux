@@ -1158,6 +1158,13 @@ VoltSwitchEffect:
 ; ------------------------------------------------------------------------------
 
 
+IF SLEEP_WITH_COIN_FLIP == 0
+SheerCold_SleepDamageMultiplierEffect:
+	call SheerCold_MultiplierEffect
+	jp SleepEffect
+ENDC
+
+
 Freeze_EnergyHealingEffect:
 Concentration_EnergyHealingEffect:
 	call AccelerateFromDiscard_AttachToPokemonEffect
@@ -3206,7 +3213,9 @@ PsychicNova_AISelectEffect:
 
 
 SheerCold_AISelectEffect:
+IF SLEEP_WITH_COIN_FLIP
 	call DiscardOpponentEnergy_AISelectEffect
+ENDC
 	; jr WaterPulse_AISelectEffect
 	; fallthrough
 

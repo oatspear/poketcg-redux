@@ -2458,7 +2458,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PetalDanceDescription                              ; 0x087f
 	textpointer ScratchName                                        ; 0x0883
 	textpointer SporeName                                          ; 0x0884
-	textpointer InflictSleepDescription                            ; 0x0885
+	textpointer InflictSleepDescription
 	textpointer SlashName                                          ; 0x0889
 	textpointer EnergySporesName
 	textpointer Attach2EnergyFromDiscardToAnyPkmnDescription
