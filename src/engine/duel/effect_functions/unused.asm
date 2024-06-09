@@ -1,6 +1,40 @@
 ;
 
 
+SteamrollerEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, StoreDefendingPokemonHPEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Steamroller_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, TrampleEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, DamageTargetBenchedPokemonIfAny_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, DamageTargetBenchedPokemonIfAny_AISelectEffect
+	dbw EFFECTCMDTYPE_AI, Steamroller_AIEffect
+	db  $00
+
+StoreDefendingPokemonHPEffect:
+	ld a, DUELVARS_ARENA_CARD_HP
+	call GetNonTurnDuelistVariable
+	ldh [hTemp_ffa0], a
+	ret
+
+; +10 damage for each attached Water and Fighting
+Steamroller_DamageBoostEffect:
+  call GetNumAttachedWaterEnergy
+	; a: [wAttachedEnergies + WATER]
+  ld hl, wAttachedEnergies + FIGHTING
+  add [hl]
+	call ATimes10
+	jp AddToDamage
+
+Steamroller_AIEffect:
+	call Steamroller_DamageBoostEffect
+	jp SetDefiniteAIDamage
+
+
+
+
+
+
+
 ; New attack: **Ice Beam** (WC): 20 damage; discard 1 Energy from the Defending Pokémon; if there are none, inflict Paralysis.
 
 IceBeamEffectCommands:

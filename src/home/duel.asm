@@ -1717,11 +1717,22 @@ PlayAttackAnimation_DealAttackDamage:
 	ld [hl], e
 	inc hl
 	ld [hl], d
+	ld a, DUELVARS_ARENA_CARD_HP
+	call GetNonTurnDuelistVariable
+
+; register overkill damage
+	ld b, a  ; Defending Pokémon's HP
+	xor a
+	ld a, e  ; damage is limited to one byte
+	sub b
+	jr nc, .got_excess_damage  ; damage >= HP
+	xor a  ; no KO
+.got_excess_damage
+	ld [wOverkillDamage], a
+
 	ld b, $0
 	ld a, [wDamageEffectiveness]
 	ld c, a
-	ld a, DUELVARS_ARENA_CARD_HP
-	call GetNonTurnDuelistVariable
 	push de
 	push hl
 	call PlayAttackAnimation
@@ -1758,6 +1769,22 @@ PlayAttackAnimation_DealAttackDamage:
 	call Func_1bb4
 	bank1call Func_7195
 	call HandleDestinyBond_ClearKnockedOutPokemon_TakePrizes_CheckGameOutcome
+	jr c, .done  ; duel finished
+
+; effects that happen after selecting a new Active Pokémon
+	ld a, [wTempNonTurnDuelistCardID]
+	push af
+	ld a, EFFECTCMDTYPE_AFTER_NEW_ACTIVE_POKEMON
+	call TryExecuteEffectCommandFunction
+	pop af
+	ld [wTempNonTurnDuelistCardID], a
+	call HandleStrikeBack_AfterDirectAttack
+	bank1call Func_6df1
+	call Func_1bb4
+	bank1call Func_7195
+	call HandleDestinyBond_ClearKnockedOutPokemon_TakePrizes_CheckGameOutcome
+
+.done
 	or a
 	ret
 

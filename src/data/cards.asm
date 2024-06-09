@@ -3711,15 +3711,15 @@ PoliwrathCard:
 	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy COLORLESS, 3 ; energies
+	energy WATER, 2, COLORLESS, 1 ; energies
 	tx SteamrollerName ; name
-	tx SteamrollerDescription ; description
-	tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
-	db 40 ; damage
-	db DAMAGE_PLUS ; category
+	tx Bounce1EnergyDescription ; description
+	tx TrampleDescription ; description (cont)
+	db 80 ; damage
+	db DAMAGE_NORMAL ; category
 	dw SteamrollerEffectCommands ; effect commands
-	db DAMAGE_TO_OPPONENT_BENCH ; flags 1
-	db ATTACHED_ENERGY_BOOST ; flags 2
+	db NONE ; flags 1
+	db DISCARD_ENERGY ; flags 2
 	db NONE ; flags 3
 	db 0
 	db ATK_ANIM_HIT ; animation

@@ -68,20 +68,6 @@ WaterGunEffect:
 	jp SetDefiniteAIDamage
 
 
-; +10 damage for each attached Water and Fighting
-Steamroller_DamageBoostEffect:
-  call GetNumAttachedWaterEnergy
-	; a: [wAttachedEnergies + WATER]
-  ld hl, wAttachedEnergies + FIGHTING
-  add [hl]
-	call ATimes10
-	jp AddToDamage
-
-Steamroller_AIEffect:
-	call Steamroller_DamageBoostEffect
-	jp SetDefiniteAIDamage
-
-
 ;
 DragonRage_DamageBoostEffect:
 	xor a  ; PLAY_AREA_ARENA

@@ -2994,7 +2994,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer AquaLauncherName
 	textpointer AquaLauncherDescription
 	textpointer SteamrollerName
-	textpointer SteamrollerDescription
+	textpointer TrampleDescription
 	textpointer ConstrictName
 	textpointer ConstrictDescription
 	textpointer WickedTentacleName

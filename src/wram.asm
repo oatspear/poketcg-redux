@@ -1006,8 +1006,11 @@ wCoinTossNumTails:: ; cd9f
 wCoinTossNumTossed:: ; cd9f
 	ds $1
 
+wOverkillDamage:: ;cd9a
+	ds $1
+
 ; unused free space
-	ds $5
+	ds $4
 
 wAIDuelVars::
 ; saves the prizes that the AI already used Peek on

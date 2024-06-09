@@ -1326,12 +1326,11 @@ StepInEffectCommands:
 	db  $00
 
 SteamrollerEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, StoreDefendingPokemonHPEffect
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Steamroller_DamageBoostEffect
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, TrampleEffect
-	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, DamageTargetBenchedPokemonIfAny_PlayerSelectEffect
-	dbw EFFECTCMDTYPE_AI_SELECTION, DamageTargetBenchedPokemonIfAny_AISelectEffect
-	dbw EFFECTCMDTYPE_AI, Steamroller_AIEffect
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasAnyEnergiesAttached
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, DiscardEnergy_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, BounceEnergy_BounceEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, DiscardEnergy_AISelectEffect
+	dbw EFFECTCMDTYPE_AFTER_NEW_ACTIVE_POKEMON, TrampleEffect
 	db  $00
 
 GrowlEffectCommands:

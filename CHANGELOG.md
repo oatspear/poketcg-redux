@@ -99,7 +99,7 @@
 - **Drain Punch**: removed.
 - **Steamroller**: reworked.
 - New Pokémon Power: **Step In**: if Benched, move all Energy from the Active Pokémon to this, then switch in.
-- New attack: **Steamroller** (CCC): 40 damage; +10 damage for each attached Water or Fighting Energy; excess damage goes to 1 Benched Pokémon.
+- New attack: **Steamroller** (WWC): 80 damage; return 1 attached Energy to the hand; excess damage after a KO goes to the new Active Pokémon.
 
 #### Tentacool
 - **Poison Sting**: removed.

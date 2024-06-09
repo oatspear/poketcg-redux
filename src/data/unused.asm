@@ -1,5 +1,38 @@
 
 
+SteamrollerDescription:
+	text "This attack does 10 more damage for"
+	line "each <WATER> or <FIGHTING> energy attached"
+	line "to this Pokémon. If this attack"
+	line "Knocks Out the Defending Pokémon,"
+	line "do the excess damage to 1 of the"
+	line "opponent's Benched Pokémon."
+	done
+
+; SteamrollerDescription:
+; 	text "This attack does <FIGHTING> damage to the"
+; 	line "Defending Pokémon. In addition,"
+; 	line "this attack does 20 damage to 1 of"
+; 	line "your opponent's Benched Pokémon."
+; 	done
+
+; New attack: **Steamroller** (CCC): 40 damage; +10 damage for each attached Water or Fighting Energy; excess damage goes to 1 Benched Pokémon.
+
+; attack 2
+energy COLORLESS, 3 ; energies
+tx SteamrollerName ; name
+tx SteamrollerDescription ; description
+tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
+db 40 ; damage
+db DAMAGE_PLUS ; category
+dw SteamrollerEffectCommands ; effect commands
+db DAMAGE_TO_OPPONENT_BENCH ; flags 1
+db ATTACHED_ENERGY_BOOST ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_HIT ; animation
+
+
 
 ReduceDamageTakenBy20Description:
 	text "Reduce all damage done by attacks"

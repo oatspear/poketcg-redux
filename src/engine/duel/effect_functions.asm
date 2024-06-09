@@ -294,13 +294,6 @@ SyncShuffleDeck:
 	jp ShuffleDeck
 
 
-StoreDefendingPokemonHPEffect:
-	ld a, DUELVARS_ARENA_CARD_HP
-	call GetNonTurnDuelistVariable
-	ldh [hTemp_ffa0], a
-	ret
-
-
 ; ------------------------------------------------------------------------------
 ; Checks and Tests
 ; ------------------------------------------------------------------------------

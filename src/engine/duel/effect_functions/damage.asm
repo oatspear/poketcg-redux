@@ -242,21 +242,13 @@ DealDamageToArenaPokemon_CustomAnim:
 ;
 TrampleEffect:
 DealExcessDamageToTarget_DamageEffect:
-	ld a, DUELVARS_ARENA_CARD_HP
-	call GetNonTurnDuelistVariable
+	ld a, [wOverkillDamage]
 	or a
-	ret nz
-; the Defending Pokémon was Knocked Out
-	ldh a, [hTemp_ffa0]
-	ld e, a  ; previous HP
-	ld a, [wDealtDamage]
-	or a
-	ret z  ; no damage was dealt
-	sub e
-	ret c  ; no excess damage (unlikely)
-	ret z  ; no excess damage (exact)
+	ret z
 	ld d, 0
 	ld e, a  ; excess damage
+	xor a  ; PLAY_AREA_ARENA
+	ldh [hTempPlayAreaLocation_ffa1], a
 	jr DealDamageToTarget_DE_DamageEffect
 
 
