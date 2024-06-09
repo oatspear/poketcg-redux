@@ -744,6 +744,7 @@ SwimFreely_SwitchEffect:
 	jp Switch_SwitchEffect
 
 
+IF SPLASHING_ATTACKS
 ; Choose a Pokémon to deal damage to.
 SplashingAttacks_DamageEffect:
 	ld a, [wDealtDamage]
@@ -783,6 +784,7 @@ SplashingAttacks_DamageEffect:
 	cp $ff
 	ret z
 	jp Deal10DamageToTarget_DamageEffect
+ENDC
 
 
 StepIn_SwitchEffect:
@@ -1144,6 +1146,33 @@ VoltSwitchEffect:
 ; check for an active Energy Jolt
 	; ld a, [wEnergyColorOverride]
 	; cp LIGHTNING
+
+
+IF SPLASHING_ATTACKS == 0
+; input:
+;   [hTempRetreatCostCards]: $ff-terminated list of discarded deck indices
+SplashingRetreatEffect:
+	ld hl, hTempRetreatCostCards
+.loop
+	ld a, [hli]
+	cp $ff
+	ret z  ; no (more) cards were discarded
+	ld d, a  ; deck index
+	call LoadCardDataToBuffer2_FromDeckIndex  ; preserves hl, de
+	ld a, [wLoadedCard2Type]
+	cp TYPE_ENERGY_WATER
+	jr nz, .loop
+; found a Water Energy
+	ld a, d
+	call MoveDiscardPileCardToHand
+	call AddCardToHand
+	call IsPlayerTurn  ; preserves de
+	ret c
+	ld a, d
+	ldtx hl, WasPlacedInTheHandText
+	bank1call DisplayCardDetailScreen
+	ret
+ENDC
 
 
 ; ------------------------------------------------------------------------------

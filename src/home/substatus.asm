@@ -526,6 +526,7 @@ IsPrehistoricPowerActive:
 	ret
 
 
+IF SPLASHING_ATTACKS
 ; returns carry if the turn holder's Active Pokémon benefits
 ; from Splashing Attacks
 ; output:
@@ -535,6 +536,7 @@ IsSplashingAttacksActive:
 	ld c, WATER
 	ld e, POLIWHIRL
 	jr IsSpecialEnergyPowerActive
+ENDC
 
 
 ; returns carry if the turn holder's Active Pokémon benefits

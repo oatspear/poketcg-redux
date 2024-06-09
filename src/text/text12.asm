@@ -793,6 +793,7 @@ Retrieve1WaterEnergyFromDiscardDescription:
 	line "into your hand."
 	done
 
+IF SPLASHING_ATTACKS
 SplashingAttacksName:
 	text "Splashing Attacks"
 	done
@@ -804,6 +805,18 @@ SplashingAttacksDescription:
 	line "Pokémon also do 10 damage to 1 of"
 	line "the opponent's Benched Pokémon."
 	done
+ELSE
+SplashingRetreatName:
+	text "Splashing Retreat"
+	done
+
+SplashingRetreatDescription:
+	text "If you discard a <WATER> Energy to pay"
+	line "for the Retreat Cost of your Active"
+	line "Pokémon, you may put that Energy in"
+	line "your hand instead."
+	done
+ENDC
 
 ; MudSportName:
 ; 	text "Mud Sport"

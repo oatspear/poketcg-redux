@@ -7296,9 +7296,11 @@ HandleOnAttackEffects:
 	; farcall LeechHalfDamageEffect
 	farcall LeechUpTo20DamageEffect
 .splashing_attacks
+IF SPLASHING_ATTACKS
 	call IsSplashingAttacksActive
 	jr nc, HandleBurnDiscardEnergy
 	farcall SplashingAttacks_DamageEffect
+ENDC
 	; jp HandleBurnDiscardEnergy
 	; fallthrough
 
@@ -7430,9 +7432,16 @@ HandleOnEvolvePokemonEffects:
 ;   [hTempRetreatCostCards]: $ff-terminated list of discarded deck indices
 HandleOnRetreatEffects:
 	ld a, RAICHU_LV40  ; Volt Switch
-	call CountPokemonIDInPlayArea
-	jr nc, .done  ; no Power-capable Pokémon was found
+	call GetFirstPokemonWithAvailablePower
+	jr nc, .splashing_retreat  ; no Power-capable Pokémon was found
 	farcall VoltSwitchEffect
+.splashing_retreat
+IF SPLASHING_ATTACKS == 0
+	ld a, POLIWHIRL  ; Volt Switch
+	call GetFirstPokemonWithAvailablePower
+	jr nc, .done  ; no Power-capable Pokémon was found
+	farcall SplashingRetreatEffect
+ENDC
 .done
 	ret
 

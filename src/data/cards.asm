@@ -3647,8 +3647,13 @@ PoliwhirlCard:
 
 	; attack 1
 	energy 0 ; energies
+IF SPLASHING_ATTACKS
 	tx SplashingAttacksName ; name
 	tx SplashingAttacksDescription ; description
+ELSE
+	tx SplashingRetreatName ; name
+	tx SplashingRetreatDescription ; description
+ENDC
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKEMON_POWER ; category
