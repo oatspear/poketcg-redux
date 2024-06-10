@@ -1016,16 +1016,17 @@ UpdateSubstatusConditions_EndOfTurn:
 	; res TURN_FLAG_TOSSED_TAILS_F, [hl]
 	; res TURN_FLAG_KO_OPPONENT_POKEMON_F, [hl]
 	ld [hl], $0
-	ld a, DUELVARS_ARENA_CARD_SUBSTATUS3
-	call GetTurnDuelistVariable
+	ld l, DUELVARS_ARENA_CARD_SUBSTATUS3
 	ld [hl], $0
 	; res SUBSTATUS3_HEADACHE, [hl]
 	; res SUBSTATUS3_THIS_TURN_ACTIVE, [hl]
 	; res SUBSTATUS3_THIS_TURN_DOUBLE_DAMAGE, [hl]
 	; res SUBSTATUS3_THIS_TURN_CANNOT_ATTACK, [hl]
-	ld a, DUELVARS_ARENA_CARD_SUBSTATUS2
-	call GetTurnDuelistVariable
+	ld l, DUELVARS_ARENA_CARD_SUBSTATUS2
 	ld [hl], $0
+	ld l, DUELVARS_ABILITY_FLAGS
+	ld [hl], $0
+	; res ABILITY_FLAG_SWIFT_SWIM_F, [hl]
 	ret
 
 ; return carry if turn holder has Wartortle and its Rain Dance Pkmn Power is active

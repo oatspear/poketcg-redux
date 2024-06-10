@@ -212,7 +212,7 @@ MACRO duel_vars
 \1ArenaCardDisabledAttackIndex:: ds $1
 
 ; damage taken the last time the opponent attacked (0 if no damage)
-\1ArenaCardLastTurnDamage::      ds $2
+\1ArenaCardLastTurnDamage::      ds $1
 
 ; status condition received the last time the opponent attacked (0 if none)
 \1ArenaCardLastTurnStatus::      ds $1
@@ -230,6 +230,9 @@ MACRO duel_vars
 
 ; stores miscellaneous turn flags for various effects
 \1MiscTurnFlags::                    ds $1
+
+; stores flags related to ability effects
+\1AbilityFlags::                    ds $1
 
 	ds $1
 ENDM

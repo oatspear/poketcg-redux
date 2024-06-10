@@ -738,16 +738,6 @@ PlayEnergyCard:
 	or USED_RAIN_DANCE_THIS_TURN
 	ld [wAlreadyPlayedEnergyOrSupporter], a
 	jr .play_energy
-; redundant: Water Energy check already done
-	; call CheckRainDanceScenario
-	; jr c, .play_energy
-; not a Water energy: redundant?
-	; ld a, [wAlreadyPlayedEnergyOrSupporter]
-	; and PLAYED_ENERGY_THIS_TURN  ; or a
-	; jr z, .play_energy_set_played
-	; ldtx hl, MayOnlyAttachOneEnergyCardText
-	; call DrawWideTextBox_WaitForInput
-	; jp OpenPlayerHandScreen
 
 .already_played_energy
 	ldtx hl, MayOnlyAttachOneEnergyCardText
@@ -7387,10 +7377,23 @@ HandleOnPlayTrainerEffects:
 	ret
 
 
+; input:
+;   [hTempPlayAreaLocation_ff9d]: PLAY_AREA_*
+;   [wLoadedCard1*]: card data of the attached Energy
 HandleOnPlayEnergyEffects:
+; 	ld a, [wLoadedCard1Type]
+; 	cp TYPE_ENERGY_WATER
+; 	jr nz, .not_water_energy
+; 	ld a, POLIWHIRL  ; Swift Swim
+; 	call GetFirstPokemonWithAvailablePower
+; 	jr nc, .not_water_energy  ; no Pkmn Power-capable Pokémon was found
+; 	ld a, DUELVARS_ABILITY_FLAGS
+; 	call GetTurnDuelistVariable
+; 	set ABILITY_FLAG_SWIFT_SWIM_F, [hl]
+; .not_water_energy
 ; OATS introduce Potion Energy effect
 	ld a, CHANSEY  ; Healing Energy
-	call CountPokemonIDInPlayArea
+	call GetFirstPokemonWithAvailablePower
 	jr nc, .electromagnetic_wall  ; no Pkmn Power-capable Pokémon was found
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	ld e, a   ; location
@@ -7399,14 +7402,10 @@ HandleOnPlayEnergyEffects:
 .electromagnetic_wall
 	call SwapTurn
 	ld a, MAGNETON_LV28  ; Electromagnetic Wall
-	call CountPokemonIDInPlayArea
+	call GetFirstPokemonWithAvailablePower
 	call SwapTurn
 	jr nc, .full_heal_energy  ; no Pkmn Power-capable Pokémon was found
 	ldh a, [hTempPlayAreaLocation_ff9d]
-; normal damage to target (unused)
-	; ld b, a    ; location
-	; ld de, 10  ; damage
-	; call DealDamageToPlayAreaPokemon_RegularAnim
 ; placing damage counters directly
 	ld e, a
 	farcall Put1DamageCounterOnTarget
