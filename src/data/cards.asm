@@ -3442,12 +3442,12 @@ BlastoiseCard:
 	tx WartortleName ; pre-evo name
 
 	; attack 1
-	energy COLORLESS, 2 ; energies
+	energy COLORLESS, 1 ; energies
 	tx HydroPumpName ; name
 	tx HydroPumpDescription ; description
 	dw NONE ; description (cont)
-	db 10 ; damage
-	db DAMAGE_PLUS ; category
+	db 20 ; damage
+	db DAMAGE_X ; category
 	dw HydroPumpEffectCommands ; effect commands
 	db NONE ; flags 1
 	db ATTACHED_ENERGY_BOOST ; flags 2

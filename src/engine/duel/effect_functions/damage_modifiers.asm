@@ -54,7 +54,8 @@ HydroPumpEffect:
   call GetNumAttachedWaterEnergy
 	add a  ; x2
 	call ATimes10
-	call AddToDamage ; add 10 * a to damage
+	; call AddToDamage ; add 10 * a to damage
+	call SetDefiniteDamage ; damage = 20 * Water Energy
 ; set attack damage
 	jp SetDefiniteAIDamage
 

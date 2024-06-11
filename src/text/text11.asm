@@ -401,9 +401,8 @@ HydroPumpName:
 	done
 
 HydroPumpDescription:
-	text "This attack does 20 more damage"
-	line "for each <WATER> Energy attached to"
-	line "this Pokémon."
+	text "This attack does 20 damage for each"
+	line "<WATER> Energy attached to this Pokémon."
 	done
 
 HeadacheName:
