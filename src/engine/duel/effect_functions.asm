@@ -3988,6 +3988,7 @@ BounceEnergy_BounceEffect:
 	ldh a, [hTemp_ffa0]
 	cp $ff
 	ret z
+.bounce
 	call PutCardInDiscardPile
 	call MoveDiscardPileCardToHand
 	call AddCardToHand
@@ -3999,6 +4000,17 @@ BounceEnergy_BounceEffect:
 	ldtx hl, WasPlacedInTheHandText
 	bank1call DisplayCardDetailScreen
 	ret
+
+
+Bounce2Energies_BounceEffect:
+	ldh a, [hTempList]
+	cp $ff
+	ret z
+	call BounceEnergy_BounceEffect.bounce
+	ldh a, [hTempList + 1]
+	cp $ff
+	ret z
+	jr BounceEnergy_BounceEffect.bounce
 
 
 BounceOpponentEnergy_BounceEffect:
