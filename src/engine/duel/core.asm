@@ -7436,7 +7436,7 @@ HandleOnRetreatEffects:
 	farcall VoltSwitchEffect
 .splashing_retreat
 IF SPLASHING_ATTACKS == 0
-	ld a, POLIWHIRL  ; Volt Switch
+	ld a, POLIWHIRL  ; Splashing Retreat
 	call GetFirstPokemonWithAvailablePower
 	jr nc, .done  ; no Power-capable Pokémon was found
 	farcall SplashingRetreatEffect
