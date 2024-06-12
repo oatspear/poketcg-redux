@@ -49,6 +49,26 @@ DoubleDamage_DamageBoostEffect:
 ; ------------------------------------------------------------------------------
 
 
+; +10 damage for each attached energy, +20 if Fighting
+Steamroller_DamageBoostEffect:
+  ld e, PLAY_AREA_ARENA
+	call GetPlayAreaCardAttachedEnergies
+	call HandleEnergyColorOverride
+; +10 for each attached Energy
+	ld a, [wTotalAttachedEnergies]
+	or a
+	ret z
+; +10 on top for each Fighting Energy
+  ld hl, wAttachedEnergies + FIGHTING
+  add [hl]
+	call ATimes10
+	jp AddToDamage
+
+Steamroller_AIEffect:
+	call Steamroller_DamageBoostEffect
+	jp SetDefiniteAIDamage
+
+
 ; 20 extra damage for each Water Energy
 HydroPumpEffect:
   call GetNumAttachedWaterEnergy

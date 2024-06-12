@@ -1070,6 +1070,12 @@ SteamrollerName:
 	text "Steamroller"
 	done
 
+SteamrollerDescription:
+	text "This attack does 10 more damage for"
+	line "each energy attached to this Pokémon"
+	line "(20 more for each <FIGHTING> energy)."
+	done
+
 TrampleDescription:
 	text "If this attack Knocks Out the"
 	line "Defending Pokémon, do the excess"

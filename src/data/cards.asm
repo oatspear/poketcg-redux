@@ -3703,12 +3703,12 @@ PoliwrathCard:
 
 	; attack 1
 	energy 0 ; energies
-	tx StepInName ; name
-	tx StepInDescription ; description
+	tx PlungeName ; name
+	tx PlungeDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKEMON_POWER ; category
-	dw StepInEffectCommands ; effect commands
+	dw PlungeEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -3718,13 +3718,13 @@ PoliwrathCard:
 	; attack 2
 	energy WATER, 2, COLORLESS, 1 ; energies
 	tx SteamrollerName ; name
-	tx Bounce1EnergyDescription ; description
+	tx SteamrollerDescription ; description
 	tx TrampleDescription ; description (cont)
-	db 80 ; damage
-	db DAMAGE_NORMAL ; category
+	db 30 ; damage
+	db DAMAGE_PLUS ; category
 	dw SteamrollerEffectCommands ; effect commands
 	db NONE ; flags 1
-	db DISCARD_ENERGY ; flags 2
+	db ATTACHED_ENERGY_BOOST ; flags 2
 	db NONE ; flags 3
 	db 0
 	db ATK_ANIM_HIT ; animation

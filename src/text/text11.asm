@@ -1638,11 +1638,11 @@ ReturnToDeckDescription:
 	line "attached to it into your deck."
 	done
 
-StepInName:
-	text "Step In"
+PlungeName:
+	text "Plunge"
 	done
 
-StepInDescription:
+PlungeDescription:
 	text "Once during your turn, if this"
 	line "Pokémon is on your Bench, you may"
 	line "move all Energy cards attached to"

@@ -2770,8 +2770,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ThatPokemonAlreadyHasAttachedEnergiesText
 	textpointer AquaReturnName
 	textpointer ReturnToDeckDescription
-	textpointer StepInName
-	textpointer StepInDescription
+	textpointer PlungeName
+	textpointer PlungeDescription
 	textpointer VampiricAuraName
 	textpointer VampiricAuraDescription
 	textpointer ReactivePoisonName
@@ -2999,6 +2999,7 @@ ENDC
 	textpointer AquaLauncherName
 	textpointer AquaLauncherDescription
 	textpointer SteamrollerName
+	textpointer SteamrollerDescription
 	textpointer TrampleDescription
 	textpointer ConstrictName
 	textpointer ConstrictDescription

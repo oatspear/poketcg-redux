@@ -98,8 +98,8 @@
 - Increased HP from 100 to 110.
 - **Drain Punch**: removed.
 - **Steamroller**: reworked.
-- New Pokémon Power: **Step In**: if Benched, move all Energy from the Active Pokémon to this, then switch in.
-- New attack: **Steamroller** (WWC): 80 damage; return 1 attached Energy to the hand; excess damage after a KO goes to the new Active Pokémon.
+- New Pokémon Power: **Plunge**: if Benched, move all Energy from the Active Pokémon to this, then switch in.
+- New attack: **Steamroller** (WWC): 30 damage; +10 damage for each attached energy (+20 for each Fighting energy); excess damage after a KO goes to the next Active Pokémon.
 
 #### Tentacool
 - **Poison Sting**: removed.

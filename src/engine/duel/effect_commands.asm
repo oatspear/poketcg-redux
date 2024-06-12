@@ -1327,18 +1327,26 @@ SwimFreelyEffectCommands:
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, SwimFreely_PlayerSelectEffect
 	db  $00
 
-StepInEffectCommands:
+PlungeEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, StepIn_PreconditionCheck
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, StepIn_SwitchEffect
 	db  $00
 
+; Scaling version
 SteamrollerEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasAnyEnergiesAttached
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, DiscardEnergy_PlayerSelectEffect
-	dbw EFFECTCMDTYPE_DISCARD_ENERGY, BounceEnergy_BounceEffect
-	dbw EFFECTCMDTYPE_AI_SELECTION, DiscardEnergy_AISelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Steamroller_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AI, Steamroller_AIEffect
 	dbw EFFECTCMDTYPE_AFTER_NEW_ACTIVE_POKEMON, TrampleEffect
 	db  $00
+
+; Energy bouncing version
+; SteamrollerEffectCommands:
+; 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasAnyEnergiesAttached
+; 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, DiscardEnergy_PlayerSelectEffect
+; 	dbw EFFECTCMDTYPE_DISCARD_ENERGY, BounceEnergy_BounceEffect
+; 	dbw EFFECTCMDTYPE_AI_SELECTION, DiscardEnergy_AISelectEffect
+; 	dbw EFFECTCMDTYPE_AFTER_NEW_ACTIVE_POKEMON, TrampleEffect
+; 	db  $00
 
 GrowlEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, GrowlEffect
