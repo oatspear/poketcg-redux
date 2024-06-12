@@ -3664,6 +3664,14 @@ QueenPressEffect:
 	jp ApplySubstatus1ToAttackingCard
 
 
+EnergyDash_PlayerSelectEffect:
+	call CreateEnergyCardListFromDiscardPile_OnlyBasic
+	ret c  ; no energies
+	call CheckEnteredActiveSpotThisTurn
+	ret c  ; not Active this turn
+	; jr EnergySpores_PlayerSelectEffect
+	; fallthrough
+
 EnergySpores_PlayerSelectEffect:
 EnergyAbsorption_PlayerSelectEffect:
 	ldtx hl, Choose2EnergyCardsFromDiscardPileToAttachText
@@ -3717,6 +3725,15 @@ AttachBasicEnergyFromDiscardPileToBench_AISelectEffect:
 	ld a, PLAY_AREA_BENCH_1
 	ldh [hTempPlayAreaLocation_ffa1], a
 	ret
+
+
+EnergyDash_AISelectEffect:
+	call CreateEnergyCardListFromDiscardPile_OnlyBasic
+	ret c  ; no energies
+	call CheckEnteredActiveSpotThisTurn
+	ret c  ; not Active this turn
+	ld a, 2
+	jr PickFirstNCardsFromList_SelectEffect
 
 
 EnergySpores_AISelectEffect:
@@ -3788,6 +3805,7 @@ PickFirstNCardsFromList_SelectEffect_DE:
 	ret
 
 
+; FIXME not multiplayer compatible
 AttachEnergyFromDiscard_AttachToPokemonEffect:
 	call IsPlayerTurn
 	jr c, .player_turn
@@ -3985,6 +4003,13 @@ ThunderPunch_PlayerSelectEffect:
 	call CheckEnteredActiveSpotThisTurn
 	jr nc, OptionalDiscardEnergy_PlayerSelectEffect.select
 	ccf
+	ret
+
+
+InitializeEmptyList:
+	ld a, $ff
+	ldh [hTempList], a
+	or a
 	ret
 
 

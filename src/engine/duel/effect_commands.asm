@@ -580,6 +580,13 @@ QuickAttack50EffectCommands:
 	dbw EFFECTCMDTYPE_AI, IfActiveThisTurn50BonusDamage_AIEffect
 	db  $00
 
+EnergyDashEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, InitializeEmptyList
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, AttachEnergyFromDiscard_AttachToPokemonEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, EnergyDash_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, EnergyDash_AISelectEffect
+	db  $00
+
 OutrageEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasAnyEnergiesAttached
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, DiscardEnergy_PlayerSelectEffect

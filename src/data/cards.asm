@@ -3665,18 +3665,18 @@ ENDC
 	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy COLORLESS, 2 ; energies
-	tx RainSplashName ; name
-	tx DoubleDamageIfAttachedEnergyDescription ; description
+	energy WATER, 1, COLORLESS, 1 ; energies
+	tx EnergyDashName ; name
+	tx EnergyDashDescription ; description
 	dw NONE ; description (cont)
 	db 20 ; damage
-	db DAMAGE_PLUS ; category
-	dw DoubleDamageIfAttachedEnergyEffectCommands ; effect commands
+	db DAMAGE_NORMAL ; category
+	dw EnergyDashEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_WATER_GUN ; animation
+	db ATK_ANIM_PUNCH ; animation
 
 	db 1 ; retreat cost
 	db WR_LIGHTNING ; weakness

@@ -92,7 +92,9 @@
 #### Poliwhirl
 - Increased HP from 70 to 80.
 - **Mud Sport**: removed.
+- **Rain Splash**: removed.
 - New Pokémon Power: **Splashing Retreat**: if you discard Water Energy to Retreat, put those energies in the hand instead.
+- New attack: **Energy Dash** (WC): 20 damage; if the Pokémon moved into the Active Spot this turn, attach 2 energies from discard pile to your Pokémon in any way.
 
 #### Poliwrath
 - Increased HP from 100 to 110.

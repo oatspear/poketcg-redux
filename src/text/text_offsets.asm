@@ -2781,6 +2781,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ClairvoyantSenseName
 	textpointer ClairvoyantSenseDescription
 	textpointer Exoskeleton10Description
+	textpointer EnergyDashName
+	textpointer EnergyDashDescription
 
 ; ------------------------------------------------------------------------------
 ; text12.asm
