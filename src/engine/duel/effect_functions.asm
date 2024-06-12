@@ -1164,14 +1164,18 @@ SplashingRetreatEffect:
 	jr nz, .loop
 ; found a Water Energy
 	ld a, d
-	call MoveDiscardPileCardToHand
-	call AddCardToHand
+	call MoveDiscardPileCardToHand  ; preserves hl, de
+	call AddCardToHand  ; preserves hl, de
+	push hl
 	call IsPlayerTurn  ; preserves de
-	ret c
+	pop hl
+	jr c, .loop
 	ld a, d
+	push hl
 	ldtx hl, WasPlacedInTheHandText
 	bank1call DisplayCardDetailScreen
-	ret
+	pop hl
+	jr .loop
 ENDC
 
 

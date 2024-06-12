@@ -811,10 +811,10 @@ SplashingRetreatName:
 	done
 
 SplashingRetreatDescription:
-	text "If you discard a <WATER> Energy to pay"
-	line "for the Retreat Cost of your Active"
-	line "Pokémon, you may put that Energy in"
-	line "your hand instead."
+	text "If you discard any <WATER> Energies to"
+	line "pay for the Retreat Cost of your"
+	line "Active Pokémon, you may put those"
+	line "Energies in your hand instead."
 	done
 ENDC
 

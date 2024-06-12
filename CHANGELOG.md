@@ -92,7 +92,7 @@
 #### Poliwhirl
 - Increased HP from 70 to 80.
 - **Mud Sport**: removed.
-- New Pokémon Power: **Splashing Attacks**: if the Active Pokémon has Water Energy, its attacks also do 10 damage to 1 Benched target.
+- New Pokémon Power: **Splashing Retreat**: if you discard Water Energy to Retreat, put those energies in the hand instead.
 
 #### Poliwrath
 - Increased HP from 100 to 110.
