@@ -1715,3 +1715,14 @@ EnergyDashDescription:
 	line "your discard pile to your Pokémon"
 	line "in any way you like."
 	done
+
+WaveSplashName:
+	text "Wave Splash"
+	done
+
+WaveSplashDescription:
+	text "If this Pokémon moved into the"
+	line "Active Spot this turn, do 10 damage"
+	line "to each of your opponent's Benched"
+	line "Pokémon."
+	done

@@ -2783,6 +2783,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer Exoskeleton10Description
 	textpointer EnergyDashName
 	textpointer EnergyDashDescription
+	textpointer WaveSplashName
+	textpointer WaveSplashDescription
 
 ; ------------------------------------------------------------------------------
 ; text12.asm

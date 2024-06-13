@@ -580,6 +580,10 @@ QuickAttack50EffectCommands:
 	dbw EFFECTCMDTYPE_AI, IfActiveThisTurn50BonusDamage_AIEffect
 	db  $00
 
+IfActiveThisTurnDamageOpponentBench10EffectCommands:
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, IfActiveThisTurnDamageOpponentBench10Effect
+	db  $00
+
 EnergyDashEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, InitializeEmptyList
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, AttachEnergyFromDiscard_AttachToPokemonEffect

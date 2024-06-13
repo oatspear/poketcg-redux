@@ -175,6 +175,12 @@ IfAttachedToolDamageOpponentBench10Effect:
 	jp DamageAllOpponentBenched10Effect
 
 
+IfActiveThisTurnDamageOpponentBench10Effect:
+	call CheckEnteredActiveSpotThisTurn
+	ret c  ; not Active this turn
+	jp DamageAllOpponentBenched10Effect
+
+
 RagingStorm_BenchDamageEffect:
 	call CheckOpponentHasMorePrizeCardsRemaining
 	ret c  ; opponent Prizes < user Prizes (losing)

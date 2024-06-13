@@ -3661,13 +3661,13 @@ PoliwhirlCard:
 
 	; attack 2
 	energy WATER, 1, COLORLESS, 1 ; energies
-	tx EnergyDashName ; name
-	tx EnergyDashDescription ; description
-	dw NONE ; description (cont)
+	tx WaveSplashName ; name
+	tx WaveSplashDescription ; description
+	tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
 	db 20 ; damage
 	db DAMAGE_NORMAL ; category
-	dw EnergyDashEffectCommands ; effect commands
-	db NONE ; flags 1
+	dw IfActiveThisTurnDamageOpponentBench10EffectCommands ; effect commands
+	db DAMAGE_TO_OPPONENT_BENCH ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
