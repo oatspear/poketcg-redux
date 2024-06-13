@@ -1012,20 +1012,6 @@ NidoranMCard:
 
 	; attack 1
 	energy COLORLESS, 1 ; energies
-	tx HornAttackName ; name
-	dw NONE ; description
-	dw NONE ; description (cont)
-	db 10 ; damage
-	db DAMAGE_NORMAL ; category
-	dw NONE ; effect commands
-	db NONE ; flags 1
-	db NONE ; flags 2
-	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_HIT ; animation
-
-	; attack 2
-	energy DARKNESS, 1 ; energies
 	tx RetaliateName ; name
 	tx RetaliateDescription ; description
 	dw NONE ; description (cont)
@@ -1037,6 +1023,20 @@ NidoranMCard:
 	db NONE ; flags 3
 	db 0
 	db ATK_ANIM_HIT ; animation
+
+	; attack 2
+	energy DARKNESS, 1 ; energies
+	tx PoisonStingName ; name
+	tx InflictPoisonDescription ; description
+	dw NONE ; description (cont)
+	db 10 ; damage
+	db DAMAGE_NORMAL ; category
+	dw InflictPoisonEffectCommands ; effect commands
+	db INFLICT_POISON ; flags 1
+	db NONE ; flags 2
+	db NONE ; flags 3
+	db 0
+	db ATK_ANIM_NEEDLES ; animation
 
 	db 0 ; retreat cost
 	db WR_FIGHTING ; weakness

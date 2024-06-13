@@ -325,6 +325,11 @@
 #### Nidoran F
 - **Poison Sting**: always inflicts Poison.
 
+#### Nidoran M
+- **Horn Attack**: removed.
+- **Retaliate**: reduced cost from (D) to (C).
+- New attack: **Poison Sting** (D): 10 damage; inflicts Poison.
+
 #### Zubat
 - **Supersonic**: removed.
 - **Pester**: removed.
