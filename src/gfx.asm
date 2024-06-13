@@ -1764,12 +1764,12 @@ GolduckCardGfx::
 	INCBIN "gfx/cards/golduck.pal"
 
 PoliwagCardGfx::
-	INCBIN "gfx/cards/poliwag.2bpp"
-	INCBIN "gfx/cards/poliwag.pal"
+	INCBIN "gfx/cards/poliwag2.2bpp"
+	INCBIN "gfx/cards/poliwag2.pal"
 
 PoliwhirlCardGfx::
-	INCBIN "gfx/cards/poliwhirl.2bpp"
-	INCBIN "gfx/cards/poliwhirl.pal"
+	INCBIN "gfx/cards/poliwhirl2.2bpp"
+	INCBIN "gfx/cards/poliwhirl2.pal"
 
 PoliwrathCardGfx::
 	INCBIN "gfx/cards/poliwrath.2bpp"
