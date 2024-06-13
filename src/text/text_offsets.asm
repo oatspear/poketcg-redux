@@ -3060,8 +3060,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer BulkUpDescription
 	textpointer SearchingMagnetName
 	textpointer SearchingMagnetDescription
-	textpointer MagneticChargeName
-	textpointer MagneticChargeDescription
+	textpointer EnergyAssistName
+	textpointer EnergyAssistDescription
 	textpointer WaveRiderName
 	textpointer WaveRiderDescription
 	textpointer DrawUntil5CardsInHandDescription

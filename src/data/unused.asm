@@ -838,7 +838,7 @@ MagnemiteLv13Card:
 	; attack 1
 	energy COLORLESS, 1 ; energies
 	tx MagneticChargeName ; name
-	tx MagneticChargeDescription ; description
+	tx EnergyAssistDescription ; description
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category

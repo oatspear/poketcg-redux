@@ -1148,7 +1148,7 @@ ENDC
 
 Freeze_EnergyHealingEffect:
 Concentration_EnergyHealingEffect:
-	call AccelerateFromDiscard_AttachToPokemonEffect
+	call AccelerateFromDiscard_AttachEnergyToArenaEffect
 	jp Heal20DamageEffect
 
 
@@ -1204,9 +1204,7 @@ RampageEffect:
 
 ; Attaches the selected energy from the discard pile to the user and heals 10 damage.
 MendEffect:
-	ld a, $ff
-	ldh [hTempList + 1], a
-	call AccelerateFromDiscard_AttachToPokemonEffect
+	call AccelerateFromDiscard_AttachEnergyToArenaEffect
 	jp Heal10DamageEffect
 
 
@@ -3628,23 +3626,15 @@ EnergyDash_PlayerSelectEffect:
 	; fallthrough
 
 EnergySpores_PlayerSelectEffect:
-EnergyAbsorption_PlayerSelectEffect:
 	ldtx hl, Choose2EnergyCardsFromDiscardPileToAttachText
 	jp HandleEnergyCardsInDiscardPileSelection
-
-
-GatherToxins_PlayerSelectEffect:
-	call RetrieveBasicEnergyFromDiscardPile_PlayerSelectEffect
-	ld a, $ff
-	ldh [hTempList + 1], a  ; terminating byte
-	ret
 
 
 AttachBasicEnergyFromDiscardPile_PlayerSelectEffect:
 	ldtx hl, Choose1BasicEnergyCardFromDiscardPileText
 	call DrawWideTextBox_WaitForInput
 	call HandlePlayerSelectionFromDiscardPile_BasicEnergy_Forced
-	ldh [hTemp_ffa0], a
+	ldh [hEnergyTransEnergyCard], a
 	ret
 
 
@@ -3658,11 +3648,22 @@ AttachBasicEnergyFromDiscardPileToBench_PlayerSelectEffect:
 	ret
 
 
+EnergyAssist_PlayerSelectEffect:
+	ld a, $ff
+	ldh [hTempPlayAreaLocation_ffa1], a
+	ldh [hEnergyTransEnergyCard], a
+	call CheckBenchIsNotEmpty
+	ret c  ; no bench
+	call CreateEnergyCardListFromDiscardPile_OnlyBasic
+	ret c  ; no energies
+	jr AttachBasicEnergyFromDiscardPileToBench_PlayerSelectEffect
+
+
 RetrieveBasicEnergyFromDiscardPile_PlayerSelectEffect:
 	ldtx hl, Choose1BasicEnergyCardFromDiscardPileText
 	call DrawWideTextBox_WaitForInput
 	call HandlePlayerSelectionFromDiscardPile_BasicEnergy
-	ldh [hTemp_ffa0], a
+	ldh [hEnergyTransEnergyCard], a
 	or a  ; ignore carry
 	ret
 
@@ -3670,12 +3671,18 @@ RetrieveBasicEnergyFromDiscardPile_AISelectEffect:
 ; AI picks the first energy card
 	call CreateEnergyCardListFromDiscardPile_OnlyBasic
 	ld a, [wDuelTempList]
-	ldh [hTemp_ffa0], a
+	ldh [hEnergyTransEnergyCard], a
 	or a  ; ignore carry
 	ret
 
 AttachBasicEnergyFromDiscardPileToBench_AISelectEffect:
-	call RetrieveBasicEnergyFromDiscardPile_AISelectEffect
+	ld a, $ff
+	ldh [hTempPlayAreaLocation_ffa1], a
+; pick first energy card
+	call CreateEnergyCardListFromDiscardPile_OnlyBasic
+	ld a, [wDuelTempList]
+	ldh [hEnergyTransEnergyCard], a
+	ret c
 	; FIXME
 	ld a, PLAY_AREA_BENCH_1
 	ldh [hTempPlayAreaLocation_ffa1], a
@@ -3692,7 +3699,6 @@ EnergyDash_AISelectEffect:
 
 
 EnergySpores_AISelectEffect:
-EnergyAbsorption_AISelectEffect:
 ; AI picks first 2 energy cards
 	call CreateEnergyCardListFromDiscardPile_OnlyBasic
 	; call CreateEnergyCardListFromDiscardPile_AllEnergy
@@ -3700,40 +3706,35 @@ EnergyAbsorption_AISelectEffect:
 	jr PickFirstNCardsFromList_SelectEffect
 
 
-Retrieve1WaterEnergyFromDiscard_SelectEffect:
-; pick the first energy card
-	call CreateEnergyCardListFromDiscardPile_OnlyWater
-	ld a, 1
-	jr PickFirstNCardsFromList_SelectEffect
-
-
 Attach1PsychicEnergyFromDiscard_SelectEffect:
 ; pick the first energy card
 	call CreateEnergyCardListFromDiscardPile_OnlyPsychic
-	ld a, 1
-	jr PickFirstNCardsFromList_SelectEffect
+	jr PickFirstEnergyFromList_SelectEffect
 
 
 Attach1WaterEnergyFromDiscard_SelectEffect:
 ; pick the first energy card
 	call CreateEnergyCardListFromDiscardPile_OnlyWater
-	ld a, 1
-	jr PickFirstNCardsFromList_SelectEffect
+	jr PickFirstEnergyFromList_SelectEffect
 
 
 Attach1LightningEnergyFromDiscard_SelectEffect:
 ; pick the first energy card
 	call CreateEnergyCardListFromDiscardPile_OnlyLightning
-	ld a, 1
-	jr PickFirstNCardsFromList_SelectEffect
+	jr PickFirstEnergyFromList_SelectEffect
 
 
 Attach1FireEnergyFromDiscard_SelectEffect:
 ; pick the first energy card
 	call CreateEnergyCardListFromDiscardPile_OnlyFire
-	ld a, 1
-	; jr PickFirstNCardsFromList_SelectEffect
+	; jr PickFirstEnergyFromList_SelectEffect
 	; fallthrough
+
+
+PickFirstEnergyFromList_SelectEffect:
+	ld a, [wDuelTempList]
+	ldh [hEnergyTransEnergyCard], a
+	ret
 
 
 ; input:
@@ -3796,17 +3797,6 @@ AttachEnergyFromDiscard_AttachToPokemonEffect:
 	or a
 	ret
 
-
-; input:
-;   [hTempList]: $ff-terminated list of discarded card indices to attach
-AccelerateFromDiscard_AttachToPlayAreaEffect:
-	ldh a, [hTempPlayAreaLocation_ffa1]
-	add CARD_LOCATION_ARENA
-	ld e, a
-	ld a, $ff
-	ldh [hTempList + 1], a
-	jr SetCardLocationsFromDiscardPileToPlayArea
-
 ; input:
 ;   [hTempList]: $ff-terminated list of discarded card indices to attach
 AccelerateFromDiscard_AttachToPokemonEffect:
@@ -3826,6 +3816,29 @@ SetCardLocationsFromDiscardPileToPlayArea:
 	ret z
 	call Helper_AttachCardFromDiscardPile
 	jr .loop
+
+
+; input:
+;   [hTempPlayAreaLocation_ffa1]: PLAY_AREA_* of the target to attach energy to
+;   [hEnergyTransEnergyCard]: deck index of discarded card to attach
+AccelerateFromDiscard_AttachEnergyToPlayAreaEffect:
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	cp $ff
+	ret z
+	add CARD_LOCATION_ARENA
+	ld e, a
+	ldh a, [hEnergyTransEnergyCard]
+	jr Helper_AttachCardFromDiscardPile
+
+
+; input:
+;   [hEnergyTransEnergyCard]: deck index of discarded card to attach
+AccelerateFromDiscard_AttachEnergyToArenaEffect:
+	ld e, CARD_LOCATION_ARENA
+	ldh a, [hEnergyTransEnergyCard]
+	; jr Helper_AttachCardFromDiscardPile
+	; fallthrough
+
 
 ; input:
 ;   a: deck index of discarded card to attach
@@ -6363,6 +6376,14 @@ Prank_AddToDeckEffect:
 	call SwapTurn
 	ldtx hl, CardWasChosenText
 	jp SelectedCard_ShowDetailsIfOpponentsTurn
+
+
+SelectedEnergy_AddToHandFromDiscardPile:
+; add the first card in hTempList to the hand
+	ldh a, [hEnergyTransEnergyCard]
+	cp $ff
+	ret z
+	jr AddDiscardPileCardToHandEffect
 
 
 SelectedCard_AddToHandFromDiscardPile:

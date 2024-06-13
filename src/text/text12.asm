@@ -1394,11 +1394,11 @@ SearchingMagnetDescription:
 	line "hand. Then, shuffle your deck."
 	done
 
-MagneticChargeName:
-	text "Magnetic Charge"
+EnergyAssistName:
+	text "Energy Assist"
 	done
 
-MagneticChargeDescription:
+EnergyAssistDescription:
 	text "Attach a Basic Energy from your"
 	line "discard pile to 1 of your Benched"
 	line "Pokémon."

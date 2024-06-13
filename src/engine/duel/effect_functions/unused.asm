@@ -1,6 +1,61 @@
 ;
 
 
+Retrieve1BasicEnergyEffectCommands:
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, SelectedEnergy_AddToHandFromDiscardPile
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, RetrieveBasicEnergyFromDiscardPile_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, RetrieveBasicEnergyFromDiscardPile_AISelectEffect
+	db  $00
+
+
+WaterfallEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Waterfall_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, SelectedCardList_AddToHandFromDiscardPileEffect  ; bugged should start at ffa2
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Retrieve2BasicEnergy_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, Retrieve2BasicEnergy_AISelectEffect
+	dbw EFFECTCMDTYPE_AI, Waterfall_AIEffect
+	db  $00
+
+
+; +20 for each selected energy to retrieve from discard
+Waterfall_DamageBoostEffect:
+	ld c, 0
+	ld hl, hTempList
+.loop_cards
+	ld a, [hli]
+	cp $ff
+	jr z, .done
+	ld a, 20
+	add c
+	ld c, a
+	jr .loop_cards
+.done
+	ld a, c
+	or a
+	ret z
+	jp AddToDamage
+
+Waterfall_AIEffect:
+	call CreateEnergyCardListFromDiscardPile_OnlyBasic
+	call CountCardsInDuelTempList
+	cp 2
+	jr c, .cap
+	ld a, 2
+.cap
+	call ATimes10
+	call AddToDamage
+	jp SetDefiniteAIDamage
+
+
+
+EnergyAbsorptionEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDiscardPileHasBasicEnergyCards
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, AccelerateFromDiscard_AttachToPokemonEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, EnergyAbsorption_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, EnergyAbsorption_AISelectEffect
+	db  $00
+
+
 
 ; Choose a Pokémon to deal damage to.
 SplashingAttacks_DamageEffect:
