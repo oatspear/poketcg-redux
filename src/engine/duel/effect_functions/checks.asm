@@ -541,6 +541,15 @@ CheckIfPlayAreaHasAnyDamage_ExcludeTempLocation:
 	ret
 
 
+; output:
+;   a: PLAY_AREA_* of the first matching Pokémon | $ff
+;   [hTempPlayAreaLocation_ff9d]: PLAY_AREA_* of the first matching Pokémon | $ff
+;   carry: set if there is no matching Pokémon
+CheckSomeDamagedPokemonInBench:
+	ld a, CARDTEST_DAMAGED_POKEMON
+	jp CheckSomeMatchingPokemonInBench
+
+
 GetMad_CheckDamage:
 	xor a  ; PLAY_AREA_ARENA
 	ldh [hTempPlayAreaLocation_ff9d], a
