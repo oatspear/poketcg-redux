@@ -1,4 +1,31 @@
 
+
+HandleOnAttackEffects:
+	call IsVampiricAuraActive
+	jr nc, .splashing_attacks
+	; farcall Leech10DamageEffect
+	; farcall LeechHalfDamageEffect
+	farcall LeechUpTo20DamageEffect
+.splashing_attacks
+	call IsSplashingAttacksActive
+	jr nc, HandleBurnDiscardEnergy
+	farcall SplashingAttacks_DamageEffect
+	; jp HandleBurnDiscardEnergy
+	; fallthrough
+
+
+; returns carry if the turn holder's Active Pokémon benefits
+; from Splashing Attacks
+; output:
+;   carry: set if Splashing Attacks is active
+IsSplashingAttacksActive:
+	ld b, PLAY_AREA_ARENA
+	ld c, WATER
+	ld e, POLIWHIRL
+	jr IsSpecialEnergyPowerActive
+
+
+
 ; return, in a, the retreat cost of the card in wLoadedCard1,
 ; adjusting for any Pokémon Power that is active
 GetLoadedCard1RetreatCost:

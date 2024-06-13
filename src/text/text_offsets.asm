@@ -2947,13 +2947,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer Attach1PsychicEnergyFromDiscardDescription
 	; textpointer AbsorbWaterName
 	textpointer Retrieve1WaterEnergyFromDiscardDescription
-IF SPLASHING_ATTACKS
-	textpointer SplashingAttacksName
-	textpointer SplashingAttacksDescription
-ELSE
 	textpointer SplashingRetreatName
 	textpointer SplashingRetreatDescription
-ENDC
 	; textpointer MudSportName
 	; textpointer Retrieve1WaterOrFightingEnergyFromDiscardDescription
 	; textpointer DualTypeFightingName

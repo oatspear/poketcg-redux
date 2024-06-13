@@ -1,4 +1,33 @@
 
+SplashingAttacksName:
+	text "Splashing Attacks"
+	done
+
+SplashingAttacksDescription:
+	text "If your Active Pokémon has any"
+	line "attached <WATER> Energy, its attacks"
+	line "that do damage to the Defending"
+	line "Pokémon also do 10 damage to 1 of"
+	line "the opponent's Benched Pokémon."
+	done
+
+
+; attack 1
+energy 0 ; energies
+tx SplashingAttacksName ; name
+tx SplashingAttacksDescription ; description
+tx PokemonPowerDescriptionCont ; description (cont)
+db 0 ; damage
+db POKEMON_POWER ; category
+dw PassivePowerEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_PKMN_POWER_1 ; animation
+
+
+
 
 SteamrollerDescription:
 	text "This attack does 10 more damage for"

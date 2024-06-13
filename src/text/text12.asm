@@ -793,19 +793,6 @@ Retrieve1WaterEnergyFromDiscardDescription:
 	line "into your hand."
 	done
 
-IF SPLASHING_ATTACKS
-SplashingAttacksName:
-	text "Splashing Attacks"
-	done
-
-SplashingAttacksDescription:
-	text "If your Active Pokémon has any"
-	line "attached <WATER> Energy, its attacks"
-	line "that do damage to the Defending"
-	line "Pokémon also do 10 damage to 1 of"
-	line "the opponent's Benched Pokémon."
-	done
-ELSE
 SplashingRetreatName:
 	text "Splashing Retreat"
 	done
@@ -816,7 +803,6 @@ SplashingRetreatDescription:
 	line "Active Pokémon, you may put those"
 	line "Energies in your hand instead."
 	done
-ENDC
 
 ; MudSportName:
 ; 	text "Mud Sport"

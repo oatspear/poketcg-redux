@@ -744,49 +744,6 @@ SwimFreely_SwitchEffect:
 	jp Switch_SwitchEffect
 
 
-IF SPLASHING_ATTACKS
-; Choose a Pokémon to deal damage to.
-SplashingAttacks_DamageEffect:
-	ld a, [wDealtDamage]
-	or a
-	ret z  ; no damage to the Defending Pokémon
-	bank1call HasAlivePokemonInBench
-	ret nc  ; no Bench to target
-
-	ld a, DUELVARS_DUELIST_TYPE
-	call GetTurnDuelistVariable
-	cp DUELIST_TYPE_LINK_OPP
-	jr z, .link_opp
-	and DUELIST_TYPE_AI_OPP
-	jr nz, .ai_opp
-
-; player
-	ldtx hl, ChoosePokemonInTheBenchToGiveDamageText
-	call DrawWideTextBox_WaitForInput
-	call HandlePlayerSelectionOpponentPokemonInBench
-	ldh [hTempPlayAreaLocation_ffa1], a
-	call SerialSend8Bytes
-	jr .done
-
-.link_opp
-	call SerialRecv8Bytes
-	ldh [hTempPlayAreaLocation_ffa1], a
-	jr .done
-
-.ai_opp
-; AI selects the lowest HP remaining
-	call GetOpponentBenchPokemonWithLowestHP
-	; ld a, PLAY_AREA_BENCH_1
-	ldh [hTempPlayAreaLocation_ffa1], a
-	; fallthrough
-
-.done
-	cp $ff
-	ret z
-	jp Deal10DamageToTarget_DamageEffect
-ENDC
-
-
 StepIn_SwitchEffect:
 	xor a  ; PLAY_AREA_ARENA
 	ldh [hTempPlayAreaLocation_ff9d], a  ; source PLAY_AREA_*
@@ -1148,7 +1105,6 @@ VoltSwitchEffect:
 	; cp LIGHTNING
 
 
-IF SPLASHING_ATTACKS == 0
 ; input:
 ;   [hTempRetreatCostCards]: $ff-terminated list of discarded deck indices
 SplashingRetreatEffect:
@@ -1176,7 +1132,6 @@ SplashingRetreatEffect:
 	bank1call DisplayCardDetailScreen
 	pop hl
 	jr .loop
-ENDC
 
 
 ; ------------------------------------------------------------------------------

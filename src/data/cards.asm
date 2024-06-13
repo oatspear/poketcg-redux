@@ -3647,13 +3647,8 @@ PoliwhirlCard:
 
 	; attack 1
 	energy 0 ; energies
-IF SPLASHING_ATTACKS
-	tx SplashingAttacksName ; name
-	tx SplashingAttacksDescription ; description
-ELSE
 	tx SplashingRetreatName ; name
 	tx SplashingRetreatDescription ; description
-ENDC
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKEMON_POWER ; category
@@ -3932,6 +3927,19 @@ DewgongCard:
 	db NONE ; flags 3
 	db 0
 	db ATK_ANIM_WHIRLPOOL ; animation
+
+	; energy WATER, 1, COLORLESS, 1 ; energies
+	; tx EnergyDashName ; name
+	; tx EnergyDashDescription ; description
+	; dw NONE ; description (cont)
+	; db 20 ; damage
+	; db DAMAGE_NORMAL ; category
+	; dw EnergyDashEffectCommands ; effect commands
+	; db NONE ; flags 1
+	; db NONE ; flags 2
+	; db NONE ; flags 3
+	; db 0
+	; db ATK_ANIM_WHIRLPOOL ; animation
 
 	db 1 ; retreat cost
 	db WR_LIGHTNING ; weakness

@@ -7281,16 +7281,11 @@ Func_6ba2:
 
 HandleOnAttackEffects:
 	call IsVampiricAuraActive
-	jr nc, .splashing_attacks
+	jr nc, .done
 	; farcall Leech10DamageEffect
 	; farcall LeechHalfDamageEffect
 	farcall LeechUpTo20DamageEffect
-.splashing_attacks
-IF SPLASHING_ATTACKS
-	call IsSplashingAttacksActive
-	jr nc, HandleBurnDiscardEnergy
-	farcall SplashingAttacks_DamageEffect
-ENDC
+.done
 	; jp HandleBurnDiscardEnergy
 	; fallthrough
 
@@ -7435,12 +7430,10 @@ HandleOnRetreatEffects:
 	jr nc, .splashing_retreat  ; no Power-capable Pokémon was found
 	farcall VoltSwitchEffect
 .splashing_retreat
-IF SPLASHING_ATTACKS == 0
 	ld a, POLIWHIRL  ; Splashing Retreat
 	call GetFirstPokemonWithAvailablePower
 	jr nc, .done  ; no Power-capable Pokémon was found
 	farcall SplashingRetreatEffect
-ENDC
 .done
 	ret
 
