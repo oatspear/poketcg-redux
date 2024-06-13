@@ -3596,17 +3596,17 @@ PoliwagCard:
 
 	; attack 1
 	energy COLORLESS, 1 ; energies
-	tx RainSplashName ; name
-	tx DoubleDamageIfAttachedEnergyDescription ; description
+	tx HypnosisName ; name
+	tx InflictSleepDescription ; description
 	dw NONE ; description (cont)
-	db 10 ; damage
-	db DAMAGE_PLUS ; category
-	dw DoubleDamageIfAttachedEnergyEffectCommands ; effect commands
-	db NONE ; flags 1
+	db 0 ; damage
+	db DAMAGE_NORMAL ; category
+	dw InflictSleepEffectCommands ; effect commands
+	db INFLICT_SLEEP ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_WATER_GUN ; animation
+	db ATK_ANIM_HYPNOSIS ; animation
 
 	; attack 2
 	energy WATER, 1, COLORLESS, 1 ; energies

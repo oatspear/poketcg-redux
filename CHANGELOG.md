@@ -91,7 +91,8 @@
 
 #### Poliwag
 - **Mud Splash**: removed.
-- **Rain Splash**: reduced cost from (W) to (C).
+- **Rain Splash**: removed.
+- New attack: **Hypnosis** (C): inflcits Drowsiness.
 - New attack: **Muddy Water** (WC): 20 damage; does 10 damage to 2 of the opponent's Benched Pokémon.
 
 #### Poliwhirl
