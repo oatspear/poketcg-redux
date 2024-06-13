@@ -171,6 +171,7 @@
 
 #### Magikarp
 - Increased HP from 30 to 40.
+- **Ascension**: reduced cost from (WC) to (W).
 
 #### Gyarados
 - Reduced HP from 100 to 90.

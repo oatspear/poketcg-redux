@@ -4491,7 +4491,7 @@ MagikarpCard:
 	db ATK_ANIM_BIG_HIT ; animation
 
 	; attack 2
-	energy WATER, 1, COLORLESS, 1 ; energies
+	energy WATER, 1 ; energies
 	tx AscensionName ; name
 	tx AscensionDescription ; description
 	dw NONE ; description (cont)
