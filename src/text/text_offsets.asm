@@ -2984,7 +2984,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer DraconicEvolutionDescription
 	textpointer RainSplashName
 	textpointer DoubleDamageIfAttachedEnergyDescription
-	textpointer MudSplashName
+	textpointer MuddyWaterName
 	textpointer Retrieve1BasicEnergyDescription
 	textpointer EnergySoakName
 	textpointer EnergySoakDescription

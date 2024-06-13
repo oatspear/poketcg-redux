@@ -986,8 +986,8 @@ DoubleDamageIfAttachedEnergyDescription:
 	line "attack's damage."
 	done
 
-MudSplashName:
-	text "Mud Splash"
+MuddyWaterName:
+	text "Muddy Water"
 	done
 
 Retrieve1BasicEnergyDescription:

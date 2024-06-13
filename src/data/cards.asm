@@ -3596,20 +3596,6 @@ PoliwagCard:
 
 	; attack 1
 	energy COLORLESS, 1 ; energies
-	tx MudSplashName ; name
-	tx Retrieve1BasicEnergyDescription ; description
-	dw NONE ; description (cont)
-	db 10 ; damage
-	db DAMAGE_NORMAL ; category
-	dw Retrieve1BasicEnergyEffectCommands ; effect commands
-	db NONE ; flags 1
-	db NONE ; flags 2
-	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_HIT ; animation
-
-	; attack 2
-	energy WATER, 1 ; energies
 	tx RainSplashName ; name
 	tx DoubleDamageIfAttachedEnergyDescription ; description
 	dw NONE ; description (cont)
@@ -3621,6 +3607,20 @@ PoliwagCard:
 	db NONE ; flags 3
 	db 0
 	db ATK_ANIM_WATER_GUN ; animation
+
+	; attack 2
+	energy WATER, 1, COLORLESS, 1 ; energies
+	tx MuddyWaterName ; name
+	tx DamageUpTo2BenchedDescription ; description
+	tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
+	db 20 ; damage
+	db DAMAGE_NORMAL ; category
+	dw DamageUpTo2Benched10EffectCommands ; effect commands
+	db DAMAGE_TO_OPPONENT_BENCH ; flags 1
+	db NONE ; flags 2
+	db NONE ; flags 3
+	db 10
+	db ATK_ANIM_WATER_JETS ; animation
 
 	db 0 ; retreat cost
 	db WR_LIGHTNING ; weakness
@@ -3641,7 +3641,7 @@ PoliwhirlCard:
 	db DIAMOND ; rarity
 	db LABORATORY | NONE ; sets
 	db POLIWHIRL
-	db 80 ; hp
+	db 70 ; hp
 	db STAGE1 ; stage
 	tx PoliwagName ; pre-evo name
 
@@ -3664,7 +3664,7 @@ PoliwhirlCard:
 	tx WaveSplashName ; name
 	tx WaveSplashDescription ; description
 	tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
-	db 20 ; damage
+	db 30 ; damage
 	db DAMAGE_NORMAL ; category
 	dw IfActiveThisTurnDamageOpponentBench10EffectCommands ; effect commands
 	db DAMAGE_TO_OPPONENT_BENCH ; flags 1

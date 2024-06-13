@@ -89,12 +89,16 @@
 - **Hydro Pump**: reduced cost from (CCC) to (C); reduced base damage from 40 to 0; increased bonus damage from 10 per Water Energy to 20 per Water Energy.
 - **Aqua Launcher**: increased cost from (WC) to (WWC); increased damage from 30 to 50; increased damage reduction from 10 to 20.
 
+#### Poliwag
+- **Mud Splash**: removed.
+- **Rain Splash**: reduced cost from (W) to (C).
+- New attack: **Muddy Water** (WC): 20 damage; does 10 damage to 2 of the opponent's Benched Pokémon.
+
 #### Poliwhirl
-- Increased HP from 70 to 80.
 - **Mud Sport**: removed.
 - **Rain Splash**: removed.
 - New Pokémon Power: **Splashing Retreat**: if you discard Water Energy to Retreat, put those energies in the hand instead.
-- New attack: **Wave Splash** (WC): 20 damage; if the Pokémon moved into the Active Spot this turn, does 10 damage to each of the opponent's Benched Pokémon.
+- New attack: **Wave Splash** (WC): 30 damage; if the Pokémon moved into the Active Spot this turn, does 10 damage to each of the opponent's Benched Pokémon.
 
 #### Poliwrath
 - Increased HP from 100 to 110.
