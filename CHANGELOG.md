@@ -128,7 +128,7 @@
 - **Deep Dive**: removed.
 - **Blizzard**: removed.
 - New Pokémon Power: **Swim Freely**: if Benched, switch in; if Active, switch out.
-- New attack: **Riptide** (CC): 10 damage; shuffle 4 Energy cards from discard pile into deck; +10 damage for each returned Energy.
+- New attack: **Riptide** (WC): 10 damage; shuffle 4 Energy cards from discard pile into deck; +10 damage for each returned Energy.
 
 #### Shellder
 - **Withdraw**: removed.
