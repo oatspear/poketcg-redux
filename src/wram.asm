@@ -444,8 +444,6 @@ wCurPlayAreaY:: ; cbca
 ; Y position to display the attached energies, HP bar, and Pluspower/Defender icons
 ; obviously different for player and opponent side. used by DrawDuelHUD.
 wHUDEnergyAndHPBarsY:: ; cbca
-
-wPracticeDuelTextY:: ; cbca
 	ds $1
 
 ; selected bench slot (1-5, that is, a PLAY_AREA_BENCH_* constant)
@@ -589,18 +587,19 @@ wTempNumRemainingPrizeCards:: ; cbfc
 wPlacingInitialBenchPokemon:: ; cbfd
 	ds $1
 
-; during a practice duel, identifies an entry of PracticeDuelActionTable
-wPracticeDuelAction:: ; cbfe
+; unused
+wcbfe:: ; cbfe
 	ds $1
 
 wcbff:: ; cbff
 	ds $1
 
-wPracticeDuelTurn:: ; cc00
+; unused
+wcc00:: ; cc00
 	ds $1
 
-; pointer from PracticeDuelTextPointerTable
-wPracticeDuelTextPointer:: ; cc01
+; unused
+wcc01:: ; cc01
 	ds $2
 
 ; used to print a Pokemon card's length in feet and inches
@@ -636,7 +635,7 @@ wDuelFinished:: ; cc07
 wDuelInitialPrizes:: ; cc08
 	ds $1
 
-; a DUELTYPE_* constant. note that for a practice duel, wIsPracticeDuel must also be set to $1
+; a DUELTYPE_* constant
 wDuelType:: ; cc09
 	ds $1
 
@@ -684,7 +683,8 @@ wPlayerAttackingCardIndex:: ; cc11
 wPlayerAttackingCardID:: ; cc12
 	ds $1
 
-wIsPracticeDuel:: ; cc13
+; unused
+wcc13:: ; cc13
 	ds $1
 
 wNPCDuelistCopy:: ; cc14

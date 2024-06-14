@@ -103,7 +103,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PlacedOnTheBenchText                               ; 0x0061
 	textpointer PlacedInTheArenaText                               ; 0x0062
 	textpointer ShufflesTheDeckText                                ; 0x0063
-	textpointer ThisIsJustPracticeDoNotShuffleText                 ; 0x0064
 	textpointer EachPlayerShuffleOpponentsDeckText                 ; 0x0065
 	textpointer EachPlayerDraw7CardsText                           ; 0x0066
 	textpointer Drew7CardsText                                     ; 0x0067
@@ -409,63 +408,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer DeckConfigurationTransferWasntSuccessful2Text      ; 0x01a1
 	textpointer NowPrintingText                                    ; 0x01a2
 	textpointer DrMasonText                                        ; 0x01a3
-	textpointer DrawSevenCardsPracticeDuelText                     ; 0x01a4
-	textpointer ChooseGoldeenPracticeDuelText                      ; 0x01a5
-	textpointer PutPokemonOnBenchPracticeDuelText                  ; 0x01a6
-	textpointer ChooseStaryuPracticeDuelText                       ; 0x01a7
-	textpointer PressBToFinishPracticeDuelText                     ; 0x01a8
-	textpointer Turn1Instr1PracticeDuelText                        ; 0x01a9
-	textpointer Turn1Instr2PracticeDuelText                        ; 0x01aa
-	textpointer Turn1Instr3PracticeDuelText                        ; 0x01ab
-	textpointer Turn2Instr1PracticeDuelText                        ; 0x01ac
-	textpointer Turn2Instr2PracticeDuelText                        ; 0x01ad
-	textpointer Turn2Instr3PracticeDuelText                        ; 0x01ae
-	textpointer Turn3Instr1PracticeDuelText                        ; 0x01af
-	textpointer Turn3Instr2PracticeDuelText                        ; 0x01b0
-	textpointer Turn3Instr3PracticeDuelText                        ; 0x01b1
-	textpointer Turn4Instr1PracticeDuelText                        ; 0x01b2
-	textpointer Turn4Instr2PracticeDuelText                        ; 0x01b3
-	textpointer Turn4Instr3PracticeDuelText                        ; 0x01b4
-	textpointer Turn5Instr1PracticeDuelText                        ; 0x01b5
-	textpointer Turn5Instr2PracticeDuelText                        ; 0x01b6
-	textpointer Turn6Instr1PracticeDuelText                        ; 0x01b7
-	textpointer Turn6Instr2PracticeDuelText                        ; 0x01b8
-	textpointer Turn6Instr3PracticeDuelText                        ; 0x01b9
-	textpointer Turn7Instr1PracticeDuelText                        ; 0x01ba
-	textpointer Turn7Instr2PracticeDuelText                        ; 0x01bb
-	textpointer Turn8Instr1PracticeDuelText                        ; 0x01bc
-	textpointer Turn8Instr2PracticeDuelText                        ; 0x01bd
-	textpointer SamTurn4Instr1PracticeDuelText                     ; 0x01be
-	textpointer SamTurn4Instr2PracticeDuelText                     ; 0x01bf
-	textpointer Turn1DrMason1PracticeDuelText                      ; 0x01c0
-	textpointer Turn1DrMason2PracticeDuelText                      ; 0x01c1
-	textpointer Turn1DrMason3PracticeDuelText                      ; 0x01c2
-	textpointer Turn2DrMason1PracticeDuelText                      ; 0x01c3
-	textpointer Turn2DrMason2PracticeDuelText                      ; 0x01c4
-	textpointer Turn2DrMason3PracticeDuelText                      ; 0x01c5
-	textpointer Turn3DrMason1PracticeDuelText                      ; 0x01c6
-	textpointer Turn3DrMason2PracticeDuelText                      ; 0x01c7
-	textpointer Turn3DrMason3PracticeDuelText                      ; 0x01c8
-	textpointer Turn4DrMason1PracticeDuelText                      ; 0x01c9
-	textpointer Turn4DrMason2PracticeDuelText                      ; 0x01ca
-	textpointer Turn4DrMason3PracticeDuelText                      ; 0x01cb
-	textpointer Turn5DrMason1PracticeDuelText                      ; 0x01cc
-	textpointer Turn5DrMason2PracticeDuelText                      ; 0x01cd
-	textpointer Turn6DrMason1PracticeDuelText                      ; 0x01ce
-	textpointer Turn6DrMason2PracticeDuelText                      ; 0x01cf
-	textpointer Turn6DrMason3PracticeDuelText                      ; 0x01d0
-	textpointer Turn7DrMason1PracticeDuelText                      ; 0x01d1
-	textpointer Turn7DrMason2PracticeDuelText                      ; 0x01d2
-	textpointer Turn8DrMason1PracticeDuelText                      ; 0x01d3
-	textpointer Turn8DrMason2PracticeDuelText                      ; 0x01d4
-	textpointer SamTurn4DrMason1PracticeDuelText                   ; 0x01d5
-	textpointer SamTurn4DrMason2PracticeDuelText                   ; 0x01d6
-	textpointer SelectStaryuPracticeDuelText                       ; 0x01d7
-	textpointer LetsPlayTheGamePracticeDuelText                    ; 0x01d8
-	textpointer NeedPracticeAgainPracticeDuelText                  ; 0x01d9
-	textpointer FollowMyGuidancePracticeDuelText                   ; 0x01da
-	textpointer PlayersTurnPracticeDuelText                        ; 0x01db
-	textpointer ReplaceDueToKnockoutPracticeDuelText               ; 0x01dc
 	textpointer Text01dd                                           ; 0x01dd
 	textpointer PracticePlayerDeckName                             ; 0x01de
 	textpointer SamsPracticeDeckName                               ; 0x01df

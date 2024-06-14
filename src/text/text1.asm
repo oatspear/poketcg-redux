@@ -470,11 +470,6 @@ ShufflesTheDeckText: ; 36afe (d:6afe)
 	text "<RAMNAME> shuffles the Deck."
 	done
 
-ThisIsJustPracticeDoNotShuffleText: ; 36b14 (d:6b14)
-	text "Since this is just practice,"
-	line "Do not shuffle the Deck."
-	done
-
 EachPlayerShuffleOpponentsDeckText: ; 36b4b (d:6b4b)
 	text "Each player will"
 	line "shuffle the opponent's Deck."

@@ -62,7 +62,6 @@ ENDM
 ; wAICardListEnergyBonus   : max number of energy cards and card scores.
 
 INCLUDE "engine/duel/ai/decks/general.asm"
-INCLUDE "engine/duel/ai/decks/sams_practice.asm"
 INCLUDE "engine/duel/ai/decks/legendary_moltres.asm"
 INCLUDE "engine/duel/ai/decks/legendary_zapdos.asm"
 INCLUDE "engine/duel/ai/decks/legendary_articuno.asm"
