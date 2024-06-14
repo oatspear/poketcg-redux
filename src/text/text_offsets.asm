@@ -2781,8 +2781,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ClairvoyantSenseName
 	textpointer ClairvoyantSenseDescription
 	textpointer Exoskeleton10Description
-	textpointer EnergyDashName
-	textpointer EnergyDashDescription
 	textpointer WaveSplashName
 	textpointer WaveSplashDescription
 

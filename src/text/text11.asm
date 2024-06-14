@@ -1704,18 +1704,6 @@ Exoskeleton10Description:
 	line "Weakness and Resistance)."
 	done
 
-EnergyDashName:
-	text "Energy Dash"
-	done
-
-EnergyDashDescription:
-	text "If this Pokémon moved into the"
-	line "Active Spot this turn, you may"
-	line "attach up to 2 Basic Energies from"
-	line "your discard pile to your Pokémon"
-	line "in any way you like."
-	done
-
 WaveSplashName:
 	text "Wave Splash"
 	done

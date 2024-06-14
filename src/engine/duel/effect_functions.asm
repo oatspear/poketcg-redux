@@ -3617,14 +3617,6 @@ QueenPressEffect:
 	jp ApplySubstatus1ToAttackingCard
 
 
-EnergyDash_PlayerSelectEffect:
-	call CreateEnergyCardListFromDiscardPile_OnlyBasic
-	ret c  ; no energies
-	call CheckEnteredActiveSpotThisTurn
-	ret c  ; not Active this turn
-	; jr EnergySpores_PlayerSelectEffect
-	; fallthrough
-
 EnergySpores_PlayerSelectEffect:
 	ldtx hl, Choose2EnergyCardsFromDiscardPileToAttachText
 	jp HandleEnergyCardsInDiscardPileSelection
@@ -3687,15 +3679,6 @@ AttachBasicEnergyFromDiscardPileToBench_AISelectEffect:
 	ld a, PLAY_AREA_BENCH_1
 	ldh [hTempPlayAreaLocation_ffa1], a
 	ret
-
-
-EnergyDash_AISelectEffect:
-	call CreateEnergyCardListFromDiscardPile_OnlyBasic
-	ret c  ; no energies
-	call CheckEnteredActiveSpotThisTurn
-	ret c  ; not Active this turn
-	ld a, 2
-	jr PickFirstNCardsFromList_SelectEffect
 
 
 EnergySpores_AISelectEffect:
