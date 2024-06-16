@@ -948,13 +948,13 @@ CheckCantRetreatDueToAcid:
 	ret
 
 ; return carry if the turn holder is affected by Headache and trainer cards can't be used
-CheckCantUseTrainerDueToHeadache:
+CheckCantUseItemsThisTurn:
 	ld a, DUELVARS_ARENA_CARD_SUBSTATUS3
 	call GetTurnDuelistVariable
 	or a
 	bit SUBSTATUS3_HEADACHE, [hl]
 	ret z
-	ldtx hl, UnableToUseTrainerDueToHeadacheText
+	ldtx hl, UnableToUseItemCardThisTurnText
 	scf
 	ret
 

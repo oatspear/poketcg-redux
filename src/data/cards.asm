@@ -2602,11 +2602,11 @@ VulpixCard:
 	; attack 1
 	energy FIRE, 1 ; energies
 	tx ConfuseRayName ; name
-	tx MayInflictConfusionDescription ; description
+	tx InflictConfusionDescription ; description
 	dw NONE ; description (cont)
 	db 10 ; damage
 	db DAMAGE_NORMAL ; category
-	dw Confusion50PercentEffectCommands ; effect commands
+	dw InflictConfusionEffectCommands ; effect commands
 	db INFLICT_CONFUSION ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -3493,7 +3493,7 @@ PsyduckCard:
 	dw NONE ; pre-evo name
 
 	; attack 1
-	energy COLORLESS, 1 ; energies
+	energy WATER, 1 ; energies
 	tx HeadacheName ; name
 	tx HeadacheDescription ; description
 	dw NONE ; description (cont)
@@ -3504,21 +3504,21 @@ PsyduckCard:
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_GLOW_EFFECT ; animation
+	db ATK_ANIM_AMNESIA ; animation
 
 	; attack 2
 	energy WATER, 1, COLORLESS, 1 ; energies
-	tx AmnesiaName ; name
-	tx AmnesiaDescription ; description
+	tx RainSplashName ; name
+	tx IfAttachedEnergy10BonusDamageDescription ; description
 	dw NONE ; description (cont)
-	db 10 ; damage
-	db DAMAGE_NORMAL ; category
-	dw AmnesiaEffectCommands ; effect commands
+	db 20 ; damage
+	db DAMAGE_PLUS ; category
+	dw IfAttachedEnergy10BonusDamageEffectCommands ; effect commands
 	db NONE ; flags 1
-	db FLAG_2_BIT_6 ; flags 2
+	db NONE ; flags 2
 	db NONE ; flags 3
-	db 2
-	db ATK_ANIM_AMNESIA ; animation
+	db 0
+	db ATK_ANIM_WATER_JETS ; animation
 
 	db 0 ; retreat cost
 	db WR_LIGHTNING ; weakness

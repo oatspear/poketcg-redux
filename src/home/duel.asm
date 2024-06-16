@@ -1969,7 +1969,7 @@ PlayTrainerCard:
 
 .not_supporter_card
 ; OATS end support trainer subtypes
-	call CheckCantUseTrainerDueToHeadache
+	call CheckCantUseItemsThisTurn
 	jr c, .cant_use
 	ld a, 10
 	ld [wGarbageEaterDamageToHeal], a

@@ -84,9 +84,8 @@ UnableToRetreatDueToTrapText:
 	line "Trapping effect."
 	done
 
-UnableToUseTrainerDueToHeadacheText: ; 381dc (e:41dc)
-	text "Unable to use a Trainer card"
-	line "due to the effects of Headache."
+UnableToUseItemCardThisTurnText:
+	text "Unable to use Item card this turn."
 	done
 
 UnableToAttackDueToEffectText:

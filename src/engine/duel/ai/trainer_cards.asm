@@ -163,7 +163,7 @@ AICheckCanPlayTrainerInBuffer1:
 	ret
 .not_supporter
 ; Headache effects prevent playing card
-	bank1call CheckCantUseTrainerDueToHeadache
+	bank1call CheckCantUseItemsThisTurn
 	ret c
 .can_play_card
 	or a

@@ -410,9 +410,8 @@ HeadacheName:
 	done
 
 HeadacheDescription:
-	text "Your opponent cannot play"
-	line "non-Supporter Trainer cards"
-	line "during their next turn."
+	text "Your opponent cannot play Item"
+	line "cards during their next turn."
 	done
 
 SpiralDrainName:

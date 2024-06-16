@@ -1,4 +1,20 @@
 
+; attack 2
+energy WATER, 1, COLORLESS, 1 ; energies
+tx HeadacheName ; name
+tx HeadacheDescription ; description
+dw NONE ; description (cont)
+db 10 ; damage
+db DAMAGE_NORMAL ; category
+dw HeadacheEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_AMNESIA ; animation
+
+
+
 SplashingAttacksName:
 	text "Splashing Attacks"
 	done
@@ -637,11 +653,11 @@ PoliwhirlCard:
 	; attack 2
 	energy COLORLESS, 2 ; energies
 	tx RainSplashName ; name
-	tx DoubleDamageIfAttachedEnergyDescription ; description
+	tx IfAttachedEnergy10BonusDamageDescription ; description
 	dw NONE ; description (cont)
 	db 20 ; damage
 	db DAMAGE_PLUS ; category
-	dw DoubleDamageIfAttachedEnergyEffectCommands ; effect commands
+	dw IfAttachedEnergy10BonusDamageEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -714,6 +730,20 @@ KinglerCard:
 	tx KinglerDescription ; description
 	db 0
 
+
+; attack 2
+energy WATER, 1, COLORLESS, 1 ; energies
+tx AmnesiaName ; name
+tx AmnesiaDescription ; description
+dw NONE ; description (cont)
+db 10 ; damage
+db DAMAGE_NORMAL ; category
+dw AmnesiaEffectCommands ; effect commands
+db NONE ; flags 1
+db FLAG_2_BIT_6 ; flags 2
+db NONE ; flags 3
+db 2
+db ATK_ANIM_AMNESIA ; animation
 
 
 SlowpokeLv9Card:

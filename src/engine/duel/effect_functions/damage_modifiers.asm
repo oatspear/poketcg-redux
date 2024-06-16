@@ -149,7 +149,7 @@ Psychic_DamageBoostEffect:
 	ld a, MAX_DAMAGE
 	ld [hl], a
 	ret
-	
+
 Psychic_AIEffect:
 	call Psychic_DamageBoostEffect
 	jp SetDefiniteAIDamage
@@ -285,13 +285,14 @@ Riptide_AIEffect:
 	jp SetDefiniteAIDamage
 
 
-DoubleDamageIfAttachedEnergy_DamageBoostEffect:
+IfAttachedEnergy10BonusDamage_DamageBoostEffect:
 	call CheckPlayedEnergyThisTurn
-	jp nc, DoubleDamage_DamageBoostEffect
-	ret
+	ret c  ; no energy
+	ld a, 10
+	jp AddToDamage
 
-DoubleDamageIfAttachedEnergy_AIEffect:
-	call DoubleDamageIfAttachedEnergy_DamageBoostEffect
+IfAttachedEnergy10BonusDamage_AIEffect:
+	call IfAttachedEnergy10BonusDamage_DamageBoostEffect
 	jp SetDefiniteAIDamage
 
 

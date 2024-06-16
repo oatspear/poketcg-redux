@@ -89,6 +89,11 @@
 - **Hydro Pump**: reduced cost from (CCC) to (C); reduced base damage from 40 to 0; increased bonus damage from 10 per Water Energy to 20 per Water Energy.
 - **Aqua Launcher**: increased cost from (WC) to (WWC); increased damage from 30 to 50; increased damage reduction from 10 to 20.
 
+#### Psyduck
+- **Headache**: increased cost from (C) to (W).
+- **Amnesia**: removed.
+- New attack: **Rain Splash** (WC): 20 damage; +10 damage if the player attached an energy from the hand this turn.
+
 #### Golduck
 - **Aquatic Rescue**: removed.
 - **Energy Loop**: removed.

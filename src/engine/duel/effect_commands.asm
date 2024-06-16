@@ -861,9 +861,9 @@ BulkUpEffectCommands:
 	dbw EFFECTCMDTYPE_AI_SELECTION, TutorFightingEnergy_AISelectEffect
 	db  $00
 
-DoubleDamageIfAttachedEnergyEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, DoubleDamageIfAttachedEnergy_DamageBoostEffect
-	dbw EFFECTCMDTYPE_AI, DoubleDamageIfAttachedEnergy_AIEffect
+IfAttachedEnergy10BonusDamageEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, IfAttachedEnergy10BonusDamage_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AI, IfAttachedEnergy10BonusDamage_AIEffect
 	db  $00
 
 GatherToxinsEffectCommands:

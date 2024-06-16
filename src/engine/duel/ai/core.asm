@@ -656,7 +656,7 @@ CheckIfCardCanBePlayed:
 	ret
 .not_supporter_card
 ; OATS end SUPPORTER check
-	bank1call CheckCantUseTrainerDueToHeadache
+	bank1call CheckCantUseItemsThisTurn
 	ret c
 .can_play
 	call LoadNonPokemonCardEffectCommands

@@ -245,7 +245,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer IfHeadsOpponentCannotAttackText                    ; 0x00fc
 	textpointer AttackUnsuccessfulText                             ; 0x00fd
 	textpointer UnableToRetreatDueToTrapText
-	textpointer UnableToUseTrainerDueToHeadacheText                ; 0x00ff
+	textpointer UnableToUseItemCardThisTurnText
 	textpointer UnableToAttackDueToEffectText
 	textpointer UnableToUseAttackDueToAmnesiaText                  ; 0x0103
 	textpointer KnockedOutDueToDestinyBondText                     ; 0x0104
@@ -2768,8 +2768,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer Discard1CardFromOpponentsDeckDescription
 	textpointer Discard2CardsFromOpponentsDeckDescription
 	textpointer MultiplePokemonOfTheSameColorText
-	textpointer SupersonicName                                     ; 0x0852
-	textpointer MayInflictConfusionDescription                     ; 0x0853
+	textpointer ConfusionName
 	textpointer AdaptiveEvolutionName
 	textpointer AdaptiveEvolutionDescription
 	textpointer PowerLariatName
@@ -2925,7 +2924,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer DraconicEvolutionName
 	textpointer DraconicEvolutionDescription
 	textpointer RainSplashName
-	textpointer DoubleDamageIfAttachedEnergyDescription
+	textpointer IfAttachedEnergy10BonusDamageDescription
 	textpointer MuddyWaterName
 	textpointer Retrieve1BasicEnergyDescription
 	textpointer EnergySoakName

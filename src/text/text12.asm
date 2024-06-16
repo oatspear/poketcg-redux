@@ -188,13 +188,8 @@ MultiplePokemonOfTheSameColorText:
 	line "of the same Color."
 	done
 
-SupersonicName: ; 58474 (16:4474)
-	text "Supersonic"
-	done
-
-MayInflictConfusionDescription: ; 58480 (16:4480)
-	text "Flip a coin. If heads, the Defending"
-	line "Pokémon is now Confused."
+ConfusionName:
+	text "Confusion"
 	done
 
 AdaptiveEvolutionName:
@@ -980,10 +975,10 @@ RainSplashName:
 	text "Rain Splash"
 	done
 
-DoubleDamageIfAttachedEnergyDescription:
+IfAttachedEnergy10BonusDamageDescription:
 	text "If you attached an Energy card from"
-	line "your Hand this turn, double this"
-	line "attack's damage."
+	line "your hand this turn, this attack"
+	line "does 10 more damage."
 	done
 
 MuddyWaterName:
