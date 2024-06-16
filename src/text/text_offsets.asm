@@ -2725,6 +2725,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer Exoskeleton10Description
 	textpointer WaveSplashName
 	textpointer WaveSplashDescription
+	textpointer SwiftSwimName
+	textpointer SwiftSwimDescription
 
 ; ------------------------------------------------------------------------------
 ; text12.asm

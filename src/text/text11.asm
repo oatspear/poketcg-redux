@@ -1714,3 +1714,13 @@ WaveSplashDescription:
 	line "to each of your opponent's Benched"
 	line "Pokémon."
 	done
+
+SwiftSwimName:
+	text "Swift Swim"
+	done
+
+SwiftSwimDescription:
+	text "If this Pokémon moved into the"
+	line "Active Spot this turn, its attacks"
+	line "cost <COLORLESS> less."
+	done

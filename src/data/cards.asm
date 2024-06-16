@@ -3544,18 +3544,18 @@ GolduckCard:
 	tx PsyduckName ; pre-evo name
 
 	; attack 1
-	energy COLORLESS, 1 ; energies
-	tx AquaticRescueName ; name
-	tx AquaticRescueDescription ; description
-	dw NONE ; description (cont)
+	energy 0 ; energies
+	tx SwiftSwimName ; name
+	tx SwiftSwimDescription ; description
+	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db RESIDUAL ; category
-	dw AquaticRescueEffectCommands ; effect commands
+	db POKEMON_POWER ; category
+	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_GLOW_EFFECT ; animation
+	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
 	energy WATER, 1, COLORLESS, 2 ; energies
@@ -3913,6 +3913,19 @@ DewgongCard:
 	db NONE ; flags 3
 	db 0
 	db ATK_ANIM_PKMN_POWER_1 ; animation
+
+	; energy COLORLESS, 1 ; energies
+	; tx AquaticRescueName ; name
+	; tx AquaticRescueDescription ; description
+	; dw NONE ; description (cont)
+	; db 0 ; damage
+	; db RESIDUAL ; category
+	; dw AquaticRescueEffectCommands ; effect commands
+	; db NONE ; flags 1
+	; db NONE ; flags 2
+	; db NONE ; flags 3
+	; db 0
+	; db ATK_ANIM_GLOW_EFFECT ; animation
 
 	; attack 2
 	energy WATER, 1, COLORLESS, 1 ; energies
@@ -5891,7 +5904,7 @@ JolteonLv29Card:
 
 	; Ability: Speed Cheer
 	; The attacks of your Pokémon-GX in play that evolve from Eevee cost Colorless less.
-	; You can't apply more than 1 Speed Cheer Ability at a time 
+	; You can't apply more than 1 Speed Cheer Ability at a time
 
 	; (LCC) Fighting Lightning  40
 	; If your opponent's Active Pokémon is a Pokémon ex/V, this attack does 40 more damage.

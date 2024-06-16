@@ -795,12 +795,20 @@ GetAttackCostDiscount:
 	ld a, e
 	or a
 	jr nz, .bench
-	ld a, DUELVARS_ARENA_CARD_SUBSTATUS1
+; check for Swift Swim
+	add DUELVARS_ARENA_CARD
 	call GetTurnDuelistVariable
-	cp $ff  ; TODO
+	call _GetCardIDFromDeckIndex  ; preserves bc, de
+	cp GOLDUCK
 	jr nz, .bench
+	call CheckCannotUseDueToStatus  ; unable to use ability
+	jr c, .bench
+	ld a, DUELVARS_ARENA_CARD_SUBSTATUS3
+	call GetTurnDuelistVariable
+	bit SUBSTATUS3_THIS_TURN_ACTIVE, a
+	jr z, .bench
 	inc c
-	ld a, e
+	; ld a, e
 .bench
 ;	add DUELVARS_ARENA_CARD
 ;	call GetTurnDuelistVariable
@@ -1120,7 +1128,7 @@ HandleStrikeBack_AgainstDamagingAttack:
 	or a
 	ret nz  ; bench
 
-; do not counter if the Pokémon Power is disabled or not available	
+; do not counter if the Pokémon Power is disabled or not available
 	call IsCounterattackActive
 	ret nc  ; not active or no capable Pokémon
 	ccf
