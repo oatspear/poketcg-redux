@@ -1709,10 +1709,11 @@ WaveSplashName:
 	done
 
 WaveSplashDescription:
-	text "If this Pokémon moved into the"
-	line "Active Spot this turn, do 10 damage"
-	line "to each of your opponent's Benched"
-	line "Pokémon."
+	text "Put an Energy attached to"
+	line "this Pokémon into your hand."
+	line "Choose up to 2 of your opponent's"
+	line "Benched Pokémon. This attack does"
+	line "10 damage to each."
 	done
 
 SwiftSwimName:

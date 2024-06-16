@@ -38,6 +38,10 @@ EffectCommands:
 ;       The EFFECTCMDTYPE_DISCARD_ENERGY and EFFECTCMDTYPE_BEFORE_DAMAGE effects
 ;       are executed as normal.
 
+; NOTE: The AI executes EFFECTCMDTYPE_AI_SWITCH_DEFENDING_PKMN after
+;       EFFECTCMDTYPE_DISCARD_ENERGY, so it works as a second selection
+;       stage, after EFFECTCMDTYPE_AI_SELECTION.
+
 ; Attacks that have an EFFECTCMDTYPE_REQUIRE_SELECTION also must have either an EFFECTCMDTYPE_AI_SWITCH_DEFENDING_PKMN or an
 ; EFFECTCMDTYPE_AI_SELECTION (for anything not involving switching the defending Pokemon), to handle selections involving the AI.
 
@@ -648,6 +652,18 @@ Bounce2EnergiesEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Discard2Energies_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_DISCARD_ENERGY, Bounce2Energies_BounceEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, Discard2Energies_AISelectEffect
+	db  $00
+
+WaveSplashEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasAnyEnergiesAttached
+; first selection phase
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, DiscardEnergy_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, DiscardEnergy_AISelectEffect
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, BounceEnergy_BounceEffect
+; second selection phase
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, SelectUpTo2Benched_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SWITCH_DEFENDING_PKMN, SelectUpTo2Benched_AISelectEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, SelectUpTo2Benched_BenchDamageEffect
 	db  $00
 
 FirePunchEffectCommands:
