@@ -143,9 +143,9 @@
 
 #### Shellder
 - **Withdraw**: removed.
-- **Clamp**: reworked.
+- **Clamp**: removed.
 - New Pokémon Power: **Exoskeleton**: reduces damage taken by 10.
-- New attack: **Deep Sea Treasure** (C): put an Item from discard pile into hand.
+- New attack: **Dredge** (W): 10 damage; put an Item from discard pile into hand.
 
 #### Cloyster
 - **Cold Crush**: removed.

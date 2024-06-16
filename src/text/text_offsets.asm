@@ -2491,7 +2491,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer CowardiceName                                      ; 0x094f
 	textpointer CowardiceDescription                               ; 0x0950
 	textpointer JellyfishStingName                                 ; 0x0954
-	textpointer DeepSeaTreasureName
+	textpointer DredgeName
 	textpointer FlailName                                          ; 0x096d
 	textpointer FlailDescription                                   ; 0x096e
 	textpointer CrabhammerName
@@ -2996,7 +2996,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer BulkUpName
 	textpointer BulkUpDescription
 	textpointer SearchingMagnetName
-	textpointer SearchingMagnetDescription
+	textpointer Tutor1ItemDescription
 	textpointer EnergyAssistName
 	textpointer EnergyAssistDescription
 	textpointer WaveRiderName

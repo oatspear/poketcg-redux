@@ -3980,18 +3980,18 @@ ShellderCard:
 	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy COLORLESS, 1 ; energies
-	tx DeepSeaTreasureName ; name
+	energy WATER, 1 ; energies
+	tx DredgeName ; name
 	tx ScavengeDescription ; description
 	dw NONE ; description (cont)
-	db 0 ; damage
-	db RESIDUAL ; category
+	db 10 ; damage
+	db DAMAGE_NORMAL ; category
 	dw ScavengeEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
-	db 2
-	db ATK_ANIM_GLOW_EFFECT ; animation
+	db 0
+	db ATK_ANIM_HIT ; animation
 
 	db 0 ; retreat cost
 	db WR_LIGHTNING ; weakness
@@ -4032,7 +4032,7 @@ CloysterCard:
 	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy WATER 1, COLORLESS, 1 ; energies
+	energy WATER, 1, COLORLESS, 1 ; energies
 	tx IcicleSpearsName ; name
 	tx IcicleSpearsDescription ; description
 	tx Counter20DamageDescription ; description (cont)
@@ -5412,7 +5412,7 @@ MagnemiteLv15Card:
 	; attack 1
 	energy COLORLESS, 1 ; energies
 	tx SearchingMagnetName ; name
-	tx SearchingMagnetDescription ; description
+	tx Tutor1ItemDescription ; description
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category
@@ -8605,7 +8605,7 @@ RattataCard:
 	; attack 1
 	energy COLORLESS, 1 ; energies
 	tx LuckyFindName ; name
-	tx SearchingMagnetDescription ; description
+	tx Tutor1ItemDescription ; description
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category

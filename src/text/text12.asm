@@ -1362,7 +1362,7 @@ SearchingMagnetName:
 	text "Searching Magnet"
 	done
 
-SearchingMagnetDescription:
+Tutor1ItemDescription:
 	text "Search your deck for an Item card,"
 	line "reveal it, and put it into your"
 	line "hand. Then, shuffle your deck."

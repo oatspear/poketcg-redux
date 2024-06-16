@@ -468,8 +468,8 @@ JellyfishStingName: ; 5ba02 (16:7a02)
 	text "Jellyfish Sting"
 	done
 
-DeepSeaTreasureName:
-	text "Deep Sea Treasure"
+DredgeName:
+	text "Dredge"
 	done
 
 FlailName: ; 5be7c (16:7e7c)
@@ -1080,9 +1080,8 @@ ScavengeName:
 	done
 
 ScavengeDescription:
-	text "Put a non-Supporter Trainer card"
-	line "from your discard pile into"
-	line "your hand."
+	text "Put an Item card from your"
+	line "discard pile into your hand."
 	done
 
 SleepingGasName: ; 604c3 (18:44c3)
