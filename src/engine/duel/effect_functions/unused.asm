@@ -1,5 +1,53 @@
 ;
 
+; input:
+;   [hTempPlayAreaLocation_ffa1]: PLAY_AREA_* of the Pokémon that switched in
+;                                 (now with the previous Active Pokémon)
+;   [hTempRetreatCostCards]: $ff-terminated list of discarded deck indices
+HandleOnRetreatEffects:
+	ld a, RAICHU_LV40  ; Volt Switch
+	call GetFirstPokemonWithAvailablePower
+	jr nc, .splashing_retreat  ; no Power-capable Pokémon was found
+	farcall VoltSwitchEffect
+.splashing_retreat
+	ld a, POLIWHIRL  ; Splashing Retreat
+	call GetFirstPokemonWithAvailablePower
+	jr nc, .done  ; no Power-capable Pokémon was found
+	farcall SplashingRetreatEffect
+.done
+	ret
+
+
+; input:
+;   [hTempRetreatCostCards]: $ff-terminated list of discarded deck indices
+SplashingRetreatEffect:
+	ld hl, hTempRetreatCostCards
+.loop
+	ld a, [hli]
+	cp $ff
+	ret z  ; no (more) cards were discarded
+	ld d, a  ; deck index
+	call LoadCardDataToBuffer2_FromDeckIndex  ; preserves hl, de
+	ld a, [wLoadedCard2Type]
+	cp TYPE_ENERGY_WATER
+	jr nz, .loop
+; found a Water Energy
+	ld a, d
+	call MoveDiscardPileCardToHand  ; preserves hl, de
+	call AddCardToHand  ; preserves hl, de
+	push hl
+	call IsPlayerTurn  ; preserves de
+	pop hl
+	jr c, .loop
+	ld a, d
+	push hl
+	ldtx hl, WasPlacedInTheHandText
+	bank1call DisplayCardDetailScreen
+	pop hl
+	jr .loop
+
+
+
 
 Retrieve1BasicEnergyEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, SelectedEnergy_AddToHandFromDiscardPile
@@ -1253,18 +1301,18 @@ Ascension_PlayerSelectEffect:
 	PoisonEvolution_PlayerSelectEffect:
 		xor a  ; PLAY_AREA_ARENA
 		; fallthrough
-	
+
 	; Allows the Player to select an evolution card in the deck.
 	; input:
 	;   a: PLAY_AREA_* of the card to evolve
 	EvolutionFromDeck_PlayerSelectEffect:
 	; temporary storage for card location
 		ldh [hTempPlayAreaLocation_ffa1], a
-	
+
 		call IsPrehistoricPowerActive
 		; ldtx hl, UnableToEvolveDueToPrehistoricPowerText
 		jr c, .none_in_deck
-	
+
 	; search cards in Deck
 		call CreateDeckCardList
 		ldtx hl, ChooseEvolvedPokemonFromDeckText
@@ -1275,12 +1323,12 @@ Ascension_PlayerSelectEffect:
 		ld e, a
 		call LookForCardsInDeck
 		jr c, .none_in_deck
-	
+
 		bank1call InitAndDrawCardListScreenLayout_MenuTypeSelectCheck
 		ldtx hl, ChooseEvolvedPokemonText
 		ldtx de, DuelistDeckText
 		bank1call SetCardListHeaderText
-	
+
 	.select_card
 		bank1call DisplayCardList
 		jr c, .try_cancel
@@ -1293,16 +1341,16 @@ Ascension_PlayerSelectEffect:
 		jr nc, .got_card
 		jr nz, .got_card  ; ignore first turn evolution
 		jr .select_card ; not a valid Evolution card
-	
+
 	; Evolution card selected
 	.got_card
 		or a
 		ret
-	
+
 	.play_sfx
 		call PlaySFX_InvalidChoice
 		jr .select_card
-	
+
 	.try_cancel
 	; Player tried exiting screen, if there are
 	; any Beedrill cards, Player is forced to select them.
@@ -1334,7 +1382,7 @@ Ascension_PlayerSelectEffect:
 		ldh [hTemp_ffa0], a
 		or a
 		ret
-	
+
 
 
 PokemonBreederEffectCommands:
@@ -1486,37 +1534,37 @@ HandleEndOfTurnEvents:
 		xor a
 		ld [wLuckyTailsCardsToDraw], a
 		ld [wDreamEaterDamageToHeal], a
-	
+
 	; return if Pokémon Powers are disabled
 		call ArePokemonPowersDisabled
 		ret c
-	
+
 	; check for Meowth's Lucky Tails Power
 		ld a, MEOWTH_LV14
 		call CountPokemonIDInPlayArea
 		jr nc, .dream_eater
 		ld c, a
-	
+
 		ld a, DUELVARS_MISC_TURN_FLAGS
 		call GetTurnDuelistVariable
 		bit TURN_FLAG_TOSSED_TAILS_F, a
 		jr z, .dream_eater
 		ld a, c
 		ld [wLuckyTailsCardsToDraw], a
-	
+
 	; check for Hypno's Dream Eater Power
 	.dream_eater
 		; ld a, HYPNO
 		; call CountPokemonIDInPlayArea
 		; jr nc, .done
 		farcall DreamEater_CountPokemonAndSetHealingAmount
-	
+
 		; ld a, HAUNTER_LV22
 		; call CountPokemonIDInPlayArea
 		; jr nc, .done
 		farcall Affliction_CountPokemonAndSetVariable
 	.done
-		ret	
+		ret
 
 
 
@@ -1998,7 +2046,7 @@ Firegiver_AddToHandEffect:
 	ldtx hl, DrewFireEnergyFromTheHandText
 	call DrawWideTextBox_WaitForInput
 	jp SyncShuffleDeck
-	
+
 
 
 
@@ -2416,7 +2464,7 @@ FlareEssence_OncePerTurnCheck:
 	; ldtx hl, OnlyOncePerTurnText
 	; scf
 	; ret
-	
+
 
 VaporEssence_ChangeColorEffect:
 	call SetUsedPokemonPowerThisTurn

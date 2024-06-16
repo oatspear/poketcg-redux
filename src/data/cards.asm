@@ -3647,12 +3647,12 @@ PoliwhirlCard:
 
 	; attack 1
 	energy 0 ; energies
-	tx SplashingRetreatName ; name
-	tx SplashingRetreatDescription ; description
+	tx WaterAbsorbName ; name
+	tx WaterAbsorbDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKEMON_POWER ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw WaterAbsorbEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -4032,11 +4032,11 @@ CloysterCard:
 	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy COLORLESS, 2 ; energies
+	energy WATER 1, COLORLESS, 1 ; energies
 	tx IcicleSpearsName ; name
 	tx IcicleSpearsDescription ; description
 	tx Counter20DamageDescription ; description (cont)
-	db 10 ; damage
+	db 20 ; damage
 	db DAMAGE_NORMAL ; category
 	dw IcicleSpearsEffectCommands ; effect commands
 	db DAMAGE_TO_OPPONENT_BENCH ; flags 1

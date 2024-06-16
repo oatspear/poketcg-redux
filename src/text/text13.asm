@@ -126,11 +126,10 @@ IcicleSpearsName:
 	done
 
 IcicleSpearsDescription:
-	text "Choose up to 2 of your opponent's"
-	line "Benched Pokémon. This attack does"
-	line "10 damage to each. Don't apply"
-	line "Weakness and Resistance for"
-	line "Benched Pokémon."
+	text "This attack does 10 damage to 1 of"
+	line "your opponent's Benched Pokémon."
+	line "Don't apply Weakness and Resistance"
+	line "for Benched Pokémon."
 	done
 
 DarkPrisonName:
@@ -204,6 +203,17 @@ SwimFreelyDescription:
 ; ------------------------------------------------------------------------------
 ; Unused Text
 ; ------------------------------------------------------------------------------
+
+; SplashingRetreatName:
+; 	text "Splashing Retreat"
+; 	done
+
+; SplashingRetreatDescription:
+; 	text "If you discard any <WATER> Energies to"
+; 	line "pay for the Retreat Cost of your"
+; 	line "Active Pokémon, you may put those"
+; 	line "Energies in your hand instead."
+; 	done
 
 IF SLEEP_WITH_COIN_FLIP
 ; DreamEaterDescription:
@@ -341,7 +351,7 @@ ENDC
 ; VaporEssenceName:
 ; 	text "Vapor Essence"
 ; 	done
-; 
+;
 ; VaporEssenceDescription:
 ; 	text "If your Active Pokémon is an evolved"
 ; 	line "Pokémon, you may change its type"
@@ -351,7 +361,7 @@ ENDC
 ; JoltEssenceName:
 ; 	text "Jolt Essence"
 ; 	done
-; 
+;
 ; JoltEssenceDescription:
 ; 	text "If your Active Pokémon is an evolved"
 ; 	line "Pokémon, you may change its type"
@@ -361,7 +371,7 @@ ENDC
 ; FlareEssenceName:
 ; 	text "Flare Essence"
 ; 	done
-; 
+;
 ; FlareEssenceDescription:
 ; 	text "If your Active Pokémon is an evolved"
 ; 	line "Pokémon, you may change its type"

@@ -109,7 +109,7 @@
 #### Poliwhirl
 - **Mud Sport**: removed.
 - **Rain Splash**: removed.
-- New Pokémon Power: **Splashing Retreat**: if you discard Water Energy to Retreat, put those energies in the hand instead.
+- New Pokémon Power: **Water Absorb**: once per turn, attach a Water energy from the discard pile to itself.
 - New attack: **Wave Splash** (WC): 40 damage; put an Energy attached to the Pokémon back into the hand; does 10 damage to 2 of the opponent's Benched Pokémon.
 
 #### Poliwrath
@@ -149,7 +149,7 @@
 
 #### Cloyster
 - **Cold Crush**: removed.
-- New attack: **Icicle Spears** (CC): 10 damage; 10 damage to 2 of the opponent's Benched Pokémon; until next turn, do 20 damage back to attackers.
+- New attack: **Icicle Spears** (WC): 20 damage; 10 damage to 1 of the opponent's Benched Pokémon; until next turn, do 20 damage back to attackers.
 
 #### Krabby
 - **Bubble**: removed.

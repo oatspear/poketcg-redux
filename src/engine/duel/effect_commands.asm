@@ -400,6 +400,11 @@ LightningHasteEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, LightningHaste_AttachEnergyEffect
 	db  $00
 
+WaterAbsorbEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, WaterAbsorb_PreconditionCheck
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, WaterAbsorb_AttachEnergyEffect
+	db  $00
+
 HelpingHandEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, HelpingHand_CheckUse
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, HelpingHand_RemoveStatusEffect
@@ -1286,6 +1291,10 @@ ImmuneIfKnockedOutOpponentEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, ImmuneIfKnockedOutOpponentEffect
 	db  $00
 
+IcicleSpearsEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Counter20DamageEffect
+	; fallthrough to Damage1BenchedPokemon10EffectCommands
+
 Damage1BenchedPokemon10EffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Deal10DamageToTarget_DamageEffect
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, DamageTargetBenchedPokemonIfAny_PlayerSelectEffect
@@ -1352,10 +1361,6 @@ SteamrollerEffectCommands:
 GrowlEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, GrowlEffect
 	db  $00
-
-IcicleSpearsEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Counter20DamageEffect
-	; fallthrough to DamageUpTo2Benched10EffectCommands
 
 DamageUpTo2Benched10EffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, SelectUpTo2Benched_BenchDamageEffect

@@ -778,27 +778,6 @@ Attach1PsychicEnergyFromDiscardDescription:
 	line "discard pile to this Pokémon."
 	done
 
-; AbsorbWaterName:
-; 	text "Absorb Water"
-; 	done
-
-Retrieve1WaterEnergyFromDiscardDescription:
-	text "Once during your turn, you may put"
-	line "a <WATER> Energy from your discard pile"
-	line "into your hand."
-	done
-
-SplashingRetreatName:
-	text "Splashing Retreat"
-	done
-
-SplashingRetreatDescription:
-	text "If you discard any <WATER> Energies to"
-	line "pay for the Retreat Cost of your"
-	line "Active Pokémon, you may put those"
-	line "Energies in your hand instead."
-	done
-
 ; MudSportName:
 ; 	text "Mud Sport"
 ; 	done
@@ -1593,4 +1572,14 @@ ConcentrationName:
 
 LuckyFindName:
 	text "Lucky Find"
+	done
+
+WaterAbsorbName:
+	text "Water Absorb"
+	done
+
+WaterAbsorbDescription:
+	text "Once during your turn, you may"
+	line "attach a <WATER> Energy from your"
+	line "discard pile to this Pokémon."
 	done

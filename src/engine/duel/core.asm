@@ -6957,13 +6957,8 @@ HandleOnEvolvePokemonEffects:
 HandleOnRetreatEffects:
 	ld a, RAICHU_LV40  ; Volt Switch
 	call GetFirstPokemonWithAvailablePower
-	jr nc, .splashing_retreat  ; no Power-capable Pokémon was found
-	farcall VoltSwitchEffect
-.splashing_retreat
-	ld a, POLIWHIRL  ; Splashing Retreat
-	call GetFirstPokemonWithAvailablePower
 	jr nc, .done  ; no Power-capable Pokémon was found
-	farcall SplashingRetreatEffect
+	farcall VoltSwitchEffect
 .done
 	ret
 
@@ -9031,7 +9026,7 @@ InitializeCardListParameters:
 	ld [wCursorBlinkCounter], a
 	ld a, 1
 	ld [wYDisplacementBetweenMenuItems], a
-	ret 
+	ret
 
 
 ; print the items of a list of cards (hand cards in a duel, cards from a booster pack...)

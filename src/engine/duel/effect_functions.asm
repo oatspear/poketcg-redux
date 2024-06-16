@@ -1105,35 +1105,6 @@ VoltSwitchEffect:
 	; cp LIGHTNING
 
 
-; input:
-;   [hTempRetreatCostCards]: $ff-terminated list of discarded deck indices
-SplashingRetreatEffect:
-	ld hl, hTempRetreatCostCards
-.loop
-	ld a, [hli]
-	cp $ff
-	ret z  ; no (more) cards were discarded
-	ld d, a  ; deck index
-	call LoadCardDataToBuffer2_FromDeckIndex  ; preserves hl, de
-	ld a, [wLoadedCard2Type]
-	cp TYPE_ENERGY_WATER
-	jr nz, .loop
-; found a Water Energy
-	ld a, d
-	call MoveDiscardPileCardToHand  ; preserves hl, de
-	call AddCardToHand  ; preserves hl, de
-	push hl
-	call IsPlayerTurn  ; preserves de
-	pop hl
-	jr c, .loop
-	ld a, d
-	push hl
-	ldtx hl, WasPlacedInTheHandText
-	bank1call DisplayCardDetailScreen
-	pop hl
-	jr .loop
-
-
 ; ------------------------------------------------------------------------------
 ; Compound Attacks
 ; ------------------------------------------------------------------------------
@@ -5028,6 +4999,21 @@ _AttachEnergyFromDiscardPileToBenchEffect:
 .done
 	bank1call Func_2c10b
 	jp ExchangeRNG
+
+
+WaterAbsorb_PreconditionCheck:
+	call CreateEnergyCardListFromDiscardPile_OnlyWater
+	ret c  ; no energy
+	jp CheckPokemonPowerCanBeUsed_StoreTrigger
+
+
+WaterAbsorb_AttachEnergyEffect:
+; attach an energy to the triggering Pokémon
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	ldh [hTempPlayAreaLocation_ffa1], a
+	ld hl, CreateEnergyCardListFromDiscardPile_OnlyWater
+	push hl
+	jr _AttachEnergyFromDiscardPileToBenchEffect.attach
 
 
 ; shuffle hand back into deck and draw as many cards as the opponent has

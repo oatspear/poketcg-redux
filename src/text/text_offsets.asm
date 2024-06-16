@@ -2888,10 +2888,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer Attach1FireEnergyFromDiscardDescription
 	textpointer Attach1WaterEnergyFromDiscardDescription
 	textpointer Attach1PsychicEnergyFromDiscardDescription
-	; textpointer AbsorbWaterName
-	textpointer Retrieve1WaterEnergyFromDiscardDescription
-	textpointer SplashingRetreatName
-	textpointer SplashingRetreatDescription
 	; textpointer MudSportName
 	; textpointer Retrieve1WaterOrFightingEnergyFromDiscardDescription
 	; textpointer DualTypeFightingName
@@ -3039,6 +3035,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer SurpriseBiteDescription
 	textpointer ConcentrationName
 	textpointer LuckyFindName
+	textpointer WaterAbsorbName
+	textpointer WaterAbsorbDescription
 
 ; ------------------------------------------------------------------------------
 ; text13.asm
