@@ -1980,6 +1980,9 @@ PlayTrainerCard:
 	call TryExecuteEffectCommandFunction
 	ld a, 1
 	jr c, .done
+	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	or PLAYED_ITEM_THIS_TURN
+	ld [wAlreadyPlayedEnergyOrSupporter], a
 .play_card
 	ld a, OPPACTION_PLAY_TRAINER
 	call SetOppAction_SerialSendDuelData
