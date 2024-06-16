@@ -3661,17 +3661,17 @@ PoliwhirlCard:
 
 	; attack 2
 	energy WATER, 1, COLORLESS, 1 ; energies
-	tx WaveSplashName ; name
-	tx WaveSplashDescription ; description
+	tx MuddyWaterName ; name
+	tx DamageUpTo2BenchedDescription ; description
 	tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
 	db 30 ; damage
 	db DAMAGE_NORMAL ; category
-	dw IfActiveThisTurnDamageOpponentBench10EffectCommands ; effect commands
+	dw DamageUpTo2Benched10EffectCommands ; effect commands
 	db DAMAGE_TO_OPPONENT_BENCH ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_PUNCH ; animation
+	db 10
+	db ATK_ANIM_WATER_JETS ; animation
 
 	db 1 ; retreat cost
 	db WR_LIGHTNING ; weakness

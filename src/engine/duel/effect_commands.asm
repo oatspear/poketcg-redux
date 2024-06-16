@@ -580,10 +580,6 @@ QuickAttack50EffectCommands:
 	dbw EFFECTCMDTYPE_AI, IfActiveThisTurn50BonusDamage_AIEffect
 	db  $00
 
-IfActiveThisTurnDamageOpponentBench10EffectCommands:
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, IfActiveThisTurnDamageOpponentBench10Effect
-	db  $00
-
 OutrageEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasAnyEnergiesAttached
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, DiscardEnergy_PlayerSelectEffect

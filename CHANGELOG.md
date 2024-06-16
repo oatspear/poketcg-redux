@@ -99,7 +99,7 @@
 - **Mud Sport**: removed.
 - **Rain Splash**: removed.
 - New Pokémon Power: **Splashing Retreat**: if you discard Water Energy to Retreat, put those energies in the hand instead.
-- New attack: **Wave Splash** (WC): 30 damage; if the Pokémon moved into the Active Spot this turn, does 10 damage to each of the opponent's Benched Pokémon.
+- New attack: **Muddy Water** (WC): 30 damage; does 10 damage to 2 of the opponent's Benched Pokémon.
 
 #### Poliwrath
 - Increased HP from 100 to 110.
