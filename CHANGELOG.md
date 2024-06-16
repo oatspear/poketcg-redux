@@ -91,7 +91,9 @@
 
 #### Golduck
 - **Aquatic Rescue**: removed.
+- **Energy Loop**: removed.
 - New ability: **Swift Swim**: if Active this turn, attacks cost (C) less.
+- New attack: **Wave Splash** (WCC): 50 damage; put an Energy attached to the Pokémon back into the hand; does 10 damage to 2 of the opponent's Benched Pokémon.
 
 #### Poliwag
 - **Mud Splash**: removed.

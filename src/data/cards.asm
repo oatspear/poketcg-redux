@@ -3559,16 +3559,16 @@ GolduckCard:
 
 	; attack 2
 	energy WATER, 1, COLORLESS, 2 ; energies
-	tx EnergyLoopName ; name
-	tx Bounce1EnergyDescription ; description
-	dw NONE ; description (cont)
-	db 60 ; damage
+	tx WaveSplashName ; name
+	tx WaveSplashDescription ; description
+	tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
+	db 50 ; damage
 	db DAMAGE_NORMAL ; category
-	dw Bounce1EnergyEffectCommands ; effect commands
-	db NONE ; flags 1
+	dw WaveSplashEffectCommands ; effect commands
+	db DAMAGE_TO_OPPONENT_BENCH ; flags 1
 	db DISCARD_ENERGY ; flags 2
 	db NONE ; flags 3
-	db 0
+	db 10
 	db ATK_ANIM_WATER_JETS ; animation
 
 	db 1 ; retreat cost
