@@ -1704,6 +1704,12 @@ EnergyGeneratorEffectCommands:
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Accelerate1EnergyFromDeck_PlayerSelectEffect
 	db  $00
 
+AbilityEnergyRetrievalEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, AbilityEnergyRetrieval_PreconditionCheck
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, AbilityEnergyRetrieval_DiscardAndAddToHandEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, AbilityEnergyRetrieval_PlayerSelectEffect
+	db  $00
+
 QueenPressEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, QueenPressEffect
 	db  $00

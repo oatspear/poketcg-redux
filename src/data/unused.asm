@@ -1,4 +1,20 @@
 
+
+; attack 1
+energy COLORLESS, 1 ; energies
+tx RecoverName ; name
+tx RecoverDescription ; description
+dw NONE ; description (cont)
+db 0 ; damage
+db RESIDUAL ; category
+dw RecoverEffectCommands ; effect commands
+db NONE ; flags 1
+db DISCARD_ENERGY | HEAL_USER ; flags 2
+db NONE ; flags 3
+db 7
+db ATK_ANIM_RECOVER ; animation
+
+
 ; attack 2
 energy WATER, 1, COLORLESS, 1 ; energies
 tx HeadacheName ; name

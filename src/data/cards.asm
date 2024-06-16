@@ -4426,18 +4426,18 @@ StarmieCard:
 	tx StaryuName ; pre-evo name
 
 	; attack 1
-	energy COLORLESS, 1 ; energies
-	tx RecoverName ; name
-	tx RecoverDescription ; description
-	dw NONE ; description (cont)
+	energy 0 ; energies
+	tx EnergyRetrievalName ; name
+	tx AbilityEnergyRetrievalDescription ; description
+	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db RESIDUAL ; category
-	dw RecoverEffectCommands ; effect commands
+	db POKEMON_POWER ; category
+	dw AbilityEnergyRetrievalEffectCommands ; effect commands
 	db NONE ; flags 1
-	db DISCARD_ENERGY | HEAL_USER ; flags 2
+	db NONE ; flags 2
 	db NONE ; flags 3
-	db 7
-	db ATK_ANIM_RECOVER ; animation
+	db 0
+	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
 	energy COLORLESS, 1 ; energies
@@ -4451,7 +4451,7 @@ StarmieCard:
 	db ATTACHED_ENERGY_BOOST ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_BEAM ; animation
+	db ATK_ANIM_PSYCHIC_HIT ; animation
 
 	db 1 ; retreat cost
 	db WR_LIGHTNING ; weakness

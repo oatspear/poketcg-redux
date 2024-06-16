@@ -731,6 +731,16 @@ INCLUDE "engine/duel/effect_functions/damage_modifiers.asm"
 ; ------------------------------------------------------------------------------
 
 
+AbilityEnergyRetrieval_PreconditionCheck:
+	call CheckPokemonPowerCanBeUsed_StoreTrigger
+	ret c  ; cannot be used
+	call CheckHandIsNotEmpty
+	ret c  ; return if there are no cards to discard
+	call CreateEnergyCardListFromDiscardPile_OnlyBasic
+	ldtx hl, ThereAreNoBasicEnergyCardsInDiscardPileText
+	ret
+
+
 SwimFreely_PlayerSelectEffect:
 	ldh a, [hTemp_ffa0]
 	or a
@@ -6537,41 +6547,29 @@ EnergyRetrieval_HandEnergyCheck:
 	ret
 
 
-EnergyRetrieval_PlayerDiscardPileSelection: ; 2f2b9 (b:72b9)
-	ld a, 1 ; start at 1 due to card selected from hand
-	ldh [hCurSelectionItem], a
+AbilityEnergyRetrieval_PlayerSelectEffect:
+	call HandlePlayerSelection1HandCardToDiscard
+	ldh [hMultiPurposeByte4], a
+	; jr EnergyRetrieval_PlayerDiscardPileSelection
+	; fallthrough
+
+EnergyRetrieval_PlayerDiscardPileSelection:
 	ldtx hl, Choose2BasicEnergyCardsFromDiscardPileText
 	call DrawWideTextBox_WaitForInput
 	call CreateEnergyCardListFromDiscardPile_OnlyBasic
+	ld a, 2 + 1  ; count the hand card as offset for [hTempList]
+	ld [wCardListNumberOfCardsToChoose], a
+	ld a, 1
+	ldh [hCurSelectionItem], a  ; selection offset, starts at [hTempList + 1]
+	jp ChooseUpToNCards_PlayerDiscardPileSelectionLoop
 
-.select_card
-	bank1call InitAndDrawCardListScreenLayout
-	ldtx hl, PleaseSelectCardText
-	ldtx de, PlayerDiscardPileText
-	bank1call SetCardListHeaderText
-	bank1call DisplayCardList
-	jr nc, .selected
-	; B was pressed
-	ld a, 2 + 1 ; includes the card selected from hand
-	call AskWhetherToQuitSelectingCards
-	jr c, .select_card ; player selected No
-	jr .done
 
-.selected
-	call GetNextPositionInTempList
-	ldh a, [hTempCardIndex_ff98]
-	ld [hl], a
-	call RemoveCardFromDuelTempList
-	jr c, .done
-	ldh a, [hCurSelectionItem]
-	cp 2 + 1 ; includes the card selected from hand
-	jr c, .select_card
-
-.done
-	call GetNextPositionInTempList
-	ld [hl], $ff ; terminating byte
-	or a
-	ret
+AbilityEnergyRetrieval_DiscardAndAddToHandEffect:
+	call SetUsedPokemonPowerThisTurn_RestoreTrigger
+	ldh a, [hMultiPurposeByte4]
+	ldh [hTempList], a
+	; jr EnergyRetrieval_DiscardAndAddToHandEffect
+	; fallthrough
 
 EnergyRetrieval_DiscardAndAddToHandEffect:
 	ld hl, hTempList
@@ -7866,8 +7864,14 @@ ChooseUpToNCards_PlayerDiscardPileSelection:
 	ldtx hl, ChooseUpToNFromDiscardPileText
 	call DrawWideTextBox_WaitForInput
 	; call CreateEnergyCardListFromDiscardPile_OnlyBasic
+	; jr ChooseUpToNCards_PlayerDiscardPileSelectionLoop
+	; fallthrough
 
-.loop_discard_pile_selection
+; input:
+;  [wDuelTempList]: list of cards to choose from
+;  [wCardListNumberOfCardsToChoose]: number of cards to choose
+;  [hCurSelectionItem]: current index (normally zero)
+ChooseUpToNCards_PlayerDiscardPileSelectionLoop:
 	bank1call InitAndDrawCardListScreenLayout
 	ldtx hl, PleaseSelectCardText
 	ldtx de, PlayerDiscardPileText
@@ -7877,22 +7881,20 @@ ChooseUpToNCards_PlayerDiscardPileSelection:
 	; B pressed
 	ld a, [wCardListNumberOfCardsToChoose]
 	call AskWhetherToQuitSelectingCards
-	jr c, .loop_discard_pile_selection ; player selected to continue
+	jr c, ChooseUpToNCards_PlayerDiscardPileSelectionLoop ; chose to continue
 	jr .done
 
 .store_selected_card
-	ldh a, [hTempCardIndex_ff98]
-	call GetTurnDuelistVariable
 	call GetNextPositionInTempList
 	ldh a, [hTempCardIndex_ff98]
-	ld [hl], a ; store selected energy card
+	ld [hl], a ; store selected card
 	call RemoveCardFromDuelTempList
 	jr c, .done
 	ld a, [wCardListNumberOfCardsToChoose]
 	ld b, a
 	ldh a, [hCurSelectionItem]
 	cp b
-	jr c, .loop_discard_pile_selection
+	jr c, ChooseUpToNCards_PlayerDiscardPileSelectionLoop
 
 .done
 ; insert terminating byte

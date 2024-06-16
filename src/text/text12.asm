@@ -1583,3 +1583,10 @@ WaterAbsorbDescription:
 	line "attach a <WATER> Energy from your"
 	line "discard pile to this Pokémon."
 	done
+
+AbilityEnergyRetrievalDescription:
+	text "Once during your turn, you may"
+	line "discard a card from your hand and"
+	line "put up to 2 Basic Energy cards from"
+	line "your discard pile into your hand."
+	done

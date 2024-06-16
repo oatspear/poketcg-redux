@@ -3037,6 +3037,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer LuckyFindName
 	textpointer WaterAbsorbName
 	textpointer WaterAbsorbDescription
+	textpointer AbilityEnergyRetrievalDescription
 
 ; ------------------------------------------------------------------------------
 ; text13.asm
