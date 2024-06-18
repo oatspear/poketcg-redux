@@ -350,7 +350,7 @@ PrimordialDream_PreconditionCheck:
 Trade_PreconditionCheck:
 	call CheckHandIsNotEmpty
 	ret c
-	jr Synthesis_PreconditionCheck
+	jr DrawOrTutorAbility_PreconditionCheck
 
 ; this Power needs to back up hTempPlayAreaLocation_ff9d
 EnergyGenerator_PreconditionCheck:
@@ -363,7 +363,7 @@ EnergyGenerator_PreconditionCheck:
 CrushingCharge_PreconditionCheck:
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	ldh [hTemp_ffa0], a
-	jr Synthesis_PreconditionCheck
+	jr DrawOrTutorAbility_PreconditionCheck
 
 WaveRider_PreconditionCheck:
 	ld c, 3
@@ -371,8 +371,7 @@ WaveRider_PreconditionCheck:
 	ret c
 	; fallthrough
 
-Synthesis_PreconditionCheck:
-DeckSearchAbility_PreconditionCheck:
+DrawOrTutorAbility_PreconditionCheck:
 	call CheckDeckIsNotEmpty
 	ret c
 	jp CheckPokemonPowerCanBeUsed
@@ -381,7 +380,7 @@ DeckSearchAbility_PreconditionCheck:
 FleetFooted_PreconditionCheck:
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	or a  ; cp PLAY_AREA_ARENA
-	jr z, Synthesis_PreconditionCheck
+	jr z, DrawOrTutorAbility_PreconditionCheck
 	ldtx hl, NotInTheActiveSpotText
 	scf
 	ret

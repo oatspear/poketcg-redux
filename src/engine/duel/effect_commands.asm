@@ -1689,7 +1689,7 @@ NaturalRemedyEffectCommands:
 	db  $00
 
 SynthesisEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Synthesis_PreconditionCheck
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, DrawOrTutorAbility_PreconditionCheck
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Synthesis_AddToHandEffect
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Synthesis_PlayerSelection
 	db  $00
