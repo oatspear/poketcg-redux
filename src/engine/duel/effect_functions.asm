@@ -7871,19 +7871,30 @@ ChooseUpToNCards_PlayerDiscardPileSelection:
 ;  [wCardListNumberOfCardsToChoose]: number of cards to choose
 ;  [hCurSelectionItem]: current index (normally zero)
 ChooseUpToNCards_PlayerDiscardPileSelectionLoop:
-	ld a, [wDuelTempList]
-	cp $ff
-	jr z, .done  ; no more cards to choose from
 	bank1call InitAndDrawCardListScreenLayout
 	ldtx hl, PleaseSelectCardText
 	ldtx de, PlayerDiscardPileText
+	; jr ChooseUpToNCardsFromCardList_PlayerSelectionLoop
+	; fallthrough
+
+; input:
+;  hl: instruction text to display (e.g. PleaseSelectCardText)
+;  de: location text (e.g. PlayerDiscardPileText)
+;  [wDuelTempList]: list of cards to choose from
+;  [wCardListNumberOfCardsToChoose]: number of cards to choose
+;  [hCurSelectionItem]: current index (normally zero)
+ChooseUpToNCardsFromCardList_PlayerSelectionLoop:
 	bank1call SetCardListHeaderText
+.loop
+	ld a, [wDuelTempList]
+	cp $ff
+	jr z, .done  ; no more cards to choose from
 	bank1call DisplayCardList
 	jr nc, .store_selected_card
 	; B pressed
 	ld a, [wCardListNumberOfCardsToChoose]
 	call AskWhetherToQuitSelectingCards
-	jr c, ChooseUpToNCards_PlayerDiscardPileSelectionLoop ; chose to continue
+	jr c, .loop ; chose to continue
 	jr .done
 
 .store_selected_card
@@ -7896,7 +7907,7 @@ ChooseUpToNCards_PlayerDiscardPileSelectionLoop:
 	ld b, a
 	ldh a, [hCurSelectionItem]
 	cp b
-	jr c, ChooseUpToNCards_PlayerDiscardPileSelectionLoop
+	jr c, .loop
 
 .done
 ; insert terminating byte
