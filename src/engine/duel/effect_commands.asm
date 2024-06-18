@@ -1762,7 +1762,7 @@ EnergyRetrievalEffectCommands:
 EnergySearchEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDeckIsNotEmpty
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SelectedCard_AddToHandFromDeckEffect
-	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, EnergySearch_PlayerSelection
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, EnergySearch_PlayerSelectEffect
 	db  $00
 
 ProfessorOakEffectCommands:

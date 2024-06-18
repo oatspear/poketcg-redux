@@ -6596,7 +6596,7 @@ Synthesis_PlayerSelectEffect:
 ; Pokémon Powers must preserve [hTemp_ffa0]
 	; ldh a, [hTemp_ffa0]
 	; push af
-	call EnergySearch_PlayerSelection
+	call EnergySearch_PlayerSelectEffect
 	ldh a, [hTemp_ffa0]
 	ldh [hEnergyTransEnergyCard], a
 	; pop af
@@ -6605,47 +6605,9 @@ Synthesis_PlayerSelectEffect:
 	ret
 
 
-EnergySearch_PlayerSelection:
-	ld a, $ff
+EnergySearch_PlayerSelectEffect:
+	call HandlePlayerSelectionBasicEnergyFromDeck
 	ldh [hTemp_ffa0], a
-	call CreateDeckCardList
-	ldtx hl, Choose1BasicEnergyCardFromDeckText
-	ldtx bc, BasicEnergyText
-	ld a, CARDTEST_BASIC_ENERGY
-	call LookForCardsInDeckList
-	ret c ; skip showing deck
-
-	bank1call InitAndDrawCardListScreenLayout_MenuTypeSelectCheck
-	ldtx hl, ChooseBasicEnergyCardText
-	ldtx de, DuelistDeckText
-	bank1call SetCardListHeaderText
-.read_input
-	bank1call DisplayCardList
-	jr c, .try_exit ; B pressed?
-	ldh a, [hTempCardIndex_ff98]
-	ldh [hTemp_ffa0], a
-	call CheckIfCardIsBasicEnergy
-	jr c, .play_sfx
-	or a
-	ret
-.play_sfx
-	call PlaySFX_InvalidChoice
-	jr .read_input
-
-.try_exit
-; check if Player can exit without selecting anything
-	ld hl, wDuelTempList
-.next_card
-	ld a, [hli]
-	cp $ff
-	jr z, .exit
-	call CheckIfCardIsBasicEnergy
-	jr c, .next_card
-	jr .read_input ; no, has to select Energy card
-.exit
-	ld a, $ff
-	ldh [hTemp_ffa0], a
-	or a
 	ret
 
 
