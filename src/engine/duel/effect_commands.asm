@@ -1691,7 +1691,7 @@ NaturalRemedyEffectCommands:
 SynthesisEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, DrawOrTutorAbility_PreconditionCheck
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Synthesis_AddToHandEffect
-	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Synthesis_PlayerSelection
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Synthesis_PlayerSelectEffect
 	db  $00
 
 EnergyGeneratorEffectCommands:

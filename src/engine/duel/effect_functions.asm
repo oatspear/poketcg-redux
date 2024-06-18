@@ -6592,7 +6592,7 @@ EnergyRetrieval_DiscardAndAddToHandEffect:
 	ret
 
 
-Synthesis_PlayerSelection:
+Synthesis_PlayerSelectEffect:
 ; Pokémon Powers must preserve [hTemp_ffa0]
 	; ldh a, [hTemp_ffa0]
 	; push af
