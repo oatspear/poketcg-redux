@@ -181,14 +181,6 @@ IfAttachedToolDamageOpponentBench10Effect:
 ; 	jp DamageAllOpponentBenched10Effect
 
 
-RagingStorm_BenchDamageEffect:
-	call CheckOpponentHasMorePrizeCardsRemaining
-	ret c  ; opponent Prizes < user Prizes (losing)
-	ret z  ; opponent Prizes = user Prizes (tied)
-; opponent Prizes > user Prizes (winning)
-	jp DamageAllOpponentBenched20Effect
-
-
 ; ------------------------------------------------------------------------------
 ; Targeted Damage
 ; ------------------------------------------------------------------------------

@@ -247,10 +247,6 @@ GrassKnotEffectCommands:
 	dbw EFFECTCMDTYPE_AI, GrassKnot_AIEffect
 	db  $00
 
-RagingStormEffectCommands:
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, RagingStorm_BenchDamageEffect
-	db  $00
-
 DoubleDamageIfMorePrizesEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, DoubleDamageIfMorePrizes_DamageBoostEffect
 	dbw EFFECTCMDTYPE_AI, DoubleDamageIfMorePrizes_AIEffect

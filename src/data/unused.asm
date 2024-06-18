@@ -579,14 +579,22 @@ db 3
 db ATK_ANIM_WATER_GUN ; animatio
 
 
+
+RagingStormDescription:
+	text "This attack does 20 damage to each"
+	line "of your opponent's Benched Pokémon"
+	line "if you have more Prize cards"
+	line "remaining than your opponent."
+	done
+
 ; attack 2
 energy WATER, 2, COLORLESS, 2 ; energies
 tx RagingStormName ; name
-tx DoubleDamageIfMorePrizesDescription ; description
+tx RagingStormDescription ; description
 dw NONE ; description (cont)
 db 50 ; damage
-db DAMAGE_PLUS ; category
-dw DoubleDamageIfMorePrizesEffectCommands ; effect commands
+db DAMAGE_NORMAL ; category
+dw RagingStormEffectCommands ; effect commands
 db NONE ; flags 1
 db NONE ; flags 2
 db NONE ; flags 3

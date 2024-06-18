@@ -187,7 +187,6 @@
 
 #### Gyarados
 - Reduced HP from 100 to 90.
-- **Raging Storm**: replaced extra damage vs the Defending Pokémon with 20 damage to all of the opponent's Benched Pokémon.
 
 #### Lapras
 - **Transport**: tutor 2 Supporters instead of 1.

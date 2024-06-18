@@ -3063,7 +3063,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer BurnOutName
 	textpointer BurnOutDescription
 	textpointer RagingStormName
-	textpointer RagingStormDescription
 	textpointer IcicleSpearsName
 	textpointer IcicleSpearsDescription
 	textpointer DarkPrisonName

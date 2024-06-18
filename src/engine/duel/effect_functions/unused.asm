@@ -1,5 +1,18 @@
 ;
 
+RagingStormEffectCommands:
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, RagingStorm_BenchDamageEffect
+	db  $00
+
+;
+RagingStorm_BenchDamageEffect:
+	call CheckOpponentHasMorePrizeCardsRemaining
+	ret c  ; opponent Prizes < user Prizes (losing)
+	ret z  ; opponent Prizes = user Prizes (tied)
+; opponent Prizes > user Prizes (winning)
+	jp DamageAllOpponentBenched20Effect
+
+
 ; input:
 ;   [hTempPlayAreaLocation_ffa1]: PLAY_AREA_* of the Pokémon that switched in
 ;                                 (now with the previous Active Pokémon)
