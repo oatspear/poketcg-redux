@@ -7871,6 +7871,9 @@ ChooseUpToNCards_PlayerDiscardPileSelection:
 ;  [wCardListNumberOfCardsToChoose]: number of cards to choose
 ;  [hCurSelectionItem]: current index (normally zero)
 ChooseUpToNCards_PlayerDiscardPileSelectionLoop:
+	ld a, [wDuelTempList]
+	cp $ff
+	jr z, .done  ; no more cards to choose from
 	bank1call InitAndDrawCardListScreenLayout
 	ldtx hl, PleaseSelectCardText
 	ldtx de, PlayerDiscardPileText
