@@ -1340,8 +1340,8 @@ SynthesisName:
 
 SynthesisDescription:
 	text "Once during your turn, you may"
-	line "search your deck for a Basic Energy"
-	line "card and put it into your hand."
+	line "search your deck for 2 Basic Energy"
+	line "cards and put them into your hand."
 	line "Shuffle your deck afterward."
 	done
 

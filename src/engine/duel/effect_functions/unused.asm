@@ -1,5 +1,30 @@
 ;
 
+
+; Pokémon Powers should not use [hTemp_ffa0]
+; adds a card in [hEnergyTransEnergyCard] from the deck to the hand
+; Note: Pokémon Power no longer needs to preserve [hTemp_ffa0] at this point
+Synthesis_AddToHandEffect:
+	call SetUsedPokemonPowerThisTurn
+	ldh a, [hEnergyTransEnergyCard]
+	ldh [hTemp_ffa0], a
+	jr SelectedCard_AddToHandFromDeckEffect
+
+
+Synthesis_PlayerSelectEffect:
+; Pokémon Powers must preserve [hTemp_ffa0]
+	; ldh a, [hTemp_ffa0]
+	; push af
+	call EnergySearch_PlayerSelectEffect
+	ldh a, [hTemp_ffa0]
+	ldh [hEnergyTransEnergyCard], a
+	; pop af
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	ldh [hTemp_ffa0], a
+	ret
+
+
+
 RagingStormEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, RagingStorm_BenchDamageEffect
 	db  $00

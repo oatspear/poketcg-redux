@@ -744,7 +744,7 @@ DoubleDamageIfUserIsDamagedEffectCommands:
 	db  $00
 
 QuickSearchEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, DeckSearchAbility_PreconditionCheck
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, DrawOrTutorAbility_PreconditionCheck
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, DeckSearchAbility_AddToHandEffect
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, QuickSearch_PlayerSelectEffect
 	; dbw EFFECTCMDTYPE_AI_SELECTION, Ultravision_AISelectEffect

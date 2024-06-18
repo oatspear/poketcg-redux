@@ -57,6 +57,7 @@
 - New attack: **Leech Seed** (GC): 20 damage; heal 10 damage.
 
 #### Exeggutor
+- **Synthesis**: adds 2 Basic Energy cards from the deck to the hand, up from 1 Basic Energy card.
 - **Big Eggsplosion**: renamed to **Energy Burst**.
 
 #### Pinsir

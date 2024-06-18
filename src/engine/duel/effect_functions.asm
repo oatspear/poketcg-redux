@@ -6226,13 +6226,20 @@ SelectedCards_Discard1AndAdd1ToHandFromDeck:
 
 
 ; Pokémon Powers should not use [hTemp_ffa0]
-; adds a card in [hEnergyTransEnergyCard] from the deck to the hand
+; adds cards in [hTempRetreatCostCards] from the deck to the hand
 ; Note: Pokémon Power no longer needs to preserve [hTemp_ffa0] at this point
 Synthesis_AddToHandEffect:
 	call SetUsedPokemonPowerThisTurn
-	ldh a, [hEnergyTransEnergyCard]
-	ldh [hTemp_ffa0], a
-	jr SelectedCard_AddToHandFromDeckEffect
+	ld hl, hTempRetreatCostCards
+.loop
+	ld a, [hli]
+	cp $ff
+	jp z, SyncShuffleDeck ; quit, no more cards
+	; a: deck index of card to add from deck to hand
+	push hl
+	call AddDeckCardToHandEffect
+	pop hl
+	jr .loop
 
 
 ; Pokémon Powers should not use [hTemp_ffa0]
@@ -6593,15 +6600,21 @@ EnergyRetrieval_DiscardAndAddToHandEffect:
 
 
 Synthesis_PlayerSelectEffect:
+	ld a, $ff
+	ldh [hTempRetreatCostCards], a
+	ldh [hTempRetreatCostCards + 1], a
+	ldh [hTempRetreatCostCards + 2], a
 ; Pokémon Powers must preserve [hTemp_ffa0]
-	; ldh a, [hTemp_ffa0]
-	; push af
-	call EnergySearch_PlayerSelectEffect
-	ldh a, [hTemp_ffa0]
-	ldh [hEnergyTransEnergyCard], a
-	; pop af
-	ldh a, [hTempPlayAreaLocation_ff9d]
-	ldh [hTemp_ffa0], a
+	call HandlePlayerSelectionBasicEnergyFromDeck
+	ldh [hTempRetreatCostCards], a
+	jr c, .done  ; no Energies or Player cancelled selection
+	call RemoveCardFromDuelTempList
+	jr c, .done  ; should not happen
+; skip deck list creation
+	call HandlePlayerSelectionBasicEnergyFromDeckList
+	ldh [hTempRetreatCostCards + 1], a
+.done
+	or a  ; clear carry
 	ret
 
 

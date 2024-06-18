@@ -197,6 +197,13 @@ SwimFreelyDescription:
 ; Unused Text
 ; ------------------------------------------------------------------------------
 
+; SynthesisDescription:
+; 	text "Once during your turn, you may"
+; 	line "search your deck for a Basic Energy"
+; 	line "card and put it into your hand."
+; 	line "Shuffle your deck afterward."
+; 	done
+
 ; SplashingRetreatName:
 ; 	text "Splashing Retreat"
 ; 	done
