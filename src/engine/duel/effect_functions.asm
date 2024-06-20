@@ -4758,7 +4758,7 @@ EnergyGenerator_PlayerSelectEffect:
 EnergySpike_AISelectEffect:
 NutritionSupport_AISelectEffect:
 Accelerate1EnergyFromDeck_AISelectEffect:
-; retrieve the presered [hTempPlayAreaLocation_ffa1] from scoring phase
+; retrieve the preserved [hTempPlayAreaLocation_ffa1] from scoring phase
 ; just for safety, ensure it is a valid play area index
 	ld a, $ff
 	ldh [hEnergyTransEnergyCard], a

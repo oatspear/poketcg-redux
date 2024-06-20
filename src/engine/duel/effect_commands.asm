@@ -1398,9 +1398,9 @@ EnergySpikeEffectCommands:
 
 Accelerate1EnergyFromDeckEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDeckIsNotEmpty
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Accelerate1EnergyFromDeck_AttachEnergyEffect
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Accelerate1EnergyFromDeck_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, Accelerate1EnergyFromDeck_AISelectEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Accelerate1EnergyFromDeck_AttachEnergyEffect
 	db  $00
 
 UnableToRetreatEffectCommands:
@@ -1562,13 +1562,6 @@ GrowthEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, AttachEnergyFromHand_AttachEnergyEffect
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, AttachEnergyFromHand_OnlyActive_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, AttachEnergyFromHand_OnlyActive_AISelectEffect
-	db  $00
-
-DragonDanceEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, AttachEnergyFromHand_HandCheck
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, AttachEnergyFromHand_AttachEnergyEffect
-	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, AttachEnergyFromHand_PlayerSelectEffect
-	dbw EFFECTCMDTYPE_AI_SELECTION, AttachEnergyFromHand_AISelectEffect
 	db  $00
 
 EnergyLiftEffectCommands:

@@ -168,6 +168,7 @@
 
 #### Horsea
 - **Aqua Burst**: removed.
+- **Dragon Dance**: attaches an energy from the deck instead of the hand.
 - New attack: **Water Gun** (W): 10 damage for each attached Water energy.
 
 #### Seadra
@@ -410,6 +411,9 @@
 
 #### Porygon
 - **Conversion Beam**: reduced cost from (CCC) to (CC).
+
+#### Dratini
+- **Dragon Dance**: attaches an energy from the deck instead of the hand.
 
 ### Game Menu Changes
 - Updated Glossary pages.

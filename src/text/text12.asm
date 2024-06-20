@@ -649,7 +649,7 @@ EnergyHurricaneName:
 	done
 
 Accelerate1EnergyFromDeckDescription:
-	text "Search your deck for a basic Energy"
+	text "Search your deck for a Basic Energy"
 	line "card and attach it to 1 of your"
 	line "Pokémon. Then, shuffle your deck."
 	done

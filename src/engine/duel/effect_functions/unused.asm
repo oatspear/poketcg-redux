@@ -1,6 +1,32 @@
 ;
 
 
+DragonDanceEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, AttachEnergyFromHand_HandCheck
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, AttachEnergyFromHand_AttachEnergyEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, AttachEnergyFromHand_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, AttachEnergyFromHand_AISelectEffect
+	db  $00
+
+
+;
+NutritionSupportEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDeckIsNotEmpty
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, NutritionSupport_AttachEnergyEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, NutritionSupport_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, NutritionSupport_AISelectEffect
+	db  $00
+
+
+;
+NutritionSupport_AttachEnergyEffect:
+	call Accelerate1EnergyFromDeck_AttachEnergyEffect
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	ld e, a   ; location
+	ld d, 10  ; damage
+	jp HealPlayAreaCardHP
+
+
 ; input:
 ;   [hTempPlayAreaLocation_ff9d]: PLAY_AREA_* of the target Pokémon
 Safeguard_StatusHealingEffect:

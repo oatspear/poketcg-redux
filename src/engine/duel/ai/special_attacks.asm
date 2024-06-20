@@ -373,6 +373,7 @@ HandleSpecialAIAttacks:
 ; if there's any lightning energy cards in deck,
 ; return a score of $80 + 3.
 .EnergySpike:
+.DragonDance:
 	ld a, CARD_LOCATION_DECK
 	call CheckIfAnyBasicEnergyInLocation
 	jp nc, .zero_score
@@ -386,13 +387,13 @@ HandleSpecialAIAttacks:
 
 ; if there's any energy cards in hand,
 ; return a score of $80 + 3.
-.DragonDance:
-	call CreateEnergyCardListFromHand
-	jp c, .zero_score
-	call AIProcessButDontPlayEnergy_SkipEvolution
-	jp nc, .zero_score
-	ld a, $83
-	ret
+; .DragonDance:
+; 	call CreateEnergyCardListFromHand
+; 	jp c, .zero_score
+; 	call AIProcessButDontPlayEnergy_SkipEvolution
+; 	jp nc, .zero_score
+; 	ld a, $83
+; 	ret
 
 .EnergySpores:
 	ld a, CARD_LOCATION_DISCARD_PILE

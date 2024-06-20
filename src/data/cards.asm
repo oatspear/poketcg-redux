@@ -4159,11 +4159,11 @@ HorseaCard:
 	; attack 1
 	energy COLORLESS, 1 ; energies
 	tx DragonDanceName ; name
-	tx AttachEnergyFromHandDescription ; description
+	tx Accelerate1EnergyFromDeckDescription ; description
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category
-	dw DragonDanceEffectCommands ; effect commands
+	dw Accelerate1EnergyFromDeckEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db SPECIAL_AI_HANDLING ; flags 3
@@ -9883,11 +9883,11 @@ DratiniCard:
 	; attack 1
 	energy COLORLESS, 1 ; energies
 	tx DragonDanceName ; name
-	tx AttachEnergyFromHandDescription ; description
+	tx Accelerate1EnergyFromDeckDescription ; description
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category
-	dw DragonDanceEffectCommands ; effect commands
+	dw Accelerate1EnergyFromDeckEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db SPECIAL_AI_HANDLING ; flags 3
