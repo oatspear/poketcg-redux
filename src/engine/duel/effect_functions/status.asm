@@ -46,7 +46,15 @@ SleepEffect: ; 2c030 (b:4030)
 	jr ApplyStatusEffect
 
 
-ApplyStatusEffect: ; 2c035 (b:4035)
+ApplyStatusEffect:
+	call SwapTurn
+	xor a  ; PLAY_AREA_ARENA
+	push bc
+	call IsSafeguardActive
+	pop bc
+	call SwapTurn
+	jr c, .cant_induce_status
+
 	ldh a, [hWhoseTurn]
 	ld hl, wWhoseTurn
 	cp [hl]
@@ -231,6 +239,14 @@ SleepEffect_PlayArea:
 ;   [wNoEffectFromWhichStatus]: set with the input status condition
 ;   carry: set if able to apply status
 ApplyStatusEffectToPlayAreaPokemon:
+	ld a, e
+	push bc
+	push de
+	call IsSafeguardActive
+	pop de
+	pop bc
+	jr c, .cant_induce_status
+
 	ld a, DUELVARS_ARENA_CARD
 	add e
 	call GetTurnDuelistVariable

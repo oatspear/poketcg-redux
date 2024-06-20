@@ -122,15 +122,6 @@ InvertedPowersOf2:
 ;   a: total number of attached energies | $ff if no energy color override
 ; preserves: de
 HandleEnergyColorOverride:
-	; ld a, DUELVARS_ARENA_CARD
-	; call GetTurnDuelistVariable
-	; call GetCardIDFromDeckIndex
-	; ld a, e
-	; cp CHARIZARD
-	; ret nz
-	; call CheckCannotUseDueToStatus
-	; ret c
-
 	ld a, [wEnergyColorOverride]
 	cp $ff
 	ret z

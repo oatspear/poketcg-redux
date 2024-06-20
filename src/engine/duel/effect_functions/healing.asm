@@ -361,7 +361,7 @@ _PlayStatusClearAnimation:
 ; Input:
 ;    a: [0, 5] (PLAY_AREA_* offsets)
 ; Affects hl.
-ClearStatusFromTargetEffect:
+ClearStatusAndEffectsFromTargetEffect:
 	ldh [hTempPlayAreaLocation_ff9d], a
 	call ClearStatusFromTarget
 	ldh a, [hTempPlayAreaLocation_ff9d]
@@ -400,3 +400,24 @@ ClearSubstatus2FromArenaPokemon:
 	; ld l, DUELVARS_ARENA_CARD_CHANGED_TYPE
 	; ld [hl], a
 	ret
+
+
+; input:
+;   [hTempPlayAreaLocation_ff9d]: PLAY_AREA_* of the target Pokémon
+Safeguard_StatusHealingEffect:
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	add DUELVARS_ARENA_CARD_STATUS
+	call GetTurnDuelistVariable
+	or a
+	jr nz, .something_to_handle
+; check effects
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	or a
+	ret nz  ; no status or effects
+	ld l, DUELVARS_ARENA_CARD_SUBSTATUS2
+	ld a, [hl]
+	or a
+	ret z  ; no status or effects
+.something_to_handle
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	jp ClearStatusAndEffectsFromTargetEffect

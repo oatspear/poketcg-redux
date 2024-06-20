@@ -6935,6 +6935,13 @@ HandleOnPlayEnergyEffects:
 	ld e, a
 	farcall Put1DamageCounterOnTarget
 .full_heal_energy
+	ld a, DEWGONG  ; Safeguard
+	call GetFirstPokemonWithAvailablePower
+	ret nc  ; no Pkmn Power-capable Pokémon was found
+	ld a, [wLoadedCard1Type]
+	cp TYPE_ENERGY_WATER
+	ret nz  ; not Water energy
+	farcall Safeguard_StatusHealingEffect
 	ret
 
 

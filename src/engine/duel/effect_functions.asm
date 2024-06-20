@@ -574,7 +574,7 @@ FullHeal_PlayerSelection:
 
 FullHeal_ClearStatusEffect:
 	ldh a, [hTemp_ffa0]
-	call ClearStatusFromTargetEffect
+	call ClearStatusAndEffectsFromTargetEffect
 	bank1call DrawDuelHUDs
 	ret
 
@@ -1222,7 +1222,7 @@ NaturalRemedy_HealEffect:
 	ld d, 20  ; damage
 	call HealPlayAreaCardHP
 	ldh a, [hTempPlayAreaLocation_ffa1]
-	jp c, ClearStatusFromTargetEffect
+	jp c, ClearStatusAndEffectsFromTargetEffect
 	jp ClearStatusFromTarget_NoAnim
 
 

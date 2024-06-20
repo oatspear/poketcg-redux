@@ -193,6 +193,19 @@ SwimFreelyDescription:
 	line "Pokémon with this Pokémon."
 	done
 
+SafeguardName:
+	text "Safeguard"
+	done
+
+SafeguardDescription:
+	text "When you attach a <WATER> Energy from"
+	line "your hand to 1 of your Pokémon, it"
+	line "recovers from all Special Conditions"
+	line "and effects. Your Pokémon with any"
+	line "attached <WATER> Energies can't be"
+	line "affected by Special Conditions."
+	done
+
 ; ------------------------------------------------------------------------------
 ; Unused Text
 ; ------------------------------------------------------------------------------

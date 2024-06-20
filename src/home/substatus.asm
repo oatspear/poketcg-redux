@@ -526,6 +526,19 @@ IsPrehistoricPowerActive:
 	ret
 
 
+; returns carry if the turn holder's Pokémon in the given location
+; benefits from Safeguard
+; input:
+;   a: PLAY_AREA_* of the Pokémon benefiting from the Power
+; output:
+;   carry: set if Safeguard is active
+IsSafeguardActive:
+	ld b, a
+	ld c, WATER
+	ld e, DEWGONG
+	jr IsSpecialEnergyPowerActive
+
+
 ; returns carry if the turn holder's Active Pokémon benefits
 ; from Vampiric Aura
 ; output:
@@ -593,6 +606,9 @@ IsSpecialEnergyPowerActive:
 ; Feedback is returned in wAttachedEnergies and wTotalAttachedEnergies.
 	ld e, b
 	call GetPlayAreaCardAttachedEnergies  ; preserves hl, bc, de
+	push bc
+	call HandleEnergyColorOverride  ; preserves de
+	pop bc
 	ld hl, wAttachedEnergies
 	ld b, 0  ; bc is color offset
 	add hl, bc

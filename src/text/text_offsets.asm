@@ -3077,6 +3077,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer RevivalWaveDescription
 	textpointer SwimFreelyName
 	textpointer SwimFreelyDescription
+	textpointer SafeguardName
+	textpointer SafeguardDescription
 
 	; unused
 	; textpointer ProphecyName
