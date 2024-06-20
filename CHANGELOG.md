@@ -240,6 +240,9 @@
 
 ### Fighting Changes
 
+#### Dugtrio
+- **Rototiller**: increased number of recovered cards from 3 to 4.
+
 #### Primeape
 - Increased HP from 70 to 80.
 - **Rage**: increased base damage from 10 to 20.

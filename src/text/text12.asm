@@ -1159,11 +1159,11 @@ RototillerName:
 	done
 
 RototillerDescription:
-	text "Shuffle up to 3 cards from your"
+	text "Shuffle up to 4 cards from your"
 	line "Discard Pile into your Deck. This"
 	line "attack does 10 damage for each"
-	line "Pokémon and Energy card you shuffled"
-	line "back in this way."
+	line "Pokémon or Energy card that you"
+	line "shuffled back in this way."
 	done
 
 ExcavateName:

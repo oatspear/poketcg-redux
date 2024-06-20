@@ -7815,17 +7815,17 @@ AquaticRescue_PlayerSelectEffect:
 	ret
 
 
-Rototiller_PlayerSelectEffect:
-	call CreateDiscardPileCardList
-	; jr ChooseUpTo3Cards_PlayerDiscardPileSelection
-	; fallthrough
-
 ; input:
 ;  [wDuelTempList]: list of cards to choose from
 ChooseUpTo3Cards_PlayerDiscardPileSelection:
 	ld a, 3
 	ld [wCardListNumberOfCardsToChoose], a
 	jr ChooseUpToNCards_PlayerDiscardPileSelection
+
+
+Rototiller_PlayerSelectEffect:
+	call CreateDiscardPileCardList
+	jr ChooseUpTo4Cards_PlayerDiscardPileSelection
 
 
 Riptide_PlayerSelectEffect:
