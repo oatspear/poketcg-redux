@@ -1125,6 +1125,30 @@ IfActiveThisTurnBonusDamage_DamageBoostEffect:
 	jp AddToDamage
 
 
+AquaticRescue_DamageMultiplierEffect:
+	ld a, CARDTEST_POKEMON
+	call CountMatchingCardsInTempList
+	ret z  ; none
+	call ATimes10
+	call AddToDamage
+	ld a, ATK_ANIM_HIT
+	ld [wLoadedAttackAnimation], a
+	ret
+
+
+AquaticRescue_AIEffect:
+	call CreatePokemonCardListFromDiscardPile
+	jr nc, .damage
+; no damage
+	xor a
+	lb de, 0, 0
+	jp SetExpectedAIDamage
+.damage
+	ld a, 20
+	lb de, 10, 30
+	jp SetExpectedAIDamage
+
+
 Rototiller_DamageBoostEffect:
 	xor a
 	call SetDefiniteDamage

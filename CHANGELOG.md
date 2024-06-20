@@ -137,10 +137,11 @@
 - New attack: **Rest** (C): heal 30 damage and status from self; becomes Drowsy.
 
 #### Dewgong
+- Reduced Retreat Cost from 1 to zero.
 - **Deep Dive**: removed.
 - **Blizzard**: removed.
 - New Pokémon Power: **Swim Freely**: if Benched, switch in; if Active, switch out.
-- New attack: **Riptide** (WC): 10 damage; shuffle 4 Energy cards from discard pile into deck; +10 damage for each returned Energy.
+- New attack: **Aquatic Rescue** (CC): put up to 3 Pokémon or Supporter from discard pile into hand; does 10 damage for each selected Pokémon.
 
 #### Shellder
 - **Withdraw**: removed.

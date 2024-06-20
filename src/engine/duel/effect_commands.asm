@@ -918,10 +918,12 @@ FishingTailEffectCommands:
 	db  $00
 
 AquaticRescueEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, FishingTail_DiscardPileCheck
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SelectedCardList_AddToHandFromDiscardPileEffect
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, AquaticRescue_DiscardPileCheck
+	dbw EFFECTCMDTYPE_AI, AquaticRescue_AIEffect
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, ChooseUpTo3Cards_PlayerDiscardPileSelection
 	dbw EFFECTCMDTYPE_AI_SELECTION, AquaticRescue_AISelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, AquaticRescue_DamageMultiplierEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, SelectedCardList_AddToHandFromDiscardPileEffect
 	db  $00
 
 RototillerEffectCommands:

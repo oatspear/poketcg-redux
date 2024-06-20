@@ -750,6 +750,7 @@ KeepOnlyCardTypeInCardList:
 ;   wDuelTempList: list of deck cards to search
 ; output:
 ;   wDuelTempList: filtered list, keeping only the cards that passed the predicate
+;   carry: set if the filtered list is empty
 FilterCardList:
 	ld [wDataTableIndex], a
   ld hl, wDuelTempList
@@ -758,7 +759,7 @@ FilterCardList:
   ld a, [hli]
   ld [de], a
   cp $ff  ; terminating byte
-  ret z
+  jr z, .set_carry_if_empty_list
 ; a: deck index to pass to the predicate function
 	push de
 	call DynamicCardTypeTest  ; preserves de only if the test function also does
@@ -767,6 +768,11 @@ FilterCardList:
   jr nc, .loop
   inc de
   jr .loop
+.set_carry_if_empty_list
+	ld a, [wDuelTempList]
+	sub $ff
+	cp 1
+	ret
 
 
 ; ------------------------------------------------------------------------------
@@ -812,4 +818,33 @@ GetNextPositionInTempList:
 	ld hl, hTempList
 	add hl, de
 	pop de
+	ret
+
+
+; input:
+;   a: CARDTEST_* constant
+; output:
+;   a: number of matching cards
+;   z: set if zero cards matched the pattern
+CountMatchingCardsInTempList:
+	push bc
+	ld [wDataTableIndex], a
+	ld hl, hTempList
+	ld c, 0
+.loop
+  ld a, [hli]
+  cp $ff  ; terminating byte
+  jr z, .tally
+; a: deck index to pass to the predicate function
+	push bc
+	call DynamicCardTypeTest  ; preserves bc only if the test function also does
+	pop bc
+; only increment c if the current card is of the given type
+  jr nc, .loop
+  inc c
+  jr .loop
+.tally
+	ld a, c
+	pop bc
+	or a
 	ret

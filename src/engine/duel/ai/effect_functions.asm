@@ -143,21 +143,16 @@ AISelect_AquaticRescue:
 	ldh [hTempList + 1], a
 	ldh [hTempList + 2], a
 	ldh [hTempList + 3], a
-; try to get energy
-	call LoopCardList_GetFirstEnergy
-	jr c, .done
-	ldh [hTempList], a
-	call RemoveCurrentPositionFromCardList
-; try to get energy
-	call LoopCardList_GetFirstEnergy
-	jr c, .done
-	ldh [hTempList + 1], a
-	call RemoveCurrentPositionFromCardList
-; try to get energy
-	call LoopCardList_GetFirstEnergy
-	jr c, .done
-	ldh [hTempList + 2], a
-	; call RemoveCurrentPositionFromCardList
-.done
-	or a
-	ret
+	ld c, 3
+	ld de, wDuelTempList
+	ld hl, hTempList
+.loop
+	ld a, [de]
+	cp $ff
+	ret z
+	inc de
+	ld [hl], a
+	inc hl
+	dec c
+	ret z
+	jr .loop

@@ -1,6 +1,15 @@
 ;
 
 
+
+AquaticRescueEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, FishingTail_DiscardPileCheck
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SelectedCardList_AddToHandFromDiscardPileEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, ChooseUpTo3Cards_PlayerDiscardPileSelection
+	dbw EFFECTCMDTYPE_AI_SELECTION, AquaticRescue_AISelectEffect
+	db  $00
+
+
 ; Pokémon Powers should not use [hTemp_ffa0]
 ; adds a card in [hEnergyTransEnergyCard] from the deck to the hand
 ; Note: Pokémon Power no longer needs to preserve [hTemp_ffa0] at this point

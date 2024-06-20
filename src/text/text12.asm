@@ -1004,9 +1004,11 @@ AquaticRescueName:
 	done
 
 AquaticRescueDescription:
-	text "Put up to 3 Pokémon or Energy"
-	line "cards from your discard pile"
-	line "into your hand."
+	text "Put up to 3 Pokémon or Supporter"
+	line "cards from your discard pile into"
+	line "your hand. This attack does 10"
+	line "damage for each Pokémon card you"
+	line "put in your hand this way."
 	done
 
 RocketShellName:

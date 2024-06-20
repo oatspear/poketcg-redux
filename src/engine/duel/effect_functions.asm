@@ -398,6 +398,16 @@ EnergySpike_PreconditionCheck:
 	jp CheckBenchIsNotEmpty
 
 
+; return carry if no eligible cards in the Discard Pile
+AquaticRescue_DiscardPileCheck:
+	call CheckDiscardPileNotEmpty  ; builds discard pile list
+	ret c  ; no cards
+	ld a, CARDTEST_POKEMON_OR_SUPPORTER
+	call FilterCardList
+	ldtx hl, ThereAreNoCardsInTheDiscardPileText
+	ret
+
+
 ; ------------------------------------------------------------------------------
 ; Discard Cards
 ; ------------------------------------------------------------------------------
@@ -7793,6 +7803,17 @@ ChooseUpTo2Cards_PlayerDiscardPileSelection:
 	ld a, 2
 	ld [wCardListNumberOfCardsToChoose], a
 	jr ChooseUpToNCards_PlayerDiscardPileSelection
+
+
+; assume:
+;   [wDuelTempList]: populated from AquaticRescue_DiscardPileCheck
+AquaticRescue_PlayerSelectEffect:
+	call ChooseUpTo3Cards_PlayerDiscardPileSelection
+; set carry set if the list is empty
+	ldh a, [hTempList]
+	sub $ff
+	cp 1
+	ret
 
 
 Rototiller_PlayerSelectEffect:
