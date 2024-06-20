@@ -2278,8 +2278,8 @@ DragoniteLv41CardGfx::
 	INCBIN "gfx/cards/dragonite1.pal"
 
 DragoniteLv45CardGfx::
-	INCBIN "gfx/cards/dragonite2.2bpp"
-	INCBIN "gfx/cards/dragonite2.pal"
+	INCBIN "gfx/cards/dragonite3.2bpp"
+	INCBIN "gfx/cards/dragonite3.pal"
 
 ProfessorOakCardGfx::
 	INCBIN "gfx/cards/professoroak.2bpp"
