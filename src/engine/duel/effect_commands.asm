@@ -1382,13 +1382,6 @@ UnaffectedByWeaknessResistancePowersOrEffectsEffectCommands:
 	dbw EFFECTCMDTYPE_AI, UnaffectedByWeaknessResistancePowersEffectsEffect
 	db  $00
 
-NutritionSupportEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDeckIsNotEmpty
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, NutritionSupport_AttachEnergyEffect
-	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, NutritionSupport_PlayerSelectEffect
-	dbw EFFECTCMDTYPE_AI_SELECTION, NutritionSupport_AISelectEffect
-	db  $00
-
 EnergySpikeEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, EnergySpike_PreconditionCheck
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Accelerate1EnergyFromDeck_AttachEnergyEffect
@@ -1555,6 +1548,13 @@ EvolutionaryWaveEffectCommands:
 
 AromatherapyEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Heal20DamageFromAll_HealEffect
+	db  $00
+
+Accelerate1EnergyFromHandEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, AttachEnergyFromHand_HandCheck
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, AttachEnergyFromHand_AttachEnergyEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, AttachEnergyFromHand_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, AttachEnergyFromHand_AISelectEffect
 	db  $00
 
 GrowthEffectCommands:

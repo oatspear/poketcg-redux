@@ -2870,7 +2870,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer AscensionDescription
 	textpointer DoubleDamageIfMorePrizesDescription
 	textpointer NutritionSupportName
-	textpointer NutritionSupportDescription
+	; textpointer NutritionSupportDescription
 	textpointer GrassKnotName
 	textpointer GrassKnotDescription
 	textpointer PanicVineName

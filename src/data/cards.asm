@@ -2014,13 +2014,13 @@ ExeggcuteCard:
 	dw NONE ; pre-evo name
 
 	; attack 1
-	energy GRASS, 1 ; energies
+	energy COLORLESS, 1 ; energies
 	tx NutritionSupportName ; name
-	tx NutritionSupportDescription ; description
+	tx AttachEnergyFromHandDescription ; description
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category
-	dw NutritionSupportEffectCommands ; effect commands
+	dw Accelerate1EnergyFromHandEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db SPECIAL_AI_HANDLING ; flags 3
@@ -2294,13 +2294,13 @@ TangelaLv12Card:
 	dw NONE ; pre-evo name
 
 	; attack 1
-	energy GRASS, 1 ; energies
+	energy COLORLESS, 1 ; energies
 	tx NutritionSupportName ; name
-	tx NutritionSupportDescription ; description
+	tx AttachEnergyFromHandDescription ; description
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category
-	dw NutritionSupportEffectCommands ; effect commands
+	dw Accelerate1EnergyFromHandEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db SPECIAL_AI_HANDLING ; flags 3

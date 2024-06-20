@@ -46,9 +46,9 @@ HandleSpecialAIAttacks:
 	cp DRAGONITE_LV45
 	jp z, .EnergySpike
 	cp EXEGGCUTE
-	jp z, .EnergySpike
+	jp z, .NutritionSupport
 	cp TANGELA_LV12
-	jp z, .EnergySpike
+	jp z, .NutritionSupport
 	cp DRATINI
 	jp z, .DragonDance
 	cp HORSEA
@@ -387,13 +387,13 @@ HandleSpecialAIAttacks:
 
 ; if there's any energy cards in hand,
 ; return a score of $80 + 3.
-; .DragonDance:
-; 	call CreateEnergyCardListFromHand
-; 	jp c, .zero_score
-; 	call AIProcessButDontPlayEnergy_SkipEvolution
-; 	jp nc, .zero_score
-; 	ld a, $83
-; 	ret
+.NutritionSupport:
+	call CreateEnergyCardListFromHand
+	jp c, .zero_score
+	call AIProcessButDontPlayEnergy_SkipEvolution
+	jp nc, .zero_score
+	ld a, $83
+	ret
 
 .EnergySpores:
 	ld a, CARD_LOCATION_DISCARD_PILE

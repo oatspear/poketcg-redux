@@ -640,8 +640,8 @@ DragonRageDescription:
 	done
 
 AttachEnergyFromHandDescription:
-	text "Attach a Basic Energy card in your"
-	line "hand to 1 of your Pokémon."
+	text "Attach a Basic Energy card from"
+	line "your hand to 1 of your Pokémon."
 	done
 
 EnergyHurricaneName:
@@ -685,12 +685,12 @@ NutritionSupportName:
 	text "Nutrition Support"
 	done
 
-NutritionSupportDescription:
-	text "Search your deck for a basic Energy"
-	line "card and attach it to 1 of your"
-	line "Pokémon. Heal 10 damage from that"
-	line "Pokémon. Then, shuffle your deck."
-	done
+; NutritionSupportDescription:
+; 	text "Attach a Basic Energy from your"
+; 	line "hand to 1 of your Pokémon and heal"
+; 	line "10 damage from that Pokémon."
+; 	line "Then, shuffle your deck."
+; 	done
 
 GrassKnotName:
 	text "Grass Knot"

@@ -54,11 +54,15 @@
 
 #### Exeggcute
 - **Eggsplosion**: removed.
+- **Nutrition Support**: reduced cost from (G) to (C); attaches energy from the hand instead of the deck; removed healing effect.
 - New attack: **Leech Seed** (GC): 20 damage; heal 10 damage.
 
 #### Exeggutor
 - **Synthesis**: adds 2 Basic Energy cards from the deck to the hand, up from 1 Basic Energy card.
 - **Big Eggsplosion**: renamed to **Energy Burst**.
+
+#### Tangela Lv12
+- **Nutrition Support**: reduced cost from (G) to (C); attaches energy from the hand instead of the deck; removed healing effect.
 
 #### Pinsir
 - **Guillotine**: reworked.
