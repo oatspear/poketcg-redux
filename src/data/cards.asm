@@ -3879,7 +3879,7 @@ SeelCard:
 
 	db 0 ; retreat cost
 	db WR_LIGHTNING ; weakness
-	db NONE ; resistance
+	db WR_FIRE ; resistance
 	tx SeaLionName ; category
 	db 86 ; Pokedex number
 	db 0

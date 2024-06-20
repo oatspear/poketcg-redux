@@ -131,6 +131,7 @@
 
 #### Seel
 - Reduced HP from 60 to 50.
+- Added Resistance to Fire.
 - **Find Ice**: removed.
 - **Energy Slide**: removed.
 - New attack: **Fetch** (C): choose a card from the top 4 deck cards and add it to the hand.
