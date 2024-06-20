@@ -7677,12 +7677,8 @@ PokeBall_PlayerSelectEffect:
 ; return carry if no eligible cards in the Discard Pile
 FishingTail_DiscardPileCheck:
 Recycle_DiscardPileCheck:
-	ld a, DUELVARS_NUMBER_OF_CARDS_IN_DISCARD_PILE
-	call GetTurnDuelistVariable
-	ldtx hl, ThereAreNoCardsInTheDiscardPileText
-	cp 1
+	call CheckDiscardPileNotEmpty
 	ret c
-	call CreateDiscardPileCardList
 	call RemoveTrainerCardsFromCardList
 	call CountCardsInDuelTempList
 	cp 1
