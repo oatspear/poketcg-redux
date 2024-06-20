@@ -1229,8 +1229,7 @@ NaturalRemedy_HealEffect:
 ; heal up to 30 damage from user and put it to sleep
 Rest_HealEffect:
 	call ClearAllArenaStatusAndEffects
-	ld a, 30
-	call HealADamageEffect
+	call HealAllDamageEffect
 	call SwapTurn
 	call SleepEffect
 	jp SwapTurn

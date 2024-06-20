@@ -134,7 +134,7 @@
 - **Find Ice**: removed.
 - **Energy Slide**: removed.
 - New attack: **Fetch** (C): choose a card from the top 4 deck cards and add it to the hand.
-- New attack: **Rest** (C): heal 30 damage and status from self; becomes Drowsy.
+- New attack: **Rest** (C): heal all damage and status from self; becomes Drowsy.
 
 #### Dewgong
 - Reduced Retreat Cost from 1 to zero.
@@ -290,6 +290,9 @@
 #### Alakazam
 - **Psychic**: increased base damage from 10 to 20.
 - **Mind Blast**: reduced cost from (PCC) to (PC); increased base damage from zero to 10; changed bonus damage from 20 per card in the opponent's hand to 10 per card in both players' hands.
+
+#### Slowpoke
+- **Rest**: heals all damage on the Pokémon, up from 30 damage.
 
 #### Drowzee
 - **Meditate**: reworked.

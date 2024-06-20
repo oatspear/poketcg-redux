@@ -312,13 +312,12 @@ HealNDamageFromAll:
 	ret  ; none healed
 
 
-Recover_HealEffect:
+HealAllDamageEffect:
 	ld e, PLAY_AREA_ARENA
 	call GetCardDamageAndMaxHP
 	ld e, a ; all damage for recovery
 	ld d, 0
-	call ApplyAndAnimateHPRecovery
-	ret
+	jp ApplyAndAnimateHPRecovery
 
 
 ; ------------------------------------------------------------------------------

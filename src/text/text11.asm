@@ -504,13 +504,13 @@ RestName:
 IF SLEEP_WITH_COIN_FLIP
 RestDescription:
 	text "Remove all Special Conditions and"
-	line "3 damage counters from this Pokémon."
+	line "damage counters from this Pokémon."
 	line "This Pokémon is now Asleep."
 	done
 ELSE
 RestDescription:
 	text "Remove all Special Conditions and"
-	line "3 damage counters from this Pokémon."
+	line "damage counters from this Pokémon."
 	line "This Pokémon is now Drowsy."
 	done
 ENDC

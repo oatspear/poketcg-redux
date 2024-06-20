@@ -1103,7 +1103,7 @@ JunkMagnetEffectCommands:
 RecoverEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, Recover_CheckEnergyHP
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, DiscardEnergy_PlayerSelectEffect
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Recover_HealEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, HealAllDamageEffect
 	dbw EFFECTCMDTYPE_DISCARD_ENERGY, DiscardEnergy_DiscardEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, DiscardEnergy_AISelectEffect
 	db  $00
