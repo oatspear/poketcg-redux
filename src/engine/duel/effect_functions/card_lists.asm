@@ -744,6 +744,31 @@ KeepOnlyCardTypeInCardList:
   jr .loop
 
 
+; removes cards from wDuelTempList that do not match the given pattern
+; input:
+;   a: table index of a predicate function (CARDTEST_* constant)
+;   wDuelTempList: list of deck cards to search
+; output:
+;   wDuelTempList: filtered list, keeping only the cards that passed the predicate
+FilterCardList:
+	ld [wDataTableIndex], a
+  ld hl, wDuelTempList
+  ld de, wDuelTempList
+.loop
+  ld a, [hli]
+  ld [de], a
+  cp $ff  ; terminating byte
+  ret z
+; a: deck index to pass to the predicate function
+	push de
+	call DynamicCardTypeTest  ; preserves de only if the test function also does
+	pop de
+; only advance de if the current card is of the given type
+  jr nc, .loop
+  inc de
+  jr .loop
+
+
 ; ------------------------------------------------------------------------------
 ; hTempList Manipulation
 ; ------------------------------------------------------------------------------
