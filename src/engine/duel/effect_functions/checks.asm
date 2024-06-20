@@ -877,6 +877,7 @@ CardTypeTest_FunctionTable:
 	dw CardTypeTest_BasicPokemon           ; CARDTEST_BASIC_POKEMON
 	dw CardTypeTest_EvolutionPokemon       ; CARDTEST_EVOLUTION_POKEMON
 	dw CardTypeTest_BasicEnergy            ; CARDTEST_BASIC_ENERGY
+	dw CardTypeTest_PokemonOrSupporter     ; CARDTEST_POKEMON_OR_SUPPORTER
 	dw CardTypeTest_IsEnergizedPokemon     ; CARDTEST_ENERGIZED_POKEMON
 	dw CardTypeTest_IsNonEnergizedPokemon  ; CARDTEST_NON_ENERGIZED_POKEMON
 	dw CardTypeTest_IsMagmar               ; CARDTEST_MAGMAR
@@ -967,6 +968,29 @@ IsBasicEnergyCard:
 	ret z  ; not a Basic Energy card
 	scf
 	ret
+
+
+;
+CardTypeTest_PokemonOrSupporter:
+	ld a, [wDynamicFunctionArgument]
+	; fallthrough
+
+; input:
+;   a: deck index of the card
+; output:
+;   carry: set if the given card is a Pokémon or a Supporter
+; preserves: hl, bc, de
+IsPokemonOrSupporterCard:
+	call LoadCardDataToBuffer2_FromDeckIndex  ; preserves hl, bc, de
+	ld a, [wLoadedCard2Type]
+	cp TYPE_PKMN + 1
+	ret c  ; is a Pokémon
+	sub TYPE_TRAINER_SUPPORTER
+; if a < TYPE_TRAINER_SUPPORTER => underflow => a > 0
+; if a > TYPE_TRAINER_SUPPORTER => a > 0
+; if a = TYPE_TRAINER_SUPPORTER => a = 0
+	cp 1
+	ret  ; carry: set only if a = TYPE_TRAINER_SUPPORTER
 
 
 ; input:

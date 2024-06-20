@@ -318,18 +318,19 @@ DEF PRIZES_6    EQU $06
  	const CARDTEST_BASIC_POKEMON                ; $01
  	const CARDTEST_EVOLUTION_POKEMON            ; $02
  	const CARDTEST_BASIC_ENERGY                 ; $03
- 	const CARDTEST_ENERGIZED_POKEMON            ; $04
- 	const CARDTEST_NON_ENERGIZED_POKEMON        ; $05
- 	const CARDTEST_MAGMAR                       ; $06
- 	const CARDTEST_ENERGIZED_MAGMAR             ; $07
- 	const CARDTEST_ELECTABUZZ                   ; $08
- 	const CARDTEST_ENERGIZED_ELECTABUZZ         ; $09
- 	const CARDTEST_EVOLVES_INTO                 ; $0a
-	const CARDTEST_EVOLUTION_OF_PLAY_AREA       ; $0b
-	const CARDTEST_GRASS_CARD                   ; $0c
-	const CARDTEST_FULL_HP_POKEMON              ; $0d
-	const CARDTEST_DAMAGED_POKEMON              ; $0e
-	const CARDTEST_EVOLVED_POKEMON              ; $0f
+	const CARDTEST_POKEMON_OR_SUPPORTER         ; $04
+ 	const CARDTEST_ENERGIZED_POKEMON            ; $05
+ 	const CARDTEST_NON_ENERGIZED_POKEMON        ; $06
+ 	const CARDTEST_MAGMAR                       ; $07
+ 	const CARDTEST_ENERGIZED_MAGMAR             ; $08
+ 	const CARDTEST_ELECTABUZZ                   ; $09
+ 	const CARDTEST_ENERGIZED_ELECTABUZZ         ; $0a
+ 	const CARDTEST_EVOLVES_INTO                 ; $0b
+	const CARDTEST_EVOLUTION_OF_PLAY_AREA       ; $0c
+	const CARDTEST_GRASS_CARD                   ; $0d
+	const CARDTEST_FULL_HP_POKEMON              ; $0e
+	const CARDTEST_DAMAGED_POKEMON              ; $0f
+	const CARDTEST_EVOLVED_POKEMON              ; $10
 
 ; [wAIAttackLogicFlags] constants
 DEF AI_LOGIC_MIN_DAMAGE_CAN_KO_F     EQU 0
