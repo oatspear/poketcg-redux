@@ -4055,18 +4055,18 @@ KrabbyCard:
 	dw NONE ; pre-evo name
 
 	; attack 1
-	energy COLORLESS, 1 ; energies
-	tx FlailName ; name
-	tx FlailDescription ; description
-	dw NONE ; description (cont)
+	energy WATER, 1 ; energies
+	tx BubbleJetName ; name
+	tx Damage1BenchedPokemon10Description ; description
+	tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
 	db 10 ; damage
-	db DAMAGE_X ; category
-	dw FlailEffectCommands ; effect commands
-	db NONE ; flags 1
+	db DAMAGE_NORMAL ; category
+	dw Damage1BenchedPokemon10EffectCommands ; effect commands
+	db DAMAGE_TO_OPPONENT_BENCH ; flags 1
 	db NONE ; flags 2
-	db BOOST_IF_TAKEN_DAMAGE ; flags 3
-	db 0
-	db ATK_ANIM_HIT ; animation
+	db NONE ; flags 3
+	db 10
+	db ATK_ANIM_BUBBLES ; animation
 
 	; attack 2
 	energy COLORLESS, 2 ; energies

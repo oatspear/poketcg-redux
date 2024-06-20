@@ -157,7 +157,7 @@
 #### Krabby
 - **Bubble**: removed.
 - **Guillotine**: removed.
-- New attack: **Flail** (C): 10 damage per damage counter on the user.
+- New attack: **Bubble Jet** (W): 10 damage; 10 damage to 1 of the opponent's Benched Pokémon.
 - New attack: **Rend** (CC): 10 damage; +20 damage if the Defending Pokémon is damaged.
 
 #### Kingler
