@@ -4324,18 +4324,18 @@ SeakingCard:
 	tx GoldeenName ; pre-evo name
 
 	; attack 1
-	energy COLORLESS, 2 ; energies
-	tx RendName ; name
-	tx Bonus20IfOpponentIsDamagedDescription ; description
-	dw NONE ; description (cont)
-	db 20 ; damage
-	db DAMAGE_PLUS ; category
-	dw RendEffectCommands ; effect commands
+	energy 0 ; energies
+	tx SwimFreelyName ; name
+	tx SwimFreelyDescription ; description
+	tx PokemonPowerDescriptionCont ; description (cont)
+	db 0 ; damage
+	db POKEMON_POWER ; category
+	dw SwimFreelyEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_HIT ; animation
+	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
 	energy WATER, 1, COLORLESS, 1 ; energies

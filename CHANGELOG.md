@@ -175,7 +175,9 @@
 - New attack: **Dragon Arrow** (W): discard any number of attached energies; 10 damage to 1 of the opponent's Pokémon, +20 damage for each discarded energy.
 
 #### Seaking
+- **Rend**: removed.
 - **Waterfall**: removed.
+- New Pokémon Power: **Swim Freely**: if Benched, switch in; if Active, switch out.
 - New attack: **Riptide** (WC): 10 damage; shuffle 4 Energy cards from discard pile into deck; +10 damage for each returned Energy.
 
 #### Starmie
