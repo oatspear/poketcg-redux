@@ -1340,9 +1340,9 @@ SynthesisName:
 
 SynthesisDescription:
 	text "Once during your turn, you may"
-	line "search your deck for 2 Basic Energy"
-	line "cards and put them into your hand."
-	line "Shuffle your deck afterward."
+	line "search your deck for up to 2 Basic"
+	line "Energy cards and put them into your"
+	line "hand. Shuffle your deck afterward."
 	done
 
 SoothingMelodyName:
