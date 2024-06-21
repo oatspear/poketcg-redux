@@ -3914,7 +3914,7 @@ DewgongCard:
 	db 0
 	db ATK_ANIM_PKMN_POWER_1 ; animation
 
-	energy COLORLESS, 2 ; energies
+	energy WATER, 1, COLORLESS, 1 ; energies
 	tx AquaticRescueName ; name
 	tx AquaticRescueDescription ; description
 	dw NONE ; description (cont)
@@ -4336,6 +4336,19 @@ SeakingCard:
 	db NONE ; flags 3
 	db 0
 	db ATK_ANIM_WHIRLPOOL ; animation
+
+	; energy WATER, 2 ; energies
+	; tx AquaReturnName ; name
+	; tx ReturnToDeckDescription ; description
+	; dw NONE ; description (cont)
+	; db 80 ; damage
+	; db DAMAGE_NORMAL ; category
+	; dw AquaReturnEffectCommands ; effect commands
+	; db NONE ; flags 1
+	; db NONE ; flags 2
+	; db NONE ; flags 3
+	; db 0
+	; db ATK_ANIM_WATER_JETS ; animation
 
 	db 1 ; retreat cost
 	db WR_LIGHTNING ; weakness
@@ -6266,7 +6279,7 @@ DugtrioCard:
 	tx DiglettName ; pre-evo name
 
 	; attack 1
-	energy COLORLESS, 2 ; energies
+	energy FIGHTING, 1, COLORLESS, 1 ; energies
 	tx RototillerName ; name
 	tx RototillerDescription ; description
 	dw NONE ; description (cont)

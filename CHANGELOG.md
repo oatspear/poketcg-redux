@@ -146,7 +146,7 @@
 - **Deep Dive**: removed.
 - **Blizzard**: removed.
 - New Pokémon Power: **Safeguard**: attaching Water Energy from hand clears Status and effects; Pokémon with attached Water Energy are immune to status.
-- New attack: **Aquatic Rescue** (CC): put up to 3 Pokémon or Supporter from discard pile into hand; does 10 damage for each selected Pokémon.
+- New attack: **Aquatic Rescue** (WC): put up to 3 Pokémon or Supporter from discard pile into hand; does 10 damage for each selected Pokémon.
 
 #### Shellder
 - **Withdraw**: removed.
@@ -247,7 +247,7 @@
 ### Fighting Changes
 
 #### Dugtrio
-- **Rototiller**: increased number of recovered cards from 3 to 4.
+- **Rototiller**: increased cost from (CC) to (FC); increased number of recovered cards from 3 to 4.
 
 #### Primeape
 - Increased HP from 70 to 80.
