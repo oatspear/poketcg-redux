@@ -212,6 +212,11 @@ RapidSpinEffectCommands:
 	dbw EFFECTCMDTYPE_AI_SELECTION, RapidSpin_AISelectEffect
 	db  $00
 
+Plus20DamageIfLessEnergyThanOpponentEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Plus20DamageIfLessEnergyThanOpponent_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AI, Plus20DamageIfLessEnergyThanOpponent_AIEffect
+	db  $00
+
 DamagePerEnergyAttachedToBothActiveEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, DamagePerEnergyAttachedToBothActive_MultiplierEffect
 	dbw EFFECTCMDTYPE_AI, DamagePerEnergyAttachedToBothActive_AIEffect
@@ -752,7 +757,12 @@ QuickSearchEffectCommands:
 
 CourierEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, PassivePowerEffect
-	dbw EFFECTCMDTYPE_PKMN_POWER_TRIGGER, Courier_SearchAndAddToHandEffect
+	dbw EFFECTCMDTYPE_PKMN_POWER_TRIGGER, Courier_TutorEffect
+	db  $00
+
+EnergyStreamEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, PassivePowerEffect
+	dbw EFFECTCMDTYPE_PKMN_POWER_TRIGGER, EnergyStream_TutorEffect
 	db  $00
 
 WaveRiderEffectCommands:

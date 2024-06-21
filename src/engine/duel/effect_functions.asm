@@ -781,7 +781,7 @@ TradeEffect:
 
 
 ; Search for any card in deck and add it to the hand.
-Courier_SearchAndAddToHandEffect:
+Courier_TutorEffect:
 	ld a, DUELVARS_DUELIST_TYPE
 	call GetTurnDuelistVariable
 	cp DUELIST_TYPE_LINK_OPP
@@ -806,6 +806,42 @@ Courier_SearchAndAddToHandEffect:
 ; AI just selects the first card in the deck
 	ld b, 1
 	call CreateDeckCardListTopNCards
+	ld a, [wDuelTempList]
+	; fallthrough
+
+.done
+	cp $ff
+	ret z
+	jp AddDeckCardToHandAndShuffleEffect
+
+
+; Search for a basic energy card in deck and add it to the hand.
+EnergyStream_TutorEffect:
+	ld a, DUELVARS_DUELIST_TYPE
+	call GetTurnDuelistVariable
+	cp DUELIST_TYPE_LINK_OPP
+	jr z, .link_opp
+	and DUELIST_TYPE_AI_OPP
+	jr nz, .ai_opp
+
+; player
+	; ldtx hl, ChooseCardToPlaceInHandText
+	; call DrawWideTextBox_WaitForInput
+	call HandlePlayerSelectionBasicEnergyFromDeck
+	; ldh [hAIPkmnPowerEffectParam], a
+	call SerialSend8Bytes
+	jr .done
+
+.link_opp
+	call SerialRecv8Bytes
+	; ldh [hAIPkmnPowerEffectParam], a
+	jr .done
+
+.ai_opp
+; AI just selects the first card in the deck
+	call CreateDeckCardList
+	ld a, CARDTEST_BASIC_ENERGY
+	call FilterCardList
 	ld a, [wDuelTempList]
 	; fallthrough
 

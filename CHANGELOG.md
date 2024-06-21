@@ -181,6 +181,12 @@
 - New attack: **Scald** (W): 10 damage; inflicts Burn.
 - New attack: **Dragon Arrow** (W): discard any number of attached energies; 10 damage to 1 of the opponent's Pokémon, +20 damage for each discarded energy.
 
+#### Goldeen
+- **Flail**: removed.
+- **Horn Attack**: removed.
+- New Pokémon Power: **Energy Stream**: when played from the hand onto the Bench, add 1 basic energy from the deck to the hand.
+- New attack: **Water Sport** (W): 10 damage; +20 damage if this Pokémon has less energies than the opponent.
+
 #### Seaking
 - Reduced HP from 80 to 70.
 - **Rend**: removed.

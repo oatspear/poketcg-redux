@@ -1592,3 +1592,14 @@ AbilityEnergyRetrievalDescription:
 	line "put up to 2 Basic Energy cards from"
 	line "your discard pile into your hand."
 	done
+
+WaterSportName:
+	text "Water Sport"
+	done
+
+Plus20DamageIfLessEnergyThanOpponentDescription:
+	text "If this Pokémon has less"
+	line "Energy attached to it than"
+	line "the Defending Pokémon, this"
+	line "attack does 20 more damage."
+	done

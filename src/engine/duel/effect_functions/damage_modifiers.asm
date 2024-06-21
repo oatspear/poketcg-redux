@@ -265,6 +265,30 @@ DamagePerEnergyAttachedToBothActive_AIEffect:
 	jp SetDefiniteAIDamage
 
 
+; +20 damage if this Pokémon has less energies than the opponent
+Plus20DamageIfLessEnergyThanOpponent_DamageBoostEffect:
+; get energies attached to opponent
+	ld e, PLAY_AREA_ARENA
+	call SwapTurn
+	call GetPlayAreaCardAttachedEnergies
+	call SwapTurn
+	ld a, [wTotalAttachedEnergies]
+	ld d, a
+; get energies attached to self
+	call GetPlayAreaCardAttachedEnergies
+	ld a, [wTotalAttachedEnergies]
+; bonus damage if this has less energies
+	cp d
+	ret nc
+	ld a, 20
+	jp AddToDamage
+
+
+Plus20DamageIfLessEnergyThanOpponent_AIEffect:
+	call Plus20DamageIfLessEnergyThanOpponent_DamageBoostEffect
+	jp SetDefiniteAIDamage
+
+
 ; +10 for each selected energy to recover from discard
 Riptide_DamageBoostEffect:
 	call TempListLength

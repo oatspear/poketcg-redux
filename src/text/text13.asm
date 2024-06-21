@@ -194,6 +194,18 @@ SafeguardDescription:
 	line "affected by Special Conditions."
 	done
 
+EnergyStreamName:
+	text "Energy Stream"
+	done
+
+EnergyStreamDescription:
+	text "When you play this Pokémon from your"
+	line "hand onto your Bench, you may search"
+	line "your deck for a Basic Energy card"
+	line "and put it into your hand."
+	line "Shuffle your deck afterward."
+	done
+
 ; ------------------------------------------------------------------------------
 ; Unused Text
 ; ------------------------------------------------------------------------------

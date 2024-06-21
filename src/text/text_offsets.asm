@@ -3038,6 +3038,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer WaterAbsorbName
 	textpointer WaterAbsorbDescription
 	textpointer AbilityEnergyRetrievalDescription
+	textpointer WaterSportName
+	textpointer Plus20DamageIfLessEnergyThanOpponentDescription
 
 ; ------------------------------------------------------------------------------
 ; text13.asm
@@ -3077,6 +3079,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer RevivalWaveDescription
 	textpointer SafeguardName
 	textpointer SafeguardDescription
+	textpointer EnergyStreamName
+	textpointer EnergyStreamDescription
 
 	; unused
 	; textpointer SwimFreelyName
