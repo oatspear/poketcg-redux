@@ -3075,12 +3075,12 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer QuickSearchDescription
 	textpointer RevivalWaveName
 	textpointer RevivalWaveDescription
-	textpointer SwimFreelyName
-	textpointer SwimFreelyDescription
 	textpointer SafeguardName
 	textpointer SafeguardDescription
 
 	; unused
+	; textpointer SwimFreelyName
+	; textpointer SwimFreelyDescription
 	; textpointer ProphecyName
 	; textpointer ProphecyDescription
 	; textpointer VaporEssenceName

@@ -1,5 +1,49 @@
 
 
+RiptideName:
+	text "Riptide"
+	done
+
+RiptideDescription:
+	text "Shuffle up to 4 Energy cards from"
+	line "your discard pile into your deck."
+	line "This attack does 10 more damage for"
+	line "each Energy card returned this way."
+	done
+
+
+; attack 1
+energy WATER, 1, COLORLESS, 1 ; energies
+tx RiptideName ; name
+tx RiptideDescription ; description
+dw NONE ; description (cont)
+db 10 ; damage
+db DAMAGE_PLUS ; category
+dw RiptideEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_WHIRLPOOL ; animation
+
+
+
+; attack 1
+energy 0 ; energies
+tx SwimFreelyName ; name
+tx SwimFreelyDescription ; description
+tx PokemonPowerDescriptionCont ; description (cont)
+db 0 ; damage
+db POKEMON_POWER ; category
+dw SwimFreelyEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_PKMN_POWER_1 ; animation
+
+
+
 ; attack 1
 energy COLORLESS, 1 ; energies
 tx RecoverName ; name

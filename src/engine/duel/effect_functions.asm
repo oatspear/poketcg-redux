@@ -301,12 +301,6 @@ SyncShuffleDeck:
 INCLUDE "engine/duel/effect_functions/checks.asm"
 
 
-SwimFreely_PreconditionCheck:
-	call CheckPokemonPowerCanBeUsed_StoreTrigger
-	ret c
-	jp CheckBenchIsNotEmpty
-
-
 HyperHypnosis_PreconditionCheck:
 	call CheckPokemonPowerCanBeUsed_StoreTrigger
 	ret c
@@ -748,19 +742,6 @@ AbilityEnergyRetrieval_PreconditionCheck:
 	call CreateEnergyCardListFromDiscardPile_OnlyBasic
 	ldtx hl, ThereAreNoBasicEnergyCardsInDiscardPileText
 	ret
-
-
-SwimFreely_PlayerSelectEffect:
-	ldh a, [hTemp_ffa0]
-	or a
-	jp z, Switch_PlayerSelection
-	ldh [hTempPlayAreaLocation_ffa1], a
-	ret
-
-
-SwimFreely_SwitchEffect:
-	call SetUsedPokemonPowerThisTurn_RestoreTrigger
-	jp Switch_SwitchEffect
 
 
 StepIn_SwitchEffect:

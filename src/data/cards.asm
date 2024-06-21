@@ -4305,31 +4305,17 @@ SeakingCard:
 	db DIAMOND ; rarity
 	db COLOSSEUM | JUNGLE ; sets
 	db SEAKING
-	db 80 ; hp
+	db 70 ; hp
 	db STAGE1 ; stage
 	tx GoldeenName ; pre-evo name
 
 	; attack 1
-	energy 0 ; energies
-	tx SwimFreelyName ; name
-	tx SwimFreelyDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
-	db 0 ; damage
-	db POKEMON_POWER ; category
-	dw SwimFreelyEffectCommands ; effect commands
-	db NONE ; flags 1
-	db NONE ; flags 2
-	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_PKMN_POWER_1 ; animation
-
-	; attack 2
-	energy WATER, 1, COLORLESS, 1 ; energies
+	energy WATER, 1 ; energies
 	tx RiptideName ; name
 	tx RiptideDescription ; description
 	dw NONE ; description (cont)
 	db 10 ; damage
-	db DAMAGE_PLUS ; category
+	db DAMAGE_X ; category
 	dw RiptideEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -4337,18 +4323,19 @@ SeakingCard:
 	db 0
 	db ATK_ANIM_WHIRLPOOL ; animation
 
-	; energy WATER, 2 ; energies
-	; tx AquaReturnName ; name
-	; tx ReturnToDeckDescription ; description
-	; dw NONE ; description (cont)
-	; db 80 ; damage
-	; db DAMAGE_NORMAL ; category
-	; dw AquaReturnEffectCommands ; effect commands
-	; db NONE ; flags 1
-	; db NONE ; flags 2
-	; db NONE ; flags 3
-	; db 0
-	; db ATK_ANIM_WATER_JETS ; animation
+	; attack 2
+	energy WATER, 1, COLORLESS, 1 ; energies
+	tx AquaReturnName ; name
+	tx ReturnToDeckDescription ; description
+	dw NONE ; description (cont)
+	db 80 ; damage
+	db DAMAGE_NORMAL ; category
+	dw AquaReturnEffectCommands ; effect commands
+	db NONE ; flags 1
+	db NONE ; flags 2
+	db NONE ; flags 3
+	db 0
+	db ATK_ANIM_WATER_JETS ; animation
 
 	db 1 ; retreat cost
 	db WR_LIGHTNING ; weakness

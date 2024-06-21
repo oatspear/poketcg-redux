@@ -1,6 +1,34 @@
 ;
 
 
+SwimFreelyEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, SwimFreely_PreconditionCheck
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SwimFreely_SwitchEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, SwimFreely_PlayerSelectEffect
+	db  $00
+
+
+SwimFreely_PreconditionCheck:
+	call CheckPokemonPowerCanBeUsed_StoreTrigger
+	ret c
+	jp CheckBenchIsNotEmpty
+
+
+SwimFreely_PlayerSelectEffect:
+	ldh a, [hTemp_ffa0]
+	or a
+	jp z, Switch_PlayerSelection
+	ldh [hTempPlayAreaLocation_ffa1], a
+	ret
+
+
+SwimFreely_SwitchEffect:
+	call SetUsedPokemonPowerThisTurn_RestoreTrigger
+	jp Switch_SwitchEffect
+
+
+
+
 DragonDanceEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, AttachEnergyFromHand_HandCheck
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, AttachEnergyFromHand_AttachEnergyEffect

@@ -1514,8 +1514,8 @@ RiptideName:
 RiptideDescription:
 	text "Shuffle up to 4 Energy cards from"
 	line "your discard pile into your deck."
-	line "This attack does 10 more damage for"
-	line "each Energy card returned this way."
+	line "This attack does 10 damage for each"
+	line "Energy card returned this way."
 	done
 
 ; DefensiveStanceName:

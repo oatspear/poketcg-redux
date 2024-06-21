@@ -271,7 +271,7 @@ Riptide_DamageBoostEffect:
 	or a
 	ret z
 	call ATimes10
-	jp AddToDamage
+	jp SetDefiniteDamage
 
 Riptide_AIEffect:
 	call CreateEnergyCardListFromDiscardPile_AllEnergy
@@ -281,7 +281,7 @@ Riptide_AIEffect:
 	ld a, 4
 .cap
 	call ATimes10
-	call AddToDamage
+	call SetDefiniteDamage
 	jp SetDefiniteAIDamage
 
 
