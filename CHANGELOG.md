@@ -219,7 +219,7 @@
 #### Gyarados
 - Reduced HP from 100 to 90.
 - **Dragon Rage**: removed.
-- New attack: **Devastate** (WC): 60 damage; discard the top 5 cards of your deck.
+- New attack: **Devastate** (WC): 70 damage; discard the top 4 cards of your deck.
 
 #### Lapras
 - **Transport**: tutor 2 Supporters instead of 1.

@@ -4521,9 +4521,9 @@ GyaradosCard:
 	; attack 1
 	energy WATER, 1, COLORLESS, 1 ; energies
 	tx DevastateName ; name
-	tx DiscardTop5CardsFromDeckDescription ; description
+	tx DiscardTop4CardsFromDeckDescription ; description
 	dw NONE ; description (cont)
-	db 60 ; damage
+	db 70 ; damage
 	db DAMAGE_NORMAL ; category
 	dw DevastateEffectCommands ; effect commands
 	db NONE ; flags 1

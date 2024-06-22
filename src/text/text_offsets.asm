@@ -2726,7 +2726,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer SwiftSwimName
 	textpointer SwiftSwimDescription
 	textpointer DevastateName
-	textpointer DiscardTop5CardsFromDeckDescription
+	textpointer DiscardTop4CardsFromDeckDescription
 
 ; ------------------------------------------------------------------------------
 ; text12.asm

@@ -1719,7 +1719,7 @@ DevastateName:
 	text "Devastate"
 	done
 
-DiscardTop5CardsFromDeckDescription:
-	text "Discard the top 5 cards"
+DiscardTop4CardsFromDeckDescription:
+	text "Discard the top 4 cards"
 	line "of your deck."
 	done

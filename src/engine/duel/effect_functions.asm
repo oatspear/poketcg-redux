@@ -430,7 +430,7 @@ Landslide_DiscardDeckEffect:
 
 
 Devastate_DiscardDeckEffect:
-	ld a, 5
+	ld a, 4
 	jp DiscardFromDeckEffect
 
 
