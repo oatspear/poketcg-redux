@@ -4513,23 +4513,36 @@ GyaradosCard:
 	db STAGE1 ; stage
 	tx MagikarpName ; pre-evo name
 
-	; Dragon Vortex (C) 20x
-	; Does 20 damage times the number of Water Energy Cards & Electric Energy cards
-	; in your discard pile. Then, shuffle all of those cards back into your deck.
+	; (WCC) Berserker Splash 40
+	; This attack does 10 damage to each Benched
+	; Pokémon (both yours and your opponent's).
 
 	; attack 1
-	energy COLORLESS, 2 ; energies
-	tx DragonRageName ; name
-	tx DragonRageDescription ; description
+	energy WATER, 1, COLORLESS, 1 ; energies
+	tx DevastateName ; name
+	tx DiscardTop5CardsFromDeckDescription ; description
 	dw NONE ; description (cont)
-	db 20 ; damage
-	db DAMAGE_PLUS ; category
-	dw DragonRageEffectCommands ; effect commands
+	db 60 ; damage
+	db DAMAGE_NORMAL ; category
+	dw DevastateEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
 	db ATK_ANIM_DRAGON_RAGE ; animation
+
+	; energy COLORLESS, 2 ; energies
+	; tx DragonRageName ; name
+	; tx DragonRageDescription ; description
+	; dw NONE ; description (cont)
+	; db 20 ; damage
+	; db DAMAGE_PLUS ; category
+	; dw DragonRageEffectCommands ; effect commands
+	; db NONE ; flags 1
+	; db NONE ; flags 2
+	; db NONE ; flags 3
+	; db 0
+	; db ATK_ANIM_DRAGON_RAGE ; animation
 
 	; attack 2
 	energy WATER, 2, COLORLESS, 2 ; energies
@@ -6217,7 +6230,7 @@ DiglettCard:
 	; attack 1
 	energy FIGHTING, 1 ; energies
 	tx LandslideName ; name
-	tx Discard2CardsFromYourDeckDescription ; description
+	tx DiscardTop2CardsFromDeckDescription ; description
 	dw NONE ; description (cont)
 	db 30 ; damage
 	db DAMAGE_NORMAL ; category

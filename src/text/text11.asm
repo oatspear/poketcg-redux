@@ -1714,3 +1714,12 @@ SwiftSwimDescription:
 	line "Active Spot this turn, its attacks"
 	line "cost <COLORLESS> less."
 	done
+
+DevastateName:
+	text "Devastate"
+	done
+
+DiscardTop5CardsFromDeckDescription:
+	text "Discard the top 5 cards"
+	line "of your deck."
+	done

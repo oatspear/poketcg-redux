@@ -1174,9 +1174,9 @@ LandslideName:
 	text "Landslide"
 	done
 
-Discard2CardsFromYourDeckDescription:
-	text "Discard the top 2 cards from"
-	line "your deck."
+DiscardTop2CardsFromDeckDescription:
+	text "Discard the top 2 cards"
+	line "of your deck."
 	done
 
 MountainSwingName:

@@ -2725,6 +2725,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer WaveSplashDescription
 	textpointer SwiftSwimName
 	textpointer SwiftSwimDescription
+	textpointer DevastateName
+	textpointer DiscardTop5CardsFromDeckDescription
 
 ; ------------------------------------------------------------------------------
 ; text12.asm
@@ -2958,7 +2960,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer RototillerDescription
 	textpointer ExcavateName
 	textpointer LandslideName
-	textpointer Discard2CardsFromYourDeckDescription
+	textpointer DiscardTop2CardsFromDeckDescription
 	textpointer MountainSwingName
 	textpointer MountainSwingDescription
 	textpointer UnaffectedByResistanceDescription

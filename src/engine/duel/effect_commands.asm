@@ -1429,6 +1429,11 @@ Discard2CardsFromOpponentsDeckEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Discard2CardsFromOpponentsDeckEffect
 	db  $00
 
+DevastateEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDeckIsNotEmpty
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Devastate_DiscardDeckEffect
+	db  $00
+
 LandslideEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDeckIsNotEmpty
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Landslide_DiscardDeckEffect

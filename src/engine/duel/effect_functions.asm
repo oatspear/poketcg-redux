@@ -429,6 +429,11 @@ Landslide_DiscardDeckEffect:
 	jp DiscardFromDeckEffect
 
 
+Devastate_DiscardDeckEffect:
+	ld a, 5
+	jp DiscardFromDeckEffect
+
+
 MountainSwing_DiscardDeckEffect:
 	ld a, 2
 	call DiscardFromDeckEffect
