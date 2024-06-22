@@ -1843,8 +1843,8 @@ GyaradosCardGfx::
 	INCBIN "gfx/cards/gyarados.pal"
 
 RedGyaradosCardGfx::
-	INCBIN "gfx/cards/gyarados3.2bpp"
-	INCBIN "gfx/cards/gyarados3.pal"
+	INCBIN "gfx/cards/gyarados4.2bpp"
+	INCBIN "gfx/cards/gyarados4.pal"
 
 LaprasCardGfx::
 	INCBIN "gfx/cards/lapras.2bpp"
