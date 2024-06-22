@@ -549,15 +549,6 @@ InflictBurnDescription:
 	line "Burned."
 	done
 
-CoreRegenerationName:
-	text "Core Regeneration"
-	done
-
-CoreRegenerationDescription:
-	text "Heal 10 damage from this Pokémon."
-	line "Draw a card."
-	done
-
 RecoverName:
 	text "Recover"
 	done

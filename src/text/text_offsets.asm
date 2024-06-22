@@ -2506,8 +2506,6 @@ TextOffsets:: ; 34000 (d:4000)
 	; textpointer WaterfallDescription
 	textpointer ScaldName
 	textpointer InflictBurnDescription
-	textpointer CoreRegenerationName
-	textpointer CoreRegenerationDescription
 	textpointer RecoverName                                        ; 0x0986
 	textpointer RecoverDescription                                 ; 0x0987
 	textpointer EnergyBurstName

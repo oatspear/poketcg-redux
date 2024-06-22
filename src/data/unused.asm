@@ -1,4 +1,19 @@
 
+; attack 1
+energy COLORLESS, 1 ; energies
+tx CoreRegenerationName ; name
+tx CoreRegenerationDescription ; description
+dw NONE ; description (cont)
+db 0 ; damage
+db RESIDUAL ; category
+dw CoreRegenerationEffectCommands ; effect commands
+db DRAW_CARD ; flags 1
+db HEAL_USER ; flags 2
+db NONE ; flags 3
+db 1
+db ATK_ANIM_GLOW_EFFECT ; animation
+
+
 
 RiptideName:
 	text "Riptide"

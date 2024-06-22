@@ -194,6 +194,10 @@
 - New attack: **Riptide** (W): shuffle 4 Energy cards from discard pile into deck; 10 damage for each returned Energy.
 - New attack: **Aqua Return** (WC): 80 damage; return this Pokémon and all attached cards to the deck.
 
+#### Staryu
+- **Core Regeneration**: removed.
+- New attack: **Collect** (C): draw 2 cards.
+
 #### Starmie
 - **Recover**: removed.
 - **Energy Spiral**: renamed to **Energy Burst**.

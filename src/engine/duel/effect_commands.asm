@@ -885,11 +885,6 @@ GatherToxinsEffectCommands:
 	dbw EFFECTCMDTYPE_AI_SELECTION, RetrieveBasicEnergyFromDiscardPile_AISelectEffect
 	db  $00
 
-CoreRegenerationEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Heal10DamageEffect
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Draw1CardEffect
-	db  $00
-
 InflictSleepEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SleepEffect
 	db  $00

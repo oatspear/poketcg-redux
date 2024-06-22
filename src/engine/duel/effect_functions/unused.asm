@@ -1,6 +1,12 @@
 ;
 
 
+CoreRegenerationEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Heal10DamageEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Draw1CardEffect
+	db  $00
+
+
 SwimFreelyEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, SwimFreely_PreconditionCheck
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SwimFreely_SwitchEffect
