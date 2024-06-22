@@ -5,6 +5,16 @@
 ### Removed Cards
 - Jigglypuff Lv12
 
+### New Cards
+
+#### Gyarados (Red)
+- Stage 1, 80 HP, Water Pokémon, evolves from Magikarp.
+- Weakness: Lightning.
+- Resistance: Fightning.
+- Retreat Cost: 2.
+- Attack 1: **Dragon Rage** (CC): 20 damage; +10 damage for each type of Basic Energy attached.
+- Attack 2: **Hyper Beam** (CCC): 50 damage; discard an energy from both Active Pokémon.
+
 ### Status Conditions Changes
 
 #### Confusion

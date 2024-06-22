@@ -55,6 +55,8 @@ HandleSpecialAIAttacks:
 	jp z, .DragonDance
 	cp PARASECT
 	jp z, .EnergySpores
+	cp RED_GYARADOS
+	jp z, .HyperBeam
 	cp DRAGONAIR
 	jp z, .HyperBeam
 	cp WEEPINBELL

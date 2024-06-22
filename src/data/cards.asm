@@ -90,6 +90,7 @@ CardPointers:
 	dw StarmieCard
 	dw MagikarpCard
 	dw GyaradosCard
+	dw RedGyaradosCard
 	dw LaprasCard
 	dw VaporeonLv29Card
 	dw VaporeonLv42Card
@@ -4531,19 +4532,6 @@ GyaradosCard:
 	db 0
 	db ATK_ANIM_DRAGON_RAGE ; animation
 
-	; energy COLORLESS, 2 ; energies
-	; tx DragonRageName ; name
-	; tx DragonRageDescription ; description
-	; dw NONE ; description (cont)
-	; db 20 ; damage
-	; db DAMAGE_PLUS ; category
-	; dw DragonRageEffectCommands ; effect commands
-	; db NONE ; flags 1
-	; db NONE ; flags 2
-	; db NONE ; flags 3
-	; db 0
-	; db ATK_ANIM_DRAGON_RAGE ; animation
-
 	; attack 2
 	energy WATER, 2, COLORLESS, 2 ; energies
 	tx RagingStormName ; name
@@ -4566,6 +4554,57 @@ GyaradosCard:
 	db 130 ; Pokedex number
 	db 0
 	db 41 ; level
+	db 21, 4 ; length
+	dw 518 * 10 ; weight
+	tx GyaradosDescription ; description
+	db 0
+
+RedGyaradosCard:
+	db TYPE_PKMN_WATER ; type
+	gfx RedGyaradosCardGfx ; gfx
+	tx GyaradosName ; name
+	db STAR ; rarity
+	db COLOSSEUM | GB ; sets
+	db RED_GYARADOS
+	db 80 ; hp
+	db STAGE1 ; stage
+	tx MagikarpName ; pre-evo name
+
+	; attack 1
+	energy COLORLESS, 2 ; energies
+	tx DragonRageName ; name
+	tx DragonRageDescription ; description
+	dw NONE ; description (cont)
+	db 20 ; damage
+	db DAMAGE_PLUS ; category
+	dw DragonRageEffectCommands ; effect commands
+	db NONE ; flags 1
+	db NONE ; flags 2
+	db NONE ; flags 3
+	db 0
+	db ATK_ANIM_DRAGON_RAGE ; animation
+
+	; attack 2
+	energy COLORLESS, 3 ; energies
+	tx HyperBeamName ; name
+	tx Discard1EnergyFromBothActiveDescription ; description
+	dw NONE ; description (cont)
+	db 50 ; damage
+	db DAMAGE_NORMAL ; category
+	dw Discard1EnergyFromBothActiveEffectCommands ; effect commands
+	db NONE ; flags 1
+	db DISCARD_ENERGY ; flags 2
+	db SPECIAL_AI_HANDLING ; flags 3
+	db 0
+	db ATK_ANIM_HYPER_BEAM ; animation
+
+	db 2 ; retreat cost
+	db WR_LIGHTNING ; weakness
+	db WR_FIGHTING ; resistance
+	tx AtrociousName ; category
+	db 130 ; Pokedex number
+	db 0
+	db 35 ; level
 	db 21, 4 ; length
 	dw 518 * 10 ; weight
 	tx GyaradosDescription ; description
