@@ -140,4 +140,20 @@ HandleEnergyColorOverride:
 	add hl, bc
 	ld a, [wTotalAttachedEnergies]
 	ld [hl], a
+
+; dual color energies
+; 	ld a, OMANYTE
+; 	call GetFirstPokemonWithAvailablePower  ; preserves hl, bc, de
+; 	jr c, .fossil_energy
+; 	ld a, KABUTO
+; 	call GetFirstPokemonWithAvailablePower  ; preserves hl, bc, de
+; 	ret nc  ; not found
+; 
+; .fossil_energy
+; 	ld a, [wAttachedEnergies + FIGHTING]
+; 	ld b, a
+; 	ld a, [wAttachedEnergies + WATER]
+; 	add b
+; 	ld [wAttachedEnergies + WATER], a
+; 	ld [wAttachedEnergies + FIGHTING], a
 	ret
