@@ -1,5 +1,57 @@
 ;
 
+RevivalWaveEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, RevivalWave_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, RevivalWave_PlaceInPlayAreaEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, RevivalWave_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, RevivalWave_AISelectEffect
+	dbw EFFECTCMDTYPE_AI, RevivalWave_AIEffect
+	db  $00
+
+
+RevivalWave_DamageBoostEffect:
+	call CheckBenchIsNotFull
+	ret nc
+	ld a, 20
+	jp AddToDamage
+
+RevivalWave_AIEffect:
+  call RevivalWave_DamageBoostEffect
+  jp SetDefiniteAIDamage
+
+
+RevivalWave_PlayerSelectEffect:
+; create Pokémon card list from Discard Pile
+	ldtx hl, ChoosePokemonToPlaceInPlayText
+	call DrawWideTextBox_WaitForInput
+	call HandlePlayerSelectionFromDiscardPile_AnyPokemon
+	ldh [hTemp_ffa0], a
+	ret
+
+
+RevivalWave_AISelectEffect:
+; create Pokémon card list from Discard Pile
+	call CreatePokemonCardListFromDiscardPile
+	ld a, [wDuelTempList]
+	ldh [hTemp_ffa0], a
+	ret
+
+
+RevivalWave_PlaceInPlayAreaEffect:
+	ldh a, [hTemp_ffa0]
+	cp $ff
+	ret z
+	call MoveDiscardPileCardToHand
+	call AddCardToHand
+	call PutHandPokemonCardInPlayArea
+	; a: PLAY_AREA_* of the new Pokémon
+	add DUELVARS_ARENA_CARD_STAGE
+	call GetTurnDuelistVariable
+	xor a  ; BASIC
+	ld [hl], a
+	ret
+
+
 
 CoreRegenerationEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Heal10DamageEffect

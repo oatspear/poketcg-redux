@@ -4688,16 +4688,13 @@ SelectUpTo2Benched_BenchDamageEffect:
 .loop_selection
 	ld a, [hli]
 	cp $ff
-	jr z, .done
+	jp z, SwapTurn  ; done
 	push hl
 	ld b, a
 	ld de, 10
 	call DealDamageToPlayAreaPokemon_RegularAnim
 	pop hl
 	jr .loop_selection
-.done
-	call SwapTurn
-	ret
 
 Sonicboom_UnaffectedByColorEffect:
 	ld hl, wDamageFlags

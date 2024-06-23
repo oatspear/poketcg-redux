@@ -4774,18 +4774,9 @@ OmanyteCard:
 	db STAGE1 ; stage
 	tx MysteriousFossilName ; pre-evo name
 
-	; Call Up / Prehistoric Dream
-	; Once during your turn (before your attack), you may flip a coin.
-	; If heads, search your discard pile for Mysterious Fossil and put it onto
-	; your Bench. This power can't be used if Omanyte is affected by a Special Condition.
-
 	; Wash Over (Wc) 20
 	; Does 10 damage to 2 of your opponent's Benched Pokémon.
 	; (Don't apply Weakness and Resistance for Benched Pokémon.)
-
-	; Work Together (WC) 10+
-	; This attack does 10 damage plus 10 more damage for each Omanyte, Omastar,
-	; Kabuto, and Kabutops on your Bench.
 
 	; attack 1
 	energy 0 ; energies
