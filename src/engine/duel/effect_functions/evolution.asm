@@ -384,6 +384,7 @@ ResetDevolvedCardStatus:
 ; If the damage exceeds HP of pre-evolution, then HP is set to zero.
 ; input:
 ;	  a: deck index of pre-evolved card
+;   wAllStagesIndices: populated from GetCardOneStageBelow
 ; preserves: bc, de
 UpdateDevolvedCardHPAndStage:
 	push bc
@@ -414,7 +415,18 @@ UpdateDevolvedCardHPAndStage:
 ; overwrite card stage
 	add DUELVARS_ARENA_CARD_STAGE
 	ld l, a
+; check for Stage 2 regression to revived Stage 1 (no Basic)
 	ld a, [wLoadedCard2Stage]
+	cp STAGE1
+	jr nz, .got_stage
+; does this Stage 1 Pokémon have a Basic Pokémon underneath it?
+	ld a, [wAllStagesIndices]
+	cp $ff
+	ld a, [wLoadedCard2Stage]
+	jr nz, .got_stage
+; force a Basic stage for a Stage 1 without a Basic underneath
+	xor a  ; BASIC
+.got_stage
 	ld [hl], a
 	pop de
 	pop bc

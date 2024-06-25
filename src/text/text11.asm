@@ -991,16 +991,6 @@ RamDescription:
 	line "Benched Pokémon."
 	done
 
-FossilEnergyName:
-	text "Fossil Energy"
-	done
-
-FossilEnergyDescription:
-	text "Once during your turn, you may use"
-	line "this Power. All Energies attached to"
-	line "your Pokémon count as <FIGHTING> Energy."
-	done
-
 FindAFriendName:
 	text "Find A Friend"
 	done

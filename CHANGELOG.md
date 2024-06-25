@@ -235,8 +235,9 @@
 - New attack: **Water Pulse** (W): discard any number of attached (W); 20 damage for each discarded energy; inflicts Confusion if 2 or more were discarded.
 
 #### Omanyte
-- Increased HP from 70 to 80.
+- **Primordial Dream**: removed.
 - **Constrict**: removed.
+- New Pokémon Power: **Primal Guidance**: once per turn, search the deck for a Stage 1 or Stage 2 Pokémon that evolves from Mysterious Fossil and put it onto the Bench as a Basic Pokémon.
 - New attack: **Revival Wave** (CC): 20 damage; put a Pokémon card from the discard pile onto the bench; +20 damage if the bench was already full.
 
 #### Omastar
@@ -295,9 +296,9 @@
 - **High Jump Kick**: reduced cost from (FCC) to (FC); reduced damage from 50 to 40.
 
 #### Kabuto
-- Increased HP from 60 to 80.
+- Increased HP from 60 to 70.
 - **Kabuto Armor**: removed.
-- New Pokémon Power: **Fossil Energy**: until end of turn, changes all energies to Fighting energy.
+- New Pokémon Power: **Primal Guidance**: once per turn, search the deck for a Stage 1 or Stage 2 Pokémon that evolves from Mysterious Fossil and put it onto the Bench as a Basic Pokémon.
 
 #### Kabutops
 - Increased HP from 100 to 110.

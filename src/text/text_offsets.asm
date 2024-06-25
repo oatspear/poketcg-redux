@@ -338,7 +338,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ChooseCardFromYourHandToSwitchText                 ; 0x015e
 	textpointer ChooseCardFromYourHandToAttachText                 ; 0x015e
 	textpointer ChooseCardToSwitchText                             ; 0x015f
-	textpointer ChooseBasicOrEvolutionPokemonCardFromDeckText      ; 0x0160
+	textpointer ChooseAncientEvolutionPokemonCardFromDeckText
+	textpointer AncientPokemonCardText
 	textpointer ChoosePokemonCardText                              ; 0x0161
 	textpointer RearrangeTheCardsAtTopOfDeckText
 	textpointer PleaseCheckTheOpponentsHandText                    ; 0x0163
@@ -2588,8 +2589,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer SpikesName
 	textpointer RamName                                            ; 0x0a67
 	textpointer RamDescription
-	textpointer FossilEnergyName
-	textpointer FossilEnergyDescription
 	textpointer FindAFriendName
 	textpointer PrimalHuntName
 	textpointer Tutor1PokemonDescription
@@ -2942,8 +2941,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer WickedTentacleName
 	textpointer WickedTentacleDescription
 	textpointer PoisonOrConfusionIfPoisonedDescription
-	textpointer PrimordialDreamName
-	textpointer PrimordialDreamDescription
+	textpointer PrimalGuidanceName
+	textpointer PrimalGuidanceDescription
 	textpointer PrimalTentacleName
 	textpointer PrimalTentacleDescription
 	textpointer PrimalTentacleDescriptionCont

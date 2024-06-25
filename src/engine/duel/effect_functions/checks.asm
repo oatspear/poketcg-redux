@@ -890,6 +890,7 @@ CardTypeTest_FunctionTable:
 	dw CardTypeTest_FullHPPokemon          ; CARDTEST_FULL_HP_POKEMON
 	dw CardTypeTest_DamagedPokemon         ; CARDTEST_DAMAGED_POKEMON
 	dw CardTypeTest_EvolvedPokemon         ; CARDTEST_EVOLVED_POKEMON
+	dw CardTypeTest_RestoredPokemon        ; CARDTEST_RESTORED_POKEMON
 
 
 CardTypeTest_Pokemon:
@@ -1254,6 +1255,40 @@ IsEvolvedPokemon:
 	call GetTurnDuelistVariable
 	or a
 	ret z  ; BASIC
+	scf
+	ret
+
+
+;
+CardTypeTest_RestoredPokemon:
+	ld a, [wDynamicFunctionArgument]
+	; fallthrough
+
+; input:
+;   a: deck index of the card
+; output:
+;   carry: set if the given card is a Restored Pokémon
+; preserves: hl, bc, de
+IsRestoredPokemonCard:
+	call LoadCardDataToBuffer2_FromDeckIndex  ; preserves hl, bc, de
+	; ld a, [wLoadedCard2Type]
+	; cp TYPE_PKMN + 1
+	; ret nc  ; not a Pokémon card
+	ld a, [wLoadedCard2ID]
+	cp OMANYTE
+	jr z, .found
+	cp OMASTAR
+	jr z, .found
+	cp KABUTO
+	jr z, .found
+	cp KABUTOPS
+	jr z, .found
+	cp AERODACTYL
+	jr z, .found
+; must avoid accidental carry because of smaller ID number
+	or a
+	ret  ; not a Magmar card
+.found
 	scf
 	ret
 

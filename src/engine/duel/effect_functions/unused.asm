@@ -1,5 +1,55 @@
 ;
 
+PrimordialDreamEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, PrimordialDream_PreconditionCheck
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PrimordialDream_MorphAndAddToHandEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, PrimordialDream_PlayerSelectEffect
+	db  $00
+
+
+PrimordialDream_PreconditionCheck:
+	call CheckPokemonPowerCanBeUsed
+	ret c
+	jp CreateItemCardListFromDiscardPile
+	; ldtx hl, ThereAreNoTrainerCardsInDiscardPileText
+	; ret
+
+
+PrimordialDream_PlayerSelectEffect:
+; Pokémon Powers must preserve [hTemp_ffa0]
+	; ldh a, [hTemp_ffa0]
+	; push af
+	ldtx hl, ChooseCardToPlaceInHandText
+	call DrawWideTextBox_WaitForInput
+	call HandlePlayerSelectionFromDiscardPile_ItemTrainer
+	ret c
+	ldh [hAIPkmnPowerEffectParam], a
+	; pop af
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	ldh [hTemp_ffa0], a
+	ret
+
+
+; Pokémon Powers do not use [hTemp_ffa0]
+; adds a card in [hEnergyTransEnergyCard] from the discard pile to the hand
+; Note: Pokémon Power no longer needs to preserve [hTemp_ffa0] at this point
+PrimordialDream_MorphAndAddToHandEffect:
+	call SetUsedPokemonPowerThisTurn
+; get deck index and morph the selected card
+	ldh a, [hAIPkmnPowerEffectParam]
+	cp $ff
+	ret z
+	call FossilizeCard
+; get deck index again and add to the hand
+	ldh a, [hAIPkmnPowerEffectParam]
+	ldh [hTempList], a
+	ld a, $ff
+	ldh [hTempList + 1], a
+	jp SelectedCard_AddToHandFromDiscardPile
+
+
+
+
 RevivalWaveEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, RevivalWave_DamageBoostEffect
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, RevivalWave_PlaceInPlayAreaEffect

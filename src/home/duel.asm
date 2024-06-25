@@ -893,10 +893,20 @@ EvolvePokemonCard:
 	ld a, e
 	call ClearAllStatusAndEffectsFromTarget  ; preserves de
 ; set the new evolution stage of the card
+; but take into account revived Stage 1 Pokémon without a Basic
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	add DUELVARS_ARENA_CARD_STAGE
 	call GetTurnDuelistVariable
+	or a  ; cp BASIC
 	ld a, [wLoadedCard1Stage]
+	jr nz, .overwrite_stage
+; trying to evolve a Basic
+; but is it a true Basic or a revived Stage 1?
+	cp STAGE2
+	jr nz, .overwrite_stage
+; handle a [Basic (actual Stage 1) → Stage 2] evolution
+	ld a, STAGE2_WITHOUT_STAGE1
+.overwrite_stage
 	ld [hl], a
 	or a
 	ret

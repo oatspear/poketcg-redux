@@ -333,14 +333,6 @@ AssassinFlight_CheckBenchAndStatus:
 	jp CheckOpponentBenchIsNotEmpty
 
 
-PrimordialDream_PreconditionCheck:
-	call CheckPokemonPowerCanBeUsed
-	ret c
-	jp CreateItemCardListFromDiscardPile
-	; ldtx hl, ThereAreNoTrainerCardsInDiscardPileText
-	; ret
-
-
 Trade_PreconditionCheck:
 	call CheckHandIsNotEmpty
 	ret c
@@ -383,7 +375,15 @@ FleetFooted_PreconditionCheck:
 StressPheromones_PreconditionCheck:
 	call CheckTempLocationPokemonHasAnyDamage
 	ret c
-	jp CheckPokemonPowerCanBeUsed
+	jr DrawOrTutorAbility_PreconditionCheck
+
+
+PrimalGuidance_PreconditionCheck:
+	call CheckBenchIsNotFull
+	ret c
+	call CheckDeckIsNotEmpty
+	ret c
+	jp CheckPokemonPowerCanBeUsed_StoreTrigger
 
 
 EnergySpike_PreconditionCheck:
@@ -1081,39 +1081,6 @@ DraconicEvolution_AttachEnergyFromHandEffect:
 	ld a, [wDuelTempList]
 	ldh [hEnergyTransEnergyCard], a
 	jp AttachEnergyFromHand_AttachEnergyEffect
-
-
-PrimordialDream_PlayerSelectEffect:
-; Pokémon Powers must preserve [hTemp_ffa0]
-	; ldh a, [hTemp_ffa0]
-	; push af
-	ldtx hl, ChooseCardToPlaceInHandText
-	call DrawWideTextBox_WaitForInput
-	call HandlePlayerSelectionFromDiscardPile_ItemTrainer
-	ret c
-	ldh [hAIPkmnPowerEffectParam], a
-	; pop af
-	ldh a, [hTempPlayAreaLocation_ff9d]
-	ldh [hTemp_ffa0], a
-	ret
-
-
-; Pokémon Powers do not use [hTemp_ffa0]
-; adds a card in [hEnergyTransEnergyCard] from the discard pile to the hand
-; Note: Pokémon Power no longer needs to preserve [hTemp_ffa0] at this point
-PrimordialDream_MorphAndAddToHandEffect:
-	call SetUsedPokemonPowerThisTurn
-; get deck index and morph the selected card
-	ldh a, [hAIPkmnPowerEffectParam]
-	cp $ff
-	ret z
-	call FossilizeCard
-; get deck index again and add to the hand
-	ldh a, [hAIPkmnPowerEffectParam]
-	ldh [hTempList], a
-	ld a, $ff
-	ldh [hTempList + 1], a
-	jp SelectedCard_AddToHandFromDiscardPile
 
 
 ; input:
@@ -2637,11 +2604,6 @@ EnergyJolt_ChangeColorEffect:
 
 EnergyBurn_ChangeColorEffect:
 	ld a, FIRE
-	ld [wEnergyColorOverride], a
-	jp SetUsedPokemonPowerThisTurn
-
-FossilEnergy_ChangeColorEffect:
-	ld a, FIGHTING
 	ld [wEnergyColorOverride], a
 	jp SetUsedPokemonPowerThisTurn
 
@@ -5979,6 +5941,23 @@ StressPheromones_PlayerSelectEffect:
 	ret
 
 
+PrimalGuidance_PlayerSelectEffect:
+	call CreateDeckCardList
+	ldtx hl, ChooseAncientEvolutionPokemonCardFromDeckText
+	ldtx bc, AncientPokemonCardText
+	ld a, CARDTEST_RESTORED_POKEMON
+	call LookForCardsInDeckList
+	ld a, $ff
+	jr c, .none_in_deck
+	ld a, CARDTEST_POKEMON
+	ldtx hl, ChoosePokemonCardText
+	call HandlePlayerSelectionFromDeckList
+.none_in_deck
+	ldh [hAIPkmnPowerEffectParam], a
+	or a  ; the Power has been used, regardless of cancel
+	ret
+
+
 SearchingMagnet_PlayerSelectEffect:
 	call HandlePlayerSelectionItemTrainerFromDeck
 	ldh [hTemp_ffa0], a
@@ -6278,6 +6257,28 @@ DeckSearchAbility_AddToHandEffect:
 	ldh a, [hAIPkmnPowerEffectParam]
 	ldh [hTemp_ffa0], a
 	jr SelectedCard_AddToHandFromDeckEffect
+
+
+PrimalGuidance_PutInPlayAreaEffect:
+	call SetUsedPokemonPowerThisTurn_RestoreTrigger
+; was any card selected?
+	ldh a, [hAIPkmnPowerEffectParam]
+	cp $ff
+	ret z
+; put the selected card in the Play Area
+	ldh [hTempList], a
+	ld a, $ff
+	ldh [hTempList + 1], a
+	call CallForFamily_PutInPlayAreaEffect
+; make it count as a Basic Pokémon
+	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+	call GetTurnDuelistVariable
+	dec a
+	add DUELVARS_ARENA_CARD_STAGE
+	ld l, a
+	xor a  ; BASIC
+	ld [hl], a
+	ret
 
 
 ; Pokémon Powers should not use [hTemp_ffa0]
@@ -7301,7 +7302,7 @@ PokemonTrader_PlayerDeckSelection:
 	call ReturnCardToDeck
 
 ; display deck card list screen
-	ldtx hl, ChooseBasicOrEvolutionPokemonCardFromDeckText
+	ldtx hl, ChooseAnyPokemonFromDeckText
 	call DrawWideTextBox_WaitForInput
 	call CreateDeckCardList
 	bank1call InitAndDrawCardListScreenLayout_MenuTypeSelectCheck
@@ -7405,7 +7406,7 @@ Pokedex_PlayerSelection:
 	jr c, .no_pokemon
 
 ; print text box
-	ldtx hl, ChooseBasicOrEvolutionPokemonCardFromDeckText
+	ldtx hl, ChooseAnyPokemonFromDeckText
 	call DrawWideTextBox_WaitForInput
 
 ; let the Player choose a Pokémon to add to the hand

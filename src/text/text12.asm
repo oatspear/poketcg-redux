@@ -1074,16 +1074,17 @@ PoisonOrConfusionIfPoisonedDescription:
 	line "Poisoned, it is now Confused."
 	done
 
-PrimordialDreamName:
-	text "Primordial Dream"
+PrimalGuidanceName:
+	text "Primal Guidance"
 	done
 
-PrimordialDreamDescription:
+PrimalGuidanceDescription:
 	text "Once during your turn, you may"
-	line "choose a non-Supporter Trainer card"
-	line "from your Discard Pile. Transform"
-	line "that card into a Mysterious Fossil"
-	line "and add it to your hand."
+	line "search your deck for a Stage 1 or"
+	line "Stage 2 Pokémon card that evolves"
+	line "from Mysterious Fossil and put it"
+	line "onto your Bench as a Basic Pokémon."
+	line "Shuffle your deck afterward."
 	done
 
 PrimalTentacleName:

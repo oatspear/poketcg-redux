@@ -70,6 +70,12 @@ StressPheromonesEffectCommands:
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, StressPheromones_PlayerSelectEffect
 	db  $00
 
+PrimalGuidanceEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, PrimalGuidance_PreconditionCheck
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, PrimalGuidance_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PrimalGuidance_PutInPlayAreaEffect
+	db  $00
+
 PrimalHuntEffectCommands:
 Tutor1PokemonEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, SelectedCard_AddToHandFromDeckEffect
@@ -346,11 +352,6 @@ EnergyJoltEffectCommands:
 EnergyBurnEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, CheckPokemonPowerCanBeUsed
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, EnergyBurn_ChangeColorEffect
-	db  $00
-
-FossilEnergyEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, CheckPokemonPowerCanBeUsed
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, FossilEnergy_ChangeColorEffect
 	db  $00
 
 ShiftEffectCommands:
@@ -1056,12 +1057,6 @@ EnergizeEffectCommands:
 PlasmaEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Attach1LightningEnergyFromDiscard_SelectEffect
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, AccelerateFromDiscard_AttachEnergyToArenaEffect
-	db  $00
-
-PrimordialDreamEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, PrimordialDream_PreconditionCheck
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PrimordialDream_MorphAndAddToHandEffect
-	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, PrimordialDream_PlayerSelectEffect
 	db  $00
 
 EnergyAssistEffectCommands:

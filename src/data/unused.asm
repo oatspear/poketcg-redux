@@ -1,4 +1,36 @@
 
+
+PrimordialDreamName:
+	text "Primordial Dream"
+	done
+
+PrimordialDreamDescription:
+	text "Once during your turn, you may"
+	line "choose a non-Supporter Trainer card"
+	line "from your Discard Pile. Transform"
+	line "that card into a Mysterious Fossil"
+	line "and add it to your hand."
+	done
+
+
+; attack 1
+energy 0 ; energies
+tx PrimordialDreamName ; name
+tx PrimordialDreamDescription ; description
+tx PokemonPowerDescriptionCont ; description (cont)
+db 0 ; damage
+db POKEMON_POWER ; category
+dw PrimordialDreamEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_PKMN_POWER_1 ; animation
+
+
+
+
+
 ; attack 1
 energy COLORLESS, 1 ; energies
 tx CoreRegenerationName ; name

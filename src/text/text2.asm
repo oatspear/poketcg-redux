@@ -579,9 +579,14 @@ ChooseCardToSwitchText: ; 3979e (e:579e)
 	line "Switch."
 	done
 
-ChooseBasicOrEvolutionPokemonCardFromDeckText: ; 397b8 (e:57b8)
-	text "Choose a Basic or Evolution"
+ChooseAncientEvolutionPokemonCardFromDeckText:
+	text "Choose an Ancient Evolution"
 	line "Pokémon card from the Deck."
+	done
+
+AncientPokemonCardText:
+	text "Ancient"
+	line "Pokémon card"
 	done
 
 ChoosePokemonCardText: ; 397f1 (e:57f1)

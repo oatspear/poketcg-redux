@@ -4770,7 +4770,7 @@ OmanyteCard:
 	db CIRCLE ; rarity
 	db MYSTERY | FOSSIL ; sets
 	db OMANYTE
-	db 80 ; hp
+	db 70 ; hp
 	db STAGE1 ; stage
 	tx MysteriousFossilName ; pre-evo name
 
@@ -4780,12 +4780,12 @@ OmanyteCard:
 
 	; attack 1
 	energy 0 ; energies
-	tx PrimordialDreamName ; name
-	tx PrimordialDreamDescription ; description
+	tx PrimalGuidanceName ; name
+	tx PrimalGuidanceDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKEMON_POWER ; category
-	dw PrimordialDreamEffectCommands ; effect commands
+	dw PrimalGuidanceEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -7191,7 +7191,7 @@ KabutoCard:
 	db CIRCLE ; rarity
 	db MYSTERY | FOSSIL ; sets
 	db KABUTO
-	db 80 ; hp
+	db 70 ; hp
 	db STAGE1 ; stage
 	tx MysteriousFossilName ; pre-evo name
 
@@ -7213,12 +7213,12 @@ KabutoCard:
 
 	; attack 1
 	energy 0 ; energies
-	tx FossilEnergyName ; name
-	tx FossilEnergyDescription ; description
+	tx PrimalGuidanceName ; name
+	tx PrimalGuidanceDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKEMON_POWER ; category
-	dw FossilEnergyEffectCommands ; effect commands
+	dw PrimalGuidanceEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
