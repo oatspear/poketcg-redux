@@ -1087,23 +1087,15 @@ PrimalGuidanceDescription:
 	line "Shuffle your deck afterward."
 	done
 
-PrimalTentacleName:
-	text "Primal Tentacle"
+PrimalSwirlName:
+	text "Primal Swirl"
 	done
 
-PrimalTentacleDescription:
-	text "Switch 1 of your opponent's Benched"
-	line "Pokémon with their Active Pokémon."
-	line "If the new Defending Pokémon is an"
+PrimalSwirlDescription:
+	text "If the Defending Pokémon is an"
 	line "Evolution Pokémon, return the"
 	line "highest stage evolution card on that"
 	line "Pokémon to your opponent's hand."
-	done
-
-PrimalTentacleDescriptionCont:
-	text "The new Active Pokémon can't"
-	line "retreat or evolve during your"
-	line "opponent's next turn."
 	done
 
 PrimalScytheName:

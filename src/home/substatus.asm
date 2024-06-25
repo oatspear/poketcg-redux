@@ -513,17 +513,26 @@ IsBodyguardActive:
 	jp GetFirstPokemonWithAvailablePower  ; preserves: hl, bc, de
 
 
-; return carry if a Pokémon Power capable Aerodactyl
-; is found in either player's Active Spot.
+; return carry if a Pokémon Power capable Omastar
+; is found in the non-turn holder's Active Spot.
 ; preserves: bc, de
 IsPrehistoricPowerActive:
-	push bc
-	ld c, AERODACTYL
-	call IsActiveSpotPokemonPowerActive
-	pop bc
-	ret nc
-	ldtx hl, UnableToEvolveDueToPrehistoricPowerText
+	call SwapTurn
+	ld a, DUELVARS_ARENA_CARD
+	call GetTurnDuelistVariable
+	push de
+	call GetCardIDFromDeckIndex  ; preserves bc
+	ld a, e
+	pop de
+	cp OMASTAR
+	jr nz, .nope
+	call CheckCannotUseDueToStatus
+	call SwapTurn
+	ccf
 	ret
+.nope
+	or a  ; reset carry
+	jp SwapTurn
 
 
 ; returns carry if the turn holder's Pokémon in the given location

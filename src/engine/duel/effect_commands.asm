@@ -107,11 +107,8 @@ DragOffEffectCommands:
 	dbw EFFECTCMDTYPE_AI_SELECTION, Lure_GetOpponentBenchPokemonWithLowestHP
 	db  $00
 
-PrimalTentacleEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckOpponentBenchIsNotEmpty
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, PrimalTentacle_SwitchTrapAndDevolveEffect
-	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Lure_SelectSwitchPokemon
-	dbw EFFECTCMDTYPE_AI_SELECTION, Lure_GetOpponentBenchPokemonWithLowestHP
+PrimalSwirlEffectCommands:
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, PrimalSwirl_DevolveAndTrapEffect
 	db  $00
 
 ConstrictEffectCommands:

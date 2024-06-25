@@ -1,5 +1,40 @@
 ;
 
+
+PrimalTentacleEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckOpponentBenchIsNotEmpty
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, PrimalTentacle_SwitchTrapAndDevolveEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Lure_SelectSwitchPokemon
+	dbw EFFECTCMDTYPE_AI_SELECTION, Lure_GetOpponentBenchPokemonWithLowestHP
+	db  $00
+
+;
+PrimalTentacle_SwitchTrapAndDevolveEffect:
+	call Lure_SwitchDefendingPokemon
+	call DevolveDefendingPokemonEffect
+	ld a, SUBSTATUS2_PRIMAL_TENTACLE
+	jp ApplySubstatus2ToDefendingCard
+
+
+
+
+
+
+; return carry if a Pokémon Power capable Aerodactyl
+; is found in either player's Active Spot.
+; preserves: bc, de
+IsPrehistoricPowerActive:
+	push bc
+	ld c, AERODACTYL
+	call IsActiveSpotPokemonPowerActive
+	pop bc
+	ret nc
+	ldtx hl, UnableToEvolveDueToPrehistoricPowerText
+	ret
+
+
+
+
 PrimordialDreamEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, PrimordialDream_PreconditionCheck
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PrimordialDream_MorphAndAddToHandEffect
@@ -907,10 +942,6 @@ LunarPower_AISelectEffect:
 	ldh [hTempPlayAreaLocation_ffa1], a
 	ret
 
-
-PrimalSwirlEffectCommands:
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DevolveDefendingPokemonEffect
-	db  $00
 
 ThiefEffectCommands:
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Thief_PlayerHandCardSelection

@@ -243,9 +243,8 @@
 #### Omastar
 - Increased HP from 100 to 110.
 - Changed rarity from Uncommon to Rare.
-- **Spiral Drain**: increased cost from (WC) to (WCC) and damage from 30 to 60.
-- **Primal Swirl**: removed.
-- New attack: **Primal Tentacle** (CC): switch in 1 of the opponent's Benched Pokémon; devolve the new Active Pokémon; the new Active Pokémon is unable to evolve or retreat.
+- **Primal Swirl**: increased damage by 10; also increased the Retreat Cost of the Defending Pokémon by 1.
+- New Pokémon Power: **Prehistoric Power**: while Active, the opponent cannot play Evolution cards from their hand.
 
 #### Articuno Lv35
 - **Freeze**: increased cost from (C) to (W); heals 20 HP.
@@ -308,6 +307,10 @@
 - **Sharp Sickle**: reworked.
 - New attack: **Sharp Sickle** (CC): Knocks Out the Defending Pokémon if it has 70 HP or less.
 - New attack: **Primal Scythe** (FCC): 60 damage; 10 damage to 2 Benched targets.
+
+#### Aerodactyl
+- **Prehistoric Power**: removed.
+- New Pokémon Power: **Primal Claw**: when the opponent uses an ability, do 10 damage to that Pokémon.
 
 ### Psychic Changes
 

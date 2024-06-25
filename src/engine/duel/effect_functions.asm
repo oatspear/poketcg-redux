@@ -1118,6 +1118,11 @@ VoltSwitchEffect:
 ; ------------------------------------------------------------------------------
 
 
+PrimalSwirl_DevolveAndTrapEffect:
+	call DevolveDefendingPokemonEffect
+	jp IncreaseRetreatCostEffect
+
+
 IF SLEEP_WITH_COIN_FLIP == 0
 SheerCold_SleepDamageMultiplierEffect:
 	call SheerCold_MultiplierEffect
@@ -2327,13 +2332,6 @@ DragOff_SwitchAndDamageEffect:
 	ld de, 30  ; damage
 	ld a, ATK_ANIM_WHIP_NO_GLOW
 	jp DealDamageToArenaPokemon_CustomAnim
-
-
-PrimalTentacle_SwitchTrapAndDevolveEffect:
-	call Lure_SwitchDefendingPokemon
-	call DevolveDefendingPokemonEffect
-	ld a, SUBSTATUS2_PRIMAL_TENTACLE
-	jp ApplySubstatus2ToDefendingCard
 
 
 ; If heads, defending Pokemon becomes poisoned. If tails, defending Pokemon becomes confused

@@ -4871,32 +4871,32 @@ OmastarCard:
 	; your opponent's next turn.
 
 	; attack 1
-	energy COLORLESS, 2 ; energies
-	tx PrimalTentacleName ; name
-	tx PrimalTentacleDescription ; description
-	tx PrimalTentacleDescriptionCont ; description (cont)
+	energy 0 ; energies
+	tx PrehistoricPowerName ; name
+	tx PrehistoricPowerDescription ; description
+	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db RESIDUAL ; category
-	dw PrimalTentacleEffectCommands ; effect commands
+	db POKEMON_POWER ; category
+	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
-	db SWITCH_OPPONENT_POKEMON ; flags 2
+	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_WHIP_NO_HIT ; animation
+	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
 	energy WATER, 1, COLORLESS, 2 ; energies
-	tx SpiralDrainName ; name
-	tx Heal20DamageDescription ; description
-	dw NONE ; description (cont)
-	db 60 ; damage
+	tx PrimalSwirlName ; name
+	tx IncreaseRetreatCostDescription ; description
+	tx PrimalSwirlDescription ; description (cont)
+	db 50 ; damage
 	db DAMAGE_NORMAL ; category
-	dw Leech20DamageEffectCommands ; effect commands
+	dw PrimalSwirlEffectCommands ; effect commands
 	db NONE ; flags 1
-	db HEAL_USER ; flags 2
+	db NONE ; flags 2
 	db NONE ; flags 3
-	db 2
-	db ATK_ANIM_DRAIN ; animation
+	db 0
+	db ATK_ANIM_WHIRLPOOL ; animation
 
 	db 2 ; retreat cost
 	db WR_GRASS ; weakness
@@ -7329,9 +7329,6 @@ AerodactylCard:
 	; As long as this Pokémon is your Active Pokémon, your opponent can't play any
 	; Supporter cards from their hand.
 
-	; Poké-Body: Primal Claw
-	; After your opponent's Pokémon uses a Poké-Power, put 2 damage counters on that Pokémon.
-
 	; Ancient Scream
 	; Your Pokémon's attacks do 10 more damage to the Active Pokémon (before applying Weakness and Resistance).
 
@@ -7342,24 +7339,10 @@ AerodactylCard:
 	; As long as this Pokémon is your Active Pokémon, your opponent's Basic Pokémon's
 	; attacks cost Colorless more.
 
-	; Primal Claw
-	; energy 0 ; energies
-	; tx PrimalClawName ; name
-	; tx PrimalClawDescription ; description
-	; tx PokemonPowerDescriptionCont ; description (cont)
-	; db 0 ; damage
-	; db POKEMON_POWER ; category
-	; dw PassivePowerEffectCommands ; effect commands
-	; db NONE ; flags 1
-	; db NONE ; flags 2
-	; db NONE ; flags 3
-	; db 0
-	; db ATK_ANIM_PKMN_POWER_1 ; animation
-
 	; attack 1
 	energy 0 ; energies
-	tx PrehistoricPowerName ; name
-	tx PrehistoricPowerDescription ; description
+	tx PrimalClawName ; name
+	tx PrimalClawDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKEMON_POWER ; category

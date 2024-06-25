@@ -1,5 +1,69 @@
 
 
+
+; - New attack: **Primal Tentacle** (CC): switch in 1 of the opponent's Benched Pokémon; devolve the new Active Pokémon; the new Active Pokémon is unable to evolve or retreat.
+
+PrimalTentacleName:
+	text "Primal Tentacle"
+	done
+
+PrimalTentacleDescription:
+	text "Switch 1 of your opponent's Benched"
+	line "Pokémon with their Active Pokémon."
+	line "If the new Defending Pokémon is an"
+	line "Evolution Pokémon, return the"
+	line "highest stage evolution card on that"
+	line "Pokémon to your opponent's hand."
+	done
+
+PrimalTentacleDescriptionCont:
+	text "The new Active Pokémon can't"
+	line "retreat or evolve during your"
+	line "opponent's next turn."
+	done
+
+
+; attack 1
+energy COLORLESS, 2 ; energies
+tx PrimalTentacleName ; name
+tx PrimalTentacleDescription ; description
+tx PrimalTentacleDescriptionCont ; description (cont)
+db 0 ; damage
+db RESIDUAL ; category
+dw PrimalTentacleEffectCommands ; effect commands
+db NONE ; flags 1
+db SWITCH_OPPONENT_POKEMON ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_WHIP_NO_HIT ; animation
+
+
+
+
+
+PrehistoricPowerDescription:
+	text "While this is your Active Pokémon,"
+	line "no more Evolution cards can be"
+	line "played from either player's hand."
+	done
+
+; attack 1
+energy 0 ; energies
+tx PrehistoricPowerName ; name
+tx PrehistoricPowerDescription ; description
+tx PokemonPowerDescriptionCont ; description (cont)
+db 0 ; damage
+db POKEMON_POWER ; category
+dw PassivePowerEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_PKMN_POWER_1 ; animation
+
+
+
+
 ; - New attack: **Revival Wave** (CC): 20 damage; put a Pokémon card from the discard pile onto the bench; +20 damage if the bench was already full.
 
 RevivalWaveName:
@@ -375,21 +439,6 @@ db NONE ; flags 2
 db SPECIAL_AI_HANDLING ; flags 3
 db 0
 db ATK_ANIM_GLOW_EFFECT ; animation
-
-
-; attack 2
-energy WATER, 1, COLORLESS, 2 ; energies
-tx PrimalSwirlName ; name
-tx PrimalSwirlDescription ; description
-dw NONE ; description (cont)
-db 50 ; damage
-db DAMAGE_NORMAL ; category
-dw PrimalSwirlEffectCommands ; effect commands
-db NONE ; flags 1
-db NONE ; flags 2
-db NONE ; flags 3
-db 0
-db ATK_ANIM_WHIRLPOOL ; animation
 
 
 ; attack 1

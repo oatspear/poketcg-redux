@@ -2594,8 +2594,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer SharpSickleName                                    ; 0x0a71
 	textpointer PrehistoricPowerName
 	textpointer PrehistoricPowerDescription
-	; textpointer PrimalClawName
-	; textpointer PrimalClawDescription
+	textpointer PrimalClawName
+	textpointer PrimalClawDescription
 	textpointer InflictConfusionDescription                        ; 0x0a7f
 	textpointer InvadeMindName
 	textpointer InvadeMindDescription
@@ -2944,9 +2944,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PoisonOrConfusionIfPoisonedDescription
 	textpointer PrimalGuidanceName
 	textpointer PrimalGuidanceDescription
-	textpointer PrimalTentacleName
-	textpointer PrimalTentacleDescription
-	textpointer PrimalTentacleDescriptionCont
+	textpointer PrimalSwirlName
+	textpointer PrimalSwirlDescription
 	textpointer PrimalScytheName
 	; textpointer FossilFangsName
 	textpointer SpeedImpactName

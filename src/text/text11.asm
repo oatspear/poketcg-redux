@@ -1011,19 +1011,19 @@ PrehistoricPowerName:
 
 PrehistoricPowerDescription:
 	text "While this is your Active Pokémon,"
-	line "no more Evolution cards can be"
-	line "played from either player's hand."
+	line "your opponent cannot play Evolution"
+	line "cards from their hand."
 	done
 
-; PrimalClawName:
-; 	text "Primal Claw"
-; 	done
+PrimalClawName:
+	text "Primal Claw"
+	done
 
-; PrimalClawDescription:
-; 	text "After your opponent's Pokémon uses"
-; 	line "a Pokémon Power, put 1 damage"
-; 	line "counter on that Pokémon."
-; 	done
+PrimalClawDescription:
+	text "After your opponent's Pokémon uses"
+	line "a Pokémon Power, put 1 damage"
+	line "counter on that Pokémon."
+	done
 
 InflictConfusionDescription:
 	text "The Defending Pokémon is now"
@@ -1715,7 +1715,6 @@ FossilBindName:
 	done
 
 IncreaseRetreatCostDescription:
-	text "Until your next turn, the"
-	line "Defending Pokémon pays <COLORLESS> more"
-	line "for its Retreat Cost."
+	text "Until your next turn, the Defending"
+	line "Pokémon pays <COLORLESS> more to Retreat."
 	done
