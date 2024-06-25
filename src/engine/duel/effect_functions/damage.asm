@@ -449,5 +449,5 @@ KnockOutDefendingPokemonEffect:
 	ld h, [hl]
 	ld l, a
 	call LoadTxRam2
-	ldtx hl, KnockedOutDueToDestinyBondText
+	ldtx hl, WasKnockedOutText
 	jp DrawWideTextBox_WaitForInput
