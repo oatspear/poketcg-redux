@@ -1441,7 +1441,7 @@ VileplumeCard:
 	; attack 1
 	energy GRASS, 1, COLORLESS, 1 ; energies
 	tx AllergicPollenName ; name
-	tx HeadacheDescription ; description
+	tx UnableToUseItemsDescription ; description
 	dw NONE ; description (cont)
 	db 20 ; damage
 	db DAMAGE_NORMAL ; category
@@ -3496,7 +3496,7 @@ PsyduckCard:
 	; attack 1
 	energy WATER, 1 ; energies
 	tx HeadacheName ; name
-	tx HeadacheDescription ; description
+	tx UnableToUseItemsDescription ; description
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category
@@ -4793,18 +4793,18 @@ OmanyteCard:
 	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy COLORLESS, 2 ; energies
-	tx RevivalWaveName ; name
-	tx RevivalWaveDescription ; description
+	energy WATER, 1, COLORLESS, 1 ; energies
+	tx FossilBindName ; name
+	tx UnableToUseItemsDescription ; description
 	dw NONE ; description (cont)
-	db 20 ; damage
-	db DAMAGE_PLUS ; category
-	dw RevivalWaveEffectCommands ; effect commands
+	db 30 ; damage
+	db DAMAGE_NORMAL ; category
+	dw HeadacheEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_WHIRLPOOL ; animation
+	db ATK_ANIM_WHIP ; animation
 
 	db 1 ; retreat cost
 	db WR_GRASS ; weakness

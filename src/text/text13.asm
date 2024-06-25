@@ -170,17 +170,6 @@ QuickSearchDescription:
 	line "hand. Shuffle your deck afterwards."
 	done
 
-RevivalWaveName:
-	text "Revival Wave"
-	done
-
-RevivalWaveDescription:
-	text "Put a Pokémon from your discard"
-	line "pile onto your Bench."
-	line "If your Bench was already full,"
-	line "this attack does 20 more damage."
-	done
-
 SafeguardName:
 	text "Safeguard"
 	done

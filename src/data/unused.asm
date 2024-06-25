@@ -1,5 +1,35 @@
 
 
+; - New attack: **Revival Wave** (CC): 20 damage; put a Pokémon card from the discard pile onto the bench; +20 damage if the bench was already full.
+
+RevivalWaveName:
+	text "Revival Wave"
+	done
+
+RevivalWaveDescription:
+	text "Put a Pokémon from your discard"
+	line "pile onto your Bench."
+	line "If your Bench was already full,"
+	line "this attack does 20 more damage."
+	done
+
+
+; attack 2
+energy COLORLESS, 2 ; energies
+tx RevivalWaveName ; name
+tx RevivalWaveDescription ; description
+dw NONE ; description (cont)
+db 20 ; damage
+db DAMAGE_PLUS ; category
+dw RevivalWaveEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_WHIRLPOOL ; animation
+
+
+
 PrimordialDreamName:
 	text "Primordial Dream"
 	done
@@ -109,7 +139,7 @@ db ATK_ANIM_RECOVER ; animation
 ; attack 2
 energy WATER, 1, COLORLESS, 1 ; energies
 tx HeadacheName ; name
-tx HeadacheDescription ; description
+tx UnableToUseItemsDescription ; description
 dw NONE ; description (cont)
 db 10 ; damage
 db DAMAGE_NORMAL ; category

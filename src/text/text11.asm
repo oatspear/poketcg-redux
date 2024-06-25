@@ -409,7 +409,7 @@ HeadacheName:
 	text "Headache"
 	done
 
-HeadacheDescription:
+UnableToUseItemsDescription:
 	text "Your opponent cannot play Item"
 	line "cards during their next turn."
 	done
@@ -1708,4 +1708,14 @@ DevastateName:
 DiscardTop4CardsFromDeckDescription:
 	text "Discard the top 4 cards"
 	line "of your deck."
+	done
+
+FossilBindName:
+	text "Fossil Bind"
+	done
+
+IncreaseRetreatCostDescription:
+	text "Until your next turn, the"
+	line "Defending Pokémon pays <COLORLESS> more"
+	line "for its Retreat Cost."
 	done

@@ -238,7 +238,7 @@
 - **Primordial Dream**: removed.
 - **Constrict**: removed.
 - New Pokémon Power: **Primal Guidance**: once per turn, search the deck for a Stage 1 or Stage 2 Pokémon that evolves from Mysterious Fossil and put it onto the Bench as a Basic Pokémon.
-- New attack: **Revival Wave** (CC): 20 damage; put a Pokémon card from the discard pile onto the bench; +20 damage if the bench was already full.
+- New attack: **Fossil Bind** (WC): 30 damage; the opponent is unable to use Items during their next turn.
 
 #### Omastar
 - Increased HP from 100 to 110.

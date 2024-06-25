@@ -2483,7 +2483,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer HydroPumpName                                      ; 0x0932
 	textpointer HydroPumpDescription                               ; 0x0933
 	textpointer HeadacheName                                       ; 0x0937
-	textpointer HeadacheDescription                                ; 0x0938
+	textpointer UnableToUseItemsDescription
 	textpointer SpiralDrainName                                    ; 0x093c
 	textpointer HyperBeamName                                      ; 0x093d
 	textpointer Discard1EnergyFromTargetDescription
@@ -2725,6 +2725,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer SwiftSwimDescription
 	textpointer DevastateName
 	textpointer DiscardTop4CardsFromDeckDescription
+	textpointer FossilBindName
+	textpointer IncreaseRetreatCostDescription
 
 ; ------------------------------------------------------------------------------
 ; text12.asm
@@ -3073,8 +3075,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer DragOffDescription
 	textpointer QuickSearchName
 	textpointer QuickSearchDescription
-	textpointer RevivalWaveName
-	textpointer RevivalWaveDescription
 	textpointer SafeguardName
 	textpointer SafeguardDescription
 	textpointer EnergyStreamName
