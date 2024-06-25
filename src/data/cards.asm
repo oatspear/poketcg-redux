@@ -7227,17 +7227,17 @@ KabutoCard:
 
 	; attack 2
 	energy FIGHTING, 1, COLORLESS, 1 ; energies
-	tx PrimalHuntName ; name
-	tx Tutor1PokemonDescription ; description
+	tx LeechLifeName ; name
+	tx LeechLifeDescription ; description
 	dw NONE ; description (cont)
-	db 20 ; damage
+	db 30 ; damage
 	db DAMAGE_NORMAL ; category
-	dw PrimalHuntEffectCommands ; effect commands
+	dw LeechLifeEffectCommands ; effect commands
 	db NONE ; flags 1
-	db NONE ; flags 2
+	db HEAL_USER ; flags 2
 	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_SLASH ; animation
+	db 3
+	db ATK_ANIM_DRAIN ; animation
 
 	db 1 ; retreat cost
 	db WR_GRASS ; weakness

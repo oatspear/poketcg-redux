@@ -2590,7 +2590,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer RamName                                            ; 0x0a67
 	textpointer RamDescription
 	textpointer FindAFriendName
-	textpointer PrimalHuntName
 	textpointer Tutor1PokemonDescription
 	textpointer SharpSickleName                                    ; 0x0a71
 	textpointer PrehistoricPowerName

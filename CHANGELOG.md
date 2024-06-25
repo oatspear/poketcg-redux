@@ -298,7 +298,9 @@
 #### Kabuto
 - Increased HP from 60 to 70.
 - **Kabuto Armor**: removed.
+- **Primal Hunt**: removed.
 - New Pokémon Power: **Primal Guidance**: once per turn, search the deck for a Stage 1 or Stage 2 Pokémon that evolves from Mysterious Fossil and put it onto the Bench as a Basic Pokémon.
+- New attack: **Leech Life** (FC): 30 damage; heal the same amount of damage dealt.
 
 #### Kabutops
 - Increased HP from 100 to 110.

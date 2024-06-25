@@ -995,10 +995,6 @@ FindAFriendName:
 	text "Find A Friend"
 	done
 
-PrimalHuntName:
-	text "Primal Hunt"
-	done
-
 Tutor1PokemonDescription:
 	text "Search your deck for a Pokémon"
 	line "card and add it to your hand."
