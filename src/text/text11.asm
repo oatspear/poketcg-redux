@@ -1011,8 +1011,9 @@ PrehistoricPowerName:
 
 PrehistoricPowerDescription:
 	text "While this is your Active Pokémon,"
-	line "your opponent cannot play Evolution"
-	line "cards from their hand."
+	line "your opponent can't play Evolution"
+	line "cards from their hand to evolve"
+	line "their Pokémon."
 	done
 
 PrimalClawName:
