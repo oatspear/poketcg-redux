@@ -392,6 +392,10 @@
 #### Nidoran F
 - **Poison Sting**: always inflicts Poison.
 
+#### Nidoqueen
+- Increased HP from 110 to 120.
+- **Family Power**: increased cost from (CCC) to (DCC); increased base damage from 10 to 20.
+
 #### Nidoran M
 - **Horn Attack**: removed.
 - **Retaliate**: reduced cost from (D) to (C).
