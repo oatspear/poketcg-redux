@@ -4797,7 +4797,7 @@ OmanyteCard:
 	tx FossilBindName ; name
 	tx UnableToUseItemsDescription ; description
 	dw NONE ; description (cont)
-	db 30 ; damage
+	db 20 ; damage
 	db DAMAGE_NORMAL ; category
 	dw HeadacheEffectCommands ; effect commands
 	db NONE ; flags 1
