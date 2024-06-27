@@ -2343,7 +2343,6 @@ FoulGas_PoisonOrConfusionEffect:
 
 
 SwitchUser_PlayerSelectEffect:
-OldTeleport_PlayerSelectEffect:
 	ld a, $ff
 	ldh [hTemp_ffa0], a
 	call CheckBenchIsNotEmpty
@@ -2363,7 +2362,6 @@ OldTeleport_PlayerSelectEffect:
 	ret
 
 SwitchUser_AISelectEffect:
-OldTeleport_AISelectEffect:
 	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
 	call GetTurnDuelistVariable
 	call Random
@@ -2371,7 +2369,6 @@ OldTeleport_AISelectEffect:
 	ret
 
 SwitchUser_SwitchEffect:
-OldTeleport_SwitchEffect:
 	ldh a, [hTemp_ffa0]
 	cp $ff
 	ret z
