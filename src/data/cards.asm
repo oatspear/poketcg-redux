@@ -140,7 +140,6 @@ CardPointers:
 	dw RhydonCard
 	dw KabutoCard
 	dw KabutopsCard
-	dw AerodactylCard
 	dw AbraCard
 	dw KadabraCard
 	dw AlakazamCard
@@ -186,6 +185,7 @@ CardPointers:
 	dw DittoCard
 	dw EeveeCard
 	dw PorygonCard
+	dw AerodactylCard
 	dw SnorlaxCard
 	dw DratiniCard
 	dw DragonairCard
@@ -7307,7 +7307,7 @@ KabutopsCard:
 	db 0
 
 AerodactylCard:
-	db TYPE_PKMN_FIGHTING ; type
+	db TYPE_PKMN_COLORLESS ; type
 	gfx AerodactylCardGfx ; gfx
 	tx AerodactylName ; name
 	db STAR ; rarity
@@ -7354,7 +7354,7 @@ AerodactylCard:
 	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy COLORLESS, 3 ; energies
+	energy COLORLESS, 2 ; energies
 	tx SkillDiveName ; name
 	tx Deal40ToAnyPokemonDescription ; description
 	tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
@@ -7368,7 +7368,7 @@ AerodactylCard:
 	db ATK_ANIM_AGILITY_NO_HIT ; animation
 
 	db 1 ; retreat cost
-	db WR_WATER ; weakness
+	db WR_LIGHTNING ; weakness
 	db WR_FIGHTING ; resistance
 	tx FossilName ; category
 	db 142 ; Pokedex number

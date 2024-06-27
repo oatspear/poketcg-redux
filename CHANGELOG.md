@@ -309,7 +309,9 @@
 - New attack: **Primal Scythe** (FCC): 60 damage; 10 damage to 2 Benched targets.
 
 #### Aerodactyl
+- Changed type from Fighting to Colorless.
 - **Prehistoric Power**: removed.
+- **Skill Dive**: reduced cost from (CCC) to (CC).
 - New Pokémon Power: **Primal Claw**: when the opponent uses an ability, do 10 damage to that Pokémon.
 
 ### Psychic Changes
