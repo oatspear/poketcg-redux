@@ -2278,7 +2278,7 @@ _DamageModifiers_HandleResistance:
 	ret z  ; not resistant
 	ld hl, wDamageEffectiveness
 	set RESISTANCE, [hl]
-	jp ReduceDamageBy30_DE  ; preserves bc
+	jp ReduceDamageBy20_DE  ; preserves bc
 
 
 

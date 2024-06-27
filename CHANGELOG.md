@@ -15,6 +15,9 @@
 - Attack 1: **Dragon Rage** (CC): 20 damage; +10 damage for each type of Basic Energy attached.
 - Attack 2: **Hyper Beam** (CCC): 50 damage; discard an energy from both Active Pokémon.
 
+### Core Mechanics Changes
+- Resistance now reduces damage taken by 20, down from 30.
+
 ### Status Conditions Changes
 
 #### Confusion

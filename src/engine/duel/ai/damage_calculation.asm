@@ -185,7 +185,7 @@ _CalculateDamage_VersusDefendingPokemon:
 	ld a, [wAttackerColorAsWR]
 	and b
 	jr z, .apply_defender
-	call ReduceDamageBy30_DE  ; preserves bc
+	call ReduceDamageBy20_DE  ; preserves bc
 
 ; 6. apply Defender reduction
 .apply_defender
@@ -411,7 +411,7 @@ CalculateDamage_FromDefendingPokemon: ; 1458c (5:458c)
 	ld b, a
 	ld a, [wAttackerColorAsWR]
 	and b
-	call nz, ReduceDamageBy30_DE
+	call nz, ReduceDamageBy20_DE
 
 ; 6. apply Defender reduction
 .apply_defender
