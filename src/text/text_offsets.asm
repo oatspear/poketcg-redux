@@ -3039,6 +3039,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer AbilityEnergyRetrievalDescription
 	textpointer WaterSportName
 	textpointer Plus20DamageIfLessEnergyThanOpponentDescription
+	textpointer BatonPassName
+	textpointer BatonPassDescription
 
 ; ------------------------------------------------------------------------------
 ; text13.asm

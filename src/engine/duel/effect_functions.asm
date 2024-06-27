@@ -2350,12 +2350,7 @@ SwitchUser_PlayerSelectEffect:
 
 	ldtx hl, SelectPkmnOnBenchToSwitchWithActiveText
 	call DrawWideTextBox_WaitForInput
-	bank1call HasAlivePokemonInBench
-	ld a, $01
-	ld [wcbd4], a
-	bank1call OpenPlayAreaScreenForSelection
-	jr c, .done
-	ldh a, [hTempPlayAreaLocation_ff9d]
+	call HandlePlayerSelectionPokemonInBench_AllowCancel_AllowExamine
 	ldh [hTemp_ffa0], a
 .done
 	or a
@@ -2368,17 +2363,35 @@ SwitchUser_AISelectEffect:
 	ldh [hTemp_ffa0], a
 	ret
 
-SwitchUser_SwitchEffect:
+; z: false
+; nz: true
+IsBenchPokemonSelected:
 	ldh a, [hTemp_ffa0]
 	cp $ff
 	ret z
 	or a
+	ret
+
+SwitchUser_SwitchEffect:
+	call IsBenchPokemonSelected
 	ret z
+.switch
 	ld e, a
 	call SwapArenaWithBenchPokemon
 	xor a
 	ld [wDuelDisplayedScreen], a
 	ret
+
+
+BatonPass_SwitchEffect:
+	call IsBenchPokemonSelected
+	ret z
+	ldh [hTempPlayAreaLocation_ffa1], a  ; target PLAY_AREA_*
+	xor a  ; PLAY_AREA_ARENA
+	ldh [hTempPlayAreaLocation_ff9d], a  ; source PLAY_AREA_*
+	call MoveAllAttachedEnergiesToAnotherPokemonEffect
+	ldh a, [hTemp_ffa0]
+	jr SwitchUser_SwitchEffect.switch
 
 
 Teleport_PlayerSelectEffect:

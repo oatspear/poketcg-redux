@@ -1596,3 +1596,15 @@ Plus20DamageIfLessEnergyThanOpponentDescription:
 	line "the Defending Pokémon, this"
 	line "attack does 20 more damage."
 	done
+
+BatonPassName:
+	text "Baton Pass"
+	done
+
+BatonPassDescription:
+	text "You may switch this Pokémon with"
+	line "1 of your Benched Pokémon. If you"
+	line "do, move all Energy cards attached"
+	line "to this Pokémon to the new Active"
+	line "Pokémon."
+	done

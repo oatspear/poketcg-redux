@@ -443,6 +443,12 @@ HandlePlayerSelectionPokemonInBench_AllowCancel:
 	bank1call HasAlivePokemonInBench
 	jr HandlePlayerSelectionPokemonInPlayArea_AllowCancel.select
 
+HandlePlayerSelectionPokemonInBench_AllowCancel_AllowExamine:
+	bank1call HasAlivePokemonInBench
+	ld a, $01
+	ld [wcbd4], a
+	jr HandlePlayerSelectionPokemonInPlayArea_AllowCancel.select
+
 
 HandlePlayerSelectionPokemonInPlayArea:
 	bank1call HasAlivePokemonInPlayArea

@@ -207,6 +207,12 @@ RapidSpinEffectCommands:
 	dbw EFFECTCMDTYPE_AI_SELECTION, RapidSpin_AISelectEffect
 	db  $00
 
+BatonPassEffectCommands:
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, SwitchUser_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, SwitchUser_AISelectEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, BatonPass_SwitchEffect
+	db  $00
+
 Plus20DamageIfLessEnergyThanOpponentEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Plus20DamageIfLessEnergyThanOpponent_DamageBoostEffect
 	dbw EFFECTCMDTYPE_AI, Plus20DamageIfLessEnergyThanOpponent_AIEffect
