@@ -1114,11 +1114,25 @@ NidokingCard:
 	tx NidorinoName ; pre-evo name
 
 	; attack 1
-	energy COLORLESS, 2 ; energies
+	energy DARKNESS, 1, COLORLESS, 1 ; energies
+	tx LandCrushName ; name
+	tx DamageAllFriendlyBenched20Description ; description
+	tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
+	db 110 ; damage
+	db DAMAGE_NORMAL ; category
+	dw DamageAllFriendlyBenched20EffectCommands ; effect commands
+	db NONE ; flags 1
+	db NONE ; flags 2
+	db NONE ; flags 3
+	db 2
+	db ATK_ANIM_HIT ; animation
+
+	; attack 2
+	energy DARKNESS, 1, COLORLESS, 2 ; energies
 	tx VengefulHornName ; name
 	tx VengefulHornDescription ; description
 	dw NONE ; description (cont)
-	db 10 ; damage
+	db 40 ; damage
 	db DAMAGE_PLUS ; category
 	dw VengefulHornEffectCommands ; effect commands
 	db NONE ; flags 1
@@ -1126,20 +1140,6 @@ NidokingCard:
 	db NONE ; flags 3
 	db 0
 	db ATK_ANIM_MULTIPLE_SLASH ; animation
-
-	; attack 2
-	energy DARKNESS, 1, COLORLESS, 2 ; energies
-	tx LandCrushName ; name
-	tx DamageAllFriendlyBenched20Description ; description
-	tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
-	db 100 ; damage
-	db DAMAGE_NORMAL ; category
-	dw DamageAllFriendlyBenched20EffectCommands ; effect commands
-	db NONE ; flags 1
-	db NONE ; flags 2
-	db NONE ; flags 3
-	db 2
-	db ATK_ANIM_BIG_HIT ; animation
 
 	db 2 ; retreat cost
 	db WR_FIGHTING ; weakness
