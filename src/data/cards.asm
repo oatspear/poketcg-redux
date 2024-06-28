@@ -1078,12 +1078,12 @@ NidorinoCard:
 
 	; attack 2
 	energy DARKNESS, 1, COLORLESS, 1 ; energies
-	tx VengefulHornName ; name
-	tx VengefulHornDescription ; description
-	dw NONE ; description (cont)
-	db 10 ; damage
-	db DAMAGE_PLUS ; category
-	dw VengefulHornEffectCommands ; effect commands
+	tx ThrashName ; name
+	tx Damage1FriendlyBenchedPokemon20Description ; description
+	tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
+	db 50 ; damage
+	db DAMAGE_NORMAL ; category
+	dw Damage1FriendlyBenchedPokemon20EffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3

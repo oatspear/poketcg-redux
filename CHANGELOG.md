@@ -401,6 +401,10 @@
 - **Retaliate**: reduced cost from (D) to (C).
 - New attack: **Poison Sting** (D): 10 damage; inflicts Poison.
 
+#### Nidorino
+- **Vengeful Horn**: removed.
+- New attack: **Thrash** (DC): 50 damage; 20 damage to 1 of the user's Benched Pokémon.
+
 #### Nidoking
 - Increased HP from 100 to 110.
 - **Rout**: removed.

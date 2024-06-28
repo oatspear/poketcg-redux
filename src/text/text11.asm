@@ -1719,3 +1719,7 @@ IncreaseRetreatCostDescription:
 	text "Until your next turn, the Defending"
 	line "Pokémon pays <COLORLESS> more to Retreat."
 	done
+
+ThrashName:
+	text "Thrash"
+	done

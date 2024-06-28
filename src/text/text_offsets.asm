@@ -2727,6 +2727,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer DiscardTop4CardsFromDeckDescription
 	textpointer FossilBindName
 	textpointer IncreaseRetreatCostDescription
+	textpointer ThrashName
 
 ; ------------------------------------------------------------------------------
 ; text12.asm
