@@ -1,6 +1,39 @@
 ;
 
 
+
+NidoPressEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, NidoPress_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AI, NidoPress_AIEffect
+	db  $00
+
+
+; +20 damage if Nidoran (F), Nidorina or Nidoqueen on Bench
+NidoPress_DamageBoostEffect:
+	ld a, DUELVARS_BENCH
+	call GetTurnDuelistVariable
+.loop
+	ld a, [hli]
+	cp $ff
+	ret z  ; done
+	call GetCardIDFromDeckIndex
+	ld a, e
+  cp NIDORANF
+	jr z, .plus_20
+  cp NIDORINA
+	jr z, .plus_20
+	cp NIDOQUEEN
+	jr nz, .loop  ; not a Nidoran (F) family card
+.plus_20
+	ld a, 20
+	jp AddToDamage
+
+NidoPress_AIEffect:
+  call NidoPress_DamageBoostEffect
+  jp SetDefiniteAIDamage
+
+
+
 TailSwingEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DamageAllOpponentBenchedBasic20Effect
 	db  $00
