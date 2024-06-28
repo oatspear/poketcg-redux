@@ -1013,19 +1013,27 @@ VengefulHorn_AIEffect:
   jp SetDefiniteAIDamage
 
 
-Rend_DamageBoostEffect:
 ; add 20 damage if the Defending Pokémon has damage counters
-	call SwapTurn
-	ld e, PLAY_AREA_ARENA
-	call GetCardDamageAndMaxHP
-	call SwapTurn
-	or a
-	ret z
+Rend_DamageBoostEffect:
+	call CheckOpponentArenaPokemonHasAnyDamage
+	ret c  ; no damage
 	ld a, 20
 	jp AddToDamage
 
 Rend_AIEffect:
 	call Rend_DamageBoostEffect
+	jp SetDefiniteAIDamage
+
+
+; add 20 damage if the Defending Pokémon has no damage counters
+Frustration_DamageBoostEffect:
+	call CheckOpponentArenaPokemonHasAnyDamage
+	ret nc  ; is damaged
+	ld a, 20
+	jp AddToDamage
+
+Frustration_AIEffect:
+	call Frustration_DamageBoostEffect
 	jp SetDefiniteAIDamage
 
 

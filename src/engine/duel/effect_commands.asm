@@ -308,6 +308,11 @@ FinishingBiteEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckOpponentArenaPokemonHasAnyDamage
 	db  $00
 
+FrustrationEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Frustration_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AI, Frustration_AIEffect
+	db  $00
+
 AssassinFlightEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, AssassinFlight_CheckBenchAndStatus
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Deal40DamageToTarget_DamageEffect

@@ -195,9 +195,29 @@ EnergyStreamDescription:
 	line "Shuffle your deck afterward."
 	done
 
+FrustrationName:
+	text "Frustration"
+	done
+
+FrustrationDescription:
+	text "If the Defending Pokémon does not"
+	line "have any damage counters on it,"
+	line "this attack does 20 more damage."
+	done
+
 ; ------------------------------------------------------------------------------
 ; Unused Text
 ; ------------------------------------------------------------------------------
+
+; NidoPressName:
+; 	text "Nido Press"
+; 	done
+
+; NidoPressDescription:
+; 	text "If you have Nidoran♀, Nidorina or"
+; 	line "Nidoqueen on your Bench, this attack"
+; 	line "does 20 more damage."
+; 	done
 
 ; SwimFreelyName:
 ; 	text "Swim Freely"

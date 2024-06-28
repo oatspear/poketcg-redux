@@ -3081,6 +3081,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer SafeguardDescription
 	textpointer EnergyStreamName
 	textpointer EnergyStreamDescription
+	textpointer FrustrationName
+	textpointer FrustrationDescription
 
 	; unused
 	; textpointer SwimFreelyName

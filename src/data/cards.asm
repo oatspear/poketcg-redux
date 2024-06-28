@@ -1027,17 +1027,17 @@ NidoranMCard:
 
 	; attack 2
 	energy DARKNESS, 1 ; energies
-	tx PoisonStingName ; name
-	tx InflictPoisonDescription ; description
+	tx FrustrationName ; name
+	tx FrustrationDescription ; description
 	dw NONE ; description (cont)
 	db 10 ; damage
-	db DAMAGE_NORMAL ; category
-	dw InflictPoisonEffectCommands ; effect commands
-	db INFLICT_POISON ; flags 1
+	db DAMAGE_PLUS ; category
+	dw FrustrationEffectCommands ; effect commands
+	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_NEEDLES ; animation
+	db ATK_ANIM_HIT ; animation
 
 	db 0 ; retreat cost
 	db WR_FIGHTING ; weakness
