@@ -803,29 +803,29 @@ DigUnderName:
 	text "Dig Under"
 	done
 
-EarthquakeName: ; 5e70d (17:670d)
+EarthquakeName:
 	text "Earthquake"
 	done
 
-EarthquakeDescription:
+DamageAllBenchedPokemon10Description:
 	text "This attack does 10 damage to each"
 	line "player's Benched Pokémon."
 	done
 
-TantrumName: ; 5e96d (17:696d)
+TantrumName:
 	text "Tantrum"
 	done
 
-TantrumDescription: ; 5e976 (17:6976)
+TantrumDescription:
 	text "This Pokémon is now Confused"
 	line "(after doing damage)."
 	done
 
-KarateChopName: ; 5eaac (17:6aac)
+KarateChopName:
 	text "Karate Chop"
 	done
 
-KarateChopDescription: ; 5eab9 (17:6ab9)
+KarateChopDescription:
 	text "Does 10 less damage for each"
 	line "damage counter on this Pokémon."
 	done

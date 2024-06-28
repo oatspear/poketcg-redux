@@ -916,16 +916,6 @@ FamilyPowerDescription:
 	line "Nidoking or Nidoqueen."
 	done
 
-TailSwingName:
-	text "Tail Swing"
-	done
-
-TailSwingDescription:
-	text "This attack does 20 damage to"
-	line "each of your opponent's Benched"
-	line "Basic Pokémon."
-	done
-
 NightAmbushName:
 	text "Night Ambush"
 	done
@@ -1607,4 +1597,13 @@ BatonPassDescription:
 	line "do, move all Energy cards attached"
 	line "to this Pokémon to the new Active"
 	line "Pokémon."
+	done
+
+LandCrushName:
+	text "Land Crush"
+	done
+
+DamageAllFriendlyBenched20Description:
+	text "This attack does 20 damage to"
+	line "each of your Benched Pokémon."
 	done

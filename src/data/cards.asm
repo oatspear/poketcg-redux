@@ -1109,33 +1109,33 @@ NidokingCard:
 	db STAR ; rarity
 	db EVOLUTION | NONE ; sets
 	db NIDOKING
-	db 100 ; hp
+	db 110 ; hp
 	db STAGE2 ; stage
 	tx NidorinoName ; pre-evo name
 
 	; attack 1
-	energy DARKNESS, 1, COLORLESS, 1 ; energies
-	tx RoutName ; name
-	tx RoutDescription ; description
+	energy COLORLESS, 2 ; energies
+	tx VengefulHornName ; name
+	tx VengefulHornDescription ; description
 	dw NONE ; description (cont)
 	db 10 ; damage
 	db DAMAGE_PLUS ; category
-	dw RoutEffectCommands ; effect commands
+	dw VengefulHornEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_HIT ; animation
+	db ATK_ANIM_MULTIPLE_SLASH ; animation
 
 	; attack 2
 	energy DARKNESS, 1, COLORLESS, 2 ; energies
-	tx TailSwingName ; name
-	tx TailSwingDescription ; description
+	tx LandCrushName ; name
+	tx DamageAllFriendlyBenched20Description ; description
 	tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
-	db 50 ; damage
+	db 100 ; damage
 	db DAMAGE_NORMAL ; category
-	dw TailSwingEffectCommands ; effect commands
-	db DAMAGE_TO_OPPONENT_BENCH ; flags 1
+	dw DamageAllFriendlyBenched20EffectCommands ; effect commands
+	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 2
@@ -6325,7 +6325,7 @@ DugtrioCard:
 	; attack 2
 	energy FIGHTING, 1, COLORLESS, 2 ; energies
 	tx EarthquakeName ; name
-	tx EarthquakeDescription ; description
+	tx DamageAllBenchedPokemon10Description ; description
 	tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
 	db 50 ; damage
 	db DAMAGE_NORMAL ; category

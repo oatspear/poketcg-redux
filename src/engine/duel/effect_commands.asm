@@ -1154,13 +1154,17 @@ DamageAllOpponentBenched10EffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DamageAllOpponentBenched10Effect
 	db  $00
 
+DamageAllFriendlyBenched10EffectCommands:
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DamageAllFriendlyPokemon10Effect
+	db  $00
+
+DamageAllFriendlyBenched20EffectCommands:
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DamageAllFriendlyPokemon20Effect
+	db  $00
+
 SinisterFogEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PoisonEffect
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DamageAllOpponentBenched10Effect
-	db  $00
-
-TailSwingEffectCommands:
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DamageAllOpponentBenchedBasic20Effect
 	db  $00
 
 SmogEffectCommands:

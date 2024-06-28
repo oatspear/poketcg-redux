@@ -401,6 +401,13 @@
 - **Retaliate**: reduced cost from (D) to (C).
 - New attack: **Poison Sting** (D): 10 damage; inflicts Poison.
 
+#### Nidoking
+- Increased HP from 100 to 110.
+- **Rout**: removed.
+- **Tail Swing**: removed.
+- New attack: **Vengeful Horn** (CC): 10 damage; +10 damage for each damaged Pokémon on the user's Bench.
+- New attack: **Land Crush** (DCC): 100 damage; 20 damage to all of the user's Benched Pokémon.
+
 #### Zubat
 - **Supersonic**: removed.
 - **Pester**: removed.

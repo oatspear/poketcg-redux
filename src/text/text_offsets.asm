@@ -2551,8 +2551,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PrimalThunderDescription
 	textpointer SandAttackName                                     ; 0x0a0a
 	textpointer DigUnderName
-	textpointer EarthquakeName                                     ; 0x0a15
-	textpointer EarthquakeDescription                              ; 0x0a16
+	textpointer EarthquakeName
+	textpointer DamageAllBenchedPokemon10Description
 	textpointer TantrumName                                        ; 0x0a1f
 	textpointer TantrumDescription                                 ; 0x0a20
 	textpointer KarateChopName                                     ; 0x0a27
@@ -2913,8 +2913,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PsyshockDescription
 	textpointer FamilyPowerName
 	textpointer FamilyPowerDescription
-	textpointer TailSwingName
-	textpointer TailSwingDescription
 	textpointer NightAmbushName
 	textpointer NightAmbushDescription
 	textpointer DraconicEvolutionName
@@ -3041,6 +3039,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer Plus20DamageIfLessEnergyThanOpponentDescription
 	textpointer BatonPassName
 	textpointer BatonPassDescription
+	textpointer LandCrushName
+	textpointer DamageAllFriendlyBenched20Description
 
 ; ------------------------------------------------------------------------------
 ; text13.asm

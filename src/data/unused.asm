@@ -1,5 +1,45 @@
 
 
+TailSwingName:
+	text "Tail Swing"
+	done
+
+TailSwingDescription:
+	text "This attack does 20 damage to"
+	line "each of your opponent's Benched"
+	line "Basic Pokémon."
+	done
+
+; attack 1
+energy DARKNESS, 1, COLORLESS, 1 ; energies
+tx RoutName ; name
+tx RoutDescription ; description
+dw NONE ; description (cont)
+db 10 ; damage
+db DAMAGE_PLUS ; category
+dw RoutEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_HIT ; animation
+
+; attack 2
+energy DARKNESS, 1, COLORLESS, 2 ; energies
+tx TailSwingName ; name
+tx TailSwingDescription ; description
+tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
+db 50 ; damage
+db DAMAGE_NORMAL ; category
+dw TailSwingEffectCommands ; effect commands
+db DAMAGE_TO_OPPONENT_BENCH ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 2
+db ATK_ANIM_BIG_HIT ; animation
+
+
+
 
 ; - New attack: **Primal Tentacle** (CC): switch in 1 of the opponent's Benched Pokémon; devolve the new Active Pokémon; the new Active Pokémon is unable to evolve or retreat.
 

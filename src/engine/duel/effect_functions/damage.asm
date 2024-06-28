@@ -134,40 +134,6 @@ DamageAllBenchedPokemon:
 	ret
 
 
-; deal damage to all the turn holder's benched Basic Pokémon
-; input: de = amount of damage to deal to each Pokémon
-DealDamageToAllBenchedBasicPokemon:
-	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
-	call GetTurnDuelistVariable
-	ld c, a
-	ld b, PLAY_AREA_ARENA
-	jr .next
-.loop
-	ld a, DUELVARS_ARENA_CARD_STAGE
-	add b
-	call GetTurnDuelistVariable
-	or a
-	jr nz, .next  ; not a BASIC Pokémon
-	push bc
-	call DealDamageToPlayAreaPokemon_RegularAnim
-	pop bc
-.next
-	inc b
-	dec c
-	jr nz, .loop
-	ret
-
-
-; deal 20 damage to each of the opponent's benched Basic Pokémon
-DamageAllOpponentBenchedBasic20Effect:
-	call SwapTurn
-	xor a
-	ld [wIsDamageToSelf], a
-	ld de, 20
-	call DealDamageToAllBenchedBasicPokemon
-	jp SwapTurn
-
-
 IfAttachedToolDamageOpponentBench10Effect:
 	xor a  ; PLAY_AREA_ARENA
 	call CheckPokemonHasNoToolsAttached
