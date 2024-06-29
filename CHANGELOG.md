@@ -272,6 +272,10 @@
 
 ### Fighting Changes
 
+#### Sandshrew
+- **Sand Attack**: removed.
+- New attack: **Swift** (CC): 20 damage; unaffected by Weakness, Resistance or any other effects.
+
 #### Dugtrio
 - **Rototiller**: increased cost from (CC) to (FC); increased number of recovered cards from 3 to 4.
 

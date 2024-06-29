@@ -225,7 +225,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PrinterPacketErrorText                             ; 0x00db
 	textpointer PrintingWasInterruptedText                         ; 0x00dc
 	textpointer CardPopCannotBePlayedWithTheGameBoyText            ; 0x00dd
-	textpointer AccuracyCheckText
 	textpointer ParalysisCheckText                                 ; 0x00e0
 	textpointer ConfusionCheckText                                 ; 0x00e3
 	textpointer CardCheckIfHeads8CardsIfTails1CardText             ; 0x00f0
@@ -2497,7 +2496,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer FlailDescription                                   ; 0x096e
 	textpointer CrabhammerName
 	; textpointer CrabhammerDescription
-	textpointer OpponentAttackMayDoNothingDescription              ; 0x0973
 	textpointer RestName                                           ; 0x0974
 	textpointer RestDescription                                    ; 0x0974
 	textpointer HornAttackName                                     ; 0x097b
@@ -2549,7 +2547,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PrimalFireDescription
 	textpointer PrimalThunderName
 	textpointer PrimalThunderDescription
-	textpointer SandAttackName                                     ; 0x0a0a
 	textpointer DigUnderName
 	textpointer EarthquakeName
 	textpointer DamageAllBenchedPokemon10Description

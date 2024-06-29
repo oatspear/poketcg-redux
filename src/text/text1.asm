@@ -1084,11 +1084,6 @@ CardPopCannotBePlayedWithTheGameBoyText: ; 37b5d (d:7b5d)
 	line "with a Game Boy Color."
 	done
 
-AccuracyCheckText:
-	text "Accuracy check!"
-	line "If Tails, Attack is unsuccessful."
-	done
-
 ParalysisCheckText: ; 37c15 (d:7c15)
 	text "Paralysis check!"
 	line "If Heads, opponent is Paralyzed."

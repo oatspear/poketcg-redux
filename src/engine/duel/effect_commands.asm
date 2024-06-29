@@ -445,11 +445,6 @@ ReduceDamageTakenBy20EffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ReduceDamageTakenBy20Effect
 	db  $00
 
-SandAttackEffectCommands:
-SmokescreenEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ReduceAccuracyEffect
-	db  $00
-
 IncreaseRetreatCostEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, IncreaseRetreatCostEffect
 	db  $00

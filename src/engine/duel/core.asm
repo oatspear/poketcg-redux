@@ -6615,8 +6615,6 @@ OppAction_BeginUseAttack:
 	jr nz, .failed
 
 .not_first_turn
-	call CheckReducedAccuracySubstatus
-	jr c, .has_status
 	ld a, DUELVARS_ARENA_CARD_STATUS
 	call GetTurnDuelistVariable
 	and CNF_SLP_PRZ
@@ -6629,10 +6627,8 @@ IF SLEEP_WITH_COIN_FLIP
 ENDC
 	jp ExchangeRNG
 
-
 ; we make it here is attacker is affected by
-; Sand Attack, Smokescreen, or confusion
-; OATS: or sleep
+; confusion or sleep
 .has_status
 	call DrawDuelMainScene
 	call PrintPokemonsAttackText
@@ -6640,9 +6636,9 @@ ENDC
 	call ExchangeRNG
 IF SLEEP_WITH_COIN_FLIP
 	call HandleSleepCheck
-	jr c, .failed
+ELSE
+	xor a
 ENDC
-	call HandleReducedAccuracySubstatus
 	ret nc ; return if attack is successful (won the coin toss)
 .failed
 	call ClearNonTurnTemporaryDuelvars
@@ -7999,7 +7995,7 @@ InitVariablesToBeginTurn:
 	ld [wAlreadyRetreatedThisTurn], a
 	ld [wAlreadyPlayedEnergyOrSupporter], a
 	; ld [wGotTailsFromConfusionCheckDuringRetreat], a
-	ld [wGotHeadsFromAccuracyCheck], a
+	; ld [wGotHeadsFromAccuracyCheck], a
 	ldh a, [hWhoseTurn]
 	ld [wWhoseTurn], a
 	or a

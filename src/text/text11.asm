@@ -489,13 +489,6 @@ CrabhammerName: ; 5bec3 (16:7ec3)
 ; 	line "the Defending Pokémon is Basic."
 ; 	done
 
-OpponentAttackMayDoNothingDescription: ; 5bf4b (16:7f4b)
-	text "If the Defending Pokémon tries to"
-	line "attack during your opponent's next"
-	line "turn, your opponent flips a coin."
-	line "If tails, that attack does nothing."
-	done
-
 RestName:
 	text "Rest"
 	done
@@ -792,10 +785,6 @@ PrimalThunderDescription:
 	text "If you have less Prize cards left"
 	line "than your opponent, this attack does"
 	line "30 damage to each of your Pokémon."
-	done
-
-SandAttackName: ; 5e566 (17:6566)
-	text "Sand-attack"
 	done
 
 DigUnderName:

@@ -67,11 +67,6 @@ ImmuneIfKnockedOutOpponentEffect:
 ; Substatus 2
 ; ------------------------------------------------------------------------------
 
-ReduceAccuracyEffect:
-	ld a, SUBSTATUS2_ACCURACY
-	jr ApplySubstatus2ToDefendingCard
-
-
 GrowlEffect:
 	ld a, SUBSTATUS2_REDUCE_BY_20
 	jr ApplySubstatus2ToDefendingCard

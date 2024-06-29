@@ -639,6 +639,7 @@ wDuelInitialPrizes:: ; cc08
 wDuelType:: ; cc09
 	ds $1
 
+; unused
 ; set to 1 if the coin toss during the CheckReducedAccuracySubstatus check is heads
 wGotHeadsFromAccuracyCheck:: ; cc0a
 	ds $1

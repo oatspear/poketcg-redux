@@ -1,5 +1,151 @@
 
 
+; begin the execution of an attack and handle the attack being
+; possibly unsuccessful due to Sand Attack or Smokescreen
+OppAction_BeginUseAttack:
+	ldh a, [hTempCardIndex_ff9f]
+	ld d, a
+	ldh a, [hTemp_ffa0]
+	ld e, a
+	call CopyAttackDataAndDamage_FromDeckIndex
+	call Func_16f6
+	ld a, $01
+	ld [wSkipDuelistIsThinkingDelay], a
+
+; OATS different logic for the first turn of the game:
+; either attack or Supporter
+	ld a, [wDuelTurns]
+	or a
+	jr nz, .not_first_turn
+	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	and PLAYED_SUPPORTER_THIS_TURN
+	jr nz, .failed
+
+.not_first_turn
+	call CheckReducedAccuracySubstatus
+	jr c, .has_status
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetTurnDuelistVariable
+	and CNF_SLP_PRZ
+	cp CONFUSED
+	jr z, .has_status
+IF SLEEP_WITH_COIN_FLIP
+; OATS sleep also requires a coin flip
+	cp ASLEEP
+	jr z, .has_status
+ENDC
+	jp ExchangeRNG
+
+; we make it here is attacker is affected by
+; Sand Attack, Smokescreen, or confusion
+; OATS: or sleep
+.has_status
+	call DrawDuelMainScene
+	call PrintPokemonsAttackText
+	call WaitForWideTextBoxInput
+	call ExchangeRNG
+IF SLEEP_WITH_COIN_FLIP
+	call HandleSleepCheck
+	jr c, .failed
+ENDC
+	call HandleReducedAccuracySubstatus
+	ret nc ; return if attack is successful (won the coin toss)
+.failed
+	call ClearNonTurnTemporaryDuelvars
+	; end the turn if the attack fails
+	ld a, 1
+	ld [wOpponentTurnEnded], a
+	ret
+
+
+
+; Use an attack (from DuelMenu_Attack) or a Pokemon Power (from DuelMenu_PkmnPower)
+; Returns carry if the effect failed (e.g. smokescreen or prerequisites not met).
+UseAttackOrPokemonPower:
+	ld a, [wSelectedAttack]
+	ld [wPlayerAttackingAttackIndex], a
+	ldh a, [hTempCardIndex_ff9f]
+	ld [wPlayerAttackingCardIndex], a
+	ld a, [wTempCardID_ccc2]
+	ld [wPlayerAttackingCardID], a
+	ld a, [wLoadedAttackCategory]
+	cp POKEMON_POWER
+	jp z, UsePokemonPower
+
+	call Func_16f6
+	ld a, EFFECTCMDTYPE_INITIAL_EFFECT_1
+	call TryExecuteEffectCommandFunction
+	jp c, DrawWideTextBox_WaitForInput_ReturnCarry
+	call CheckReducedAccuracySubstatus
+	jr c, .sand_attack_smokescreen
+	ld a, EFFECTCMDTYPE_INITIAL_EFFECT_2
+	call TryExecuteEffectCommandFunction
+	ret c
+	call SendAttackDataToLinkOpponent
+	jr .next
+.sand_attack_smokescreen
+	call SendAttackDataToLinkOpponent
+	call HandleReducedAccuracySubstatus
+	jp c, ClearNonTurnTemporaryDuelvars_ResetCarry
+	ld a, EFFECTCMDTYPE_INITIAL_EFFECT_2
+	call TryExecuteEffectCommandFunction
+	ret c
+.next
+	ld a, OPPACTION_USE_ATTACK
+	call SetOppAction_SerialSendDuelData
+	ld a, EFFECTCMDTYPE_DISCARD_ENERGY
+	call TryExecuteEffectCommandFunction
+	call CheckSelfConfusionDamage
+	jp c, HandleConfusionDamageToSelf
+	call DrawDuelMainScene_PrintPokemonsAttackText
+	call WaitForWideTextBoxInput
+	call ExchangeRNG
+	ld a, EFFECTCMDTYPE_REQUIRE_SELECTION
+	call TryExecuteEffectCommandFunction
+	ld a, OPPACTION_ATTACK_ANIM_AND_DAMAGE
+	call SetOppAction_SerialSendDuelData
+;	fallthrough
+
+
+
+
+; return carry if the turn holder's attack was unsuccessful due to reduced accuracy effect
+HandleReducedAccuracySubstatus:
+	call CheckReducedAccuracySubstatus
+	ret nc
+	call TossCoin
+	ld [wGotHeadsFromAccuracyCheck], a
+	ccf
+	ret nc
+	ldtx hl, AttackUnsuccessfulText
+	call DrawWideTextBox_WaitForInput
+	scf
+	ret
+
+
+
+; return carry if the turn holder's arena card is under the effects of reduced accuracy
+CheckReducedAccuracySubstatus:
+	ld a, DUELVARS_ARENA_CARD_SUBSTATUS2
+	call GetTurnDuelistVariable
+	or a
+	ret z
+	ldtx de, AccuracyCheckText
+	cp SUBSTATUS2_ACCURACY
+	jr z, .card_is_affected
+	or a
+	ret
+.card_is_affected
+	ld a, [wGotHeadsFromAccuracyCheck]
+	or a
+	ret nz
+	scf
+	ret
+
+
+
+
+
 HandleOnAttackEffects:
 	call IsVampiricAuraActive
 	jr nc, .splashing_attacks

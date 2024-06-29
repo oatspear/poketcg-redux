@@ -1678,21 +1678,10 @@ UseAttackOrPokemonPower:
 	ld a, EFFECTCMDTYPE_INITIAL_EFFECT_1
 	call TryExecuteEffectCommandFunction
 	jp c, DrawWideTextBox_WaitForInput_ReturnCarry
-	call CheckReducedAccuracySubstatus
-	jr c, .sand_attack_smokescreen
 	ld a, EFFECTCMDTYPE_INITIAL_EFFECT_2
 	call TryExecuteEffectCommandFunction
 	ret c
 	call SendAttackDataToLinkOpponent
-	jr .next
-.sand_attack_smokescreen
-	call SendAttackDataToLinkOpponent
-	call HandleReducedAccuracySubstatus
-	jp c, ClearNonTurnTemporaryDuelvars_ResetCarry
-	ld a, EFFECTCMDTYPE_INITIAL_EFFECT_2
-	call TryExecuteEffectCommandFunction
-	ret c
-.next
 	ld a, OPPACTION_USE_ATTACK
 	call SetOppAction_SerialSendDuelData
 	ld a, EFFECTCMDTYPE_DISCARD_ENERGY
