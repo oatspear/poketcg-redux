@@ -717,9 +717,8 @@ PowerLariat_AIEffect:
   jp SetDefiniteAIDamage
 
 
-; +10 damage for each Nidoran on Bench
-; +20 damage for each Nidorina or Nidorino on Bench
-; +30 damage for each Nidoqueen or Nidoking on Bench
+; +20 damage for each Nidoran family card on Bench
+; assumes card IDS for these Pokémon are sequential
 FamilyPower_DamageBoostEffect:
 	ld a, DUELVARS_BENCH
 	call GetTurnDuelistVariable
@@ -731,22 +730,11 @@ FamilyPower_DamageBoostEffect:
 	call GetCardIDFromDeckIndex
 	ld a, e
   cp NIDORANF
-	jr z, .plus_10
-  cp NIDORANM
-	jr z, .plus_10
-	cp NIDORINA
-	jr z, .plus_20
-	cp NIDORINO
-	jr z, .plus_20
-	cp NIDOQUEEN
-	jr z, .plus_30
-	cp NIDOKING
-	jr nz, .loop  ; not a Nidoran family card
-.plus_30
+	jr c, .loop  ; not a Nidoran family card
+	cp NIDOKING + 1
+	jr nc, .loop  ; not a Nidoran family card
+; plus 20 damage
   inc c
-.plus_20
-  inc c
-.plus_10
 	inc c
 	jr .loop
 .done

@@ -394,7 +394,7 @@
 
 #### Nidoqueen
 - Increased HP from 110 to 120.
-- **Family Power**: increased cost from (CCC) to (DCC); increased base damage from 10 to 20.
+- **Family Power**: increased cost from (CCC) to (DCC); increased base damage from 10 to 20; flattened damage bonus to 20 in all cases.
 
 #### Nidoran M
 - **Horn Attack**: removed.

@@ -908,12 +908,10 @@ FamilyPowerName:
 	done
 
 FamilyPowerDescription:
-	text "This attack does 10 more damage"
-	line "for each Nidoran♂ or Nidoran♀"
-	line "on your Bench, 20 more damage"
-	line "for each Nidorino or Nidorina,"
-	line "and 30 more damage for each"
-	line "Nidoking or Nidoqueen."
+	text "This attack does 20 more damage"
+	line "for each Nidoran♂, Nidoran♀,"
+	line "Nidorino, Nidorina, Nidoking"
+	line "or Nidoqueen on your Bench."
 	done
 
 NightAmbushName:

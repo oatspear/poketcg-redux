@@ -209,6 +209,15 @@ FrustrationDescription:
 ; Unused Text
 ; ------------------------------------------------------------------------------
 
+; FamilyPowerDescription:
+; 	text "This attack does 10 more damage"
+; 	line "for each Nidoran♂ or Nidoran♀"
+; 	line "on your Bench, 20 more damage"
+; 	line "for each Nidorino or Nidorina,"
+; 	line "and 30 more damage for each"
+; 	line "Nidoking or Nidoqueen."
+; 	done
+
 ; NidoPressName:
 ; 	text "Nido Press"
 ; 	done
