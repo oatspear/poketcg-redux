@@ -37,6 +37,8 @@ HandleSpecialAIAttacks:
 	jp z, .Collect
 	cp PIDGEY
 	jp z, .Collect
+	cp NIDORANM
+	jp z, .Collect
 	cp DUGTRIO
 	jp z, .Earthquake
 	cp RHYDON
@@ -314,12 +316,12 @@ HandleSpecialAIAttacks:
 	ld a, $83
 	ret
 
-; dismiss attack if cards in deck <= 15.
+; dismiss attack if cards in deck < 10.
 ; otherwise return a score of $80 + 2 if number of cards in hand is less than 4.
 .Collect:
 	ld a, DUELVARS_NUMBER_OF_CARDS_NOT_IN_DECK
 	call GetTurnDuelistVariable
-	cp 46
+	cp 51
 	jp nc, .zero_score
 	ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND
 	call GetTurnDuelistVariable

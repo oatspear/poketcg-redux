@@ -1013,17 +1013,17 @@ NidoranMCard:
 
 	; attack 1
 	energy COLORLESS, 1 ; energies
-	tx RetaliateName ; name
-	tx RetaliateDescription ; description
+	tx CollectName ; name
+	tx Draw2CardsDescription ; description
 	dw NONE ; description (cont)
-	db 30 ; damage
-	db DAMAGE_NORMAL ; category
-	dw RetaliateEffectCommands ; effect commands
-	db NONE ; flags 1
+	db 0 ; damage
+	db RESIDUAL ; category
+	dw Draw2CardsEffectCommands ; effect commands
+	db DRAW_CARD ; flags 1
 	db NONE ; flags 2
-	db NONE ; flags 3
+	db SPECIAL_AI_HANDLING ; flags 3
 	db 0
-	db ATK_ANIM_HIT ; animation
+	db ATK_ANIM_GLOW_EFFECT ; animation
 
 	; attack 2
 	energy DARKNESS, 1 ; energies

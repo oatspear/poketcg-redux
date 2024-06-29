@@ -398,7 +398,8 @@
 
 #### Nidoran M
 - **Horn Attack**: removed.
-- **Retaliate**: reduced cost from (D) to (C).
+- **Retaliate**: removed.
+- New attack: **Collect** (C): draw 2 cards.
 - New attack: **Frustration** (D): 10 damage; +20 damage if the Defending Pokémon does not have any damage counters.
 
 #### Nidorino
