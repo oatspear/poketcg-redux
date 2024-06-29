@@ -2207,15 +2207,15 @@ WeezingCard:
 	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy DARKNESS, 1, COLORLESS, 1 ; energies
+	energy DARKNESS, 2 ; energies
 	tx SmogName ; name
 	tx SmogDescription ; description
 	dw NONE ; description (cont)
-	db 20 ; damage
+	db 10 ; damage
 	db DAMAGE_NORMAL ; category
 	dw SmogEffectCommands ; effect commands
-	db INFLICT_POISON ; flags 1
-	db NULLIFY_OR_WEAKEN_ATTACK ; flags 2
+	db INFLICT_POISON | DAMAGE_TO_OPPONENT_BENCH ; flags 1
+	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
 	db ATK_ANIM_SMOG ; animation

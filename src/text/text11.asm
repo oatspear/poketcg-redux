@@ -149,10 +149,9 @@ SmogName:
 
 SmogDescription:
 	text "The Defending Pokémon is now"
-	line "Poisoned. If it tries to attack"
-	line "during your opponent's next turn,"
-	line "your opponent flips a coin."
-	line "If tails, that attack does nothing."
+	line "Poisoned. This attack does"
+	line "10 damage to each of your"
+	line "opponent's Benched Pokémon."
 	done
 
 SelfdestructName: ; 59abe (16:5abe)

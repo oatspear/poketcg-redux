@@ -116,12 +116,6 @@ JellyfishSting_PoisonConfusionEffect:
 	jp ConfusionEffect
 
 
-; Poison + Smokescreen
-SmogEffect:
-	call ReduceAccuracyEffect
-	jp PoisonEffect
-
-
 ; If heads, defending Pokemon becomes confused
 SupersonicEffect:
 	call Confusion50PercentEffect

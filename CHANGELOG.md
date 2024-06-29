@@ -428,6 +428,10 @@
 - **Toxic**: removed.
 - New attack: **Toxic Waste** (DC): 10 damage; inflicts Double Poison; +30 damage if you have at least 7 Items in the discard pile.
 
+#### Weezing
+- **Smog**: reworked.
+- New attack: **Smog** (DD): 10 damage; inflicts Poison; 10 damage to all of the opponent's Benched Pokémon.
+
 ### Colorless Changes
 
 #### Pidgeotto

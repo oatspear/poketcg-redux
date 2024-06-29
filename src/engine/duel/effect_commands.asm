@@ -1167,13 +1167,9 @@ DamageAllFriendlyBenched20EffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DamageAllFriendlyPokemon20Effect
 	db  $00
 
-SinisterFogEffectCommands:
+SmogEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PoisonEffect
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DamageAllOpponentBenched10Effect
-	db  $00
-
-SmogEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SmogEffect
 	db  $00
 
 DeadlyPoisonEffectCommands:

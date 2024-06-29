@@ -1,6 +1,16 @@
 ;
 
 
+SmogEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SmogEffect
+	db  $00
+
+; Poison + Smokescreen
+SmogEffect:
+	call ReduceAccuracyEffect
+	jp PoisonEffect
+
+
 
 ; +10 damage for each Nidoran on Bench
 ; +20 damage for each Nidorina or Nidorino on Bench

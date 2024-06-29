@@ -3104,8 +3104,6 @@ TextOffsets:: ; 34000 (d:4000)
 	; textpointer MountainBreakName
 	; textpointer MountainBreakDescription
 	; textpointer ExcavateDescription
-	; textpointer SinisterFogName
-	; textpointer SinisterFogDescription
 	; textpointer Received10DamageDueToAfflictionText
 	; textpointer Received10DamageDueToSpikesText
 

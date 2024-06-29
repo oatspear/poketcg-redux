@@ -462,18 +462,6 @@ ENDC
 ; 	line "additional damage."
 ; 	done
 
-
-; SinisterFogName:
-; 	text "Sinister Fog"
-; 	done
-;
-; SinisterFogDescription:
-; 	text "The Defending Pokémon is now"
-; 	line "Poisoned. This attack does"
-; 	line "10 damage to each of your"
-; 	line "opponent's Benched Pokémon."
-; 	done
-
 ; Received10DamageDueToAfflictionText:
 ; 	text "<RAMTEXT> received"
 ; 	line "10 damage due to Affliction."
