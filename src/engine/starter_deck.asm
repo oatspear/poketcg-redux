@@ -51,6 +51,7 @@ _AddStarterDeck:
 	dec c
 	jr nz, .loop_extra_cards
 
+IF DEBUG_FULL_COLLECTION_AT_START
 ; OATS DEBUG
 ; add all cards to the initial collection
 	ld c, NUM_CARDS
@@ -74,6 +75,7 @@ _AddStarterDeck:
 	dec c
 	jr nz, .loop_debug_energies
 ; end OATS DEBUG
+ENDC
 
 	call DisableSRAM
 	ret
