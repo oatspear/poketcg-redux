@@ -18,10 +18,10 @@ SHA1 := sha1sum
 endif
 
 RGBDS ?=
-RGBASM  ?= $(RGBDS)rgbasm
-RGBFIX  ?= $(RGBDS)rgbfix
-RGBGFX  ?= $(RGBDS)rgbgfx
-RGBLINK ?= $(RGBDS)rgblink
+RGBASM  ?= $(RGBDS)rgbasm0.6
+RGBFIX  ?= $(RGBDS)rgbfix0.6
+RGBGFX  ?= $(RGBDS)rgbgfx0.6
+RGBLINK ?= $(RGBDS)rgblink0.6
 
 
 ### Build targets
@@ -98,49 +98,49 @@ $(rom): $(rom_obj) src/layout.link
 
 ### Misc file-specific graphics rules
 
-src/gfx/booster_packs/colosseum2.2bpp: rgbgfx += -x 10
-src/gfx/booster_packs/evolution2.2bpp: rgbgfx += -x 10
-src/gfx/booster_packs/laboratory2.2bpp: rgbgfx += -x 10
-src/gfx/booster_packs/mystery2.2bpp: rgbgfx += -x 10
+src/gfx/booster_packs/colosseum2.2bpp: rgbgfx0.6 += -x 10
+src/gfx/booster_packs/evolution2.2bpp: rgbgfx0.6 += -x 10
+src/gfx/booster_packs/laboratory2.2bpp: rgbgfx0.6 += -x 10
+src/gfx/booster_packs/mystery2.2bpp: rgbgfx0.6 += -x 10
 
-src/gfx/cards/%.2bpp: rgbgfx += -Z -P
+src/gfx/cards/%.2bpp: rgbgfx0.6 += -Z -P
 
-src/gfx/duel/anims/51.2bpp: rgbgfx += -x 10
-# src/gfx/duel/dmg_sgb_symbols.2bpp: rgbgfx += -x 7
-src/gfx/duel/dmg_sgb_symbols3.2bpp: rgbgfx += -x 7
-src/gfx/duel/other.2bpp: rgbgfx += -x 7
+src/gfx/duel/anims/51.2bpp: rgbgfx0.6 += -x 10
+# src/gfx/duel/dmg_sgb_symbols.2bpp: rgbgfx0.6 += -x 7
+src/gfx/duel/dmg_sgb_symbols3.2bpp: rgbgfx0.6 += -x 7
+src/gfx/duel/other.2bpp: rgbgfx0.6 += -x 7
 
-src/gfx/fonts/full_width/4.1bpp: rgbgfx += -x 3
+src/gfx/fonts/full_width/4.1bpp: rgbgfx0.6 += -x 3
 
-src/gfx/link/cardpop.2bpp: rgbgfx += -x 3
-src/gfx/link/gameboylink.2bpp: rgbgfx += -x 3
-src/gfx/link/gameboyprinter.2bpp: rgbgfx += -x 3
+src/gfx/link/cardpop.2bpp: rgbgfx0.6 += -x 3
+src/gfx/link/gameboylink.2bpp: rgbgfx0.6 += -x 3
+src/gfx/link/gameboyprinter.2bpp: rgbgfx0.6 += -x 3
 
-src/gfx/overworld_map.2bpp: rgbgfx += -x 15
+src/gfx/overworld_map.2bpp: rgbgfx0.6 += -x 15
 
-src/gfx/tilesets/challengehall.2bpp: rgbgfx += -x 3
-src/gfx/tilesets/clubentrance.2bpp: rgbgfx += -x 15
-src/gfx/tilesets/clublobby.2bpp: rgbgfx += -x 8
-src/gfx/tilesets/fightingclub.2bpp: rgbgfx += -x 13
-src/gfx/tilesets/fireclub.2bpp: rgbgfx += -x 9
-src/gfx/tilesets/grassclub.2bpp: rgbgfx += -x 9
-src/gfx/tilesets/hallofhonor.2bpp: rgbgfx += -x 7
-src/gfx/tilesets/ishihara.2bpp: rgbgfx += -x 3
-src/gfx/tilesets/lightningclub.2bpp: rgbgfx += -x 13
-src/gfx/tilesets/masonlaboratory.2bpp: rgbgfx += -x 9
-src/gfx/tilesets/pokemondome.2bpp: rgbgfx += -x 1
-src/gfx/tilesets/pokemondomeentrance.2bpp: rgbgfx += -x 2
-src/gfx/tilesets/psychicclub.2bpp: rgbgfx += -x 6
-src/gfx/tilesets/rockclub.2bpp: rgbgfx += -x 4
-src/gfx/tilesets/scienceclub.2bpp: rgbgfx += -x 14
-src/gfx/tilesets/waterclub.2bpp: rgbgfx += -x 15
+src/gfx/tilesets/challengehall.2bpp: rgbgfx0.6 += -x 3
+src/gfx/tilesets/clubentrance.2bpp: rgbgfx0.6 += -x 15
+src/gfx/tilesets/clublobby.2bpp: rgbgfx0.6 += -x 8
+src/gfx/tilesets/fightingclub.2bpp: rgbgfx0.6 += -x 13
+src/gfx/tilesets/fireclub.2bpp: rgbgfx0.6 += -x 9
+src/gfx/tilesets/grassclub.2bpp: rgbgfx0.6 += -x 9
+src/gfx/tilesets/hallofhonor.2bpp: rgbgfx0.6 += -x 7
+src/gfx/tilesets/ishihara.2bpp: rgbgfx0.6 += -x 3
+src/gfx/tilesets/lightningclub.2bpp: rgbgfx0.6 += -x 13
+src/gfx/tilesets/masonlaboratory.2bpp: rgbgfx0.6 += -x 9
+src/gfx/tilesets/pokemondome.2bpp: rgbgfx0.6 += -x 1
+src/gfx/tilesets/pokemondomeentrance.2bpp: rgbgfx0.6 += -x 2
+src/gfx/tilesets/psychicclub.2bpp: rgbgfx0.6 += -x 6
+src/gfx/tilesets/rockclub.2bpp: rgbgfx0.6 += -x 4
+src/gfx/tilesets/scienceclub.2bpp: rgbgfx0.6 += -x 14
+src/gfx/tilesets/waterclub.2bpp: rgbgfx0.6 += -x 15
 
-src/gfx/titlescreen/japanese_title_screen.2bpp: rgbgfx += -x 15
-src/gfx/titlescreen/japanese_title_screen_cgb.2bpp: rgbgfx += -x 15
-src/gfx/titlescreen/japanese_title_screen_2.2bpp: rgbgfx += -x 12
-src/gfx/titlescreen/japanese_title_screen_2_cgb.2bpp: rgbgfx += -x 5
-src/gfx/titlescreen/title_screen.2bpp: rgbgfx += -x 4
-src/gfx/titlescreen/title_screen_cgb.2bpp: rgbgfx += -x 12
+src/gfx/titlescreen/japanese_title_screen.2bpp: rgbgfx0.6 += -x 15
+src/gfx/titlescreen/japanese_title_screen_cgb.2bpp: rgbgfx0.6 += -x 15
+src/gfx/titlescreen/japanese_title_screen_2.2bpp: rgbgfx0.6 += -x 12
+src/gfx/titlescreen/japanese_title_screen_2_cgb.2bpp: rgbgfx0.6 += -x 5
+src/gfx/titlescreen/title_screen.2bpp: rgbgfx0.6 += -x 4
+src/gfx/titlescreen/title_screen_cgb.2bpp: rgbgfx0.6 += -x 12
 
 
 ### Catch-all graphics rules
@@ -150,11 +150,11 @@ src/gfx/titlescreen/title_screen_cgb.2bpp: rgbgfx += -x 12
 %.pal: ;
 
 %.2bpp: %.png
-	$(RGBGFX) $(rgbgfx) -o $@ $<
+	$(RGBGFX) $(rgbgfx0.6) -o $@ $<
 	$(if $(tools/gfx),\
 		tools/gfx $(tools/gfx) -o $@ $@)
 
 %.1bpp: %.png
-	$(RGBGFX) $(rgbgfx) -d1 -o $@ $<
+	$(RGBGFX) $(rgbgfx0.6) -d1 -o $@ $<
 	$(if $(tools/gfx),\
 		tools/gfx $(tools/gfx) -d1 -o $@ $@)
