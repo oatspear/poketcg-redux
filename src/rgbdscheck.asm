@@ -1,8 +1,8 @@
-MAJOR EQU 0
-MINOR EQU 6
-PATCH EQU 1
+DEF MAJOR EQU 0
+DEF MINOR EQU 6
+DEF PATCH EQU 1
 
-WRONG_RGBDS EQUS "FAIL \"poketcg requires rgbds v0.6.1 or newer.\""
+DEF WRONG_RGBDS EQUS "FAIL \"poketcg requires rgbds v0.6.1 or newer.\""
 
 IF !DEF(__RGBDS_MAJOR__) || !DEF(__RGBDS_MINOR__) || !DEF(__RGBDS_PATCH__)
 	WRONG_RGBDS
