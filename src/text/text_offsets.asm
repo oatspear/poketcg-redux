@@ -2619,8 +2619,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PainAmplifierDescription                           ; 0x0aa7
 	textpointer DarkMindName                                       ; 0x0aa8
 	textpointer ShadowName                                         ; 0x0aaa
-	textpointer InvisibleWallName
-	textpointer InvisibleWallDescription
+	textpointer BenchBarrierName
+	textpointer BenchBarrierDescription
 	textpointer MeditateName
 	textpointer MeditateDescription
 	textpointer PainBurstName                                      ; unused

@@ -831,15 +831,11 @@ AIDecide_Pluspower1:
 
 ; first attack can KO with Pluspower.
 .kos_with_pluspower_1
-	call .check_mr_mime
-	jr nc, .no_carry
 	xor a ; FIRST_ATTACK_OR_PKMN_POWER
 	scf
 	ret
 ; second attack can KO with Pluspower.
 .kos_with_pluspower_2
-	call .check_mr_mime
-	jr nc, .no_carry
 	ld a, SECOND_ATTACK
 	scf
 	ret
@@ -871,25 +867,6 @@ AIDecide_Pluspower1:
 	or a
 	ret
 
-; returns carry if Pluspower boost does
-; not exceed 30 damage when facing Mr. Mime.
-.check_mr_mime
-	ld a, [wDamage]
-	add 10 ; add Pluspower boost
-	cp 30 ; no danger in preventing damage
-	ret c
-	call SwapTurn
-	ld a, DUELVARS_ARENA_CARD
-	call GetTurnDuelistVariable
-	call GetCardIDFromDeckIndex
-	call SwapTurn
-	ld a, e
-	cp MR_MIME
-	ret z
-; damage is >= 30 but not Mr. Mime
-	scf
-	ret
-
 ; returns carry 7/10 of the time
 ; if selected attack is useable, can't KO without Pluspower boost
 ; can damage Mr. Mime even with Pluspower boost
@@ -904,31 +881,10 @@ AIDecide_Pluspower2:
 	jr nc, .no_carry
 	call .check_random
 	jr nc, .no_carry
-	call .check_mr_mime
-	jr nc, .no_carry
-	scf
+	; scf
 	ret
 .no_carry
 	or a
-	ret
-
-; returns carry if Pluspower boost does
-; not exceed 30 damage when facing Mr. Mime.
-.check_mr_mime
-	ld a, [wDamage]
-	add 10 ; add Pluspower boost
-	cp 30 ; no danger in preventing damage
-	ret c
-	call SwapTurn
-	ld a, DUELVARS_ARENA_CARD
-	call GetTurnDuelistVariable
-	call GetCardIDFromDeckIndex
-	call SwapTurn
-	ld a, e
-	cp MR_MIME
-	ret z
-; damage is >= 30 but not Mr. Mime
-	scf
 	ret
 
 ; return carry if attack is useable but cannot KO.

@@ -235,6 +235,8 @@ DealDamageToFriendlyTarget_DE_DamageEffect:
 	cp $ff
 	ret z
 	ld b, a
+	ld a, TRUE
+	ld [wIsDamageToSelf], a
 	jp DealDamageToPlayAreaPokemon_RegularAnim
 
 

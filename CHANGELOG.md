@@ -352,6 +352,11 @@
 - New Pokémon Power: **Hyper Hypnosis**: discard an attached Energy; the opponent's Active Pokémon is Asleep.
 - New attack: **Dream Eater** (PC): 60 damage; heal 20 damage; fails if the Defending Pokémon is not Asleep.
 
+#### Mr. Mime
+- Increased HP from 40 to 60.
+- **Invisible Wall**: removed.
+- New Pokémon Power: **Bench Barrier**: prevents damage done from the opponent's attacks to the player's Bench.
+
 #### Clefairy
 - **Lead**: removed.
 - **Friend Tackle**: removed.

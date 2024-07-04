@@ -1159,17 +1159,14 @@ ShadowName: ; 60a5f (18:4a5f)
 	text "Shadow"
 	done
 
-InvisibleWallName:
-	text "Invisible Wall"
+BenchBarrierName:
+	text "Bench Barrier"
 	done
 
-InvisibleWallDescription:
-	text "Whenever an attack does 30 or more"
-	line "damage to this Pokémon (after"
-	line "applying Weakness and Resistance),"
-	line "prevent that damage."
-	line "(Any other effects of attacks"
-	line "still happen.)"
+BenchBarrierDescription:
+	text "Prevent all damage done to your"
+	line "Benched Pokémon by attacks from"
+	line "your opponent's Pokémon."
 	done
 
 MeditateName:

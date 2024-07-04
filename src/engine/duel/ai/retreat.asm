@@ -312,14 +312,14 @@ AIDecideWhetherToRetreat:
 	ld [wAIPlayEnergyCardForRetreat], a
 
 .check_defending_id
-	ld a, DUELVARS_ARENA_CARD
-	call GetNonTurnDuelistVariable
-	call SwapTurn
-	call GetCardIDFromDeckIndex
-	call SwapTurn
-	ld a, e
-	cp MR_MIME
-	jr nz, .check_retreat_cost
+	; ld a, DUELVARS_ARENA_CARD
+	; call GetNonTurnDuelistVariable
+	; call SwapTurn
+	; call GetCardIDFromDeckIndex
+	; call SwapTurn
+	; ld a, e
+	; cp MR_MIME
+	; jr nz, .check_retreat_cost
 
 ; check bench if there's any Pokémon
 ; that can damage defending Pokémon
@@ -599,19 +599,19 @@ AIDecideBenchPokemonToSwitchTo:
 	call GetPlayAreaCardAttachedEnergies
 	ld a, [wTotalAttachedEnergies]
 	or a
-	jr nz, .check_mr_mime
+	jr nz, .check_defensive
 	ld a, 1
 	call SubFromAIScore
 
 ; if can damage Mr Mime, raise AI score
-.check_mr_mime
-	ld a, DUELVARS_ARENA_CARD
-	call GetNonTurnDuelistVariable
-	call SwapTurn
-	call LoadCardDataToBuffer2_FromDeckIndex
-	call SwapTurn
-	cp MR_MIME
-	jr nz, .check_defending_weak
+.check_defensive
+	; ld a, DUELVARS_ARENA_CARD
+	; call GetNonTurnDuelistVariable
+	; call SwapTurn
+	; call LoadCardDataToBuffer2_FromDeckIndex
+	; call SwapTurn
+	; cp MR_MIME
+	; jr nz, .check_defending_weak
 	xor a
 	call EstimateDamage_VersusDefendingCard
 	ld a, [wDamage]
@@ -738,19 +738,19 @@ AIDecideBenchPokemonToSwitchTo:
 	add DUELVARS_ARENA_CARD
 	call GetTurnDuelistVariable
 	call LoadCardDataToBuffer1_FromDeckIndex
-	cp MR_MIME
-	jr z, .raise_score
-	cp MEW_LV8
-	jr nz, .asm_15cf0
-	ld a, DUELVARS_ARENA_CARD
-	call GetNonTurnDuelistVariable
-	call LoadCardDataToBuffer2_FromDeckIndex
-	ld a, [wLoadedCard2Stage]
-	or a
-	jr z, .asm_15cf0
-.raise_score
-	ld a, 5
-	call AddToAIScore
+; 	cp MR_MIME
+; 	jr z, .raise_score
+; 	cp MEW_LV8
+; 	jr nz, .asm_15cf0
+; 	ld a, DUELVARS_ARENA_CARD
+; 	call GetNonTurnDuelistVariable
+; 	call LoadCardDataToBuffer2_FromDeckIndex
+; 	ld a, [wLoadedCard2Stage]
+; 	or a
+; 	jr z, .asm_15cf0
+; .raise_score
+; 	ld a, 5
+; 	call AddToAIScore
 
 ; if wLoadedCard1Unknown2 == $01, lower AI score
 .asm_15cf0

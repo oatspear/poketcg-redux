@@ -54,8 +54,6 @@ HandleDefenderDamageReduction_PokemonPowers:
 	cp POKEMON_POWER
 	ret z
 	ld a, [wTempNonTurnDuelistCardID]
-	cp MR_MIME
-	jr z, .prevent_30_or_more_damage ; invisible wall
 	cp MAROWAK_LV26
 	jp z, ReduceDamageBy20_DE ; Battle Armor
 	cp METAPOD
@@ -66,15 +64,6 @@ HandleDefenderDamageReduction_PokemonPowers:
 	jp z, ReduceDamageBy20_DE ; Exoskeleton
 	cp SHELLDER
 	jp z, ReduceDamageBy10_DE ; Exoskeleton
-	; cp KABUTO
-	; jp z, HalveDamage_DE ; kabuto armor
-	ret
-
-.prevent_30_or_more_damage
-	ld bc, 30
-	call CompareDEtoBC
-	ret c  ; de < 30
-	ld de, 0
 	ret
 
 
@@ -473,13 +462,16 @@ IsClairvoyanceActive:
 	jp GetFirstPokemonWithAvailablePower
 
 
-; return carry if turn holder has Marowak and its Bodyguard Pkmn Power is active
+; return carry if turn holder has Mr. Mime and its Bench Barrier Pkmn Power is active
 ; preserves: bc, de
 IsBodyguardActive:
 	call ArePokemonPowersDisabled  ; preserves: bc, de
 	ccf
 	ret nc
-	ld a, 0  ; TODO insert Pokémon ID
+	ld a, [wIsDamageToSelf]
+	or a
+	ret nz  ; only prevents damage from the opponent
+	ld a, MR_MIME
 	jp GetFirstPokemonWithAvailablePower  ; preserves: hl, bc, de
 
 

@@ -7998,14 +7998,14 @@ MrMimeCard:
 	db STAR ; rarity
 	db LABORATORY | JUNGLE ; sets
 	db MR_MIME
-	db 40 ; hp
+	db 60 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
 
 	; attack 1
 	energy 0 ; energies
-	tx InvisibleWallName ; name
-	tx InvisibleWallDescription ; description
+	tx BenchBarrierName ; name
+	tx BenchBarrierDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKEMON_POWER ; category
