@@ -1155,10 +1155,6 @@ DarkMindName: ; 609b7 (18:49b7)
 	text "Dark Mind"
 	done
 
-ShadowName: ; 60a5f (18:4a5f)
-	text "Shadow"
-	done
-
 BenchBarrierName:
 	text "Bench Barrier"
 	done

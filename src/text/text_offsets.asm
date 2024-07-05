@@ -2031,6 +2031,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer SludgeName
 	textpointer BivalveName
 	textpointer GasName
+	textpointer ShadowName
 	textpointer RockSnakeName
 	textpointer HypnosisName
 	textpointer RiverCrabName
@@ -2618,7 +2619,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PainAmplifierName                                  ; 0x0aa6
 	textpointer PainAmplifierDescription                           ; 0x0aa7
 	textpointer DarkMindName                                       ; 0x0aa8
-	textpointer ShadowName                                         ; 0x0aaa
 	textpointer BenchBarrierName
 	textpointer BenchBarrierDescription
 	textpointer MeditateName
