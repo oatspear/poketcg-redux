@@ -302,6 +302,55 @@ SurpriseBite_PlayerSelectEffect:
 	jp SwapTurn
 
 
+;
+GetMad_PlayerSelectEffect:
+	ldtx hl, PutHowManyDamageCountersMenuText
+	call DrawWideTextBox_PrintText
+; set up menu parameters
+	ld e, PLAY_AREA_ARENA
+	call GetCardDamageAndMaxHP
+	ld d, a  ; damage
+	ld a, c  ; max HP
+	sub d    ; current HP
+	; sub 10
+	call ADividedBy10  ; max damage counters
+	dec a
+	ld hl, GetMad_NumberSliderHandler
+; handle input
+	call HandleNumberSlider
+	ret c  ; cancelled
+	cp 1
+	ret c  ; zero equals cancelled
+; restore HP to what it was
+	ld a, DUELVARS_ARENA_CARD_HP
+	call GetTurnDuelistVariable
+	ldh a, [hTemp_ffa0]
+	ld [hl], a
+; store selected number of damage counters
+	ldh a, [hCurMenuItem]
+	ldh [hTemp_ffa0], a
+	or a  ; no carry
+	ret
+
+
+; input:
+;   a: current slider number (already inverted)
+GetMad_NumberSliderHandler:
+; convert damage counters into actual damage
+	call ATimes10
+	ld c, a
+; change current HP based on user input
+	ld a, DUELVARS_ARENA_CARD_HP
+	call GetTurnDuelistVariable
+	ldh a, [hTemp_ffa0]  ; initial HP
+	sub c  ; not supposed to underflow
+	cp [hl]
+	ret z  ; no change
+	ld [hl], a
+	bank1call DrawDuelHUDs
+	ret
+
+
 ; ------------------------------------------------------------------------------
 ; Targeted Damage - AI Selection
 ; ------------------------------------------------------------------------------
@@ -419,3 +468,11 @@ KnockOutDefendingPokemonEffect:
 	call LoadTxRam2
 	ldtx hl, WasKnockedOutText
 	jp DrawWideTextBox_WaitForInput
+
+
+StoreCurrentHpEffect:
+	ld a, DUELVARS_ARENA_CARD_HP
+	call GetTurnDuelistVariable
+	ldh [hTemp_ffa0], a
+	or a
+	ret

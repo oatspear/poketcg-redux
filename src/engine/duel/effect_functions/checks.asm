@@ -550,12 +550,6 @@ CheckSomeDamagedPokemonInBench:
 	jp CheckSomeMatchingPokemonInBench
 
 
-GetMad_CheckDamage:
-	xor a  ; PLAY_AREA_ARENA
-	ldh [hTempPlayAreaLocation_ff9d], a
-	jr StrangeBehavior_CheckDamage.check_damage
-
-
 ; returns carry if Strange Behavior cannot be used
 StrangeBehavior_CheckDamage:
 ; can Pkmn Power be used?
@@ -588,6 +582,14 @@ CheckPokemonHasEnoughHP:
 	cp e
 	ldtx hl, CannotUseBecauseItWillBeKnockedOutText
 	ret
+
+
+; output:
+;   carry: set if the Active Pokémon has less than 20 HP remaining
+CheckArenaPokemonHas20HpOrMore:
+	xor a  ; PLAY_AREA_ARENA
+	ld e, 20
+	jr CheckPokemonHasEnoughHP
 
 
 ; input:

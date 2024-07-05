@@ -205,6 +205,10 @@ FrustrationDescription:
 	line "this attack does 20 more damage."
 	done
 
+PutHowManyDamageCountersMenuText:
+	text "Put how many damage counters?"
+	done
+
 ; ------------------------------------------------------------------------------
 ; Unused Text
 ; ------------------------------------------------------------------------------

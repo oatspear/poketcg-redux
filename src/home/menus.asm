@@ -578,3 +578,106 @@ ContinueDuel:
 	ld a, BANK(_ContinueDuel)
 	call BankswitchROM
 	jp _ContinueDuel
+
+
+; sets variables at:
+;   wCursorXPosition, wCursorYPosition
+;   wYDisplacementBetweenMenuItems
+;   wNumMenuItems
+;	  wCursorTile
+;   wTileBehindCursor
+;   wMenuFunctionPointer
+; in newer codebases these are named as:
+;   wMenuCursorXOffset, wMenuCursorYOffset
+;   wMenuYSeparation
+;   wNumMenuItems
+;   wMenuVisibleCursorTile
+;   wMenuInvisibleCursorTile
+;   wMenuUpdateFunc
+NumberSliderMenuParameters::
+	db 17, 16 ; cursor x, cursor y
+	db 0 ; y displacement between items
+	db 1 ; number of items
+	db SYM_0 ; cursor tile number
+	db SYM_SPACE ; tile behind cursor
+	dw NumberSliderMenuFunction ; function pointer if non-0
+
+
+; currently only handles 0 to 9
+; for double digits, see CopyCardNameAndLevel and how it is printed
+; input:
+;   a: maximum selectable number (0 < a < $ff)
+;   hl: pointer to callback function
+; output:
+;   a: selected number | $ff
+;   [wCurMenuItem]: selected number | $ff
+;   [hCurMenuItem]: selected number | $ff
+;   carry: set if B was pressed
+HandleNumberSlider:
+	push hl
+	push af
+	xor a
+	ld hl, NumberSliderMenuParameters
+	call InitializeMenuParameters
+	pop af
+	pop hl
+; overwrite number of options from input value
+	inc a  ; add zero as an option
+	ld [wNumMenuItems], a
+; move user callback function to wListFunctionPointer
+	ld de, wListFunctionPointer
+	ld a, l
+	ld [de], a
+	inc de
+	ld a, h
+	ld [de], a
+; draw frames and handle user input
+	call EnableLCD
+	ld a, SYM_CURSOR_U
+	lb bc, 18, 16
+	call WriteByteToBGMap0
+	ld a, SYM_CURSOR_D
+	lb bc, 15, 16
+	call WriteByteToBGMap0
+.wait_for_input
+	call DoFrame
+	call HandleMenuInput
+	jr nc, .wait_for_input
+	cp $ff
+	ccf
+	jr c, .b_pressed
+; A pressed, invert selection
+	ld c, a
+	ld a, [wNumMenuItems]
+	dec a
+	sub c  ; no carry
+.b_pressed
+	ld [wCurMenuItem], a
+	ldh [hCurMenuItem], a
+	ret
+
+
+; called after automatic handling of UP/DOWN in HandleMenuInput
+; treat the current menu index as the amount to subtract from max
+; this way, UP increases and DOWN decreases
+; input:
+;   a: index at [hCurMenuItem]
+NumberSliderMenuFunction:
+	ld c, a
+	ld a, [wNumMenuItems]
+	dec a
+	sub c
+	ld c, a
+; overwrite the cursor symbol
+	add SYM_0
+	ld [wCursorTile], a
+; execute the function at wListFunctionPointer, if any
+	ld hl, wListFunctionPointer
+	ld a, [hli]
+	or [hl]
+	ret z  ; no custom function
+	ld a, [hld]
+	ld l, [hl]
+	ld h, a
+	ld a, c
+	jp hl

@@ -1,4 +1,27 @@
 
+GetMadDescription:
+	text "Move any number of damage counters"
+	line "from your Pokémon to this Pokémon."
+	line "If you moved at least 4, prevent all"
+	line "damage done to this Pokémon during"
+	line "your opponent's next turn."
+	done
+
+; attack 1
+energy FIGHTING, 1 ; energies
+tx GetMadName ; name
+tx GetMadDescription ; description
+tx OtherEffectsStillHappenDescriptionCont ; description (cont)
+db 0 ; damage
+db DAMAGE_NORMAL ; category
+dw GetMadEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db SPECIAL_AI_HANDLING ; flags 3
+db 0
+db ATK_ANIM_GLOW_EFFECT ; animation
+
+
 
 TailSwingName:
 	text "Tail Swing"

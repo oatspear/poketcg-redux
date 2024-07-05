@@ -3080,6 +3080,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer EnergyStreamDescription
 	textpointer FrustrationName
 	textpointer FrustrationDescription
+	textpointer PutHowManyDamageCountersMenuText
 
 	; unused
 	; textpointer SwimFreelyName
