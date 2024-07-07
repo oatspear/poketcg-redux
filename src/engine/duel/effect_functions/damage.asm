@@ -338,12 +338,23 @@ GetMad_PlayerSelectEffect:
 GetMad_NumberSliderHandler:
 ; convert damage counters into actual damage
 	call ATimes10
-	ld c, a
+	ld c, a  ; temp storage
+; blink the HP bar every 16 frames
+	ld hl, wCursorBlinkCounter
+	ld a, [hl]
+	and $f
+	ret nz
+	bit 4, [hl]
+	ldh a, [hTemp_ffa0]  ; initial HP
+	ld b, a  ; final HP value to draw
+	jr nz, .draw_unchanged_hp
+	sub c  ; not supposed to underflow
+	ld b, a
+.draw_unchanged_hp
 ; change current HP based on user input
 	ld a, DUELVARS_ARENA_CARD_HP
 	call GetTurnDuelistVariable
-	ldh a, [hTemp_ffa0]  ; initial HP
-	sub c  ; not supposed to underflow
+	ld a, b
 	cp [hl]
 	ret z  ; no change
 	ld [hl], a
