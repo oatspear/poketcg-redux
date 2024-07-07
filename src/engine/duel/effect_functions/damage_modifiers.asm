@@ -576,6 +576,19 @@ DoubleDamageIfMorePrizes_AIEffect:
   jp SetDefiniteAIDamage
 
 
+; +10 damage for each Prize the opponent has taken
+RageFist_DamageBoostEffect:
+	call SwapTurn
+	call CountPrizesTaken
+	call SwapTurn
+	call ATimes10
+	jp AddToDamage
+
+RageFist_AIEffect:
+	call RageFist_DamageBoostEffect
+	jp SetDefiniteAIDamage
+
+
 ; ------------------------------------------------------------------------------
 ; Based on Discard Pile
 ; ------------------------------------------------------------------------------

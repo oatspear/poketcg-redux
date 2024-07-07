@@ -119,6 +119,17 @@ CountPrizes:
 	pop hl
 	ret
 
+; output:
+;   a: how many prizes the turn holder has already taken
+CountPrizesTaken:
+	push bc
+	call CountPrizes
+	ld c, a
+	ld a, [wDuelInitialPrizes]
+	sub c
+	pop bc
+	ret
+
 ; shuffles the turn holder's deck
 ; if less than 60 cards remain in the deck, it makes sure that the rest are ignored
 ShuffleDeck:
@@ -2554,9 +2565,10 @@ PrintPokemonsAttackText:
 ; so that it can be used with <RAMTEXT> text.
 ; Input:
 ;    a: DUELVARS_ARENA_CARD + offset
+; preserves: bc, de
 LoadCardNameAndLevelFromVarToRam2:
-	call GetTurnDuelistVariable
-	call LoadCardDataToBuffer1_FromDeckIndex
+	call GetTurnDuelistVariable  ; preserves bc, de
+	call LoadCardDataToBuffer1_FromDeckIndex  ; preserves hl, bc, de
 	jr LoadCardNameAndLevelFromCardIDToRam2.copy
 
 ; Input:
@@ -2567,7 +2579,7 @@ LoadCardNameAndLevelFromCardIDToRam2:
 
 .copy
 	ld a, 18
-	call CopyCardNameAndLevel
+	call CopyCardNameAndLevel  ; preserves bc, de
 	; zero wTxRam2 so that the name & level text just loaded to wDefaultText is printed
 	ld [hl], TX_END
 

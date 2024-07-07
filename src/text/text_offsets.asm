@@ -2725,6 +2725,9 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer FossilBindName
 	textpointer IncreaseRetreatCostDescription
 	textpointer ThrashName
+	textpointer RageFistName
+	textpointer RageFistDescription
+	textpointer PutDamageCountersOnPokemonText
 
 ; ------------------------------------------------------------------------------
 ; text12.asm

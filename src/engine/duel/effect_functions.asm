@@ -1022,7 +1022,18 @@ VoltSwitchEffect:
 ;   [hTemp_ffa0]: selected number of damage counters
 GetMadEffect:
 	ldh a, [hTemp_ffa0]
+	or a
+	ret z  ; no recoil
+; load recoil dialogue
+	ld l, a
+	ld h, 0
+	call LoadTxRam3  ; preserves hl, bc, de
+	ld a, DUELVARS_ARENA_CARD
+	call LoadCardNameAndLevelFromVarToRam2  ; preserves bc, de
+	ldtx hl, PutDamageCountersOnPokemonText
+	call DrawWideTextBox_PrintText
 ; convert damage counters into actual damage
+	ldh a, [hTemp_ffa0]
 	call ATimes10
 	ld d, a
 ; back up attack variables

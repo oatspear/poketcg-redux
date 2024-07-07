@@ -95,8 +95,6 @@ HandleSpecialAIAttacks:
 	jr z, .Teleport
 	cp MANKEY
 	jp z, .Prank
-	cp PRIMEAPE
-	jp z, .GetMad
 	cp KINGLER
 	jp z, .Guillotine
 	cp KABUTOPS
@@ -432,28 +430,6 @@ HandleSpecialAIAttacks:
 	jp c, .zero_score
 	ld a, $82
 	ret
-
-.GetMad:
-	ld e, PLAY_AREA_ARENA
-	call GetCardDamageAndMaxHP
-	or a
-	jp nz, .zero_score  ; return if Arena card has damage counters
-	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
-	call GetTurnDuelistVariable
-	cp 2
-	jp c, .zero_score  ; return if no Benched Pokémon
-	dec a
-	ld d, a
-	ld e, PLAY_AREA_BENCH_1
-.get_mad_loop
-	call GetCardDamageAndMaxHP
-	cp 40
-	ld a, $83
-	ret nc  ; at least 40 damage
-	inc e
-	dec d
-	jr nz, .get_mad_loop
-	jp .zero_score  ; no Benched Pokémon with at least 40 damage
 
 ; always encourage; the initial check prevents use in invalid scenarios
 .Guillotine:

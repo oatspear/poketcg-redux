@@ -409,6 +409,11 @@ SurpriseBite_PlayerSelectEffect:
 
 ;
 GetMad_PlayerSelectEffect:
+; store the current HP of the user
+	ld a, DUELVARS_ARENA_CARD_HP
+	call GetTurnDuelistVariable
+	ldh [hTemp_ffa0], a
+; menu prompt
 	ldtx hl, PutHowManyDamageCountersMenuText
 	call DrawWideTextBox_PrintText
 ; set up menu parameters
@@ -424,8 +429,8 @@ GetMad_PlayerSelectEffect:
 ; handle input
 	call HandleNumberSlider
 	ret c  ; cancelled
-	cp 1
-	ret c  ; zero equals cancelled
+	; cp 1
+	; ret c  ; zero equals cancelled
 ; restore HP to what it was
 	ld a, DUELVARS_ARENA_CARD_HP
 	call GetTurnDuelistVariable  ; preserves nc flag
@@ -584,11 +589,3 @@ KnockOutDefendingPokemonEffect:
 	call LoadTxRam2
 	ldtx hl, WasKnockedOutText
 	jp DrawWideTextBox_WaitForInput
-
-
-StoreCurrentHpEffect:
-	ld a, DUELVARS_ARENA_CARD_HP
-	call GetTurnDuelistVariable
-	ldh [hTemp_ffa0], a
-	or a
-	ret

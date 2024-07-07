@@ -1704,3 +1704,18 @@ IncreaseRetreatCostDescription:
 ThrashName:
 	text "Thrash"
 	done
+
+RageFistName:
+	text "Rage Fist"
+	done
+
+RageFistDescription:
+	text "This attack does 10 more damage"
+	line "for each Prize card your opponent"
+	line "has taken."
+	done
+
+PutDamageCountersOnPokemonText:
+	text "Put <RAMNUM> damage counters on"
+	line "<RAMTEXT>."
+	done

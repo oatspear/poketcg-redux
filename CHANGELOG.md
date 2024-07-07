@@ -281,9 +281,10 @@
 
 #### Primeape
 - Increased HP from 70 to 80.
+- **Rage**: removed.
 - **Get Mad**: reworked.
-- **Rage**: increased base damage from 10 to 20.
-- New attack: **Get Mad** (FF): 20 damage; put any number of damage counters on the user; +10 damage for each damage counter put on self.
+- New attack: **Get Mad** (F): 10 damage; put any number of damage counters on the user; +10 damage for each damage counter put on self.
+- New attack: **Rage Fist** (FC): 20 damage; +10 damage for each Prize the opponent has taken.
 
 #### Machop
 - **Defensive Stance**: removed.

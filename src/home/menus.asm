@@ -616,7 +616,7 @@ NumberSliderMenuParameters::
 HandleNumberSlider:
 	push hl
 	push af
-	xor a
+	; xor a
 	ld hl, NumberSliderMenuParameters
 	call InitializeMenuParameters
 	pop af

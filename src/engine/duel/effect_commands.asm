@@ -253,6 +253,11 @@ GrassKnotEffectCommands:
 	dbw EFFECTCMDTYPE_AI, GrassKnot_AIEffect
 	db  $00
 
+RageFistEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, RageFist_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AI, RageFist_AIEffect
+	db  $00
+
 DoubleDamageIfMorePrizesEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, DoubleDamageIfMorePrizes_DamageBoostEffect
 	dbw EFFECTCMDTYPE_AI, DoubleDamageIfMorePrizes_AIEffect
@@ -943,8 +948,7 @@ StrangeBehaviorEffectCommands:
 
 GetMadEffectCommands:
 	; dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHas20HpOrMore
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, StoreCurrentHpEffect
-	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, GetMad_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, GetMad_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, GetMadEffect
 	db  $00
 

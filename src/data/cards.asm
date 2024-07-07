@@ -6411,32 +6411,32 @@ PrimeapeCard:
 	tx MankeyName ; pre-evo name
 
 	; attack 1
-	energy COLORLESS, 2 ; energies
-	tx RageName ; name
-	tx RageDescription ; description
+	energy FIGHTING, 1 ; energies
+	tx GetMadName ; name
+	tx GetMadDescription ; description
 	dw NONE ; description (cont)
-	db 20 ; damage
+	db 10 ; damage
 	db DAMAGE_PLUS ; category
-	dw RageEffectCommands ; effect commands
-	db NONE ; flags 1
+	dw GetMadEffectCommands ; effect commands
+	db LOW_RECOIL ; flags 1
 	db NONE ; flags 2
 	db BOOST_IF_TAKEN_DAMAGE ; flags 3
 	db 0
 	db ATK_ANIM_HIT ; animation
 
 	; attack 2
-	energy FIGHTING, 2 ; energies
-	tx GetMadName ; name
-	tx GetMadDescription ; description
+	energy FIGHTING, 1, COLORLESS, 1 ; energies
+	tx RageFistName ; name
+	tx RageFistDescription ; description
 	dw NONE ; description (cont)
 	db 20 ; damage
 	db DAMAGE_PLUS ; category
-	dw GetMadEffectCommands ; effect commands
-	db LOW_RECOIL ; flags 1
+	dw RageFistEffectCommands ; effect commands
+	db NONE ; flags 1
 	db NONE ; flags 2
-	db BOOST_IF_TAKEN_DAMAGE | SPECIAL_AI_HANDLING ; flags 3
+	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_HIT ; animation
+	db ATK_ANIM_PUNCH ; animation
 
 	db 1 ; retreat cost
 	db WR_PSYCHIC ; weakness
