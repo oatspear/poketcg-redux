@@ -6429,7 +6429,7 @@ PrimeapeCard:
 	tx GetMadName ; name
 	tx GetMadDescription ; description
 	dw NONE ; description (cont)
-	db 30 ; damage
+	db 20 ; damage
 	db DAMAGE_PLUS ; category
 	dw GetMadEffectCommands ; effect commands
 	db LOW_RECOIL ; flags 1
