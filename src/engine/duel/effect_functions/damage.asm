@@ -323,13 +323,13 @@ GetMad_PlayerSelectEffect:
 	ret c  ; zero equals cancelled
 ; restore HP to what it was
 	ld a, DUELVARS_ARENA_CARD_HP
-	call GetTurnDuelistVariable
+	call GetTurnDuelistVariable  ; preserves nc flag
 	ldh a, [hTemp_ffa0]
 	ld [hl], a
 ; store selected number of damage counters
 	ldh a, [hCurMenuItem]
 	ldh [hTemp_ffa0], a
-	or a  ; no carry
+	; or a  ; no carry
 	ret
 
 
