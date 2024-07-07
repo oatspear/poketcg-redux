@@ -6411,20 +6411,6 @@ PrimeapeCard:
 	tx MankeyName ; pre-evo name
 
 	; attack 1
-	energy FIGHTING, 1 ; energies
-	tx GetMadName ; name
-	tx GetMadDescription ; description
-	tx OtherEffectsStillHappenDescriptionCont ; description (cont)
-	db 0 ; damage
-	db DAMAGE_NORMAL ; category
-	dw GetMadEffectCommands ; effect commands
-	db NONE ; flags 1
-	db NONE ; flags 2
-	db SPECIAL_AI_HANDLING ; flags 3
-	db 0
-	db ATK_ANIM_GLOW_EFFECT ; animation
-
-	; attack 2
 	energy COLORLESS, 2 ; energies
 	tx RageName ; name
 	tx RageDescription ; description
@@ -6435,6 +6421,20 @@ PrimeapeCard:
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db BOOST_IF_TAKEN_DAMAGE ; flags 3
+	db 0
+	db ATK_ANIM_HIT ; animation
+
+	; attack 2
+	energy FIGHTING, 2 ; energies
+	tx GetMadName ; name
+	tx GetMadDescription ; description
+	dw NONE ; description (cont)
+	db 30 ; damage
+	db DAMAGE_PLUS ; category
+	dw GetMadEffectCommands ; effect commands
+	db LOW_RECOIL ; flags 1
+	db NONE ; flags 2
+	db BOOST_IF_TAKEN_DAMAGE | SPECIAL_AI_HANDLING ; flags 3
 	db 0
 	db ATK_ANIM_HIT ; animation
 

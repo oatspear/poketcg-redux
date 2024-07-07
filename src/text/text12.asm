@@ -1121,11 +1121,11 @@ GetMadName:
 	done
 
 GetMadDescription:
-	text "Move any number of damage counters"
-	line "from your Pokémon to this Pokémon."
-	line "If you moved at least 4, prevent all"
-	line "damage done to this Pokémon during"
-	line "your opponent's next turn."
+	text "Put any number of damage counters on"
+	line "this Pokémon up to its remaining HP."
+	line "This attack does 10 more damage for"
+	line "each damage counter you put on this"
+	line "Pokémon this way."
 	done
 
 SpikesDescription:

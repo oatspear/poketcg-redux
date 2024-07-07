@@ -585,106 +585,6 @@ FullHeal_ClearStatusEffect:
 INCLUDE "engine/duel/effect_functions/damage.asm"
 
 
-; puts 2 damage counters on the target at location in e,
-; without counting as attack damage (does not trigger damage reduction, etc.)
-; assumes: call to SwapTurn if needed
-; inputs:
-;   e: PLAY_AREA_* of the target
-; output:
-;   carry: set if the target was Knocked Out
-Put2DamageCountersOnTarget:
-	ld d, 20
-	jr ApplyDirectDamage_RegularAnim
-
-
-; puts 1 damage counter on the target at location in e,
-; without counting as attack damage (does not trigger damage reduction, etc.)
-; assumes: call to SwapTurn if needed
-; inputs:
-;   e: PLAY_AREA_* of the target
-; output:
-;   carry: set if the target was Knocked Out
-Put1DamageCounterOnTarget:
-	ld d, 10
-	; jr ApplyDirectDamage_RegularAnim
-	; fallthrough
-
-
-; Puts damage counters on the target at location in e,
-;   without counting as attack damage (does not trigger damage reduction, etc.)
-; This is a mix between DealDamageToPlayAreaPokemon_RegularAnim (bank 0)
-;   and HandlePoisonDamage (bank 1).
-; inputs:
-;   d: amount of damage to deal
-;   e: PLAY_AREA_* of the target
-; output:
-;   carry: set if the target was Knocked Out
-; preserves:
-;   hl, de, bc
-ApplyDirectDamage_RegularAnim:
-	ld a, ATK_ANIM_BENCH_HIT
-	ld [wLoadedAttackAnimation], a
-	; fallthrough
-
-ApplyDirectDamage:
-	push hl
-	push de
-	push bc
-	ld a, e
-	ld [wTempPlayAreaLocation_cceb], a
-	or a ; cp PLAY_AREA_ARENA
-	jr nz, .bench
-; arena
-	ld a, [wNoDamageOrEffect]
-	or a
-	jr nz, .no_damage
-	jr .skip_no_damage_or_effect_check
-.bench
-	call IsBodyguardActive
-	jr nc, .skip_no_damage_or_effect_check
-.no_damage
-	ld d, 0
-.skip_no_damage_or_effect_check
-	xor a
-	ld [wNoDamageOrEffect], a
-	ld e, d
-	ld d, 0
-	push de
-	ld a, [wTempPlayAreaLocation_cceb]
-	add DUELVARS_ARENA_CARD
-	call GetTurnDuelistVariable
-	call GetCardIDFromDeckIndex
-	ld a, e
-	ld [wTempNonTurnDuelistCardID], a
-	pop de
-	ld a, [wTempPlayAreaLocation_cceb]
-	ld b, a
-	ld c, 0
-	add DUELVARS_ARENA_CARD_HP
-	call GetTurnDuelistVariable
-	push af
-	bank1call Func_7415
-	bank1call PlayAttackAnimation_DealAttackDamageSimple
-	; push hl
-	; call WaitForWideTextBoxInput
-	; pop hl
-	; push hl
-	; ldtx hl, Received10DamageDueToAfflictionText
-	; bank1call PrintNonTurnDuelistCardIDText
-	; pop hl
-	pop af
-	or a
-	jr z, .skip_knocked_out
-	call PrintKnockedOutIfHLZero
-	call WaitForWideTextBoxInput
-	scf  ; signal KO
-.skip_knocked_out
-	pop bc
-	pop de
-	pop hl
-	ret
-
-
 Affliction_DamageEffect:
 	ld a, [wAfflictionAffectedPlayArea]
 	or a
@@ -1116,6 +1016,31 @@ VoltSwitchEffect:
 ; ------------------------------------------------------------------------------
 ; Compound Attacks
 ; ------------------------------------------------------------------------------
+
+
+; input:
+;   [hTemp_ffa0]: selected number of damage counters
+GetMadEffect:
+	ldh a, [hTemp_ffa0]
+; convert damage counters into actual damage
+	call ATimes10
+	ld d, a
+; back up attack animation
+	ld a, [wLoadedAttackAnimation]
+	ld c, a
+; apply damage counters on self
+	ld e, PLAY_AREA_ARENA
+	ld a, TRUE
+	ld [wIsDamageToSelf], a
+	call ApplyDirectDamage_RegularAnim  ; preserves hl, de, bc
+	xor a  ; FALSE
+	ld [wIsDamageToSelf], a
+; restore attack animation
+	ld a, c
+	ld [wLoadedAttackAnimation], a
+; damage boost effect
+	ld a, d
+	jp AddToDamage
 
 
 PrimalSwirl_DevolveAndTrapEffect:

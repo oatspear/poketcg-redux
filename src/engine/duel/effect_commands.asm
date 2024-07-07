@@ -942,10 +942,10 @@ StrangeBehaviorEffectCommands:
 	db  $00
 
 GetMadEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHas20HpOrMore
+	; dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHas20HpOrMore
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, StoreCurrentHpEffect
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, GetMad_PlayerSelectEffect
-	; dbw EFFECTCMDTYPE_BEFORE_DAMAGE, GetMad_MoveDamageCountersEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, GetMadEffect
 	db  $00
 
 ; unused unreferenced
