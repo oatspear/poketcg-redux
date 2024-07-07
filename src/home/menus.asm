@@ -680,4 +680,6 @@ NumberSliderMenuFunction:
 	ld l, [hl]
 	ld h, a
 	ld a, c
-	jp hl
+	; jp hl
+	call CallHL
+	jp HandleMenuInput.check_A_or_B

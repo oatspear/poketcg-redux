@@ -1025,22 +1025,34 @@ GetMadEffect:
 ; convert damage counters into actual damage
 	call ATimes10
 	ld d, a
-; back up attack animation
+; back up attack variables
 	ld a, [wLoadedAttackAnimation]
 	ld c, a
+	ld a, [wTempNonTurnDuelistCardID]
+	ld b, a
 ; apply damage counters on self
 	ld e, PLAY_AREA_ARENA
 	ld a, TRUE
 	ld [wIsDamageToSelf], a
-	call ApplyDirectDamage_RegularAnim  ; preserves hl, de, bc
+	ld a, ATK_ANIM_NONE
+	ld [wLoadedAttackAnimation], a
+	call ApplyDirectDamage  ; preserves hl, de, bc
+; restore attack variables
 	xor a  ; FALSE
 	ld [wIsDamageToSelf], a
-; restore attack animation
 	ld a, c
 	ld [wLoadedAttackAnimation], a
+	ld a, b
+	ld [wTempNonTurnDuelistCardID], a
+	; xor a
+	; ld [wDuelAnimLocationParam], a
+	; ld a, DUEL_ANIM_SCREEN_MAIN_SCENE
+	; ld [wDuelAnimationScreen], a
 ; damage boost effect
 	ld a, d
 	jp AddToDamage
+	; bank1call DrawDuelMainScene
+	; ret
 
 
 PrimalSwirl_DevolveAndTrapEffect:
