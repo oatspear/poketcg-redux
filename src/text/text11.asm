@@ -1064,15 +1064,6 @@ LickName: ; 60623 (18:4623)
 	text "Lick"
 	done
 
-EnergyConversionName: ; 60629 (18:4629)
-	text "Energy Conversion"
-	done
-
-EnergyConversionDescription:
-	text "Put up to 2 Basic Energy cards from"
-	line "your discard pile into your hand."
-	done
-
 NightmareName: ; 60801 (18:4801)
 	text "Nightmare"
 	done

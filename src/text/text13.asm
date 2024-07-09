@@ -213,6 +213,15 @@ PutHowManyDamageCountersMenuText:
 ; Unused Text
 ; ------------------------------------------------------------------------------
 
+; EnergyConversionName:
+; 	text "Energy Conversion"
+; 	done
+
+; EnergyConversionDescription:
+; 	text "Put up to 2 Basic Energy cards from"
+; 	line "your discard pile into your hand."
+; 	done
+
 ; FamilyPowerDescription:
 ; 	text "This attack does 10 more damage"
 ; 	line "for each Nidoran♂ or Nidoran♀"
