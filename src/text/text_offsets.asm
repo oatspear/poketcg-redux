@@ -2782,7 +2782,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ToxicName
 	textpointer ToxicDescription
 	textpointer ToxicWasteName
-	textpointer ToxicWasteDescription
+	textpointer ToxicWasteDescriptionCont
 	textpointer LeechLifeName                                      ; 0x086a
 	textpointer LeechLifeDescription                               ; 0x086b
 	textpointer GrowthName

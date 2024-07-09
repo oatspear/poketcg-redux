@@ -1964,24 +1964,10 @@ MukCard:
 	tx GrimerName ; pre-evo name
 
 	; attack 1
-	energy DARKNESS, 1 ; energies
-	tx OverwhelmName ; name
-	tx OverwhelmDescription ; description
-	dw NONE ; description (cont)
-	db 10 ; damage
-	db DAMAGE_NORMAL ; category
-	dw OverwhelmEffectCommands ; effect commands
-	db INFLICT_PARALYSIS ; flags 1
-	db NONE ; flags 2
-	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_HIT_EFFECT ; animation
-
-	; attack 2
 	energy DARKNESS, 1, COLORLESS, 1 ; energies
 	tx ToxicWasteName ; name
-	tx ToxicWasteDescription ; description
-	dw NONE ; description (cont)
+	tx ToxicDescription ; description
+	tx ToxicWasteDescriptionCont ; description (cont)
 	db 10 ; damage
 	db DAMAGE_PLUS ; category
 	dw ToxicWasteEffectCommands ; effect commands
@@ -1990,6 +1976,20 @@ MukCard:
 	db NONE ; flags 3
 	db 2
 	db ATK_ANIM_GOO ; animation
+
+	; attack 2
+	energy DARKNESS, 2, COLORLESS, 1 ; energies
+	tx OverwhelmName ; name
+	tx OverwhelmDescription ; description
+	dw NONE ; description (cont)
+	db 40 ; damage
+	db DAMAGE_NORMAL ; category
+	dw OverwhelmEffectCommands ; effect commands
+	db INFLICT_PARALYSIS ; flags 1
+	db NONE ; flags 2
+	db NONE ; flags 3
+	db 0
+	db ATK_ANIM_HIT_EFFECT ; animation
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness

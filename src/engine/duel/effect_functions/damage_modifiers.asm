@@ -610,12 +610,23 @@ Vengeance_AIEffect:
 	jp SetDefiniteAIDamage
 
 
-; +30 damage if 7 or more Items in discard pile
+; +30 damage if 10 or more Items in both discard piles
 ToxicWaste_DamageBoostEffect:
 	call CreateItemCardListFromDiscardPile
 	call CountCardsInDuelTempList
-	cp 7
+	cp 10
+	jr nc, .enough
+	ld c, a
+	push bc
+	call SwapTurn
+	call CreateItemCardListFromDiscardPile
+	call CountCardsInDuelTempList
+	call SwapTurn
+	pop bc
+	add c
+	cp 10
 	ret c  ; not enough cards
+.enough
   ld a, 30
 	jp AddToDamage
 

@@ -787,7 +787,10 @@ RemoveCardFromDuelTempList:
 	pop hl
 	ret
 
-; return the number of cards in wDuelTempList in a
+
+; output:
+;   a: number of cards in wDuelTempList
+; preserves: hl, bc, de
 CountCardsInDuelTempList:
 	push hl
 	push bc

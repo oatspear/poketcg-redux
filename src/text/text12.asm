@@ -248,10 +248,9 @@ ToxicWasteName:
 	text "Toxic Waste"
 	done
 
-ToxicWasteDescription:
-	text "The Defending Pokémon is now Badly"
-	line "Poisoned. If you have 7 or more"
-	line "Item cards in your discard pile,"
+ToxicWasteDescriptionCont:
+	text "If there are 10 or more Item cards"
+	line "in both discard piles combined,"
 	line "this attack does 30 more damage."
 	done
 
