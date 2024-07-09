@@ -1118,7 +1118,7 @@ NidokingCard:
 	tx LandCrushName ; name
 	tx DamageAllFriendlyBenched20Description ; description
 	tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
-	db 110 ; damage
+	db 100 ; damage
 	db DAMAGE_NORMAL ; category
 	dw DamageAllFriendlyBenched20EffectCommands ; effect commands
 	db NONE ; flags 1

@@ -422,7 +422,7 @@
 - Increased HP from 100 to 110.
 - **Rout**: removed.
 - **Tail Swing**: removed.
-- New attack: **Land Crush** (DC): 110 damage; 20 damage to all of the user's Benched Pokémon.
+- New attack: **Land Crush** (DC): 100 damage; 20 damage to all of the user's Benched Pokémon.
 - New attack: **Vengeful Horn** (DCC): 40 damage; +10 damage for each damaged Pokémon on the user's Bench.
 
 #### Zubat
