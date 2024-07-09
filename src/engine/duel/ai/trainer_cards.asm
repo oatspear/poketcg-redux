@@ -3319,11 +3319,7 @@ AIDecide_FullHeal:
 ; .asleep
 ; set carry if any of the following
 ; cards are in the Play Area.
-	; ld a, GASTLY_LV8
-	; ld b, PLAY_AREA_ARENA
-	; call LookForCardIDInPlayArea_Bank8
-	; jr c, .set_carry
-	; ld a, GASTLY_LV17
+	; ld a, GASTLY
 	; ld b, PLAY_AREA_ARENA
 	; call LookForCardIDInPlayArea_Bank8
 	; jr c, .set_carry
@@ -3917,38 +3913,31 @@ AIDecide_Recycle:
 	call LoadCardDataToBuffer1_FromDeckIndex
 
 ; gastly2
-	cp GASTLY_LV17
-	jr nz, .gastly1
-	ld a, b
-	ld [wAITempVars], a
-	jr .loop_2
-
-.gastly1
-	cp GASTLY_LV8
+	cp GASTLY
 	jr nz, .zubat
 	ld a, b
-	ld [wAITempVars + 1], a
+	ld [wAITempVars], a
 	jr .loop_2
 
 .zubat
 	cp ZUBAT
 	jr nz, .ditto
 	ld a, b
-	ld [wAITempVars + 2], a
+	ld [wAITempVars + 1], a
 	jr .loop_2
 
 .ditto
 	cp DITTO
 	jr nz, .meowth
 	ld a, b
-	ld [wAITempVars + 3], a
+	ld [wAITempVars + 2], a
 	jr .loop_2
 
 .meowth
 	cp MEOWTH_LV15
 	jr nz, .loop_2
 	ld a, b
-	ld [wAITempVars + 4], a
+	ld [wAITempVars + 3], a
 	jr .loop_2
 
 
@@ -4490,13 +4479,13 @@ AIDecide_Pokeball:
 	ld a, PSYCHIC_ENERGY
 	call LookForCardIDInHandList_Bank8
 	jr nc, .done_etcetera
-	ld a, GASTLY_LV8
+	ld a, GASTLY
 	call LookForCardIDInHandList_Bank8
 	jr c, .done_etcetera
 	ld a, JYNX
 	call LookForCardIDInHandList_Bank8
 	jr c, .done_etcetera
-	ld e, GASTLY_LV8
+	ld e, GASTLY
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation
 	ret c
@@ -4555,11 +4544,7 @@ AIDecide_Pokeball:
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation
 	ret c
-	ld e, GASTLY_LV8
-	ld a, CARD_LOCATION_DECK
-	call LookForCardIDInLocation
-	ret c
-	ld e, GASTLY_LV17
+	ld e, GASTLY
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation
 	ret

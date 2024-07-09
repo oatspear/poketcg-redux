@@ -3275,20 +3275,8 @@ ApplyDestinyBondEffect: ; 2d987 (b:5987)
 	jp ApplySubstatus1ToAttackingCard
 
 
-Retrieve2BasicEnergy_PlayerSelectEffect:
-	ldtx hl, Choose2EnergyCardsFromDiscardPileForHandText
-	jp HandleEnergyCardsInDiscardPileSelection
-
-
 JunkMagnet_AISelectEffect:
 	call CreateItemCardListFromDiscardPile
-	ld a, 2
-	jp PickFirstNCardsFromList_SelectEffect
-
-
-Retrieve2BasicEnergy_AISelectEffect:
-	call CreateEnergyCardListFromDiscardPile_OnlyBasic
-	; call CreateEnergyCardListFromDiscardPile_AllEnergy
 	ld a, 2
 	jp PickFirstNCardsFromList_SelectEffect
 

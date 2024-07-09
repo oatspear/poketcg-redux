@@ -145,8 +145,7 @@ CardPointers:
 	dw AlakazamCard
 	dw SlowpokeLv9Card
 	dw SlowbroCard
-	dw GastlyLv8Card
-	dw GastlyLv17Card
+	dw GastlyCard
 	dw HaunterLv17Card
 	dw HaunterLv22Card
 	dw GengarCard
@@ -7634,30 +7633,30 @@ SlowbroCard:
 	tx SlowbroDescription ; description
 	db 1
 
-GastlyLv8Card:
+GastlyCard:
 	db TYPE_PKMN_DARKNESS ; type
-	gfx GastlyLv8CardGfx ; gfx
+	gfx GastlyLv17CardGfx ; gfx
 	tx GastlyName ; name
-	db CIRCLE ; rarity
-	db EVOLUTION | NONE ; sets
-	db GASTLY_LV8
-	db 30 ; hp
+	db DIAMOND ; rarity
+	db LABORATORY | FOSSIL ; sets
+	db GASTLY
+	db 40 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
 
 	; attack 1
-	energy COLORLESS, 1 ; energies
-	tx SleepingGasName ; name
-	tx InflictSleepDescription ; description
+	energy DARKNESS, 1 ; energies
+	tx OminousEyesName ; name
+	tx Put1DamageCounterOnAnyPokemonDescription ; description
 	dw NONE ; description (cont)
 	db 0 ; damage
-	db DAMAGE_NORMAL ; category
-	dw InflictSleepEffectCommands ; effect commands
-	db INFLICT_SLEEP ; flags 1
+	db RESIDUAL ; category
+	dw Put1DamageCounterOnTargetEffectCommands ; effect commands
+	db DAMAGE_TO_OPPONENT_BENCH ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_SLEEPING_GAS ; animation
+	db ATK_ANIM_DARK_MIND_NO_HIT ; animation
 
 	; attack 2
 	energy DARKNESS, 1, COLORLESS, 1 ; energies
@@ -7672,57 +7671,6 @@ GastlyLv8Card:
 	db SPECIAL_AI_HANDLING ; flags 3
 	db 3
 	db ATK_ANIM_GLOW_EFFECT ; animation
-
-	db 0 ; retreat cost
-	db NONE ; weakness
-	db WR_FIGHTING ; resistance
-	tx GasName ; category
-	db 92 ; Pokedex number
-	db 0
-	db 8 ; level
-	db 4, 3 ; length
-	dw 2 ; weight
-	tx GastlyDescription ; description
-	db 16
-
-GastlyLv17Card:
-	db TYPE_PKMN_DARKNESS ; type
-	gfx GastlyLv17CardGfx ; gfx
-	tx GastlyName ; name
-	db DIAMOND ; rarity
-	db LABORATORY | FOSSIL ; sets
-	db GASTLY_LV17
-	db 40 ; hp
-	db BASIC ; stage
-	dw NONE ; pre-evo name
-
-	; attack 1
-	energy COLORLESS, 1 ; energies
-	tx EnergyConversionName ; name
-	tx EnergyConversionDescription ; description
-	dw NONE ; description (cont)
-	db 0 ; damage
-	db RESIDUAL ; category
-	dw EnergyConversionEffectCommands ; effect commands
-	db NONE ; flags 1
-	db NONE ; flags 2
-	db SPECIAL_AI_HANDLING ; flags 3
-	db 10
-	db ATK_ANIM_ENERGY_CONVERSION ; animation
-
-	; attack 2
-	energy DARKNESS, 1 ; energies
-	tx OminousEyesName ; name
-	tx Put1DamageCounterOnAnyPokemonDescription ; description
-	dw NONE ; description (cont)
-	db 0 ; damage
-	db RESIDUAL ; category
-	dw Put1DamageCounterOnTargetEffectCommands ; effect commands
-	db DAMAGE_TO_OPPONENT_BENCH ; flags 1
-	db NONE ; flags 2
-	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_DARK_MIND_NO_HIT ; animation
 
 	db 0 ; retreat cost
 	db NONE ; weakness

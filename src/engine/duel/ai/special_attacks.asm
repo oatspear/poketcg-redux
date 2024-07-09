@@ -87,8 +87,6 @@ HandleSpecialAIAttacks:
 	jr z, .LunarPower
 	; cp SPEAROW
 	; jr z, .DevastatingWind
-	cp GASTLY_LV17
-	jp z, .EnergyConversion
 	cp SANDSLASH
 	jr z, .Teleport
 	cp MACHOP
@@ -286,13 +284,6 @@ HandleSpecialAIAttacks:
 .JunkMagnet:
 	ld a, CARD_LOCATION_DISCARD_PILE
 	call CheckIfAnyItemInLocation
-	jp nc, .zero_score
-	ld a, $82
-	ret
-
-.EnergyConversion:
-	ld a, CARD_LOCATION_DISCARD_PILE
-	call CheckIfAnyBasicEnergyInLocation
 	jp nc, .zero_score
 	ld a, $82
 	ret

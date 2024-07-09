@@ -2601,8 +2601,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ScavengeName                                       ; 0x0a8c
 	textpointer ScavengeDescription                                ; 0x0a8d
 	textpointer SleepingGasName                                    ; 0x0a94
-	textpointer DestinyBondName                                    ; 0x0a96
-	textpointer DestinyBondDescription                             ; 0x0a97
+	textpointer DestinyBondName
+	textpointer DestinyBondDescription
 	textpointer LickName                                           ; 0x0a9a
 	textpointer EnergyConversionName                               ; 0x0a9b
 	textpointer EnergyConversionDescription                        ; 0x0a9c

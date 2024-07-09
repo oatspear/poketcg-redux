@@ -300,7 +300,7 @@ EnergyRemovalCardList:
 	card_item POLIWAG,                  4
 	card_item POLIWHIRL,                3
 	card_item POLIWRATH,                2
-	card_item GASTLY_LV17,              4
+	card_item GASTLY,                   4
 	card_item HAUNTER_LV17,             3
 	card_item DRATINI,                  3
 	card_item DRAGONAIR,                2
@@ -580,8 +580,7 @@ PsychicPowerCardList:
 	card_item ALAKAZAM,          1
 	card_item SLOWPOKE_LV9,      2
 	card_item SLOWBRO,           1
-	card_item GASTLY_LV8,        1
-	card_item GASTLY_LV17,       2
+	card_item GASTLY,            3
 	card_item HAUNTER_LV17,      1
 	card_item HAUNTER_LV22,      1
 	card_item GENGAR,            1
@@ -609,7 +608,7 @@ DreamEaterHaunterCardList:
 	card_item PSYCHIC_ENERGY,         17
 	card_item ZUBAT,                   3
 	card_item GOLBAT,                  2
-	card_item GASTLY_LV8,              4
+	card_item GASTLY,                  4
 	card_item HAUNTER_LV17,            1
 	card_item HAUNTER_LV22,            2
 	card_item GENGAR,                  2
@@ -1006,7 +1005,7 @@ BulbasaurAndFriendsCardList:
 	card_item ELECTABUZZ_LV35,  1
 	card_item ABRA,             2
 	card_item KADABRA,          1
-	card_item GASTLY_LV8,       2
+	card_item GASTLY,           2
 	card_item HAUNTER_LV22,     1
 	card_item JYNX,             1
 	card_item JIGGLYPUFF,       1
@@ -1038,7 +1037,7 @@ PsychicMachampCardList:
 	card_item ABRA,             2
 	card_item KADABRA,          1
 	card_item ALAKAZAM,         1
-	card_item GASTLY_LV8,       2
+	card_item GASTLY,           2
 	card_item HAUNTER_LV22,     1
 	card_item GENGAR,           1
 	card_item MR_MIME,          1

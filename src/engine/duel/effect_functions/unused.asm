@@ -1,6 +1,26 @@
 ;
 
 
+EnergyConversionEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDiscardPileHasBasicEnergyCards
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, SelectedCardList_AddToHandFromDiscardPileEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Retrieve2BasicEnergy_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, Retrieve2BasicEnergy_AISelectEffect
+	db  $00
+
+
+Retrieve2BasicEnergy_PlayerSelectEffect:
+	ldtx hl, Choose2EnergyCardsFromDiscardPileForHandText
+	jp HandleEnergyCardsInDiscardPileSelection
+
+
+Retrieve2BasicEnergy_AISelectEffect:
+	call CreateEnergyCardListFromDiscardPile_OnlyBasic
+	; call CreateEnergyCardListFromDiscardPile_AllEnergy
+	ld a, 2
+	jp PickFirstNCardsFromList_SelectEffect
+
+
 GetMadEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, GetMad_CheckDamage
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, GetMad_MoveDamageCountersEffect

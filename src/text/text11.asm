@@ -1048,11 +1048,11 @@ SleepingGasName: ; 604c3 (18:44c3)
 	text "Sleeping Gas"
 	done
 
-DestinyBondName: ; 6050e (18:450e)
+DestinyBondName:
 	text "Destiny Bond"
 	done
 
-DestinyBondDescription: ; 6051c (18:451c)
+DestinyBondDescription:
 	text "Discard an Energy card attached to"
 	line "this Pokémon. If a Pokémon Knocks"
 	line "Out this Pokémon during your"

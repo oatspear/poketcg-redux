@@ -4,6 +4,7 @@
 
 ### Removed Cards
 - Jigglypuff Lv12
+- Gastly Lv8
 
 ### New Cards
 
@@ -447,6 +448,10 @@
 #### Weezing
 - **Smog**: reworked.
 - New attack: **Smog** (DD): 10 damage; inflicts Poison; 10 damage to all of the opponent's Benched Pokémon.
+
+#### Gastly
+- **Energy Conversion**: removed.
+- New attack: **Destiny Bond** (DC): discard 1 energy; if this is Knocked Out with an attack next turn, Knock Out the opponent's Pokémon.
 
 ### Colorless Changes
 

@@ -104,7 +104,7 @@ UnnamedDeck:
 	; card_item PIDGEOT_LV40,            4
 	; card_item CHARMANDER,              4
 	; card_item PIDGEY,                  4
-	; card_item GASTLY_LV17,             4
+	; card_item GASTLY,                  4
 	; card_item EEVEE,                   4
 	; card_item TAUROS,                  4
 	; card_item ENERGY_SEARCH,           2
@@ -138,8 +138,7 @@ UnnamedDeck:
 	; deck_list_start
 	; card_item DARKNESS_ENERGY,  10
 	; card_item LIGHTNING_ENERGY, 12
-	; card_item GASTLY_LV8,        2
-	; card_item GASTLY_LV17,       2
+	; card_item GASTLY,            4
 	; card_item HAUNTER_LV22,      2
 	; card_item HAUNTER_LV17,      1
 	; card_item GENGAR,            2
@@ -168,7 +167,7 @@ UnnamedDeck:
 	; card_item ABRA,              4
 	; card_item KADABRA,           4
 	; card_item ALAKAZAM,          4
-	; card_item GASTLY_LV17,       4
+	; card_item GASTLY,            4
 	; card_item HAUNTER_LV17,      4
 	; card_item GENGAR,            4
 	; card_item POKEMON_BREEDER,   4
@@ -180,7 +179,7 @@ UnnamedDeck:
 	; card_item PIDGEOT_LV40,     4
 	; card_item CHARMANDER,       4
 	; card_item PIDGEY,           4
-	; card_item GASTLY_LV17,      4
+	; card_item GASTLY,           4
 	; card_item HAUNTER_LV17,     4
 	; card_item RATTATA,          4
 	; card_item RATICATE,         4
@@ -198,7 +197,7 @@ UnnamedDeck:
 	; card_item CLEFAIRY,         4
 	; card_item SPEAROW,          4
 	; card_item PORYGON,          4
-	; card_item GASTLY_LV17,      4
+	; card_item GASTLY,           4
 	; card_item HAUNTER_LV17,     4
 	; card_item GENGAR,           4
 	; card_item MEW_LV23,         4
@@ -241,7 +240,7 @@ UnnamedDeck:
 	; card_item MACHAMP,          4
 	; card_item MACHOKE,          4
 	; card_item MACHOP,           4
-	; card_item GASTLY_LV17,      4
+	; card_item GASTLY,           4
 	; card_item HAUNTER_LV17,     4
 	; card_item RATTATA,          4
 	; card_item POKEMON_BREEDER,  4
@@ -669,7 +668,7 @@ CharmanderExtraDeck:
 	card_item SEAKING,         1
 	card_item ABRA,            2
 	card_item KADABRA,         1
-	card_item GASTLY_LV8,      1
+	card_item GASTLY,          1
 	card_item GRASS_ENERGY,   30 ; irrelevant
 	deck_list_end
 	tx CharmanderExtraDeckName
@@ -691,7 +690,7 @@ SquirtleAndFriendsDeck:
 	card_item LAPRAS,           1
 	card_item ABRA,             2
 	card_item KADABRA,          1
-	card_item GASTLY_LV8,       2
+	card_item GASTLY,           2
 	card_item HAUNTER_LV22,     1
 	card_item MACHOP,           1
 	card_item MACHOKE,          1
@@ -785,7 +784,7 @@ BulbasaurExtraDeck:
 	card_item ABRA,              2
 	card_item KADABRA,           1
 	card_item JYNX,              1
-	card_item GASTLY_LV8,        2
+	card_item GASTLY,            2
 	card_item HAUNTER_LV22,      1
 	card_item DIGLETT,           1
 	card_item DUGTRIO,           1
@@ -1541,7 +1540,7 @@ EtceteraDeck:
 	card_item MAGNEMITE_LV15,   1
 	card_item DIGLETT,          1
 	card_item MACHOP,           2
-	card_item GASTLY_LV8,       2
+	card_item GASTLY,           2
 	card_item JYNX,             1
 	card_item BILL,             3
 	card_item ENERGY_RETRIEVAL, 2
@@ -1611,8 +1610,7 @@ GhostDeck:
 	card_item DOUBLE_COLORLESS_ENERGY,  3
 	card_item ZUBAT,                    4
 	card_item GOLBAT,                   3
-	card_item GASTLY_LV8,               2
-	card_item GASTLY_LV17,              2
+	card_item GASTLY,                   4
 	card_item HAUNTER_LV17,             2
 	card_item HAUNTER_LV22,             2
 	card_item GENGAR,                   4
@@ -1634,7 +1632,7 @@ NapTimeDeck:
 	card_item DARKNESS_ENERGY, 18
 	card_item PARAS,            4
 	card_item EXEGGCUTE,        4
-	card_item GASTLY_LV8,       4
+	card_item GASTLY,           4
 	card_item HAUNTER_LV17,     2
 	card_item HAUNTER_LV22,     2
 	card_item JIGGLYPUFF,       4
@@ -1700,8 +1698,7 @@ LovelyNidoranDeck:
 	card_item NIDOQUEEN,        4
 	card_item NIDORANM,         4
 	card_item NIDOKING,         4
-	card_item GASTLY_LV8,       2
-	card_item GASTLY_LV17,      2
+	card_item GASTLY,           4
 	card_item GENGAR,           3
 	card_item PROFESSOR_OAK,    1
 	card_item BILL,             4

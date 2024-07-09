@@ -2091,9 +2091,9 @@ SlowbroCardGfx::
 	INCBIN "gfx/cards/slowbro.2bpp"
 	INCBIN "gfx/cards/slowbro.pal"
 
-GastlyLv8CardGfx::
-	INCBIN "gfx/cards/gastly1.2bpp"
-	INCBIN "gfx/cards/gastly1.pal"
+; GastlyLv8CardGfx::
+; 	INCBIN "gfx/cards/gastly1.2bpp"
+; 	INCBIN "gfx/cards/gastly1.pal"
 
 GastlyLv17CardGfx::
 	INCBIN "gfx/cards/gastly2.2bpp"
