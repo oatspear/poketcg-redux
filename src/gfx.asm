@@ -1930,8 +1930,8 @@ MagnetonLv35CardGfx::
 	INCBIN "gfx/cards/magneton2.pal"
 
 VoltorbCardGfx::
-	INCBIN "gfx/cards/voltorb.2bpp"
-	INCBIN "gfx/cards/voltorb.pal"
+	INCBIN "gfx/cards/voltorb2.2bpp"
+	INCBIN "gfx/cards/voltorb2.pal"
 
 ElectrodeLv35CardGfx::
 	INCBIN "gfx/cards/electrode1.2bpp"
