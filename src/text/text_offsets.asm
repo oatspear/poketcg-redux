@@ -2408,8 +2408,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer FungalGrowthName
 	textpointer ShiftName                                          ; 0x0890
 	textpointer ShiftDescription                                   ; 0x0891
-	textpointer VenomPowderName                                    ; 0x0892
-	textpointer VenomPowderDescription                             ; 0x0893
+	textpointer VenomPowderName
+	textpointer InflictConfusionAndPoisonDescription
 	textpointer RazorLeafName                                      ; 0x089a
 	textpointer LureName                                           ; 0x089e
 	textpointer LureDescription                                    ; 0x089f
@@ -2427,7 +2427,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer SwitchThisPokemonDescription
 	textpointer DamagePerEnergyAttachedToBothActiveDescription
 	textpointer FoulGasName                                        ; 0x08ba
-	textpointer FoulGasDescription                                 ; 0x08bb
 	textpointer SmogName
 	textpointer SmogDescription
 	textpointer SelfdestructName                                   ; 0x08c0

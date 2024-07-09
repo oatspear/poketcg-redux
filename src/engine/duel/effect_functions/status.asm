@@ -103,9 +103,19 @@ ApplyStatusEffect:
 	ret
 
 
+PoisonConfusionEffect:
+	call PoisonEffect
+	call ConfusionEffect
+	ret c
+	ld a, CONFUSED | POISONED
+	ld [wNoEffectFromWhichStatus], a
+	ret
+
+
 ; ------------------------------------------------------------------------------
 ; Status Attacks
 ; ------------------------------------------------------------------------------
+
 
 ; Poison; Confusion if Poisoned.
 JellyfishSting_PoisonConfusionEffect:

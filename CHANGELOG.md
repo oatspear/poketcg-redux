@@ -439,7 +439,10 @@
 - **Overwhelm**: increased cost from (CCC) to (DDC) and damage from 30 to 40.
 - **Overwhelm**: changed condition from 6 cards in the opponent's hand to 4 cards.
 - **Toxic**: removed.
-- New attack: **Toxic Waste** (DC): 10 damage; inflicts Double Poison; +30 damage if you have at least 7 Items in the discard pile.
+- New attack: **Toxic Waste** (DC): 10 damage; inflicts Double Poison; +30 damage if there are at least 10 Items in both discard piles.
+
+#### Koffing
+- **Foul Gas**: removed coin flip; always inflicts Poison and Confusion.
 
 #### Weezing
 - **Smog**: reworked.

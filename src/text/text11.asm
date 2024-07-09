@@ -50,7 +50,7 @@ VenomPowderName:
 	text "Venom Powder"
 	done
 
-VenomPowderDescription:
+InflictConfusionAndPoisonDescription:
 	text "The Defending Pokémon is now"
 	line "Confused and Poisoned."
 	done
@@ -133,14 +133,8 @@ DamagePerEnergyAttachedToBothActiveDescription:
 	line "to the Defending Pokémon."
 	done
 
-FoulGasName: ; 599d5 (16:59d5)
+FoulGasName:
 	text "Foul Gas"
-	done
-
-FoulGasDescription: ; 599df (16:59df)
-	text "Flip a coin. If heads, the Defending"
-	line "Pokémon is now Poisoned; if tails,"
-	line "it is now Confused."
 	done
 
 SmogName:

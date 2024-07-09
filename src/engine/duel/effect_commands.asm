@@ -169,10 +169,6 @@ PoisonEvolutionEffectCommands:
 	dbw EFFECTCMDTYPE_AI_SELECTION, EvolveArenaPokemonFromDeck_AISelectEffect
 	db  $00
 
-FoulGasEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, FoulGas_PoisonOrConfusionEffect
-	db  $00
-
 TeleportEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckBenchIsNotEmpty
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Teleport_ReturnToDeckEffect
@@ -365,9 +361,8 @@ ShiftEffectCommands:
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Shift_PlayerSelectEffect
 	db  $00
 
-VenomPowderEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, VenomPowder_PoisonConfusionEffect
-	; dbw EFFECTCMDTYPE_AI, VenomPowder_AIEffect
+InflictConfusionAndPoisonEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PoisonConfusionEffect
 	db  $00
 
 JellyfishStingEffectCommands:

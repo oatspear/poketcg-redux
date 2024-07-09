@@ -2185,14 +2185,6 @@ DragOff_SwitchAndDamageEffect:
 	jp DealDamageToArenaPokemon_CustomAnim
 
 
-; If heads, defending Pokemon becomes poisoned. If tails, defending Pokemon becomes confused
-FoulGas_PoisonOrConfusionEffect:
-	ldtx de, PoisonedIfHeadsConfusedIfTailsText
-	call TossCoin_BankB
-	jp c, PoisonEffect
-	jp ConfusionEffect
-
-
 SwitchUser_PlayerSelectEffect:
 	ld a, $ff
 	ldh [hTemp_ffa0], a
@@ -2610,14 +2602,6 @@ _ResetCardColor:
 	res IS_PERMANENT_COLOR_F, [hl]
 	ret
 
-
-VenomPowder_PoisonConfusionEffect:
-	call PoisonEffect
-	call ConfusionEffect
-	ret c
-	ld a, CONFUSED | POISONED
-	ld [wNoEffectFromWhichStatus], a
-	ret
 
 Heal_OncePerTurnCheck:
 	ldh a, [hTempPlayAreaLocation_ff9d]

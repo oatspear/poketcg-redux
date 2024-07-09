@@ -1682,11 +1682,11 @@ VenomothCard:
 	; attack 2
 	energy GRASS, 2 ; energies
 	tx VenomPowderName ; name
-	tx VenomPowderDescription ; description
+	tx InflictConfusionAndPoisonDescription ; description
 	dw NONE ; description (cont)
 	db 20 ; damage
 	db DAMAGE_NORMAL ; category
-	dw VenomPowderEffectCommands ; effect commands
+	dw InflictConfusionAndPoisonEffectCommands ; effect commands
 	db INFLICT_POISON | INFLICT_CONFUSION ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -2144,11 +2144,11 @@ KoffingCard:
 	; attack 1
 	energy DARKNESS, 1 ; energies
 	tx FoulGasName ; name
-	tx FoulGasDescription ; description
+	tx InflictConfusionAndPoisonDescription ; description
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category
-	dw FoulGasEffectCommands ; effect commands
+	dw InflictConfusionAndPoisonEffectCommands ; effect commands
 	db INFLICT_POISON | INFLICT_CONFUSION ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
