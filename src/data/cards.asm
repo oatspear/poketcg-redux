@@ -7798,11 +7798,11 @@ GengarCard:
 	tx HaunterName ; pre-evo name
 
 	; attack 1
-	energy DARKNESS, 1, COLORLESS, 1 ; energies
+	energy DARKNESS, 1 ; energies
 	tx ShadowClawName ; name
 	tx ShadowClawDescription ; description
 	dw NONE ; description (cont)
-	db 40 ; damage
+	db 30 ; damage
 	db DAMAGE_NORMAL ; category
 	dw ShadowClawEffectCommands ; effect commands
 	db NONE ; flags 1
@@ -7812,7 +7812,7 @@ GengarCard:
 	db ATK_ANIM_SLASH ; animation
 
 	; attack 2
-	energy DARKNESS, 2, COLORLESS, 1 ; energies
+	energy DARKNESS, 1, COLORLESS, 1 ; energies
 	tx VengeanceName ; name
 	tx VengeanceDescription ; description
 	dw NONE ; description (cont)

@@ -453,6 +453,10 @@
 - **Energy Conversion**: removed.
 - New attack: **Destiny Bond** (DC): discard 1 energy; if this is Knocked Out with an attack next turn, Knock Out the opponent's Pokémon.
 
+#### Gengar
+- **Shadow Claw**: reduced cost from (DC) to (D) and damage from 40 to 30.
+- **Vengeance**: reduced cost from (DDC) to (DC).
+
 ### Colorless Changes
 
 #### Pidgeotto
