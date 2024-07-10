@@ -817,12 +817,6 @@ PainAmplifierEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, PainAmplifier_DamageEffect
 	db  $00
 
-; DarkMindEffectCommands:
-; 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DarkMind_DamageBenchEffect
-; 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, DarkMind_PlayerSelectEffect
-; 	dbw EFFECTCMDTYPE_AI_SELECTION, DarkMind_AISelectEffect
-; 	db  $00
-
 GastlyDestinyBondEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasAnyEnergiesAttached
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, DiscardEnergy_PlayerSelectEffect
