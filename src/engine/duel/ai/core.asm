@@ -2079,18 +2079,18 @@ AISelectSpecialAttackParameters:
 	call GetTurnDuelistVariable
 	call GetCardIDFromDeckIndex
 	ld a, e
-	cp MEW_LV23
-	jr z, .DevolutionBeam
-	cp MEWTWO_ALT_LV60
-	jr z, .EnergyAbsorption
-	cp MEWTWO_LV60
-	jr z, .EnergyAbsorption
-	cp ABRA
-	jr z, .Teleport
-	cp STARYU
-	jr z, .Teleport
-	cp MAGNETON_LV35
-	jr z, .EnergySpike
+	; cp MEW_LV23
+	; jr z, .DevolutionBeam
+	; cp MEWTWO_ALT_LV60
+	; jr z, .EnergyAbsorption
+	; cp MEWTWO_LV60
+	; jr z, .EnergyAbsorption
+	; cp ABRA
+	; jr z, .Teleport
+	; cp STARYU
+	; jr z, .Teleport
+	; cp MAGNETON_LV35
+	; jr z, .EnergySpike
 	; fallthrough
 
 .no_carry

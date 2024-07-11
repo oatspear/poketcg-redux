@@ -1023,13 +1023,11 @@ AIDecide_GustOfWind:
 	jr c, .no_carry ; if energy card is in hand
 
 .check_id
-	; skip if current active card is MEW_LV23 or MEWTWO_LV53
+	; skip if current active card is MEWTWO_LV53
 	ld a, DUELVARS_ARENA_CARD
 	call GetTurnDuelistVariable
 	call GetCardIDFromDeckIndex
 	ld a, e
-	cp MEW_LV23
-	jr z, .no_carry
 	cp MEWTWO_LV53
 	jr z, .no_carry
 

@@ -589,7 +589,7 @@ PsychicPowerCardList:
 	card_item MR_MIME,           1
 	card_item JYNX,              1
 	card_item MEWTWO_LV53,       1
-	card_item MEW_LV23,          1
+	card_item MEW_LV15,          1
 	card_item CLEFAIRY,          1
 	card_item CLEFABLE,          1
 	card_item SNORLAX,           1
@@ -632,7 +632,7 @@ ScavengingSlowbroCardList:
 	card_item SLOWBRO,           3
 	card_item JYNX,              3
 	card_item MEWTWO_LV53,       2
-	card_item MEW_LV23,          2
+	card_item MEW_LV15,          2
 	card_item JIGGLYPUFF,        4
 	card_item EEVEE,             2
 	card_item ENERGY_RETRIEVAL,  2
@@ -654,7 +654,7 @@ StrangePowerCardList:
 	card_item MR_MIME,                  2
 	card_item JYNX,                     2
 	card_item MEW_LV8,                  1
-	card_item MEW_LV23,                 2
+	card_item MEW_LV15,                 2
 	card_item LICKITUNG,                2
 	card_item SNORLAX,                  1
 	card_item POKEMON_TRADER,           2
@@ -1042,7 +1042,7 @@ PsychicMachampCardList:
 	card_item GENGAR,           1
 	card_item MR_MIME,          1
 	card_item JYNX,             1
-	card_item MEW_LV23,         1
+	card_item MEW_LV15,         1
 	card_item PIDGEY,           2
 	card_item PIDGEOTTO,        1
 	card_item PIDGEOT_LV40,     1

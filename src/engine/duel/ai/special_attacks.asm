@@ -19,8 +19,8 @@ HandleSpecialAIAttacks:
 	jp z, .SwordsDanceAndFocusEnergy
 	cp MAGNETON_LV35
 	jp z, .JunkMagnet
-	cp MEW_LV23
-	jp z, .DevolutionBeam
+	; cp MEW_LV15
+	; jp z, .DevolutionBeam
 	; cp PORYGON
 	; jp z, .Conversion
 	cp GEODUDE
@@ -193,11 +193,11 @@ HandleSpecialAIAttacks:
 	ret
 
 
-.DevolutionBeam:
-	call LookForCardThatIsKnockedOutOnDevolution
-	jp nc, .zero_score
-	ld a, $85
-	ret
+; .DevolutionBeam:
+; 	call LookForCardThatIsKnockedOutOnDevolution
+; 	jp nc, .zero_score
+; 	ld a, $85
+; 	ret
 
 ; first checks if card is confused, and if so return 0.
 ; then checks number of Pokémon in bench that are viable to use:

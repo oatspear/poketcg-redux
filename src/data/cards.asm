@@ -158,7 +158,6 @@ CardPointers:
 	dw MewtwoAltLV60Card
 	dw MewLv8Card
 	dw MewLv15Card
-	dw MewLv23Card
 	dw PidgeyCard
 	dw PidgeottoCard
 	dw Pidgeot1Card
@@ -8247,7 +8246,7 @@ MewLv8Card:
 
 MewLv15Card:
 	db TYPE_PKMN_PSYCHIC ; type
-	gfx MewLv15CardGfx ; gfx
+	gfx MewLv23CardGfx ; gfx
 	tx MewName ; name
 	db STAR ; rarity
 	db PROMOTIONAL | GB ; sets
@@ -8295,57 +8294,6 @@ MewLv15Card:
 	dw 9 * 10 ; weight
 	tx MewDescription ; description
 	db 0
-
-MewLv23Card:
-	db TYPE_PKMN_PSYCHIC ; type
-	gfx MewLv23CardGfx ; gfx
-	tx MewName ; name
-	db STAR ; rarity
-	db MYSTERY | FOSSIL ; sets
-	db MEW_LV23
-	db 50 ; hp
-	db BASIC ; stage
-	dw NONE ; pre-evo name
-
-	; attack 1
-	energy PSYCHIC, 1 ; energies
-	tx PsywaveName ; name
-	tx PsywaveDescription ; description
-	dw NONE ; description (cont)
-	db 10 ; damage
-	db DAMAGE_X ; category
-	dw MewPsywaveEffectCommands ; effect commands
-	db NONE ; flags 1
-	db NONE ; flags 2
-	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_PSYCHIC_HIT ; animation
-
-	; attack 2
-	energy PSYCHIC, 1, COLORLESS, 1 ; energies
-	tx DevolutionBeamName ; name
-	tx DevolutionBeamDescription ; description
-	dw NONE ; description (cont)
-	db 0 ; damage
-	db RESIDUAL ; category
-	dw MewDevolutionBeamEffectCommands ; effect commands
-	db NONE ; flags 1
-	db NONE ; flags 2
-	db SPECIAL_AI_HANDLING ; flags 3
-	db 0
-	db ATK_ANIM_NONE ; animation
-
-	db 0 ; retreat cost
-	db WR_DARKNESS ; weakness
-	db NONE ; resistance
-	tx NewSpeciesName ; category
-	db 151 ; Pokedex number
-	db 0
-	db 23 ; level
-	db 1, 4 ; length
-	dw 9 * 10 ; weight
-	tx MewDescription ; description
-	db 8
 
 PidgeyCard:
 	db TYPE_PKMN_COLORLESS ; type

@@ -200,7 +200,7 @@ UnnamedDeck:
 	; card_item GASTLY,           4
 	; card_item HAUNTER_LV17,     4
 	; card_item GENGAR,           4
-	; card_item MEW_LV23,         4
+	; card_item MEW_LV15,         4
 	; card_item POKEMON_BREEDER,  4
 	; deck_list_end
 	db 0
@@ -210,7 +210,7 @@ UnnamedDeck:
 	; card_item SLOWPOKE_LV9,    4
 	; card_item SLOWBRO,         4
 	; card_item CLEFAIRY,        4
-	; card_item MEW_LV23,        4
+	; card_item MEW_LV15,        4
 	; card_item DROWZEE,         4
 	; card_item SPEAROW,         4
 	; card_item PORYGON,         4
@@ -223,7 +223,7 @@ UnnamedDeck:
 	; card_item PSYCHIC_ENERGY,  24
 	; card_item SLOWPOKE_LV9,     4
 	; card_item CLEFAIRY,         4
-	; card_item MEW_LV23,         4
+	; card_item MEW_LV15,         4
 	; card_item DROWZEE,          4
 	; card_item HYPNO,            4
 	; card_item RATTATA,          4
@@ -1656,7 +1656,7 @@ StrangePowerDeck:
 	card_item MR_MIME,                  2
 	card_item JYNX,                     2
 	card_item MEW_LV8,                  1
-	card_item MEW_LV23,                 2
+	card_item MEW_LV15,                 2
 	card_item LICKITUNG,                2
 	card_item SNORLAX,                  1
 	card_item POKEMON_TRADER,           2

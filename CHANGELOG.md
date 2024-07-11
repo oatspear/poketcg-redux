@@ -3,6 +3,7 @@
 ## Version 0.9.0
 
 ### Removed Cards
+- Mew Lv23
 - Jigglypuff Lv12
 - Gastly Lv8
 
