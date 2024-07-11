@@ -244,33 +244,6 @@ DevolveDefendingPokemonEffect:
 	jp SwapTurn
 
 
-DevolutionBeam_DevolveEffect:
-	ldh a, [hTemp_ffa0]
-	or a
-	jr z, .devolve
-	cp $ff
-	ret z
-
-; opponent's Play Area
-	call SwapTurn
-	ldh a, [hTempPlayAreaLocation_ffa1]
-	or a
-	jr nz, .skip_handle_no_damage_effect
-	call HandleNoDamageOrEffect
-	jp c, SwapTurn  ; unaffected
-.skip_handle_no_damage_effect
-	call .devolve
-	jp SwapTurn
-
-.devolve
-	ldh a, [hTempPlayAreaLocation_ffa1]
-	ld b, a
-	ld a, ATK_ANIM_DEVOLUTION_BEAM
-	bank1call PlayAdhocAnimationOnDuelScene_NoEffectiveness
-	; jr TryDevolveSelectedPokemonEffect
-	; fallthrough
-
-
 TryDevolveSelectedPokemonEffect:
 	; load selected card's data
 	ldh a, [hTempPlayAreaLocation_ffa1]

@@ -364,18 +364,6 @@ ProcedureForDamageSwapText: ; 38e90 (e:4e90)
 	line "   it will Knock Out the Pokémon."
 	done
 
-ProcedureForDevolutionBeamText: ; 38fcc (e:4fcc)
-	text ""
-	line "1. Choose either a Pokémon in your"
-	line "   Play Area or your opponent's"
-	line "   Play Area and press the A Button."
-	line ""
-	line "2. Choose the Pokémon to Devolve"
-	line "   and press the A Button."
-	line ""
-	line "3. Press the B Button to cancel."
-	done
-
 ProcedureForStrangeBehaviorText:
 	text ""
 	line "1. Choose the Pokémon to move"
@@ -412,11 +400,6 @@ ThereAreNoEligibleCardsInTheDiscardPileText:
 
 PleaseSelectTheDeckText: ; 39254 (e:5254)
 	text "Please select the Deck:"
-	line "            Yours   Opponent's"
-	done
-
-PleaseSelectThePlayAreaText: ; 3928c (e:528c)
-	text "Please select the Play Area:"
 	line "            Yours   Opponent's"
 	done
 

@@ -1,5 +1,212 @@
 ;
 
+
+MewDevolutionBeamEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, DevolutionBeam_CheckPlayArea
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, DevolutionBeam_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, DevolutionBeam_LoadAnimation
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DevolutionBeam_DevolveEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, DevolutionBeam_AISelectEffect
+	db  $00
+
+; unreferenced
+; return carry if Turn Duelist has no Evolution cards in Play Area
+; Evolution cards played as Basic Pokémon count for this check
+; CheckSomeEvolutionPokemonCardsInPlayArea:
+; 	ld a, CARDTEST_EVOLUTION_POKEMON
+; 	call CheckSomeMatchingPokemonInPlayArea
+; ; carry set if there is no evolved Pokémon
+; 	ldtx hl, ThereAreNoEvolvedPokemonInPlayAreaText
+; 	ret
+
+
+; returns carry if neither Duelist has evolved Pokemon.
+DevolutionBeam_CheckPlayArea:
+	call CheckSomeEvolvedPokemonInPlayArea
+	ret nc
+	call SwapTurn
+	call CheckSomeEvolvedPokemonInPlayArea
+	call SwapTurn
+	ldtx hl, ThereAreNoEvolvedPokemonInPlayAreaText
+	ret
+
+
+PleaseSelectThePlayAreaText: ; 3928c (e:528c)
+	text "Please select the Play Area:"
+	line "            Yours   Opponent's"
+	done
+
+ProcedureForDevolutionBeamText: ; 38fcc (e:4fcc)
+	text ""
+	line "1. Choose either a Pokémon in your"
+	line "   Play Area or your opponent's"
+	line "   Play Area and press the A Button."
+	line ""
+	line "2. Choose the Pokémon to Devolve"
+	line "   and press the A Button."
+	line ""
+	line "3. Press the B Button to cancel."
+	done
+
+; handles Player selection of an evolved card in Play Area.
+; returns carry if Player cancelled operation.
+HandleEvolvedCardSelection: ; 2dd50 (b:5d50)
+	bank1call HasAlivePokemonInPlayArea
+.loop
+	bank1call OpenPlayAreaScreenForSelection
+	ret c
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	add DUELVARS_ARENA_CARD_STAGE
+	call GetTurnDuelistVariable
+	or a
+	jr z, .loop ; if Basic, loop
+	ret
+
+
+; returns carry of Player cancelled selection.
+; otherwise, output in hTemp_ffa0 which Play Area
+; was selected ($0 = own Play Area, $1 = opp. Play Area)
+; and in hTempPlayAreaLocation_ffa1 selected card.
+DevolutionBeam_PlayerSelectEffect: ; 2dc64 (b:5c64)
+	ldtx hl, ProcedureForDevolutionBeamText
+	bank1call DrawWholeScreenTextBox
+
+.start
+	bank1call DrawDuelMainScene
+	ldtx hl, PleaseSelectThePlayAreaText
+	call TwoItemHorizontalMenu
+	ldh a, [hKeysHeld]
+	and B_BUTTON
+	jr nz, .set_carry
+
+; a Play Area was selected
+	ldh a, [hCurMenuItem]
+	or a
+	jr nz, .opp_chosen
+
+; player chosen
+	call HandleEvolvedCardSelection
+	jr c, .start
+
+	xor a
+.store_selection
+	ld hl, hTemp_ffa0
+	ld [hli], a ; store which Duelist Play Area selected
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	ld [hl], a ; store which card selected
+	or a
+	ret
+
+.opp_chosen
+	call SwapTurn
+	call HandleEvolvedCardSelection
+	call SwapTurn
+	jr c, .start
+	ld a, $01
+	jr .store_selection
+
+.set_carry
+	scf
+	ret
+
+
+; finds first occurrence in Play Area
+; of Stage 1 or 2 card, and outputs its
+; Play Area location in a, with carry set.
+; if none found, don't return carry set.
+FindFirstNonBasicCardInPlayArea: ; 2dd62 (b:5d62)
+	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+	call GetTurnDuelistVariable
+	ld c, a
+
+	ld b, PLAY_AREA_ARENA
+	ld l, DUELVARS_ARENA_CARD_STAGE
+.loop
+	ld a, [hli]
+	or a
+	jr nz, .not_basic
+	inc b
+	dec c
+	jr nz, .loop
+	or a
+	ret
+.not_basic
+	ld a, b
+	scf
+	ret
+
+
+DevolutionBeam_AISelectEffect: ; 2dc9e (b:5c9e)
+	ld a, $01
+	ldh [hTemp_ffa0], a
+	call SwapTurn
+	call FindFirstNonBasicCardInPlayArea
+	call SwapTurn
+	jr c, .found
+	xor a
+	ldh [hTemp_ffa0], a
+	call FindFirstNonBasicCardInPlayArea
+.found
+	ldh [hTempPlayAreaLocation_ffa1], a
+	ret
+
+
+DevolutionBeam_LoadAnimation: ; 2dcb6 (b:5cb6)
+	xor a ; ATK_ANIM_NONE
+	ld [wLoadedAttackAnimation], a
+	ret
+
+DevolutionBeam_DevolveEffect:
+	ldh a, [hTemp_ffa0]
+	or a
+	jr z, .devolve
+	cp $ff
+	ret z
+
+; opponent's Play Area
+	call SwapTurn
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	or a
+	jr nz, .skip_handle_no_damage_effect
+	call HandleNoDamageOrEffect
+	jp c, SwapTurn  ; unaffected
+.skip_handle_no_damage_effect
+	call .devolve
+	jp SwapTurn
+
+.devolve
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	ld b, a
+	ld a, ATK_ANIM_DEVOLUTION_BEAM
+	bank1call PlayAdhocAnimationOnDuelScene_NoEffectiveness
+	jr TryDevolveSelectedPokemonEffect
+
+
+
+ConfusionWaveEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ConfusionWaveEffect
+	db  $00
+
+ConfusionWaveEffect:
+	call ConfusionEffect
+	; fallthrough to SelfConfusionEffect
+
+
+
+MewPsywaveEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PsywaveEffect
+	db  $00
+
+PsywaveEffect: ; 2dc49 (b:5c49)
+	call GetEnergyAttachedMultiplierDamage
+	ld hl, wDamage
+	ld [hl], e
+	; inc hl
+	; ld [hl], d
+	ret
+
+
+
 NaturalRemedyEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckIfPlayAreaHasAnyDamageOrStatus
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, NaturalRemedy_HealEffect

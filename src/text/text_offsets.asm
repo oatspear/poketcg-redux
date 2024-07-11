@@ -296,14 +296,12 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ChooseAnEnergyCardText                             ; 0x0134
 	textpointer ChooseTheOrderOfTheCardsText                       ; 0x0136
 	textpointer ProcedureForDamageSwapText                         ; 0x0137
-	textpointer ProcedureForDevolutionBeamText                     ; 0x0138
 	textpointer ProcedureForStrangeBehaviorText                    ; 0x0139
 	textpointer ChooseOppAttackToBeUsedWithMetronomeText           ; 0x013a
 	textpointer ThereIsNoInTheDeckText                             ; 0x013b
 	textpointer WouldYouLikeToCheckTheDeckText                     ; 0x013c
 	textpointer ThereAreNoEligibleCardsInTheDiscardPileText
 	textpointer PleaseSelectTheDeckText                            ; 0x013d
-	textpointer PleaseSelectThePlayAreaText                        ; 0x013e
 	textpointer ChooseAnyPokemonFromDeckText
 	textpointer AnyPokemonDeckText
 	textpointer BasicPokemonDeckText                               ; 0x0143

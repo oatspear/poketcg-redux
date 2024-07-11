@@ -980,22 +980,6 @@ InflictConfusionEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ConfusionEffect
 	db  $00
 
-ConfusionWaveEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ConfusionWaveEffect
-	db  $00
-
-MewPsywaveEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PsywaveEffect
-	db  $00
-
-MewDevolutionBeamEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, DevolutionBeam_CheckPlayArea
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, DevolutionBeam_PlayerSelectEffect
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, DevolutionBeam_LoadAnimation
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DevolutionBeam_DevolveEffect
-	dbw EFFECTCMDTYPE_AI_SELECTION, DevolutionBeam_AISelectEffect
-	db  $00
-
 UnstableEvolutionEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasAnyEnergiesAttached
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, DiscardEnergy_PlayerSelectEffect

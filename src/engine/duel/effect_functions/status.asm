@@ -136,9 +136,6 @@ SupersonicEffect:
 ; Defending Pokémon also becomes Poisoned.
 FoulOdorEffect:
 	call PoisonEffect
-	; fallthrough
-
-ConfusionWaveEffect:
 	call ConfusionEffect
 	; fallthrough
 
