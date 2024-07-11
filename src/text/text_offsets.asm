@@ -2881,8 +2881,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer IsCuredOfStatusAndEffectsText
 	textpointer HealingEnergyName
 	textpointer HealingEnergyDescription
-	textpointer NaturalRemedyName
-	textpointer NaturalRemedyDescription
 	textpointer Attach1FireEnergyFromDiscardDescription
 	textpointer Attach1WaterEnergyFromDiscardDescription
 	textpointer Attach1PsychicEnergyFromDiscardDescription

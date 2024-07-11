@@ -1658,13 +1658,6 @@ FungalGrowthEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, LeechLifeEffect
 	db  $00
 
-NaturalRemedyEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckIfPlayAreaHasAnyDamageOrStatus
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, NaturalRemedy_HealEffect
-	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, NaturalRemedy_PlayerSelection
-	dbw EFFECTCMDTYPE_AI_SELECTION, NaturalRemedy_AISelectEffect
-	db  $00
-
 SynthesisEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, DrawOrTutorAbility_PreconditionCheck
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Synthesis_AddToHandEffect

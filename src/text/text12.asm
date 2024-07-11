@@ -752,16 +752,6 @@ HealingEnergyDescription:
 	line "that Pokémon."
 	done
 
-NaturalRemedyName:
-	text "Natural Remedy"
-	done
-
-NaturalRemedyDescription:
-	text "Heal 20 damage and remove all"
-	line "Special Conditions from 1 of"
-	line "your Pokémon."
-	done
-
 Attach1FireEnergyFromDiscardDescription:
 	text "Attach a <FIRE> Energy from your"
 	line "discard pile to this Pokémon."

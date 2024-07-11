@@ -1,4 +1,30 @@
 
+
+NaturalRemedyName:
+	text "Natural Remedy"
+	done
+
+NaturalRemedyDescription:
+	text "Heal 20 damage and remove all"
+	line "Special Conditions from 1 of"
+	line "your Pokémon."
+	done
+
+; attack 2
+energy COLORLESS, 2 ; energies
+tx NaturalRemedyName ; name
+tx NaturalRemedyDescription ; description
+dw NONE ; description (cont)
+db 0 ; damage
+db RESIDUAL ; category
+dw NaturalRemedyEffectCommands ; effect commands
+db NONE ; flags 1
+db HEAL_USER ; flags 2
+db NONE ; flags 3
+db 30
+db ATK_ANIM_GLOW_EFFECT ; animation
+
+
 GetMadDescription:
 	text "Move any number of damage counters"
 	line "from your Pokémon to this Pokémon."

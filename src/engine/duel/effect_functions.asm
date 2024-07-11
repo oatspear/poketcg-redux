@@ -315,12 +315,6 @@ Mischief_PreconditionCheck:
 	jp CheckIfPlayAreaHasAnyDamage
 
 
-CheckIfPlayAreaHasAnyDamageOrStatus:
-	call CheckIfPlayAreaHasAnyDamage
-	ret nc  ; there is damage to heal
-	jp CheckIfPlayAreaHasAnyStatus
-
-
 Maintenance_CheckHandAndDiscardPile:
 	call CheckHandSizeGreaterThan1
 	ret c
@@ -1154,18 +1148,6 @@ AquaLauncherEffect:
 PanicVine_ConfusionTrapEffect:
 	call UnableToRetreatEffect
 	jp ConfusionEffect
-
-
-NaturalRemedy_HealEffect:
-	ldh a, [hTempPlayAreaLocation_ffa1]
-	cp $ff
-	ret z
-	ld e, a   ; location
-	ld d, 20  ; damage
-	call HealPlayAreaCardHP
-	ldh a, [hTempPlayAreaLocation_ffa1]
-	jp c, ClearStatusAndEffectsFromTargetEffect
-	jp ClearStatusFromTarget_NoAnim
 
 
 ; heal up to 30 damage from user and put it to sleep
@@ -5829,26 +5811,6 @@ Lead_AISelectEffect:
 	cp TYPE_TRAINER_SUPPORTER
 	ret z  ; found one
 	jr .loop_deck
-
-
-; select a Pokémon to heal damage and status
-NaturalRemedy_PlayerSelection:
-	ldtx hl, ChoosePkmnToHealText
-	call DrawWideTextBox_WaitForInput
-.read_input
-	call HandlePlayerSelectionPokemonInPlayArea
-	ldh [hTempPlayAreaLocation_ffa1], a
-	ld e, a
-	call GetCardDamageAndMaxHP
-	or a
-	jr nz, .done
-	ld a, DUELVARS_ARENA_CARD_STATUS
-	add e
-	call GetTurnDuelistVariable
-	or a
-	jr z, .read_input ; no damage, no status, loop back to start
-.done
-	ret
 
 
 Mischief_PlayerSelectEffect:

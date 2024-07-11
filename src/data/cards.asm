@@ -9467,7 +9467,7 @@ ChanseyCard:
 	db STAR ; rarity
 	db COLOSSEUM | NONE ; sets
 	db CHANSEY
-	db 60 ; hp
+	db 70 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
 
@@ -9486,18 +9486,18 @@ ChanseyCard:
 	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy COLORLESS, 2 ; energies
-	tx NaturalRemedyName ; name
-	tx NaturalRemedyDescription ; description
+	energy COLORLESS, 1 ; energies
+	tx LightStepsName ; name
+	tx EnergySlideDescription ; description
 	dw NONE ; description (cont)
-	db 0 ; damage
-	db RESIDUAL ; category
-	dw NaturalRemedyEffectCommands ; effect commands
+	db 10 ; damage
+	db DAMAGE_NORMAL ; category
+	dw EnergySlideEffectCommands ; effect commands
 	db NONE ; flags 1
-	db HEAL_USER ; flags 2
+	db DISCARD_ENERGY ; flags 2
 	db NONE ; flags 3
-	db 30
-	db ATK_ANIM_GLOW_EFFECT ; animation
+	db 0
+	db ATK_ANIM_BOYFRIENDS ; animation
 
 	db 0 ; retreat cost
 	db WR_FIGHTING ; weakness

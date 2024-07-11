@@ -484,6 +484,11 @@
 #### Dodrio
 - **Retreat Aid**: now also affects itself.
 
+#### Chansey
+- Increased HP from 60 to 70.
+- **Natural Remedy**: removed.
+- New attack: **Light Steps** (C): 10 damage; able to move a Basic energy from the user to a Benched Pokémon.
+
 #### Tauros
 - **Take Down**: removed.
 - **Rampage**: reduced cost from (CCC) to (CC).
