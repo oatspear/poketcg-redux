@@ -857,9 +857,10 @@ StrangeBehaviorName:
 
 StrangeBehaviorDescription:
 	text "As often as you like during your"
-	line "turn, you may move 1 damage counter"
-	line "from 1 of your other Pokémon to"
-	line "this Pokémon."
+	line "turn, if this Pokémon has any"
+	line "attached Energies, you may move 1"
+	line "damage counter from 1 of your other"
+	line "Pokémon to this Pokémon."
 	done
 
 FishingTailName:

@@ -550,6 +550,13 @@ CheckSomeDamagedPokemonInBench:
 	jp CheckSomeMatchingPokemonInBench
 
 
+StrangeBehavior_PreconditionCheck:
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	call CheckPlayAreaPokemonHasAnyEnergiesAttached
+	ret c
+	; jr StrangeBehavior_CheckDamage
+	; fallthrough
+
 ; returns carry if Strange Behavior cannot be used
 StrangeBehavior_CheckDamage:
 ; can Pkmn Power be used?

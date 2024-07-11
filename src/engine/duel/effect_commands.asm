@@ -325,8 +325,8 @@ Leech10DamageEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Leech10DamageEffect
 	db  $00
 
-Leech20DamageEffectCommands:
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Leech20DamageEffect
+Heal20DamageEffectCommands:
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Heal20DamageEffect
 	db  $00
 
 Leech30DamageEffectCommands:
@@ -923,7 +923,7 @@ RototillerEffectCommands:
 	db  $00
 
 StrangeBehaviorEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, StrangeBehavior_CheckDamage
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, StrangeBehavior_PreconditionCheck
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, StrangeBehavior_SelectAndSwapEffect
 	dbw EFFECTCMDTYPE_INTERACTIVE_STEP, StrangeBehavior_SwapEffect
 	db  $00

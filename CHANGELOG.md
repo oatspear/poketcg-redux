@@ -345,6 +345,10 @@
 #### Slowpoke
 - **Rest**: heals all damage on the Pokémon, up from 30 damage.
 
+#### Slowbro
+- **Strange Behavior**: can only be used if this Pokémon has some energies attached to it.
+- **Spiral Drain**: reduced cost from (CCC) to (PC) and damage from 30 to 20.
+
 #### Drowzee
 - **Meditate**: reworked.
 - New attack: **Meditate** (P): 30 damage; fails if the player has less than 5 cards in hand.
