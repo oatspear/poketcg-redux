@@ -400,7 +400,7 @@
 
 #### Arbok
 - **Deadly Poison**: increased base damage from 20 to 30.
-- **Terror Strike***: reduced cost from (DCC) to (D); reduced base damage from 30 to 10.
+- **Terror Strike***: reduced cost from (DCC) to (D); reduced base damage from 30 to 10 and damage bonus from 20 to 10.
 
 #### Nidoran F
 - **Poison Sting**: always inflicts Poison.

@@ -2668,7 +2668,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer GatherToxinsName
 	textpointer GatherToxinsDescription
 	textpointer DeadlyPoisonName
-	textpointer DeadlyPoisonDescription
+	textpointer VenoshockDescription
 	textpointer OverwhelmName
 	textpointer OverwhelmDescription
 	textpointer AfflictionName

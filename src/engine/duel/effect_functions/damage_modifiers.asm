@@ -785,7 +785,7 @@ Rout_AIEffect:
   jp SetDefiniteAIDamage
 
 
-; +20 damage for each of the opponent's Pokémon with a Pokémon Power
+; +10 damage for each of the opponent's Pokémon with a Pokémon Power
 TerrorStrike_DamageBoostEffect:
   call SwapTurn
   ld a, DUELVARS_ARENA_CARD
@@ -804,7 +804,7 @@ TerrorStrike_DamageBoostEffect:
 .done
   call SwapTurn
   ld a, c
-  add a  ; x20
+  ; add a  ; x20
   call ATimes10
   jp AddToDamage
 

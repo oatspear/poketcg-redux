@@ -606,7 +606,7 @@ PoisonPaybackDescription:
 	done
 
 DamagePerPokemonPowerDescription:
-	text "This attack does 20 more damage"
+	text "This attack does 10 more damage"
 	line "for each of your opponent's Pokémon"
 	line "that has a Pokémon Power."
 	done
@@ -1407,11 +1407,10 @@ DeadlyPoisonName:
 	text "Deadly Poison"
 	done
 
-DeadlyPoisonDescription:
-	text "The Defending Pokémon is now"
-	line "Poisoned. If the Defending Pokémon"
-	line "was already Poisoned, this attack"
-	line "does 20 more damage."
+VenoshockDescription:
+	text "If the Defending Pokémon was already"
+	line "already Poisoned, this attack does"
+	line "20 more damage."
 	done
 
 OverwhelmName:

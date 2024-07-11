@@ -823,8 +823,8 @@ ArbokCard:
 	; attack 2
 	energy DARKNESS, 1, COLORLESS, 1 ; energies
 	tx DeadlyPoisonName ; name
-	tx DeadlyPoisonDescription ; description
-	dw NONE ; description (cont)
+	tx InflictPoisonDescription ; description
+	tx VenoshockDescription ; description (cont)
 	db 30 ; damage
 	db DAMAGE_PLUS ; category
 	dw DeadlyPoisonEffectCommands ; effect commands
