@@ -365,7 +365,7 @@
 - **Lead**: removed.
 - **Friend Tackle**: removed.
 - New attack: **Find A Friend** (C): add a Pokémon from the deck to the hand.
-- New attack: **Light Steps** (C): 10 damage; may move an energy to another Pokémon.
+- New attack: **Moonblast** (PC): 20 damage; reduces Defending Pokémon's damage by 10.
 
 #### Clefable
 - Increased HP from 70 to 80.
