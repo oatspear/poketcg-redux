@@ -436,6 +436,9 @@
 - **Leech Life**: removed.
 - New Pokémon Power: **Vampiric Aura**: the user's Pokémon with attached (D) Energy leech up to 20 damage when attacking.
 
+#### Grimer
+- **Gather Toxins**: reduced damage from 10 to zero.
+
 #### Muk
 - **Overwhelm**: increased cost from (CCC) to (DDC) and damage from 30 to 40.
 - **Overwhelm**: changed condition from 6 cards in the opponent's hand to 4 cards.

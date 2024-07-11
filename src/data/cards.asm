@@ -1930,14 +1930,14 @@ GrimerCard:
 	tx GatherToxinsName ; name
 	tx GatherToxinsDescription ; description
 	dw NONE ; description (cont)
-	db 10 ; damage
-	db DAMAGE_NORMAL ; category
+	db 0 ; damage
+	db RESIDUAL ; category
 	dw GatherToxinsEffectCommands ; effect commands
 	db INFLICT_POISON ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_GOO ; animation
+	db ATK_ANIM_SPIT_POISON ; animation
 
 	db 0 ; retreat cost
 	db WR_FIGHTING ; weakness
