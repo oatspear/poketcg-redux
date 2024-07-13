@@ -1,5 +1,33 @@
 
 
+
+MimicName:
+	text "Mimic"
+	done
+
+MimicDescription:
+	text "Shuffle your hand into your deck."
+	line "Then, draw a number of cards"
+	line "equal to the number of cards"
+	line "in your opponent's hand."
+	done
+
+
+energy COLORLESS, 1 ; energies
+	tx MimicName ; name
+	tx MimicDescription ; description
+	dw NONE ; description (cont)
+	db 0 ; damage
+	db RESIDUAL ; category
+	dw MimicEffectCommands ; effect commands
+	db DRAW_CARD ; flags 1
+	db NONE ; flags 2
+	db SPECIAL_AI_HANDLING ; flags 3
+	db 0
+	db ATK_ANIM_GLOW_EFFECT ; animation
+
+
+
 NaturalRemedyName:
 	text "Natural Remedy"
 	done

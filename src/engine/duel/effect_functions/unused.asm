@@ -1,5 +1,17 @@
 ;
 
+MimicEffectCommands:
+	; dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDeckIsNotEmpty
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, MimicEffect
+	db  $00
+
+; shuffle hand back into deck and draw as many cards as the opponent has
+MimicEffect:
+	call ShuffleHandIntoDeck
+	ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND
+	call GetNonTurnDuelistVariable
+	jp DrawNCards_NoCardDetails
+
 
 MewDevolutionBeamEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, DevolutionBeam_CheckPlayArea

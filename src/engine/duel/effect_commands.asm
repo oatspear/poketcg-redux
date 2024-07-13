@@ -941,11 +941,6 @@ PainBurstEffectCommands:
 	dbw EFFECTCMDTYPE_AI, PsychicAssault_AIEffect
 	db  $00
 
-MimicEffectCommands:
-	; dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDeckIsNotEmpty
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, MimicEffect
-	db  $00
-
 MeditateEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckHandSizeGreaterThan4
 	db  $00

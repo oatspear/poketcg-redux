@@ -39,9 +39,13 @@ HandleSpecialAIAttacks:
 	jp z, .Collect
 	cp NIDORANM
 	jp z, .Collect
+	cp FLYING_PIKACHU
+	jp z, .Collect
+	cp JYNX
+	jp z, .Collect
 	cp DUGTRIO
 	jp z, .Earthquake
-	cp RHYDON
+	cp NIDOKING
 	jp z, .Earthquake
 	cp ELECTRODE_LV35
 	jp z, .EnergySpike
@@ -81,18 +85,20 @@ HandleSpecialAIAttacks:
 	jp z, .Flare
 	cp ZAPDOS_LV64
 	jp z, .Energize
-	cp JYNX
-	jr z, .Mimic
-	cp CLEFABLE
-	jr z, .LunarPower
+	; cp JYNX
+	; jr z, .Mimic
+	; cp CLEFABLE
+	; jr z, .LunarPower
 	; cp SPEAROW
 	; jr z, .DevastatingWind
 	cp SANDSLASH
 	jr z, .Teleport
-	cp MACHOP
-	jr z, .Teleport
+	; cp MACHOP
+	; jr z, .Teleport
 	cp MANKEY
 	jp z, .Prank
+	cp PINSIR
+	jp z, .Guillotine
 	cp KINGLER
 	jp z, .Guillotine
 	cp KABUTOPS
@@ -103,22 +109,22 @@ HandleSpecialAIAttacks:
 	xor a
 	ret
 
-.LunarPower
-	farcall AIDecide_PokemonBreeder
-	jr nc, .zero_score
-	ld a, $83
-	ret
+; .LunarPower
+; 	farcall AIDecide_PokemonBreeder
+; 	jr nc, .zero_score
+; 	ld a, $83
+; 	ret
 
-.Mimic
-	ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND
-	call GetNonTurnDuelistVariable
-	ld c, a
-	ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND
-	call GetTurnDuelistVariable
-	cp c
-	jr nc, .zero_score
-	ld a, $82
-	ret
+; .Mimic
+; 	ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND
+; 	call GetNonTurnDuelistVariable
+; 	ld c, a
+; 	ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND
+; 	call GetTurnDuelistVariable
+; 	cp c
+; 	jr nc, .zero_score
+; 	ld a, $82
+; 	ret
 
 ; .DevastatingWind
 ; 	ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND

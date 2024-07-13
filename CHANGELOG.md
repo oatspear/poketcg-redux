@@ -367,6 +367,13 @@
 - **Hand Press**: increased base damage from 10 to 20.
 - New Pokémon Power: **Bench Barrier**: prevents damage done from the opponent's attacks to the player's Bench.
 
+#### Jynx
+- Reduced HP from 60 to 50.
+- **Mimic**: removed.
+- **Hand Press**: removed.
+- New attack: **Return** (C): 10 damage; draw cards until you have 5 cards in hand.
+- New attack: **Sweet Kiss** (CC): 20 damage; inflicts Confusion.
+
 #### Clefairy
 - **Lead**: removed.
 - **Friend Tackle**: removed.

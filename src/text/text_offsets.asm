@@ -2891,8 +2891,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer DrainPunchName
 	textpointer PesterName
 	textpointer PesterDescription
-	textpointer MimicName
-	textpointer MimicDescription
+	textpointer SweetKissName
 	textpointer MindBlastName
 	textpointer MindBlastDescription
 	textpointer HandPressName

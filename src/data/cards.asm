@@ -5202,7 +5202,7 @@ FlyingPikachuCard:
 	dw DrawUntil5CardsInHandEffectCommands ; effect commands
 	db DRAW_CARD ; flags 1
 	db NONE ; flags 2
-	db NONE ; flags 3
+	db SPECIAL_AI_HANDLING ; flags 3
 	db 0
 	db ATK_ANIM_BOYFRIENDS ; animation
 
@@ -7996,37 +7996,37 @@ JynxCard:
 	db DIAMOND ; rarity
 	db EVOLUTION | NONE ; sets
 	db JYNX
-	db 60 ; hp
+	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
 
 	; attack 1
 	energy COLORLESS, 1 ; energies
-	tx MimicName ; name
-	tx MimicDescription ; description
+	tx ReturnName ; name
+	tx DrawUntil5CardsInHandDescription ; description
 	dw NONE ; description (cont)
-	db 0 ; damage
-	db RESIDUAL ; category
-	dw MimicEffectCommands ; effect commands
+	db 10 ; damage
+	db DAMAGE_NORMAL ; category
+	dw DrawUntil5CardsInHandEffectCommands ; effect commands
 	db DRAW_CARD ; flags 1
 	db NONE ; flags 2
 	db SPECIAL_AI_HANDLING ; flags 3
 	db 0
-	db ATK_ANIM_GLOW_EFFECT ; animation
+	db ATK_ANIM_BOYFRIENDS ; animation
 
 	; attack 2
-	energy PSYCHIC, 1, COLORLESS, 1 ; energies
-	tx HandPressName ; name
-	tx HandPressDescription ; description
+	energy COLORLESS, 2 ; energies
+	tx SweetKissName ; name
+	tx InflictConfusionDescription ; description
 	dw NONE ; description (cont)
-	db 10 ; damage
-	db DAMAGE_PLUS ; category
-	dw HandPressEffectCommands ; effect commands
-	db NONE ; flags 1
+	db 20 ; damage
+	db DAMAGE_NORMAL ; category
+	dw InflictConfusionEffectCommands ; effect commands
+	db INFLICT_CONFUSION ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_PSYCHIC_HIT ; animation
+	db ATK_ANIM_BOYFRIENDS ; animation
 
 	db 1 ; retreat cost
 	db WR_DARKNESS ; weakness

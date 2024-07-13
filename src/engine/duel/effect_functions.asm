@@ -4704,14 +4704,6 @@ WaterAbsorb_AttachEnergyEffect:
 	jr _AttachEnergyFromDiscardPileToBenchEffect.attach
 
 
-; shuffle hand back into deck and draw as many cards as the opponent has
-MimicEffect:
-	call ShuffleHandIntoDeck
-	ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND
-	call GetNonTurnDuelistVariable
-	jp DrawNCards_NoCardDetails
-
-
 Hurricane_PlayerSelectEffect:
 	ldtx hl, ChoosePokemonToReturnToTheHandText
 	call DrawWideTextBox_WaitForInput

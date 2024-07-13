@@ -812,15 +812,8 @@ PesterDescription:
 	line "does double damage."
 	done
 
-MimicName:
-	text "Mimic"
-	done
-
-MimicDescription:
-	text "Shuffle your hand into your deck."
-	line "Then, draw a number of cards"
-	line "equal to the number of cards"
-	line "in your opponent's hand."
+SweetKissName:
+	text "Sweet Kiss"
 	done
 
 MindRulerName:
