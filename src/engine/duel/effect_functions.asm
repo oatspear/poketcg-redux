@@ -3510,12 +3510,6 @@ Scavenge_AISelectEffect:
 	ldh [hTemp_ffa0], a
 	ret
 
-; returns carry if Arena card has no Energies attached
-; or if it doesn't have any damage counters.
-Recover_CheckEnergyHP:
-	call CheckArenaPokemonHasAnyDamage
-	ret c ; return carry if no damage
-	jp CheckArenaPokemonHasAnyEnergiesAttached
 
 ; ------------------------------------------------------------------------------
 ; Energy Discard

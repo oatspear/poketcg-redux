@@ -155,7 +155,6 @@ CardPointers:
 	dw JynxCard
 	dw MewtwoLv53Card
 	dw MewtwoLv60Card
-	dw MewtwoAltLV60Card
 	dw MewLv8Card
 	dw MewLv15Card
 	dw PidgeyCard
@@ -8126,57 +8125,6 @@ MewtwoLv60Card:
 	dw PsychicNovaEffectCommands ; effect commands
 	db NONE ; flags 1
 	db ATTACHED_ENERGY_BOOST | DISCARD_ENERGY ; flags 2
-	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_PSYCHIC_HIT ; animation
-
-	db 1 ; retreat cost
-	db WR_DARKNESS ; weakness
-	db NONE ; resistance
-	tx GeneticName ; category
-	db 150 ; Pokedex number
-	db 0
-	db 60 ; level
-	db 6, 7 ; length
-	dw 269 * 10 ; weight
-	tx MewtwoDescription ; description
-	db 0
-
-MewtwoAltLV60Card:
-	db TYPE_PKMN_PSYCHIC ; type
-	gfx MewtwoAltLV60CardGfx ; gfx
-	tx MewtwoName ; name
-	db PROMOSTAR ; rarity
-	db PROMOTIONAL | PRO ; sets
-	db MEWTWO_ALT_LV60
-	db 60 ; hp
-	db BASIC ; stage
-	dw NONE ; pre-evo name
-
-	; attack 1
-	energy PSYCHIC, 1 ; energies
-	tx RecoverName ; name
-	tx RecoverDescription ; description
-	dw NONE ; description (cont)
-	db 0 ; damage
-	db RESIDUAL ; category
-	dw RecoverEffectCommands ; effect commands
-	db NONE ; flags 1
-	db HEAL_USER | DISCARD_ENERGY | FLAG_2_BIT_6 ; flags 2
-	db NONE ; flags 3
-	db 6
-	db ATK_ANIM_RECOVER ; animation
-
-	; attack 2
-	energy PSYCHIC, 1, COLORLESS, 1 ; energies
-	tx PsyshockName ; name
-	tx PsyshockDescription ; description
-	dw NONE ; description (cont)
-	db 20 ; damage
-	db DAMAGE_PLUS ; category
-	dw PsyshockEffectCommands ; effect commands
-	db NONE ; flags 1
-	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
 	db ATK_ANIM_PSYCHIC_HIT ; animation

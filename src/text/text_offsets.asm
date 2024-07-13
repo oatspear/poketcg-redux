@@ -2503,8 +2503,6 @@ TextOffsets:: ; 34000 (d:4000)
 	; textpointer WaterfallDescription
 	textpointer ScaldName
 	textpointer InflictBurnDescription
-	textpointer RecoverName                                        ; 0x0986
-	textpointer RecoverDescription                                 ; 0x0987
 	textpointer EnergyBurstName
 	textpointer Counter20DamageDescription
 	textpointer ShellPressName
@@ -2902,8 +2900,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer FishingTailDescription
 	textpointer TeleportName
 	textpointer TeleportDescription
-	textpointer PsyshockName
-	textpointer PsyshockDescription
 	textpointer FamilyPowerName
 	textpointer FamilyPowerDescription
 	textpointer NightAmbushName

@@ -945,11 +945,6 @@ MeditateEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckHandSizeGreaterThan4
 	db  $00
 
-PsyshockEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Psyshock_DamageBoostEffect
-	dbw EFFECTCMDTYPE_AI, Psyshock_AIEffect
-	db  $00
-
 MindRulerEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, MindRuler_DamageBoostEffect
 	dbw EFFECTCMDTYPE_AI, MindRuler_AIEffect
@@ -1060,14 +1055,6 @@ JunkMagnetEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, SelectedCardList_AddToHandFromDiscardPileEffect
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, JunkMagnet_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, JunkMagnet_AISelectEffect
-	db  $00
-
-RecoverEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, Recover_CheckEnergyHP
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, DiscardEnergy_PlayerSelectEffect
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, HealAllDamageEffect
-	dbw EFFECTCMDTYPE_DISCARD_ENERGY, DiscardEnergy_DiscardEffect
-	dbw EFFECTCMDTYPE_AI_SELECTION, DiscardEnergy_AISelectEffect
 	db  $00
 
 BurnOutEffectCommands:

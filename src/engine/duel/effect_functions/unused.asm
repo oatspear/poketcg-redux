@@ -1,5 +1,44 @@
 ;
 
+
+RecoverEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, Recover_CheckEnergyHP
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, DiscardEnergy_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, HealAllDamageEffect
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, DiscardEnergy_DiscardEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, DiscardEnergy_AISelectEffect
+	db  $00
+
+; returns carry if Arena card has no Energies attached
+; or if it doesn't have any damage counters.
+Recover_CheckEnergyHP:
+	call CheckArenaPokemonHasAnyDamage
+	ret c ; return carry if no damage
+	jp CheckArenaPokemonHasAnyEnergiesAttached
+
+
+
+
+PsyshockEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Psyshock_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AI, Psyshock_AIEffect
+	db  $00
+
+; +20 damage if the opponent has at least 5 cards in hand
+Psyshock_DamageBoostEffect:
+  ld c, 5
+  call SwapTurn
+	call CheckHandSizeIsLessThanC
+  call SwapTurn
+	ret nc  ; hand size < 5
+	ld a, 20
+	jp AddToDamage
+
+Psyshock_AIEffect:
+  call Psyshock_DamageBoostEffect
+  jp SetDefiniteAIDamage
+
+
 MimicEffectCommands:
 	; dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDeckIsNotEmpty
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, MimicEffect

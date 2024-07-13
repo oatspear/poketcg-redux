@@ -876,16 +876,6 @@ TeleportDescription:
 	line "Then, draw 4 cards."
 	done
 
-PsyshockName:
-	text "Psyshock"
-	done
-
-PsyshockDescription:
-	text "If your opponent has 5 or more"
-	line "cards in their hand, this attack"
-	line "does 20 more damage."
-	done
-
 FamilyPowerName:
 	text "Family Power"
 	done

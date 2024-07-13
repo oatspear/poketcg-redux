@@ -463,21 +463,6 @@ IfOpponentHasAttachedToolDoubleDamage_AIEffect:
 ; ------------------------------------------------------------------------------
 
 
-; +20 damage if the opponent has at least 5 cards in hand
-Psyshock_DamageBoostEffect:
-  ld c, 5
-  call SwapTurn
-	call CheckHandSizeIsLessThanC
-  call SwapTurn
-	ret nc  ; hand size < 5
-	ld a, 20
-	jp AddToDamage
-
-Psyshock_AIEffect:
-  call Psyshock_DamageBoostEffect
-  jp SetDefiniteAIDamage
-
-
 ; 20 damage for each card in opponent's hand
 MindRuler_DamageBoostEffect:
   ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND

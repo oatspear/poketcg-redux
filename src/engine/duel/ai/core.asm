@@ -2081,8 +2081,6 @@ AISelectSpecialAttackParameters:
 	ld a, e
 	; cp MEW_LV23
 	; jr z, .DevolutionBeam
-	; cp MEWTWO_ALT_LV60
-	; jr z, .EnergyAbsorption
 	; cp MEWTWO_LV60
 	; jr z, .EnergyAbsorption
 	; cp ABRA

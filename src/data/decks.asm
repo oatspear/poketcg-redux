@@ -1107,8 +1107,7 @@ WondersofScienceDeck:
 	card_item KOFFING,                 4
 	card_item WEEZING,                 3
 	card_item MEWTWO_LV53,             2
-	card_item MEWTWO_ALT_LV60,         1
-	card_item MEWTWO_LV60,             1
+	card_item MEWTWO_LV60,             2
 	card_item PORYGON,                 2
 	card_item IMPOSTER_PROFESSOR_OAK,  1
 	card_item PROFESSOR_OAK,           2

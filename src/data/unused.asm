@@ -1,5 +1,55 @@
 
 
+RecoverName:
+	text "Recover"
+	done
+
+RecoverDescription:
+	text "Discard an Energy from this Pokémon."
+	line "Then, heal all damage from it."
+	done
+
+; attack 1
+energy PSYCHIC, 1 ; energies
+tx RecoverName ; name
+tx RecoverDescription ; description
+dw NONE ; description (cont)
+db 0 ; damage
+db RESIDUAL ; category
+dw RecoverEffectCommands ; effect commands
+db NONE ; flags 1
+db HEAL_USER | DISCARD_ENERGY | FLAG_2_BIT_6 ; flags 2
+db NONE ; flags 3
+db 6
+db ATK_ANIM_RECOVER ; animation
+
+
+
+PsyshockName:
+	text "Psyshock"
+	done
+
+PsyshockDescription:
+	text "If your opponent has 5 or more"
+	line "cards in their hand, this attack"
+	line "does 20 more damage."
+	done
+
+; attack 2
+energy PSYCHIC, 1, COLORLESS, 1 ; energies
+tx PsyshockName ; name
+tx PsyshockDescription ; description
+dw NONE ; description (cont)
+db 20 ; damage
+db DAMAGE_PLUS ; category
+dw PsyshockEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_PSYCHIC_HIT ; animation
+
+
 
 MimicName:
 	text "Mimic"

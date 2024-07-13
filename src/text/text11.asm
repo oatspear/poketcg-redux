@@ -535,15 +535,6 @@ InflictBurnDescription:
 	line "Burned."
 	done
 
-RecoverName:
-	text "Recover"
-	done
-
-RecoverDescription:
-	text "Discard an Energy from this Pokémon."
-	line "Then, heal all damage from it."
-	done
-
 EnergyBurstName:
 	text "Energy Burst"
 	done
