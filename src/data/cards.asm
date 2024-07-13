@@ -7968,7 +7968,7 @@ MrMimeCard:
 	tx HandPressName ; name
 	tx HandPressDescription ; description
 	dw NONE ; description (cont)
-	db 10 ; damage
+	db 20 ; damage
 	db DAMAGE_PLUS ; category
 	dw HandPressEffectCommands ; effect commands
 	db NONE ; flags 1

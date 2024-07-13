@@ -364,6 +364,7 @@
 #### Mr. Mime
 - Increased HP from 40 to 60.
 - **Invisible Wall**: removed.
+- **Hand Press**: increased base damage from 10 to 20.
 - New Pokémon Power: **Bench Barrier**: prevents damage done from the opponent's attacks to the player's Bench.
 
 #### Clefairy
