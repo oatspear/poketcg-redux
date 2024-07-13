@@ -331,13 +331,13 @@
 #### Abra
 - **Teleport**: reduced cost from (P) to (C).
 - **Confuse Ray**: removed.
-- New attack: **Energy Loop** (P): 20 damage; put an Energy attached to the Pokémon back into the hand.
+- New attack: **Teleport Blast** (P): 20 damage; switch with another Pokémon.
 
 #### Kadabra
 - **Prophecy**: removed.
 - **Invade Mind**: removed.
 - New Pokémon Power: **Clairvoyant Sense**: attach a Psychic Energy from the hand to 1 Benched Pokémon; draw 2 cards.
-- New attack: **Teleport Blast** (P): 30 damage; switch with another Pokémon.
+- New attack: **Energy Loop** (P): 30 damage; put an Energy attached to the Pokémon back into the hand.
 
 #### Alakazam
 - **Psychic**: increased base damage from 10 to 20.

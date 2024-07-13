@@ -7404,17 +7404,17 @@ AbraCard:
 
 	; attack 2
 	energy PSYCHIC, 1 ; energies
-	tx EnergyLoopName ; name
-	tx Bounce1EnergyDescription ; description
+	tx TeleportBlastName ; name
+	tx SwitchThisPokemonDescription ; description
 	dw NONE ; description (cont)
 	db 20 ; damage
 	db DAMAGE_NORMAL ; category
-	dw Bounce1EnergyEffectCommands ; effect commands
+	dw SwitchUserEffectCommands ; effect commands
 	db NONE ; flags 1
-	db DISCARD_ENERGY ; flags 2
+	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_CONFUSE_RAY ; animation
+	db ATK_ANIM_PSYCHIC_HIT ; animation
 
 	db 0 ; retreat cost
 	db WR_DARKNESS ; weakness
@@ -7455,17 +7455,17 @@ KadabraCard:
 
 	; attack 2
 	energy PSYCHIC, 1 ; energies
-	tx TeleportBlastName ; name
-	tx SwitchThisPokemonDescription ; description
+	tx EnergyLoopName ; name
+	tx Bounce1EnergyDescription ; description
 	dw NONE ; description (cont)
 	db 30 ; damage
 	db DAMAGE_NORMAL ; category
-	dw SwitchUserEffectCommands ; effect commands
+	dw Bounce1EnergyEffectCommands ; effect commands
 	db NONE ; flags 1
-	db NONE ; flags 2
+	db DISCARD_ENERGY ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_PSYCHIC_HIT ; animation
+	db ATK_ANIM_CONFUSE_RAY ; animation
 
 	db 1 ; retreat cost
 	db WR_DARKNESS ; weakness
