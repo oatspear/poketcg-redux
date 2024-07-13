@@ -348,7 +348,7 @@
 
 #### Slowbro
 - **Strange Behavior**: can only be used if this Pokémon has some energies attached to it.
-- **Spiral Drain**: reduced cost from (CCC) to (PC) and damage from 30 to 20.
+- **Spiral Drain**: increased cost from (CCC) to (PPC) and damage from 30 to 40.
 
 #### Drowzee
 - **Meditate**: reworked.
