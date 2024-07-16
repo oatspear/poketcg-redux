@@ -1,6 +1,19 @@
 ;
 
 
+
+BarrierEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasAnyEnergiesAttached
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Barrier_BarrierEffect
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, DiscardAllAttachedEnergiesEffect
+	db  $00
+
+Barrier_BarrierEffect:
+	ld a, SUBSTATUS1_BARRIER
+	jp ApplySubstatus1ToAttackingCard
+
+
+
 RecoverEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, Recover_CheckEnergyHP
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, DiscardEnergy_PlayerSelectEffect

@@ -332,7 +332,7 @@ Wildfire_DamageBoostEffect:
 	jp AddToDamage
 
 
-PsychicNova_MultiplierEffect:
+Psyburn_MultiplierEffect:
 SheerCold_MultiplierEffect:
 ScorchingColumn_MultiplierEffect:
 Discharge_MultiplierEffect:
@@ -354,7 +354,7 @@ Discharge_AIEffect:
 	jp SetDefiniteAIDamage
 
 
-PsychicNova_AIEffect:
+Psyburn_AIEffect:
 	call GetPlayAreaCardAttachedEnergies
 	call HandleEnergyColorOverride
 	ld a, [wAttachedEnergies + PSYCHIC]

@@ -118,11 +118,6 @@ NoDamageOrEffectDueToAgilityText:
 	line "due to the effects of Agility."
 	done
 
-NoDamageOrEffectDueToBarrierText: ; 383d3 (e:43d3)
-	text "No damage or effect on next Attack"
-	line "due to the effects of Barrier."
-	done
-
 ; NoDamageQueenPressText:
 ; 	text "No damage on next Attack due to the"
 ; 	line "effects of Queen Press."

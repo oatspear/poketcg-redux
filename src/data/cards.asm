@@ -6563,7 +6563,7 @@ MachampCard:
 	; attack 1
 	energy 0 ; energies
 	tx StrikeBackName ; name
-	tx StrikeBackDescription ; description
+	tx StrikeBack20Description ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKEMON_POWER ; category
@@ -8046,57 +8046,6 @@ MewtwoLv53Card:
 	db STAR ; rarity
 	db LABORATORY | NONE ; sets
 	db MEWTWO_LV53
-	db 60 ; hp
-	db BASIC ; stage
-	dw NONE ; pre-evo name
-
-	; attack 1
-	energy PSYCHIC, 1, COLORLESS, 1 ; energies
-	tx BarrierName ; name
-	tx BarrierDescription ; description
-	dw NONE ; description (cont)
-	db 0 ; damage
-	db RESIDUAL ; category
-	dw BarrierEffectCommands ; effect commands
-	db NONE ; flags 1
-	db NULLIFY_OR_WEAKEN_ATTACK | DISCARD_ENERGY ; flags 2
-	db NONE ; flags 3
-	db 2
-	db ATK_ANIM_BARRIER ; animation
-
-	; attack 2
-	energy COLORLESS, 3 ; energies
-	tx PsychicName ; name
-	tx PsychicDescription ; description
-	dw NONE ; description (cont)
-	db 20 ; damage
-	db DAMAGE_PLUS ; category
-	dw PsychicEffectCommands ; effect commands
-	db NONE ; flags 1
-	db NONE ; flags 2
-	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_PSYCHIC_HIT ; animation
-
-	db 1 ; retreat cost
-	db WR_DARKNESS ; weakness
-	db NONE ; resistance
-	tx GeneticName ; category
-	db 150 ; Pokedex number
-	db 0
-	db 53 ; level
-	db 6, 7 ; length
-	dw 269 * 10 ; weight
-	tx MewtwoDescription ; description
-	db 0
-
-MewtwoLv60Card:
-	db TYPE_PKMN_PSYCHIC ; type
-	gfx MewtwoLv60CardGfx ; gfx
-	tx MewtwoName ; name
-	db PROMOSTAR ; rarity
-	db PROMOTIONAL | PRO ; sets
-	db MEWTWO_LV60
 	db 70 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -8117,17 +8066,68 @@ MewtwoLv60Card:
 
 	; attack 2
 	energy PSYCHIC, 1 ; energies
-	tx PsychicNovaName ; name
-	tx PsychicNovaDescription ; description
+	tx PsyburnName ; name
+	tx PsyburnDescription ; description
 	dw NONE ; description (cont)
 	db 20 ; damage
 	db DAMAGE_X ; category
-	dw PsychicNovaEffectCommands ; effect commands
+	dw PsyburnEffectCommands ; effect commands
 	db NONE ; flags 1
 	db ATTACHED_ENERGY_BOOST | DISCARD_ENERGY ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_PSYCHIC_HIT ; animation
+	db ATK_ANIM_DARK_MIND ; animation
+
+	db 1 ; retreat cost
+	db WR_DARKNESS ; weakness
+	db NONE ; resistance
+	tx GeneticName ; category
+	db 150 ; Pokedex number
+	db 0
+	db 53 ; level
+	db 6, 7 ; length
+	dw 269 * 10 ; weight
+	tx MewtwoDescription ; description
+	db 0
+
+MewtwoLv60Card:
+	db TYPE_PKMN_PSYCHIC ; type
+	gfx MewtwoLv60CardGfx ; gfx
+	tx MewtwoName ; name
+	db PROMOSTAR ; rarity
+	db PROMOTIONAL | PRO ; sets
+	db MEWTWO_LV60
+	db 90 ; hp
+	db BASIC ; stage
+	dw NONE ; pre-evo name
+
+	; attack 1
+	energy 0 ; energies
+	tx StrikeBackName ; name
+	tx StrikeBack10Description ; description
+	tx PokemonPowerDescriptionCont ; description (cont)
+	db 0 ; damage
+	db POKEMON_POWER ; category
+	dw PassivePowerEffectCommands ; effect commands
+	db NONE ; flags 1
+	db NONE ; flags 2
+	db NONE ; flags 3
+	db 0
+	db ATK_ANIM_GLOW_EFFECT ; animation
+
+	; attack 2
+	energy PSYCHIC, 2, COLORLESS, 1 ; energies
+	tx PsychicNovaName ; name
+	tx PsychicNovaDescription ; description
+	dw NONE ; description (cont)
+	db 70 ; damage
+	db DAMAGE_NORMAL ; category
+	dw PsychicNovaEffectCommands ; effect commands
+	db NONE ; flags 1
+	db NONE ; flags 2
+	db NONE ; flags 3
+	db 0
+	db ATK_ANIM_PSYCHIC_NOVA ; animation
 
 	db 1 ; retreat cost
 	db WR_DARKNESS ; weakness
@@ -8178,7 +8178,7 @@ MewLv8Card:
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_GLOW_EFFECT ; animation
+	db ATK_ANIM_PSYCHIC_HIT ; animation
 
 	db 0 ; retreat cost
 	db WR_DARKNESS ; weakness

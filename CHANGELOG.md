@@ -401,11 +401,19 @@
 - **Do the Wave**: removed.
 - New attack: **Friend Tackle** (CC): 20 damage; +20 damage if the user played a Supporter this turn.
 
+#### Mewtwo Lv53
+- Increased HP from 60 to 70.
+- **Barrier**: removed.
+- **Psychic**: removed.
+- New attack: **Concentration** (P): attach 1 Psychic Energy from discard pile to the user; heal 20 HP.
+- New attack: **Psyburn** (P): discard any number of attached (P); 20 damage for each discarded energy; discard 1 random card from the opponent's hand if they have 4 or more.
+
 #### Mewtwo Lv60
+- Increased HP from 70 to 90.
 - **Energy Absorption**: removed.
 - **Psyburn**: removed.
-- New attack: **Concentration** (P): attach 1 Psychic Energy from discard pile to the user; heal 20 HP.
-- New attack: **Psychic Nova** (P): discard any number of attached (P); 20 damage for each discarded energy; discard 1 random card from the opponent's hand if they have 4 or more.
+- New Pokémon Power: **Strike Back**: does 10 counter damage to attackers.
+- New attack: **Psychic Nova** (PPC): 70 damage; discard the user's hand if the user has taken more Prizes.
 
 ### Darkness Changes
 

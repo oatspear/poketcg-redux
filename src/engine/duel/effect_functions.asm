@@ -2891,7 +2891,7 @@ DragonArrow_PlayerSelectEffect:
 	ret
 
 
-PsychicNova_PlayerSelectEffect:
+Psyburn_PlayerSelectEffect:
 	call CreateListOfPsychicEnergyAttachedToArena
 	jr DiscardAnyNumberOfAttachedEnergy_PlayerSelectEffect
 
@@ -2982,7 +2982,7 @@ DragonArrow_AISelectEffect:
 	jr DiscardAnyNumberOfAttachedEnergy_AISelectEffect
 
 
-PsychicNova_AISelectEffect:
+Psyburn_AISelectEffect:
 ; AI always chooses all cards to discard
 	call CreateListOfPsychicEnergyAttachedToArena
 	ldh [hTemp_ffa0], a
@@ -3034,7 +3034,7 @@ DragonArrow_DiscardEnergyEffect:
 	call CreateListOfEnergiesAttachedToArena
 	jr DiscardAnyNumberOfAttachedEnergy_DiscardEnergyEffect
 
-PsychicNova_DiscardEnergyEffect:
+Psyburn_DiscardEnergyEffect:
 	call CreateListOfPsychicEnergyAttachedToArena
 	jr DiscardAnyNumberOfAttachedEnergy_DiscardEnergyEffect
 
@@ -3267,11 +3267,6 @@ Recover4Energy_AISelectEffect:
 	call CreateEnergyCardListFromDiscardPile_AllEnergy
 	ld a, 4
 	jp PickFirstNCardsFromList_SelectEffect
-
-
-Barrier_BarrierEffect:
-	ld a, SUBSTATUS1_BARRIER
-	jp ApplySubstatus1ToAttackingCard
 
 
 QueenPressEffect:
@@ -6326,18 +6321,7 @@ CheckIfCardIsBasicEnergy: ; 2f38f (b:738f)
 
 
 ProfessorOakEffect:
-; discard hand
-	call CreateHandCardList
-	call SortCardsInDuelTempListByID
-	ld hl, wDuelTempList
-.discard_loop
-	ld a, [hli]
-	cp $ff
-	jr z, .draw_cards
-	call RemoveCardFromHand
-	call PutCardInDiscardPile
-	jr .discard_loop
-
+	call DiscardAllCardsFromHand
 .draw_cards
 	ld a, 7
 	bank1call DisplayDrawNCardsScreen

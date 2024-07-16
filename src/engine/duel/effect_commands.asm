@@ -271,6 +271,10 @@ PrimalThunderEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, PrimalThunder_DrawbackEffect
 	db  $00
 
+PsychicNovaEffectCommands:
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, PsychicNova_DrawbackEffect
+	db  $00
+
 ChopDownEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ChopDown_DamageBoostEffect
 	dbw EFFECTCMDTYPE_AI, ChopDown_AIEffect
@@ -983,12 +987,6 @@ PsychicEffectCommands:
 	dbw EFFECTCMDTYPE_AI, Psychic_AIEffect
 	db  $00
 
-BarrierEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasAnyEnergiesAttached
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Barrier_BarrierEffect
-	dbw EFFECTCMDTYPE_DISCARD_ENERGY, DiscardAllAttachedEnergiesEffect
-	db  $00
-
 ConcentrationEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDiscardPileHasPsychicEnergyCards
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Attach1PsychicEnergyFromDiscard_SelectEffect
@@ -1216,14 +1214,14 @@ WaterPulseEffectCommands:
 	dbw EFFECTCMDTYPE_AI, WaterPulse_AIEffect
 	db  $00
 
-PsychicNovaEffectCommands:
+PsyburnEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasEnergy_Psychic
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, PsychicNova_PlayerSelectEffect
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PsychicNova_MultiplierEffect
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Psyburn_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Psyburn_MultiplierEffect
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Discard1RandomCardFromOpponentsHandIf4OrMoreEffect
-	dbw EFFECTCMDTYPE_DISCARD_ENERGY, PsychicNova_DiscardEnergyEffect
-	dbw EFFECTCMDTYPE_AI_SELECTION, PsychicNova_AISelectEffect
-	dbw EFFECTCMDTYPE_AI, PsychicNova_AIEffect
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, Psyburn_DiscardEnergyEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, Psyburn_AISelectEffect
+	dbw EFFECTCMDTYPE_AI, Psyburn_AIEffect
 	db  $00
 
 DragonArrowEffectCommands:

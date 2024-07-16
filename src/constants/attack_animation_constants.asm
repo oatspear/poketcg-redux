@@ -29,7 +29,7 @@
 	const ATK_ANIM_BLIZZARD               ; $18
 	const ATK_ANIM_PSYCHIC_HIT            ; $19
 	const ATK_ANIM_NIGHTMARE              ; $1a
-	const ATK_ANIM_27                     ; $1b
+	const ATK_ANIM_PSYCHIC_NOVA           ; $1b
 	const ATK_ANIM_DARK_MIND              ; $1c
 	const ATK_ANIM_BEAM                   ; $1d
 	const ATK_ANIM_HYPER_BEAM             ; $1e

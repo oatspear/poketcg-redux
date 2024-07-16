@@ -251,7 +251,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ReceivesDamageDueToStrikeBackText                 ; 0x0105
 	textpointer UnableToEvolveDueToPrehistoricPowerText            ; 0x0106
 	textpointer NoDamageOrEffectDueToAgilityText
-	textpointer NoDamageOrEffectDueToBarrierText                   ; 0x0108
 	; textpointer NoDamageQueenPressText
 	textpointer UnableToUseAttackDueToNShieldText                  ; 0x010a
 	textpointer NoDamageOrEffectDueToNShieldText                   ; 0x010b
@@ -2558,7 +2557,8 @@ TextOffsets:: ; 34000 (d:4000)
 	; textpointer SpikedArmorName
 	; textpointer SpikedArmorDescription
 	textpointer StrikeBackName
-	textpointer StrikeBackDescription
+	textpointer StrikeBack10Description
+	textpointer StrikeBack20Description
 	textpointer RockThrowName                                      ; 0x0a3a
 	textpointer RockSlideName                                      ; 0x0a3d
 	textpointer ExplosionName
@@ -2618,9 +2618,10 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer MeditateDescription
 	textpointer PainBurstName                                      ; unused
 	textpointer PainBurstDescription                               ; unused
+	textpointer PsyburnName
+	textpointer PsyburnDescription
 	textpointer PsychicName
 	textpointer PsychicDescription
-	textpointer BarrierDescription                                 ; 0x0ac3
 	textpointer EnergyAbsorptionName                               ; 0x0ac6
 	textpointer EnergyAbsorptionDescription                        ; 0x0ac7
 	textpointer NeutralizingShieldName                             ; 0x0acb

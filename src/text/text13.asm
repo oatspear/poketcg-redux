@@ -140,12 +140,9 @@ PsychicNovaName:
 	done
 
 PsychicNovaDescription:
-	text "Discard 1 or more <PSYCHIC> Energy attached"
-	line "to this Pokémon to use this attack."
-	line "This attack does 20 damage for each"
-	line "Energy discarded this way."
-	line "If your opponent has 4 or more cards"
-	line "in their hand, discard 1 at random."
+	text "If you have less Prize cards"
+	line "left than your opponent,"
+	line "discard your hand."
 	done
 
 DragOffName:

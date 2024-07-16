@@ -224,10 +224,6 @@ HandleNoDamageOrEffectSubstatus:
 	ldtx hl, NoDamageOrEffectDueToAgilityText
 	cp SUBSTATUS1_AGILITY
 	jr z, .no_damage_or_effect
-	ld e, NO_DAMAGE_OR_EFFECT_BARRIER
-	ldtx hl, NoDamageOrEffectDueToBarrierText
-	cp SUBSTATUS1_BARRIER
-	jr z, .no_damage_or_effect
 	call CheckCannotUseDueToStatus
 	ccf
 	ret nc
@@ -321,7 +317,6 @@ CheckNoDamageOrEffect:
 
 NoDamageOrEffectTextIDTable:
 	tx NoDamageText                          ; NO_DAMAGE_OR_EFFECT_UNUSED
-	tx NoDamageOrEffectDueToBarrierText      ; NO_DAMAGE_OR_EFFECT_BARRIER
 	tx NoDamageOrEffectDueToAgilityText      ; NO_DAMAGE_OR_EFFECT_AGILITY
 	tx NoDamageOrEffectDueToTransparencyText ; NO_DAMAGE_OR_EFFECT_TRANSPARENCY
 	tx NoDamageOrEffectDueToNShieldText      ; NO_DAMAGE_OR_EFFECT_NSHIELD
@@ -1206,8 +1201,13 @@ IsCounterattackActive:
 	cp MACHAMP
 	; ld hl, 20  ; damage to return
 	; call z, AddToDamage_DE
-	jr nz, .desperate_blast
 	ld de, 20  ; damage to return
+	jr z, .dark_retribution
+	cp MEWTWO_LV60
+	; ld hl, 10  ; damage to return
+	; call z, AddToDamage_DE
+	jr nz, .desperate_blast
+	ld de, 10  ; damage to return
 	jr .dark_retribution
 
 .desperate_blast

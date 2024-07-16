@@ -841,7 +841,15 @@ StrikeBackName:
 	text "Strike Back"
 	done
 
-StrikeBackDescription:
+StrikeBack10Description:
+	text "If this is your Active Pokémon and"
+	line "it is damaged by an opponent's"
+	line "attack (even if this Pokémon is"
+	line "Knocked Out), put 1 damage counter"
+	line "on the Attacking Pokémon."
+	done
+
+StrikeBack20Description:
 	text "If this is your Active Pokémon and"
 	line "it is damaged by an opponent's"
 	line "attack (even if this Pokémon is"
@@ -1161,6 +1169,19 @@ PainBurstDescription:
 	line "Defending Pokémon."
 	done
 
+PsyburnName:
+	text "Psyburn"
+	done
+
+PsyburnDescription:
+	text "Discard 1 or more <PSYCHIC> Energy attached"
+	line "to this Pokémon to use this attack."
+	line "This attack does 20 damage for each"
+	line "Energy discarded this way."
+	line "If your opponent has 4 or more cards"
+	line "in their hand, discard 1 at random."
+	done
+
 PsychicName:
 	text "Psychic"
 	done
@@ -1169,14 +1190,6 @@ PsychicDescription:
 	text "This attack does 10 more damage"
 	line "for each Energy attached to"
 	line "the Defending Pokémon."
-	done
-
-BarrierDescription:
-	text "Discard all Energy cards attached to"
-	line "this Pokémon (at least 1). During"
-	line "your opponent's next turn, prevent"
-	line "all effects of attacks, including"
-	line "damage, done to this Pokémon."
 	done
 
 EnergyAbsorptionName: ; 61065 (18:5065)

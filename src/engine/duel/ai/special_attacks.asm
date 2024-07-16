@@ -25,7 +25,7 @@ HandleSpecialAIAttacks:
 	; jp z, .Conversion
 	cp GEODUDE
 	jp z, .Mend
-	cp MEWTWO_LV60
+	cp MEWTWO_LV53
 	jp z, .Concentration
 	cp BELLSPROUT
 	jp z, .Growth

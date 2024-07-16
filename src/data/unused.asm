@@ -1,5 +1,34 @@
 
 
+NoDamageOrEffectDueToBarrierText: ; 383d3 (e:43d3)
+	text "No damage or effect on next Attack"
+	line "due to the effects of Barrier."
+	done
+
+BarrierDescription:
+	text "Discard all Energy cards attached to"
+	line "this Pokémon (at least 1). During"
+	line "your opponent's next turn, prevent"
+	line "all effects of attacks, including"
+	line "damage, done to this Pokémon."
+	done
+
+; attack 1
+energy PSYCHIC, 1, COLORLESS, 1 ; energies
+tx BarrierName ; name
+tx BarrierDescription ; description
+dw NONE ; description (cont)
+db 0 ; damage
+db RESIDUAL ; category
+dw BarrierEffectCommands ; effect commands
+db NONE ; flags 1
+db NULLIFY_OR_WEAKEN_ATTACK | DISCARD_ENERGY ; flags 2
+db NONE ; flags 3
+db 2
+db ATK_ANIM_BARRIER ; animation
+
+
+
 RecoverName:
 	text "Recover"
 	done
