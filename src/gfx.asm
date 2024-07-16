@@ -2131,9 +2131,9 @@ MewtwoLv53CardGfx::
 	INCBIN "gfx/cards/mewtwo1.2bpp"
 	INCBIN "gfx/cards/mewtwo1.pal"
 
-MewtwoLv60CardGfx::
-	INCBIN "gfx/cards/mewtwo2.2bpp"
-	INCBIN "gfx/cards/mewtwo2.pal"
+; MewtwoLv60CardGfx::
+; 	INCBIN "gfx/cards/mewtwo2.2bpp"
+; 	INCBIN "gfx/cards/mewtwo2.pal"
 
 MewtwoAltLV60CardGfx::
 	INCBIN "gfx/cards/mewtwo3.2bpp"
