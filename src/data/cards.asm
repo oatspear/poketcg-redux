@@ -8092,7 +8092,7 @@ MewtwoLv53Card:
 
 MewtwoLv60Card:
 	db TYPE_PKMN_PSYCHIC ; type
-	gfx MewtwoLv60CardGfx ; gfx
+	gfx MewtwoAltLV60CardGfx ; gfx
 	tx MewtwoName ; name
 	db PROMOSTAR ; rarity
 	db PROMOTIONAL | PRO ; sets
