@@ -357,6 +357,7 @@ DrawOrTutorAbility_PreconditionCheck:
 	jp CheckPokemonPowerCanBeUsed
 
 
+MysteriousTail_PreconditionCheck:
 FleetFooted_PreconditionCheck:
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	or a  ; cp PLAY_AREA_ARENA
@@ -5625,6 +5626,17 @@ PrimalGuidance_PlayerSelectEffect:
 .none_in_deck
 	ldh [hAIPkmnPowerEffectParam], a
 	or a  ; the Power has been used, regardless of cancel
+	ret
+
+
+MysteriousTail_PlayerSelectEffect:
+	ld b, 6
+	call CreateDeckCardListTopNCards
+	ld a, TYPE_TRAINER
+	call HandlePlayerSelectionCardTypeFromDeckListToHand
+	ldh [hTempRetreatCostCards], a
+	ld a, $ff
+	ldh [hTempRetreatCostCards + 1], a
 	ret
 
 

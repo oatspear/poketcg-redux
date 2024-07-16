@@ -2495,7 +2495,6 @@ TextOffsets:: ; 34000 (d:4000)
 	; textpointer CrabhammerDescription
 	textpointer RestName                                           ; 0x0974
 	textpointer RestDescription                                    ; 0x0974
-	textpointer HornAttackName                                     ; 0x097b
 	textpointer RendName
 	textpointer Bonus20IfOpponentIsDamagedDescription
 	; textpointer WaterfallName
@@ -2505,12 +2504,11 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer EnergyBurstName
 	textpointer Counter20DamageDescription
 	textpointer ShellPressName
-	textpointer FocusEnergyName                                    ; 0x099a
-	textpointer MysteriousFossilName                               ; 0x09a1
-	textpointer ClairvoyanceName                                   ; 0x09a2
-	textpointer ClairvoyanceDescription                            ; 0x09a3
-	textpointer BlizzardName                                       ; 0x09ac
-	textpointer DamageOpponentBench10Description                   ; 0x09ad
+	textpointer MysteriousFossilName
+	textpointer ClairvoyanceName                                   ; unused
+	textpointer ClairvoyanceDescription                            ; unused
+	textpointer BlizzardName                                       ; unused
+	textpointer DamageOpponentBench10Description
 	textpointer OnlyWorksOnEvolvedPokemonText
 	; textpointer GnawName
 	textpointer SkillDiveName
@@ -2722,6 +2720,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer RageFistName
 	textpointer RageFistDescription
 	textpointer PutDamageCountersOnPokemonText
+	textpointer MysteriousTailName
+	textpointer MysteriousTailDescription
 
 ; ------------------------------------------------------------------------------
 ; text12.asm

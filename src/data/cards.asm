@@ -8205,12 +8205,12 @@ MewLv15Card:
 
 	; attack 1
 	energy 0 ; energies
-	tx ClairvoyanceName ; name
-	tx ClairvoyanceDescription ; description
+	tx MysteriousTailName ; name
+	tx MysteriousTailDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKEMON_POWER ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw MysteriousTailEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3

@@ -501,10 +501,6 @@ RestDescription:
 	done
 ENDC
 
-HornAttackName: ; 5c1f5 (17:41f5)
-	text "Horn Attack"
-	done
-
 RendName:
 	text "Rend"
 	done
@@ -551,11 +547,7 @@ ShellPressName:
 	text "Shell Press"
 	done
 
-FocusEnergyName: ; 5c6b4 (17:46b4)
-	text "Focus Energy"
-	done
-
-MysteriousFossilName: ; 5c894 (17:4894)
+MysteriousFossilName:
 	text "Mysterious Fossil"
 	done
 
@@ -568,7 +560,7 @@ ClairvoyanceDescription:
 	line "hand face up."
 	done
 
-BlizzardName: ; 5cb6d (17:4b6d)
+BlizzardName:
 	text "Blizzard"
 	done
 
@@ -1706,4 +1698,17 @@ RageFistDescription:
 PutDamageCountersOnPokemonText:
 	text "Put <RAMNUM> damage counters on"
 	line "<RAMTEXT>."
+	done
+
+MysteriousTailName:
+	text "Mysterious Tail"
+	done
+
+MysteriousTailDescription:
+	text "Once during your turn, if this"
+	line "Pokémon is in the Active Spot, you"
+	line "may look at the top 6 cards of your"
+	line "deck and put an Item card you find"
+	line "there into your hand. Shuffle the"
+	line "other cards back into your deck."
 	done

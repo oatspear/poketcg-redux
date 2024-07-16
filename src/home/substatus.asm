@@ -450,11 +450,13 @@ IsDarkPrisonActive:
 ; return carry if turn holder has Mew and its Clairvoyance Pkmn Power is active
 ; preserves: bc, de
 IsClairvoyanceActive:
-	call ArePokemonPowersDisabled
-	ccf
-	ret nc
-	ld a, MEW_LV15
-	jp GetFirstPokemonWithAvailablePower
+	or a
+	ret
+;	call ArePokemonPowersDisabled
+;	ccf
+;	ret nc
+;	ld a, MEW_LV15
+;	jp GetFirstPokemonWithAvailablePower
 
 
 ; return carry if turn holder has Mr. Mime and its Bench Barrier Pkmn Power is active

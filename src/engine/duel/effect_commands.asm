@@ -1574,6 +1574,12 @@ AquaLauncherEffectCommands:
 	dbw EFFECTCMDTYPE_AI_SELECTION, DamageTargetPokemon_AISelectEffect
 	db  $00
 
+MysteriousTailEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, MysteriousTail_PreconditionCheck
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, MysteriousTail_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Synthesis_AddToHandEffect
+	db  $00
+
 SearchingMagnetEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDeckIsNotEmpty
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, SelectedCard_AddToHandFromDeckEffect

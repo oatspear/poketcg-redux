@@ -415,6 +415,10 @@
 - New Pokémon Power: **Strike Back**: does 10 counter damage to attackers.
 - New attack: **Psychic Nova** (PPC): 70 damage; discard the user's hand if the user has taken more Prizes.
 
+#### Mew Lv15
+- **Clairvoyance**: removed.
+- New Pokémon Power: **Mysterious Tail**: once per turn, if Active, you may put an Item card from the top 6 deck cards into the hand.
+
 ### Darkness Changes
 
 #### Ekans

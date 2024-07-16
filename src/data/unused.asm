@@ -1,4 +1,27 @@
 
+ClairvoyanceName:
+	text "Clairvoyance"
+	done
+
+ClairvoyanceDescription:
+	text "Your opponent plays with his or her"
+	line "hand face up."
+	done
+
+; attack 1
+energy 0 ; energies
+tx ClairvoyanceName ; name
+tx ClairvoyanceDescription ; description
+tx PokemonPowerDescriptionCont ; description (cont)
+db 0 ; damage
+db POKEMON_POWER ; category
+dw PassivePowerEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_PKMN_POWER_1 ; animation
+
 
 NoDamageOrEffectDueToBarrierText: ; 383d3 (e:43d3)
 	text "No damage or effect on next Attack"
