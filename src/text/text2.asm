@@ -138,9 +138,9 @@ NoDamageOrEffectDueToTransparencyText: ; 384d8 (e:44d8)
 	line "due to the effects of Transparency"
 	done
 
-MetamorphsToText: ; 3851f (e:451f)
-	text "<RAMTEXT>"
-	line "metamorphs to <RAMTEXT>."
+PutInPlayWithTransformText:
+	text "<RAMTEXT> was put"
+	line "in play with Transform."
 	done
 
 SelectPkmnOnBenchToSwitchWithActiveText: ; 38533 (e:4533)

@@ -1295,6 +1295,11 @@ IsRestoredPokemonCard:
 ; Compound Checks
 ; ------------------------------------------------------------------------------
 
+Transform_PreconditionCheck:
+	call CheckPokemonPowerCanBeUsed_StoreTrigger
+	jp CheckDiscardPileHasBasicPokemonCards
+
+
 ThunderWave_PreconditionCheck:
 	call CheckEnteredActiveSpotThisTurn
 	ret nc  ; active this turn

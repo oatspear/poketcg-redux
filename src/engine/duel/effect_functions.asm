@@ -5254,160 +5254,74 @@ ClairvoyantSense_AttachEnergyEffect:
 	jp Draw2CardsEffect
 
 
-Morph_PlayerSelectEffect:
+Transform_PlayerSelectEffect:
 	call HandlePlayerSelectionFromDiscardPile_BasicPokemon
-	ldh [hTemp_ffa0], a
+	ldh [hAIPkmnPowerEffectParam], a
 	ret
 
-Morph_AISelectEffect:
-; prioritize cards for which there are no duplicates on the play area
-; assume card list is already populated from initial check
-	; call CreateBasicPokemonCardListFromDiscardPile
-	ld hl, wDuelTempList
-.loop_cards
-	ld a, [hli]
-	ldh [hTemp_ffa0], a
+TransformEffect:
+	ldh a, [hAIPkmnPowerEffectParam]
 	cp $ff
-	jr z, .choose_first_card
+	ret z
+	ldh [hTempCardIndex_ff98], a
 
-; which Pokémon are we iterating over?
-	call GetCardIDFromDeckIndex
-	ld a, e
-	ld [wTempPokemonID_ce7c], a
-
-; check play area for duplicates (similar to CountPokemonIDInPlayArea)
-	push hl
-	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
-	call GetTurnDuelistVariable
-	ld b, a
-	ld c, 0
-
-.loop_play_area
-	ld a, DUELVARS_ARENA_CARD
-	add b
-	dec a  ; b starts at 1, we want a 0-based index
-	call GetTurnDuelistVariable
-	cp $ff
-	jr z, .found
-; check if it is the same Pokémon
-	call GetCardIDFromDeckIndex
-	ld a, [wTempPokemonID_ce7c]
-	cp e
-	jr z, .found_duplicate
-	dec b
-	jr nz, .loop_play_area
-; no duplicates in play area
-; card is already stored in [hTemp_ffa0]
-	jr .found
-
-.found_duplicate
-	pop hl
-	jr .loop_cards
-
-.found
-	pop hl
-	ret
-
-.choose_first_card
-	ld a, [wDuelTempList]
-	ldh [hTemp_ffa0], a
-	ret
-
-
-MorphEffect:
+; exchange card locations
 	ldh a, [hTemp_ffa0]
-	cp $ff
-	jr nz, .successful
-	ldtx hl, AttackUnsuccessfulText
-	call DrawWideTextBox_WaitForInput
-	ret
-
-.successful
-	ldh [hTempCardIndex_ff98], a
-	ld a, DUELVARS_ARENA_CARD_STAGE
+	add DUELVARS_ARENA_CARD
 	call GetTurnDuelistVariable
-	or a
-	jr z, .skip_discard_stage_below
-
-; if this is an evolved Pokémon (in case it's used with Metronome)
-; then first discard the lower stage card.
-	push hl
-	xor a
-	ldh [hTempPlayAreaLocation_ff9d], a
-	bank1call GetCardOneStageBelow
-	ld a, d
-	call PutCardInDiscardPile
-	pop hl
-	ld [hl], BASIC
-
-.skip_discard_stage_below
-; overwrite card ID
-; store in de the ID of the card we want to Morph to
+	ld d, a
+	ld l, a
+	ld a, CARD_LOCATION_DISCARD_PILE
+	ld [hl], a
 	ldh a, [hTempCardIndex_ff98]
-	call GetCardIDFromDeckIndex
-; store in [hTempCardIndex_ff98] the deck index of the current card
-	ld a, DUELVARS_ARENA_CARD
-	call GetTurnDuelistVariable
-	ldh [hTempCardIndex_ff98], a
-; point hl to the index in deck list, to overwrite ID (preserves de)
-	call _GetCardIDFromDeckIndex
-	ld [hl], e
+	ld c, a
+	ld l, a
+	ldh a, [hTemp_ffa0]
+	add CARD_LOCATION_ARENA
+	ld [hl], a
 
-; overwrite HP to new card's maximum HP
-	ld e, PLAY_AREA_ARENA
+; move this card to the discard pile and vice versa
+	ld l, DUELVARS_DECK_CARDS
+.discard_pile_loop
+	ld a, [hli]
+	cp c
+	jr nz, .discard_pile_loop
+	dec hl
+	ld a, d  ; the ability user card
+	ld [hl], a
+
+; overwrite card stage (redundant)
+	ldh a, [hTemp_ffa0]
+	add DUELVARS_ARENA_CARD_STAGE
+	ld l, a
+	xor a  ; BASIC
+	ld [hl], a
+
+; overwrite HP (retain damage counters)
+	ldh a, [hTemp_ffa0]
+	add PLAY_AREA_ARENA
+	ld e, a
 	call GetCardDamageAndMaxHP
-	ld a, DUELVARS_ARENA_CARD_HP
+	ldh a, [hTemp_ffa0]
+	add DUELVARS_ARENA_CARD_HP
 	call GetTurnDuelistVariable
-	ld [hl], c
+	ld d, a  ; current damage taken
+	ld a, c  ; new maximum HP
+	sub d    ; new current HP
+	ld [hl], a
 
 ; clear changed color and status
-	ld l, DUELVARS_ARENA_CARD_CHANGED_TYPE
-	ld [hl], $00
-	call ClearAllArenaStatusAndEffects
+	; ld l, DUELVARS_ARENA_CARD_CHANGED_TYPE
+	; ld [hl], $00
+	; call ClearAllArenaStatusAndEffects
 
-; load both card's names for printing text
-	ld a, [wTempTurnDuelistCardID]
-	ld e, a
-	ld d, $00
-	call LoadCardDataToBuffer2_FromCardID
-	ld hl, wLoadedCard2Name
-	ld de, wTxRam2
-	ld a, [hli]
-	ld [de], a
-	inc de
-	ld a, [hl]
-	ld [de], a
-	inc de
+	call IsPlayerTurn
+	ret c
 	ldh a, [hTempCardIndex_ff98]
-	call LoadCardDataToBuffer2_FromDeckIndex
-	ld hl, wLoadedCard2Name
-	ld a, [hli]
-	ld [de], a
-	inc de
-	ld a, [hl]
-	ld [de], a
-	ldtx hl, MetamorphsToText
-	call DrawWideTextBox_WaitForInput
-
-	xor a
-	ld [wDuelDisplayedScreen], a
-	ret
-
-
-; Converts the selected card into a Mysterious Fossil
-; input:
-;   a - deck index of the selected card
-FossilizeCard:
-	ld e, MYSTERIOUS_FOSSIL
-	; fallthrough
-
-; input:
-;   a - deck index of the card to transform
-;   e - ID of the card to transform into
-OverwriteCardID:
-; point hl to the index in deck list, to overwrite ID (preserves de)
-	call _GetCardIDFromDeckIndex
-	ld [hl], e
+	ldtx hl, PutInPlayWithTransformText
+	bank1call DisplayCardDetailScreen
+	; xor a
+	; ld [wDuelDisplayedScreen], a
 	ret
 
 

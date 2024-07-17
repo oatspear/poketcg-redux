@@ -865,8 +865,11 @@ IfAttachedEnergy10BonusDamageEffectCommands:
 	db  $00
 
 GatherToxinsEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDiscardPileHasBasicEnergyCards
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PoisonEffect
+	; fallthrough to EnergyLinkEffectCommands
+
+EnergyLinkEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDiscardPileHasBasicEnergyCards
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, AccelerateFromDiscard_AttachEnergyToArenaEffect
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, AttachBasicEnergyFromDiscardPile_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, RetrieveBasicEnergyFromDiscardPile_AISelectEffect
@@ -1524,11 +1527,11 @@ ClairvoyantSenseEffectCommands:
 	; dbw EFFECTCMDTYPE_AI_SELECTION, AttachEnergyFromHand_AISelectEffect
 	db  $00
 
-MorphEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDiscardPileHasBasicPokemonCards
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, MorphEffect
-	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Morph_PlayerSelectEffect
-	dbw EFFECTCMDTYPE_AI_SELECTION, Morph_AISelectEffect
+TransformEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Transform_PreconditionCheck
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Transform_PlayerSelectEffect
+	; dbw EFFECTCMDTYPE_AI_SELECTION, Morph_AISelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, TransformEffect
 	db  $00
 
 Deal10ToAnyPokemonEffectCommands:

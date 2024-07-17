@@ -526,20 +526,13 @@ RampageDescription:
 	line "(after doing damage)."
 	done
 
-CopyName:
-	text "Copy"
-	done
-
-MorphName:
-	text "Morph"
-	done
-
-MorphDescription:
-	text "Remove all damage counters and"
-	line "effects from this Pokémon."
-	line "For the rest of the game, replace"
-	line "this Pokémon with a copy of a Basic"
-	line "Pokémon from your Discard Pile."
+TransformDescription:
+	text "Once during your turn, you may"
+	line "switch this Pokémon with a Basic"
+	line "Basic Pokémon in your discard pile."
+	line "Any attached cards, damage counters,"
+	line "Special Conditions and effects are"
+	line "now on the new Pokémon."
 	done
 
 ConversionBeamName:
@@ -1469,8 +1462,13 @@ ThunderWaveDescription:
 	line "Paralyzed."
 	done
 
-EnergizeName:
-	text "Energize"
+EnergyLinkName:
+	text "Energy Link"
+	done
+
+Attach1BasicEnergyFromDiscardDescription:
+	text "Attach a Basic Energy from your"
+	line "discard pile to this Pokémon."
 	done
 
 Attach1LightningEnergyFromDiscardDescription:

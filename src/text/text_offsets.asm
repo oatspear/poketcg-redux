@@ -255,7 +255,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer UnableToUseAttackDueToNShieldText                  ; 0x010a
 	textpointer NoDamageOrEffectDueToNShieldText                   ; 0x010b
 	textpointer NoDamageOrEffectDueToTransparencyText              ; 0x010c
-	textpointer MetamorphsToText                                   ; 0x010d
+	textpointer PutInPlayWithTransformText
 	textpointer SelectPkmnOnBenchToSwitchWithActiveText            ; 0x010e
 	textpointer SelectPokemonToPlaceInTheArenaText                 ; 0x010f
 	textpointer DuelistIsSelectingPokemonToPlaceInArenaText        ; 0x0110
@@ -2833,9 +2833,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PlasmaDescription
 	textpointer RampageName                                        ; 0x0b40
 	textpointer RampageDescription                                 ; 0x0b41
-	textpointer CopyName
-	textpointer MorphName                                          ; 0x0b45
-	textpointer MorphDescription                                   ; 0x0b46
+	textpointer TransformDescription
 	; textpointer Conversion1Name
 	; textpointer Conversion1Description
 	; textpointer Conversion2Name
@@ -3011,7 +3009,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer MoveOpponentEnergyToBenchDescription
 	textpointer Recoil30UnlessActiveThisTurnDescription
 	textpointer ThunderWaveDescription
-	textpointer EnergizeName
+	textpointer EnergyLinkName
 	textpointer Attach1LightningEnergyFromDiscardDescription
 	textpointer BoostedVoltageName
 	textpointer BoostedVoltageDescription

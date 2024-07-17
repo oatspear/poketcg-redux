@@ -530,7 +530,10 @@
 - New attack: **Stampede** (C): 20 damage; 10 damage to 1 of the user's Benched Pokémon.
 
 #### Ditto
-- **Copy**: increased cost from (CC) to (CCC).
+- **Morph**: removed.
+- **Copy**: removed.
+- New Pokémon Power: **Transform**: switch this Pokémon with a Basic Pokémon from the discard pile.
+- New attack: **Energy Link** (C): 10 damage; attach a Basic Energy from the discard pile to this.
 
 #### Porygon
 - **Conversion Beam**: reduced cost from (CCC) to (CC).
