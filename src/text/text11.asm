@@ -1205,14 +1205,14 @@ NeutralizingShieldDescription:
 	line "Evolved Pokémon."
 	done
 
-PsywaveName: ; 6134c (18:534c)
+PsywaveName:
 	text "Psywave"
 	done
 
-PsywaveDescription: ; 61355 (18:5355)
-	text "Does 10 damage times the number of"
-	line "Energy cards attached to the"
-	line "Defending Pokémon."
+PsywaveDescription:
+	text "Put 1 damage counter on the"
+	line "Defending Pokémon for each"
+	line "Energy attached to it."
 	done
 
 DevolutionBeamName:
@@ -1698,6 +1698,10 @@ RageFistDescription:
 PutDamageCountersOnPokemonText:
 	text "Put <RAMNUM> damage counters on"
 	line "<RAMTEXT>."
+	done
+
+PsychicLeapName:
+	text "Psychic Leap"
 	done
 
 MysteriousTailName:
