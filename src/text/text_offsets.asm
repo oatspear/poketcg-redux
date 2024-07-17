@@ -3010,6 +3010,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer Recoil30UnlessActiveThisTurnDescription
 	textpointer ThunderWaveDescription
 	textpointer EnergyLinkName
+	textpointer Attach1BasicEnergyFromDiscardDescription
 	textpointer Attach1LightningEnergyFromDiscardDescription
 	textpointer BoostedVoltageName
 	textpointer BoostedVoltageDescription
