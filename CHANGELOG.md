@@ -415,9 +415,15 @@
 - New Pokémon Power: **Strike Back**: does 10 counter damage to attackers.
 - New attack: **Psychic Nova** (PPC): 70 damage; discard the user's hand if the user has taken more Prizes.
 
+#### Mew Lv8
+- **Teleport Blast**: removed.
+- New attack: **Metronome** (CCC): copies one of the Defending Pokémon's attacks.
+
 #### Mew Lv15
 - **Clairvoyance**: removed.
+- **Metronome**: removed.
 - New Pokémon Power: **Mysterious Tail**: once per turn, if Active, you may put an Item card from the top 6 deck cards into the hand.
+- New attack: **Teleport Blast** (CC): 20 damage; switch with another Pokémon.
 
 ### Darkness Changes
 

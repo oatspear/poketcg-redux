@@ -8167,18 +8167,18 @@ MewLv8Card:
 	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy PSYCHIC, 1, COLORLESS, 1 ; energies
-	tx TeleportBlastName ; name
-	tx SwitchThisPokemonDescription ; description
+	energy COLORLESS, 3 ; energies
+	tx MetronomeName ; name
+	tx MetronomeDescription ; description
 	dw NONE ; description (cont)
-	db 20 ; damage
-	db DAMAGE_NORMAL ; category
-	dw SwitchUserEffectCommands ; effect commands
+	db 0 ; damage
+	db RESIDUAL ; category
+	dw MetronomeEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_PSYCHIC_HIT ; animation
+	db ATK_ANIM_NONE ; animation
 
 	db 0 ; retreat cost
 	db WR_DARKNESS ; weakness
@@ -8218,18 +8218,18 @@ MewLv15Card:
 	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy COLORLESS, 3 ; energies
-	tx MetronomeName ; name
-	tx MetronomeDescription ; description
+	energy COLORLESS, 2 ; energies
+	tx TeleportBlastName ; name
+	tx SwitchThisPokemonDescription ; description
 	dw NONE ; description (cont)
-	db 0 ; damage
-	db RESIDUAL ; category
-	dw MetronomeEffectCommands ; effect commands
+	db 20 ; damage
+	db DAMAGE_NORMAL ; category
+	dw SwitchUserEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_NONE ; animation
+	db ATK_ANIM_PSYCHIC_HIT ; animation
 
 	db 0 ; retreat cost
 	db WR_DARKNESS ; weakness
