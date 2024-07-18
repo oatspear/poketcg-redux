@@ -5264,20 +5264,33 @@ TransformEffect:
 	cp $ff
 	ret z
 	ldh [hTempCardIndex_ff98], a
+	ld c, a  ; deck index of the selected card in the discard pile
 
-; exchange card locations
+; get the current Pokémon using this ability
 	ldh a, [hTemp_ffa0]
+	ld e, a  ; play area location of the Pokémon using the ability
 	add DUELVARS_ARENA_CARD
 	call GetTurnDuelistVariable
-	ld d, a
-	ld l, a
+	ld b, a  ; deck index of the Pokémon using the ability
+
+; store the current damage on this card
+	; e: PLAY_AREA_* of the ability user
+	push bc
+	call GetCardDamageAndMaxHP  ; preserves hl, de, b
+	pop bc
+	ld d, a  ; damage taken
+
+; set this play area card to the index of the selected card
+	ld a, c
+	ld [hl], a
+; change the card location of the ability user to the discard pile
+	ld l, b
 	ld a, CARD_LOCATION_DISCARD_PILE
 	ld [hl], a
-	ldh a, [hTempCardIndex_ff98]
-	ld c, a
-	ld l, a
-	ldh a, [hTemp_ffa0]
-	add CARD_LOCATION_ARENA
+; change the card location of the selected card to the play area slot
+	ld l, c
+	ld a, CARD_LOCATION_ARENA
+	add e
 	ld [hl], a
 
 ; move this card to the discard pile and vice versa
@@ -5287,41 +5300,45 @@ TransformEffect:
 	cp c
 	jr nz, .discard_pile_loop
 	dec hl
-	ld a, d  ; the ability user card
+	ld a, b  ; the ability user card
 	ld [hl], a
 
 ; overwrite card stage (redundant)
-	ldh a, [hTemp_ffa0]
-	add DUELVARS_ARENA_CARD_STAGE
+	ld a, DUELVARS_ARENA_CARD_STAGE
+	add e
 	ld l, a
 	xor a  ; BASIC
 	ld [hl], a
 
+; point hl to the user's current HP
+	ld a, DUELVARS_ARENA_CARD_HP
+	add e
+	ld l, a
 ; overwrite HP (retain damage counters)
-	ldh a, [hTemp_ffa0]
-	add PLAY_AREA_ARENA
-	ld e, a
-	call GetCardDamageAndMaxHP
-	ldh a, [hTemp_ffa0]
-	add DUELVARS_ARENA_CARD_HP
-	call GetTurnDuelistVariable
-	ld d, a  ; current damage taken
-	ld a, c  ; new maximum HP
-	sub d    ; new current HP
+	ld a, c
+	call LoadCardDataToBuffer1_FromDeckIndex
+	ld a, [wLoadedCard1HP]
+	sub d  ; current HP = max HP - damage taken
+	jr nc, .got_hp
+	xor a
+.got_hp
 	ld [hl], a
+	cp 1
+	push af  ; carry set if KO
 
 ; clear changed color and status
 	; ld l, DUELVARS_ARENA_CARD_CHANGED_TYPE
 	; ld [hl], $00
 	; call ClearAllArenaStatusAndEffects
 
-	call IsPlayerTurn
-	ret c
+	; call IsPlayerTurn
+	; ret c
 	ldh a, [hTempCardIndex_ff98]
 	ldtx hl, PutInPlayWithTransformText
 	bank1call DisplayCardDetailScreen
-	; xor a
-	; ld [wDuelDisplayedScreen], a
+	pop af
+	ret nc
+	bank1call ClearKnockedOutPokemon_TakePrizes_CheckGameOutcome
 	ret
 
 
