@@ -661,7 +661,10 @@ StepIn_SwitchEffect:
 EvolutionaryFlame_DamageBurnEffect:
 	xor a  ; PLAY_AREA_ARENA
 	ldh [hTempPlayAreaLocation_ffa1], a
-	call BurnEffect
+	ld e, a
+	call SwapTurn
+	call BurnEffect_PlayArea
+	call SwapTurn
 	jp Deal20DamageToTarget_DamageEffect
 
 

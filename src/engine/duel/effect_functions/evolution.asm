@@ -274,13 +274,15 @@ DevolveSelectedPokemonEffect:
 	call DevolvePokemon
 	ld a, e
 	call PrintDevolvedCardNameAndLevelText
+; refresh screen to show devolved Pokémon
+	xor a  ; REFRESH_DUEL_SCREEN
+	ld [wDuelDisplayedScreen], a
+	bank1call DrawDuelMainScene
 ; check if this devolution is a Knock Out
 	ldh a, [hTempPlayAreaLocation_ffa1]
 	call PrintPlayAreaCardKnockedOutIfNoHP
 	ret nc  ; not Knocked Out
 	bank1call ClearKnockedOutPokemon_TakePrizes_CheckGameOutcome
-	xor a  ; REFRESH_DUEL_SCREEN
-	ld [wDuelDisplayedScreen], a
 	ret
 
 
@@ -291,6 +293,7 @@ DevolveTurnHolderArenaPokemonEffect:
 	or a  ; BASIC
 	ret z  ; nothing to do
 	xor a  ; PLAY_AREA_ARENA
+	ldh [hTempPlayAreaLocation_ffa1], a
 	jr DevolveSelectedPokemonEffect
 
 
