@@ -1198,21 +1198,22 @@ IsCounterattackActive:
 	call CheckCannotUseDueToStatus  ; preserves de
 	jr c, .dark_retribution
 
-; check the ID of the defending Pokémon
+; Strike Back Pokémon
 	ld a, [wTempNonTurnDuelistCardID]
 	cp MACHAMP
 	; ld hl, 20  ; damage to return
 	; call z, AddToDamage_DE
 	ld de, 20  ; damage to return
 	jr z, .dark_retribution
+
 	cp MEWTWO_LV60
 	; ld hl, 10  ; damage to return
 	; call z, AddToDamage_DE
-	jr nz, .desperate_blast
 	ld de, 10  ; damage to return
-	jr .dark_retribution
+	jr z, .dark_retribution
 
 .desperate_blast
+	ld de, 0   ; damage to return
 	cp ELECTRODE_LV35
 	jr nz, .dark_retribution
 ; only triggers if the Pokémon has been Knocked Out
