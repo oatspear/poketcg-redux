@@ -44,7 +44,7 @@
 	const ATK_ANIM_WHIP                   ; $27
 	const ATK_ANIM_TEAR                   ; $28
 	const ATK_ANIM_MULTIPLE_SLASH         ; $29
-	const ATK_ANIM_42                     ; $2a
+	const ATK_ANIM_TEAR_NO_DAMAGE         ; $2a
 	const ATK_ANIM_RAMPAGE                ; $2b
 	const ATK_ANIM_DRILL                  ; $2c
 	const ATK_ANIM_POT_SMASH              ; $2d

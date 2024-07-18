@@ -2419,7 +2419,7 @@ PinsirCard:
 	db NONE ; flags 2
 	db SPECIAL_AI_HANDLING ; flags 3
 	db 0
-	db ATK_ANIM_TEAR ; animation
+	db ATK_ANIM_TEAR_NO_DAMAGE ; animation
 
 	db 1 ; retreat cost
 	db WR_FIRE ; weakness
@@ -4115,7 +4115,7 @@ KinglerCard:
 	db NONE ; flags 2
 	db SPECIAL_AI_HANDLING ; flags 3
 	db 0
-	db ATK_ANIM_TEAR ; animation
+	db ATK_ANIM_TEAR_NO_DAMAGE ; animation
 
 	; attack 2
 	energy WATER, 2, COLORLESS, 1 ; energies
@@ -7275,7 +7275,7 @@ KabutopsCard:
 	db NONE ; flags 2
 	db SPECIAL_AI_HANDLING ; flags 3
 	db 0
-	db ATK_ANIM_TEAR ; animation
+	db ATK_ANIM_TEAR_NO_DAMAGE ; animation
 
 	; attack 2
 	energy FIGHTING, 1, COLORLESS, 2 ; energies

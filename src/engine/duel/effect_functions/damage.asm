@@ -581,7 +581,9 @@ KnockOutDefendingPokemonEffect:
 	; pop hl
 	ld l, DUELVARS_ARENA_CARD
 	ld a, [hl]
+	call SwapTurn
 	call LoadCardDataToBuffer2_FromDeckIndex
+	call SwapTurn
 	ld hl, wLoadedCard2Name
 	ld a, [hli]
 	ld h, [hl]

@@ -64,7 +64,7 @@ PointerTable_AttackAnimation:
 	dw AttackAnimation_Whip                ; ATK_ANIM_WHIP
 	dw AttackAnimation_Tear                ; ATK_ANIM_TEAR
 	dw AttackAnimation_MultipleSlash       ; ATK_ANIM_MULTIPLE_SLASH
-	dw AttackAnimation_MultipleSlash       ; ATK_ANIM_42
+	dw AttackAnimation_TearNoDamage        ; ATK_ANIM_TEAR_NO_DAMAGE
 	dw AttackAnimation_MultipleSlash       ; ATK_ANIM_RAMPAGE
 	dw AttackAnimation_Drill               ; ATK_ANIM_DRILL
 	dw AttackAnimation_PotSmash            ; ATK_ANIM_POT_SMASH
@@ -406,6 +406,12 @@ AttackAnimation_Tear:
 	anim_opponent       DUEL_ANIM_HIT
 	anim_normal         DUEL_ANIM_SHAKE1
 	anim_opponent       DUEL_ANIM_SHOW_DAMAGE
+	anim_end
+
+AttackAnimation_TearNoDamage:
+	anim_player         DUEL_ANIM_GLOW
+	anim_opponent       DUEL_ANIM_TEAR
+	anim_normal         DUEL_ANIM_SHAKE1
 	anim_end
 
 AttackAnimation_MultipleSlash:
