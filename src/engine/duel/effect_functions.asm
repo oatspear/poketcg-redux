@@ -5338,6 +5338,8 @@ TransformEffect:
 	bank1call DisplayCardDetailScreen
 	pop af
 	ret nc
+	ldtx hl, WasKnockedOutText
+	call DrawWideTextBox_WaitForInput
 	bank1call ClearKnockedOutPokemon_TakePrizes_CheckGameOutcome
 	ret
 
