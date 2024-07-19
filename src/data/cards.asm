@@ -9693,18 +9693,18 @@ DratiniCard:
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
 	; attack 2
-	energy COLORLESS, 1 ; energies
-	tx WrapName ; name
-	tx MayInflictParalysisDescription ; description
+	energy COLORLESS, 2 ; energies
+	tx AgilityName ; name
+	tx ImmuneIfKnockedOutOpponentDescription ; description
 	dw NONE ; description (cont)
-	db 10 ; damage
+	db 20 ; damage
 	db DAMAGE_NORMAL ; category
-	dw Paralysis50PercentEffectCommands ; effect commands
-	db INFLICT_PARALYSIS ; flags 1
-	db NONE ; flags 2
+	dw ImmuneIfKnockedOutOpponentEffectCommands ; effect commands
+	db NONE ; flags 1
+	db NULLIFY_OR_WEAKEN_ATTACK ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_HIT ; animation
+	db ATK_ANIM_QUICK_ATTACK ; animation
 
 	db 0 ; retreat cost
 	db NONE ; weakness
@@ -9743,12 +9743,6 @@ DragonairCard:
 
 	; Dragon's Wish (C)
 	; During your next turn, you may attach any number of Energy cards from your hand onto this Pokémon
-
-	; Wrap (CC) 20
-	; Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed.
-
-	; Spiral Wave (WL) 20x
-	; Flip a coin until you get tails. This attack does 20 damage times the number of heads.
 
 	; Destructive Whirlpool (WLCC) 60
 	; Discard an Energy attached to your opponent's Active Pokémon.
@@ -9811,12 +9805,6 @@ DragoniteLv41Card:
 	db STAGE2 ; stage
 	tx DragonairName ; pre-evo name
 
-	; Pokémon Power: Top Accelerator
-	; Once during your turn (before your attack), you may reveal the top card of your deck.
-	; If that card is a basic Energy card, attach it to 1 of your Pokémon.
-	; If that card isn't a basic Energy card, discard it.
-	; This power can't be used if Dragonite is affected by a Special Condition.
-
 	; Pokémon Power: Dragon Wind
 	; Once during your turn (before your attack), if Dragonite is your Active Pokémon,
 	; you may switch 1 of your opponent's Benched Pokémon with the Defending Pokémon.
@@ -9841,9 +9829,6 @@ DragoniteLv41Card:
 	; the Defending Pokémon. If you discarded 2 basic Water Energy cards, this attack
 	; does 100 damage to 1 of your opponent's Benched Pokémon.
 	; (Don't apply Weakness and Resistance for Benched Pokémon.)
-
-	; Speed Impact (CCC) 100-
-	; Does 100 damage minus 20 damage for each Energy attached to the Defending Pokémon.
 
 	; attack 1
 	energy COLORLESS, 2 ; energies

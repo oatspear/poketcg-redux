@@ -453,10 +453,6 @@ IncreaseRetreatCostEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, IncreaseRetreatCostEffect
 	db  $00
 
-SupersonicEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SupersonicEffect
-	db  $00
-
 AmnesiaEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, Amnesia_CheckAttacks
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Amnesia_PlayerSelectEffect
@@ -473,6 +469,7 @@ ParalysisRecoil20EffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Recoil20Effect
 	db  $00
 
+; unused
 ParalysisIfDiscardedEnergyEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, OptionalDiscardEnergy_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ParalysisIfSelectedCardEffect
@@ -480,6 +477,7 @@ ParalysisIfDiscardedEnergyEffectCommands:
 	dbw EFFECTCMDTYPE_AI_SELECTION, OptionalDiscardEnergyForStatus_AISelectEffect
 	db  $00
 
+; unused
 ClampEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasAnyEnergiesAttached
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, DiscardEnergy_PlayerSelectEffect
@@ -488,6 +486,7 @@ ClampEffectCommands:
 	dbw EFFECTCMDTYPE_AI_SELECTION, DiscardEnergy_AISelectEffect
 	db  $00
 
+; unused
 ThunderWaveEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, ThunderWave_PreconditionCheck
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, ThunderWave_PlayerSelectEffect
@@ -725,10 +724,6 @@ OvervoltageEffectCommands:
 
 BoostedVoltageEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, IfAttachedToolDamageOpponentBench10Effect
-	db  $00
-
-Confusion50PercentEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Confusion50PercentEffect
 	db  $00
 
 FlamesOfRageEffectCommands:

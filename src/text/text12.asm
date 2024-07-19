@@ -121,14 +121,6 @@ TwineedleName: ; 58070 (16:4070)
 	text "Twineedle"
 	done
 
-SpitPoisonName: ; 58131 (16:4131)
-	text "Spit Poison"
-	done
-
-WrapName: ; 5813e (16:413e)
-	text "Wrap"
-	done
-
 TerrorStrikeName: ; 581ad (16:41ad)
 	text "Terror Strike"
 	done

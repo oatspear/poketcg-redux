@@ -2749,8 +2749,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer OpponentSwitchesPokemonDescription                 ; 0x082d
 	textpointer PoisonStingName                                    ; 0x0833
 	textpointer TwineedleName                                      ; 0x083b
-	textpointer SpitPoisonName                                     ; 0x0840
-	textpointer WrapName                                           ; 0x0841
 	textpointer TerrorStrikeName                                   ; 0x0845
 	textpointer PoisonFangName                                     ; 0x0847
 	textpointer FurySwipesName                                     ; 0x084b

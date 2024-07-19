@@ -32,11 +32,6 @@ ParalysisEffect: ; 2c018 (b:4018)
 	lb bc, PSN_DBLPSN_BRN, PARALYZED
 	jr ApplyStatusEffect
 
-Confusion50PercentEffect: ; 2c01d (b:401d)
-	ldtx de, ConfusionCheckText
-	call TossCoin_BankB
-	ret nc
-
 ConfusionEffect: ; 2c024 (b:4024)
 	lb bc, PSN_DBLPSN_BRN, CONFUSED
 	jr ApplyStatusEffect
@@ -125,12 +120,6 @@ JellyfishSting_PoisonConfusionEffect:
 	jp z, PoisonEffect  ; not yet Poisoned
 	jp ConfusionEffect
 
-
-; If heads, defending Pokemon becomes confused
-SupersonicEffect:
-	call Confusion50PercentEffect
-	call nc, SetNoEffectFromStatus
-	ret
 
 ; Defending Pokémon and user become confused.
 ; Defending Pokémon also becomes Poisoned.

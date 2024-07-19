@@ -539,7 +539,9 @@
 - **Conversion Beam**: reduced cost from (CCC) to (CC).
 
 #### Dratini
+- **Wrap**: removed.
 - **Dragon Dance**: attaches an energy from the deck instead of the hand.
+- New attack: **Agility** (CC): 20 damage; immune next turn if this attack Knocks Out the Defending Pokémon.
 
 ### Game Menu Changes
 - Updated Glossary pages.
