@@ -613,6 +613,8 @@ CheckDefendingPokemonHas50HpOrLess:
 	call GetNonTurnDuelistVariable
 	cp 51
 	ccf
+	ret nc
+	ldtx hl, ThatPokemonHasTooMuchHPText
 	ret
 
 
@@ -623,6 +625,8 @@ CheckDefendingPokemonHas70HpOrLess:
 	call GetNonTurnDuelistVariable
 	cp 71
 	ccf
+	ret nc
+	ldtx hl, ThatPokemonHasTooMuchHPText
 	ret
 
 

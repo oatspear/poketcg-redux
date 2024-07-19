@@ -308,7 +308,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer EvolvedPokemonText
 	textpointer GrassCardText
 	textpointer PeekWasUsedToLookInYourHandText                    ; 0x0145
-	textpointer CardPeekWasUsedOnText                              ; 0x0146
+	textpointer ThatPokemonHasTooMuchHPText
 	textpointer PokemonAndAllAttachedCardsReturnedToHandText       ; 0x0147
 	textpointer WasChosenForTheEffectOfAmnesiaText                 ; 0x0148
 	textpointer BasicPokemonWasPlacedOnEachBenchText               ; 0x0149

@@ -428,8 +428,8 @@ PeekWasUsedToLookInYourHandText: ; 39318 (e:5318)
 	line "<RAMTEXT> in your Hand."
 	done
 
-CardPeekWasUsedOnText: ; 39346 (e:5346)
-	text "Card Peek was used on"
+ThatPokemonHasTooMuchHPText:
+	text "That Pokémon has too much HP."
 	done
 
 PokemonAndAllAttachedCardsReturnedToHandText: ; 3935d (e:535d)
