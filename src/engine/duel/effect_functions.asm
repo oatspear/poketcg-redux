@@ -5146,19 +5146,13 @@ Helper_SelectEnergyFromHand:
 	ld a, $ff
 	ret
 
-OptionalAttachEnergyFromHand_PlayerSelectEffect:
+
+AttachEnergyFromHand_PlayerSelectEffect:
 	call Helper_SelectEnergyFromHand
 	ldh [hEnergyTransEnergyCard], a
 	cp $ff
 	ret z
-	jr AttachEnergyFromHand_PlayerSelectEffect.select_play_area
-
-AttachEnergyFromHand_PlayerSelectEffect:
-	call Helper_SelectEnergyFromHand
-	jr c, Helper_SelectEnergyFromHand.loop_hand_input
-	ldh [hEnergyTransEnergyCard], a
 .select_play_area
-; handle Player selection (play area)
 	call Helper_ChooseAPokemonInPlayArea_EmptyScreen
 	ldh [hTempPlayAreaLocation_ffa1], a
 	ret
