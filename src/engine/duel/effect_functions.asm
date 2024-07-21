@@ -7416,6 +7416,8 @@ ChooseUpTo4Cards_PlayerDiscardPileSelection:
 ;  [wDuelTempList]: list of cards to choose from
 ChooseUpToNCards_PlayerDiscardPileSelection:
 	ld l, a
+	ld a, $ff
+	ldh [hTempList], a
 	xor a
 	ldh [hCurSelectionItem], a
 	ld h, a
@@ -7454,7 +7456,7 @@ ChooseUpToNCardsFromCardList_PlayerSelectionLoop:
 	; B pressed
 	ld a, [wCardListNumberOfCardsToChoose]
 	call AskWhetherToQuitSelectingCards
-	jr c, .loop ; chose to continue
+	jr c, ChooseUpToNCards_PlayerDiscardPileSelectionLoop ; chose to continue
 	jr .done
 
 .store_selected_card

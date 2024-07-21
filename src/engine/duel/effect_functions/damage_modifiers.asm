@@ -1144,11 +1144,13 @@ IfActiveThisTurnBonusDamage_DamageBoostEffect:
 
 
 AquaticRescue_DamageMultiplierEffect:
+	xor a
+	call SetDefiniteDamage
 	ld a, CARDTEST_POKEMON
 	call CountMatchingCardsInTempList
 	ret z  ; none
 	call ATimes10
-	call AddToDamage
+	call SetDefiniteDamage
 	ld a, ATK_ANIM_HIT
 	ld [wLoadedAttackAnimation], a
 	ret
