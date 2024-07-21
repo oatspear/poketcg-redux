@@ -2223,6 +2223,11 @@ BatonPass_SwitchEffect:
 	jr SwitchUser_SwitchEffect.switch
 
 
+AquaReturn_PlayerSelectEffect:
+	ld a, PLAY_AREA_BENCH_1
+	ldh [hTempPlayAreaLocation_ffa1], a
+	; fallthrough
+
 Teleport_PlayerSelectEffect:
 	ldtx hl, SelectPokemonToPlaceInTheArenaText
 	call DrawWideTextBox_WaitForInput
@@ -7447,7 +7452,7 @@ ChooseUpToNCards_PlayerDiscardPileSelectionLoop:
 ;  [hCurSelectionItem]: current index (normally zero)
 ChooseUpToNCardsFromCardList_PlayerSelectionLoop:
 	bank1call SetCardListHeaderText
-.loop
+; loop
 	ld a, [wDuelTempList]
 	cp $ff
 	jr z, .done  ; no more cards to choose from
@@ -7469,7 +7474,7 @@ ChooseUpToNCardsFromCardList_PlayerSelectionLoop:
 	ld b, a
 	ldh a, [hCurSelectionItem]
 	cp b
-	jr c, .loop
+	jr c, ChooseUpToNCards_PlayerDiscardPileSelectionLoop
 
 .done
 ; insert terminating byte
