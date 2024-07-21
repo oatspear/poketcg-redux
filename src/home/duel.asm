@@ -1784,6 +1784,9 @@ PlayAttackAnimation_DealAttackDamage:
 	call HandleDestinyBond_ClearKnockedOutPokemon_TakePrizes_CheckGameOutcome
 	jr c, .done  ; duel finished
 
+; reset some variables to prepare for the next phase
+	xor a
+	ld [wEffectFunctionsFeedbackIndex], a
 ; effects that happen after selecting a new Active Pokémon
 	ld a, [wTempNonTurnDuelistCardID]
 	push af
@@ -1791,7 +1794,7 @@ PlayAttackAnimation_DealAttackDamage:
 	call TryExecuteEffectCommandFunction
 	pop af
 	ld [wTempNonTurnDuelistCardID], a
-	call HandleStrikeBack_AfterDirectAttack
+	; call HandleStrikeBack_AfterDirectAttack
 	bank1call Func_6df1
 	call Func_1bb4
 	bank1call Func_7195
