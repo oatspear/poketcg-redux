@@ -1529,7 +1529,7 @@ OnPokemonPlayedInitVariablesAndPowers:
 	ld a, [wLoadedAttackCategory]
 	cp POKEMON_POWER
 	ret nz
-	call DisplayUsePokemonPowerScreen
+	bank1call DisplayUsePokemonPowerScreen
 	ldh a, [hTempCardIndex_ff98]
 	call LoadCardDataToBuffer1_FromDeckIndex
 	ld hl, wLoadedCard1Name
@@ -1551,7 +1551,7 @@ OnPokemonPlayedInitVariablesAndPowers:
 	bit TURN_FLAG_PKMN_POWERS_DISABLED_F, a
 	jr z, .use_pokemon_power
 .unable_to_use
-	call DisplayUsePokemonPowerScreen
+	bank1call DisplayUsePokemonPowerScreen
 	ldtx hl, UnableToUsePkmnPowerDueToDisableEffectText
 	call DrawWideTextBox_WaitForInput
 	jp ExchangeRNG
