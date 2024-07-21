@@ -714,7 +714,7 @@ Courier_TutorEffect:
 
 .done
 	cp $ff
-	ret z
+	jp z, SyncShuffleDeck
 	jp AddDeckCardToHandAndShuffleEffect
 
 
@@ -750,7 +750,7 @@ EnergyStream_TutorEffect:
 
 .done
 	cp $ff
-	ret z
+	jp z, SyncShuffleDeck
 	jp AddDeckCardToHandAndShuffleEffect
 
 
