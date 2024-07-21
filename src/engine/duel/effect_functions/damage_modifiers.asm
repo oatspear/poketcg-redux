@@ -292,8 +292,6 @@ Plus20DamageIfLessEnergyThanOpponent_AIEffect:
 ; +10 for each selected energy to recover from discard
 Riptide_DamageBoostEffect:
 	call TempListLength
-	or a
-	ret z
 	call ATimes10
 	jp SetDefiniteDamage
 
