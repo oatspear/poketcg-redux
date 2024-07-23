@@ -247,20 +247,12 @@ AIDecideEvolution:
 .check_defending_can_ko_evolution
 	ld a, [wTempAI]
 	or a
-	jr nz, .check_mr_mime
+	jr nz, .check_defending_can_ko
 	xor a
 	ldh [hTempPlayAreaLocation_ff9d], a
 	call CheckIfDefendingPokemonCanKnockOut
-	jr nc, .check_mr_mime
+	jr nc, .check_defending_can_ko
 	ld a, 5
-	call SubFromAIScore
-
-; if evolution can't damage player's Mr Mime, lower AI score
-.check_mr_mime
-	ld a, [wTempAI]
-	call CheckDamageToMrMime
-	jr c, .check_defending_can_ko
-	ld a, 20
 	call SubFromAIScore
 
 ; if defending Pokémon can KO current card, raise AI score

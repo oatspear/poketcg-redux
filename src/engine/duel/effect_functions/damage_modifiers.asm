@@ -292,8 +292,6 @@ Plus20DamageIfLessEnergyThanOpponent_AIEffect:
 ; +10 for each selected energy to recover from discard
 Riptide_DamageBoostEffect:
 	call TempListLength
-	or a
-	ret z
 	call ATimes10
 	jp SetDefiniteDamage
 
@@ -332,7 +330,7 @@ Wildfire_DamageBoostEffect:
 	jp AddToDamage
 
 
-PsychicNova_MultiplierEffect:
+Psyburn_MultiplierEffect:
 SheerCold_MultiplierEffect:
 ScorchingColumn_MultiplierEffect:
 Discharge_MultiplierEffect:
@@ -354,7 +352,7 @@ Discharge_AIEffect:
 	jp SetDefiniteAIDamage
 
 
-PsychicNova_AIEffect:
+Psyburn_AIEffect:
 	call GetPlayAreaCardAttachedEnergies
 	call HandleEnergyColorOverride
 	ld a, [wAttachedEnergies + PSYCHIC]
@@ -463,21 +461,6 @@ IfOpponentHasAttachedToolDoubleDamage_AIEffect:
 ; ------------------------------------------------------------------------------
 
 
-; +20 damage if the opponent has at least 5 cards in hand
-Psyshock_DamageBoostEffect:
-  ld c, 5
-  call SwapTurn
-	call CheckHandSizeIsLessThanC
-  call SwapTurn
-	ret nc  ; hand size < 5
-	ld a, 20
-	jp AddToDamage
-
-Psyshock_AIEffect:
-  call Psyshock_DamageBoostEffect
-  jp SetDefiniteAIDamage
-
-
 ; 20 damage for each card in opponent's hand
 MindRuler_DamageBoostEffect:
   ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND
@@ -576,6 +559,19 @@ DoubleDamageIfMorePrizes_AIEffect:
   jp SetDefiniteAIDamage
 
 
+; +10 damage for each Prize the opponent has taken
+RageFist_DamageBoostEffect:
+	call SwapTurn
+	call CountPrizesTaken
+	call SwapTurn
+	call ATimes10
+	jp AddToDamage
+
+RageFist_AIEffect:
+	call RageFist_DamageBoostEffect
+	jp SetDefiniteAIDamage
+
+
 ; ------------------------------------------------------------------------------
 ; Based on Discard Pile
 ; ------------------------------------------------------------------------------
@@ -597,12 +593,23 @@ Vengeance_AIEffect:
 	jp SetDefiniteAIDamage
 
 
-; +30 damage if 7 or more Items in discard pile
+; +30 damage if 10 or more Items in both discard piles
 ToxicWaste_DamageBoostEffect:
 	call CreateItemCardListFromDiscardPile
 	call CountCardsInDuelTempList
-	cp 7
+	cp 10
+	jr nc, .enough
+	ld c, a
+	push bc
+	call SwapTurn
+	call CreateItemCardListFromDiscardPile
+	call CountCardsInDuelTempList
+	call SwapTurn
+	pop bc
+	add c
+	cp 10
 	ret c  ; not enough cards
+.enough
   ld a, 30
 	jp AddToDamage
 
@@ -761,7 +768,7 @@ Rout_AIEffect:
   jp SetDefiniteAIDamage
 
 
-; +20 damage for each of the opponent's Pokémon with a Pokémon Power
+; +10 damage for each of the opponent's Pokémon with a Pokémon Power
 TerrorStrike_DamageBoostEffect:
   call SwapTurn
   ld a, DUELVARS_ARENA_CARD
@@ -780,7 +787,7 @@ TerrorStrike_DamageBoostEffect:
 .done
   call SwapTurn
   ld a, c
-  add a  ; x20
+  ; add a  ; x20
   call ATimes10
   jp AddToDamage
 
@@ -1135,11 +1142,13 @@ IfActiveThisTurnBonusDamage_DamageBoostEffect:
 
 
 AquaticRescue_DamageMultiplierEffect:
+	xor a
+	call SetDefiniteDamage
 	ld a, CARDTEST_POKEMON
 	call CountMatchingCardsInTempList
 	ret z  ; none
 	call ATimes10
-	call AddToDamage
+	call SetDefiniteDamage
 	ld a, ATK_ANIM_HIT
 	ld [wLoadedAttackAnimation], a
 	ret

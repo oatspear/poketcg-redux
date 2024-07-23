@@ -211,9 +211,16 @@ DealExcessDamageToTarget_DamageEffect:
 	ret z
 	ld d, 0
 	ld e, a  ; excess damage
+; refresh screen to show new Active Pokémon
+	push de
+	; xor a  ; REFRESH_DUEL_SCREEN
+	; ld [wDuelDisplayedScreen], a
+	; bank1call DrawDuelMainScene
+	ldtx hl, DoExcessDamageToTheNewActivePokemonText
+	call DrawWideTextBox_WaitForInput
+	pop de
 	xor a  ; PLAY_AREA_ARENA
-	ldh [hTempPlayAreaLocation_ffa1], a
-	jr DealDamageToTarget_DE_DamageEffect
+	jr DealDamageToTargetA_DE_DamageEffect
 
 
 Deal10DamageToFriendlyTarget_DamageEffect:
@@ -235,7 +242,114 @@ DealDamageToFriendlyTarget_DE_DamageEffect:
 	cp $ff
 	ret z
 	ld b, a
+	ld a, TRUE
+	ld [wIsDamageToSelf], a
 	jp DealDamageToPlayAreaPokemon_RegularAnim
+
+
+; ------------------------------------------------------------------------------
+; Targeted Damage - Damage Counters
+; ------------------------------------------------------------------------------
+
+
+; puts 2 damage counters on the target at location in e,
+; without counting as attack damage (does not trigger damage reduction, etc.)
+; assumes: call to SwapTurn if needed
+; inputs:
+;   e: PLAY_AREA_* of the target
+; output:
+;   carry: set if the target was Knocked Out
+Put2DamageCountersOnTarget:
+	ld d, 20
+	jr ApplyDirectDamage_RegularAnim
+
+
+; puts 1 damage counter on the target at location in e,
+; without counting as attack damage (does not trigger damage reduction, etc.)
+; assumes: call to SwapTurn if needed
+; inputs:
+;   e: PLAY_AREA_* of the target
+; output:
+;   carry: set if the target was Knocked Out
+Put1DamageCounterOnTarget:
+	ld d, 10
+	; jr ApplyDirectDamage_RegularAnim
+	; fallthrough
+
+
+; Puts damage counters on the target at location in e,
+;   without counting as attack damage (does not trigger damage reduction, etc.)
+; This is a mix between DealDamageToPlayAreaPokemon_RegularAnim (bank 0)
+;   and HandlePoisonDamage (bank 1).
+; inputs:
+;   d: amount of damage to deal
+;   e: PLAY_AREA_* of the target
+; output:
+;   carry: set if the target was Knocked Out
+; preserves:
+;   hl, de, bc
+ApplyDirectDamage_RegularAnim:
+	ld a, ATK_ANIM_BENCH_HIT
+	ld [wLoadedAttackAnimation], a
+	; fallthrough
+
+ApplyDirectDamage:
+	push hl
+	push de
+	push bc
+	ld a, e
+	ld [wTempPlayAreaLocation_cceb], a
+	or a ; cp PLAY_AREA_ARENA
+	jr nz, .bench
+; arena
+	ld a, [wNoDamageOrEffect]
+	or a
+	jr nz, .no_damage
+	jr .skip_no_damage_or_effect_check
+.bench
+	call IsBodyguardActive
+	jr nc, .skip_no_damage_or_effect_check
+.no_damage
+	ld d, 0
+.skip_no_damage_or_effect_check
+	xor a
+	ld [wNoDamageOrEffect], a
+	ld e, d
+	ld d, 0
+	push de
+	ld a, [wTempPlayAreaLocation_cceb]
+	add DUELVARS_ARENA_CARD
+	call GetTurnDuelistVariable
+	call GetCardIDFromDeckIndex
+	ld a, e
+	ld [wTempNonTurnDuelistCardID], a
+	pop de
+	ld a, [wTempPlayAreaLocation_cceb]
+	ld b, a
+	ld c, 0
+	add DUELVARS_ARENA_CARD_HP
+	call GetTurnDuelistVariable
+	push af
+	bank1call Func_7415
+	bank1call PlayAttackAnimation_DealAttackDamageSimple
+	; push hl
+	; call WaitForWideTextBoxInput
+	; pop hl
+	; push hl
+	; ldtx hl, Received10DamageDueToAfflictionText
+	; bank1call PrintNonTurnDuelistCardIDText
+	; pop hl
+	pop af
+	or a
+	jr z, .skip_knocked_out
+	call PrintKnockedOutIfHLZero
+	call WaitForWideTextBoxInput
+	scf  ; signal KO
+.skip_knocked_out
+	pop bc
+	pop de
+	pop hl
+	ret
 
 
 ; ------------------------------------------------------------------------------
@@ -297,7 +411,73 @@ SurpriseBite_PlayerSelectEffect:
 	call SwapTurn
 	ld a, CARDTEST_FULL_HP_POKEMON
 	call HandlePlayerSelectionMatchingPokemonInBench_AllowCancel
+	ldh [hTempPlayAreaLocation_ffa1], a
 	jp SwapTurn
+
+
+;
+GetMad_PlayerSelectEffect:
+; store the current HP of the user
+	ld a, DUELVARS_ARENA_CARD_HP
+	call GetTurnDuelistVariable
+	ldh [hTemp_ffa0], a
+; menu prompt
+	ldtx hl, PutHowManyDamageCountersMenuText
+	call DrawWideTextBox_PrintText
+; set up menu parameters
+	ld e, PLAY_AREA_ARENA
+	call GetCardDamageAndMaxHP
+	ld d, a  ; damage
+	ld a, c  ; max HP
+	sub d    ; current HP
+	; sub 10
+	call ADividedBy10  ; max damage counters
+	; dec a
+	ld hl, GetMad_NumberSliderHandler
+; handle input
+	call HandleNumberSlider
+	ret c  ; cancelled
+	; cp 1
+	; ret c  ; zero equals cancelled
+; restore HP to what it was
+	ld a, DUELVARS_ARENA_CARD_HP
+	call GetTurnDuelistVariable  ; preserves nc flag
+	ldh a, [hTemp_ffa0]
+	ld [hl], a
+; store selected number of damage counters
+	ldh a, [hCurMenuItem]
+	ldh [hTemp_ffa0], a
+	; or a  ; no carry
+	ret
+
+
+; input:
+;   a: current slider number (already inverted)
+GetMad_NumberSliderHandler:
+; convert damage counters into actual damage
+	call ATimes10
+	ld c, a  ; temp storage
+; blink the HP bar every 16 frames
+	ld hl, wCursorBlinkCounter
+	ld a, [hl]
+	and $f
+	ret nz
+	bit 4, [hl]
+	ldh a, [hTemp_ffa0]  ; initial HP
+	ld b, a  ; final HP value to draw
+	jr nz, .draw_unchanged_hp
+	sub c  ; not supposed to underflow
+	ld b, a
+.draw_unchanged_hp
+; change current HP based on user input
+	ld a, DUELVARS_ARENA_CARD_HP
+	call GetTurnDuelistVariable
+	ld a, b
+	cp [hl]
+	ret z  ; no change
+	ld [hl], a
+	bank1call DrawDuelHUDs
+	ret
 
 
 ; ------------------------------------------------------------------------------
@@ -397,11 +577,17 @@ SpikesDamageEffect:
 ; Other Forms of Damage
 ; ------------------------------------------------------------------------------
 
+; assume:
+;   - this is called after dealing damage, to have [wNoDamageOrEffect] set
 KnockOutDefendingPokemonEffect:
+	call CheckDefendingPokemonAffectedByEffects
+	jp c, DrawWideTextBox_WaitForInput
+; affected by effects
 	ld a, DUELVARS_ARENA_CARD_HP
 	call GetNonTurnDuelistVariable
 	or a
 	ret z
+; not Knocked Out previously
 	ld [hl], 0
 	; push hl
 	; call DrawDuelMainScene
@@ -409,7 +595,9 @@ KnockOutDefendingPokemonEffect:
 	; pop hl
 	ld l, DUELVARS_ARENA_CARD
 	ld a, [hl]
+	call SwapTurn
 	call LoadCardDataToBuffer2_FromDeckIndex
+	call SwapTurn
 	ld hl, wLoadedCard2Name
 	ld a, [hli]
 	ld h, [hl]

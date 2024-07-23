@@ -300,7 +300,7 @@ EnergyRemovalCardList:
 	card_item POLIWAG,                  4
 	card_item POLIWHIRL,                3
 	card_item POLIWRATH,                2
-	card_item GASTLY_LV17,              4
+	card_item GASTLY,                   4
 	card_item HAUNTER_LV17,             3
 	card_item DRATINI,                  3
 	card_item DRAGONAIR,                2
@@ -580,8 +580,7 @@ PsychicPowerCardList:
 	card_item ALAKAZAM,          1
 	card_item SLOWPOKE_LV9,      2
 	card_item SLOWBRO,           1
-	card_item GASTLY_LV8,        1
-	card_item GASTLY_LV17,       2
+	card_item GASTLY,            3
 	card_item HAUNTER_LV17,      1
 	card_item HAUNTER_LV22,      1
 	card_item GENGAR,            1
@@ -590,7 +589,7 @@ PsychicPowerCardList:
 	card_item MR_MIME,           1
 	card_item JYNX,              1
 	card_item MEWTWO_LV53,       1
-	card_item MEW_LV23,          1
+	card_item MEW_LV15,          1
 	card_item CLEFAIRY,          1
 	card_item CLEFABLE,          1
 	card_item SNORLAX,           1
@@ -609,7 +608,7 @@ DreamEaterHaunterCardList:
 	card_item PSYCHIC_ENERGY,         17
 	card_item ZUBAT,                   3
 	card_item GOLBAT,                  2
-	card_item GASTLY_LV8,              4
+	card_item GASTLY,                  4
 	card_item HAUNTER_LV17,            1
 	card_item HAUNTER_LV22,            2
 	card_item GENGAR,                  2
@@ -633,7 +632,7 @@ ScavengingSlowbroCardList:
 	card_item SLOWBRO,           3
 	card_item JYNX,              3
 	card_item MEWTWO_LV53,       2
-	card_item MEW_LV23,          2
+	card_item MEW_LV15,          2
 	card_item JIGGLYPUFF,        4
 	card_item EEVEE,             2
 	card_item ENERGY_RETRIEVAL,  2
@@ -655,7 +654,7 @@ StrangePowerCardList:
 	card_item MR_MIME,                  2
 	card_item JYNX,                     2
 	card_item MEW_LV8,                  1
-	card_item MEW_LV23,                 2
+	card_item MEW_LV15,                 2
 	card_item LICKITUNG,                2
 	card_item SNORLAX,                  1
 	card_item POKEMON_TRADER,           2
@@ -786,8 +785,7 @@ WondersOfScienceCardList:
 	card_item KOFFING,                 4
 	card_item WEEZING,                 3
 	card_item MEWTWO_LV53,             2
-	card_item MEWTWO_ALT_LV60,         1
-	card_item MEWTWO_LV60,             1
+	card_item MEWTWO_LV60,             2
 	card_item PORYGON,                 2
 	card_item IMPOSTER_PROFESSOR_OAK,  1
 	card_item PROFESSOR_OAK,           2
@@ -1006,7 +1004,7 @@ BulbasaurAndFriendsCardList:
 	card_item ELECTABUZZ_LV35,  1
 	card_item ABRA,             2
 	card_item KADABRA,          1
-	card_item GASTLY_LV8,       2
+	card_item GASTLY,           2
 	card_item HAUNTER_LV22,     1
 	card_item JYNX,             1
 	card_item JIGGLYPUFF,       1
@@ -1038,12 +1036,12 @@ PsychicMachampCardList:
 	card_item ABRA,             2
 	card_item KADABRA,          1
 	card_item ALAKAZAM,         1
-	card_item GASTLY_LV8,       2
+	card_item GASTLY,           2
 	card_item HAUNTER_LV22,     1
 	card_item GENGAR,           1
 	card_item MR_MIME,          1
 	card_item JYNX,             1
-	card_item MEW_LV23,         1
+	card_item MEW_LV15,         1
 	card_item PIDGEY,           2
 	card_item PIDGEOTTO,        1
 	card_item PIDGEOT_LV40,     1

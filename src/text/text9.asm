@@ -1400,6 +1400,10 @@ GasName:
 	text "Gas"
 	done
 
+ShadowName:
+	text "Shadow"
+	done
+
 RockSnakeName:
 	text "Rock Snake"
 	done

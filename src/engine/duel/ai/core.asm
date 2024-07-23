@@ -1387,33 +1387,9 @@ CopyHandCardList:
 	inc de
 	jr CopyHandCardList
 
+
 INCLUDE "engine/duel/ai/hand_pokemon.asm"
 
-; check if player's active Pokémon is Mr Mime
-; if it isn't, set carry
-; if it is, check if Pokémon at a
-; can damage it, and if it can, set carry
-; input:
-;	a = location of Pokémon card
-CheckDamageToMrMime:
-	push af
-	ld a, DUELVARS_ARENA_CARD
-	call GetNonTurnDuelistVariable
-	call SwapTurn
-	call GetCardIDFromDeckIndex
-	call SwapTurn
-	ld a, e
-	cp MR_MIME
-	pop bc
-	jr nz, .set_carry
-	ld a, b
-	call CheckIfCanDamageDefendingPokemon
-	jr c, .set_carry
-	or a
-	ret
-.set_carry
-	scf
-	ret
 
 ; returns carry if arena card
 ; can knock out defending Pokémon
@@ -2103,18 +2079,16 @@ AISelectSpecialAttackParameters:
 	call GetTurnDuelistVariable
 	call GetCardIDFromDeckIndex
 	ld a, e
-	cp MEW_LV23
-	jr z, .DevolutionBeam
-	cp MEWTWO_ALT_LV60
-	jr z, .EnergyAbsorption
-	cp MEWTWO_LV60
-	jr z, .EnergyAbsorption
-	cp ABRA
-	jr z, .Teleport
-	cp STARYU
-	jr z, .Teleport
-	cp MAGNETON_LV35
-	jr z, .EnergySpike
+	; cp MEW_LV23
+	; jr z, .DevolutionBeam
+	; cp MEWTWO_LV60
+	; jr z, .EnergyAbsorption
+	; cp ABRA
+	; jr z, .Teleport
+	; cp STARYU
+	; jr z, .Teleport
+	; cp MAGNETON_LV35
+	; jr z, .EnergySpike
 	; fallthrough
 
 .no_carry

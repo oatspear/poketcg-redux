@@ -3,7 +3,10 @@
 ## Version 0.9.0
 
 ### Removed Cards
+- Mewtwo Lv60 (Alternative Art)
+- Mew Lv23
 - Jigglypuff Lv12
+- Gastly Lv8
 
 ### New Cards
 
@@ -281,7 +284,10 @@
 
 #### Primeape
 - Increased HP from 70 to 80.
-- **Rage**: increased base damage from 10 to 20.
+- **Rage**: removed.
+- **Get Mad**: reworked.
+- New attack: **Get Mad** (F): 10 damage; put any number of damage counters on the user; +10 damage for each damage counter put on self.
+- New attack: **Rage Fist** (FC): 20 damage; +10 damage for each Prize the opponent has taken.
 
 #### Machop
 - **Defensive Stance**: removed.
@@ -326,13 +332,13 @@
 #### Abra
 - **Teleport**: reduced cost from (P) to (C).
 - **Confuse Ray**: removed.
-- New attack: **Energy Loop** (P): 20 damage; put an Energy attached to the Pokémon back into the hand.
+- New attack: **Teleport Blast** (P): 20 damage; switch with another Pokémon.
 
 #### Kadabra
 - **Prophecy**: removed.
 - **Invade Mind**: removed.
 - New Pokémon Power: **Clairvoyant Sense**: attach a Psychic Energy from the hand to 1 Benched Pokémon; draw 2 cards.
-- New attack: **Teleport Blast** (P): 30 damage; switch with another Pokémon.
+- New attack: **Energy Loop** (P): 30 damage; put an Energy attached to the Pokémon back into the hand.
 
 #### Alakazam
 - **Psychic**: increased base damage from 10 to 20.
@@ -340,6 +346,10 @@
 
 #### Slowpoke
 - **Rest**: heals all damage on the Pokémon, up from 30 damage.
+
+#### Slowbro
+- **Strange Behavior**: can only be used if this Pokémon has some energies attached to it.
+- **Spiral Drain**: increased cost from (CCC) to (PPC) and damage from 30 to 40.
 
 #### Drowzee
 - **Meditate**: reworked.
@@ -352,11 +362,24 @@
 - New Pokémon Power: **Hyper Hypnosis**: discard an attached Energy; the opponent's Active Pokémon is Asleep.
 - New attack: **Dream Eater** (PC): 60 damage; heal 20 damage; fails if the Defending Pokémon is not Asleep.
 
+#### Mr. Mime
+- Increased HP from 40 to 60.
+- **Invisible Wall**: removed.
+- **Hand Press**: increased base damage from 10 to 20.
+- New Pokémon Power: **Bench Barrier**: prevents damage done from the opponent's attacks to the player's Bench.
+
+#### Jynx
+- Reduced HP from 60 to 50.
+- **Mimic**: removed.
+- **Hand Press**: removed.
+- New attack: **Return** (C): 10 damage; draw cards until you have 5 cards in hand.
+- New attack: **Sweet Kiss** (CC): 20 damage; inflicts Confusion.
+
 #### Clefairy
 - **Lead**: removed.
 - **Friend Tackle**: removed.
 - New attack: **Find A Friend** (C): add a Pokémon from the deck to the hand.
-- New attack: **Light Steps** (C): 10 damage; may move an energy to another Pokémon.
+- New attack: **Moonblast** (PC): 20 damage; reduces Defending Pokémon's damage by 10.
 
 #### Clefable
 - Increased HP from 70 to 80.
@@ -378,11 +401,29 @@
 - **Do the Wave**: removed.
 - New attack: **Friend Tackle** (CC): 20 damage; +20 damage if the user played a Supporter this turn.
 
+#### Mewtwo Lv53
+- Increased HP from 60 to 70.
+- **Barrier**: removed.
+- **Psychic**: removed.
+- New attack: **Concentration** (P): attach 1 Psychic Energy from discard pile to the user; heal 20 HP.
+- New attack: **Psyburn** (P): discard any number of attached (P); 20 damage for each discarded energy; discard 1 random card from the opponent's hand if they have 4 or more.
+
 #### Mewtwo Lv60
+- Increased HP from 70 to 90.
 - **Energy Absorption**: removed.
 - **Psyburn**: removed.
-- New attack: **Concentration** (P): attach 1 Psychic Energy from discard pile to the user; heal 20 HP.
-- New attack: **Psychic Nova** (P): discard any number of attached (P); 20 damage for each discarded energy; discard 1 random card from the opponent's hand if they have 4 or more.
+- New Pokémon Power: **Strike Back**: does 10 counter damage to attackers.
+- New attack: **Psychic Nova** (PPC): 70 damage; discard the user's hand if the user has taken more Prizes.
+
+#### Mew Lv8
+- **Teleport Blast**: removed.
+- New attack: **Metronome** (CCC): copies one of the Defending Pokémon's attacks.
+
+#### Mew Lv15
+- **Clairvoyance**: removed.
+- **Metronome**: removed.
+- New Pokémon Power: **Mysterious Tail**: once per turn, if Active, you may put an Item card from the top 6 deck cards into the hand.
+- New attack: **Teleport Blast** (CC): 20 damage; switch with another Pokémon.
 
 ### Darkness Changes
 
@@ -391,7 +432,7 @@
 
 #### Arbok
 - **Deadly Poison**: increased base damage from 20 to 30.
-- **Terror Strike***: reduced cost from (DCC) to (D); reduced base damage from 30 to 10.
+- **Terror Strike**: reduced cost from (DCC) to (D); reduced base damage from 30 to 10 and damage bonus from 20 to 10.
 
 #### Nidoran F
 - **Poison Sting**: always inflicts Poison.
@@ -414,7 +455,7 @@
 - Increased HP from 100 to 110.
 - **Rout**: removed.
 - **Tail Swing**: removed.
-- New attack: **Land Crush** (DC): 110 damage; 20 damage to all of the user's Benched Pokémon.
+- New attack: **Land Crush** (DC): 100 damage; 20 damage to all of the user's Benched Pokémon.
 - New attack: **Vengeful Horn** (DCC): 40 damage; +10 damage for each damaged Pokémon on the user's Bench.
 
 #### Zubat
@@ -427,14 +468,29 @@
 - **Leech Life**: removed.
 - New Pokémon Power: **Vampiric Aura**: the user's Pokémon with attached (D) Energy leech up to 20 damage when attacking.
 
+#### Grimer
+- **Gather Toxins**: reduced damage from 10 to zero.
+
 #### Muk
-- **Overwhelm**: reduced cost from (CCC) to (D); reduced damage from 30 to 10; changed condition from 6 cards in the opponent's hand to 4 cards.
+- **Overwhelm**: increased cost from (CCC) to (DDC) and damage from 30 to 40.
+- **Overwhelm**: changed condition from 6 cards in the opponent's hand to 4 cards.
 - **Toxic**: removed.
-- New attack: **Toxic Waste** (DC): 10 damage; inflicts Double Poison; +30 damage if you have at least 7 Items in the discard pile.
+- New attack: **Toxic Waste** (DC): 10 damage; inflicts Double Poison; +30 damage if there are at least 10 Items in both discard piles.
+
+#### Koffing
+- **Foul Gas**: removed coin flip; always inflicts Poison and Confusion.
 
 #### Weezing
 - **Smog**: reworked.
 - New attack: **Smog** (DD): 10 damage; inflicts Poison; 10 damage to all of the opponent's Benched Pokémon.
+
+#### Gastly
+- **Energy Conversion**: removed.
+- New attack: **Destiny Bond** (DC): discard 1 energy; if this is Knocked Out with an attack next turn, Knock Out the opponent's Pokémon.
+
+#### Gengar
+- **Shadow Claw**: reduced cost from (DC) to (D) and damage from 40 to 30.
+- **Vengeance**: reduced cost from (DDC) to (DC).
 
 ### Colorless Changes
 
@@ -463,19 +519,29 @@
 #### Dodrio
 - **Retreat Aid**: now also affects itself.
 
+#### Chansey
+- Increased HP from 60 to 70.
+- **Natural Remedy**: removed.
+- New attack: **Light Steps** (C): 10 damage; able to move a Basic energy from the user to a Benched Pokémon.
+
 #### Tauros
 - **Take Down**: removed.
 - **Rampage**: reduced cost from (CCC) to (CC).
 - New attack: **Stampede** (C): 20 damage; 10 damage to 1 of the user's Benched Pokémon.
 
 #### Ditto
-- **Copy**: increased cost from (CC) to (CCC).
+- **Morph**: removed.
+- **Copy**: removed.
+- New Pokémon Power: **Transform**: switch this Pokémon with a Basic Pokémon from the discard pile.
+- New attack: **Energy Link** (C): 10 damage; attach a Basic Energy from the discard pile to this.
 
 #### Porygon
 - **Conversion Beam**: reduced cost from (CCC) to (CC).
 
 #### Dratini
+- **Wrap**: removed.
 - **Dragon Dance**: attaches an energy from the deck instead of the hand.
+- New attack: **Agility** (CC): 20 damage; immune next turn if this attack Knocks Out the Defending Pokémon.
 
 ### Game Menu Changes
 - Updated Glossary pages.

@@ -3,47 +3,6 @@
 ; ------------------------------------------------------------------------------
 
 
-NaturalRemedy_AISelectEffect:
-	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
-	call GetTurnDuelistVariable
-	ld c, a   ; loop counter
-	ld d, 20  ; current max damage (heal at least 20)
-	ld e, PLAY_AREA_ARENA  ; location iterator
-	ld b, $ff  ; location of max damage
-	ld l, DUELVARS_ARENA_CARD_STATUS
-; find Play Area location with most amount of damage
-.loop
-	push bc
-	ld b, 0  ; score
-; status conditions are worth 20 damage
-	ld a, [hli]
-	or a
-	jr z, .get_damage
-	ld b, 20
-.get_damage
-; e already has the current PLAY_AREA_* offset
-	call GetCardDamageAndMaxHP
-; add score from status conditions
-	add b
-	pop bc
-	or a
-	jr z, .next ; skip if nothing to heal (redundant)
-; compare to current max damage
-	cp d
-	jr c, .next ; skip if stored damage is higher
-; store new target Pokémon
-	ld d, a
-	ld b, e
-.next
-	inc e  ; next location
-	dec c  ; decrement counter
-	jr nz, .loop
-; return selected location (or $ff) in a and [hTemp_ffa0]
-	ld a, b
-	ldh [hTempPlayAreaLocation_ffa1], a
-	ret
-
-
 ; store deck index of selected card or $ff in [hTemp_ffa0]
 ChoosePokemonFromDeck_AISelectEffect:
 ; TODO FIXME

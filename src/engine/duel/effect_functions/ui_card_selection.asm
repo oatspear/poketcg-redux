@@ -228,6 +228,7 @@ HandlePlayerSelectionCardTypeFromDeckToHand:
 ; Handles screen for the Player to choose a card of given type from a Deck list
 ; input:
 ;   a: TYPE_* constant of the card to be selected
+;   [wDuelTempList]: $ff-terminated list of deck cards
 ; output:
 ;   a: deck index of the selected card | $ff
 ;   [hTempCardIndex_ff98]: deck index of the selected card | $ff

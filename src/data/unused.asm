@@ -1,4 +1,183 @@
 
+ClairvoyanceName:
+	text "Clairvoyance"
+	done
+
+ClairvoyanceDescription:
+	text "Your opponent plays with his or her"
+	line "hand face up."
+	done
+
+; attack 1
+energy 0 ; energies
+tx ClairvoyanceName ; name
+tx ClairvoyanceDescription ; description
+tx PokemonPowerDescriptionCont ; description (cont)
+db 0 ; damage
+db POKEMON_POWER ; category
+dw PassivePowerEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_PKMN_POWER_1 ; animation
+
+
+NoDamageOrEffectDueToBarrierText: ; 383d3 (e:43d3)
+	text "No damage or effect on next Attack"
+	line "due to the effects of Barrier."
+	done
+
+BarrierDescription:
+	text "Discard all Energy cards attached to"
+	line "this Pokémon (at least 1). During"
+	line "your opponent's next turn, prevent"
+	line "all effects of attacks, including"
+	line "damage, done to this Pokémon."
+	done
+
+; attack 1
+energy PSYCHIC, 1, COLORLESS, 1 ; energies
+tx BarrierName ; name
+tx BarrierDescription ; description
+dw NONE ; description (cont)
+db 0 ; damage
+db RESIDUAL ; category
+dw BarrierEffectCommands ; effect commands
+db NONE ; flags 1
+db NULLIFY_OR_WEAKEN_ATTACK | DISCARD_ENERGY ; flags 2
+db NONE ; flags 3
+db 2
+db ATK_ANIM_BARRIER ; animation
+
+
+
+RecoverName:
+	text "Recover"
+	done
+
+RecoverDescription:
+	text "Discard an Energy from this Pokémon."
+	line "Then, heal all damage from it."
+	done
+
+; attack 1
+energy PSYCHIC, 1 ; energies
+tx RecoverName ; name
+tx RecoverDescription ; description
+dw NONE ; description (cont)
+db 0 ; damage
+db RESIDUAL ; category
+dw RecoverEffectCommands ; effect commands
+db NONE ; flags 1
+db HEAL_USER | DISCARD_ENERGY | FLAG_2_BIT_6 ; flags 2
+db NONE ; flags 3
+db 6
+db ATK_ANIM_RECOVER ; animation
+
+
+
+PsyshockName:
+	text "Psyshock"
+	done
+
+PsyshockDescription:
+	text "If your opponent has 5 or more"
+	line "cards in their hand, this attack"
+	line "does 20 more damage."
+	done
+
+; attack 2
+energy PSYCHIC, 1, COLORLESS, 1 ; energies
+tx PsyshockName ; name
+tx PsyshockDescription ; description
+dw NONE ; description (cont)
+db 20 ; damage
+db DAMAGE_PLUS ; category
+dw PsyshockEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_PSYCHIC_HIT ; animation
+
+
+
+MimicName:
+	text "Mimic"
+	done
+
+MimicDescription:
+	text "Shuffle your hand into your deck."
+	line "Then, draw a number of cards"
+	line "equal to the number of cards"
+	line "in your opponent's hand."
+	done
+
+
+energy COLORLESS, 1 ; energies
+	tx MimicName ; name
+	tx MimicDescription ; description
+	dw NONE ; description (cont)
+	db 0 ; damage
+	db RESIDUAL ; category
+	dw MimicEffectCommands ; effect commands
+	db DRAW_CARD ; flags 1
+	db NONE ; flags 2
+	db SPECIAL_AI_HANDLING ; flags 3
+	db 0
+	db ATK_ANIM_GLOW_EFFECT ; animation
+
+
+
+NaturalRemedyName:
+	text "Natural Remedy"
+	done
+
+NaturalRemedyDescription:
+	text "Heal 20 damage and remove all"
+	line "Special Conditions from 1 of"
+	line "your Pokémon."
+	done
+
+; attack 2
+energy COLORLESS, 2 ; energies
+tx NaturalRemedyName ; name
+tx NaturalRemedyDescription ; description
+dw NONE ; description (cont)
+db 0 ; damage
+db RESIDUAL ; category
+dw NaturalRemedyEffectCommands ; effect commands
+db NONE ; flags 1
+db HEAL_USER ; flags 2
+db NONE ; flags 3
+db 30
+db ATK_ANIM_GLOW_EFFECT ; animation
+
+
+GetMadDescription:
+	text "Move any number of damage counters"
+	line "from your Pokémon to this Pokémon."
+	line "If you moved at least 4, prevent all"
+	line "damage done to this Pokémon during"
+	line "your opponent's next turn."
+	done
+
+; attack 1
+energy FIGHTING, 1 ; energies
+tx GetMadName ; name
+tx GetMadDescription ; description
+tx OtherEffectsStillHappenDescriptionCont ; description (cont)
+db 0 ; damage
+db DAMAGE_NORMAL ; category
+dw GetMadEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db SPECIAL_AI_HANDLING ; flags 3
+db 0
+db ATK_ANIM_GLOW_EFFECT ; animation
+
+
 
 TailSwingName:
 	text "Tail Swing"
@@ -1204,3 +1383,138 @@ PikachuAltLv16Card:
 	dw 13 * 10 ; weight
 	tx PikachuDescription ; description
 	db 16
+
+
+
+
+
+ClefableLv28Card:
+	db TYPE_PKMN_PSYCHIC ; type
+	gfx ClefableCardGfx ; gfx
+	tx ClefableName ; name
+	db STAR ; rarity
+	db LABORATORY | GB ; sets
+	db CLEFABLE  ; CLEFABLE_LV28
+	db 70 ; hp
+	db STAGE1 ; stage
+	tx ClefairyName ; pre-evo name
+
+	; Moon Guidance
+	; Once during your turn (before your attack), you may flip a coin.
+	; If heads, search your deck for a card that evolves from 1 of your Pokémon
+	; and put it on that Pokémon. This counts as evolving your Pokémon.
+	; Shuffle your deck afterward.
+
+	; Moonlight
+	; Once during your turn (before your attack), you may put a card from your
+	; hand back on your deck. If you do, search your deck for a basic Energy card,
+	; show it to your opponent, and put it into your hand. This power can't be
+	; used if Clefable is affected by a Special Condition.
+
+	; Lunar Blessing
+	; Once during your turn, if your Active Pokémon has any Psychic Energy
+	; attached, you may heal 20 damage from it, and it recovers from a
+	; Special Condition.
+
+	; Lunar Sanctuary
+	; Prevents all effects of your opponent's attacks, except damage,
+	; done to each of your Pokémon that has any Energy attached to it.
+
+	; attack 1
+	energy COLORLESS, 2 ; energies
+	tx MetronomeName ; name
+	tx MetronomeDescription ; description
+	dw NONE ; description (cont)
+	db 0 ; damage
+	db RESIDUAL ; category
+	dw MetronomeEffectCommands ; effect commands
+	db NONE ; flags 1
+	db FLAG_2_BIT_6 ; flags 2
+	db NONE ; flags 3
+	db 3
+	db ATK_ANIM_NONE ; animation
+
+	; attack 2
+	energy PSYCHIC, 1, COLORLESS, 1 ; energies
+	tx MoonblastName ; name
+	tx ReduceAttackBy10Description ; description
+	dw NONE ; description (cont)
+	db 30 ; damage
+	db DAMAGE_NORMAL ; category
+	dw ReduceAttackBy10EffectCommands ; effect commands
+	db NONE ; flags 1
+	db NULLIFY_OR_WEAKEN_ATTACK ; flags 2
+	db NONE ; flags 3
+	db 10
+	db ATK_ANIM_CONFUSE_RAY ; animation
+
+	db 1 ; retreat cost
+	db WR_DARKNESS ; weakness
+	db NONE ; resistance
+	tx FairyName ; category
+	db 36 ; Pokedex number
+	db 0
+	db 34 ; level
+	db 4, 3 ; length
+	dw 88 * 10 ; weight
+	tx ClefableDescription ; description
+	db 0
+
+
+
+;
+
+MewLv23Card:
+	db TYPE_PKMN_PSYCHIC ; type
+	gfx MewLv23CardGfx ; gfx
+	tx MewName ; name
+	db STAR ; rarity
+	db MYSTERY | FOSSIL ; sets
+	db MEW_LV23
+	db 50 ; hp
+	db BASIC ; stage
+	dw NONE ; pre-evo name
+
+	; attack 1
+	energy PSYCHIC, 1 ; energies
+	tx PsywaveName ; name
+	tx PsywaveDescription ; description
+	dw NONE ; description (cont)
+	db 10 ; damage
+	db DAMAGE_X ; category
+	dw MewPsywaveEffectCommands ; effect commands
+	db NONE ; flags 1
+	db NONE ; flags 2
+	db NONE ; flags 3
+	db 0
+	db ATK_ANIM_PSYCHIC_HIT ; animation
+
+	; attack 2
+	energy PSYCHIC, 1, COLORLESS, 1 ; energies
+	tx DevolutionBeamName ; name
+	tx DevolutionBeamDescription ; description
+	dw NONE ; description (cont)
+	db 0 ; damage
+	db RESIDUAL ; category
+	dw MewDevolutionBeamEffectCommands ; effect commands
+	db NONE ; flags 1
+	db NONE ; flags 2
+	db SPECIAL_AI_HANDLING ; flags 3
+	db 0
+	db ATK_ANIM_NONE ; animation
+
+	db 0 ; retreat cost
+	db WR_DARKNESS ; weakness
+	db NONE ; resistance
+	tx NewSpeciesName ; category
+	db 151 ; Pokedex number
+	db 0
+	db 23 ; level
+	db 1, 4 ; length
+	dw 9 * 10 ; weight
+	tx MewDescription ; description
+	db 8
+
+
+
+

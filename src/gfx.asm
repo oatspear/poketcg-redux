@@ -1930,8 +1930,8 @@ MagnetonLv35CardGfx::
 	INCBIN "gfx/cards/magneton2.pal"
 
 VoltorbCardGfx::
-	INCBIN "gfx/cards/voltorb.2bpp"
-	INCBIN "gfx/cards/voltorb.pal"
+	INCBIN "gfx/cards/voltorb2.2bpp"
+	INCBIN "gfx/cards/voltorb2.pal"
 
 ElectrodeLv35CardGfx::
 	INCBIN "gfx/cards/electrode1.2bpp"
@@ -2091,9 +2091,9 @@ SlowbroCardGfx::
 	INCBIN "gfx/cards/slowbro.2bpp"
 	INCBIN "gfx/cards/slowbro.pal"
 
-GastlyLv8CardGfx::
-	INCBIN "gfx/cards/gastly1.2bpp"
-	INCBIN "gfx/cards/gastly1.pal"
+; GastlyLv8CardGfx::
+; 	INCBIN "gfx/cards/gastly1.2bpp"
+; 	INCBIN "gfx/cards/gastly1.pal"
 
 GastlyLv17CardGfx::
 	INCBIN "gfx/cards/gastly2.2bpp"
@@ -2131,9 +2131,9 @@ MewtwoLv53CardGfx::
 	INCBIN "gfx/cards/mewtwo1.2bpp"
 	INCBIN "gfx/cards/mewtwo1.pal"
 
-MewtwoLv60CardGfx::
-	INCBIN "gfx/cards/mewtwo2.2bpp"
-	INCBIN "gfx/cards/mewtwo2.pal"
+; MewtwoLv60CardGfx::
+; 	INCBIN "gfx/cards/mewtwo2.2bpp"
+; 	INCBIN "gfx/cards/mewtwo2.pal"
 
 MewtwoAltLV60CardGfx::
 	INCBIN "gfx/cards/mewtwo3.2bpp"

@@ -1,4 +1,69 @@
 ; ------------------------------------------------------------------------------
+; Core
+; ------------------------------------------------------------------------------
+
+
+; check if player's active Pokémon is Mr Mime
+; if it isn't, set carry
+; if it is, check if Pokémon at a
+; can damage it, and if it can, set carry
+; input:
+;	a = location of Pokémon card
+CheckDamageToMrMime:
+	push af
+	ld a, DUELVARS_ARENA_CARD
+	call GetNonTurnDuelistVariable
+	call SwapTurn
+	call GetCardIDFromDeckIndex
+	call SwapTurn
+	ld a, e
+	cp MR_MIME
+	pop bc
+	jr nz, .set_carry
+	ld a, b
+	call CheckIfCanDamageDefendingPokemon
+	jr c, .set_carry
+	or a
+	ret
+.set_carry
+	scf
+	ret
+
+
+
+
+
+; ------------------------------------------------------------------------------
+; Attacks
+; ------------------------------------------------------------------------------
+
+
+
+.GetMad:
+	ld e, PLAY_AREA_ARENA
+	call GetCardDamageAndMaxHP
+	or a
+	jp nz, .zero_score  ; return if Arena card has damage counters
+	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+	call GetTurnDuelistVariable
+	cp 2
+	jp c, .zero_score  ; return if no Benched Pokémon
+	dec a
+	ld d, a
+	ld e, PLAY_AREA_BENCH_1
+.get_mad_loop
+	call GetCardDamageAndMaxHP
+	cp 40
+	ld a, $83
+	ret nc  ; at least 40 damage
+	inc e
+	dec d
+	jr nz, .get_mad_loop
+	jp .zero_score  ; no Benched Pokémon with at least 40 damage
+
+
+
+; ------------------------------------------------------------------------------
 ; Pokémon Powers
 ; ------------------------------------------------------------------------------
 
@@ -422,6 +487,226 @@ HandleAICurse:
 ; ------------------------------------------------------------------------------
 ; Trainer Cards
 ; ------------------------------------------------------------------------------
+
+
+; returns carry if using a Pluspower can KO defending Pokémon
+; if active card cannot KO without the boost.
+; outputs in a the attack to use.
+AIDecide_Pluspower1:
+	farcall PlusPower_PreconditionCheck
+	jr c, .no_carry
+	xor a
+	ldh [hTempPlayAreaLocation_ff9d], a
+
+; continue if no attack can knock out.
+; if there's an attack that can, only continue
+; if it's unusable and there's no card in hand
+; to fulfill its energy cost.
+	farcall CheckIfAnyAttackKnocksOutDefendingCard
+	jr nc, .cannot_ko
+	farcall CheckIfSelectedAttackIsUnusable
+	jr nc, .no_carry
+	farcall LookForEnergyNeededForAttackInHand
+	jr c, .no_carry
+
+; cannot use an attack that knocks out.
+.cannot_ko
+; get active Pokémon's info.
+	ld a, DUELVARS_ARENA_CARD
+	call GetTurnDuelistVariable
+	call GetCardIDFromDeckIndex
+	ld a, e
+	ld [wTempTurnDuelistCardID], a
+
+; get defending Pokémon's info and check
+; its No Damage or Effect substatus.
+; if substatus is active, return.
+	call SwapTurn
+	ld a, DUELVARS_ARENA_CARD
+	call GetTurnDuelistVariable
+	call GetCardIDFromDeckIndex
+	ld a, e
+	ld [wTempNonTurnDuelistCardID], a
+	call HandleNoDamageOrEffectSubstatus
+	call SwapTurn
+	jr c, .no_carry
+
+; check both attacks and decide which one
+; can KO with Pluspower boost.
+; if neither can KO, return no carry.
+	xor a ; FIRST_ATTACK_OR_PKMN_POWER
+	ld [wSelectedAttack], a
+	call .check_ko_with_pluspower
+	jr c, .kos_with_pluspower_1
+	ld a, SECOND_ATTACK
+	ld [wSelectedAttack], a
+	call .check_ko_with_pluspower
+	jr c, .kos_with_pluspower_2
+
+.no_carry
+	or a
+	ret
+
+; first attack can KO with Pluspower.
+.kos_with_pluspower_1
+	call .check_mr_mime
+	jr nc, .no_carry
+	xor a ; FIRST_ATTACK_OR_PKMN_POWER
+	scf
+	ret
+; second attack can KO with Pluspower.
+.kos_with_pluspower_2
+	call .check_mr_mime
+	jr nc, .no_carry
+	ld a, SECOND_ATTACK
+	scf
+	ret
+
+; return carry if attack is useable and KOs
+; defending Pokémon with Pluspower boost.
+.check_ko_with_pluspower
+	farcall CheckIfSelectedAttackIsUnusable
+	jr c, .unusable
+	ld a, [wSelectedAttack]
+	farcall EstimateDamage_VersusDefendingCard
+	ld a, DUELVARS_ARENA_CARD_HP
+	call GetNonTurnDuelistVariable
+	ld b, a
+	ld hl, wDamage
+	sub [hl]
+	jr c, .no_carry
+	jr z, .no_carry
+	ld a, [hl]
+	add 10 ; add Pluspower boost
+	ld c, a
+	ld a, b
+	sub c
+	ret c ; return carry if damage > HP left
+	ret nz ; does not KO
+	scf
+	ret ; KOs with Pluspower boost
+.unusable
+	or a
+	ret
+
+; returns carry if Pluspower boost does
+; not exceed 30 damage when facing Mr. Mime.
+.check_mr_mime
+	ld a, [wDamage]
+	add 10 ; add Pluspower boost
+	cp 30 ; no danger in preventing damage
+	ret c
+	call SwapTurn
+	ld a, DUELVARS_ARENA_CARD
+	call GetTurnDuelistVariable
+	call GetCardIDFromDeckIndex
+	call SwapTurn
+	ld a, e
+	cp MR_MIME
+	ret z
+; damage is >= 30 but not Mr. Mime
+	scf
+	ret
+
+
+
+
+; returns carry 7/10 of the time
+; if selected attack is useable, can't KO without Pluspower boost
+; can damage Mr. Mime even with Pluspower boost
+; and has a minimum damage > 0.
+; outputs in a the attack to use.
+AIDecide_Pluspower2:
+	farcall PlusPower_PreconditionCheck
+	jr c, .no_carry
+	xor a
+	ldh [hTempPlayAreaLocation_ff9d], a
+	call .check_can_ko
+	jr nc, .no_carry
+	call .check_random
+	jr nc, .no_carry
+	call .check_mr_mime
+	jr nc, .no_carry
+	scf
+	ret
+.no_carry
+	or a
+	ret
+
+; returns carry if Pluspower boost does
+; not exceed 30 damage when facing Mr. Mime.
+.check_mr_mime
+	ld a, [wDamage]
+	add 10 ; add Pluspower boost
+	cp 30 ; no danger in preventing damage
+	ret c
+	call SwapTurn
+	ld a, DUELVARS_ARENA_CARD
+	call GetTurnDuelistVariable
+	call GetCardIDFromDeckIndex
+	call SwapTurn
+	ld a, e
+	cp MR_MIME
+	ret z
+; damage is >= 30 but not Mr. Mime
+	scf
+	ret
+
+; return carry if attack is useable but cannot KO.
+.check_can_ko
+	farcall CheckIfSelectedAttackIsUnusable
+	jr c, .unusable
+	ld a, [wSelectedAttack]
+	farcall EstimateDamage_VersusDefendingCard
+	ld a, DUELVARS_ARENA_CARD_HP
+	call GetNonTurnDuelistVariable
+	ld b, a
+	ld hl, wDamage
+	sub [hl]
+	jr c, .no_carry
+	jr z, .no_carry
+; can't KO.
+	scf
+	ret
+.unusable
+	or a
+	ret
+
+; return carry 7/10 of the time if
+; attack is useable and minimum damage > 0.
+.check_random
+	farcall CheckIfSelectedAttackIsUnusable
+	jr c, .unusable
+	ld a, [wSelectedAttack]
+	farcall EstimateDamage_VersusDefendingCard
+	ld a, [wAIMinDamage]
+	cp 10
+	jr c, .unusable
+	ld a, 10
+	call Random
+	cp 3
+	ret
+
+
+
+AIDecide_PokemonTrader_StrangePower:
+	; looks for a Pokemon in hand to trade with Mr Mime in deck.
+	; inputting Mr Mime in register e for the function is redundant
+	; since it already checks whether a Mr Mime exists in the hand.
+		ld a, MR_MIME
+		ld e, MR_MIME
+		call LookForCardIDToTradeWithDifferentHandCard
+		jr nc, .no_carry
+	; found
+		ld [wce1a], a
+		ld a, e
+		scf
+		ret
+	.no_carry
+		or a
+		ret
+
+
 
 AIDecide_ComputerSearch_RockCrusher:
 ; if number of cards in hand is equal to 3,

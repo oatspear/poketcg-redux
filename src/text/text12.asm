@@ -31,10 +31,9 @@ Heal30DamageDescription:
 	text "Heal 30 damage from this Pokémon."
 	done
 
-HealHalfDamageDealtDescription:
-	text "Heal from this Pokémon half the"
-	line "damage dealt with this attack"
-	line "(rounded up to the nearest 10)."
+DoExcessDamageToTheNewActivePokemonText:
+	text "Do excess damage to the"
+	line "new Active Pokémon!"
 	done
 
 EnergyTransName: ; 57960 (15:7960)
@@ -119,14 +118,6 @@ PoisonStingName: ; 57ea1 (15:7ea1)
 
 TwineedleName: ; 58070 (16:4070)
 	text "Twineedle"
-	done
-
-SpitPoisonName: ; 58131 (16:4131)
-	text "Spit Poison"
-	done
-
-WrapName: ; 5813e (16:413e)
-	text "Wrap"
 	done
 
 TerrorStrikeName: ; 581ad (16:41ad)
@@ -248,10 +239,9 @@ ToxicWasteName:
 	text "Toxic Waste"
 	done
 
-ToxicWasteDescription:
-	text "The Defending Pokémon is now Badly"
-	line "Poisoned. If you have 7 or more"
-	line "Item cards in your discard pile,"
+ToxicWasteDescriptionCont:
+	text "If there are 10 or more Item cards"
+	line "in both discard piles combined,"
 	line "this attack does 30 more damage."
 	done
 
@@ -527,20 +517,13 @@ RampageDescription:
 	line "(after doing damage)."
 	done
 
-CopyName:
-	text "Copy"
-	done
-
-MorphName:
-	text "Morph"
-	done
-
-MorphDescription:
-	text "Remove all damage counters and"
-	line "effects from this Pokémon."
-	line "For the rest of the game, replace"
-	line "this Pokémon with a copy of a Basic"
-	line "Pokémon from your Discard Pile."
+TransformDescription:
+	text "Once during your turn, you may"
+	line "switch this Pokémon with a Basic"
+	line "Basic Pokémon in your discard pile."
+	line "Any attached cards, damage counters,"
+	line "Special Conditions and effects are"
+	line "now on the new Pokémon."
 	done
 
 ConversionBeamName:
@@ -753,16 +736,6 @@ HealingEnergyDescription:
 	line "that Pokémon."
 	done
 
-NaturalRemedyName:
-	text "Natural Remedy"
-	done
-
-NaturalRemedyDescription:
-	text "Heal 20 damage and remove all"
-	line "Special Conditions from 1 of"
-	line "your Pokémon."
-	done
-
 Attach1FireEnergyFromDiscardDescription:
 	text "Attach a <FIRE> Energy from your"
 	line "discard pile to this Pokémon."
@@ -823,15 +796,8 @@ PesterDescription:
 	line "does double damage."
 	done
 
-MimicName:
-	text "Mimic"
-	done
-
-MimicDescription:
-	text "Shuffle your hand into your deck."
-	line "Then, draw a number of cards"
-	line "equal to the number of cards"
-	line "in your opponent's hand."
+SweetKissName:
+	text "Sweet Kiss"
 	done
 
 MindRulerName:
@@ -868,9 +834,10 @@ StrangeBehaviorName:
 
 StrangeBehaviorDescription:
 	text "As often as you like during your"
-	line "turn, you may move 1 damage counter"
-	line "from 1 of your other Pokémon to"
-	line "this Pokémon."
+	line "turn, if this Pokémon has any"
+	line "attached Energies, you may move 1"
+	line "damage counter from 1 of your other"
+	line "Pokémon to this Pokémon."
 	done
 
 FishingTailName:
@@ -891,16 +858,6 @@ TeleportDescription:
 	text "Shuffle this Pokémon and any cards"
 	line "attached to it into your deck."
 	line "Then, draw 4 cards."
-	done
-
-PsyshockName:
-	text "Psyshock"
-	done
-
-PsyshockDescription:
-	text "If your opponent has 5 or more"
-	line "cards in their hand, this attack"
-	line "does 20 more damage."
 	done
 
 FamilyPowerName:
@@ -1121,11 +1078,11 @@ GetMadName:
 	done
 
 GetMadDescription:
-	text "Move any number of damage counters"
-	line "from your Pokémon to this Pokémon."
-	line "If you moved at least 4, prevent all"
-	line "damage done to this Pokémon during"
-	line "your opponent's next turn."
+	text "Put any number of damage counters on"
+	line "this Pokémon up to its remaining HP."
+	line "This attack does 10 more damage for"
+	line "each damage counter you put on this"
+	line "Pokémon this way."
 	done
 
 SpikesDescription:
@@ -1496,8 +1453,13 @@ ThunderWaveDescription:
 	line "Paralyzed."
 	done
 
-EnergizeName:
-	text "Energize"
+EnergyLinkName:
+	text "Energy Link"
+	done
+
+Attach1BasicEnergyFromDiscardDescription:
+	text "Attach a Basic Energy from your"
+	line "discard pile to this Pokémon."
 	done
 
 Attach1LightningEnergyFromDiscardDescription:

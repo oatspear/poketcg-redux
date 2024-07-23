@@ -251,12 +251,11 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ReceivesDamageDueToStrikeBackText                 ; 0x0105
 	textpointer UnableToEvolveDueToPrehistoricPowerText            ; 0x0106
 	textpointer NoDamageOrEffectDueToAgilityText
-	textpointer NoDamageOrEffectDueToBarrierText                   ; 0x0108
 	; textpointer NoDamageQueenPressText
 	textpointer UnableToUseAttackDueToNShieldText                  ; 0x010a
 	textpointer NoDamageOrEffectDueToNShieldText                   ; 0x010b
 	textpointer NoDamageOrEffectDueToTransparencyText              ; 0x010c
-	textpointer MetamorphsToText                                   ; 0x010d
+	textpointer PutInPlayWithTransformText
 	textpointer SelectPkmnOnBenchToSwitchWithActiveText            ; 0x010e
 	textpointer SelectPokemonToPlaceInTheArenaText                 ; 0x010f
 	textpointer DuelistIsSelectingPokemonToPlaceInArenaText        ; 0x0110
@@ -296,14 +295,12 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ChooseAnEnergyCardText                             ; 0x0134
 	textpointer ChooseTheOrderOfTheCardsText                       ; 0x0136
 	textpointer ProcedureForDamageSwapText                         ; 0x0137
-	textpointer ProcedureForDevolutionBeamText                     ; 0x0138
 	textpointer ProcedureForStrangeBehaviorText                    ; 0x0139
 	textpointer ChooseOppAttackToBeUsedWithMetronomeText           ; 0x013a
 	textpointer ThereIsNoInTheDeckText                             ; 0x013b
 	textpointer WouldYouLikeToCheckTheDeckText                     ; 0x013c
 	textpointer ThereAreNoEligibleCardsInTheDiscardPileText
 	textpointer PleaseSelectTheDeckText                            ; 0x013d
-	textpointer PleaseSelectThePlayAreaText                        ; 0x013e
 	textpointer ChooseAnyPokemonFromDeckText
 	textpointer AnyPokemonDeckText
 	textpointer BasicPokemonDeckText                               ; 0x0143
@@ -311,7 +308,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer EvolvedPokemonText
 	textpointer GrassCardText
 	textpointer PeekWasUsedToLookInYourHandText                    ; 0x0145
-	textpointer CardPeekWasUsedOnText                              ; 0x0146
+	textpointer ThatPokemonHasTooMuchHPText
 	textpointer PokemonAndAllAttachedCardsReturnedToHandText       ; 0x0147
 	textpointer WasChosenForTheEffectOfAmnesiaText                 ; 0x0148
 	textpointer BasicPokemonWasPlacedOnEachBenchText               ; 0x0149
@@ -2031,6 +2028,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer SludgeName
 	textpointer BivalveName
 	textpointer GasName
+	textpointer ShadowName
 	textpointer RockSnakeName
 	textpointer HypnosisName
 	textpointer RiverCrabName
@@ -2407,8 +2405,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer FungalGrowthName
 	textpointer ShiftName                                          ; 0x0890
 	textpointer ShiftDescription                                   ; 0x0891
-	textpointer VenomPowderName                                    ; 0x0892
-	textpointer VenomPowderDescription                             ; 0x0893
+	textpointer VenomPowderName
+	textpointer InflictConfusionAndPoisonDescription
 	textpointer RazorLeafName                                      ; 0x089a
 	textpointer LureName                                           ; 0x089e
 	textpointer LureDescription                                    ; 0x089f
@@ -2426,7 +2424,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer SwitchThisPokemonDescription
 	textpointer DamagePerEnergyAttachedToBothActiveDescription
 	textpointer FoulGasName                                        ; 0x08ba
-	textpointer FoulGasDescription                                 ; 0x08bb
 	textpointer SmogName
 	textpointer SmogDescription
 	textpointer SelfdestructName                                   ; 0x08c0
@@ -2498,24 +2495,20 @@ TextOffsets:: ; 34000 (d:4000)
 	; textpointer CrabhammerDescription
 	textpointer RestName                                           ; 0x0974
 	textpointer RestDescription                                    ; 0x0974
-	textpointer HornAttackName                                     ; 0x097b
 	textpointer RendName
 	textpointer Bonus20IfOpponentIsDamagedDescription
 	; textpointer WaterfallName
 	; textpointer WaterfallDescription
 	textpointer ScaldName
 	textpointer InflictBurnDescription
-	textpointer RecoverName                                        ; 0x0986
-	textpointer RecoverDescription                                 ; 0x0987
 	textpointer EnergyBurstName
 	textpointer Counter20DamageDescription
 	textpointer ShellPressName
-	textpointer FocusEnergyName                                    ; 0x099a
-	textpointer MysteriousFossilName                               ; 0x09a1
-	textpointer ClairvoyanceName                                   ; 0x09a2
-	textpointer ClairvoyanceDescription                            ; 0x09a3
-	textpointer BlizzardName                                       ; 0x09ac
-	textpointer DamageOpponentBench10Description                   ; 0x09ad
+	textpointer MysteriousFossilName
+	textpointer ClairvoyanceName                                   ; unused
+	textpointer ClairvoyanceDescription                            ; unused
+	textpointer BlizzardName                                       ; unused
+	textpointer DamageOpponentBench10Description
 	textpointer OnlyWorksOnEvolvedPokemonText
 	; textpointer GnawName
 	textpointer SkillDiveName
@@ -2562,7 +2555,8 @@ TextOffsets:: ; 34000 (d:4000)
 	; textpointer SpikedArmorName
 	; textpointer SpikedArmorDescription
 	textpointer StrikeBackName
-	textpointer StrikeBackDescription
+	textpointer StrikeBack10Description
+	textpointer StrikeBack20Description
 	textpointer RockThrowName                                      ; 0x0a3a
 	textpointer RockSlideName                                      ; 0x0a3d
 	textpointer ExplosionName
@@ -2601,11 +2595,9 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ScavengeName                                       ; 0x0a8c
 	textpointer ScavengeDescription                                ; 0x0a8d
 	textpointer SleepingGasName                                    ; 0x0a94
-	textpointer DestinyBondName                                    ; 0x0a96
-	textpointer DestinyBondDescription                             ; 0x0a97
+	textpointer DestinyBondName
+	textpointer DestinyBondDescription
 	textpointer LickName                                           ; 0x0a9a
-	textpointer EnergyConversionName                               ; 0x0a9b
-	textpointer EnergyConversionDescription                        ; 0x0a9c
 	textpointer NightmareName                                      ; 0x0aa1
 	textpointer HyperHypnosisName
 	textpointer HyperHypnosisDescription
@@ -2618,16 +2610,16 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PainAmplifierName                                  ; 0x0aa6
 	textpointer PainAmplifierDescription                           ; 0x0aa7
 	textpointer DarkMindName                                       ; 0x0aa8
-	textpointer ShadowName                                         ; 0x0aaa
-	textpointer InvisibleWallName
-	textpointer InvisibleWallDescription
+	textpointer BenchBarrierName
+	textpointer BenchBarrierDescription
 	textpointer MeditateName
 	textpointer MeditateDescription
 	textpointer PainBurstName                                      ; unused
 	textpointer PainBurstDescription                               ; unused
+	textpointer PsyburnName
+	textpointer PsyburnDescription
 	textpointer PsychicName
 	textpointer PsychicDescription
-	textpointer BarrierDescription                                 ; 0x0ac3
 	textpointer EnergyAbsorptionName                               ; 0x0ac6
 	textpointer EnergyAbsorptionDescription                        ; 0x0ac7
 	textpointer NeutralizingShieldName                             ; 0x0acb
@@ -2671,7 +2663,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer GatherToxinsName
 	textpointer GatherToxinsDescription
 	textpointer DeadlyPoisonName
-	textpointer DeadlyPoisonDescription
+	textpointer VenoshockDescription
 	textpointer OverwhelmName
 	textpointer OverwhelmDescription
 	textpointer AfflictionName
@@ -2725,6 +2717,12 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer FossilBindName
 	textpointer IncreaseRetreatCostDescription
 	textpointer ThrashName
+	textpointer RageFistName
+	textpointer RageFistDescription
+	textpointer PutDamageCountersOnPokemonText
+	textpointer PsychicLeapName                                    ; unused
+	textpointer MysteriousTailName
+	textpointer MysteriousTailDescription
 
 ; ------------------------------------------------------------------------------
 ; text12.asm
@@ -2738,7 +2736,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer MegaDrainName                                      ; 0x0818
 	textpointer Heal20DamageDescription
 	textpointer Heal30DamageDescription
-	textpointer HealHalfDamageDealtDescription
+	textpointer DoExcessDamageToTheNewActivePokemonText
 	textpointer EnergyTransName                                    ; 0x081c
 	textpointer EnergyTransDescription                             ; 0x081d
 	textpointer PollenFrenzyName
@@ -2751,8 +2749,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer OpponentSwitchesPokemonDescription                 ; 0x082d
 	textpointer PoisonStingName                                    ; 0x0833
 	textpointer TwineedleName                                      ; 0x083b
-	textpointer SpitPoisonName                                     ; 0x0840
-	textpointer WrapName                                           ; 0x0841
 	textpointer TerrorStrikeName                                   ; 0x0845
 	textpointer PoisonFangName                                     ; 0x0847
 	textpointer FurySwipesName                                     ; 0x084b
@@ -2779,7 +2775,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ToxicName
 	textpointer ToxicDescription
 	textpointer ToxicWasteName
-	textpointer ToxicWasteDescription
+	textpointer ToxicWasteDescriptionCont
 	textpointer LeechLifeName                                      ; 0x086a
 	textpointer LeechLifeDescription                               ; 0x086b
 	textpointer GrowthName
@@ -2835,9 +2831,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PlasmaDescription
 	textpointer RampageName                                        ; 0x0b40
 	textpointer RampageDescription                                 ; 0x0b41
-	textpointer CopyName
-	textpointer MorphName                                          ; 0x0b45
-	textpointer MorphDescription                                   ; 0x0b46
+	textpointer TransformDescription
 	; textpointer Conversion1Name
 	; textpointer Conversion1Description
 	; textpointer Conversion2Name
@@ -2881,8 +2875,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer IsCuredOfStatusAndEffectsText
 	textpointer HealingEnergyName
 	textpointer HealingEnergyDescription
-	textpointer NaturalRemedyName
-	textpointer NaturalRemedyDescription
 	textpointer Attach1FireEnergyFromDiscardDescription
 	textpointer Attach1WaterEnergyFromDiscardDescription
 	textpointer Attach1PsychicEnergyFromDiscardDescription
@@ -2895,8 +2887,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer DrainPunchName
 	textpointer PesterName
 	textpointer PesterDescription
-	textpointer MimicName
-	textpointer MimicDescription
+	textpointer SweetKissName
 	textpointer MindBlastName
 	textpointer MindBlastDescription
 	textpointer HandPressName
@@ -2907,8 +2898,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer FishingTailDescription
 	textpointer TeleportName
 	textpointer TeleportDescription
-	textpointer PsyshockName
-	textpointer PsyshockDescription
 	textpointer FamilyPowerName
 	textpointer FamilyPowerDescription
 	textpointer NightAmbushName
@@ -3018,7 +3007,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer MoveOpponentEnergyToBenchDescription
 	textpointer Recoil30UnlessActiveThisTurnDescription
 	textpointer ThunderWaveDescription
-	textpointer EnergizeName
+	textpointer EnergyLinkName
+	textpointer Attach1BasicEnergyFromDiscardDescription
 	textpointer Attach1LightningEnergyFromDiscardDescription
 	textpointer BoostedVoltageName
 	textpointer BoostedVoltageDescription
@@ -3080,6 +3070,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer EnergyStreamDescription
 	textpointer FrustrationName
 	textpointer FrustrationDescription
+	textpointer PutHowManyDamageCountersMenuText
 
 	; unused
 	; textpointer SwimFreelyName

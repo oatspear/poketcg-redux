@@ -1,6 +1,645 @@
 ;
 
 
+MorphEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDiscardPileHasBasicPokemonCards
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, MorphEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Morph_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, Morph_AISelectEffect
+	db  $00
+
+
+Morph_PlayerSelectEffect:
+	call HandlePlayerSelectionFromDiscardPile_BasicPokemon
+	ldh [hTemp_ffa0], a
+	ret
+
+Morph_AISelectEffect:
+; prioritize cards for which there are no duplicates on the play area
+; assume card list is already populated from initial check
+	; call CreateBasicPokemonCardListFromDiscardPile
+	ld hl, wDuelTempList
+.loop_cards
+	ld a, [hli]
+	ldh [hTemp_ffa0], a
+	cp $ff
+	jr z, .choose_first_card
+
+; which Pokémon are we iterating over?
+	call GetCardIDFromDeckIndex
+	ld a, e
+	ld [wTempPokemonID_ce7c], a
+
+; check play area for duplicates (similar to CountPokemonIDInPlayArea)
+	push hl
+	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+	call GetTurnDuelistVariable
+	ld b, a
+	ld c, 0
+
+.loop_play_area
+	ld a, DUELVARS_ARENA_CARD
+	add b
+	dec a  ; b starts at 1, we want a 0-based index
+	call GetTurnDuelistVariable
+	cp $ff
+	jr z, .found
+; check if it is the same Pokémon
+	call GetCardIDFromDeckIndex
+	ld a, [wTempPokemonID_ce7c]
+	cp e
+	jr z, .found_duplicate
+	dec b
+	jr nz, .loop_play_area
+; no duplicates in play area
+; card is already stored in [hTemp_ffa0]
+	jr .found
+
+.found_duplicate
+	pop hl
+	jr .loop_cards
+
+.found
+	pop hl
+	ret
+
+.choose_first_card
+	ld a, [wDuelTempList]
+	ldh [hTemp_ffa0], a
+	ret
+
+
+MorphEffect:
+	ldh a, [hTemp_ffa0]
+	cp $ff
+	jr nz, .successful
+	ldtx hl, AttackUnsuccessfulText
+	call DrawWideTextBox_WaitForInput
+	ret
+
+.successful
+	ldh [hTempCardIndex_ff98], a
+	ld a, DUELVARS_ARENA_CARD_STAGE
+	call GetTurnDuelistVariable
+	or a
+	jr z, .skip_discard_stage_below
+
+; if this is an evolved Pokémon (in case it's used with Metronome)
+; then first discard the lower stage card.
+	push hl
+	xor a
+	ldh [hTempPlayAreaLocation_ff9d], a
+	bank1call GetCardOneStageBelow
+	ld a, d
+	call PutCardInDiscardPile
+	pop hl
+	ld [hl], BASIC
+
+.skip_discard_stage_below
+; overwrite card ID
+; store in de the ID of the card we want to Morph to
+	ldh a, [hTempCardIndex_ff98]
+	call GetCardIDFromDeckIndex
+; store in [hTempCardIndex_ff98] the deck index of the current card
+	ld a, DUELVARS_ARENA_CARD
+	call GetTurnDuelistVariable
+	ldh [hTempCardIndex_ff98], a
+; point hl to the index in deck list, to overwrite ID (preserves de)
+	call _GetCardIDFromDeckIndex
+	ld [hl], e
+
+; overwrite HP to new card's maximum HP
+	ld e, PLAY_AREA_ARENA
+	call GetCardDamageAndMaxHP
+	ld a, DUELVARS_ARENA_CARD_HP
+	call GetTurnDuelistVariable
+	ld [hl], c
+
+; clear changed color and status
+	ld l, DUELVARS_ARENA_CARD_CHANGED_TYPE
+	ld [hl], $00
+	call ClearAllArenaStatusAndEffects
+
+; load both card's names for printing text
+	ld a, [wTempTurnDuelistCardID]
+	ld e, a
+	ld d, $00
+	call LoadCardDataToBuffer2_FromCardID
+	ld hl, wLoadedCard2Name
+	ld de, wTxRam2
+	ld a, [hli]
+	ld [de], a
+	inc de
+	ld a, [hl]
+	ld [de], a
+	inc de
+	ldh a, [hTempCardIndex_ff98]
+	call LoadCardDataToBuffer2_FromDeckIndex
+	ld hl, wLoadedCard2Name
+	ld a, [hli]
+	ld [de], a
+	inc de
+	ld a, [hl]
+	ld [de], a
+	ldtx hl, MetamorphsToText
+	call DrawWideTextBox_WaitForInput
+
+	xor a
+	ld [wDuelDisplayedScreen], a
+	ret
+
+
+
+
+
+BarrierEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasAnyEnergiesAttached
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Barrier_BarrierEffect
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, DiscardAllAttachedEnergiesEffect
+	db  $00
+
+Barrier_BarrierEffect:
+	ld a, SUBSTATUS1_BARRIER
+	jp ApplySubstatus1ToAttackingCard
+
+
+
+RecoverEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, Recover_CheckEnergyHP
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, DiscardEnergy_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, HealAllDamageEffect
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, DiscardEnergy_DiscardEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, DiscardEnergy_AISelectEffect
+	db  $00
+
+; returns carry if Arena card has no Energies attached
+; or if it doesn't have any damage counters.
+Recover_CheckEnergyHP:
+	call CheckArenaPokemonHasAnyDamage
+	ret c ; return carry if no damage
+	jp CheckArenaPokemonHasAnyEnergiesAttached
+
+
+
+
+PsyshockEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Psyshock_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AI, Psyshock_AIEffect
+	db  $00
+
+; +20 damage if the opponent has at least 5 cards in hand
+Psyshock_DamageBoostEffect:
+  ld c, 5
+  call SwapTurn
+	call CheckHandSizeIsLessThanC
+  call SwapTurn
+	ret nc  ; hand size < 5
+	ld a, 20
+	jp AddToDamage
+
+Psyshock_AIEffect:
+  call Psyshock_DamageBoostEffect
+  jp SetDefiniteAIDamage
+
+
+MimicEffectCommands:
+	; dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDeckIsNotEmpty
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, MimicEffect
+	db  $00
+
+; shuffle hand back into deck and draw as many cards as the opponent has
+MimicEffect:
+	call ShuffleHandIntoDeck
+	ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND
+	call GetNonTurnDuelistVariable
+	jp DrawNCards_NoCardDetails
+
+
+MewDevolutionBeamEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, DevolutionBeam_CheckPlayArea
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, DevolutionBeam_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, DevolutionBeam_LoadAnimation
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DevolutionBeam_DevolveEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, DevolutionBeam_AISelectEffect
+	db  $00
+
+; unreferenced
+; return carry if Turn Duelist has no Evolution cards in Play Area
+; Evolution cards played as Basic Pokémon count for this check
+; CheckSomeEvolutionPokemonCardsInPlayArea:
+; 	ld a, CARDTEST_EVOLUTION_POKEMON
+; 	call CheckSomeMatchingPokemonInPlayArea
+; ; carry set if there is no evolved Pokémon
+; 	ldtx hl, ThereAreNoEvolvedPokemonInPlayAreaText
+; 	ret
+
+
+; returns carry if neither Duelist has evolved Pokemon.
+DevolutionBeam_CheckPlayArea:
+	call CheckSomeEvolvedPokemonInPlayArea
+	ret nc
+	call SwapTurn
+	call CheckSomeEvolvedPokemonInPlayArea
+	call SwapTurn
+	ldtx hl, ThereAreNoEvolvedPokemonInPlayAreaText
+	ret
+
+
+PleaseSelectThePlayAreaText: ; 3928c (e:528c)
+	text "Please select the Play Area:"
+	line "            Yours   Opponent's"
+	done
+
+ProcedureForDevolutionBeamText: ; 38fcc (e:4fcc)
+	text ""
+	line "1. Choose either a Pokémon in your"
+	line "   Play Area or your opponent's"
+	line "   Play Area and press the A Button."
+	line ""
+	line "2. Choose the Pokémon to Devolve"
+	line "   and press the A Button."
+	line ""
+	line "3. Press the B Button to cancel."
+	done
+
+; handles Player selection of an evolved card in Play Area.
+; returns carry if Player cancelled operation.
+HandleEvolvedCardSelection: ; 2dd50 (b:5d50)
+	bank1call HasAlivePokemonInPlayArea
+.loop
+	bank1call OpenPlayAreaScreenForSelection
+	ret c
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	add DUELVARS_ARENA_CARD_STAGE
+	call GetTurnDuelistVariable
+	or a
+	jr z, .loop ; if Basic, loop
+	ret
+
+
+; returns carry of Player cancelled selection.
+; otherwise, output in hTemp_ffa0 which Play Area
+; was selected ($0 = own Play Area, $1 = opp. Play Area)
+; and in hTempPlayAreaLocation_ffa1 selected card.
+DevolutionBeam_PlayerSelectEffect: ; 2dc64 (b:5c64)
+	ldtx hl, ProcedureForDevolutionBeamText
+	bank1call DrawWholeScreenTextBox
+
+.start
+	bank1call DrawDuelMainScene
+	ldtx hl, PleaseSelectThePlayAreaText
+	call TwoItemHorizontalMenu
+	ldh a, [hKeysHeld]
+	and B_BUTTON
+	jr nz, .set_carry
+
+; a Play Area was selected
+	ldh a, [hCurMenuItem]
+	or a
+	jr nz, .opp_chosen
+
+; player chosen
+	call HandleEvolvedCardSelection
+	jr c, .start
+
+	xor a
+.store_selection
+	ld hl, hTemp_ffa0
+	ld [hli], a ; store which Duelist Play Area selected
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	ld [hl], a ; store which card selected
+	or a
+	ret
+
+.opp_chosen
+	call SwapTurn
+	call HandleEvolvedCardSelection
+	call SwapTurn
+	jr c, .start
+	ld a, $01
+	jr .store_selection
+
+.set_carry
+	scf
+	ret
+
+
+; finds first occurrence in Play Area
+; of Stage 1 or 2 card, and outputs its
+; Play Area location in a, with carry set.
+; if none found, don't return carry set.
+FindFirstNonBasicCardInPlayArea: ; 2dd62 (b:5d62)
+	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+	call GetTurnDuelistVariable
+	ld c, a
+
+	ld b, PLAY_AREA_ARENA
+	ld l, DUELVARS_ARENA_CARD_STAGE
+.loop
+	ld a, [hli]
+	or a
+	jr nz, .not_basic
+	inc b
+	dec c
+	jr nz, .loop
+	or a
+	ret
+.not_basic
+	ld a, b
+	scf
+	ret
+
+
+DevolutionBeam_AISelectEffect: ; 2dc9e (b:5c9e)
+	ld a, $01
+	ldh [hTemp_ffa0], a
+	call SwapTurn
+	call FindFirstNonBasicCardInPlayArea
+	call SwapTurn
+	jr c, .found
+	xor a
+	ldh [hTemp_ffa0], a
+	call FindFirstNonBasicCardInPlayArea
+.found
+	ldh [hTempPlayAreaLocation_ffa1], a
+	ret
+
+
+DevolutionBeam_LoadAnimation: ; 2dcb6 (b:5cb6)
+	xor a ; ATK_ANIM_NONE
+	ld [wLoadedAttackAnimation], a
+	ret
+
+DevolutionBeam_DevolveEffect:
+	ldh a, [hTemp_ffa0]
+	or a
+	jr z, .devolve
+	cp $ff
+	ret z
+
+; opponent's Play Area
+	call SwapTurn
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	or a
+	jr nz, .skip_handle_no_damage_effect
+	call HandleNoDamageOrEffect
+	jp c, SwapTurn  ; unaffected
+.skip_handle_no_damage_effect
+	call .devolve
+	jp SwapTurn
+
+.devolve
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	ld b, a
+	ld a, ATK_ANIM_DEVOLUTION_BEAM
+	bank1call PlayAdhocAnimationOnDuelScene_NoEffectiveness
+	jr TryDevolveSelectedPokemonEffect
+
+
+
+ConfusionWaveEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ConfusionWaveEffect
+	db  $00
+
+ConfusionWaveEffect:
+	call ConfusionEffect
+	; fallthrough to SelfConfusionEffect
+
+
+
+MewPsywaveEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PsywaveEffect
+	db  $00
+
+PsywaveEffect: ; 2dc49 (b:5c49)
+	call GetEnergyAttachedMultiplierDamage
+	ld hl, wDamage
+	ld [hl], e
+	; inc hl
+	; ld [hl], d
+	ret
+
+
+
+NaturalRemedyEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckIfPlayAreaHasAnyDamageOrStatus
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, NaturalRemedy_HealEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, NaturalRemedy_PlayerSelection
+	dbw EFFECTCMDTYPE_AI_SELECTION, NaturalRemedy_AISelectEffect
+	db  $00
+
+
+NaturalRemedy_HealEffect:
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	cp $ff
+	ret z
+	ld e, a   ; location
+	ld d, 20  ; damage
+	call HealPlayAreaCardHP
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	jp c, ClearStatusAndEffectsFromTargetEffect
+	jp ClearStatusFromTarget_NoAnim
+
+
+
+NaturalRemedy_AISelectEffect:
+	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+	call GetTurnDuelistVariable
+	ld c, a   ; loop counter
+	ld d, 20  ; current max damage (heal at least 20)
+	ld e, PLAY_AREA_ARENA  ; location iterator
+	ld b, $ff  ; location of max damage
+	ld l, DUELVARS_ARENA_CARD_STATUS
+; find Play Area location with most amount of damage
+.loop
+	push bc
+	ld b, 0  ; score
+; status conditions are worth 20 damage
+	ld a, [hli]
+	or a
+	jr z, .get_damage
+	ld b, 20
+.get_damage
+; e already has the current PLAY_AREA_* offset
+	call GetCardDamageAndMaxHP
+; add score from status conditions
+	add b
+	pop bc
+	or a
+	jr z, .next ; skip if nothing to heal (redundant)
+; compare to current max damage
+	cp d
+	jr c, .next ; skip if stored damage is higher
+; store new target Pokémon
+	ld d, a
+	ld b, e
+.next
+	inc e  ; next location
+	dec c  ; decrement counter
+	jr nz, .loop
+; return selected location (or $ff) in a and [hTemp_ffa0]
+	ld a, b
+	ldh [hTempPlayAreaLocation_ffa1], a
+	ret
+
+
+; select a Pokémon to heal damage and status
+NaturalRemedy_PlayerSelection:
+	ldtx hl, ChoosePkmnToHealText
+	call DrawWideTextBox_WaitForInput
+.read_input
+	call HandlePlayerSelectionPokemonInPlayArea
+	ldh [hTempPlayAreaLocation_ffa1], a
+	ld e, a
+	call GetCardDamageAndMaxHP
+	or a
+	jr nz, .done
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	add e
+	call GetTurnDuelistVariable
+	or a
+	jr z, .read_input ; no damage, no status, loop back to start
+.done
+	ret
+
+
+CheckIfPlayAreaHasAnyDamageOrStatus:
+	call CheckIfPlayAreaHasAnyDamage
+	ret nc  ; there is damage to heal
+	jp CheckIfPlayAreaHasAnyStatus
+
+
+EnergyConversionEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDiscardPileHasBasicEnergyCards
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, SelectedCardList_AddToHandFromDiscardPileEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Retrieve2BasicEnergy_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, Retrieve2BasicEnergy_AISelectEffect
+	db  $00
+
+
+Retrieve2BasicEnergy_PlayerSelectEffect:
+	ldtx hl, Choose2EnergyCardsFromDiscardPileForHandText
+	jp HandleEnergyCardsInDiscardPileSelection
+
+
+Retrieve2BasicEnergy_AISelectEffect:
+	call CreateEnergyCardListFromDiscardPile_OnlyBasic
+	; call CreateEnergyCardListFromDiscardPile_AllEnergy
+	ld a, 2
+	jp PickFirstNCardsFromList_SelectEffect
+
+
+GetMadEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, GetMad_CheckDamage
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, GetMad_MoveDamageCountersEffect
+	db  $00
+
+
+GetMad_CheckDamage:
+	xor a  ; PLAY_AREA_ARENA
+	ldh [hTempPlayAreaLocation_ff9d], a
+	jr StrangeBehavior_CheckDamage.check_damage
+
+
+GetMad_MoveDamageCountersEffect:
+	; store initial HP count
+		ld a, DUELVARS_ARENA_CARD_HP
+		call GetTurnDuelistVariable
+		ldh [hMultiPurposeByte1], a
+	
+	; handle duelist type
+		ld a, DUELVARS_DUELIST_TYPE
+		call GetTurnDuelistVariable
+		cp DUELIST_TYPE_LINK_OPP
+		jr z, .link_opp
+		and DUELIST_TYPE_AI_OPP
+		jr nz, .ai_opp
+	
+	; player
+		ldtx hl, ProcedureForStrangeBehaviorText
+		bank1call DrawWholeScreenTextBox
+		xor a
+		ldh [hCurSelectionItem], a
+		bank1call Func_61a1
+	.loop_player
+		xor a
+		ldh [hTemp_ffa0], a
+		call Move1DamageCounterToRecipient_PlayerSelectEffect
+		jr z, .send_terminator  ; B was pressed
+		ldh a, [hTempPlayAreaLocation_ffa1]
+		ld e, a
+		call SerialSend8Bytes
+		jr .loop_player
+	
+	.send_terminator
+		ld a, $ff  ; terminator
+		ld e, a
+		call SerialSend8Bytes
+		jr .end
+	
+	.link_opp
+		call SerialRecv8Bytes
+		ld a, e
+		cp $ff
+		jr z, .end
+		ldh [hTempPlayAreaLocation_ffa1], a
+		xor a  ; PLAY_AREA_ARENA
+		ldh [hTemp_ffa0], a
+		call StrangeBehavior_SwapEffect
+		jr .link_opp
+	
+	.ai_opp
+	; if we got here, there should be a Benched Pokémon with at least 40 damage
+		ld e, PLAY_AREA_ARENA
+		call GetCardDamageAndMaxHP
+		or a
+		ret nz  ; return if Arena card has damage counters
+		ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+		call GetTurnDuelistVariable
+		cp 2
+		ret c  ; return if no Benched Pokémon
+		dec a
+		ld d, a
+		ld e, PLAY_AREA_BENCH_1
+	.loop_ai
+		call GetCardDamageAndMaxHP
+		cp 40
+		jr nc, .ai_damage_swap
+		inc e
+		dec d
+		ret z  ; no Benched Pokémon with at least 40 damage
+		jr .loop_ai
+	
+	.ai_damage_swap
+		ld a, e  ; play area location
+		ldh [hTempPlayAreaLocation_ffa1], a
+		xor a  ; PLAY_AREA_ARENA
+		ldh [hTemp_ffa0], a
+		; move four damage counters
+		call StrangeBehavior_SwapEffect
+		call StrangeBehavior_SwapEffect
+		call StrangeBehavior_SwapEffect
+		call StrangeBehavior_SwapEffect
+		; jr .end
+		; fallthrough
+	
+	.end
+	; compare current HP to initial value
+		ld a, DUELVARS_ARENA_CARD_HP
+		call GetTurnDuelistVariable
+		ldh a, [hMultiPurposeByte1]
+		sub [hl]
+		cp 40
+		ret c
+	; moved 4 damage counters or more; immune to damage
+		ld a, ATK_ANIM_PROTECT
+		ld [wLoadedAttackAnimation], a
+		ld a, SUBSTATUS1_NO_DAMAGE
+		jp ApplySubstatus1ToAttackingCard
+	
+
+
+
 SmogEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SmogEffect
 	db  $00
@@ -210,6 +849,22 @@ PrimordialDream_MorphAndAddToHandEffect:
 	ldh [hTempList + 1], a
 	jp SelectedCard_AddToHandFromDiscardPile
 
+
+; Converts the selected card into a Mysterious Fossil
+; input:
+;   a - deck index of the selected card
+FossilizeCard:
+	ld e, MYSTERIOUS_FOSSIL
+	; fallthrough to OverwriteCardID
+
+; input:
+;   a - deck index of the card to transform
+;   e - ID of the card to transform into
+OverwriteCardID:
+	; point hl to the index in deck list, to overwrite ID (preserves de)
+		call _GetCardIDFromDeckIndex
+		ld [hl], e
+		ret
 
 
 

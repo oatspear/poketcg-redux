@@ -118,11 +118,6 @@ NoDamageOrEffectDueToAgilityText:
 	line "due to the effects of Agility."
 	done
 
-NoDamageOrEffectDueToBarrierText: ; 383d3 (e:43d3)
-	text "No damage or effect on next Attack"
-	line "due to the effects of Barrier."
-	done
-
 ; NoDamageQueenPressText:
 ; 	text "No damage on next Attack due to the"
 ; 	line "effects of Queen Press."
@@ -143,9 +138,9 @@ NoDamageOrEffectDueToTransparencyText: ; 384d8 (e:44d8)
 	line "due to the effects of Transparency"
 	done
 
-MetamorphsToText: ; 3851f (e:451f)
-	text "<RAMTEXT>"
-	line "metamorphs to <RAMTEXT>."
+PutInPlayWithTransformText:
+	text "<RAMTEXT> was put"
+	line "in play with Transform."
 	done
 
 SelectPkmnOnBenchToSwitchWithActiveText: ; 38533 (e:4533)
@@ -364,18 +359,6 @@ ProcedureForDamageSwapText: ; 38e90 (e:4e90)
 	line "   it will Knock Out the Pokémon."
 	done
 
-ProcedureForDevolutionBeamText: ; 38fcc (e:4fcc)
-	text ""
-	line "1. Choose either a Pokémon in your"
-	line "   Play Area or your opponent's"
-	line "   Play Area and press the A Button."
-	line ""
-	line "2. Choose the Pokémon to Devolve"
-	line "   and press the A Button."
-	line ""
-	line "3. Press the B Button to cancel."
-	done
-
 ProcedureForStrangeBehaviorText:
 	text ""
 	line "1. Choose the Pokémon to move"
@@ -415,11 +398,6 @@ PleaseSelectTheDeckText: ; 39254 (e:5254)
 	line "            Yours   Opponent's"
 	done
 
-PleaseSelectThePlayAreaText: ; 3928c (e:528c)
-	text "Please select the Play Area:"
-	line "            Yours   Opponent's"
-	done
-
 ChooseAnyPokemonFromDeckText:
 	text "Choose any Pokémon"
 	line "from the Deck."
@@ -450,8 +428,8 @@ PeekWasUsedToLookInYourHandText: ; 39318 (e:5318)
 	line "<RAMTEXT> in your Hand."
 	done
 
-CardPeekWasUsedOnText: ; 39346 (e:5346)
-	text "Card Peek was used on"
+ThatPokemonHasTooMuchHPText:
+	text "That Pokémon has too much HP."
 	done
 
 PokemonAndAllAttachedCardsReturnedToHandText: ; 3935d (e:535d)

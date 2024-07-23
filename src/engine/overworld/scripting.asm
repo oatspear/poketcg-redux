@@ -1496,7 +1496,7 @@ ChallengeCupPrizeCards:
 	db SLOWPOKE_LV9
 	tx SlowpokeTradeCardName
 
-	db MEWTWO_ALT_LV60
+	db MEWTWO_LV53
 	tx MewtwoTradeCardName
 
 	db MEWTWO_LV60

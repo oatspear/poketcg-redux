@@ -49,7 +49,7 @@ PointerTable_AttackAnimation:
 	dw AttackAnimation_Blizzard            ; ATK_ANIM_BLIZZARD
 	dw AttackAnimation_PsychicHit          ; ATK_ANIM_PSYCHIC_HIT
 	dw AttackAnimation_PsychicHit          ; ATK_ANIM_NIGHTMARE
-	dw AttackAnimation_PsychicHit          ; ATK_ANIM_27
+	dw AttackAnimation_PsychicNova         ; ATK_ANIM_PSYCHIC_NOVA
 	dw AttackAnimation_DarkMind            ; ATK_ANIM_DARK_MIND
 	dw AttackAnimation_Beam                ; ATK_ANIM_BEAM
 	dw AttackAnimation_HyperBeam           ; ATK_ANIM_HYPER_BEAM
@@ -64,7 +64,7 @@ PointerTable_AttackAnimation:
 	dw AttackAnimation_Whip                ; ATK_ANIM_WHIP
 	dw AttackAnimation_Tear                ; ATK_ANIM_TEAR
 	dw AttackAnimation_MultipleSlash       ; ATK_ANIM_MULTIPLE_SLASH
-	dw AttackAnimation_MultipleSlash       ; ATK_ANIM_42
+	dw AttackAnimation_TearNoDamage        ; ATK_ANIM_TEAR_NO_DAMAGE
 	dw AttackAnimation_MultipleSlash       ; ATK_ANIM_RAMPAGE
 	dw AttackAnimation_Drill               ; ATK_ANIM_DRILL
 	dw AttackAnimation_PotSmash            ; ATK_ANIM_POT_SMASH
@@ -303,6 +303,15 @@ AttackAnimation_PsychicHit:
 	anim_opponent       DUEL_ANIM_SHOW_DAMAGE
 	anim_end
 
+AttackAnimation_PsychicNova:
+	anim_player         DUEL_ANIM_GLOW
+	anim_normal         DUEL_ANIM_FLASH
+	anim_opponent       DUEL_ANIM_GLARE
+	anim_opponent       DUEL_ANIM_BIG_HIT
+	anim_normal         DUEL_ANIM_SHAKE2
+	anim_opponent       DUEL_ANIM_SHOW_DAMAGE
+	anim_end
+
 AttackAnimation_DarkMind:
 	anim_player         DUEL_ANIM_GLOW
 	anim_opponent       DUEL_ANIM_GLARE
@@ -397,6 +406,12 @@ AttackAnimation_Tear:
 	anim_opponent       DUEL_ANIM_HIT
 	anim_normal         DUEL_ANIM_SHAKE1
 	anim_opponent       DUEL_ANIM_SHOW_DAMAGE
+	anim_end
+
+AttackAnimation_TearNoDamage:
+	anim_player         DUEL_ANIM_GLOW
+	anim_opponent       DUEL_ANIM_TEAR
+	anim_normal         DUEL_ANIM_SHAKE1
 	anim_end
 
 AttackAnimation_MultipleSlash:

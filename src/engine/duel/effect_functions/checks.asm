@@ -317,17 +317,6 @@ CheckPokemonHasNoToolsAttached:
 	ret
 
 
-; unreferenced
-; return carry if Turn Duelist has no Evolution cards in Play Area
-; Evolution cards played as Basic Pokémon count for this check
-; CheckSomeEvolutionPokemonCardsInPlayArea:
-; 	ld a, CARDTEST_EVOLUTION_POKEMON
-; 	call CheckSomeMatchingPokemonInPlayArea
-; ; carry set if there is no evolved Pokémon
-; 	ldtx hl, ThereAreNoEvolvedPokemonInPlayAreaText
-; 	ret
-
-
 ; returns carry if Turn Duelist
 ; has no Stage1 or Stage2 cards in Play Area.
 CheckSomeEvolvedPokemonInPlayArea:
@@ -550,11 +539,12 @@ CheckSomeDamagedPokemonInBench:
 	jp CheckSomeMatchingPokemonInBench
 
 
-GetMad_CheckDamage:
-	xor a  ; PLAY_AREA_ARENA
-	ldh [hTempPlayAreaLocation_ff9d], a
-	jr StrangeBehavior_CheckDamage.check_damage
-
+StrangeBehavior_PreconditionCheck:
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	call CheckPlayAreaPokemonHasAnyEnergiesAttached
+	ret c
+	; jr StrangeBehavior_CheckDamage
+	; fallthrough
 
 ; returns carry if Strange Behavior cannot be used
 StrangeBehavior_CheckDamage:
@@ -590,6 +580,14 @@ CheckPokemonHasEnoughHP:
 	ret
 
 
+; output:
+;   carry: set if the Active Pokémon has less than 20 HP remaining
+CheckArenaPokemonHas20HpOrMore:
+	xor a  ; PLAY_AREA_ARENA
+	ld e, 20
+	jr CheckPokemonHasEnoughHP
+
+
 ; input:
 ;   e: minimum amount of HP
 CheckSomePokemonWithEnoughHP:
@@ -615,6 +613,8 @@ CheckDefendingPokemonHas50HpOrLess:
 	call GetNonTurnDuelistVariable
 	cp 51
 	ccf
+	ret nc
+	ldtx hl, ThatPokemonHasTooMuchHPText
 	ret
 
 
@@ -625,6 +625,8 @@ CheckDefendingPokemonHas70HpOrLess:
 	call GetNonTurnDuelistVariable
 	cp 71
 	ccf
+	ret nc
+	ldtx hl, ThatPokemonHasTooMuchHPText
 	ret
 
 
@@ -718,6 +720,18 @@ FullHeal_CheckPlayAreaStatus:
 	or a
 	ret nz  ; substatus found
 	jr CheckIfPlayAreaHasAnyStatus
+
+
+; carry set if the Defending Pokémon is immune to damage or effects
+CheckDefendingPokemonAffectedByEffects:
+	call SwapTurn
+	ld a, DUELVARS_ARENA_CARD
+	call GetTurnDuelistVariable
+	call GetCardIDFromDeckIndex
+	ld a, e
+	ld [wTempNonTurnDuelistCardID], a
+	call HandleNoDamageOrEffectSubstatus
+	jp SwapTurn
 
 
 ; ------------------------------------------------------------------------------
@@ -1297,6 +1311,11 @@ IsRestoredPokemonCard:
 ; Compound Checks
 ; ------------------------------------------------------------------------------
 
+Transform_PreconditionCheck:
+	call CheckPokemonPowerCanBeUsed_StoreTrigger
+	jp CheckDiscardPileHasBasicPokemonCards
+
+
 ThunderWave_PreconditionCheck:
 	call CheckEnteredActiveSpotThisTurn
 	ret nc  ; active this turn
@@ -1314,3 +1333,9 @@ WickedTentacle_PreconditionCheck:
 	call CheckBenchIsNotEmpty
 	call nc, CheckArenaPokemonHasAnyEnergiesAttached
 	jp SwapTurn
+
+
+EnergySwitch_PreconditionCheck:
+	call CheckBenchIsNotEmpty
+	ret c
+	jp CheckIfPlayAreaHasAnyEnergies

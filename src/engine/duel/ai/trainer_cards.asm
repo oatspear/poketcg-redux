@@ -831,15 +831,11 @@ AIDecide_Pluspower1:
 
 ; first attack can KO with Pluspower.
 .kos_with_pluspower_1
-	call .check_mr_mime
-	jr nc, .no_carry
 	xor a ; FIRST_ATTACK_OR_PKMN_POWER
 	scf
 	ret
 ; second attack can KO with Pluspower.
 .kos_with_pluspower_2
-	call .check_mr_mime
-	jr nc, .no_carry
 	ld a, SECOND_ATTACK
 	scf
 	ret
@@ -871,25 +867,6 @@ AIDecide_Pluspower1:
 	or a
 	ret
 
-; returns carry if Pluspower boost does
-; not exceed 30 damage when facing Mr. Mime.
-.check_mr_mime
-	ld a, [wDamage]
-	add 10 ; add Pluspower boost
-	cp 30 ; no danger in preventing damage
-	ret c
-	call SwapTurn
-	ld a, DUELVARS_ARENA_CARD
-	call GetTurnDuelistVariable
-	call GetCardIDFromDeckIndex
-	call SwapTurn
-	ld a, e
-	cp MR_MIME
-	ret z
-; damage is >= 30 but not Mr. Mime
-	scf
-	ret
-
 ; returns carry 7/10 of the time
 ; if selected attack is useable, can't KO without Pluspower boost
 ; can damage Mr. Mime even with Pluspower boost
@@ -904,31 +881,10 @@ AIDecide_Pluspower2:
 	jr nc, .no_carry
 	call .check_random
 	jr nc, .no_carry
-	call .check_mr_mime
-	jr nc, .no_carry
-	scf
+	; scf
 	ret
 .no_carry
 	or a
-	ret
-
-; returns carry if Pluspower boost does
-; not exceed 30 damage when facing Mr. Mime.
-.check_mr_mime
-	ld a, [wDamage]
-	add 10 ; add Pluspower boost
-	cp 30 ; no danger in preventing damage
-	ret c
-	call SwapTurn
-	ld a, DUELVARS_ARENA_CARD
-	call GetTurnDuelistVariable
-	call GetCardIDFromDeckIndex
-	call SwapTurn
-	ld a, e
-	cp MR_MIME
-	ret z
-; damage is >= 30 but not Mr. Mime
-	scf
 	ret
 
 ; return carry if attack is useable but cannot KO.
@@ -1067,13 +1023,11 @@ AIDecide_GustOfWind:
 	jr c, .no_carry ; if energy card is in hand
 
 .check_id
-	; skip if current active card is MEW_LV23 or MEWTWO_LV53
+	; skip if current active card is MEWTWO_LV53
 	ld a, DUELVARS_ARENA_CARD
 	call GetTurnDuelistVariable
 	call GetCardIDFromDeckIndex
 	ld a, e
-	cp MEW_LV23
-	jr z, .no_carry
 	cp MEWTWO_LV53
 	jr z, .no_carry
 
@@ -3363,11 +3317,7 @@ AIDecide_FullHeal:
 ; .asleep
 ; set carry if any of the following
 ; cards are in the Play Area.
-	; ld a, GASTLY_LV8
-	; ld b, PLAY_AREA_ARENA
-	; call LookForCardIDInPlayArea_Bank8
-	; jr c, .set_carry
-	; ld a, GASTLY_LV17
+	; ld a, GASTLY
 	; ld b, PLAY_AREA_ARENA
 	; call LookForCardIDInPlayArea_Bank8
 	; jr c, .set_carry
@@ -3961,38 +3911,31 @@ AIDecide_Recycle:
 	call LoadCardDataToBuffer1_FromDeckIndex
 
 ; gastly2
-	cp GASTLY_LV17
-	jr nz, .gastly1
-	ld a, b
-	ld [wAITempVars], a
-	jr .loop_2
-
-.gastly1
-	cp GASTLY_LV8
+	cp GASTLY
 	jr nz, .zubat
 	ld a, b
-	ld [wAITempVars + 1], a
+	ld [wAITempVars], a
 	jr .loop_2
 
 .zubat
 	cp ZUBAT
 	jr nz, .ditto
 	ld a, b
-	ld [wAITempVars + 2], a
+	ld [wAITempVars + 1], a
 	jr .loop_2
 
 .ditto
 	cp DITTO
 	jr nz, .meowth
 	ld a, b
-	ld [wAITempVars + 3], a
+	ld [wAITempVars + 2], a
 	jr .loop_2
 
 .meowth
 	cp MEOWTH_LV15
 	jr nz, .loop_2
 	ld a, b
-	ld [wAITempVars + 4], a
+	ld [wAITempVars + 3], a
 	jr .loop_2
 
 
@@ -4534,13 +4477,13 @@ AIDecide_Pokeball:
 	ld a, PSYCHIC_ENERGY
 	call LookForCardIDInHandList_Bank8
 	jr nc, .done_etcetera
-	ld a, GASTLY_LV8
+	ld a, GASTLY
 	call LookForCardIDInHandList_Bank8
 	jr c, .done_etcetera
 	ld a, JYNX
 	call LookForCardIDInHandList_Bank8
 	jr c, .done_etcetera
-	ld e, GASTLY_LV8
+	ld e, GASTLY
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation
 	ret c
@@ -4599,11 +4542,7 @@ AIDecide_Pokeball:
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation
 	ret c
-	ld e, GASTLY_LV8
-	ld a, CARD_LOCATION_DECK
-	call LookForCardIDInLocation
-	ret c
-	ld e, GASTLY_LV17
+	ld e, GASTLY
 	ld a, CARD_LOCATION_DECK
 	call LookForCardIDInLocation
 	ret

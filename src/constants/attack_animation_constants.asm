@@ -29,7 +29,7 @@
 	const ATK_ANIM_BLIZZARD               ; $18
 	const ATK_ANIM_PSYCHIC_HIT            ; $19
 	const ATK_ANIM_NIGHTMARE              ; $1a
-	const ATK_ANIM_27                     ; $1b
+	const ATK_ANIM_PSYCHIC_NOVA           ; $1b
 	const ATK_ANIM_DARK_MIND              ; $1c
 	const ATK_ANIM_BEAM                   ; $1d
 	const ATK_ANIM_HYPER_BEAM             ; $1e
@@ -44,7 +44,7 @@
 	const ATK_ANIM_WHIP                   ; $27
 	const ATK_ANIM_TEAR                   ; $28
 	const ATK_ANIM_MULTIPLE_SLASH         ; $29
-	const ATK_ANIM_42                     ; $2a
+	const ATK_ANIM_TEAR_NO_DAMAGE         ; $2a
 	const ATK_ANIM_RAMPAGE                ; $2b
 	const ATK_ANIM_DRILL                  ; $2c
 	const ATK_ANIM_POT_SMASH              ; $2d

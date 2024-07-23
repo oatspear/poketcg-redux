@@ -6902,6 +6902,8 @@ HandleOnPlayTrainerEffects:
 ;   [hTempPlayAreaLocation_ff9d]: PLAY_AREA_*
 ;   [wLoadedCard1*]: card data of the attached Energy
 HandleOnPlayEnergyEffects:
+	call ArePokemonPowersDisabled
+	ret c
 ; 	ld a, [wLoadedCard1Type]
 ; 	cp TYPE_ENERGY_WATER
 ; 	jr nz, .not_water_energy

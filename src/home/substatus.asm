@@ -54,8 +54,6 @@ HandleDefenderDamageReduction_PokemonPowers:
 	cp POKEMON_POWER
 	ret z
 	ld a, [wTempNonTurnDuelistCardID]
-	cp MR_MIME
-	jr z, .prevent_30_or_more_damage ; invisible wall
 	cp MAROWAK_LV26
 	jp z, ReduceDamageBy20_DE ; Battle Armor
 	cp METAPOD
@@ -66,15 +64,6 @@ HandleDefenderDamageReduction_PokemonPowers:
 	jp z, ReduceDamageBy20_DE ; Exoskeleton
 	cp SHELLDER
 	jp z, ReduceDamageBy10_DE ; Exoskeleton
-	; cp KABUTO
-	; jp z, HalveDamage_DE ; kabuto armor
-	ret
-
-.prevent_30_or_more_damage
-	ld bc, 30
-	call CompareDEtoBC
-	ret c  ; de < 30
-	ld de, 0
 	ret
 
 
@@ -235,10 +224,6 @@ HandleNoDamageOrEffectSubstatus:
 	ldtx hl, NoDamageOrEffectDueToAgilityText
 	cp SUBSTATUS1_AGILITY
 	jr z, .no_damage_or_effect
-	ld e, NO_DAMAGE_OR_EFFECT_BARRIER
-	ldtx hl, NoDamageOrEffectDueToBarrierText
-	cp SUBSTATUS1_BARRIER
-	jr z, .no_damage_or_effect
 	call CheckCannotUseDueToStatus
 	ccf
 	ret nc
@@ -262,11 +247,13 @@ HandleNoDamageOrEffectSubstatus:
 	ret nz
 
 ; prevent damage if attacked by a non-basic Pokemon
-	ld a, [wTempTurnDuelistCardID]
-	ld e, a
-	ld d, $0
-	call LoadCardDataToBuffer2_FromCardID
-	ld a, [wLoadedCard2Stage]
+	; ld a, [wTempTurnDuelistCardID]
+	; ld e, a
+	; ld d, $0
+	; call LoadCardDataToBuffer2_FromCardID
+	; ld a, [wLoadedCard2Stage]
+	ld a, DUELVARS_ARENA_CARD_STAGE
+	call GetNonTurnDuelistVariable
 	or a
 	ret z
 
@@ -332,7 +319,6 @@ CheckNoDamageOrEffect:
 
 NoDamageOrEffectTextIDTable:
 	tx NoDamageText                          ; NO_DAMAGE_OR_EFFECT_UNUSED
-	tx NoDamageOrEffectDueToBarrierText      ; NO_DAMAGE_OR_EFFECT_BARRIER
 	tx NoDamageOrEffectDueToAgilityText      ; NO_DAMAGE_OR_EFFECT_AGILITY
 	tx NoDamageOrEffectDueToTransparencyText ; NO_DAMAGE_OR_EFFECT_TRANSPARENCY
 	tx NoDamageOrEffectDueToNShieldText      ; NO_DAMAGE_OR_EFFECT_NSHIELD
@@ -466,20 +452,25 @@ IsDarkPrisonActive:
 ; return carry if turn holder has Mew and its Clairvoyance Pkmn Power is active
 ; preserves: bc, de
 IsClairvoyanceActive:
-	call ArePokemonPowersDisabled
-	ccf
-	ret nc
-	ld a, MEW_LV15
-	jp GetFirstPokemonWithAvailablePower
+	or a
+	ret
+;	call ArePokemonPowersDisabled
+;	ccf
+;	ret nc
+;	ld a, MEW_LV15
+;	jp GetFirstPokemonWithAvailablePower
 
 
-; return carry if turn holder has Marowak and its Bodyguard Pkmn Power is active
+; return carry if turn holder has Mr. Mime and its Bench Barrier Pkmn Power is active
 ; preserves: bc, de
 IsBodyguardActive:
 	call ArePokemonPowersDisabled  ; preserves: bc, de
 	ccf
 	ret nc
-	ld a, 0  ; TODO insert Pokémon ID
+	ld a, [wIsDamageToSelf]
+	or a
+	ret nz  ; only prevents damage from the opponent
+	ld a, MR_MIME
 	jp GetFirstPokemonWithAvailablePower  ; preserves: hl, bc, de
 
 
@@ -1209,16 +1200,22 @@ IsCounterattackActive:
 	call CheckCannotUseDueToStatus  ; preserves de
 	jr c, .dark_retribution
 
-; check the ID of the defending Pokémon
+; Strike Back Pokémon
 	ld a, [wTempNonTurnDuelistCardID]
 	cp MACHAMP
 	; ld hl, 20  ; damage to return
 	; call z, AddToDamage_DE
-	jr nz, .desperate_blast
 	ld de, 20  ; damage to return
-	jr .dark_retribution
+	jr z, .dark_retribution
+
+	cp MEWTWO_LV60
+	; ld hl, 10  ; damage to return
+	; call z, AddToDamage_DE
+	ld de, 10  ; damage to return
+	jr z, .dark_retribution
 
 .desperate_blast
+	ld de, 0   ; damage to return
 	cp ELECTRODE_LV35
 	jr nz, .dark_retribution
 ; only triggers if the Pokémon has been Knocked Out

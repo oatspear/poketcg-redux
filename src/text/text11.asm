@@ -50,7 +50,7 @@ VenomPowderName:
 	text "Venom Powder"
 	done
 
-VenomPowderDescription:
+InflictConfusionAndPoisonDescription:
 	text "The Defending Pokémon is now"
 	line "Confused and Poisoned."
 	done
@@ -133,14 +133,8 @@ DamagePerEnergyAttachedToBothActiveDescription:
 	line "to the Defending Pokémon."
 	done
 
-FoulGasName: ; 599d5 (16:59d5)
+FoulGasName:
 	text "Foul Gas"
-	done
-
-FoulGasDescription: ; 599df (16:59df)
-	text "Flip a coin. If heads, the Defending"
-	line "Pokémon is now Poisoned; if tails,"
-	line "it is now Confused."
 	done
 
 SmogName:
@@ -507,10 +501,6 @@ RestDescription:
 	done
 ENDC
 
-HornAttackName: ; 5c1f5 (17:41f5)
-	text "Horn Attack"
-	done
-
 RendName:
 	text "Rend"
 	done
@@ -541,15 +531,6 @@ InflictBurnDescription:
 	line "Burned."
 	done
 
-RecoverName:
-	text "Recover"
-	done
-
-RecoverDescription:
-	text "Discard an Energy from this Pokémon."
-	line "Then, heal all damage from it."
-	done
-
 EnergyBurstName:
 	text "Energy Burst"
 	done
@@ -566,11 +547,7 @@ ShellPressName:
 	text "Shell Press"
 	done
 
-FocusEnergyName: ; 5c6b4 (17:46b4)
-	text "Focus Energy"
-	done
-
-MysteriousFossilName: ; 5c894 (17:4894)
+MysteriousFossilName:
 	text "Mysterious Fossil"
 	done
 
@@ -583,7 +560,7 @@ ClairvoyanceDescription:
 	line "hand face up."
 	done
 
-BlizzardName: ; 5cb6d (17:4b6d)
+BlizzardName:
 	text "Blizzard"
 	done
 
@@ -612,7 +589,7 @@ PoisonPaybackDescription:
 	done
 
 DamagePerPokemonPowerDescription:
-	text "This attack does 20 more damage"
+	text "This attack does 10 more damage"
 	line "for each of your opponent's Pokémon"
 	line "that has a Pokémon Power."
 	done
@@ -856,7 +833,15 @@ StrikeBackName:
 	text "Strike Back"
 	done
 
-StrikeBackDescription:
+StrikeBack10Description:
+	text "If this is your Active Pokémon and"
+	line "it is damaged by an opponent's"
+	line "attack (even if this Pokémon is"
+	line "Knocked Out), put 1 damage counter"
+	line "on the Attacking Pokémon."
+	done
+
+StrikeBack20Description:
 	text "If this is your Active Pokémon and"
 	line "it is damaged by an opponent's"
 	line "attack (even if this Pokémon is"
@@ -1054,11 +1039,11 @@ SleepingGasName: ; 604c3 (18:44c3)
 	text "Sleeping Gas"
 	done
 
-DestinyBondName: ; 6050e (18:450e)
+DestinyBondName:
 	text "Destiny Bond"
 	done
 
-DestinyBondDescription: ; 6051c (18:451c)
+DestinyBondDescription:
 	text "Discard an Energy card attached to"
 	line "this Pokémon. If a Pokémon Knocks"
 	line "Out this Pokémon during your"
@@ -1068,15 +1053,6 @@ DestinyBondDescription: ; 6051c (18:451c)
 
 LickName: ; 60623 (18:4623)
 	text "Lick"
-	done
-
-EnergyConversionName: ; 60629 (18:4629)
-	text "Energy Conversion"
-	done
-
-EnergyConversionDescription:
-	text "Put up to 2 Basic Energy cards from"
-	line "your discard pile into your hand."
 	done
 
 NightmareName: ; 60801 (18:4801)
@@ -1155,21 +1131,14 @@ DarkMindName: ; 609b7 (18:49b7)
 	text "Dark Mind"
 	done
 
-ShadowName: ; 60a5f (18:4a5f)
-	text "Shadow"
+BenchBarrierName:
+	text "Bench Barrier"
 	done
 
-InvisibleWallName:
-	text "Invisible Wall"
-	done
-
-InvisibleWallDescription:
-	text "Whenever an attack does 30 or more"
-	line "damage to this Pokémon (after"
-	line "applying Weakness and Resistance),"
-	line "prevent that damage."
-	line "(Any other effects of attacks"
-	line "still happen.)"
+BenchBarrierDescription:
+	text "Prevent all damage done to your"
+	line "Benched Pokémon by attacks from"
+	line "your opponent's Pokémon."
 	done
 
 MeditateName:
@@ -1192,6 +1161,19 @@ PainBurstDescription:
 	line "Defending Pokémon."
 	done
 
+PsyburnName:
+	text "Psyburn"
+	done
+
+PsyburnDescription:
+	text "Discard 1 or more <PSYCHIC> Energy attached"
+	line "to this Pokémon to use this attack."
+	line "This attack does 20 damage for each"
+	line "Energy discarded this way."
+	line "If your opponent has 4 or more cards"
+	line "in their hand, discard 1 at random."
+	done
+
 PsychicName:
 	text "Psychic"
 	done
@@ -1200,14 +1182,6 @@ PsychicDescription:
 	text "This attack does 10 more damage"
 	line "for each Energy attached to"
 	line "the Defending Pokémon."
-	done
-
-BarrierDescription:
-	text "Discard all Energy cards attached to"
-	line "this Pokémon (at least 1). During"
-	line "your opponent's next turn, prevent"
-	line "all effects of attacks, including"
-	line "damage, done to this Pokémon."
 	done
 
 EnergyAbsorptionName: ; 61065 (18:5065)
@@ -1231,14 +1205,14 @@ NeutralizingShieldDescription:
 	line "Evolved Pokémon."
 	done
 
-PsywaveName: ; 6134c (18:534c)
+PsywaveName:
 	text "Psywave"
 	done
 
-PsywaveDescription: ; 61355 (18:5355)
-	text "Does 10 damage times the number of"
-	line "Energy cards attached to the"
-	line "Defending Pokémon."
+PsywaveDescription:
+	text "Put 1 damage counter on the"
+	line "Defending Pokémon for each"
+	line "Energy attached to it."
 	done
 
 DevolutionBeamName:
@@ -1429,11 +1403,10 @@ DeadlyPoisonName:
 	text "Deadly Poison"
 	done
 
-DeadlyPoisonDescription:
-	text "The Defending Pokémon is now"
-	line "Poisoned. If the Defending Pokémon"
-	line "was already Poisoned, this attack"
-	line "does 20 more damage."
+VenoshockDescription:
+	text "If the Defending Pokémon was already"
+	line "already Poisoned, this attack does"
+	line "20 more damage."
 	done
 
 OverwhelmName:
@@ -1710,4 +1683,36 @@ IncreaseRetreatCostDescription:
 
 ThrashName:
 	text "Thrash"
+	done
+
+RageFistName:
+	text "Rage Fist"
+	done
+
+RageFistDescription:
+	text "This attack does 10 more damage"
+	line "for each Prize card your opponent"
+	line "has taken."
+	done
+
+PutDamageCountersOnPokemonText:
+	text "Put <RAMNUM> damage counters on"
+	line "<RAMTEXT>."
+	done
+
+PsychicLeapName:
+	text "Psychic Leap"
+	done
+
+MysteriousTailName:
+	text "Mysterious Tail"
+	done
+
+MysteriousTailDescription:
+	text "Once during your turn, if this"
+	line "Pokémon is in the Active Spot, you"
+	line "may look at the top 6 cards of your"
+	line "deck and put an Item card you find"
+	line "there into your hand. Shuffle the"
+	line "other cards back into your deck."
 	done

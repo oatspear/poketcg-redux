@@ -119,6 +119,17 @@ CountPrizes:
 	pop hl
 	ret
 
+; output:
+;   a: how many prizes the turn holder has already taken
+CountPrizesTaken:
+	push bc
+	call CountPrizes
+	ld c, a
+	ld a, [wDuelInitialPrizes]
+	sub c
+	pop bc
+	ret
+
 ; shuffles the turn holder's deck
 ; if less than 60 cards remain in the deck, it makes sure that the rest are ignored
 ShuffleDeck:
@@ -776,7 +787,10 @@ RemoveCardFromDuelTempList:
 	pop hl
 	ret
 
-; return the number of cards in wDuelTempList in a
+
+; output:
+;   a: number of cards in wDuelTempList
+; preserves: hl, bc, de
 CountCardsInDuelTempList:
 	push hl
 	push bc
@@ -1515,7 +1529,7 @@ OnPokemonPlayedInitVariablesAndPowers:
 	ld a, [wLoadedAttackCategory]
 	cp POKEMON_POWER
 	ret nz
-	call DisplayUsePokemonPowerScreen
+	bank1call DisplayUsePokemonPowerScreen
 	ldh a, [hTempCardIndex_ff98]
 	call LoadCardDataToBuffer1_FromDeckIndex
 	ld hl, wLoadedCard1Name
@@ -1537,7 +1551,7 @@ OnPokemonPlayedInitVariablesAndPowers:
 	bit TURN_FLAG_PKMN_POWERS_DISABLED_F, a
 	jr z, .use_pokemon_power
 .unable_to_use
-	call DisplayUsePokemonPowerScreen
+	bank1call DisplayUsePokemonPowerScreen
 	ldtx hl, UnableToUsePkmnPowerDueToDisableEffectText
 	call DrawWideTextBox_WaitForInput
 	jp ExchangeRNG
@@ -1770,6 +1784,9 @@ PlayAttackAnimation_DealAttackDamage:
 	call HandleDestinyBond_ClearKnockedOutPokemon_TakePrizes_CheckGameOutcome
 	jr c, .done  ; duel finished
 
+; reset some variables to prepare for the next phase
+	xor a
+	ld [wEffectFunctionsFeedbackIndex], a
 ; effects that happen after selecting a new Active Pokémon
 	ld a, [wTempNonTurnDuelistCardID]
 	push af
@@ -1777,7 +1794,7 @@ PlayAttackAnimation_DealAttackDamage:
 	call TryExecuteEffectCommandFunction
 	pop af
 	ld [wTempNonTurnDuelistCardID], a
-	call HandleStrikeBack_AfterDirectAttack
+	; call HandleStrikeBack_AfterDirectAttack
 	bank1call Func_6df1
 	call Func_1bb4
 	bank1call Func_7195
@@ -2554,9 +2571,10 @@ PrintPokemonsAttackText:
 ; so that it can be used with <RAMTEXT> text.
 ; Input:
 ;    a: DUELVARS_ARENA_CARD + offset
+; preserves: bc, de
 LoadCardNameAndLevelFromVarToRam2:
-	call GetTurnDuelistVariable
-	call LoadCardDataToBuffer1_FromDeckIndex
+	call GetTurnDuelistVariable  ; preserves bc, de
+	call LoadCardDataToBuffer1_FromDeckIndex  ; preserves hl, bc, de
 	jr LoadCardNameAndLevelFromCardIDToRam2.copy
 
 ; Input:
@@ -2567,7 +2585,7 @@ LoadCardNameAndLevelFromCardIDToRam2:
 
 .copy
 	ld a, 18
-	call CopyCardNameAndLevel
+	call CopyCardNameAndLevel  ; preserves bc, de
 	; zero wTxRam2 so that the name & level text just loaded to wDefaultText is printed
 	ld [hl], TX_END
 

@@ -169,6 +169,30 @@ Discard1RandomCardFromOpponentsHand:
   jp SwapTurn
 
 
+;
+PsychicNova_DrawbackEffect:
+  call CheckOpponentHasMorePrizeCardsRemaining
+  ret c  ; opponent Prizes < user Prizes (losing)
+  ret z  ; opponent Prizes = user Prizes (tied)
+; opponent Prizes > user Prizes (winning)
+  ; jr DiscardAllCardsFromHand
+  ; fallthrough
+
+
+; discards all cards from the turn holder's hand
+DiscardAllCardsFromHand:
+  call CreateHandCardList
+	call SortCardsInDuelTempListByID
+	ld hl, wDuelTempList
+.discard_loop
+	ld a, [hli]
+	cp $ff
+	ret z
+	call RemoveCardFromHand
+	call PutCardInDiscardPile
+	jr .discard_loop
+
+
 ; ------------------------------------------------------------------------------
 ; Discard Energies
 ; ------------------------------------------------------------------------------

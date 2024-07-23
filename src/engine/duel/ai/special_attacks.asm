@@ -19,13 +19,13 @@ HandleSpecialAIAttacks:
 	jp z, .SwordsDanceAndFocusEnergy
 	cp MAGNETON_LV35
 	jp z, .JunkMagnet
-	cp MEW_LV23
-	jp z, .DevolutionBeam
+	; cp MEW_LV15
+	; jp z, .DevolutionBeam
 	; cp PORYGON
 	; jp z, .Conversion
 	cp GEODUDE
 	jp z, .Mend
-	cp MEWTWO_LV60
+	cp MEWTWO_LV53
 	jp z, .Concentration
 	cp BELLSPROUT
 	jp z, .Growth
@@ -39,9 +39,13 @@ HandleSpecialAIAttacks:
 	jp z, .Collect
 	cp NIDORANM
 	jp z, .Collect
+	cp FLYING_PIKACHU
+	jp z, .Collect
+	cp JYNX
+	jp z, .Collect
 	cp DUGTRIO
 	jp z, .Earthquake
-	cp RHYDON
+	cp NIDOKING
 	jp z, .Earthquake
 	cp ELECTRODE_LV35
 	jp z, .EnergySpike
@@ -81,22 +85,20 @@ HandleSpecialAIAttacks:
 	jp z, .Flare
 	cp ZAPDOS_LV64
 	jp z, .Energize
-	cp JYNX
-	jr z, .Mimic
-	cp CLEFABLE
-	jr z, .LunarPower
+	; cp JYNX
+	; jr z, .Mimic
+	; cp CLEFABLE
+	; jr z, .LunarPower
 	; cp SPEAROW
 	; jr z, .DevastatingWind
-	cp GASTLY_LV17
-	jp z, .EnergyConversion
 	cp SANDSLASH
 	jr z, .Teleport
-	cp MACHOP
-	jr z, .Teleport
+	; cp MACHOP
+	; jr z, .Teleport
 	cp MANKEY
 	jp z, .Prank
-	cp PRIMEAPE
-	jp z, .GetMad
+	cp PINSIR
+	jp z, .Guillotine
 	cp KINGLER
 	jp z, .Guillotine
 	cp KABUTOPS
@@ -107,22 +109,22 @@ HandleSpecialAIAttacks:
 	xor a
 	ret
 
-.LunarPower
-	farcall AIDecide_PokemonBreeder
-	jr nc, .zero_score
-	ld a, $83
-	ret
+; .LunarPower
+; 	farcall AIDecide_PokemonBreeder
+; 	jr nc, .zero_score
+; 	ld a, $83
+; 	ret
 
-.Mimic
-	ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND
-	call GetNonTurnDuelistVariable
-	ld c, a
-	ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND
-	call GetTurnDuelistVariable
-	cp c
-	jr nc, .zero_score
-	ld a, $82
-	ret
+; .Mimic
+; 	ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND
+; 	call GetNonTurnDuelistVariable
+; 	ld c, a
+; 	ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND
+; 	call GetTurnDuelistVariable
+; 	cp c
+; 	jr nc, .zero_score
+; 	ld a, $82
+; 	ret
 
 ; .DevastatingWind
 ; 	ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND
@@ -197,11 +199,11 @@ HandleSpecialAIAttacks:
 	ret
 
 
-.DevolutionBeam:
-	call LookForCardThatIsKnockedOutOnDevolution
-	jp nc, .zero_score
-	ld a, $85
-	ret
+; .DevolutionBeam:
+; 	call LookForCardThatIsKnockedOutOnDevolution
+; 	jp nc, .zero_score
+; 	ld a, $85
+; 	ret
 
 ; first checks if card is confused, and if so return 0.
 ; then checks number of Pokémon in bench that are viable to use:
@@ -288,13 +290,6 @@ HandleSpecialAIAttacks:
 .JunkMagnet:
 	ld a, CARD_LOCATION_DISCARD_PILE
 	call CheckIfAnyItemInLocation
-	jp nc, .zero_score
-	ld a, $82
-	ret
-
-.EnergyConversion:
-	ld a, CARD_LOCATION_DISCARD_PILE
-	call CheckIfAnyBasicEnergyInLocation
 	jp nc, .zero_score
 	ld a, $82
 	ret
@@ -432,28 +427,6 @@ HandleSpecialAIAttacks:
 	jp c, .zero_score
 	ld a, $82
 	ret
-
-.GetMad:
-	ld e, PLAY_AREA_ARENA
-	call GetCardDamageAndMaxHP
-	or a
-	jp nz, .zero_score  ; return if Arena card has damage counters
-	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
-	call GetTurnDuelistVariable
-	cp 2
-	jp c, .zero_score  ; return if no Benched Pokémon
-	dec a
-	ld d, a
-	ld e, PLAY_AREA_BENCH_1
-.get_mad_loop
-	call GetCardDamageAndMaxHP
-	cp 40
-	ld a, $83
-	ret nc  ; at least 40 damage
-	inc e
-	dec d
-	jr nz, .get_mad_loop
-	jp .zero_score  ; no Benched Pokémon with at least 40 damage
 
 ; always encourage; the initial check prevents use in invalid scenarios
 .Guillotine:
