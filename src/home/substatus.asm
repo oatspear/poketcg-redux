@@ -247,11 +247,13 @@ HandleNoDamageOrEffectSubstatus:
 	ret nz
 
 ; prevent damage if attacked by a non-basic Pokemon
-	ld a, [wTempTurnDuelistCardID]
-	ld e, a
-	ld d, $0
-	call LoadCardDataToBuffer2_FromCardID
-	ld a, [wLoadedCard2Stage]
+	; ld a, [wTempTurnDuelistCardID]
+	; ld e, a
+	; ld d, $0
+	; call LoadCardDataToBuffer2_FromCardID
+	; ld a, [wLoadedCard2Stage]
+	ld a, DUELVARS_ARENA_CARD_STAGE
+	call GetNonTurnDuelistVariable
 	or a
 	ret z
 

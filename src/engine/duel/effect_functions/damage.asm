@@ -569,11 +569,17 @@ SpikesDamageEffect:
 ; Other Forms of Damage
 ; ------------------------------------------------------------------------------
 
+; assume:
+;   - this is called after dealing damage, to have [wNoDamageOrEffect] set
 KnockOutDefendingPokemonEffect:
+	call CheckDefendingPokemonAffectedByEffects
+	jp c, DrawWideTextBox_WaitForInput
+; affected by effects
 	ld a, DUELVARS_ARENA_CARD_HP
 	call GetNonTurnDuelistVariable
 	or a
 	ret z
+; not Knocked Out previously
 	ld [hl], 0
 	; push hl
 	; call DrawDuelMainScene

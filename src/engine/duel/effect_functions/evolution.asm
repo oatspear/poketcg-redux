@@ -241,7 +241,12 @@ DevolveDefendingPokemonEffect:
 	; ld b, PLAY_AREA_ARENA
 	; ld c, $00
 	call TryDevolveSelectedPokemonEffect
-	jp SwapTurn
+	call SwapTurn
+	; refresh screen to show devolved Pokémon
+	xor a  ; REFRESH_DUEL_SCREEN
+	ld [wDuelDisplayedScreen], a
+	bank1call DrawDuelMainScene
+	ret
 
 
 TryDevolveSelectedPokemonEffect:

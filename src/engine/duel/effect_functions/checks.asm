@@ -722,6 +722,18 @@ FullHeal_CheckPlayAreaStatus:
 	jr CheckIfPlayAreaHasAnyStatus
 
 
+; carry set if the Defending Pokémon is immune to damage or effects
+CheckDefendingPokemonAffectedByEffects:
+	call SwapTurn
+	ld a, DUELVARS_ARENA_CARD
+	call GetTurnDuelistVariable
+	call GetCardIDFromDeckIndex
+	ld a, e
+	ld [wTempNonTurnDuelistCardID], a
+	call HandleNoDamageOrEffectSubstatus
+	jp SwapTurn
+
+
 ; ------------------------------------------------------------------------------
 ; Energy
 ; ------------------------------------------------------------------------------
