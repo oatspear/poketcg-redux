@@ -7288,7 +7288,7 @@ DrawNCards_NoCardDetails:
 
 PokeBall_PlayerSelectEffect:
 	call ChooseBasicPokemonFromDeck_PlayerSelectEffect
-	call c, ForcePlayerSelectionFromDeckList
+	; call c, ForcePlayerSelectionFromDeckList
 	ldh [hTemp_ffa0], a
 	ret
 
