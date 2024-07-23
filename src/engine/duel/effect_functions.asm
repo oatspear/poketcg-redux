@@ -5555,7 +5555,7 @@ PrimalGuidance_PlayerSelectEffect:
 	call LookForCardsInDeckList
 	ld a, $ff
 	jr c, .none_in_deck
-	ld a, CARDTEST_POKEMON
+	ld a, CARDTEST_RESTORED_POKEMON
 	ldtx hl, ChoosePokemonCardText
 	call HandlePlayerSelectionFromDeckList
 .none_in_deck
