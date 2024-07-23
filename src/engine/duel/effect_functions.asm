@@ -32,6 +32,7 @@ DreamEaterEffect:
 
 
 HyperHypnosis_DiscardSleepEffect:
+	call SetUsedPokemonPowerThisTurn_RestoreTrigger
 	ldh a, [hEnergyTransEnergyCard]
 	cp $ff
 	ret z
