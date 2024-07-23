@@ -5798,11 +5798,12 @@ OptionalDoubleDamage_PlayerSelectEffect:
 ; assume:
 ;   - card list already created in precondition check
 Prank_PlayerSelectEffect:
+	call SwapTurn
 	; call CreateDiscardPileCardList
 	ldtx de, OpponentsDiscardPileText
 	bank1call HandlePlayerSelectionFromCardList_Forced
 	ldh [hTemp_ffa0], a
-	ret
+	jp SwapTurn
 
 
 JunkMagnet_PlayerSelectEffect:
