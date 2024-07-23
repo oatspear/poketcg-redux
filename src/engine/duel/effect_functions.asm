@@ -3520,7 +3520,9 @@ Scavenge_AISelectEffect:
 ; ------------------------------------------------------------------------------
 
 DiscardEnergyAbility_PlayerSelectEffect:
-	bank1call HandleDiscardArenaEnergy
+	ldh a, [hTemp_ffa0]
+	ld e, a
+	bank1call HandleDiscardPlayAreaEnergy
 	ldh [hEnergyTransEnergyCard], a
 	ret
 
