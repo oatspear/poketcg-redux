@@ -239,7 +239,7 @@ Bounce1EnergyDescription:
 	line "this Pokémon into your hand."
 	done
 
-FireSpinName: ; 5a095 (16:6095)
+FireSpinName:
 	text "Fire Spin"
 	done
 

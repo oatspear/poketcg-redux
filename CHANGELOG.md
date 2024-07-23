@@ -1,5 +1,15 @@
 # Pokémon TCG Rebalanced
 
+## Version 0.10.0
+
+### Fire Changes
+
+#### Charizard
+- **Fire Spin**: renamed to **Fire Blast**.
+- **Fire Blast**: cost reduced from (CCCC) to (FFC).
+- **Fire Blast**: damage increased from 100 to 120.
+
+
 ## Version 0.9.0
 
 ### Removed Cards

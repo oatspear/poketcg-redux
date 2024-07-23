@@ -2561,11 +2561,11 @@ CharizardCard:
 	db ATK_ANIM_DRAGON_RAGE ; animation
 
 	; attack 2
-	energy COLORLESS, 4 ; energies
-	tx FireSpinName ; name
+	energy FIRE, 2, COLORLESS, 1 ; energies
+	tx FireBlastName ; name
 	tx Discard2EnergiesDescription ; description
 	dw NONE ; description (cont)
-	db 100 ; damage
+	db 120 ; damage
 	db DAMAGE_NORMAL ; category
 	dw Discard2EnergiesEffectCommands ; effect commands
 	db NONE ; flags 1
