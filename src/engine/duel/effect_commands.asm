@@ -1861,7 +1861,7 @@ DevolutionSprayEffectCommands:
 	db  $00
 
 EnergySwitchEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckIfPlayAreaHasAnyEnergies
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, EnergySwitch_PreconditionCheck
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, EnergySwitch_PlayerSelection
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, EnergySwitch_TransferEffect
 	db  $00

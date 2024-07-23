@@ -1333,3 +1333,9 @@ WickedTentacle_PreconditionCheck:
 	call CheckBenchIsNotEmpty
 	call nc, CheckArenaPokemonHasAnyEnergiesAttached
 	jp SwapTurn
+
+
+EnergySwitch_PreconditionCheck:
+	call CheckBenchIsNotEmpty
+	ret c
+	jp CheckIfPlayAreaHasAnyEnergies
