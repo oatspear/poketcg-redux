@@ -211,9 +211,16 @@ DealExcessDamageToTarget_DamageEffect:
 	ret z
 	ld d, 0
 	ld e, a  ; excess damage
+; refresh screen to show new Active Pokémon
+	push de
+	; xor a  ; REFRESH_DUEL_SCREEN
+	; ld [wDuelDisplayedScreen], a
+	; bank1call DrawDuelMainScene
+	ldtx hl, DoExcessDamageToTheNewActivePokemonText
+	call DrawWideTextBox_WaitForInput
+	pop de
 	xor a  ; PLAY_AREA_ARENA
-	ldh [hTempPlayAreaLocation_ffa1], a
-	jr DealDamageToTarget_DE_DamageEffect
+	jr DealDamageToTargetA_DE_DamageEffect
 
 
 Deal10DamageToFriendlyTarget_DamageEffect:

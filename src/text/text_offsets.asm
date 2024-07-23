@@ -2736,7 +2736,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer MegaDrainName                                      ; 0x0818
 	textpointer Heal20DamageDescription
 	textpointer Heal30DamageDescription
-	textpointer HealHalfDamageDealtDescription
+	textpointer DoExcessDamageToTheNewActivePokemonText
 	textpointer EnergyTransName                                    ; 0x081c
 	textpointer EnergyTransDescription                             ; 0x081d
 	textpointer PollenFrenzyName

@@ -31,10 +31,9 @@ Heal30DamageDescription:
 	text "Heal 30 damage from this Pokémon."
 	done
 
-HealHalfDamageDealtDescription:
-	text "Heal from this Pokémon half the"
-	line "damage dealt with this attack"
-	line "(rounded up to the nearest 10)."
+DoExcessDamageToTheNewActivePokemonText:
+	text "Do excess damage to the"
+	line "new Active Pokémon!"
 	done
 
 EnergyTransName: ; 57960 (15:7960)
