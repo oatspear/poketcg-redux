@@ -411,6 +411,7 @@ SurpriseBite_PlayerSelectEffect:
 	call SwapTurn
 	ld a, CARDTEST_FULL_HP_POKEMON
 	call HandlePlayerSelectionMatchingPokemonInBench_AllowCancel
+	ldh [hTempPlayAreaLocation_ffa1], a
 	jp SwapTurn
 
 
