@@ -183,7 +183,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer NoSpaceOnTheBenchText                              ; 0x00b2
 	textpointer NoPokemonCapableOfEvolvingText                     ; 0x00b3
 	textpointer CantEvolvePokemonInSameTurnItsPlacedText           ; 0x00b4
-	textpointer NotAffectedByPoisonSleepParalysisOrConfusionText   ; 0x00b5
+	textpointer NotAffectedBySpecialConditionsText   ; 0x00b5
 	textpointer NotEnoughCardsInHandText                           ; 0x00b6
 	textpointer EffectNoPokemonOnTheBenchText                      ; 0x00b7
 	textpointer ThereAreNoPokemonInDiscardPileText                 ; 0x00b8
@@ -2408,7 +2408,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer InflictConfusionAndPoisonDescription
 	textpointer RazorLeafName                                      ; 0x089a
 	textpointer LureName                                           ; 0x089e
-	textpointer LureDescription                                    ; 0x089f
 	textpointer PoisonLureName
 	textpointer PoisonLureDescription
 	textpointer CorrosiveAcidName
@@ -2443,7 +2442,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer FirestarterDescription
 	textpointer EnergyLoopName
 	textpointer Bounce1EnergyDescription
-	textpointer FireSpinName                                       ; unused
+	textpointer FireSpinName
+	textpointer FireSpinDescription
 	textpointer Discard2EnergiesDescription
 	textpointer SingeName
 	textpointer ConfuseRayName
@@ -2721,6 +2721,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PsychicLeapName                                    ; unused
 	textpointer MysteriousTailName
 	textpointer MysteriousTailDescription
+	textpointer HexName
+	textpointer HexDescription
 
 ; ------------------------------------------------------------------------------
 ; text12.asm

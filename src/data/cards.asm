@@ -2663,31 +2663,31 @@ NinetalesLv32Card:
 
 	; attack 1
 	energy FIRE, 1 ; energies
-	tx LureName ; name
-	tx LureDescription ; description
-	dw NONE ; description (cont)
-	db 0 ; damage
-	db RESIDUAL ; category
-	dw LureEffectCommands ; effect commands
-	db NONE ; flags 1
-	db SWITCH_OPPONENT_POKEMON ; flags 2
+	tx FireSpinName ; name
+	tx FireSpinDescription ; description
+	tx IncreaseRetreatCostDescription ; description (cont)
+	db 10 ; damage
+	db DAMAGE_X ; category
+	dw FireSpinEffectCommands ; effect commands
+	db INFLICT_POISON ; flags 1
+	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_LURE ; animation
+	db ATK_ANIM_FIRE_SPIN ; animation
 
 	; attack 2
-	energy FIRE, 1, COLORLESS, 2 ; energies
-	tx FireBlastName ; name
-	tx Discard2EnergiesDescription ; description
+	energy COLORLESS, 3 ; energies
+	tx HexName ; name
+	tx HexDescription ; description
 	dw NONE ; description (cont)
 	db 70 ; damage
 	db DAMAGE_NORMAL ; category
-	dw Discard2EnergiesEffectCommands ; effect commands
+	dw HexEffectCommands ; effect commands
 	db NONE ; flags 1
-	db DISCARD_ENERGY ; flags 2
+	db NONE ; flags 2
 	db NONE ; flags 3
-	db 6
-	db ATK_ANIM_FIRE_SPIN ; animation
+	db 3
+	db ATK_ANIM_DARK_MIND ; animation
 
 	db 1 ; retreat cost
 	db WR_WATER ; weakness

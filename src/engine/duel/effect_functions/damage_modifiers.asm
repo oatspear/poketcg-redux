@@ -89,6 +89,15 @@ WaterGunEffect:
 	jp SetDefiniteAIDamage
 
 
+; 10 damage for each Fire Energy
+FireSpin_DamageMultiplierEffect:
+  call GetNumAttachedFireEnergy
+	call ATimes10
+	call SetDefiniteDamage ; damage = 10 * Fire Energy
+; set attack damage
+	jp SetDefiniteAIDamage
+
+
 ;
 DragonRage_DamageBoostEffect:
 	xor a  ; PLAY_AREA_ARENA
@@ -878,7 +887,7 @@ ReactivePoison_AIEffect:
 
 ; double damage if the Defending Pokémon has a status condition
 Pester_DamageBoostEffect:
-  call CheckOpponentHasStatus
+  call CheckDefendingPokemonHasStatus
   ret c
   jp DoubleDamage_DamageBoostEffect
 

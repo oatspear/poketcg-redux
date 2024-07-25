@@ -59,13 +59,6 @@ LureName:
 	text "Lure"
 	done
 
-LureDescription:
-	text "Switch 1 of your opponent's Benched"
-	line "Pokémon with their Active Pokémon."
-	line "The new Active Pokémon can't retreat"
-	line "during your opponent's next turn."
-	done
-
 PoisonLureName:
 	text "Poison Lure"
 	done
@@ -231,6 +224,12 @@ Bounce1EnergyDescription:
 
 FireSpinName:
 	text "Fire Spin"
+	done
+
+FireSpinDescription:
+	text "This attack does 10 damage for each"
+	line "<FIRE> Energy attached to this Pokémon."
+	line "The Defending Pokémon is now Burned."
 	done
 
 Discard2EnergiesDescription:
@@ -515,8 +514,7 @@ ScaldName:
 	done
 
 InflictBurnDescription:
-	text "The Defending Pokémon is now"
-	line "Burned."
+	text "The Defending Pokémon is now Burned."
 	done
 
 EnergyBurstName:
@@ -1074,12 +1072,12 @@ DreamEaterName:
 IF SLEEP_WITH_COIN_FLIP
 DreamEaterDescription:
 	text "If the Defending Pokémon is not"
-	line "Asleep, this attack does nothing."
+	line "Asleep, this attack cannot be used."
 	done
 ELSE
 DreamEaterDescription:
 	text "If the Defending Pokémon is not"
-	line "Drowsy, this attack does nothing."
+	line "Drowsy, this attack cannot be used."
 	done
 ENDC
 
@@ -1700,4 +1698,14 @@ MysteriousTailDescription:
 	line "deck and put an Item card you find"
 	line "there into your hand. Shuffle the"
 	line "other cards back into your deck."
+	done
+
+HexName:
+	text "Hex"
+	done
+
+HexDescription:
+	text "If the Defending Pokémon is not"
+	line "affected by a Special Condition,"
+	line "this attack cannot be used."
 	done

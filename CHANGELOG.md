@@ -27,6 +27,12 @@
 - **Confuse Ray**: increased cost from (F) to (FC).
 - New attack: **Singe** (F): inflicts Burn.
 
+#### Ninetales Lv32
+- **Lure**: removed.
+- **Fire Blast**: removed.
+- New attack: **Fire Spin** (F): does 10 damage for each attached Fire Energy; inflicts Burn; increases the Retreat Cost of the Defending Pokémon by 1.
+- New attack: **Hex** (CCC): 70 damage; unusable, unless the Defending Pokémon is affected by a Special Condition.
+
 #### Ninetales Lv35
 - **Combustion**: removed.
 - **Fire Fang**: reduced cost from (FFC) to (FC).

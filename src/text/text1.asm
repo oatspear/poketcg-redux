@@ -882,8 +882,8 @@ CantEvolvePokemonInSameTurnItsPlacedText: ; 37546 (d:7546)
 	line "in the same turn it was placed."
 	done
 
-NotAffectedByPoisonSleepParalysisOrConfusionText: ; 37583 (d:7583)
-	text "Not affected by Status Conditions."
+NotAffectedBySpecialConditionsText:
+	text "Not affected by Special Conditions."
 	done
 
 NotEnoughCardsInHandText: ; 375bc (d:75bc)

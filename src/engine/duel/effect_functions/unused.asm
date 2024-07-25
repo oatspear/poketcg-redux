@@ -3982,7 +3982,7 @@ SolarPower_CheckUse: ; 2ce53 (b:4e53)
 	scf
 	ret
 .no_status
-	ldtx hl, NotAffectedByPoisonSleepParalysisOrConfusionText
+	ldtx hl, NotAffectedBySpecialConditionsText
 	scf
 	ret
 
@@ -7031,7 +7031,7 @@ FullHeal_StatusCheck: ; 2f4c5 (b:74c5)
 	call GetTurnDuelistVariable
 	or a
 	ret nz
-	ldtx hl, NotAffectedByPoisonSleepParalysisOrConfusionText
+	ldtx hl, NotAffectedBySpecialConditionsText
 	scf
 	ret
 

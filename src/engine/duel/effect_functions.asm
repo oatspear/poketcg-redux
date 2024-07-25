@@ -323,7 +323,7 @@ Maintenance_CheckHandAndDiscardPile:
 
 
 AssassinFlight_CheckBenchAndStatus:
-	call CheckOpponentHasStatus
+	call CheckDefendingPokemonHasStatus
 	ret c
 	jp CheckOpponentBenchIsNotEmpty
 
@@ -1017,6 +1017,12 @@ VoltSwitchEffect:
 ; ------------------------------------------------------------------------------
 
 
+FireSpinEffect:
+	call FireSpin_DamageMultiplierEffect
+	call BurnEffect
+	jp IncreaseRetreatCostEffect
+
+
 ; input:
 ;   [hTemp_ffa0]: selected number of damage counters
 GetMadEffect:
@@ -1492,6 +1498,16 @@ ChooseCardOfGivenType_AISelectEffect:
 INCLUDE "engine/duel/effect_functions/card_lists.asm"
 
 ; ------------------------------------------------------------------------------
+
+
+GetNumAttachedFireEnergy:
+	; ldh a, [hTempPlayAreaLocation_ff9d]
+	; ld e, a
+	ld e, PLAY_AREA_ARENA
+	call GetPlayAreaCardAttachedEnergies
+	call HandleEnergyColorOverride
+	ld a, [wAttachedEnergies + FIRE]
+	ret
 
 
 GetNumAttachedWaterEnergy:

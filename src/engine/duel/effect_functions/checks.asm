@@ -687,18 +687,18 @@ CheckArenaPokemonHasStatus:
 	call GetTurnDuelistVariable
 	or a
 	ret nz
-	ldtx hl, NotAffectedByPoisonSleepParalysisOrConfusionText
+	ldtx hl, NotAffectedBySpecialConditionsText
 	scf
 	ret
 
 
 ; return carry if opponent's Arena card has no status conditions
-CheckOpponentHasStatus:
+CheckDefendingPokemonHasStatus:
 	ld a, DUELVARS_ARENA_CARD_STATUS
 	call GetNonTurnDuelistVariable
 	or a
 	ret nz
-	ldtx hl, NotAffectedByPoisonSleepParalysisOrConfusionText
+	ldtx hl, NotAffectedBySpecialConditionsText
 	scf
 	ret
 
@@ -724,7 +724,7 @@ CheckIfPlayAreaHasAnyStatus:
 	dec b
 	jr nz, .loop_play_area
 .set_carry
-	ldtx hl, NotAffectedByPoisonSleepParalysisOrConfusionText
+	ldtx hl, NotAffectedBySpecialConditionsText
 	scf
 	ret
 

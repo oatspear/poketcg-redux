@@ -92,6 +92,7 @@ PoisonLureEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, PoisonLure_SwitchEffect
 	; fallthrough to LureEffectCommands
 
+; unused
 LureEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckOpponentBenchIsNotEmpty
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Lure_SwitchAndTrapDefendingPokemon
@@ -99,6 +100,7 @@ LureEffectCommands:
 	dbw EFFECTCMDTYPE_AI_SELECTION, Lure_GetOpponentBenchPokemonWithLowestHP
 	db  $00
 
+; unused
 DragOffEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckOpponentBenchIsNotEmpty
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DragOff_SwitchAndDamageEffect
@@ -317,6 +319,10 @@ FrustrationEffectCommands:
 	dbw EFFECTCMDTYPE_AI, Frustration_AIEffect
 	db  $00
 
+HexEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDefendingPokemonHasStatus
+	db  $00
+
 AssassinFlightEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, AssassinFlight_CheckBenchAndStatus
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Deal40DamageToTarget_DamageEffect
@@ -450,6 +456,11 @@ ReduceDamageTakenBy20EffectCommands:
 
 IncreaseRetreatCostEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, IncreaseRetreatCostEffect
+	db  $00
+
+FireSpinEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, FireSpinEffect
+	dbw EFFECTCMDTYPE_AI, FireSpin_DamageMultiplierEffect
 	db  $00
 
 AmnesiaEffectCommands:
