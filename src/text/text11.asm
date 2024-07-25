@@ -201,8 +201,8 @@ EmberName: ; 59e0e (16:5e0e)
 	done
 
 Discard1EnergyDescription:
-	text "Discard an Energy card attached to"
-	line "this Pokémon."
+	text "Discard 1 Energy card attached"
+	line "to this Pokémon."
 	done
 
 FlamethrowerName: ; 59ee6 (16:5ee6)
