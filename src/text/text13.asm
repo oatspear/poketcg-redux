@@ -210,6 +210,11 @@ PutHowManyDamageCountersMenuText:
 ; Unused Text
 ; ------------------------------------------------------------------------------
 
+; RelentlessFlamesDescription:
+; 	text "This attack does 20 damage for each"
+; 	line "Prize card your opponent has taken."
+; 	done
+
 ; OptionalDiscard1Energy10BonusDamageDescription:
 ; 	text "You may discard an Energy card"
 ; 	line "attached to this Pokémon. If you do,"

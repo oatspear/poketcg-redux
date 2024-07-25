@@ -2547,18 +2547,18 @@ CharizardCard:
 	tx CharmeleonName ; pre-evo name
 
 	; attack 1
-	energy COLORLESS, 2 ; energies
-	tx DragonRageName ; name
-	tx DragonRageDescription ; description
+	energy FIRE, 1, COLORLESS, 1 ; energies
+	tx RelentlessFlamesName ; name
+	tx DoubleDamageIfMorePrizesDescription ; description
 	dw NONE ; description (cont)
 	db 30 ; damage
 	db DAMAGE_PLUS ; category
-	dw DragonRageEffectCommands ; effect commands
+	dw DoubleDamageIfMorePrizesEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_DRAGON_RAGE ; animation
+	db ATK_ANIM_BIG_FLAME ; animation
 
 	; attack 2
 	energy FIRE, 2, COLORLESS, 1 ; energies

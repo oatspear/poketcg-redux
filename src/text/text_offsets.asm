@@ -2715,6 +2715,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ThrashName
 	textpointer RageFistName
 	textpointer RageFistDescription
+	textpointer RelentlessFlamesName
 	textpointer PutDamageCountersOnPokemonText
 	textpointer PsychicLeapName                                    ; unused
 	textpointer MysteriousTailName

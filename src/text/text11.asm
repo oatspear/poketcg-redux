@@ -1672,6 +1672,10 @@ RageFistDescription:
 	line "has taken."
 	done
 
+RelentlessFlamesName:
+	text "Relentless Flames"
+	done
+
 PutDamageCountersOnPokemonText:
 	text "Put <RAMNUM> damage counters on"
 	line "<RAMTEXT>."

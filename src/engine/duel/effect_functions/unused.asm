@@ -1,5 +1,28 @@
 ;
 
+RelentlessFlamesEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, RelentlessFlames_DamageMultiplierEffect
+	dbw EFFECTCMDTYPE_AI, RelentlessFlames_AIEffect
+	db  $00
+
+
+; x20 damage for each Prize the opponent has taken
+RelentlessFlames_DamageMultiplierEffect:
+	call SwapTurn
+	call CountPrizesTaken
+	call SwapTurn
+	add a  ; x2
+	call ATimes10
+	jp SetDefiniteDamage
+
+RelentlessFlames_AIEffect:
+	call RelentlessFlames_DamageMultiplierEffect
+	jp SetDefiniteAIDamage
+
+
+
+
+
 IfDiscardedEnergy10BonusDamageEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, OptionalDiscardEnergy_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, IfSelectedCard10BonusDamage_DamageBoostEffect

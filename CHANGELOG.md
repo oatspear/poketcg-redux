@@ -16,9 +16,11 @@
 - New attack: **Flare** (C): 10 damage; must attach a Fire Energy from the discard pile to itself.
 
 #### Charizard
+- **Dragon Rage**: removed.
 - **Fire Spin**: renamed to **Fire Blast**.
 - **Fire Blast**: cost reduced from (CCCC) to (FFC).
 - **Fire Blast**: damage increased from 100 to 120.
+- New attack: **Relentless Flames** (FC): 30 damage; double damage if the opponent has taken more Prizes.
 
 ### Fighting Changes
 
