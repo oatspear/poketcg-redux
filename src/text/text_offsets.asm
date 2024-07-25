@@ -2445,7 +2445,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer Bounce1EnergyDescription
 	textpointer FireSpinName                                       ; unused
 	textpointer Discard2EnergiesDescription
-	textpointer ConfuseRayName                                     ; 0x08e4
+	textpointer SingeName
+	textpointer ConfuseRayName
 	textpointer FireBlastName
 	textpointer FireFangName                                       ; 0x08ec
 	textpointer FlareName

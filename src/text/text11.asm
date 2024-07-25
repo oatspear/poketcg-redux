@@ -238,7 +238,11 @@ Discard2EnergiesDescription:
 	line "this Pokémon."
 	done
 
-ConfuseRayName: ; 5a151 (16:6151)
+SingeName:
+	text "Singe"
+	done
+
+ConfuseRayName:
 	text "Confuse Ray"
 	done
 

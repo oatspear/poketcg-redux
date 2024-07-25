@@ -22,6 +22,11 @@
 - **Fire Blast**: damage increased from 100 to 120.
 - New attack: **Relentless Flames** (FC): 30 damage; double damage if the opponent has taken more Prizes.
 
+#### Vulpix
+- **Ember**: removed.
+- **Confuse Ray**: increased cost from (F) to (FC).
+- New attack: **Singe** (F): inflicts Burn.
+
 ### Fighting Changes
 
 #### Geodude

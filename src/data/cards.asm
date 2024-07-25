@@ -2599,6 +2599,20 @@ VulpixCard:
 
 	; attack 1
 	energy FIRE, 1 ; energies
+	tx SingeName ; name
+	tx InflictBurnDescription ; description
+	dw NONE ; description (cont)
+	db 0 ; damage
+	db RESIDUAL ; category
+	dw InflictBurnEffectCommands ; effect commands
+	db INFLICT_POISON ; flags 1
+	db NONE ; flags 2
+	db NONE ; flags 3
+	db 0
+	db ATK_ANIM_SMALL_FLAME_NO_HIT ; animation
+
+	; attack 2
+	energy FIRE, 1, COLORLESS, 1 ; energies
 	tx ConfuseRayName ; name
 	tx InflictConfusionDescription ; description
 	dw NONE ; description (cont)
@@ -2610,20 +2624,6 @@ VulpixCard:
 	db NONE ; flags 3
 	db 0
 	db ATK_ANIM_CONFUSE_RAY ; animation
-
-	; attack 2
-	energy FIRE, 1, COLORLESS, 1 ; energies
-	tx EmberName ; name
-	tx Discard1EnergyDescription ; description
-	dw NONE ; description (cont)
-	db 30 ; damage
-	db DAMAGE_NORMAL ; category
-	dw Discard1EnergyEffectCommands ; effect commands
-	db NONE ; flags 1
-	db DISCARD_ENERGY ; flags 2
-	db NONE ; flags 3
-	db 3
-	db ATK_ANIM_SMALL_FLAME ; animation
 
 	; energy FIRE, 2 ; energies
 	; tx CombustionName ; name

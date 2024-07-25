@@ -25,7 +25,7 @@
 	const ATK_ANIM_WHIRLPOOL              ; $14
 	const ATK_ANIM_DRAGON_RAGE            ; $15
 	const ATK_ANIM_HYDRO_PUMP             ; $16
-	const ATK_ANIM_23                     ; $17
+	const ATK_ANIM_SMALL_FLAME_NO_HIT     ; $17
 	const ATK_ANIM_BLIZZARD               ; $18
 	const ATK_ANIM_PSYCHIC_HIT            ; $19
 	const ATK_ANIM_NIGHTMARE              ; $1a
