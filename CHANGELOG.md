@@ -27,6 +27,12 @@
 - **Confuse Ray**: increased cost from (F) to (FC).
 - New attack: **Singe** (F): inflicts Burn.
 
+#### Ninetales Lv35
+- **Combustion**: removed.
+- **Fire Fang**: reduced cost from (FFC) to (FC).
+- **Fire Fang**: reworked effect; discards an Energy attached to itself and inflicts Burn.
+- New Pokémon Power: **Cursed Flames**: when your Active Pokémon does damage to the Defending Pokémon with an attack, if it has any attached Fire Energies, discard the top card from the opponent's deck.
+
 ### Fighting Changes
 
 #### Geodude

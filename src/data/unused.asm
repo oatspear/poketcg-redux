@@ -1,4 +1,37 @@
 
+
+
+; attack 2
+energy FIRE, 2, COLORLESS, 1 ; energies
+tx FireFangName ; name
+tx Discard1EnergyFromTargetDescription ; description
+dw NONE ; description (cont)
+db 30 ; damage
+db DAMAGE_NORMAL ; category
+dw Discard1EnergyFromOpponentEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db SPECIAL_AI_HANDLING ; flags 3
+db 0
+db ATK_ANIM_BIG_FLAME ; animation
+
+
+; attack 1
+energy FIRE, 1, COLORLESS, 1 ; energies
+tx CombustionName ; name
+tx Discard2CardsFromOpponentsDeckDescription ; description
+dw NONE ; description (cont)
+db 20 ; damage
+db DAMAGE_NORMAL ; category
+dw Discard2CardsFromOpponentsDeckEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_BIG_FLAME ; animation
+
+
+
 ClairvoyanceName:
 	text "Clairvoyance"
 	done

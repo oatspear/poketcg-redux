@@ -2713,31 +2713,31 @@ NinetalesLv35Card:
 	tx VulpixName ; pre-evo name
 
 	; attack 1
-	energy FIRE, 1, COLORLESS, 1 ; energies
-	tx CombustionName ; name
-	tx Discard2CardsFromOpponentsDeckDescription ; description
-	dw NONE ; description (cont)
-	db 20 ; damage
-	db DAMAGE_NORMAL ; category
-	dw Discard2CardsFromOpponentsDeckEffectCommands ; effect commands
+	energy 0 ; energies
+	tx CursedFlamesName ; name
+	tx CursedFlamesDescription ; description
+	tx PokemonPowerDescriptionCont ; description (cont)
+	db 0 ; damage
+	db POKEMON_POWER ; category
+	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_BIG_FLAME ; animation
+	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy FIRE, 2, COLORLESS, 1 ; energies
+	energy FIRE, 1, COLORLESS, 1 ; energies
 	tx FireFangName ; name
-	tx Discard1EnergyFromTargetDescription ; description
-	dw NONE ; description (cont)
+	tx Discard1EnergyDescription ; description
+	tx InflictBurnDescription ; description (cont)
 	db 30 ; damage
 	db DAMAGE_NORMAL ; category
-	dw Discard1EnergyFromOpponentEffectCommands ; effect commands
-	db NONE ; flags 1
-	db NONE ; flags 2
-	db SPECIAL_AI_HANDLING ; flags 3
-	db 0
+	dw Discard1EnergyEffectCommands ; effect commands
+	db INFLICT_POISON ; flags 1
+	db DISCARD_ENERGY ; flags 2
+	db NONE ; flags 3
+	db 3
 	db ATK_ANIM_BIG_FLAME ; animation
 
 	db 1 ; retreat cost

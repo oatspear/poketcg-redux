@@ -206,6 +206,18 @@ PutHowManyDamageCountersMenuText:
 	text "Put how many damage counters?"
 	done
 
+CursedFlamesName:
+	text "Cursed Flames"
+	done
+
+CursedFlamesDescription:
+	text "If your Active Pokémon has any"
+	line "attached <FIRE> Energy, its attacks"
+	line "that do damage to the Defending"
+	line "Pokémon also discard the top card"
+	line "of your opponent's deck."
+	done
+
 ; ------------------------------------------------------------------------------
 ; Unused Text
 ; ------------------------------------------------------------------------------

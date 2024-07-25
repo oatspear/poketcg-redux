@@ -510,6 +510,17 @@ IsSafeguardActive:
 
 
 ; returns carry if the turn holder's Active Pokémon benefits
+; from Cursed Flames
+; output:
+;   carry: set if Vampiric Aura is active
+IsCursedFlamesActive:
+	ld b, PLAY_AREA_ARENA
+	ld c, FIRE
+	ld e, NINETALES_LV35
+	jr IsSpecialEnergyPowerActive
+
+
+; returns carry if the turn holder's Active Pokémon benefits
 ; from Vampiric Aura
 ; output:
 ;   carry: set if Vampiric Aura is active

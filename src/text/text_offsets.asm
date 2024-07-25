@@ -2756,7 +2756,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer OverrunName
 	textpointer Damage1BenchedPokemon30Description
 	textpointer NoWeaknessResistanceForBenchDescriptionCont
-	textpointer CombustionName
+	textpointer CombustionName                                     ; unused
 	textpointer Discard1CardFromOpponentsDeckDescription
 	textpointer Discard2CardsFromOpponentsDeckDescription
 	textpointer MultiplePokemonOfTheSameColorText
@@ -3070,6 +3070,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer FrustrationName
 	textpointer FrustrationDescription
 	textpointer PutHowManyDamageCountersMenuText
+	textpointer CursedFlamesName
+	textpointer CursedFlamesDescription
 
 	; unused
 	; textpointer SwimFreelyName
