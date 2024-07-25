@@ -99,9 +99,9 @@ CreateEnergyCardListFromDiscardPile_WaterFighting:
 DEF ALL_ENERGY_ALLOWED EQU $ff
 
 ; makes a list in wDuelTempList with the deck indices
-; of all Psychic energy cards found in Turn Duelist's Discard Pile.
-CreateEnergyCardListFromDiscardPile_OnlyPsychic:
-	ld c, TYPE_ENERGY_PSYCHIC
+; of all Grass energy cards found in Turn Duelist's Discard Pile.
+CreateEnergyCardListFromDiscardPile_OnlyGrass:
+	ld c, TYPE_ENERGY_GRASS
 	jr CreateEnergyCardListFromDiscardPile
 
 ; makes a list in wDuelTempList with the deck indices
@@ -121,6 +121,25 @@ CreateEnergyCardListFromDiscardPile_OnlyWater:
 CreateEnergyCardListFromDiscardPile_OnlyLightning:
 	ld c, TYPE_ENERGY_LIGHTNING
 	jr CreateEnergyCardListFromDiscardPile
+
+; makes a list in wDuelTempList with the deck indices
+; of all Fighting energy cards found in Turn Duelist's Discard Pile.
+CreateEnergyCardListFromDiscardPile_OnlyFighting:
+	ld c, TYPE_ENERGY_FIGHTING
+	jr CreateEnergyCardListFromDiscardPile
+
+; makes a list in wDuelTempList with the deck indices
+; of all Psychic energy cards found in Turn Duelist's Discard Pile.
+CreateEnergyCardListFromDiscardPile_OnlyPsychic:
+	ld c, TYPE_ENERGY_PSYCHIC
+	jr CreateEnergyCardListFromDiscardPile
+
+; makes a list in wDuelTempList with the deck indices
+; of all Darkness energy cards found in Turn Duelist's Discard Pile.
+CreateEnergyCardListFromDiscardPile_OnlyDarkness:
+	ld c, TYPE_ENERGY_DARKNESS
+	jr CreateEnergyCardListFromDiscardPile
+
 
 ; makes a list in wDuelTempList with the deck indices
 ; of all basic energy cards found in Turn Duelist's Discard Pile.

@@ -1,7 +1,3 @@
-ScratchName: ; 58ed9 (16:4ed9)
-	text "Scratch"
-	done
-
 SporeName: ; 58ee2 (16:4ee2)
 	text "Spore"
 	done
@@ -204,12 +200,6 @@ EmberName: ; 59e0e (16:5e0e)
 	text "Ember"
 	done
 
-OptionalDiscard1Energy10BonusDamageDescription:
-	text "You may discard an Energy card"
-	line "attached to this Pokémon. If you do,"
-	line "this attack does 10 more damage."
-	done
-
 Discard1EnergyDescription:
 	text "Discard an Energy card attached to"
 	line "this Pokémon."
@@ -262,12 +252,6 @@ FireFangName: ; 5a2ec (16:62ec)
 
 FlareName:
 	text "Flare"
-	done
-
-FlareDescription:
-	text "You must attach a <FIRE> Energy from"
-	line "your discard pile to this Pokémon"
-	line "to use this attack."
 	done
 
 QuickAttackName: ; 5a55c (16:655c)
@@ -1390,13 +1374,6 @@ GarbageEaterDescription:
 
 GatherToxinsName:
 	text "Gather Toxins"
-	done
-
-GatherToxinsDescription:
-	text "Attach a Basic Energy card from"
-	line "your Discard Pile to this Pokémon."
-	line "The Defending Pokémon is now"
-	line "Poisoned."
 	done
 
 DeadlyPoisonName:

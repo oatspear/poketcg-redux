@@ -2396,7 +2396,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer AllergicPollenName
 	textpointer PetalDanceName                                     ; 0x087e
 	textpointer PetalDanceDescription                              ; 0x087f
-	textpointer ScratchName                                        ; 0x0883
 	textpointer SporeName                                          ; 0x0884
 	textpointer InflictSleepDescription
 	textpointer SlashName                                          ; 0x0889
@@ -2438,7 +2437,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer Guillotine50Description
 	textpointer Guillotine70Description
 	textpointer EmberName                                          ; 0x08d4
-	textpointer OptionalDiscard1Energy10BonusDamageDescription
 	textpointer Discard1EnergyDescription
 	textpointer FlamethrowerName                                   ; 0x08d9
 	textpointer FirestarterName
@@ -2451,7 +2449,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer FireBlastName
 	textpointer FireFangName                                       ; 0x08ec
 	textpointer FlareName
-	textpointer FlareDescription
 	textpointer QuickAttackName                                    ; 0x08f7
 	textpointer IfActiveThisTurn10BonusDamageDescription
 	textpointer FlamesOfRageName                                   ; 0x08f9
@@ -2661,7 +2658,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer GarbageEaterName
 	textpointer GarbageEaterDescription
 	textpointer GatherToxinsName
-	textpointer GatherToxinsDescription
 	textpointer DeadlyPoisonName
 	textpointer VenoshockDescription
 	textpointer OverwhelmName
@@ -2732,7 +2728,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer Heal10DamageDescription                            ; 0x080c
 	textpointer VineWhipName                                       ; 0x0810
 	textpointer PoisonPowderName                                   ; 0x0811
-	textpointer InflictPoisonDescription                           ; 0x0812
+	textpointer InflictPoisonDescription
 	textpointer MegaDrainName                                      ; 0x0818
 	textpointer Heal20DamageDescription
 	textpointer Heal30DamageDescription
@@ -2828,7 +2824,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer Draw1CardDescription                               ; 0x0b3b
 	textpointer Draw2CardsDescription
 	textpointer PlasmaName
-	textpointer PlasmaDescription
 	textpointer RampageName                                        ; 0x0b40
 	textpointer RampageDescription                                 ; 0x0b41
 	textpointer TransformDescription
@@ -2875,9 +2870,14 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer IsCuredOfStatusAndEffectsText
 	textpointer HealingEnergyName
 	textpointer HealingEnergyDescription
+	textpointer Attach1GrassEnergyFromDiscardDescription
 	textpointer Attach1FireEnergyFromDiscardDescription
 	textpointer Attach1WaterEnergyFromDiscardDescription
+	textpointer Attach1LightningEnergyFromDiscardDescription
+	textpointer Attach1FightingEnergyFromDiscardDescription
 	textpointer Attach1PsychicEnergyFromDiscardDescription
+	textpointer Attach1DarknessEnergyFromDiscardDescription
+	textpointer Attach1BasicEnergyFromDiscardDescription
 	; textpointer MudSportName
 	; textpointer Retrieve1WaterOrFightingEnergyFromDiscardDescription
 	; textpointer DualTypeFightingName
@@ -2951,7 +2951,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer IncreaseDamageTakenBy40Description
 	textpointer RevengeName
 	textpointer MendName
-	textpointer MendDescription
 	textpointer FightingFuryName
 	textpointer FightingFuryDescription
 	textpointer StoneSkinName
@@ -3008,8 +3007,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer Recoil30UnlessActiveThisTurnDescription
 	textpointer ThunderWaveDescription
 	textpointer EnergyLinkName
-	textpointer Attach1BasicEnergyFromDiscardDescription
-	textpointer Attach1LightningEnergyFromDiscardDescription
 	textpointer BoostedVoltageName
 	textpointer BoostedVoltageDescription
 	textpointer LightningHasteName

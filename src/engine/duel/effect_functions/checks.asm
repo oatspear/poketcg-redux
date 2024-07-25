@@ -209,14 +209,9 @@ CheckDiscardPileHasBasicEnergyCards:
   jp CreateEnergyCardListFromDiscardPile_OnlyBasic
 
 
-; return carry if no Water Energy cards in Discard Pile
-CheckDiscardPileHasPsychicEnergyCards:
-  jp CreateEnergyCardListFromDiscardPile_OnlyPsychic
-
-
-; return carry if no Water Energy cards in Discard Pile
-CheckDiscardPileHasWaterEnergyCards:
-  jp CreateEnergyCardListFromDiscardPile_OnlyWater
+; return carry if no Fire Energy cards in Discard Pile
+CheckDiscardPileHasGrassEnergyCards:
+  jp CreateEnergyCardListFromDiscardPile_OnlyGrass
 
 
 ; return carry if no Fire Energy cards in Discard Pile
@@ -224,9 +219,29 @@ CheckDiscardPileHasFireEnergyCards:
   jp CreateEnergyCardListFromDiscardPile_OnlyFire
 
 
+; return carry if no Water Energy cards in Discard Pile
+CheckDiscardPileHasWaterEnergyCards:
+	jp CreateEnergyCardListFromDiscardPile_OnlyWater
+
+
 ; return carry if no Lightning Energy cards in Discard Pile
 CheckDiscardPileHasLightningEnergyCards:
   jp CreateEnergyCardListFromDiscardPile_OnlyLightning
+
+
+; return carry if no Lightning Energy cards in Discard Pile
+CheckDiscardPileHasFightingEnergyCards:
+  jp CreateEnergyCardListFromDiscardPile_OnlyFighting
+
+
+; return carry if no Water Energy cards in Discard Pile
+CheckDiscardPileHasPsychicEnergyCards:
+  jp CreateEnergyCardListFromDiscardPile_OnlyPsychic
+
+
+; return carry if no Water Energy cards in Discard Pile
+CheckDiscardPileHasDarknessEnergyCards:
+  jp CreateEnergyCardListFromDiscardPile_OnlyDarkness
 
 
 ; return carry if no Pokémon cards in Discard Pile

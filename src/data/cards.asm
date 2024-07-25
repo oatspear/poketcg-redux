@@ -1502,7 +1502,7 @@ ParasCard:
 
 	; attack 2
 	energy COLORLESS, 2 ; energies
-	tx ScratchName ; name
+	tx SlashName ; name
 	dw NONE ; description
 	dw NONE ; description (cont)
 	db 20 ; damage
@@ -1926,8 +1926,8 @@ GrimerCard:
 	; attack 2
 	energy COLORLESS, 1 ; energies
 	tx GatherToxinsName ; name
-	tx GatherToxinsDescription ; description
-	dw NONE ; description (cont)
+	tx Attach1DarknessEnergyFromDiscardDescription ; description
+	tx InflictPoisonDescription ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category
 	dw GatherToxinsEffectCommands ; effect commands
@@ -2446,26 +2446,26 @@ CharmanderCard:
 
 	; attack 1
 	energy COLORLESS, 1 ; energies
-	tx ScratchName ; name
-	dw NONE ; description
+	tx FlareName ; name
+	tx Attach1FireEnergyFromDiscardDescription ; description
 	dw NONE ; description (cont)
 	db 10 ; damage
 	db DAMAGE_NORMAL ; category
-	dw NONE ; effect commands
+	dw Attach1FireEnergyFromDiscardEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
-	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_SLASH ; animation
+	db SPECIAL_AI_HANDLING ; flags 3
+	db 1
+	db ATK_ANIM_SMALL_FLAME ; animation
 
 	; attack 2
 	energy FIRE, 1, COLORLESS, 1 ; energies
 	tx EmberName ; name
-	tx OptionalDiscard1Energy10BonusDamageDescription ; description
+	tx Discard1EnergyDescription ; description
 	dw NONE ; description (cont)
-	db 20 ; damage
-	db DAMAGE_PLUS ; category
-	dw IfDiscardedEnergy10BonusDamageEffectCommands ; effect commands
+	db 30 ; damage
+	db DAMAGE_NORMAL ; category
+	dw Discard1EnergyEffectCommands ; effect commands
 	db NONE ; flags 1
 	db DISCARD_ENERGY ; flags 2
 	db NONE ; flags 3
@@ -2614,11 +2614,11 @@ VulpixCard:
 	; attack 2
 	energy FIRE, 1, COLORLESS, 1 ; energies
 	tx EmberName ; name
-	tx OptionalDiscard1Energy10BonusDamageDescription ; description
+	tx Discard1EnergyDescription ; description
 	dw NONE ; description (cont)
-	db 20 ; damage
-	db DAMAGE_PLUS ; category
-	dw IfDiscardedEnergy10BonusDamageEffectCommands ; effect commands
+	db 30 ; damage
+	db DAMAGE_NORMAL ; category
+	dw Discard1EnergyEffectCommands ; effect commands
 	db NONE ; flags 1
 	db DISCARD_ENERGY ; flags 2
 	db NONE ; flags 3
@@ -3225,11 +3225,11 @@ MoltresLv35Card:
 	; attack 1
 	energy FIRE, 1 ; energies
 	tx FlareName ; name
-	tx FlareDescription ; description
+	tx Attach1FireEnergyFromDiscardDescription ; description
 	dw NONE ; description (cont)
 	db 10 ; damage
 	db DAMAGE_NORMAL ; category
-	dw FlareEffectCommands ; effect commands
+	dw Attach1FireEnergyFromDiscardEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db SPECIAL_AI_HANDLING ; flags 3
@@ -5989,11 +5989,11 @@ ZapdosLv40Card:
 	; attack 1
 	energy LIGHTNING, 1 ; energies
 	tx PlasmaName ; name
-	tx PlasmaDescription ; description
+	tx Attach1LightningEnergyFromDiscardDescription ; description
 	dw NONE ; description (cont)
 	db 10 ; damage
 	db DAMAGE_NORMAL ; category
-	dw EnergizeEffectCommands ; effect commands
+	dw Attach1LightningEnergyFromDiscardEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db SPECIAL_AI_HANDLING ; flags 3
@@ -6614,8 +6614,8 @@ GeodudeCard:
 	; attack 1
 	energy COLORLESS, 1 ; energies
 	tx MendName ; name
-	tx MendDescription ; description
-	dw NONE ; description (cont)
+	tx Attach1FightingEnergyFromDiscardDescription ; description
+	tx Heal10DamageDescription ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category
 	dw MendEffectCommands ; effect commands

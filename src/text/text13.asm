@@ -210,6 +210,12 @@ PutHowManyDamageCountersMenuText:
 ; Unused Text
 ; ------------------------------------------------------------------------------
 
+; OptionalDiscard1Energy10BonusDamageDescription:
+; 	text "You may discard an Energy card"
+; 	line "attached to this Pokémon. If you do,"
+; 	line "this attack does 10 more damage."
+; 	done
+
 ; EnergyConversionName:
 ; 	text "Energy Conversion"
 ; 	done

@@ -500,12 +500,6 @@ PlasmaName:
 	text "Plasma"
 	done
 
-PlasmaDescription:
-	text "You must attach a <LIGHTNING> Energy from"
-	line "your discard pile to this Pokémon"
-	line "to use this attack."
-	done
-
 RampageName: ; 62ade (18:6ade)
 	text "Rampage"
 	done
@@ -736,18 +730,43 @@ HealingEnergyDescription:
 	line "that Pokémon."
 	done
 
+Attach1GrassEnergyFromDiscardDescription:
+	text "Attach 1 <GRASS> Energy from your"
+	line "discard pile to this Pokémon."
+	done
+
 Attach1FireEnergyFromDiscardDescription:
-	text "Attach a <FIRE> Energy from your"
+	text "Attach 1 <FIRE> Energy from your"
 	line "discard pile to this Pokémon."
 	done
 
 Attach1WaterEnergyFromDiscardDescription:
-	text "Attach a <WATER> Energy from your"
+	text "Attach 1 <WATER> Energy from your"
+	line "discard pile to this Pokémon."
+	done
+
+Attach1LightningEnergyFromDiscardDescription:
+	text "Attach 1 <LIGHTNING> Energy from your"
+	line "discard pile to this Pokémon."
+	done
+
+Attach1FightingEnergyFromDiscardDescription:
+	text "Attach 1 <FIGHTING> Energy from your"
 	line "discard pile to this Pokémon."
 	done
 
 Attach1PsychicEnergyFromDiscardDescription:
-	text "Attach a <PSYCHIC> Energy from your"
+	text "Attach 1 <PSYCHIC> Energy from your"
+	line "discard pile to this Pokémon."
+	done
+
+Attach1DarknessEnergyFromDiscardDescription:
+	text "Attach 1 <DARKNESS> Energy from your"
+	line "discard pile to this Pokémon."
+	done
+
+Attach1BasicEnergyFromDiscardDescription:
+	text "Attach 1 Basic Energy from your"
 	line "discard pile to this Pokémon."
 	done
 
@@ -1145,12 +1164,6 @@ MendName:
 	text "Mend"
 	done
 
-MendDescription:
-	text "Attach a Basic Energy from your"
-	line "Discard Pile to this Pokémon."
-	line "Then, heal 10 damage."
-	done
-
 FightingFuryName:
 	text "Fighting Fury"
 	done
@@ -1455,16 +1468,6 @@ ThunderWaveDescription:
 
 EnergyLinkName:
 	text "Energy Link"
-	done
-
-Attach1BasicEnergyFromDiscardDescription:
-	text "Attach a Basic Energy from your"
-	line "discard pile to this Pokémon."
-	done
-
-Attach1LightningEnergyFromDiscardDescription:
-	text "Attach a <LIGHTNING> Energy from your"
-	line "discard pile to this Pokémon."
 	done
 
 BoostedVoltageName:

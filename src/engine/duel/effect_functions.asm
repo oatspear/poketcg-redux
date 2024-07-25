@@ -3356,6 +3356,12 @@ EnergySpores_AISelectEffect:
 	jr PickFirstNCardsFromList_SelectEffect
 
 
+Attach1DarknessEnergyFromDiscard_SelectEffect:
+; pick the first energy card
+	call CreateEnergyCardListFromDiscardPile_OnlyDarkness
+	jr PickFirstEnergyFromList_SelectEffect
+
+
 Attach1PsychicEnergyFromDiscard_SelectEffect:
 ; pick the first energy card
 	call CreateEnergyCardListFromDiscardPile_OnlyPsychic
@@ -3368,9 +3374,21 @@ Attach1WaterEnergyFromDiscard_SelectEffect:
 	jr PickFirstEnergyFromList_SelectEffect
 
 
+Attach1FightingEnergyFromDiscard_SelectEffect:
+; pick the first energy card
+	call CreateEnergyCardListFromDiscardPile_OnlyFighting
+	jr PickFirstEnergyFromList_SelectEffect
+
+
 Attach1LightningEnergyFromDiscard_SelectEffect:
 ; pick the first energy card
 	call CreateEnergyCardListFromDiscardPile_OnlyLightning
+	jr PickFirstEnergyFromList_SelectEffect
+
+
+Attach1GrassEnergyFromDiscard_SelectEffect:
+; pick the first energy card
+	call CreateEnergyCardListFromDiscardPile_OnlyGrass
 	jr PickFirstEnergyFromList_SelectEffect
 
 

@@ -2,12 +2,33 @@
 
 ## Version 0.10.0
 
+### Grass Changes
+
+#### Paras
+- **Scratch**: renamed to **Slash**.
+
 ### Fire Changes
+
+#### Charmander
+- **Scratch**: removed.
+- **Ember**: always discards 1 energy card attached to the Pokémon.
+- **Ember**: increased base damage from 20 to 30; no bonus damage.
+- New attack: **Flare** (C): 10 damage; must attach a Fire Energy from the discard pile to itself.
 
 #### Charizard
 - **Fire Spin**: renamed to **Fire Blast**.
 - **Fire Blast**: cost reduced from (CCCC) to (FFC).
 - **Fire Blast**: damage increased from 100 to 120.
+
+### Fighting Changes
+
+#### Geodude
+- **Mend**: attaches a Fighting Energy from the discard pile, instead of any Basic Energy.
+
+### Darkness Changes
+
+#### Grimer
+- **Gather Toxins**: attaches a Darkness Energy from the discard pile, instead of any Basic Energy.
 
 
 ## Version 0.9.0

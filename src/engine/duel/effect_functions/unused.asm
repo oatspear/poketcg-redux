@@ -1,5 +1,19 @@
 ;
 
+IfDiscardedEnergy10BonusDamageEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, OptionalDiscardEnergy_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, IfSelectedCard10BonusDamage_DamageBoostEffect
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, DiscardEnergy_DiscardEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, OptionalDiscardEnergyForDamage_AISelectEffect
+	db  $00
+
+; +10 damage if a card was selected (hTemp_ffa0 is not $ff)
+IfSelectedCard10BonusDamage_DamageBoostEffect:
+	ld d, 10
+	jr IfSelectedCardBonusDamage_DamageBoostEffect
+
+
+
 
 MorphEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDiscardPileHasBasicPokemonCards
