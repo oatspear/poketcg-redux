@@ -49,6 +49,9 @@
 #### Grimer
 - **Gather Toxins**: attaches a Darkness Energy from the discard pile, instead of any Basic Energy.
 
+### Bug Fixes
+- **Primeape** - Exiting the damage counter selection menu for **Get Mad** returns HP to what it was before.
+
 
 ## Version 0.9.0
 
