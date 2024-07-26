@@ -39,6 +39,13 @@
 - **Fire Fang**: reworked effect; discards an Energy attached to itself and inflicts Burn.
 - New Pokémon Power: **Cursed Flames**: when your Active Pokémon does damage to the Defending Pokémon with an attack, if it has any attached Fire Energies, discard the top card from the opponent's deck.
 
+#### Growlithe
+- Reduced HP from 60 to 50.
+- **Collect**: removed.
+- **Bite**: removed.
+- New attack: **Fetch** (C): choose a card from the top 4 deck cards and add it to the hand.
+- New attack: **Reckless Charge** (FC): 30 damage; does 10 recoil damage.
+
 ### Fighting Changes
 
 #### Geodude

@@ -2759,37 +2759,37 @@ GrowlitheCard:
 	db DIAMOND ; rarity
 	db COLOSSEUM | NONE ; sets
 	db GROWLITHE
-	db 60 ; hp
+	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
 
 	; attack 1
 	energy COLORLESS, 1 ; energies
-	tx CollectName ; name
-	tx Draw2CardsDescription ; description
+	tx FetchName ; name
+	tx TutorAnyCardFromTop4DeckDescription ; description
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category
-	dw Draw2CardsEffectCommands ; effect commands
+	dw UltravisionEffectCommands ; effect commands
 	db DRAW_CARD ; flags 1
 	db NONE ; flags 2
-	db SPECIAL_AI_HANDLING ; flags 3
+	db NONE ; flags 3
 	db 0
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
 	; attack 2
 	energy FIRE, 1, COLORLESS, 1 ; energies
-	tx BiteName ; name
-	dw NONE ; description
+	tx RecklessChargeName ; name
+	tx Recoil10Description ; description
 	dw NONE ; description (cont)
-	db 20 ; damage
+	db 30 ; damage
 	db DAMAGE_NORMAL ; category
-	dw NONE ; effect commands
-	db NONE ; flags 1
+	dw Recoil10EffectCommands ; effect commands
+	db LOW_RECOIL ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_HIT ; animation
+	db 10
+	db ATK_ANIM_HIT_RECOIL ; animation
 
 	db 0 ; retreat cost
 	db WR_WATER ; weakness

@@ -33,8 +33,6 @@ HandleSpecialAIAttacks:
 	jp z, .Growth
 	cp ZAPDOS_LV68
 	jp z, .BigThunder
-	cp GROWLITHE
-	jp z, .Collect
 	cp MEOWTH_LV15
 	jp z, .Collect
 	cp PIDGEY
