@@ -67,6 +67,12 @@
 - New Pokémon Power: **Heat Boost**: if Active this turn, attacks cost (C) less.
 - New attack: **Inferno Onrush** (FCC): 60 damage; excess damage after a KO goes to the next Active Pokémon.
 
+#### Magmar Lv24
+- **Searing Spark**: reduced cost from (FC) to (F).
+- **Searing Spark**: reduced base damage from 20 to 10.
+- **Fire Punch**: reworked.
+- New attack: **Fire Punch** (CC): 30 damage; discard an energy card attached to this Pokémon, unless it has damage counters on it.
+
 ### Fighting Changes
 
 #### Geodude

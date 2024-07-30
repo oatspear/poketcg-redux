@@ -45,12 +45,6 @@ Put1DamageCounterOnTarget_AIEffect:
 	jp UpdateExpectedAIDamage
 
 
-FirePunch_AIEffect:
-	ld a, 10
-	lb de, 10, 30
-	jp UpdateExpectedAIDamage
-
-
 ThunderPunch_AIEffect:
 	ld a, 20
 	lb de, 20, 40

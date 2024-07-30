@@ -1391,11 +1391,9 @@ IfActiveThisTurn30BonusDamageDescription:
 	done
 
 FirePunchDescription:
-	text "If this Pokémon has any damage"
-	line "counters on it, you may discard an"
-	line "energy card attached to it."
-	line "If you do, this attack does 20 more"
-	line "damage."
+	text "Discard an Energy card attached to"
+	line "this Pokémon, unless it has some"
+	line "damage counters on it."
 	done
 
 ThunderPunchDescription:

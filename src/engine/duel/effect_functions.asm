@@ -398,6 +398,12 @@ AquaticRescue_DiscardPileCheck:
 	ret
 
 
+FirePunch_PreconditionCheck:
+	call CheckArenaPokemonHasAnyDamage
+	ret nc  ; damaged
+	jp CheckArenaPokemonHasAnyEnergiesAttached
+
+
 ; ------------------------------------------------------------------------------
 ; Discard Cards
 ; ------------------------------------------------------------------------------
@@ -3601,8 +3607,8 @@ DiscardBasicEnergy_AISelectEffect:
 
 FirePunch_AISelectEffect:
 	call _StoreFF_CheckIfUserIsDamaged
-	jr nz, OptionalDiscardEnergyForDamage_AISelectEffect
-	ret
+	ret nz  ; damaged
+	jr DiscardEnergy_AISelectEffect
 
 
 ThunderPunch_AISelectEffect:
@@ -3646,7 +3652,13 @@ OptionalDiscardEnergy_PlayerSelectEffect:
 
 FirePunch_PlayerSelectEffect:
 	call _StoreFF_CheckIfUserIsDamaged
-	jr nz, OptionalDiscardEnergy_PlayerSelectEffect.select
+	ret nz  ; damaged
+	xor a ; PLAY_AREA_ARENA
+	call CreateArenaOrBenchEnergyCardList
+	ret c  ; no energy
+	xor a ; PLAY_AREA_ARENA
+	bank1call HandlePlayAreaEnergyDiscardMenu
+	ldh [hTemp_ffa0], a
 	ret
 
 

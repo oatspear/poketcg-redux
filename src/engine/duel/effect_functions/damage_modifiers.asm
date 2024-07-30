@@ -1045,11 +1045,6 @@ Frustration_AIEffect:
 ; Miscellaneous
 ; ------------------------------------------------------------------------------
 
-; +20 damage if a card was selected (hTemp_ffa0 is not $ff)
-IfSelectedCard20BonusDamage_DamageBoostEffect:
-	ld d, 20
-	jr IfSelectedCardBonusDamage_DamageBoostEffect
-
 ; +30 damage if a card was selected (hTemp_ffa0 is not $ff)
 IfSelectedCard30BonusDamage_DamageBoostEffect:
 	ld d, 30

@@ -675,11 +675,10 @@ WaveSplashEffectCommands:
 	db  $00
 
 FirePunchEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, FirePunch_PreconditionCheck
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, FirePunch_PlayerSelectEffect
-	dbw EFFECTCMDTYPE_DISCARD_ENERGY, DiscardEnergy_DiscardEffect
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, IfSelectedCard20BonusDamage_DamageBoostEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, FirePunch_AISelectEffect
-	dbw EFFECTCMDTYPE_AI, FirePunch_AIEffect
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, DiscardEnergy_DiscardEffect
 	db  $00
 
 ThunderPunchEffectCommands:

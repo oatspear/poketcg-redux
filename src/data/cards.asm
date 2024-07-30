@@ -3020,24 +3020,10 @@ MagmarLv24Card:
 
 	; attack 1
 	energy FIRE, 1 ; energies
-	tx FirePunchName ; name
-	tx FirePunchDescription ; description
-	dw NONE ; description (cont)
-	db 10 ; damage
-	db DAMAGE_PLUS ; category
-	dw FirePunchEffectCommands ; effect commands
-	db NONE ; flags 1
-	db NONE ; flags 2
-	db BOOST_IF_TAKEN_DAMAGE ; flags 3
-	db 0
-	db ATK_ANIM_FIRE_PUNCH ; animation
-
-	; attack 2
-	energy FIRE, 1, COLORLESS, 1 ; energies
 	tx SearingSparkName ; name
 	tx SearingSparkDescription ; description
 	dw NONE ; description (cont)
-	db 20 ; damage
+	db 10 ; damage
 	db DAMAGE_PLUS ; category
 	dw SearingSparkEffectCommands ; effect commands
 	db NONE ; flags 1
@@ -3045,6 +3031,20 @@ MagmarLv24Card:
 	db NONE ; flags 3
 	db 0
 	db ATK_ANIM_SMALL_FLAME ; animation
+
+	; attack 2
+	energy COLORLESS, 2 ; energies
+	tx FirePunchName ; name
+	tx FirePunchDescription ; description
+	dw NONE ; description (cont)
+	db 30 ; damage
+	db DAMAGE_NORMAL ; category
+	dw FirePunchEffectCommands ; effect commands
+	db NONE ; flags 1
+	db DISCARD_ENERGY ; flags 2
+	db BOOST_IF_TAKEN_DAMAGE ; flags 3
+	db 0
+	db ATK_ANIM_FIRE_PUNCH ; animation
 
 	db 1 ; retreat cost
 	db WR_WATER ; weakness

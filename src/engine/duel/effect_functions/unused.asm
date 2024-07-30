@@ -1,5 +1,40 @@
 ;
 
+
+FirePunchEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, FirePunch_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, DiscardEnergy_DiscardEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, IfSelectedCard20BonusDamage_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, FirePunch_AISelectEffect
+	dbw EFFECTCMDTYPE_AI, FirePunch_AIEffect
+	db  $00
+
+;
+FirePunch_PlayerSelectEffect:
+	call _StoreFF_CheckIfUserIsDamaged
+	jr nz, OptionalDiscardEnergy_PlayerSelectEffect.select
+	ret
+
+;
+FirePunch_AISelectEffect:
+	call _StoreFF_CheckIfUserIsDamaged
+	jr nz, OptionalDiscardEnergyForDamage_AISelectEffect
+	ret
+
+; +20 damage if a card was selected (hTemp_ffa0 is not $ff)
+IfSelectedCard20BonusDamage_DamageBoostEffect:
+	ld d, 20
+	jr IfSelectedCardBonusDamage_DamageBoostEffect
+
+;
+FirePunch_AIEffect:
+	ld a, 10
+	lb de, 10, 30
+	jp UpdateExpectedAIDamage
+
+
+
+
 RelentlessFlamesEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, RelentlessFlames_DamageMultiplierEffect
 	dbw EFFECTCMDTYPE_AI, RelentlessFlames_AIEffect
