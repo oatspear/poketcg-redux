@@ -2733,7 +2733,7 @@ NinetalesLv35Card:
 	tx InflictBurnDescription ; description (cont)
 	db 30 ; damage
 	db DAMAGE_NORMAL ; category
-	dw Discard1EnergyEffectCommands ; effect commands
+	dw FireFangEffectCommands ; effect commands
 	db INFLICT_POISON ; flags 1
 	db DISCARD_ENERGY ; flags 2
 	db NONE ; flags 3

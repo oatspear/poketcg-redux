@@ -626,6 +626,14 @@ EvolutionaryFlameEffectCommands:
 	dbw EFFECTCMDTYPE_PKMN_POWER_TRIGGER, EvolutionaryFlame_DamageBurnEffect
 	db  $00
 
+FireFangEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasAnyEnergiesAttached
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, DiscardEnergy_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, DiscardEnergy_DiscardEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, DiscardEnergy_AISelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, BurnEffect
+	db  $00
+
 ; EFFECTCMDTYPE_AI_SWITCH_DEFENDING_PKMN runs after EFFECTCMDTYPE_DISCARD_ENERGY,
 ; but before EFFECTCMDTYPE_BEFORE_DAMAGE
 Discard1EnergyFromBothActiveEffectCommands:
