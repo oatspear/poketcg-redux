@@ -1397,11 +1397,9 @@ FirePunchDescription:
 	done
 
 ThunderPunchDescription:
-	text "If this Pokémon entered the Active"
-	line "Spot this turn, you may discard an"
-	line "energy card attached to it."
-	line "If you do, this attack does 30 more"
-	line "damage."
+	text "Discard an Energy card attached to"
+	line "this Pokémon, unless it moved into"
+	line "the Active Spot this turn."
 	done
 
 IgnitedVoltageName:

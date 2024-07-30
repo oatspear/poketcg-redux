@@ -682,11 +682,10 @@ FirePunchEffectCommands:
 	db  $00
 
 ThunderPunchEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, ThunderPunch_PreconditionCheck
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, ThunderPunch_PlayerSelectEffect
-	dbw EFFECTCMDTYPE_DISCARD_ENERGY, DiscardEnergy_DiscardEffect
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, IfSelectedCard30BonusDamage_DamageBoostEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, ThunderPunch_AISelectEffect
-	dbw EFFECTCMDTYPE_AI, ThunderPunch_AIEffect
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, DiscardEnergy_DiscardEffect
 	db  $00
 
 IgnitedVoltageEffectCommands:

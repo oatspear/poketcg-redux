@@ -404,6 +404,12 @@ FirePunch_PreconditionCheck:
 	jp CheckArenaPokemonHasAnyEnergiesAttached
 
 
+ThunderPunch_PreconditionCheck:
+	call CheckEnteredActiveSpotThisTurn
+	ret nc  ; active this turn
+	jp CheckArenaPokemonHasAnyEnergiesAttached
+
+
 ; ------------------------------------------------------------------------------
 ; Discard Cards
 ; ------------------------------------------------------------------------------
@@ -3583,10 +3589,42 @@ DiscardEnergyAbility_PlayerSelectEffect:
 	ldh [hEnergyTransEnergyCard], a
 	ret
 
+
+;
+ThunderPunch_PlayerSelectEffect:
+	ld a, $ff
+	ldh [hTemp_ffa0], a
+	call CheckEnteredActiveSpotThisTurn
+	ret nc  ; active this turn
+	jr DiscardEnergy_PlayerSelectEffect
+
+
+FirePunch_PlayerSelectEffect:
+	call _StoreFF_CheckIfUserIsDamaged
+	ret nz  ; damaged
+	; jr DiscardEnergy_PlayerSelectEffect
+	; fallthrough
+
 DiscardEnergy_PlayerSelectEffect:
 	bank1call HandleDiscardArenaEnergy
 	ldh [hTemp_ffa0], a
 	ret
+
+
+;
+ThunderPunch_AISelectEffect:
+	ld a, $ff
+	ldh [hTemp_ffa0], a
+	call CheckEnteredActiveSpotThisTurn
+	ret nc  ; active this turn
+	jr DiscardEnergy_AISelectEffect
+
+;
+FirePunch_AISelectEffect:
+	call _StoreFF_CheckIfUserIsDamaged
+	ret nz  ; damaged
+	; jr DiscardEnergy_AISelectEffect
+	; fallthrough
 
 DiscardEnergy_AISelectEffect:
 	xor a ; PLAY_AREA_ARENA
@@ -3604,28 +3642,6 @@ DiscardBasicEnergy_AISelectEffect:
 	ldh [hTemp_ffa0], a
 	ret
 
-
-FirePunch_AISelectEffect:
-	call _StoreFF_CheckIfUserIsDamaged
-	ret nz  ; damaged
-	jr DiscardEnergy_AISelectEffect
-
-
-ThunderPunch_AISelectEffect:
-	ld a, $ff
-	ldh [hTemp_ffa0], a
-	call CheckEnteredActiveSpotThisTurn
-	ccf
-	ret nc  ; not active this turn
-	; fallthrough
-
-OptionalDiscardEnergyForDamage_AISelectEffect:
-	ld a, [wAIAttackLogicFlags]
-	bit AI_LOGIC_MIN_DAMAGE_CAN_KO_F, a
-	ret nz  ; no need for bonus damage
-	bit AI_LOGIC_MAX_DAMAGE_CAN_KO_F, a
-	jr nz, DiscardEnergy_AISelectEffect  ; can KO with bonus
-	ret
 
 OptionalDiscardEnergyForStatus_AISelectEffect:
 	ld a, [wAIAttackLogicFlags]
@@ -3650,18 +3666,6 @@ OptionalDiscardEnergy_PlayerSelectEffect:
 	ret
 
 
-FirePunch_PlayerSelectEffect:
-	call _StoreFF_CheckIfUserIsDamaged
-	ret nz  ; damaged
-	xor a ; PLAY_AREA_ARENA
-	call CreateArenaOrBenchEnergyCardList
-	ret c  ; no energy
-	xor a ; PLAY_AREA_ARENA
-	bank1call HandlePlayAreaEnergyDiscardMenu
-	ldh [hTemp_ffa0], a
-	ret
-
-
 ; output:
 ;   z: set if the user did not take damage
 _StoreFF_CheckIfUserIsDamaged:
@@ -3670,15 +3674,6 @@ _StoreFF_CheckIfUserIsDamaged:
 	ld e, PLAY_AREA_ARENA
 	call GetCardDamageAndMaxHP
 	or a
-	ret
-
-
-ThunderPunch_PlayerSelectEffect:
-	ld a, $ff
-	ldh [hTemp_ffa0], a
-	call CheckEnteredActiveSpotThisTurn
-	jr nc, OptionalDiscardEnergy_PlayerSelectEffect.select
-	ccf
 	ret
 
 

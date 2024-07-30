@@ -73,6 +73,12 @@
 - **Fire Punch**: reworked.
 - New attack: **Fire Punch** (CC): 30 damage; discard an energy card attached to this Pokémon, unless it has damage counters on it.
 
+### Lightning Changes
+
+#### Electabuzz Lv35
+- **Thunder Punch**: reworked.
+- New attack: **Thunder Punch** (CC): 30 damage; discard an energy card attached to this Pokémon, unless it moved into the Active Spot this turn.
+
 ### Fighting Changes
 
 #### Geodude

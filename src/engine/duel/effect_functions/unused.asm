@@ -1,5 +1,47 @@
 ;
 
+ThunderPunchEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, ThunderPunch_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, DiscardEnergy_DiscardEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, IfSelectedCard30BonusDamage_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, ThunderPunch_AISelectEffect
+	dbw EFFECTCMDTYPE_AI, ThunderPunch_AIEffect
+	db  $00
+
+;
+ThunderPunch_PlayerSelectEffect:
+	ld a, $ff
+	ldh [hTemp_ffa0], a
+	call CheckEnteredActiveSpotThisTurn
+	jr nc, OptionalDiscardEnergy_PlayerSelectEffect.select
+	ccf
+	ret
+
+;
+ThunderPunch_AISelectEffect:
+	ld a, $ff
+	ldh [hTemp_ffa0], a
+	call CheckEnteredActiveSpotThisTurn
+	ccf
+	ret nc  ; not active this turn
+	; fallthrough to OptionalDiscardEnergyForDamage_AISelectEffect
+
+;
+OptionalDiscardEnergyForDamage_AISelectEffect:
+	ld a, [wAIAttackLogicFlags]
+	bit AI_LOGIC_MIN_DAMAGE_CAN_KO_F, a
+	ret nz  ; no need for bonus damage
+	bit AI_LOGIC_MAX_DAMAGE_CAN_KO_F, a
+	jr nz, DiscardEnergy_AISelectEffect  ; can KO with bonus
+	ret
+
+;
+ThunderPunch_AIEffect:
+	ld a, 20
+	lb de, 20, 40
+	jp UpdateExpectedAIDamage
+
+
 
 FirePunchEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, FirePunch_PlayerSelectEffect

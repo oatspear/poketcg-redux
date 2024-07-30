@@ -5820,15 +5820,15 @@ ElectabuzzLv35Card:
 	db ATK_ANIM_THUNDERSHOCK ; animation
 
 	; attack 2
-	energy LIGHTNING, 1, COLORLESS, 1 ; energies
+	energy COLORLESS, 2 ; energies
 	tx ThunderpunchName ; name
 	tx ThunderPunchDescription ; description
 	dw NONE ; description (cont)
-	db 20 ; damage
-	db DAMAGE_PLUS ; category
+	db 30 ; damage
+	db DAMAGE_NORMAL ; category
 	dw ThunderPunchEffectCommands ; effect commands
 	db NONE ; flags 1
-	db NONE ; flags 2
+	db DISCARD_ENERGY ; flags 2
 	db NONE ; flags 3
 	db 0
 	db ATK_ANIM_THUNDERPUNCH ; animation

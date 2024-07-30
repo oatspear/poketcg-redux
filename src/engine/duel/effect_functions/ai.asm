@@ -45,12 +45,6 @@ Put1DamageCounterOnTarget_AIEffect:
 	jp UpdateExpectedAIDamage
 
 
-ThunderPunch_AIEffect:
-	ld a, 20
-	lb de, 20, 40
-	jp UpdateExpectedAIDamage
-
-
 IgnitedVoltage_AIEffect:
 	ld a, CARDTEST_ENERGIZED_MAGMAR
 	call CheckSomeMatchingPokemonInBench
