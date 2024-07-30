@@ -982,8 +982,12 @@ ClearDamageReductionSubstatus2:
 UpdateSubstatusConditions_StartOfTurn:
 	ld a, $ff
 	ld [wEnergyColorOverride], a
-	ld a, DUELVARS_ARENA_CARD_SUBSTATUS1
+; clear active this turn flag to handle opponent gusting/repulsion
+	ld a, DUELVARS_ARENA_CARD_SUBSTATUS3
 	call GetTurnDuelistVariable
+	res SUBSTATUS3_THIS_TURN_ACTIVE, [hl]
+	ld l, DUELVARS_ARENA_CARD_SUBSTATUS1
+	ld a, [hl]
 	ld [hl], $0
 	or a
 	ret z
