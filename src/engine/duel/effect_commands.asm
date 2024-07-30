@@ -1254,6 +1254,14 @@ SteamrollerEffectCommands:
 ; 	dbw EFFECTCMDTYPE_AFTER_NEW_ACTIVE_POKEMON, TrampleEffect
 ; 	db  $00
 
+InfernoOnrushEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasAnyEnergiesAttached
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, DiscardEnergy_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, DiscardEnergy_DiscardEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, DiscardEnergy_AISelectEffect
+	dbw EFFECTCMDTYPE_AFTER_NEW_ACTIVE_POKEMON, TrampleEffect
+	db  $00
+
 GrowlEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, GrowlEffect
 	db  $00

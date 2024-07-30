@@ -2968,31 +2968,31 @@ RapidashCard:
 	tx PonytaName ; pre-evo name
 
 	; attack 1
-	energy COLORLESS, 2 ; energies
-	tx StrafeName ; name
-	tx SwitchThisPokemonDescription ; description
-	dw NONE ; description (cont)
-	db 20 ; damage
-	db DAMAGE_NORMAL ; category
-	dw SwitchUserEffectCommands ; effect commands
+	energy 0 ; energies
+	tx HeatBoostName ; name
+	tx SwiftSwimDescription ; description
+	tx PokemonPowerDescriptionCont ; description (cont)
+	db 0 ; damage
+	db POKEMON_POWER ; category
+	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_QUICK_ATTACK ; animation
+	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy FIRE, 2, COLORLESS, 1 ; energies
-	tx OverrunName ; name
-	tx Damage1BenchedPokemon30Description ; description
-	tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
-	db 30 ; damage
+	energy FIRE, 1, COLORLESS, 2 ; energies
+	tx InfernoOnrushName ; name
+	tx Discard1EnergyDescription ; description
+	tx TrampleDescription ; description (cont)
+	db 60 ; damage
 	db DAMAGE_NORMAL ; category
-	dw Damage1BenchedPokemon30EffectCommands ; effect commands
-	db DAMAGE_TO_OPPONENT_BENCH ; flags 1
-	db FLAG_2_BIT_6 ; flags 2
+	dw InfernoOnrushEffectCommands ; effect commands
+	db NONE ; flags 1
+	db DISCARD_ENERGY ; flags 2
 	db NONE ; flags 3
-	db 2
+	db 1
 	db ATK_ANIM_BIG_HIT ; animation
 
 	db 1 ; retreat cost

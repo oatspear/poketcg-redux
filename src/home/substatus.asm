@@ -797,7 +797,10 @@ GetAttackCostDiscount:
 	call GetTurnDuelistVariable
 	call _GetCardIDFromDeckIndex  ; preserves bc, de
 	cp GOLDUCK
+	jr z, .swift_swim
+	cp RAPIDASH
 	jr nz, .bench
+.swift_swim
 	call CheckCannotUseDueToStatus  ; unable to use ability
 	jr c, .bench
 	ld a, DUELVARS_ARENA_CARD_SUBSTATUS3

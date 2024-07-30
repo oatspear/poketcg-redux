@@ -61,6 +61,12 @@
 - New attack: **Flame Charge** (F): 10 damage; add 1 Fire Energy from the deck to the hand.
 - New attack: **Overrun** (FC): 20 damage; does 10 damage to 1 of the opponent's Benched Pokémon.
 
+#### Rapidash
+- **Strafe**: removed.
+- **Overrun**: removed.
+- New Pokémon Power: **Heat Boost**: if Active this turn, attacks cost (C) less.
+- New attack: **Inferno Onrush** (FCC): 60 damage; excess damage after a KO goes to the next Active Pokémon.
+
 ### Fighting Changes
 
 #### Geodude
@@ -193,7 +199,7 @@
 #### Golduck
 - **Aquatic Rescue**: removed.
 - **Energy Loop**: removed.
-- New ability: **Swift Swim**: if Active this turn, attacks cost (C) less.
+- New Pokémon Power: **Swift Swim**: if Active this turn, attacks cost (C) less.
 - New attack: **Wave Splash** (WCC): 50 damage; put an Energy attached to the Pokémon back into the hand; does 10 damage to 2 of the opponent's Benched Pokémon.
 
 #### Poliwag
@@ -400,7 +406,7 @@
 - Changed type from Fighting to Colorless.
 - **Prehistoric Power**: removed.
 - **Skill Dive**: reduced cost from (CCC) to (CC).
-- New Pokémon Power: **Primal Claw**: when the opponent uses an ability, do 10 damage to that Pokémon.
+- New Pokémon Power: **Primal Claw**: when the opponent uses a Pokémon Power, do 10 damage to that Pokémon.
 
 ### Psychic Changes
 

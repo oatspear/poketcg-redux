@@ -2705,6 +2705,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer Exoskeleton10Description
 	textpointer WaveSplashName
 	textpointer WaveSplashDescription
+	textpointer HeatBoostName
 	textpointer SwiftSwimName
 	textpointer SwiftSwimDescription
 	textpointer DevastateName
@@ -2721,6 +2722,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer MysteriousTailDescription
 	textpointer HexName
 	textpointer HexDescription
+	textpointer InfernoOnrushName
 	textpointer IntimidatingRoarName
 	textpointer IntimidatingRoarDescription
 

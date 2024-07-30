@@ -1628,6 +1628,10 @@ SwiftSwimName:
 	text "Swift Swim"
 	done
 
+HeatBoostName:
+	text "Heat Boost"
+	done
+
 SwiftSwimDescription:
 	text "If this Pokémon moved into the"
 	line "Active Spot this turn, its attacks"
@@ -1700,6 +1704,10 @@ HexDescription:
 	text "If the Defending Pokémon is not"
 	line "affected by a Special Condition,"
 	line "this attack cannot be used."
+	done
+
+InfernoOnrushName:
+	text "Inferno Onrush"
 	done
 
 IntimidatingRoarName:
