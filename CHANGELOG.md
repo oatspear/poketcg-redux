@@ -46,6 +46,14 @@
 - New attack: **Fetch** (C): choose a card from the top 4 deck cards and add it to the hand.
 - New attack: **Reckless Charge** (FC): 30 damage; does 10 recoil damage.
 
+#### Arcanine Lv45
+- Reduced HP from 90 to 80.
+- **Flamethrower**: removed.
+- **Reckless Charge**: increased cost from (CC) to (FC).
+- **Reckless Charge**: increased damage from 50 to 60.
+- **Reckless Charge**: increased recoil damage from 20 to 30.
+- New Pokémon Power: **Intimidating Roar**: once per turn, may force the opponent to switch their Active Pokémon.
+
 ### Fighting Changes
 
 #### Geodude

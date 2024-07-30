@@ -2723,6 +2723,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer MysteriousTailDescription
 	textpointer HexName
 	textpointer HexDescription
+	textpointer IntimidatingRoarName
+	textpointer IntimidatingRoarDescription
 
 ; ------------------------------------------------------------------------------
 ; text12.asm

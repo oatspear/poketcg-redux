@@ -1655,7 +1655,7 @@ AskWhetherToQuitSelectingCards:
 
 ; handles the selection of a forced switch by link/AI opponent or by the player.
 ; outputs the Play Area location of the chosen bench card in hTempPlayAreaLocation_ff9d.
-DuelistSelectForcedSwitch: ; 2c487 (b:4487)
+DuelistSelectForcedSwitch:
 	ld a, DUELVARS_DUELIST_TYPE
 	call GetNonTurnDuelistVariable
 	cp DUELIST_TYPE_LINK_OPP
@@ -2125,14 +2125,15 @@ BenchSelectionMenuParameters: ; 2c6e8 (b:46e8)
 	db SYM_SPACE ; tile behind cursor
 	dw NULL ; function pointer if non-0
 
+
 ; return carry if there are no Pokemon cards in the non-turn holder's bench
-LureAbility_AssertPokemonInBench:
+LureAbility_PreconditionCheck:
+RepelAbility_PreconditionCheck:
 	; call Lure_AssertPokemonInBench
 	call CheckOpponentBenchIsNotEmpty
 	ret c
-	ldh a, [hTempPlayAreaLocation_ff9d]
-	ldh [hTemp_ffa0], a
-	jp CheckPokemonPowerCanBeUsed
+	jp CheckPokemonPowerCanBeUsed_StoreTrigger
+
 
 ; return in hTempPlayAreaLocation_ffa1 the PLAY_AREA_* location
 ; of the Bench Pokemon that was selected for switch
@@ -4866,15 +4867,16 @@ Whirlwind_SelectEffect:
 	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
 	call GetNonTurnDuelistVariable
 	cp 2
-	jr nc, .switch
+	jr nc, RepelDefendingPokemon_SelectEffect
 ; no Bench Pokemon
 	ld a, $ff
-	ldh [hTemp_ffa0], a
+	ldh [hTempPlayAreaLocation_ffa1], a
 	ret
-.switch
+
+RepelDefendingPokemon_SelectEffect:
 	call DuelistSelectForcedSwitch
 	ldh a, [hTempPlayAreaLocation_ff9d]
-	ldh [hTemp_ffa0], a
+	ldh [hTempPlayAreaLocation_ffa1], a
 	ret
 
 
@@ -4885,7 +4887,7 @@ Ram_RecoilSwitchEffect:
 
 
 Whirlwind_SwitchEffect:
-	ldh a, [hTemp_ffa0]
+	ldh a, [hTempPlayAreaLocation_ffa1]
 	; jr HandleSwitchDefendingPokemonEffect
 	; fallthrough
 
@@ -4908,7 +4910,9 @@ HandleSwitchDefendingPokemonEffect:
 .switch
 	call HandleNoDamageOrEffect
 	ret c
+	; fallthrough
 
+ForceSwitchDefendingPokemon:
 ; attack was successful, switch Defending Pokemon
 	call SwapTurn
 	call SwapArenaWithBenchPokemon
@@ -4922,23 +4926,30 @@ HandleSwitchDefendingPokemonEffect:
 	ret
 
 
+IntimidatingRoar_SwitchEffect:
+	call SetUsedPokemonPowerThisTurn_RestoreTrigger
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	ld e, a
+	jr ForceSwitchDefendingPokemon
+
+
 RapidSpin_PlayerSelectEffect:
-	call SwitchUser_PlayerSelectEffect
-	ldh a, [hTemp_ffa0]
-	ldh [hTempPlayAreaLocation_ffa1], a
-	jp Whirlwind_SelectEffect
+	call SwitchUser_PlayerSelectEffect  ; ffa0
+	; ldh a, [hTemp_ffa0]
+	; ldh [hTempPlayAreaLocation_ffa1], a
+	jp Whirlwind_SelectEffect  ; ffa1
 
 RapidSpin_AISelectEffect:
-	call SwitchUser_AISelectEffect
-	ldh a, [hTemp_ffa0]
-	ldh [hTempPlayAreaLocation_ffa1], a
-	jp Whirlwind_SelectEffect
+	call SwitchUser_AISelectEffect  ; ffa0
+	; ldh a, [hTemp_ffa0]
+	; ldh [hTempPlayAreaLocation_ffa1], a
+	jp Whirlwind_SelectEffect  ; ffa1
 
 RapidSpin_SwitchEffect:
-	call Whirlwind_SwitchEffect
-	ldh a, [hTempPlayAreaLocation_ffa1]
-	ldh [hTemp_ffa0], a
-	jp SwitchUser_SwitchEffect
+	call Whirlwind_SwitchEffect  ; ffa1
+	; ldh a, [hTempPlayAreaLocation_ffa1]
+	; ldh [hTemp_ffa0], a
+	jp SwitchUser_SwitchEffect  ; ffa0
 
 
 ; return carry if Defending Pokemon has no attacks

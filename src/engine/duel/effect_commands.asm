@@ -83,7 +83,7 @@ Tutor1PokemonEffectCommands:
 	db  $00
 
 AbilityLureEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, LureAbility_AssertPokemonInBench
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, LureAbility_PreconditionCheck
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, LureAbility_SwitchDefendingPokemon
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Lure_SelectSwitchPokemon
 	db  $00
@@ -1417,6 +1417,13 @@ WhirlwindEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Whirlwind_SwitchEffect
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Whirlwind_SelectEffect
 	dbw EFFECTCMDTYPE_AI_SWITCH_DEFENDING_PKMN, Whirlwind_SelectEffect
+	db  $00
+
+IntimidatingRoarEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, RepelAbility_PreconditionCheck
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, RepelDefendingPokemon_SelectEffect
+	; dbw EFFECTCMDTYPE_AI_SWITCH_DEFENDING_PKMN, RepelDefendingPokemon_SelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, IntimidatingRoar_SwitchEffect
 	db  $00
 
 ConversionBeamEffectCommands:

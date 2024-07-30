@@ -1709,3 +1709,14 @@ HexDescription:
 	line "affected by a Special Condition,"
 	line "this attack cannot be used."
 	done
+
+IntimidatingRoarName:
+	text "Intimidating Roar"
+	done
+
+IntimidatingRoarDescription:
+	text "Once during your turn, you may"
+	line "switch out your opponent's Active"
+	line "Pokémon to the Bench. (Your opponent"
+	line "chooses the new Active Pokémon.)"
+	done

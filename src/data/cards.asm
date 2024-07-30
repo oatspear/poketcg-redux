@@ -2861,37 +2861,37 @@ ArcanineLv45Card:
 	db DIAMOND ; rarity
 	db COLOSSEUM | NONE ; sets
 	db ARCANINE_LV45
-	db 90 ; hp
+	db 80 ; hp
 	db STAGE1 ; stage
 	tx GrowlitheName ; pre-evo name
 
 	; attack 1
-	energy COLORLESS, 2 ; energies
+	energy 0 ; energies
+	tx IntimidatingRoarName ; name
+	tx IntimidatingRoarDescription ; description
+	tx PokemonPowerDescriptionCont ; description (cont)
+	db 0 ; damage
+	db POKEMON_POWER ; category
+	dw IntimidatingRoarEffectCommands ; effect commands
+	db NONE ; flags 1
+	db NONE ; flags 2
+	db NONE ; flags 3
+	db 0
+	db ATK_ANIM_PKMN_POWER_1 ; animation
+
+	; attack 2
+	energy FIRE, 1, COLORLESS, 1 ; energies
 	tx RecklessChargeName ; name
-	tx Recoil20Description ; description
+	tx Recoil30Description ; description
 	dw NONE ; description (cont)
-	db 50 ; damage
+	db 60 ; damage
 	db DAMAGE_NORMAL ; category
-	dw Recoil20EffectCommands ; effect commands
+	dw Recoil30EffectCommands ; effect commands
 	db LOW_RECOIL ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
-	db 20
+	db 30
 	db ATK_ANIM_HIT_RECOIL ; animation
-
-	; attack 2
-	energy FIRE, 1, COLORLESS, 2 ; energies
-	tx FlamethrowerName ; name
-	tx Discard1EnergyDescription ; description
-	dw NONE ; description (cont)
-	db 50 ; damage
-	db DAMAGE_NORMAL ; category
-	dw Discard1EnergyEffectCommands ; effect commands
-	db NONE ; flags 1
-	db DISCARD_ENERGY ; flags 2
-	db NONE ; flags 3
-	db 3
-	db ATK_ANIM_BIG_FLAME ; animation
 
 	db 1 ; retreat cost
 	db WR_WATER ; weakness
