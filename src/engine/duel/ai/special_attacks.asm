@@ -83,6 +83,8 @@ HandleSpecialAIAttacks:
 	jp z, .Flare
 	cp MOLTRES_LV35
 	jp z, .Flare
+	; cp PONYTA
+	; jp z, .FlameCharge
 	cp ZAPDOS_LV64
 	jp z, .Energize
 	; cp JYNX
@@ -260,6 +262,7 @@ HandleSpecialAIAttacks:
 	ld a, CARD_LOCATION_DISCARD_PILE
 	call CheckIfAnyCardIDinLocation
 	jp nc, .zero_score
+.accelerate_self_got_energy
 	call GetPlayAreaCardAttachedEnergies
 	ld a, [wTotalAttachedEnergies]
 	cp 3
@@ -282,6 +285,13 @@ HandleSpecialAIAttacks:
 .GatherToxins:
 	ld e, DARKNESS_ENERGY
 	jr .accelerate_self_from_discard_got_energy
+
+; .FlameCharge
+; 	ld e, FIRE_ENERGY
+; 	ld a, CARD_LOCATION_DECK
+; 	call CheckIfAnyCardIDinLocation
+; 	jp nc, .zero_score
+; 	jr .accelerate_self_got_energy
 
 .JunkMagnet:
 	ld a, CARD_LOCATION_DISCARD_PILE

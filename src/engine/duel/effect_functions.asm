@@ -1362,6 +1362,14 @@ AquaticRescue_AISelectEffect:
 	ret
 
 
+TutorFireEnergy_PlayerSelectEffect:
+	call CreateDeckCardList
+	ld a, TYPE_ENERGY_FIRE
+	call HandlePlayerSelectionCardTypeFromDeckListToHand
+	ldh [hTempList], a
+	ret
+
+
 TutorWaterEnergy_PlayerSelectEffect:
 	; ld b, 5
 	; call CreateDeckCardListTopNCards
@@ -1378,6 +1386,13 @@ TutorFightingEnergy_PlayerSelectEffect:
 	ldh [hTempList], a
 	ret
 
+
+TutorFireEnergy_AISelectEffect:
+	call CreateDeckCardList
+	ld b, TYPE_ENERGY_FIRE
+	call ChooseCardOfGivenType_AISelectEffect
+	ldh [hTempList], a
+	ret
 
 TutorWaterEnergy_AISelectEffect:
 	; ld b, 5
@@ -5938,6 +5953,8 @@ StressPheromones_AddToHandEffect:
 	; fallthrough
 
 
+; Adds the selected card to the turn holder's Hand.
+; Then, shuffles the deck, but only if a card was selected.
 RocketShell_AddToHandEffect:
 	ldh a, [hTemp_ffa0]
 	cp $ff
@@ -5946,6 +5963,7 @@ RocketShell_AddToHandEffect:
 
 
 ; Adds the selected card to the turn holder's Hand.
+; Then, shufles the deck.
 SelectedCard_AddToHandFromDeckEffect:
 	ldh a, [hTemp_ffa0]
 	cp $ff

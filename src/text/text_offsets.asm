@@ -2455,8 +2455,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer FlamesOfRageName                                   ; 0x08f9
 	textpointer FlamesOfRageDescription                            ; 0x08fa
 	textpointer RecklessChargeName
-	textpointer SmashKickName                                      ; 0x0902
-	textpointer FlameTailName                                      ; 0x0903
 	; textpointer StompName
 	textpointer AgilityName                                        ; 0x0909
 	textpointer FirePunchName                                      ; 0x090d
@@ -2857,6 +2855,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer AttachEnergyFromHandDescription
 	textpointer EnergyHurricaneName
 	textpointer Accelerate1EnergyFromDeckDescription
+	textpointer FlameChargeName
+	textpointer Tutor1FireEnergyDescription
 	textpointer OutrageName
 	textpointer OutrageDescription
 	textpointer AscensionName

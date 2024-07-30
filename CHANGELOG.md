@@ -54,6 +54,13 @@
 - **Reckless Charge**: increased recoil damage from 20 to 30.
 - New Pokémon Power: **Intimidating Roar**: once per turn, may force the opponent to switch their Active Pokémon.
 
+#### Ponyta
+- Increased HP from 40 to 50.
+- **Smash Kick**: removed.
+- **Flame Tail**: removed.
+- New attack: **Flame Charge** (F): 10 damage; add 1 Fire Energy from the deck to the hand.
+- New attack: **Overrun** (FC): 20 damage; does 10 damage to 1 of the opponent's Benched Pokémon.
+
 ### Fighting Changes
 
 #### Geodude

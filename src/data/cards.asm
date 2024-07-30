@@ -2912,37 +2912,37 @@ PonytaCard:
 	db CIRCLE ; rarity
 	db COLOSSEUM | NONE ; sets
 	db PONYTA
-	db 40 ; hp
+	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
 
 	; attack 1
-	energy COLORLESS, 2 ; energies
-	tx SmashKickName ; name
-	dw NONE ; description
+	energy FIRE, 1 ; energies
+	tx FlameChargeName ; name
+	tx Tutor1FireEnergyDescription ; description
 	dw NONE ; description (cont)
-	db 20 ; damage
+	db 10 ; damage
 	db DAMAGE_NORMAL ; category
-	dw NONE ; effect commands
+	dw Tutor1FireEnergyEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
-	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_HIT ; animation
-
-	; attack 2
-	energy FIRE, 2 ; energies
-	tx FlameTailName ; name
-	dw NONE ; description
-	dw NONE ; description (cont)
-	db 30 ; damage
-	db DAMAGE_NORMAL ; category
-	dw NONE ; effect commands
-	db NONE ; flags 1
-	db NONE ; flags 2
-	db NONE ; flags 3
+	db SPECIAL_AI_HANDLING ; flags 3
 	db 0
 	db ATK_ANIM_BIG_FLAME ; animation
+
+	; attack 2
+	energy FIRE, 1, COLORLESS, 1 ; energies
+	tx OverrunName ; name
+	tx Damage1BenchedPokemon10Description ; description
+	tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
+	db 20 ; damage
+	db DAMAGE_NORMAL ; category
+	dw Damage1BenchedPokemon10EffectCommands ; effect commands
+	db DAMAGE_TO_OPPONENT_BENCH ; flags 1
+	db FLAG_2_BIT_6 ; flags 2
+	db NONE ; flags 3
+	db 2
+	db ATK_ANIM_HIT ; animation
 
 	db 0 ; retreat cost
 	db WR_WATER ; weakness

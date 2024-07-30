@@ -282,14 +282,6 @@ RecklessChargeName:
 	text "Reckless Charge"
 	done
 
-SmashKickName: ; 5a7ca (16:67ca)
-	text "Smash Kick"
-	done
-
-FlameTailName: ; 5a7d6 (16:67d6)
-	text "Flame Tail"
-	done
-
 AgilityName:
 	text "Agility"
 	done

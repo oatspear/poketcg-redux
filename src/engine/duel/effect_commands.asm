@@ -857,6 +857,13 @@ BulkUpEffectCommands:
 	dbw EFFECTCMDTYPE_AI_SELECTION, TutorFightingEnergy_AISelectEffect
 	db  $00
 
+Tutor1FireEnergyEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDeckIsNotEmpty
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, TutorFireEnergy_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, TutorFireEnergy_AISelectEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, SelectedCard_AddToHandFromDeckEffect
+	db  $00
+
 IfAttachedEnergy10BonusDamageEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, IfAttachedEnergy10BonusDamage_DamageBoostEffect
 	dbw EFFECTCMDTYPE_AI, IfAttachedEnergy10BonusDamage_AIEffect

@@ -631,6 +631,16 @@ Accelerate1EnergyFromDeckDescription:
 	line "Pokémon. Then, shuffle your deck."
 	done
 
+FlameChargeName:
+	text "Flame Charge"
+	done
+
+Tutor1FireEnergyDescription:
+	text "Search your deck for a <FIRE> Energy"
+	line "card and put it in your hand."
+	line "Then, shuffle your deck."
+	done
+
 OutrageName:
 	text "Outrage"
 	done
