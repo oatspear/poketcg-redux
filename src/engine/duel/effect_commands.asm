@@ -1689,7 +1689,7 @@ Attach1PsychicEnergyFromDiscardEffectCommands:
 
 
 GatherToxinsEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PoisonEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, GatherToxinsEffect
 	; fallthrough to Attach1DarknessEnergyFromDiscardEffectCommands
 
 Attach1DarknessEnergyFromDiscardEffectCommands:

@@ -1029,6 +1029,11 @@ VoltSwitchEffect:
 ; ------------------------------------------------------------------------------
 
 
+GatherToxinsEffect:
+	call Attach1DarknessEnergyFromDiscard_SelectEffect
+	jp PoisonEffect
+
+
 FireSpinEffect:
 	call FireSpin_DamageMultiplierEffect
 	call BurnEffect
