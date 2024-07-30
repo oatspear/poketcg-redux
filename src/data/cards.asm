@@ -2609,7 +2609,7 @@ VulpixCard:
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_SMALL_FLAME_NO_HIT ; animation
+	db ATK_ANIM_GLOW_EFFECT ; animation
 
 	; attack 2
 	energy FIRE, 1, COLORLESS, 1 ; energies
