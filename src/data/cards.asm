@@ -2880,11 +2880,11 @@ ArcanineLv45Card:
 	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy FIRE, 1, COLORLESS, 1 ; energies
+	energy COLORLESS, 3 ; energies
 	tx RecklessChargeName ; name
 	tx Recoil30Description ; description
 	dw NONE ; description (cont)
-	db 60 ; damage
+	db 70 ; damage
 	db DAMAGE_NORMAL ; category
 	dw Recoil30EffectCommands ; effect commands
 	db LOW_RECOIL ; flags 1

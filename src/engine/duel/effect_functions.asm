@@ -360,12 +360,9 @@ DrawOrTutorAbility_PreconditionCheck:
 
 MysteriousTail_PreconditionCheck:
 FleetFooted_PreconditionCheck:
-	ldh a, [hTempPlayAreaLocation_ff9d]
-	or a  ; cp PLAY_AREA_ARENA
-	jr z, DrawOrTutorAbility_PreconditionCheck
-	ldtx hl, NotInTheActiveSpotText
-	scf
-	ret
+	call CheckTriggeringPokemonIsActive
+	ret c
+	jr DrawOrTutorAbility_PreconditionCheck
 
 
 StressPheromones_PreconditionCheck:
@@ -2158,9 +2155,14 @@ BenchSelectionMenuParameters: ; 2c6e8 (b:46e8)
 	dw NULL ; function pointer if non-0
 
 
+RepelAbility_PreconditionCheck:
+	call CheckTriggeringPokemonIsActive
+	ret c
+	; jr LureAbility_PreconditionCheck
+	; fallthrough
+
 ; return carry if there are no Pokemon cards in the non-turn holder's bench
 LureAbility_PreconditionCheck:
-RepelAbility_PreconditionCheck:
 	; call Lure_AssertPokemonInBench
 	call CheckOpponentBenchIsNotEmpty
 	ret c

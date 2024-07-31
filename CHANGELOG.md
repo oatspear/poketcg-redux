@@ -49,10 +49,10 @@
 #### Arcanine Lv45
 - Reduced HP from 90 to 80.
 - **Flamethrower**: removed.
-- **Reckless Charge**: increased cost from (CC) to (FC).
-- **Reckless Charge**: increased damage from 50 to 60.
+- **Reckless Charge**: increased cost from (CC) to (CCC).
+- **Reckless Charge**: increased damage from 50 to 70.
 - **Reckless Charge**: increased recoil damage from 20 to 30.
-- New Pokémon Power: **Intimidating Roar**: once per turn, may force the opponent to switch their Active Pokémon.
+- New Pokémon Power: **Intimidating Roar**: once per turn, if Active, may force the opponent to switch their Active Pokémon.
 
 #### Ponyta
 - Increased HP from 40 to 50.

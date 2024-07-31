@@ -432,6 +432,17 @@ CheckEnteredActiveSpotThisTurn:
 
 
 ; returns carry if the Pokémon at play area location in [hTempPlayAreaLocation_ff9d]
+; is on the bench
+CheckTriggeringPokemonIsActive:
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	or a
+	ret z  ; PLAY_AREA_ARENA
+	ldtx hl, NotInTheActiveSpotText
+	scf
+	ret
+
+
+; returns carry if the Pokémon at play area location in [hTempPlayAreaLocation_ff9d]
 ; is not on the bench
 CheckTriggeringPokemonIsOnTheBench:
 	ldh a, [hTempPlayAreaLocation_ff9d]
