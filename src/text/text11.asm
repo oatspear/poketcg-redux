@@ -1,7 +1,3 @@
-ScratchName: ; 58ed9 (16:4ed9)
-	text "Scratch"
-	done
-
 SporeName: ; 58ee2 (16:4ee2)
 	text "Spore"
 	done
@@ -61,13 +57,6 @@ RazorLeafName: ; 59403 (16:5403)
 
 LureName:
 	text "Lure"
-	done
-
-LureDescription:
-	text "Switch 1 of your opponent's Benched"
-	line "Pokémon with their Active Pokémon."
-	line "The new Active Pokémon can't retreat"
-	line "during your opponent's next turn."
 	done
 
 PoisonLureName:
@@ -204,15 +193,9 @@ EmberName: ; 59e0e (16:5e0e)
 	text "Ember"
 	done
 
-OptionalDiscard1Energy10BonusDamageDescription:
-	text "You may discard an Energy card"
-	line "attached to this Pokémon. If you do,"
-	line "this attack does 10 more damage."
-	done
-
 Discard1EnergyDescription:
-	text "Discard an Energy card attached to"
-	line "this Pokémon."
+	text "Discard 1 Energy card attached"
+	line "to this Pokémon."
 	done
 
 FlamethrowerName: ; 59ee6 (16:5ee6)
@@ -239,8 +222,14 @@ Bounce1EnergyDescription:
 	line "this Pokémon into your hand."
 	done
 
-FireSpinName: ; 5a095 (16:6095)
+FireSpinName:
 	text "Fire Spin"
+	done
+
+FireSpinDescription:
+	text "This attack does 10 damage for each"
+	line "<FIRE> Energy attached to this Pokémon."
+	line "The Defending Pokémon is now Burned."
 	done
 
 Discard2EnergiesDescription:
@@ -248,7 +237,11 @@ Discard2EnergiesDescription:
 	line "this Pokémon."
 	done
 
-ConfuseRayName: ; 5a151 (16:6151)
+SingeName:
+	text "Singe"
+	done
+
+ConfuseRayName:
 	text "Confuse Ray"
 	done
 
@@ -262,12 +255,6 @@ FireFangName: ; 5a2ec (16:62ec)
 
 FlareName:
 	text "Flare"
-	done
-
-FlareDescription:
-	text "You must attach a <FIRE> Energy from"
-	line "your discard pile to this Pokémon"
-	line "to use this attack."
 	done
 
 QuickAttackName: ; 5a55c (16:655c)
@@ -293,14 +280,6 @@ FlamesOfRageDescription: ; 5a5e8 (16:65e8)
 
 RecklessChargeName:
 	text "Reckless Charge"
-	done
-
-SmashKickName: ; 5a7ca (16:67ca)
-	text "Smash Kick"
-	done
-
-FlameTailName: ; 5a7d6 (16:67d6)
-	text "Flame Tail"
 	done
 
 AgilityName:
@@ -527,8 +506,7 @@ ScaldName:
 	done
 
 InflictBurnDescription:
-	text "The Defending Pokémon is now"
-	line "Burned."
+	text "The Defending Pokémon is now Burned."
 	done
 
 EnergyBurstName:
@@ -1086,12 +1064,12 @@ DreamEaterName:
 IF SLEEP_WITH_COIN_FLIP
 DreamEaterDescription:
 	text "If the Defending Pokémon is not"
-	line "Asleep, this attack does nothing."
+	line "Asleep, this attack cannot be used."
 	done
 ELSE
 DreamEaterDescription:
 	text "If the Defending Pokémon is not"
-	line "Drowsy, this attack does nothing."
+	line "Drowsy, this attack cannot be used."
 	done
 ENDC
 
@@ -1392,13 +1370,6 @@ GatherToxinsName:
 	text "Gather Toxins"
 	done
 
-GatherToxinsDescription:
-	text "Attach a Basic Energy card from"
-	line "your Discard Pile to this Pokémon."
-	line "The Defending Pokémon is now"
-	line "Poisoned."
-	done
-
 DeadlyPoisonName:
 	text "Deadly Poison"
 	done
@@ -1657,6 +1628,10 @@ SwiftSwimName:
 	text "Swift Swim"
 	done
 
+HeatBoostName:
+	text "Heat Boost"
+	done
+
 SwiftSwimDescription:
 	text "If this Pokémon moved into the"
 	line "Active Spot this turn, its attacks"
@@ -1695,6 +1670,10 @@ RageFistDescription:
 	line "has taken."
 	done
 
+RelentlessFlamesName:
+	text "Relentless Flames"
+	done
+
 PutDamageCountersOnPokemonText:
 	text "Put <RAMNUM> damage counters on"
 	line "<RAMTEXT>."
@@ -1715,4 +1694,30 @@ MysteriousTailDescription:
 	line "deck and put an Item card you find"
 	line "there into your hand. Shuffle the"
 	line "other cards back into your deck."
+	done
+
+HexName:
+	text "Hex"
+	done
+
+HexDescription:
+	text "If the Defending Pokémon is not"
+	line "affected by a Special Condition,"
+	line "this attack cannot be used."
+	done
+
+InfernoOnrushName:
+	text "Inferno Onrush"
+	done
+
+IntimidatingRoarName:
+	text "Intimidating Roar"
+	done
+
+IntimidatingRoarDescription:
+	text "Once during your turn, if this"
+	line "is your Active Pokémon, you may"
+	line "switch out your opponent's Active"
+	line "Pokémon to the Bench. (Your opponent"
+	line "chooses the new Active Pokémon.)"
 	done

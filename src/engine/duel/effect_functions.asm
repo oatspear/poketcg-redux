@@ -323,7 +323,7 @@ Maintenance_CheckHandAndDiscardPile:
 
 
 AssassinFlight_CheckBenchAndStatus:
-	call CheckOpponentHasStatus
+	call CheckDefendingPokemonHasStatus
 	ret c
 	jp CheckOpponentBenchIsNotEmpty
 
@@ -360,12 +360,9 @@ DrawOrTutorAbility_PreconditionCheck:
 
 MysteriousTail_PreconditionCheck:
 FleetFooted_PreconditionCheck:
-	ldh a, [hTempPlayAreaLocation_ff9d]
-	or a  ; cp PLAY_AREA_ARENA
-	jr z, DrawOrTutorAbility_PreconditionCheck
-	ldtx hl, NotInTheActiveSpotText
-	scf
-	ret
+	call CheckTriggeringPokemonIsActive
+	ret c
+	jr DrawOrTutorAbility_PreconditionCheck
 
 
 StressPheromones_PreconditionCheck:
@@ -396,6 +393,18 @@ AquaticRescue_DiscardPileCheck:
 	call FilterCardList
 	ldtx hl, ThereAreNoCardsInTheDiscardPileText
 	ret
+
+
+FirePunch_PreconditionCheck:
+	call CheckArenaPokemonHasAnyDamage
+	ret nc  ; damaged
+	jp CheckArenaPokemonHasAnyEnergiesAttached
+
+
+ThunderPunch_PreconditionCheck:
+	call CheckEnteredActiveSpotThisTurn
+	ret nc  ; active this turn
+	jp CheckArenaPokemonHasAnyEnergiesAttached
 
 
 ; ------------------------------------------------------------------------------
@@ -1017,6 +1026,17 @@ VoltSwitchEffect:
 ; ------------------------------------------------------------------------------
 
 
+GatherToxinsEffect:
+	call Attach1DarknessEnergyFromDiscard_SelectEffect
+	jp PoisonEffect
+
+
+FireSpinEffect:
+	call FireSpin_DamageMultiplierEffect
+	call BurnEffect
+	jp IncreaseRetreatCostEffect
+
+
 ; input:
 ;   [hTemp_ffa0]: selected number of damage counters
 GetMadEffect:
@@ -1356,6 +1376,14 @@ AquaticRescue_AISelectEffect:
 	ret
 
 
+TutorFireEnergy_PlayerSelectEffect:
+	call CreateDeckCardList
+	ld a, TYPE_ENERGY_FIRE
+	call HandlePlayerSelectionCardTypeFromDeckListToHand
+	ldh [hTempList], a
+	ret
+
+
 TutorWaterEnergy_PlayerSelectEffect:
 	; ld b, 5
 	; call CreateDeckCardListTopNCards
@@ -1372,6 +1400,13 @@ TutorFightingEnergy_PlayerSelectEffect:
 	ldh [hTempList], a
 	ret
 
+
+TutorFireEnergy_AISelectEffect:
+	call CreateDeckCardList
+	ld b, TYPE_ENERGY_FIRE
+	call ChooseCardOfGivenType_AISelectEffect
+	ldh [hTempList], a
+	ret
 
 TutorWaterEnergy_AISelectEffect:
 	; ld b, 5
@@ -1492,6 +1527,16 @@ ChooseCardOfGivenType_AISelectEffect:
 INCLUDE "engine/duel/effect_functions/card_lists.asm"
 
 ; ------------------------------------------------------------------------------
+
+
+GetNumAttachedFireEnergy:
+	; ldh a, [hTempPlayAreaLocation_ff9d]
+	; ld e, a
+	ld e, PLAY_AREA_ARENA
+	call GetPlayAreaCardAttachedEnergies
+	call HandleEnergyColorOverride
+	ld a, [wAttachedEnergies + FIRE]
+	ret
 
 
 GetNumAttachedWaterEnergy:
@@ -1639,7 +1684,7 @@ AskWhetherToQuitSelectingCards:
 
 ; handles the selection of a forced switch by link/AI opponent or by the player.
 ; outputs the Play Area location of the chosen bench card in hTempPlayAreaLocation_ff9d.
-DuelistSelectForcedSwitch: ; 2c487 (b:4487)
+DuelistSelectForcedSwitch:
 	ld a, DUELVARS_DUELIST_TYPE
 	call GetNonTurnDuelistVariable
 	cp DUELIST_TYPE_LINK_OPP
@@ -2109,14 +2154,20 @@ BenchSelectionMenuParameters: ; 2c6e8 (b:46e8)
 	db SYM_SPACE ; tile behind cursor
 	dw NULL ; function pointer if non-0
 
+
+RepelAbility_PreconditionCheck:
+	call CheckTriggeringPokemonIsActive
+	ret c
+	; jr LureAbility_PreconditionCheck
+	; fallthrough
+
 ; return carry if there are no Pokemon cards in the non-turn holder's bench
-LureAbility_AssertPokemonInBench:
+LureAbility_PreconditionCheck:
 	; call Lure_AssertPokemonInBench
 	call CheckOpponentBenchIsNotEmpty
 	ret c
-	ldh a, [hTempPlayAreaLocation_ff9d]
-	ldh [hTemp_ffa0], a
-	jp CheckPokemonPowerCanBeUsed
+	jp CheckPokemonPowerCanBeUsed_StoreTrigger
+
 
 ; return in hTempPlayAreaLocation_ffa1 the PLAY_AREA_* location
 ; of the Bench Pokemon that was selected for switch
@@ -3356,6 +3407,12 @@ EnergySpores_AISelectEffect:
 	jr PickFirstNCardsFromList_SelectEffect
 
 
+Attach1DarknessEnergyFromDiscard_SelectEffect:
+; pick the first energy card
+	call CreateEnergyCardListFromDiscardPile_OnlyDarkness
+	jr PickFirstEnergyFromList_SelectEffect
+
+
 Attach1PsychicEnergyFromDiscard_SelectEffect:
 ; pick the first energy card
 	call CreateEnergyCardListFromDiscardPile_OnlyPsychic
@@ -3368,9 +3425,21 @@ Attach1WaterEnergyFromDiscard_SelectEffect:
 	jr PickFirstEnergyFromList_SelectEffect
 
 
+Attach1FightingEnergyFromDiscard_SelectEffect:
+; pick the first energy card
+	call CreateEnergyCardListFromDiscardPile_OnlyFighting
+	jr PickFirstEnergyFromList_SelectEffect
+
+
 Attach1LightningEnergyFromDiscard_SelectEffect:
 ; pick the first energy card
 	call CreateEnergyCardListFromDiscardPile_OnlyLightning
+	jr PickFirstEnergyFromList_SelectEffect
+
+
+Attach1GrassEnergyFromDiscard_SelectEffect:
+; pick the first energy card
+	call CreateEnergyCardListFromDiscardPile_OnlyGrass
 	jr PickFirstEnergyFromList_SelectEffect
 
 
@@ -3527,10 +3596,42 @@ DiscardEnergyAbility_PlayerSelectEffect:
 	ldh [hEnergyTransEnergyCard], a
 	ret
 
+
+;
+ThunderPunch_PlayerSelectEffect:
+	ld a, $ff
+	ldh [hTemp_ffa0], a
+	call CheckEnteredActiveSpotThisTurn
+	ret nc  ; active this turn
+	jr DiscardEnergy_PlayerSelectEffect
+
+
+FirePunch_PlayerSelectEffect:
+	call _StoreFF_CheckIfUserIsDamaged
+	ret nz  ; damaged
+	; jr DiscardEnergy_PlayerSelectEffect
+	; fallthrough
+
 DiscardEnergy_PlayerSelectEffect:
 	bank1call HandleDiscardArenaEnergy
 	ldh [hTemp_ffa0], a
 	ret
+
+
+;
+ThunderPunch_AISelectEffect:
+	ld a, $ff
+	ldh [hTemp_ffa0], a
+	call CheckEnteredActiveSpotThisTurn
+	ret nc  ; active this turn
+	jr DiscardEnergy_AISelectEffect
+
+;
+FirePunch_AISelectEffect:
+	call _StoreFF_CheckIfUserIsDamaged
+	ret nz  ; damaged
+	; jr DiscardEnergy_AISelectEffect
+	; fallthrough
 
 DiscardEnergy_AISelectEffect:
 	xor a ; PLAY_AREA_ARENA
@@ -3548,28 +3649,6 @@ DiscardBasicEnergy_AISelectEffect:
 	ldh [hTemp_ffa0], a
 	ret
 
-
-FirePunch_AISelectEffect:
-	call _StoreFF_CheckIfUserIsDamaged
-	jr nz, OptionalDiscardEnergyForDamage_AISelectEffect
-	ret
-
-
-ThunderPunch_AISelectEffect:
-	ld a, $ff
-	ldh [hTemp_ffa0], a
-	call CheckEnteredActiveSpotThisTurn
-	ccf
-	ret nc  ; not active this turn
-	; fallthrough
-
-OptionalDiscardEnergyForDamage_AISelectEffect:
-	ld a, [wAIAttackLogicFlags]
-	bit AI_LOGIC_MIN_DAMAGE_CAN_KO_F, a
-	ret nz  ; no need for bonus damage
-	bit AI_LOGIC_MAX_DAMAGE_CAN_KO_F, a
-	jr nz, DiscardEnergy_AISelectEffect  ; can KO with bonus
-	ret
 
 OptionalDiscardEnergyForStatus_AISelectEffect:
 	ld a, [wAIAttackLogicFlags]
@@ -3594,12 +3673,6 @@ OptionalDiscardEnergy_PlayerSelectEffect:
 	ret
 
 
-FirePunch_PlayerSelectEffect:
-	call _StoreFF_CheckIfUserIsDamaged
-	jr nz, OptionalDiscardEnergy_PlayerSelectEffect.select
-	ret
-
-
 ; output:
 ;   z: set if the user did not take damage
 _StoreFF_CheckIfUserIsDamaged:
@@ -3608,15 +3681,6 @@ _StoreFF_CheckIfUserIsDamaged:
 	ld e, PLAY_AREA_ARENA
 	call GetCardDamageAndMaxHP
 	or a
-	ret
-
-
-ThunderPunch_PlayerSelectEffect:
-	ld a, $ff
-	ldh [hTemp_ffa0], a
-	call CheckEnteredActiveSpotThisTurn
-	jr nc, OptionalDiscardEnergy_PlayerSelectEffect.select
-	ccf
 	ret
 
 
@@ -4832,15 +4896,16 @@ Whirlwind_SelectEffect:
 	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
 	call GetNonTurnDuelistVariable
 	cp 2
-	jr nc, .switch
+	jr nc, RepelDefendingPokemon_SelectEffect
 ; no Bench Pokemon
 	ld a, $ff
-	ldh [hTemp_ffa0], a
+	ldh [hTempPlayAreaLocation_ffa1], a
 	ret
-.switch
+
+RepelDefendingPokemon_SelectEffect:
 	call DuelistSelectForcedSwitch
 	ldh a, [hTempPlayAreaLocation_ff9d]
-	ldh [hTemp_ffa0], a
+	ldh [hTempPlayAreaLocation_ffa1], a
 	ret
 
 
@@ -4851,7 +4916,7 @@ Ram_RecoilSwitchEffect:
 
 
 Whirlwind_SwitchEffect:
-	ldh a, [hTemp_ffa0]
+	ldh a, [hTempPlayAreaLocation_ffa1]
 	; jr HandleSwitchDefendingPokemonEffect
 	; fallthrough
 
@@ -4874,7 +4939,9 @@ HandleSwitchDefendingPokemonEffect:
 .switch
 	call HandleNoDamageOrEffect
 	ret c
+	; fallthrough
 
+ForceSwitchDefendingPokemon:
 ; attack was successful, switch Defending Pokemon
 	call SwapTurn
 	call SwapArenaWithBenchPokemon
@@ -4888,23 +4955,30 @@ HandleSwitchDefendingPokemonEffect:
 	ret
 
 
+IntimidatingRoar_SwitchEffect:
+	call SetUsedPokemonPowerThisTurn_RestoreTrigger
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	ld e, a
+	jr ForceSwitchDefendingPokemon
+
+
 RapidSpin_PlayerSelectEffect:
-	call SwitchUser_PlayerSelectEffect
-	ldh a, [hTemp_ffa0]
-	ldh [hTempPlayAreaLocation_ffa1], a
-	jp Whirlwind_SelectEffect
+	call SwitchUser_PlayerSelectEffect  ; ffa0
+	; ldh a, [hTemp_ffa0]
+	; ldh [hTempPlayAreaLocation_ffa1], a
+	jp Whirlwind_SelectEffect  ; ffa1
 
 RapidSpin_AISelectEffect:
-	call SwitchUser_AISelectEffect
-	ldh a, [hTemp_ffa0]
-	ldh [hTempPlayAreaLocation_ffa1], a
-	jp Whirlwind_SelectEffect
+	call SwitchUser_AISelectEffect  ; ffa0
+	; ldh a, [hTemp_ffa0]
+	; ldh [hTempPlayAreaLocation_ffa1], a
+	jp Whirlwind_SelectEffect  ; ffa1
 
 RapidSpin_SwitchEffect:
-	call Whirlwind_SwitchEffect
-	ldh a, [hTempPlayAreaLocation_ffa1]
-	ldh [hTemp_ffa0], a
-	jp SwitchUser_SwitchEffect
+	call Whirlwind_SwitchEffect  ; ffa1
+	; ldh a, [hTempPlayAreaLocation_ffa1]
+	; ldh [hTemp_ffa0], a
+	jp SwitchUser_SwitchEffect  ; ffa0
 
 
 ; return carry if Defending Pokemon has no attacks
@@ -5893,6 +5967,8 @@ StressPheromones_AddToHandEffect:
 	; fallthrough
 
 
+; Adds the selected card to the turn holder's Hand.
+; Then, shuffles the deck, but only if a card was selected.
 RocketShell_AddToHandEffect:
 	ldh a, [hTemp_ffa0]
 	cp $ff
@@ -5901,6 +5977,7 @@ RocketShell_AddToHandEffect:
 
 
 ; Adds the selected card to the turn holder's Hand.
+; Then, shufles the deck.
 SelectedCard_AddToHandFromDeckEffect:
 	ldh a, [hTemp_ffa0]
 	cp $ff

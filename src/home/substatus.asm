@@ -510,6 +510,17 @@ IsSafeguardActive:
 
 
 ; returns carry if the turn holder's Active Pokémon benefits
+; from Cursed Flames
+; output:
+;   carry: set if Vampiric Aura is active
+IsCursedFlamesActive:
+	ld b, PLAY_AREA_ARENA
+	ld c, FIRE
+	ld e, NINETALES_LV35
+	jr IsSpecialEnergyPowerActive
+
+
+; returns carry if the turn holder's Active Pokémon benefits
 ; from Vampiric Aura
 ; output:
 ;   carry: set if Vampiric Aura is active
@@ -786,7 +797,10 @@ GetAttackCostDiscount:
 	call GetTurnDuelistVariable
 	call _GetCardIDFromDeckIndex  ; preserves bc, de
 	cp GOLDUCK
+	jr z, .swift_swim
+	cp RAPIDASH
 	jr nz, .bench
+.swift_swim
 	call CheckCannotUseDueToStatus  ; unable to use ability
 	jr c, .bench
 	ld a, DUELVARS_ARENA_CARD_SUBSTATUS3
@@ -968,8 +982,12 @@ ClearDamageReductionSubstatus2:
 UpdateSubstatusConditions_StartOfTurn:
 	ld a, $ff
 	ld [wEnergyColorOverride], a
-	ld a, DUELVARS_ARENA_CARD_SUBSTATUS1
+; clear active this turn flag to handle opponent gusting/repulsion
+	ld a, DUELVARS_ARENA_CARD_SUBSTATUS3
 	call GetTurnDuelistVariable
+	res SUBSTATUS3_THIS_TURN_ACTIVE, [hl]
+	ld l, DUELVARS_ARENA_CARD_SUBSTATUS1
+	ld a, [hl]
 	ld [hl], $0
 	or a
 	ret z

@@ -1,4 +1,61 @@
 
+
+
+LureDescription:
+	text "Switch 1 of your opponent's Benched"
+	line "Pokémon with their Active Pokémon."
+	line "The new Active Pokémon can't retreat"
+	line "during your opponent's next turn."
+	done
+
+; attack 1
+energy FIRE, 1 ; energies
+tx LureName ; name
+tx LureDescription ; description
+dw NONE ; description (cont)
+db 0 ; damage
+db RESIDUAL ; category
+dw LureEffectCommands ; effect commands
+db NONE ; flags 1
+db SWITCH_OPPONENT_POKEMON ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_LURE ; animation
+
+
+
+
+; attack 2
+energy FIRE, 2, COLORLESS, 1 ; energies
+tx FireFangName ; name
+tx Discard1EnergyFromTargetDescription ; description
+dw NONE ; description (cont)
+db 30 ; damage
+db DAMAGE_NORMAL ; category
+dw Discard1EnergyFromOpponentEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db SPECIAL_AI_HANDLING ; flags 3
+db 0
+db ATK_ANIM_BIG_FLAME ; animation
+
+
+; attack 1
+energy FIRE, 1, COLORLESS, 1 ; energies
+tx CombustionName ; name
+tx Discard2CardsFromOpponentsDeckDescription ; description
+dw NONE ; description (cont)
+db 20 ; damage
+db DAMAGE_NORMAL ; category
+dw Discard2CardsFromOpponentsDeckEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_BIG_FLAME ; animation
+
+
+
 ClairvoyanceName:
 	text "Clairvoyance"
 	done

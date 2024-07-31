@@ -209,14 +209,9 @@ CheckDiscardPileHasBasicEnergyCards:
   jp CreateEnergyCardListFromDiscardPile_OnlyBasic
 
 
-; return carry if no Water Energy cards in Discard Pile
-CheckDiscardPileHasPsychicEnergyCards:
-  jp CreateEnergyCardListFromDiscardPile_OnlyPsychic
-
-
-; return carry if no Water Energy cards in Discard Pile
-CheckDiscardPileHasWaterEnergyCards:
-  jp CreateEnergyCardListFromDiscardPile_OnlyWater
+; return carry if no Fire Energy cards in Discard Pile
+CheckDiscardPileHasGrassEnergyCards:
+  jp CreateEnergyCardListFromDiscardPile_OnlyGrass
 
 
 ; return carry if no Fire Energy cards in Discard Pile
@@ -224,9 +219,29 @@ CheckDiscardPileHasFireEnergyCards:
   jp CreateEnergyCardListFromDiscardPile_OnlyFire
 
 
+; return carry if no Water Energy cards in Discard Pile
+CheckDiscardPileHasWaterEnergyCards:
+	jp CreateEnergyCardListFromDiscardPile_OnlyWater
+
+
 ; return carry if no Lightning Energy cards in Discard Pile
 CheckDiscardPileHasLightningEnergyCards:
   jp CreateEnergyCardListFromDiscardPile_OnlyLightning
+
+
+; return carry if no Lightning Energy cards in Discard Pile
+CheckDiscardPileHasFightingEnergyCards:
+  jp CreateEnergyCardListFromDiscardPile_OnlyFighting
+
+
+; return carry if no Water Energy cards in Discard Pile
+CheckDiscardPileHasPsychicEnergyCards:
+  jp CreateEnergyCardListFromDiscardPile_OnlyPsychic
+
+
+; return carry if no Water Energy cards in Discard Pile
+CheckDiscardPileHasDarknessEnergyCards:
+  jp CreateEnergyCardListFromDiscardPile_OnlyDarkness
 
 
 ; return carry if no Pokémon cards in Discard Pile
@@ -412,6 +427,17 @@ CheckEnteredActiveSpotThisTurn:
 	call GetTurnDuelistVariable
 	bit SUBSTATUS3_THIS_TURN_ACTIVE, a
 	ret nz  ; moved to active spot this turn
+	scf
+	ret
+
+
+; returns carry if the Pokémon at play area location in [hTempPlayAreaLocation_ff9d]
+; is on the bench
+CheckTriggeringPokemonIsActive:
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	or a
+	ret z  ; PLAY_AREA_ARENA
+	ldtx hl, NotInTheActiveSpotText
 	scf
 	ret
 
@@ -672,18 +698,18 @@ CheckArenaPokemonHasStatus:
 	call GetTurnDuelistVariable
 	or a
 	ret nz
-	ldtx hl, NotAffectedByPoisonSleepParalysisOrConfusionText
+	ldtx hl, NotAffectedBySpecialConditionsText
 	scf
 	ret
 
 
 ; return carry if opponent's Arena card has no status conditions
-CheckOpponentHasStatus:
+CheckDefendingPokemonHasStatus:
 	ld a, DUELVARS_ARENA_CARD_STATUS
 	call GetNonTurnDuelistVariable
 	or a
 	ret nz
-	ldtx hl, NotAffectedByPoisonSleepParalysisOrConfusionText
+	ldtx hl, NotAffectedBySpecialConditionsText
 	scf
 	ret
 
@@ -709,7 +735,7 @@ CheckIfPlayAreaHasAnyStatus:
 	dec b
 	jr nz, .loop_play_area
 .set_carry
-	ldtx hl, NotAffectedByPoisonSleepParalysisOrConfusionText
+	ldtx hl, NotAffectedBySpecialConditionsText
 	scf
 	ret
 

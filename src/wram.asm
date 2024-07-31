@@ -768,6 +768,7 @@ wTempTurnDuelistCardID:: ; ccc3
 wTempNonTurnDuelistCardID:: ; ccc4
 	ds $1
 
+; potentially unused
 ; the status condition of the defending Pokemon is loaded here after an attack
 wccc5:: ; ccc5
 	ds $1

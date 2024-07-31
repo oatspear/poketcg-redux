@@ -1,5 +1,98 @@
 # Pokémon TCG Rebalanced
 
+## Version 0.10.0
+
+### Grass Changes
+
+#### Paras
+- **Scratch**: renamed to **Slash**.
+
+### Fire Changes
+
+#### Charmander
+- **Scratch**: removed.
+- **Ember**: always discards 1 energy card attached to the Pokémon.
+- **Ember**: increased base damage from 20 to 30; no bonus damage.
+- New attack: **Flare** (C): 10 damage; must attach a Fire Energy from the discard pile to itself.
+
+#### Charizard
+- **Dragon Rage**: removed.
+- **Fire Spin**: renamed to **Fire Blast**.
+- **Fire Blast**: cost reduced from (CCCC) to (FFC).
+- **Fire Blast**: damage increased from 100 to 120.
+- New attack: **Relentless Flames** (FC): 30 damage; double damage if the opponent has taken more Prizes.
+
+#### Vulpix
+- **Ember**: removed.
+- **Confuse Ray**: increased cost from (F) to (FC).
+- New attack: **Singe** (F): inflicts Burn.
+
+#### Ninetales Lv32
+- **Lure**: removed.
+- **Fire Blast**: removed.
+- New attack: **Fire Spin** (F): does 10 damage for each attached Fire Energy; inflicts Burn; increases the Retreat Cost of the Defending Pokémon by 1.
+- New attack: **Hex** (CCC): 70 damage; unusable, unless the Defending Pokémon is affected by a Special Condition.
+
+#### Ninetales Lv35
+- **Combustion**: removed.
+- **Fire Fang**: reduced cost from (FFC) to (FC).
+- **Fire Fang**: reworked effect; discards an Energy attached to itself and inflicts Burn.
+- New Pokémon Power: **Cursed Flames**: when your Active Pokémon does damage to the Defending Pokémon with an attack, if it has any attached Fire Energies, discard the top card from the opponent's deck.
+
+#### Growlithe
+- Reduced HP from 60 to 50.
+- **Collect**: removed.
+- **Bite**: removed.
+- New attack: **Fetch** (C): choose a card from the top 4 deck cards and add it to the hand.
+- New attack: **Reckless Charge** (FC): 30 damage; does 10 recoil damage.
+
+#### Arcanine Lv45
+- Reduced HP from 90 to 80.
+- **Flamethrower**: removed.
+- **Reckless Charge**: increased cost from (CC) to (CCC).
+- **Reckless Charge**: increased damage from 50 to 70.
+- **Reckless Charge**: increased recoil damage from 20 to 30.
+- New Pokémon Power: **Intimidating Roar**: once per turn, if Active, may force the opponent to switch their Active Pokémon.
+
+#### Ponyta
+- Increased HP from 40 to 50.
+- **Smash Kick**: removed.
+- **Flame Tail**: removed.
+- New attack: **Flame Charge** (F): 10 damage; add 1 Fire Energy from the deck to the hand.
+- New attack: **Overrun** (FC): 20 damage; does 10 damage to 1 of the opponent's Benched Pokémon.
+
+#### Rapidash
+- **Strafe**: removed.
+- **Overrun**: removed.
+- New Pokémon Power: **Heat Boost**: if Active this turn, attacks cost (C) less.
+- New attack: **Inferno Onrush** (FCC): 60 damage; excess damage after a KO goes to the next Active Pokémon.
+
+#### Magmar Lv24
+- **Searing Spark**: reduced cost from (FC) to (F).
+- **Searing Spark**: reduced base damage from 20 to 10.
+- **Fire Punch**: reworked.
+- New attack: **Fire Punch** (CC): 30 damage; discard an energy card attached to this Pokémon, unless it has damage counters on it.
+
+### Lightning Changes
+
+#### Electabuzz Lv35
+- **Thunder Punch**: reworked.
+- New attack: **Thunder Punch** (CC): 30 damage; discard an energy card attached to this Pokémon, unless it moved into the Active Spot this turn.
+
+### Fighting Changes
+
+#### Geodude
+- **Mend**: attaches a Fighting Energy from the discard pile, instead of any Basic Energy.
+
+### Darkness Changes
+
+#### Grimer
+- **Gather Toxins**: attaches a Darkness Energy from the discard pile, instead of any Basic Energy.
+
+### Bug Fixes
+- **Primeape** - Exiting the damage counter selection menu for **Get Mad** returns HP to what it was before.
+
+
 ## Version 0.9.0
 
 ### Removed Cards
@@ -118,7 +211,7 @@
 #### Golduck
 - **Aquatic Rescue**: removed.
 - **Energy Loop**: removed.
-- New ability: **Swift Swim**: if Active this turn, attacks cost (C) less.
+- New Pokémon Power: **Swift Swim**: if Active this turn, attacks cost (C) less.
 - New attack: **Wave Splash** (WCC): 50 damage; put an Energy attached to the Pokémon back into the hand; does 10 damage to 2 of the opponent's Benched Pokémon.
 
 #### Poliwag
@@ -325,7 +418,7 @@
 - Changed type from Fighting to Colorless.
 - **Prehistoric Power**: removed.
 - **Skill Dive**: reduced cost from (CCC) to (CC).
-- New Pokémon Power: **Primal Claw**: when the opponent uses an ability, do 10 damage to that Pokémon.
+- New Pokémon Power: **Primal Claw**: when the opponent uses a Pokémon Power, do 10 damage to that Pokémon.
 
 ### Psychic Changes
 

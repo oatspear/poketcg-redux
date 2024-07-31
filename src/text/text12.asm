@@ -500,12 +500,6 @@ PlasmaName:
 	text "Plasma"
 	done
 
-PlasmaDescription:
-	text "You must attach a <LIGHTNING> Energy from"
-	line "your discard pile to this Pokémon"
-	line "to use this attack."
-	done
-
 RampageName: ; 62ade (18:6ade)
 	text "Rampage"
 	done
@@ -637,6 +631,16 @@ Accelerate1EnergyFromDeckDescription:
 	line "Pokémon. Then, shuffle your deck."
 	done
 
+FlameChargeName:
+	text "Flame Charge"
+	done
+
+Tutor1FireEnergyDescription:
+	text "Search your deck for a <FIRE> Energy"
+	line "card and put it in your hand."
+	line "Then, shuffle your deck."
+	done
+
 OutrageName:
 	text "Outrage"
 	done
@@ -736,18 +740,43 @@ HealingEnergyDescription:
 	line "that Pokémon."
 	done
 
+Attach1GrassEnergyFromDiscardDescription:
+	text "Attach 1 <GRASS> Energy from your"
+	line "discard pile to this Pokémon."
+	done
+
 Attach1FireEnergyFromDiscardDescription:
-	text "Attach a <FIRE> Energy from your"
+	text "Attach 1 <FIRE> Energy from your"
 	line "discard pile to this Pokémon."
 	done
 
 Attach1WaterEnergyFromDiscardDescription:
-	text "Attach a <WATER> Energy from your"
+	text "Attach 1 <WATER> Energy from your"
+	line "discard pile to this Pokémon."
+	done
+
+Attach1LightningEnergyFromDiscardDescription:
+	text "Attach 1 <LIGHTNING> Energy from your"
+	line "discard pile to this Pokémon."
+	done
+
+Attach1FightingEnergyFromDiscardDescription:
+	text "Attach 1 <FIGHTING> Energy from your"
 	line "discard pile to this Pokémon."
 	done
 
 Attach1PsychicEnergyFromDiscardDescription:
-	text "Attach a <PSYCHIC> Energy from your"
+	text "Attach 1 <PSYCHIC> Energy from your"
+	line "discard pile to this Pokémon."
+	done
+
+Attach1DarknessEnergyFromDiscardDescription:
+	text "Attach 1 <DARKNESS> Energy from your"
+	line "discard pile to this Pokémon."
+	done
+
+Attach1BasicEnergyFromDiscardDescription:
+	text "Attach 1 Basic Energy from your"
 	line "discard pile to this Pokémon."
 	done
 
@@ -1145,12 +1174,6 @@ MendName:
 	text "Mend"
 	done
 
-MendDescription:
-	text "Attach a Basic Energy from your"
-	line "Discard Pile to this Pokémon."
-	line "Then, heal 10 damage."
-	done
-
 FightingFuryName:
 	text "Fighting Fury"
 	done
@@ -1368,19 +1391,15 @@ IfActiveThisTurn30BonusDamageDescription:
 	done
 
 FirePunchDescription:
-	text "If this Pokémon has any damage"
-	line "counters on it, you may discard an"
-	line "energy card attached to it."
-	line "If you do, this attack does 20 more"
-	line "damage."
+	text "Discard an Energy card attached to"
+	line "this Pokémon, unless it has some"
+	line "damage counters on it."
 	done
 
 ThunderPunchDescription:
-	text "If this Pokémon entered the Active"
-	line "Spot this turn, you may discard an"
-	line "energy card attached to it."
-	line "If you do, this attack does 30 more"
-	line "damage."
+	text "Discard an Energy card attached to"
+	line "this Pokémon, unless it moved into"
+	line "the Active Spot this turn."
 	done
 
 IgnitedVoltageName:
@@ -1455,16 +1474,6 @@ ThunderWaveDescription:
 
 EnergyLinkName:
 	text "Energy Link"
-	done
-
-Attach1BasicEnergyFromDiscardDescription:
-	text "Attach a Basic Energy from your"
-	line "discard pile to this Pokémon."
-	done
-
-Attach1LightningEnergyFromDiscardDescription:
-	text "Attach a <LIGHTNING> Energy from your"
-	line "discard pile to this Pokémon."
 	done
 
 BoostedVoltageName:

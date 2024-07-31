@@ -89,6 +89,15 @@ WaterGunEffect:
 	jp SetDefiniteAIDamage
 
 
+; 10 damage for each Fire Energy
+FireSpin_DamageMultiplierEffect:
+  call GetNumAttachedFireEnergy
+	call ATimes10
+	call SetDefiniteDamage ; damage = 10 * Fire Energy
+; set attack damage
+	jp SetDefiniteAIDamage
+
+
 ;
 DragonRage_DamageBoostEffect:
 	xor a  ; PLAY_AREA_ARENA
@@ -878,7 +887,7 @@ ReactivePoison_AIEffect:
 
 ; double damage if the Defending Pokémon has a status condition
 Pester_DamageBoostEffect:
-  call CheckOpponentHasStatus
+  call CheckDefendingPokemonHasStatus
   ret c
   jp DoubleDamage_DamageBoostEffect
 
@@ -1035,16 +1044,6 @@ Frustration_AIEffect:
 ; ------------------------------------------------------------------------------
 ; Miscellaneous
 ; ------------------------------------------------------------------------------
-
-; +10 damage if a card was selected (hTemp_ffa0 is not $ff)
-IfSelectedCard10BonusDamage_DamageBoostEffect:
-	ld d, 10
-	jr IfSelectedCardBonusDamage_DamageBoostEffect
-
-; +20 damage if a card was selected (hTemp_ffa0 is not $ff)
-IfSelectedCard20BonusDamage_DamageBoostEffect:
-	ld d, 20
-	jr IfSelectedCardBonusDamage_DamageBoostEffect
 
 ; +30 damage if a card was selected (hTemp_ffa0 is not $ff)
 IfSelectedCard30BonusDamage_DamageBoostEffect:

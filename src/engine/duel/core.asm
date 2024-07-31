@@ -6806,6 +6806,13 @@ Func_6ba2:
 
 
 HandleOnAttackEffects:
+	call IsCursedFlamesActive
+	jr nc, .vampiric_aura
+	ld a, [wDealtDamage]
+	or a
+	jr z, .vampiric_aura
+	farcall Discard1CardFromOpponentsDeckEffect
+.vampiric_aura
 	call IsVampiricAuraActive
 	jr nc, .done
 	; farcall Leech10DamageEffect

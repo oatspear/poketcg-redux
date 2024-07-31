@@ -436,7 +436,8 @@ GetMad_PlayerSelectEffect:
 	ld hl, GetMad_NumberSliderHandler
 ; handle input
 	call HandleNumberSlider
-	ret c  ; cancelled
+	push af
+	; ret c  ; cancelled
 	; cp 1
 	; ret c  ; zero equals cancelled
 ; restore HP to what it was
@@ -444,10 +445,12 @@ GetMad_PlayerSelectEffect:
 	call GetTurnDuelistVariable  ; preserves nc flag
 	ldh a, [hTemp_ffa0]
 	ld [hl], a
+; return if the player cancelled
+	pop af
+	ret c
 ; store selected number of damage counters
 	ldh a, [hCurMenuItem]
 	ldh [hTemp_ffa0], a
-	; or a  ; no carry
 	ret
 
 

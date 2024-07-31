@@ -1,5 +1,119 @@
 ;
 
+ThunderPunchEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, ThunderPunch_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, DiscardEnergy_DiscardEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, IfSelectedCard30BonusDamage_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, ThunderPunch_AISelectEffect
+	dbw EFFECTCMDTYPE_AI, ThunderPunch_AIEffect
+	db  $00
+
+;
+ThunderPunch_PlayerSelectEffect:
+	ld a, $ff
+	ldh [hTemp_ffa0], a
+	call CheckEnteredActiveSpotThisTurn
+	jr nc, OptionalDiscardEnergy_PlayerSelectEffect.select
+	ccf
+	ret
+
+;
+ThunderPunch_AISelectEffect:
+	ld a, $ff
+	ldh [hTemp_ffa0], a
+	call CheckEnteredActiveSpotThisTurn
+	ccf
+	ret nc  ; not active this turn
+	; fallthrough to OptionalDiscardEnergyForDamage_AISelectEffect
+
+;
+OptionalDiscardEnergyForDamage_AISelectEffect:
+	ld a, [wAIAttackLogicFlags]
+	bit AI_LOGIC_MIN_DAMAGE_CAN_KO_F, a
+	ret nz  ; no need for bonus damage
+	bit AI_LOGIC_MAX_DAMAGE_CAN_KO_F, a
+	jr nz, DiscardEnergy_AISelectEffect  ; can KO with bonus
+	ret
+
+;
+ThunderPunch_AIEffect:
+	ld a, 20
+	lb de, 20, 40
+	jp UpdateExpectedAIDamage
+
+
+
+FirePunchEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, FirePunch_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, DiscardEnergy_DiscardEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, IfSelectedCard20BonusDamage_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, FirePunch_AISelectEffect
+	dbw EFFECTCMDTYPE_AI, FirePunch_AIEffect
+	db  $00
+
+;
+FirePunch_PlayerSelectEffect:
+	call _StoreFF_CheckIfUserIsDamaged
+	jr nz, OptionalDiscardEnergy_PlayerSelectEffect.select
+	ret
+
+;
+FirePunch_AISelectEffect:
+	call _StoreFF_CheckIfUserIsDamaged
+	jr nz, OptionalDiscardEnergyForDamage_AISelectEffect
+	ret
+
+; +20 damage if a card was selected (hTemp_ffa0 is not $ff)
+IfSelectedCard20BonusDamage_DamageBoostEffect:
+	ld d, 20
+	jr IfSelectedCardBonusDamage_DamageBoostEffect
+
+;
+FirePunch_AIEffect:
+	ld a, 10
+	lb de, 10, 30
+	jp UpdateExpectedAIDamage
+
+
+
+
+RelentlessFlamesEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, RelentlessFlames_DamageMultiplierEffect
+	dbw EFFECTCMDTYPE_AI, RelentlessFlames_AIEffect
+	db  $00
+
+
+; x20 damage for each Prize the opponent has taken
+RelentlessFlames_DamageMultiplierEffect:
+	call SwapTurn
+	call CountPrizesTaken
+	call SwapTurn
+	add a  ; x2
+	call ATimes10
+	jp SetDefiniteDamage
+
+RelentlessFlames_AIEffect:
+	call RelentlessFlames_DamageMultiplierEffect
+	jp SetDefiniteAIDamage
+
+
+
+
+
+IfDiscardedEnergy10BonusDamageEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, OptionalDiscardEnergy_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, IfSelectedCard10BonusDamage_DamageBoostEffect
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, DiscardEnergy_DiscardEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, OptionalDiscardEnergyForDamage_AISelectEffect
+	db  $00
+
+; +10 damage if a card was selected (hTemp_ffa0 is not $ff)
+IfSelectedCard10BonusDamage_DamageBoostEffect:
+	ld d, 10
+	jr IfSelectedCardBonusDamage_DamageBoostEffect
+
+
+
 
 MorphEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDiscardPileHasBasicPokemonCards
@@ -3945,7 +4059,7 @@ SolarPower_CheckUse: ; 2ce53 (b:4e53)
 	scf
 	ret
 .no_status
-	ldtx hl, NotAffectedByPoisonSleepParalysisOrConfusionText
+	ldtx hl, NotAffectedBySpecialConditionsText
 	scf
 	ret
 
@@ -6994,7 +7108,7 @@ FullHeal_StatusCheck: ; 2f4c5 (b:74c5)
 	call GetTurnDuelistVariable
 	or a
 	ret nz
-	ldtx hl, NotAffectedByPoisonSleepParalysisOrConfusionText
+	ldtx hl, NotAffectedBySpecialConditionsText
 	scf
 	ret
 

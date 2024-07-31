@@ -206,9 +206,32 @@ PutHowManyDamageCountersMenuText:
 	text "Put how many damage counters?"
 	done
 
+CursedFlamesName:
+	text "Cursed Flames"
+	done
+
+CursedFlamesDescription:
+	text "If your Active Pokémon has any"
+	line "attached <FIRE> Energy, its attacks"
+	line "that do damage to the Defending"
+	line "Pokémon also discard the top card"
+	line "of your opponent's deck."
+	done
+
 ; ------------------------------------------------------------------------------
 ; Unused Text
 ; ------------------------------------------------------------------------------
+
+; RelentlessFlamesDescription:
+; 	text "This attack does 20 damage for each"
+; 	line "Prize card your opponent has taken."
+; 	done
+
+; OptionalDiscard1Energy10BonusDamageDescription:
+; 	text "You may discard an Energy card"
+; 	line "attached to this Pokémon. If you do,"
+; 	line "this attack does 10 more damage."
+; 	done
 
 ; EnergyConversionName:
 ; 	text "Energy Conversion"

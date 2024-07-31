@@ -45,7 +45,7 @@ PointerTable_AttackAnimation:
 	dw AttackAnimation_Whirlpool           ; ATK_ANIM_WHIRLPOOL
 	dw AttackAnimation_DragonRage          ; ATK_ANIM_DRAGON_RAGE
 	dw AttackAnimation_HydroPump           ; ATK_ANIM_HYDRO_PUMP
-	dw AttackAnimation_Blizzard            ; ATK_ANIM_23
+	dw AttackAnimation_SmallFlameNoHit     ; ATK_ANIM_SMALL_FLAME_NO_HIT
 	dw AttackAnimation_Blizzard            ; ATK_ANIM_BLIZZARD
 	dw AttackAnimation_PsychicHit          ; ATK_ANIM_PSYCHIC_HIT
 	dw AttackAnimation_PsychicHit          ; ATK_ANIM_NIGHTMARE
@@ -212,6 +212,12 @@ AttackAnimation_BigLightning:
 	anim_opponent       DUEL_ANIM_HIT
 	anim_normal         DUEL_ANIM_SHAKE1
 	anim_opponent       DUEL_ANIM_SHOW_DAMAGE
+	anim_end
+
+AttackAnimation_SmallFlameNoHit:
+	anim_player         DUEL_ANIM_GLOW
+	anim_opponent       DUEL_ANIM_SMALL_FLAME
+	anim_normal         DUEL_ANIM_SHAKE1
 	anim_end
 
 AttackAnimation_SmallFlame:

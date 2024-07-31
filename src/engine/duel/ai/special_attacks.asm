@@ -27,12 +27,12 @@ HandleSpecialAIAttacks:
 	jp z, .Mend
 	cp MEWTWO_LV53
 	jp z, .Concentration
+	cp GRIMER
+	jp z, .GatherToxins
 	cp BELLSPROUT
 	jp z, .Growth
 	cp ZAPDOS_LV68
 	jp z, .BigThunder
-	cp GROWLITHE
-	jp z, .Collect
 	cp MEOWTH_LV15
 	jp z, .Collect
 	cp PIDGEY
@@ -67,8 +67,6 @@ HandleSpecialAIAttacks:
 	jp z, .HyperBeam
 	cp WEEPINBELL
 	jp z, .HyperBeam
-	cp NINETALES_LV35
-	jp z, .HyperBeam
 	cp NIDORANF
 	jr z, .CallForFamily
 	cp KANGASKHAN
@@ -81,8 +79,12 @@ HandleSpecialAIAttacks:
 	jr z, .Sprout
 	cp ARTICUNO_LV35
 	jp z, .Freeze
+	cp CHARMANDER
+	jp z, .Flare
 	cp MOLTRES_LV35
 	jp z, .Flare
+	; cp PONYTA
+	; jp z, .FlameCharge
 	cp ZAPDOS_LV64
 	jp z, .Energize
 	; cp JYNX
@@ -251,16 +253,8 @@ HandleSpecialAIAttacks:
 ; 	ret
 
 .Mend:
-	call GetPlayAreaCardAttachedEnergies
-	ld a, [wTotalAttachedEnergies]
-	cp 3
-	jp nc, .zero_score
 	ld e, FIGHTING_ENERGY
-	ld a, CARD_LOCATION_DISCARD_PILE
-	call CheckIfAnyCardIDinLocation
-	ret nc
-	ld a, $82
-	ret
+	jr .accelerate_self_from_discard_got_energy
 
 .Flare:
 	ld e, FIRE_ENERGY
@@ -268,6 +262,7 @@ HandleSpecialAIAttacks:
 	ld a, CARD_LOCATION_DISCARD_PILE
 	call CheckIfAnyCardIDinLocation
 	jp nc, .zero_score
+.accelerate_self_got_energy
 	call GetPlayAreaCardAttachedEnergies
 	ld a, [wTotalAttachedEnergies]
 	cp 3
@@ -286,6 +281,17 @@ HandleSpecialAIAttacks:
 .Concentration:
 	ld e, PSYCHIC_ENERGY
 	jr .accelerate_self_from_discard_got_energy
+
+.GatherToxins:
+	ld e, DARKNESS_ENERGY
+	jr .accelerate_self_from_discard_got_energy
+
+; .FlameCharge
+; 	ld e, FIRE_ENERGY
+; 	ld a, CARD_LOCATION_DECK
+; 	call CheckIfAnyCardIDinLocation
+; 	jp nc, .zero_score
+; 	jr .accelerate_self_got_energy
 
 .JunkMagnet:
 	ld a, CARD_LOCATION_DISCARD_PILE
