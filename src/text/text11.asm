@@ -1716,7 +1716,7 @@ IntimidatingRoarName:
 
 IntimidatingRoarDescription:
 	text "Once during your turn, if this"
-	text "is your Active Pokémon, you may"
+	line "is your Active Pokémon, you may"
 	line "switch out your opponent's Active"
 	line "Pokémon to the Bench. (Your opponent"
 	line "chooses the new Active Pokémon.)"
