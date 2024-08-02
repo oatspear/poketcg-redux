@@ -773,6 +773,11 @@ ENDC
 	ld a, e
 	or a
 	jr nz, .tally
+	ld a, DUELVARS_ARENA_CARD_SUBSTATUS2
+	call GetTurnDuelistVariable
+	cp SUBSTATUS2_ATTACK_COST_PLUS_1
+	jr nz, .tally
+	inc c
 .tally
 	ld a, c
 	pop hl
