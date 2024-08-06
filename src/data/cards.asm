@@ -561,11 +561,11 @@ ButterfreeCard:
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
 	; attack 2
-	energy GRASS, 1, COLORLESS, 2 ; energies
+	energy GRASS, 1 ; energies
 	tx SilverWhirlwindName ; name
-	tx SilverWhirlwindDescription ; description
-	dw NONE ; description (cont)
-	db 30 ; damage
+	tx OpponentSwitchesPokemonDescription ; description
+	tx SilverWhirlwindDescriptionCont ; description (cont)
+	db 20 ; damage
 	db DAMAGE_NORMAL ; category
 	dw SilverWhirlwindEffectCommands ; effect commands
 	db INFLICT_POISON | INFLICT_SLEEP ; flags 1

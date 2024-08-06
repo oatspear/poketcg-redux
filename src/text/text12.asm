@@ -300,20 +300,20 @@ SilverWhirlwindName:
 	done
 
 IF SLEEP_WITH_COIN_FLIP
-SilverWhirlwindDescription:
-	text "Flip a coin. If heads, the Defending"
-	line "Pokémon is now Asleep. If tails, it"
-	line "is now Poisoned. Then, your opponent"
-	line "switches their Active Pokémon with"
-	line "one of their Benched Pokémon."
+SilverWhirlwindDescriptionCont:
+	text "The new Defending Pokémon is now"
+	line "Poisoned. If this Pokémon has 3 or"
+	line "more Energies attached to it, the"
+	line "new Defending Pokémon is now also"
+	line "Asleep and Burned."
 	done
 ELSE
-SilverWhirlwindDescription:
-	text "Flip a coin. If heads, the Defending"
-	line "Pokémon is now Drowsy. If tails, it"
-	line "is now Poisoned. Then, your opponent"
-	line "switches their Active Pokémon with"
-	line "one of their Benched Pokémon."
+SilverWhirlwindDescriptionCont:
+	text "The new Defending Pokémon is now"
+	line "Poisoned. If this Pokémon has 3 or"
+	line "more Energies attached to it, the"
+	line "new Defending Pokémon is now also"
+	line "Drowsy and Burned."
 	done
 ENDC
 

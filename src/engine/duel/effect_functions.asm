@@ -5008,6 +5008,23 @@ RapidSpin_SwitchEffect:
 	jp SwitchUser_SwitchEffect  ; ffa0
 
 
+SilverWhirlwind_SwitchEffect:
+	call Whirlwind_SwitchEffect
+	xor a
+	ld [wEffectFunctionsFeedbackIndex], a
+	call PoisonEffect
+	ld e, PLAY_AREA_ARENA
+	call GetPlayAreaCardAttachedEnergies
+	ld a, [wTotalAttachedEnergies]
+	cp 3
+	jr c, .play_animation
+	call BurnEffect
+	call SleepEffect
+.play_animation
+	bank1call PlayInflictStatusAnimation
+	ret
+
+
 ; return carry if Defending Pokemon has no attacks
 Metronome_CheckAttacks:
 	call CheckIfDefendingPokemonHasAnyAttack

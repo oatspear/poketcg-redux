@@ -2792,7 +2792,7 @@ TextOffsets:: ; 34000 (d:4000)
 	; textpointer HealingNectarName                                ; unreferenced
 	; textpointer HealingNectarDescription                         ; unreferenced
 	textpointer SilverWhirlwindName
-	textpointer SilverWhirlwindDescription
+	textpointer SilverWhirlwindDescriptionCont
 	textpointer HatchName
 	textpointer HatchDescription
 	textpointer PoisonEvolutionName

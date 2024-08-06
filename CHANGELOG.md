@@ -11,6 +11,10 @@
 #### Butterfree
 - Increased HP from 80 to 100.
 - **Healing Wind**: removed.
+- **Silver Whirlwind**: reduced cost from (GCC) to (G).
+- **Silver Whirlwind**: reduced damage from 30 to 20.
+- **Silver Whirlwind**: inflicts status on the new Defending Pokémon, after the opponent switches.
+- **Silver Whirlwind**: inflicts only Poison by default; if the Pokémon has 3 or more attached energies, also inflicts Burn and Drowsiness.
 - New attack: **Quiver Dance** (C): attach a Basic Energy from the deck to this Pokémon; heal 30 damage.
 
 
