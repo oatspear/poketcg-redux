@@ -556,10 +556,6 @@ BodySlamName: ; 63088 (18:7088)
 	text "Body Slam"
 	done
 
-HealingWindName: ; 631e4 (18:71e4)
-	text "Healing Wind"
-	done
-
 HelpingHandName:
 	text "Helping Hand"
 	done

@@ -2726,6 +2726,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer IntimidatingRoarName
 	textpointer IntimidatingRoarDescription
 	textpointer IncreaseAttackCostby1Description
+	textpointer QuiverDanceName
+	textpointer Attach1EnergyFromDeckToThisPokemonDescription
 
 ; ------------------------------------------------------------------------------
 ; text12.asm
@@ -2843,7 +2845,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ThickSkinnedName                                   ; 0x0b56
 	textpointer ThickSkinnedDescription                            ; 0x0b57
 	textpointer BodySlamName                                       ; 0x0b58
-	textpointer HealingWindName                                    ; 0x0b61
 	textpointer HelpingHandName
 	textpointer HelpingHandDescription
 	textpointer CollectName

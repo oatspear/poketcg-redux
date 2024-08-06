@@ -1727,3 +1727,13 @@ IncreaseAttackCostby1Description:
 	line "the Defending Pokémon pays <COLORLESS> more"
 	line "to attack."
 	done
+
+QuiverDanceName:
+	text "Quiver Dance"
+	done
+
+Attach1EnergyFromDeckToThisPokemonDescription:
+	text "Search your deck for a Basic Energy"
+	line "card and attach it to this Pokémon."
+	line "Shuffle your deck afterward."
+	done

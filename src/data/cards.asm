@@ -542,24 +542,23 @@ ButterfreeCard:
 	db DIAMOND ; rarity
 	db EVOLUTION | JUNGLE ; sets
 	db BUTTERFREE
-	db 80 ; hp
+	db 100 ; hp
 	db STAGE2 ; stage
 	tx MetapodName ; pre-evo name
 
 	; attack 1
 	energy COLORLESS, 1 ; energies
-	tx HealingWindName ; name
-	tx Heal20DamageFromAllDescription ; description
-	dw NONE ; description (cont)
+	tx QuiverDanceName ; name
+	tx Attach1EnergyFromDeckToThisPokemonDescription ; description
+	tx Heal30DamageDescription ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category
-	dw AromatherapyEffectCommands ; effect commands
+	dw QuiverDanceEffectCommands ; effect commands
 	db NONE ; flags 1
 	db HEAL_USER ; flags 2
 	db NONE ; flags 3
 	db 1
-	db ATK_ANIM_RECOVER ; animation
-	; db ATK_ANIM_NONE ; animation
+	db ATK_ANIM_GLOW_EFFECT ; animation
 
 	; attack 2
 	energy GRASS, 1, COLORLESS, 2 ; energies
@@ -1333,7 +1332,7 @@ GloomCard:
 	; dw NONE ; description (cont)
 	; db 0 ; damage
 	; db RESIDUAL ; category
-	; dw AromatherapyEffectCommands ; effect commands
+	; dw Heal20DamageFromAllEffectCommands ; effect commands
 	; db NONE ; flags 1
 	; db HEAL_USER ; flags 2
 	; db NONE ; flags 3

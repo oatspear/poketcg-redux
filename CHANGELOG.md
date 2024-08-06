@@ -8,6 +8,11 @@
 - **String Shot**: no longer inflicts Paralysis.
 - **String Shot**: increases the cost of the Defending Pokémon's attacks by (C) during the opponent's next turn.
 
+#### Butterfree
+- Increased HP from 80 to 100.
+- **Healing Wind**: removed.
+- New attack: **Quiver Dance** (C): attach a Basic Energy from the deck to this Pokémon; heal 30 damage.
+
 
 ## Version 0.10.0
 

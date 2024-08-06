@@ -4431,6 +4431,33 @@ UnaffectedByWeaknessResistancePowersEffectsEffect:
 	ret
 
 
+QuiverDance_PlayerSelectEffect:
+	xor a  ; PLAY_AREA_ARENA
+	ldh [hTempPlayAreaLocation_ffa1], a
+	ld a, $ff
+	ldh [hEnergyTransEnergyCard], a
+; search cards in Deck
+	call CreateDeckCardList
+	ldtx hl, Choose1BasicEnergyCardFromDeckText
+	ldtx bc, BasicEnergyText
+	ld a, CARDTEST_BASIC_ENERGY
+	call LookForCardsInDeckList
+	ret c  ; no cards, the Player refuses to search the deck
+; choose a card from the deck
+	call HandlePlayerSelectionBasicEnergyFromDeckList
+	ldh [hEnergyTransEnergyCard], a
+	ret
+
+QuiverDance_AISelectEffect:
+; AI just selects the first card in the deck
+	call CreateDeckCardList
+	ld a, CARDTEST_BASIC_ENERGY
+	call FilterCardList
+	ld a, [wDuelTempList]
+	ldh [hEnergyTransEnergyCard], a
+	ret
+
+
 EnergySpike_PlayerSelectEffect:
 	xor a  ; FALSE
 	ld [wMultiPurposeByte], a
@@ -4541,11 +4568,11 @@ Accelerate1EnergyFromDeck_AttachEnergyEffect:
 	jp SyncShuffleDeck
 
 
-NutritionSupport_AttachEnergyEffect:
+QuiverDance_AttachEnergyEffect:
 	call Accelerate1EnergyFromDeck_AttachEnergyEffect
 	ldh a, [hTempPlayAreaLocation_ffa1]
 	ld e, a   ; location
-	ld d, 10  ; damage
+	ld d, 30  ; damage
 	jp HealPlayAreaCardHP
 
 

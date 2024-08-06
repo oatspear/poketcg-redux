@@ -1,4 +1,24 @@
 
+HealingWindName: ; 631e4 (18:71e4)
+	text "Healing Wind"
+	done
+
+; attack 1
+energy COLORLESS, 1 ; energies
+tx HealingWindName ; name
+tx Heal20DamageFromAllDescription ; description
+dw NONE ; description (cont)
+db 0 ; damage
+db RESIDUAL ; category
+dw Heal20DamageFromAllEffectCommands ; effect commands
+db NONE ; flags 1
+db HEAL_USER ; flags 2
+db NONE ; flags 3
+db 1
+db ATK_ANIM_RECOVER ; animation
+; db ATK_ANIM_NONE ; animation
+
+
 
 
 LureDescription:

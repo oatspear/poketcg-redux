@@ -1312,6 +1312,13 @@ Accelerate1EnergyFromDeckEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Accelerate1EnergyFromDeck_AttachEnergyEffect
 	db  $00
 
+QuiverDanceEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDeckIsNotEmpty
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, QuiverDance_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, QuiverDance_AISelectEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, QuiverDance_AttachEnergyEffect
+	db  $00
+
 UnableToRetreatEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, UnableToRetreatEffect
 	db  $00
@@ -1474,7 +1481,7 @@ EvolutionaryWaveEffectCommands:
 	dbw EFFECTCMDTYPE_PKMN_POWER_TRIGGER, Heal20DamageFromAll_HealEffect
 	db  $00
 
-AromatherapyEffectCommands:
+Heal20DamageFromAllEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Heal20DamageFromAll_HealEffect
 	db  $00
 
