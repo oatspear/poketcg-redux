@@ -82,6 +82,11 @@ IncreaseRetreatCostEffect:
 	jr ApplySubstatus2ToDefendingCard
 
 
+IncreaseAttackCostEffect:
+	ld a, SUBSTATUS2_ATTACK_COST_PLUS_1
+	jr ApplySubstatus2ToDefendingCard
+
+
 ReduceAttackBy10Effect:
 	ld a, SUBSTATUS2_REDUCE_BY_10
 	jr ApplySubstatus2ToDefendingCard

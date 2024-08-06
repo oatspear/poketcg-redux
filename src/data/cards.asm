@@ -460,12 +460,12 @@ CaterpieCard:
 	; attack 2
 	energy GRASS, 1 ; energies
 	tx StringShotName ; name
-	tx MayInflictParalysisDescription ; description
+	tx IncreaseAttackCostby1Description ; description
 	dw NONE ; description (cont)
 	db 10 ; damage
 	db DAMAGE_NORMAL ; category
-	dw Paralysis50PercentEffectCommands ; effect commands
-	db INFLICT_PARALYSIS ; flags 1
+	dw IncreaseAttackCostby1EffectCommands ; effect commands
+	db INFLICT_SLEEP ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0

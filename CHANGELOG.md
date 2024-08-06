@@ -1,5 +1,14 @@
 # Pokémon TCG Rebalanced
 
+## Version 0.11.0
+
+### Grass Changes
+
+#### Caterpie
+- **String Shot**: no longer inflicts Paralysis.
+- **String Shot**: increases the cost of the Defending Pokémon's attacks by (C) during the opponent's next turn.
+
+
 ## Version 0.10.0
 
 ### Grass Changes

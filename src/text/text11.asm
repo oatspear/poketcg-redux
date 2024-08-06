@@ -1721,3 +1721,9 @@ IntimidatingRoarDescription:
 	line "Pokémon to the Bench. (Your opponent"
 	line "chooses the new Active Pokémon.)"
 	done
+
+IncreaseAttackCostby1Description:
+	text "During your opponent's next turn,"
+	line "the Defending Pokémon pays <COLORLESS> more"
+	line "to attack."
+	done

@@ -2725,6 +2725,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer InfernoOnrushName
 	textpointer IntimidatingRoarName
 	textpointer IntimidatingRoarDescription
+	textpointer IncreaseAttackCostby1Description
 
 ; ------------------------------------------------------------------------------
 ; text12.asm
