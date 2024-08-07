@@ -1583,7 +1583,7 @@ VenonatCard:
 	db CIRCLE ; rarity
 	db LABORATORY | JUNGLE ; sets
 	db VENONAT
-	db 40 ; hp
+	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
 

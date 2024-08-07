@@ -23,6 +23,9 @@
 - **Toxic**: removed.
 - New attack: **Toxic Needle** (GC): 30 damage; inflicts Double Poison; inflicts Paralysis if the Defending Pokémon was not affected with any status.
 
+#### Venonat
+- Increased HP from 40 to 50.
+
 
 ## Version 0.10.0
 
