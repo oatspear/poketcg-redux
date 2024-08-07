@@ -697,7 +697,7 @@ BeedrillCard:
 	db STAR ; rarity
 	db EVOLUTION | NONE ; sets
 	db BEEDRILL
-	db 80 ; hp
+	db 100 ; hp
 	db STAGE2 ; stage
 	tx KakunaName ; pre-evo name
 
@@ -717,14 +717,14 @@ BeedrillCard:
 
 	; attack 2
 	energy GRASS, 1, COLORLESS, 1 ; energies
-	tx ToxicName ; name
+	tx ToxicNeedleName ; name
 	tx ToxicDescription ; description
-	dw NONE ; description (cont)
+	tx ToxicNeedleDescriptionCont ; description (cont)
 	db 30 ; damage
 	db DAMAGE_NORMAL ; category
-	dw ToxicEffectCommands ; effect commands
-	db INFLICT_POISON ; flags 1
-	db FLAG_2_BIT_6 ; flags 2
+	dw ToxicNeedleEffectCommands ; effect commands
+	db INFLICT_POISON | INFLICT_PARALYSIS ; flags 1
+	db NONE ; flags 2
 	db NONE ; flags 3
 	db 2
 	db ATK_ANIM_NEEDLES ; animation

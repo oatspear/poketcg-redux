@@ -225,8 +225,14 @@ RoutDescription:
 	line "Benched Pokémon."
 	done
 
-ToxicName:
-	text "Toxic"
+ToxicNeedleName:
+	text "Toxic Needle"
+	done
+
+ToxicNeedleDescriptionCont:
+	text "If the Defending Pokémon was"
+	line "not affected with any Special"
+	line "Conditions, it is now Paralyzed."
 	done
 
 ToxicDescription:

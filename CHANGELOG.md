@@ -17,6 +17,12 @@
 - **Silver Whirlwind**: inflicts only Poison by default; if the Pokémon has 3 or more attached energies, also inflicts Burn and Drowsiness.
 - New attack: **Quiver Dance** (C): attach a Basic Energy from the deck to this Pokémon; heal 30 damage.
 
+#### Beedrill
+- Increased HP from 80 to 100.
+- **Assassin Flight**: increased damage from 40 to 50.
+- **Toxic**: removed.
+- New attack: **Toxic Needle** (GC): 30 damage; inflicts Double Poison; inflicts Paralysis if the Defending Pokémon was not affected with any status.
+
 
 ## Version 0.10.0
 

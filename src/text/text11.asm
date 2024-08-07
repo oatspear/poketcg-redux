@@ -589,9 +589,9 @@ AssassinFlightName:
 AssassinFlightDescription:
 	text "You can only use this attack if the"
 	line "opponent's Active Pokémon is"
-	line "affected by a Special Condition."
-	line "Deal 40 damage to 1 of the"
-	line "opponent's Benched Pokémon."
+	line "affected with a Special Condition."
+	line "This attack does 50 damage to 1"
+	line "of your opponent's Benched Pokémon."
 	done
 
 FoulOdorName:

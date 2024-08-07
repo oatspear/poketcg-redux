@@ -245,6 +245,10 @@ ToxicEffectCommands:
 	; dbw EFFECTCMDTYPE_AI, Toxic_AIEffect
 	db  $00
 
+ToxicNeedleEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ToxicNeedleEffect
+	db  $00
+
 GrassKnotEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, GrassKnot_DamageBoostEffect
 	dbw EFFECTCMDTYPE_AI, GrassKnot_AIEffect
@@ -325,7 +329,7 @@ HexEffectCommands:
 
 AssassinFlightEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, AssassinFlight_CheckBenchAndStatus
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Deal40DamageToTarget_DamageEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Deal50DamageToTarget_DamageEffect
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, DamageTargetBenchedPokemon_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, DamageTargetBenchedPokemon_AISelectEffect
 	db  $00

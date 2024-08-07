@@ -2777,7 +2777,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer HornDrillName                                      ; 0x0861
 	textpointer RoutName
 	textpointer RoutDescription
-	textpointer ToxicName
+	textpointer ToxicNeedleName
+	textpointer ToxicNeedleDescriptionCont
 	textpointer ToxicDescription
 	textpointer ToxicWasteName
 	textpointer ToxicWasteDescriptionCont

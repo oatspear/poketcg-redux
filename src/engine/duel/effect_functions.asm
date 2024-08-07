@@ -1025,6 +1025,14 @@ VoltSwitchEffect:
 ; Compound Attacks
 ; ------------------------------------------------------------------------------
 
+ToxicNeedleEffect:
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetNonTurnDuelistVariable
+	or a
+	jp nz, DoublePoisonEffect  ; just poison
+	call ParalysisEffect
+	jp DoublePoisonEffect
+
 
 GatherToxinsEffect:
 	call Attach1DarknessEnergyFromDiscard_SelectEffect
