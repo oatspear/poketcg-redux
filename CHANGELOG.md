@@ -28,7 +28,9 @@
 
 #### Venomoth
 - **Assassin Flight**: removed.
+- **Venom Powder**: removed.
 - New Pokémon Power: **Noxious Scales**: when this Pokémon moves into the Active Spot, inflict Poison; if it has 3 or more attached energies, inflict Double Poison and Confusion.
+- New attack: **Baton Pass** (G): 20 damage; switch the user; move all energies attached to the user to the new Active Pokémon.
 
 
 ## Version 0.10.0

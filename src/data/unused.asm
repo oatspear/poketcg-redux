@@ -1,4 +1,26 @@
 
+
+VenomPowderName:
+	text "Venom Powder"
+	done
+
+; attack 2
+energy GRASS, 1 ; energies
+tx VenomPowderName ; name
+tx InflictConfusionAndPoisonDescription ; description
+dw NONE ; description (cont)
+db 20 ; damage
+db DAMAGE_NORMAL ; category
+dw InflictConfusionAndPoisonEffectCommands ; effect commands
+db INFLICT_POISON | INFLICT_CONFUSION ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
+
+
+
+
 HealingWindName: ; 631e4 (18:71e4)
 	text "Healing Wind"
 	done

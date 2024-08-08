@@ -1668,21 +1668,21 @@ VenomothCard:
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 1
-	db ATK_ANIM_PKMN_POWER_1 ; animation
+	db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
 
 	; attack 2
 	energy GRASS, 1 ; energies
-	tx VenomPowderName ; name
-	tx InflictConfusionAndPoisonDescription ; description
+	tx BatonPassName ; name
+	tx BatonPassDescription ; description
 	dw NONE ; description (cont)
 	db 20 ; damage
 	db DAMAGE_NORMAL ; category
-	dw InflictConfusionAndPoisonEffectCommands ; effect commands
-	db INFLICT_POISON | INFLICT_CONFUSION ; flags 1
+	dw BatonPassEffectCommands ; effect commands
+	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
+	db ATK_ANIM_QUICK_ATTACK ; animation
 
 	db 1 ; retreat cost
 	db WR_FIRE ; weakness

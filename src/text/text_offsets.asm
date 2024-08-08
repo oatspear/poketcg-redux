@@ -2404,7 +2404,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer FungalGrowthName
 	textpointer ShiftName                                          ; 0x0890
 	textpointer ShiftDescription                                   ; 0x0891
-	textpointer VenomPowderName
 	textpointer InflictConfusionAndPoisonDescription
 	textpointer RazorLeafName                                      ; 0x089a
 	textpointer LureName                                           ; 0x089e

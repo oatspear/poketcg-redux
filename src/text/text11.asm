@@ -42,10 +42,6 @@ ShiftDescription:
 	line "play, other than Colorless."
 	done
 
-VenomPowderName:
-	text "Venom Powder"
-	done
-
 InflictConfusionAndPoisonDescription:
 	text "The Defending Pokémon is now"
 	line "Confused and Poisoned."
