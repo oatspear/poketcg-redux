@@ -613,7 +613,7 @@ Discard1EnergyEffectCommands:
 	db  $00
 
 Discard2EnergiesEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, Check2EnergiesAttached
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHas2OrMoreEnergiesAttached
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Discard2Energies_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_DISCARD_ENERGY, Discard2Energies_DiscardEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, Discard2Energies_AISelectEffect
@@ -668,7 +668,7 @@ Bounce1EnergyFromOpponentEffectCommands:
 	db  $00
 
 Bounce2EnergiesEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, Check2EnergiesAttached
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHas2OrMoreEnergiesAttached
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Discard2Energies_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_DISCARD_ENERGY, Bounce2Energies_BounceEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, Discard2Energies_AISelectEffect
@@ -740,7 +740,7 @@ BoostedVoltageEffectCommands:
 	db  $00
 
 FlamesOfRageEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, Check2EnergiesAttached
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHas2OrMoreEnergiesAttached
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Discard2Energies_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_DISCARD_ENERGY, Discard2Energies_DiscardEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, Discard2Energies_AISelectEffect
@@ -1522,6 +1522,18 @@ TransformEffectCommands:
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Transform_PlayerSelectEffect
 	; dbw EFFECTCMDTYPE_AI_SELECTION, Morph_AISelectEffect
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, TransformEffect
+	db  $00
+
+DoubleHitEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, DoubleHit_StoreExtraDamageEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DoubleHitEffect
+	dbw EFFECTCMDTYPE_AI, DoubleHit_AIEffect
+	db  $00
+
+TripleHitEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, TripleHit_StoreExtraDamageEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, TripleHitEffect
+	dbw EFFECTCMDTYPE_AI, TripleHit_AIEffect
 	db  $00
 
 Deal10ToAnyPokemonEffectCommands:

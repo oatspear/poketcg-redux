@@ -39,6 +39,34 @@ Prank_AISelectEffect:
 ; ------------------------------------------------------------------------------
 
 
+DoubleHit_AIEffect:
+	call CheckArenaPokemonHas2OrMoreEnergiesAttached
+	ret c
+	ld a, [wDamage]
+	add a
+	call AddToDamage
+	jp SetDefiniteAIDamage
+
+
+TripleHit_AIEffect:
+	call CheckArenaPokemonHas3OrMoreEnergiesAttached
+	cp 2
+	ret c  ; once
+; twice
+	dec a
+	ld c, a
+	ld a, [wDamage]
+	ld d, a
+	add d
+	dec c
+	jr z, .update
+; thrice
+	add d
+.update
+	call AddToDamage
+	jp SetDefiniteAIDamage
+
+
 Put1DamageCounterOnTarget_AIEffect:
 	ld a, 10
 	lb de, 10, 10

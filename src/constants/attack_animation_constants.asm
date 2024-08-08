@@ -11,7 +11,7 @@
 	const ATK_ANIM_THUNDERSHOCK           ; $06
 	const ATK_ANIM_THUNDER                ; $07
 	const ATK_ANIM_THUNDERBOLT            ; $08
-	const ATK_ANIM_9                      ; $09
+	const ATK_ANIM_HIT_NO_GLOW            ; $09
 	const ATK_ANIM_THUNDER_WHOLE_SCREEN   ; $0a
 	const ATK_ANIM_11                     ; $0b
 	const ATK_ANIM_THUNDERSTORM           ; $0c

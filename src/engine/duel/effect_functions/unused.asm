@@ -1,5 +1,27 @@
 ;
 
+
+TripleHit_StoreExtraDamageEffect:
+	xor a
+	ldh [hTempList], a
+	ldh [hTempList + 1], a
+	call CheckArenaPokemonHas3OrMoreEnergiesAttached
+	jr c, .check_twice
+	ld a, [wLoadedAttackDamage]
+	ldh [hTempList], a
+	ldh [hTempList + 1], a
+	ret
+.check_twice
+	cp 2
+	ccf
+	ret nc  ; must not return carry
+	ld a, [wLoadedAttackDamage]
+	ldh [hTempList], a
+	or a
+	ret
+
+
+
 ThunderPunchEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, ThunderPunch_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_DISCARD_ENERGY, DiscardEnergy_DiscardEffect

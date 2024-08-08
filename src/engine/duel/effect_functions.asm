@@ -590,6 +590,55 @@ FullHeal_ClearStatusEffect:
 INCLUDE "engine/duel/effect_functions/damage.asm"
 
 
+TripleHit_StoreExtraDamageEffect:
+	call CheckArenaPokemonHas3OrMoreEnergiesAttached
+	ld de, 0
+	or a
+	jr z, .store  ; zero energies
+	ld c, a
+	dec c
+	jr z, .store  ; one energy
+	ld a, [wLoadedAttackDamage]
+	ld d, a
+	dec c
+	jr z, .store  ; two energies
+	ld e, a  ; three or more energies
+.store
+	ld a, d
+	ldh [hTempList], a
+	ld a, e
+	ldh [hTempList + 1], a
+	ret
+
+
+DoubleHit_StoreExtraDamageEffect:
+	call CheckArenaPokemonHas2OrMoreEnergiesAttached
+	ld a, [wLoadedAttackDamage]
+	jr nc, .store
+	xor a  ; also reset carry
+.store
+	ldh [hTemp_ffa0], a
+	ret
+
+;
+TripleHitEffect:
+	call DoubleHitEffect
+	ldh a, [hTempList + 1]
+	ldh [hTemp_ffa0], a
+	; jr DoubleHitEffect
+	; fallthrough
+
+DoubleHitEffect:
+	ldh a, [hTemp_ffa0]
+	or a
+	ret z
+.hit
+	ld d, 0
+	ld e, a
+	ld a, ATK_ANIM_HIT_NO_GLOW
+	jp DealDamageToArenaPokemon_CustomAnim
+
+
 Affliction_DamageEffect:
 	ld a, [wAfflictionAffectedPlayArea]
 	or a

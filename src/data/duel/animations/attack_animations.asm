@@ -31,7 +31,7 @@ PointerTable_AttackAnimation:
 	dw AttackAnimation_ThunderShock        ; ATK_ANIM_THUNDERSHOCK
 	dw AttackAnimation_ThunderShock        ; ATK_ANIM_THUNDER
 	dw AttackAnimation_Thunderbolt         ; ATK_ANIM_THUNDERBOLT
-	dw AttackAnimation_ThunderShock        ; ATK_ANIM_9
+	dw AttackAnimation_HitNoGlow           ; ATK_ANIM_HIT_NO_GLOW
 	dw AttackAnimation_BigLightning        ; ATK_ANIM_THUNDER_WHOLE_SCREEN
 	dw AttackAnimation_BigLightning        ; ATK_ANIM_11
 	dw AttackAnimation_BigLightning        ; ATK_ANIM_THUNDERSTORM
@@ -169,8 +169,11 @@ PointerTable_AttackAnimation:
 	dw AttackAnimation_5673                ; ATK_ANIM_144
 	assert_table_length NUM_ATK_ANIMS
 
-AttackAnimation_Hit: ; (6:52c6)
+AttackAnimation_Hit:
 	anim_player         DUEL_ANIM_GLOW
+	; fallthrough to AttackAnimation_HitNoGlow
+
+AttackAnimation_HitNoGlow:
 	anim_opponent       DUEL_ANIM_HIT
 	anim_normal         DUEL_ANIM_SHAKE1
 	anim_opponent       DUEL_ANIM_SHOW_DAMAGE

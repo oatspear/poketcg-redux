@@ -787,7 +787,7 @@ CheckIfPlayAreaHasAnyEnergies:
 
 
 ; return carry if has less than 2 Energy cards
-Check2EnergiesAttached:
+CheckArenaPokemonHas2OrMoreEnergiesAttached:
 	ld a, 2
 	ldtx hl, NotEnoughEnergyCardsText
 	jr GetNumAttachedEnergiesAtMostA_Arena
