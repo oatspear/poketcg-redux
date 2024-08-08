@@ -1656,27 +1656,22 @@ VenomothCard:
 	; Noxious Scales (GCC) 50
 	; The Defending Pokémon is now Confused and Poisoned.
 
-	; Assassin Flight (C)
-	; You can only use this attack if the opponent's Active Pokémon is affected by
-	; a Special Condition. This attack does 90 damage to one of your opponent's
-	; Benched Pokémon (do not apply Weakness and Resistance for Benched Pokémon).
-
 	; attack 1
-	energy COLORLESS, 1 ; energies
-	tx AssassinFlightName ; name
-	tx AssassinFlightDescription ; description
-	dw NONE ; description (cont)
+	energy 0 ; energies
+	tx NoxiousScalesName ; name
+	tx NoxiousScalesDescription ; description
+	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db RESIDUAL ; category
-	dw AssassinFlightEffectCommands ; effect commands
-	db DAMAGE_TO_OPPONENT_BENCH ; flags 1
-	db FLAG_2_BIT_6 ; flags 2
+	db POKEMON_POWER ; category
+	dw PassivePowerEffectCommands ; effect commands
+	db INFLICT_POISON | INFLICT_CONFUSION ; flags 1
+	db NONE ; flags 2
 	db NONE ; flags 3
-	db 3
-	db ATK_ANIM_AGILITY_NO_HIT ; animation
+	db 1
+	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy GRASS, 2 ; energies
+	energy GRASS, 1 ; energies
 	tx VenomPowderName ; name
 	tx InflictConfusionAndPoisonDescription ; description
 	dw NONE ; description (cont)

@@ -792,6 +792,12 @@ Check2EnergiesAttached:
 	ldtx hl, NotEnoughEnergyCardsText
 	jr GetNumAttachedEnergiesAtMostA_Arena
 
+; return carry if has less than 3 Energy cards
+CheckArenaPokemonHas3OrMoreEnergiesAttached:
+	ld a, 3
+	ldtx hl, NotEnoughEnergyCardsText
+	jr GetNumAttachedEnergiesAtMostA_Arena
+
 
 ; return carry if less than a Energy cards
 GetNumAttachedEnergiesAtMostA_Arena:

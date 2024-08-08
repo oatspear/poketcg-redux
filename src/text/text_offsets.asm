@@ -3037,6 +3037,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer BatonPassDescription
 	textpointer LandCrushName
 	textpointer DamageAllFriendlyBenched20Description
+	textpointer NoxiousScalesName
+	textpointer NoxiousScalesDescription
 
 ; ------------------------------------------------------------------------------
 ; text13.asm

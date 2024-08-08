@@ -26,6 +26,10 @@
 #### Venonat
 - Increased HP from 40 to 50.
 
+#### Venomoth
+- **Assassin Flight**: removed.
+- New Pokémon Power: **Noxious Scales**: when this Pokémon moves into the Active Spot, inflict Poison; if it has 3 or more attached energies, inflict Double Poison and Confusion.
+
 
 ## Version 0.10.0
 

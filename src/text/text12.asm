@@ -1578,3 +1578,16 @@ DamageAllFriendlyBenched20Description:
 	text "This attack does 20 damage to"
 	line "each of your Benched Pokémon."
 	done
+
+NoxiousScalesName:
+	text "Noxious Scales"
+	done
+
+NoxiousScalesDescription:
+	text "Whenever this Pokémon moves into the"
+	line "Active Spot during your turn, Poison"
+	line "the opponent's Active Pokémon. If"
+	line "this Pokémon has 3 or more Energies"
+	line "attached to it, that Pokémon is"
+	line "Badly Poisoned and Confused."
+	done

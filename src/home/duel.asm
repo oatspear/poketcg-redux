@@ -1310,6 +1310,7 @@ ENDC
 	call SwapPlayAreaPokemon
 ; OATS trigger "on Active" Pokémon Powers
 	call ClearChangedTypesIfWeezing
+	farcall NoxiousScalesEffect
 	farcall SpikesDamageEffect
 	ret
 

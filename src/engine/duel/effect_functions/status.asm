@@ -328,8 +328,64 @@ ApplyStatusEffectToAllOpponentBenchedPokemon:
 
 
 ; ------------------------------------------------------------------------------
+; Pokémon Powers
+; ------------------------------------------------------------------------------
+
+
+NoxiousScalesEffect:
+	ldh a, [hWhoseTurn]
+	ld hl, wWhoseTurn
+	cp [hl]
+	ret nz  ; it is the opponent's turn
+; check for Venomoth in the Active Spot
+	ld a, DUELVARS_ARENA_CARD
+	call GetTurnDuelistVariable
+	call GetCardIDFromDeckIndex
+	ld a, e
+	cp VENOMOTH
+	ret nz  ; not Venomoth
+; check whether Pokémon Powers can be used
+	call ArePokemonPowersDisabled
+	ret c  ; Powers are disabled
+; check whether the opponent's Active Pokémon is still alive
+	ld a, DUELVARS_ARENA_CARD_HP
+	call GetNonTurnDuelistVariable
+	or a
+	ret z  ; already Knocked Out
+; reset status queue
+	xor a
+	ld [wEffectFunctionsFeedbackIndex], a
+; check whether additional status should be applied
+	call CheckArenaPokemonHas3OrMoreEnergiesAttached
+	jr c, .just_poison
+
+	call DoublePoisonEffect
+	call ConfusionEffect
+	jr ApplyStatusAndPlayAnimationAdhoc
+
+.just_poison
+	call PoisonEffect
+	jr ApplyStatusAndPlayAnimationAdhoc
+
+
+; ------------------------------------------------------------------------------
 ; Utility Functions
 ; ------------------------------------------------------------------------------
+
+ApplyStatusAndPlayAnimationAdhoc:
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	ld b, a
+	ld c, $00
+	ldh a, [hWhoseTurn]
+	ld h, a
+	bank1call PlayInflictStatusAnimation
+	bank1call WaitAttackAnimation
+	bank1call Func_6df1
+	bank1call DrawDuelHUDs
+	call PrintNoEffectTextOrUnsuccessfulText
+	call c, WaitForWideTextBoxInput
+	ret
+
 
 ; returns in a the number of Asleep Pokémon
 ; in the turn holder's Play Area

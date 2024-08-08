@@ -7741,6 +7741,7 @@ ReplaceKnockedOutPokemon:
 	ldtx hl, DuelistPlacedACardText
 	call DisplayCardDetailScreen
 	call ExchangeRNG
+	farcall NoxiousScalesEffect
 	farcall SpikesDamageEffect
 	or a
 	ret
