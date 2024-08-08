@@ -9152,17 +9152,17 @@ DoduoCard:
 
 	; attack 2
 	energy COLORLESS, 1 ; energies
-	tx RecklessChargeName ; name
-	tx Recoil10Description ; description
+	tx DoubleHitName ; name
+	tx DoubleHitDescription ; description
 	dw NONE ; description (cont)
-	db 20 ; damage
+	db 10 ; damage
 	db DAMAGE_NORMAL ; category
-	dw Recoil10EffectCommands ; effect commands
-	db LOW_RECOIL ; flags 1
+	dw DoubleHitEffectCommands ; effect commands
+	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 10
-	db ATK_ANIM_HIT_RECOIL ; animation
+	db ATK_ANIM_HIT ; animation
 
 	db 0 ; retreat cost
 	db WR_LIGHTNING ; weakness
@@ -9191,7 +9191,7 @@ DodrioCard:
 	energy 0 ; energies
 	tx RetreatAidName ; name
 	tx RetreatAidDescription ; description
-	dw NONE ; description (cont)
+	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKEMON_POWER ; category
 	dw PassivePowerEffectCommands ; effect commands
@@ -9202,17 +9202,17 @@ DodrioCard:
 	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy COLORLESS, 2 ; energies
-	tx RageName ; name
-	tx RageDescription ; description
+	energy COLORLESS, 1 ; energies
+	tx TripleHitName ; name
+	tx TripleHitDescription ; description
 	dw NONE ; description (cont)
 	db 10 ; damage
-	db DAMAGE_PLUS ; category
-	dw RageEffectCommands ; effect commands
+	db DAMAGE_NORMAL ; category
+	dw TripleHitEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
-	db BOOST_IF_TAKEN_DAMAGE ; flags 3
-	db 0
+	db NONE ; flags 3
+	db 10
 	db ATK_ANIM_HIT ; animation
 
 	db 1 ; retreat cost

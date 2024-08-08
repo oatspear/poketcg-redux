@@ -32,6 +32,16 @@
 - New Pokémon Power: **Noxious Scales**: when this Pokémon moves into the Active Spot, inflict Poison; if it has 3 or more attached energies, inflict Double Poison and Confusion.
 - New attack: **Baton Pass** (G): 20 damage; switch the user; move all energies attached to the user to the new Active Pokémon.
 
+### Colorless Changes
+
+#### Doduo
+- **Reckless Charge**: removed.
+- New attack: **Double Hit** (C): 10 damage; if the user has 2 or more Energies, does damage twice.
+
+#### Dodrio
+- **Rage**: removed.
+- New attack: **Triple Hit** (C): 10 damage; if the user has 2 Energies, does damage twice; if the user has 3 or more Energies, does damage thrice.
+
 
 ## Version 0.10.0
 

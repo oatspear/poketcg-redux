@@ -3082,6 +3082,10 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PutHowManyDamageCountersMenuText
 	textpointer CursedFlamesName
 	textpointer CursedFlamesDescription
+	textpointer DoubleHitName
+	textpointer DoubleHitDescription
+	textpointer TripleHitName
+	textpointer TripleHitDescription
 
 	; unused
 	; textpointer SwimFreelyName

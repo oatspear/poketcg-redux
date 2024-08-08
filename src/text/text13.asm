@@ -218,6 +218,29 @@ CursedFlamesDescription:
 	line "of your opponent's deck."
 	done
 
+DoubleHitName:
+	text "Double Hit"
+	done
+
+DoubleHitDescription:
+	text "If this Pokémon has 2 or more"
+	line "Energies attached to it, this"
+	line "attack does damage to the"
+	line "Defending Pokémon twice."
+	done
+
+TripleHitName:
+	text "Triple Hit"
+	done
+
+TripleHitDescription:
+	text "This attack does damage to the"
+	line "Defending Pokémon twice if this"
+	line "Pokémon has 2 Energies attached to"
+	line "it, or thrice if it has 3 or more"
+	line "Energies attached to it."
+	done
+
 ; ------------------------------------------------------------------------------
 ; Unused Text
 ; ------------------------------------------------------------------------------
