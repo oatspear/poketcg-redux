@@ -32,6 +32,13 @@
 - New Pokémon Power: **Noxious Scales**: when this Pokémon moves into the Active Spot, inflict Poison; if it has 3 or more attached energies, inflict Double Poison and Confusion.
 - New attack: **Baton Pass** (G): 20 damage; switch the user; move all energies attached to the user to the new Active Pokémon.
 
+#### Pinsir
+- Increased HP from 60 to 70.
+- **Iron Grip**: removed.
+- **Guillotine**: reduced cost from (GGC) to (GC).
+- **Guillotine**: can only be used on Pokémon with 40 HP or less, down from 50 HP or less.
+- New attack: **Bug Bite** (G): 10 damage; discards any Tools attached to the Defending Pokémon; does double damage if a Tool was discarded.
+
 ### Colorless Changes
 
 #### Doduo

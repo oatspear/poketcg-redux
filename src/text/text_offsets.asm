@@ -2409,9 +2409,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer LureName                                           ; 0x089e
 	textpointer PoisonLureName
 	textpointer PoisonLureDescription
-	textpointer CorrosiveAcidName
 	textpointer AcidName
-	textpointer AcidDescription
 	textpointer FlytrapName
 	textpointer FlytrapDescription
 	textpointer ToxicGasName                                       ; 0x08aa
@@ -2430,8 +2428,9 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PoisonWhipName                                     ; 0x08c7
 	textpointer SwordsDanceName                                    ; 0x08ca
 	textpointer NextTurnDoubleDamageDescription
-	textpointer IronGripName                                       ; 0x08cf
+	textpointer BugBiteName
 	textpointer GuillotineName
+	textpointer Guillotine40Description
 	textpointer Guillotine50Description
 	textpointer Guillotine70Description
 	textpointer EmberName                                          ; 0x08d4

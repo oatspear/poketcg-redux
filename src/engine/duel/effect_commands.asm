@@ -285,10 +285,13 @@ ChopDownEffectCommands:
 	dbw EFFECTCMDTYPE_AI, ChopDown_AIEffect
 	db  $00
 
+Guillotine40EffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDefendingPokemonHas40HpOrLess
+	; fallthrough
+
 Guillotine50EffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDefendingPokemonHas50HpOrLess
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, KnockOutDefendingPokemonEffect
-	db  $00
+	; fallthrough
 
 Guillotine70EffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDefendingPokemonHas70HpOrLess

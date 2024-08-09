@@ -633,23 +633,37 @@ CheckSomePokemonWithEnoughHP:
 
 
 ; output:
+;   carry: set if the Defending Pokémon has more than 40 HP remaining
+CheckDefendingPokemonHas40HpOrLess:
+	ld a, 40
+	jr CheckDefendingPokemonHasLowHp
+
+; output:
 ;   carry: set if the Defending Pokémon has more than 50 HP remaining
 CheckDefendingPokemonHas50HpOrLess:
-	ld a, DUELVARS_ARENA_CARD_HP
-	call GetNonTurnDuelistVariable
-	cp 51
-	ccf
-	ret nc
-	ldtx hl, ThatPokemonHasTooMuchHPText
-	ret
-
+	ld a, 50
+	jr CheckDefendingPokemonHasLowHp
 
 ; output:
 ;   carry: set if the Defending Pokémon has more than 70 HP remaining
 CheckDefendingPokemonHas70HpOrLess:
+	ld a, 70
+	; jr CheckDefendingPokemonHasLowHp
+	; fallthrough
+
+; input:
+;   a: HP threshold to test against
+; output:
+;   carry: set if the Defending Pokémon has more than `a` HP remaining
+; preserves: bc, de
+CheckDefendingPokemonHasLowHp:
+	inc a
+	ld h, a
+	push hl
 	ld a, DUELVARS_ARENA_CARD_HP
 	call GetNonTurnDuelistVariable
-	cp 71
+	pop hl
+	cp h
 	ccf
 	ret nc
 	ldtx hl, ThatPokemonHasTooMuchHPText

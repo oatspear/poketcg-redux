@@ -66,17 +66,8 @@ PoisonLureDescription:
 	line "Poisoned."
 	done
 
-CorrosiveAcidName:
-	text "Corrosive Acid"
-	done
-
 AcidName:
 	text "Acid"
-	done
-
-AcidDescription:
-	text "The Defending Pokémon can't retreat"
-	line "during your opponent's next turn."
 	done
 
 FlytrapName:
@@ -165,12 +156,18 @@ NextTurnDoubleDamageDescription:
 	line "is doubled."
 	done
 
-IronGripName: ; 59d7d (16:5d7d)
-	text "Irongrip"
+BugBiteName:
+	text "Bug Bite"
 	done
 
 GuillotineName:
 	text "Guillotine"
+	done
+
+Guillotine40Description:
+	text "If the Defending Pokémon has"
+	line "40 HP or less remaining,"
+	line "it is Knocked Out."
 	done
 
 Guillotine50Description:
