@@ -6981,6 +6981,9 @@ HandleEndOfTurnEvents:
 	call ArePokemonPowersDisabled
 	ret c
 
+; check for Parasect's Lethargy Spores Ability
+	farcall LethargySpores_StatusEffect
+
 ; check for Haunter's Affliction Ability
 	; ld a, HAUNTER_LV22
 	; call CountPokemonIDInPlayArea

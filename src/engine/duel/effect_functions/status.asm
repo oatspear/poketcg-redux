@@ -368,6 +368,30 @@ NoxiousScalesEffect:
 	jr ApplyStatusAndPlayAnimationAdhoc
 
 
+; assume:
+;  - ArePokemonPowersDisabled has been called
+LethargySpores_StatusEffect:
+	ld a, DUELVARS_ARENA_CARD
+	call GetTurnDuelistVariable
+	call GetCardIDFromDeckIndex
+	ld a, e
+	cp PARASECT
+	ret nz  ; not Parasect
+; do not inflict Sleep twice
+	call CheckDefendingPokemonIsAsleep
+	ret nc  ; already asleep
+; check that the ability can be used
+	call CheckCannotUseDueToStatus
+	ret c
+	call CheckArenaPokemonHasAnyEnergiesAttached
+	ret c
+; inflict status
+	xor a
+	ld [wEffectFunctionsFeedbackIndex], a
+	call SleepEffect
+	jr ApplyStatusAndPlayAnimationAdhoc
+
+
 ; ------------------------------------------------------------------------------
 ; Utility Functions
 ; ------------------------------------------------------------------------------

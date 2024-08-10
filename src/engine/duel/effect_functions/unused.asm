@@ -1,6 +1,13 @@
 ;
 
 
+FungalGrowthEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SleepEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, LeechLifeEffect
+	db  $00
+
+
+
 TripleHit_StoreExtraDamageEffect:
 	xor a
 	ldh [hTempList], a

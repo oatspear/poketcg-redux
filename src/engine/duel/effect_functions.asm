@@ -18,19 +18,6 @@ INCLUDE "engine/duel/effect_functions/status.asm"
 INCLUDE "engine/duel/effect_functions/substatus.asm"
 
 
-; return carry if the Defending Pokémon is not asleep
-DreamEaterEffect:
-	ld a, DUELVARS_ARENA_CARD_STATUS
-	call GetNonTurnDuelistVariable
-	and CNF_SLP_PRZ
-	cp ASLEEP
-	ret z ; return if asleep
-; not asleep, set carry and load text
-	ldtx hl, OpponentIsNotAsleepText
-	scf
-	ret
-
-
 HyperHypnosis_DiscardSleepEffect:
 	call SetUsedPokemonPowerThisTurn_RestoreTrigger
 	ldh a, [hEnergyTransEnergyCard]
@@ -1073,6 +1060,13 @@ VoltSwitchEffect:
 ; ------------------------------------------------------------------------------
 ; Compound Attacks
 ; ------------------------------------------------------------------------------
+
+FungalGrowthEffect:
+	call AttachEnergyFromDiscard_AttachToPokemonEffect
+	call CheckArenaPokemonHas3OrMoreEnergiesAttached
+	ret c  ; not enough energies
+	jp Heal20DamageEffect
+
 
 ToxicNeedleEffect:
 	ld a, DUELVARS_ARENA_CARD_STATUS

@@ -893,7 +893,7 @@ HyperHypnosisEffectCommands:
 	db  $00
 
 DreamEaterEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, DreamEaterEffect
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDefendingPokemonIsAsleep
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Leech20DamageEffect
 	db  $00
 
@@ -1003,6 +1003,9 @@ MagneticChargeEffectCommands:
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, AttachBasicEnergyFromDiscardPileToBench_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, AttachBasicEnergyFromDiscardPileToBench_AISelectEffect
 	db  $00
+
+FungalGrowthEffectCommands:
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, FungalGrowthEffect
 
 EnergySporesEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDiscardPileHasBasicEnergyCards
@@ -1629,11 +1632,6 @@ DragonRageEffectCommands:
 SpeedImpactEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SpeedImpact_DamageSubtractionEffect
 	dbw EFFECTCMDTYPE_AI, SpeedImpact_AIEffect
-	db  $00
-
-FungalGrowthEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SleepEffect
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, LeechLifeEffect
 	db  $00
 
 SynthesisEffectCommands:

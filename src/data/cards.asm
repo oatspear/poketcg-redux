@@ -1487,31 +1487,31 @@ ParasCard:
 
 	; attack 1
 	energy GRASS, 1 ; energies
-	tx SporeName ; name
-	tx InflictSleepDescription ; description
+	tx SwarmName ; name
+	tx SwarmDescription ; description
 	dw NONE ; description (cont)
-	db 0 ; damage
-	db DAMAGE_NORMAL ; category
-	dw InflictSleepEffectCommands ; effect commands
-	db INFLICT_SLEEP ; flags 1
-	db NONE ; flags 2
-	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_SPORE ; animation
-
-	; attack 2
-	energy COLORLESS, 2 ; energies
-	tx SlashName ; name
-	dw NONE ; description
-	dw NONE ; description (cont)
-	db 20 ; damage
-	db DAMAGE_NORMAL ; category
-	dw NONE ; effect commands
+	db 10 ; damage
+	db DAMAGE_PLUS ; category
+	dw SwarmEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_SLASH ; animation
+	db 3
+	db ATK_ANIM_HIT ; animation
+
+	; attack 2
+	energy COLORLESS, 2 ; energies
+	tx LeechLifeName ; name
+	tx LeechLifeDescription ; description
+	dw NONE ; description (cont)
+	db 20 ; damage
+	db DAMAGE_NORMAL ; category
+	dw LeechLifeEffectCommands ; effect commands
+	db NONE ; flags 1
+	db HEAL_USER ; flags 2
+	db NONE ; flags 3
+	db 3
+	db ATK_ANIM_DRAIN ; animation
 
 	db 0 ; retreat cost
 	db WR_FIRE ; weakness
@@ -1537,32 +1537,32 @@ ParasectCard:
 	tx ParasName ; pre-evo name
 
 	; attack 1
-	energy COLORLESS, 1 ; energies
-	tx EnergySporesName ; name
-	tx Attach2EnergyFromDiscardToAnyPkmnDescription ; description
-	dw NONE ; description (cont)
+	energy 0 ; energies
+	tx LethargySporesName ; name
+	tx LethargySporesDescription ; description
+	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db RESIDUAL ; category
+	db POKEMON_POWER ; category
+	dw PassivePowerEffectCommands ; effect commands
+	db INFLICT_SLEEP ; flags 1
+	db NONE ; flags 2
+	db NONE ; flags 3
+	db 1
+	db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
+
+	; attack 2
+	energy GRASS, 1, COLORLESS, 1 ; energies
+	tx FungalGrowthName ; name
+	tx Attach2EnergyFromDiscardToAnyPkmnDescription ; description
+	tx FungalGrowthDescriptionCont ; description (cont)
+	db 20 ; damage
+	db DAMAGE_NORMAL ; category
 	dw EnergySporesEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
-	db SPECIAL_AI_HANDLING ; flags 3
+	db NONE ; flags 3  | SPECIAL_AI_HANDLING
 	db 0
-	db ATK_ANIM_GLOW_EFFECT ; animation
-
-	; attack 2
-	energy GRASS, 1, COLORLESS, 2 ; energies
-	tx FungalGrowthName ; name
-	tx LeechLifeDescription ; description
-	tx InflictSleepDescription ; description (cont)
-	db 20 ; damage
-	db DAMAGE_NORMAL ; category
-	dw FungalGrowthEffectCommands ; effect commands
-	db INFLICT_SLEEP | HEAL_USER ; flags 1
-	db NONE ; flags 2
-	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_SPORE ; animation
+	db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
 
 	db 1 ; retreat cost
 	db WR_FIRE ; weakness
@@ -1603,17 +1603,17 @@ VenonatCard:
 
 	; attack 2
 	energy GRASS, 1 ; energies
-	tx LeechLifeName ; name
-	tx LeechLifeDescription ; description
+	tx BugBiteName ; name
+	tx PluckDescription ; description
 	dw NONE ; description (cont)
 	db 10 ; damage
-	db DAMAGE_NORMAL ; category
-	dw LeechLifeEffectCommands ; effect commands
+	db DAMAGE_PLUS ; category
+	dw PluckEffectCommands ; effect commands
 	db NONE ; flags 1
-	db HEAL_USER ; flags 2
+	db NONE ; flags 2
 	db NONE ; flags 3
-	db 3
-	db ATK_ANIM_DRAIN ; animation
+	db 0
+	db ATK_ANIM_HIT ; animation
 
 	db 0 ; retreat cost
 	db WR_FIRE ; weakness

@@ -59,8 +59,6 @@ HandleSpecialAIAttacks:
 	jp z, .DragonDance
 	cp HORSEA
 	jp z, .DragonDance
-	cp PARASECT
-	jp z, .EnergySpores
 	cp RED_GYARADOS
 	jp z, .HyperBeam
 	cp DRAGONAIR
@@ -400,15 +398,15 @@ HandleSpecialAIAttacks:
 	ld a, $83
 	ret
 
-.EnergySpores:
-	ld a, CARD_LOCATION_DISCARD_PILE
-	ld e, GRASS_ENERGY
-	call CheckIfAnyCardIDinLocation
-	jp nc, .zero_score
-	call AIProcessButDontPlayEnergy_SkipEvolution
-	jp nc, .zero_score
-	ld a, $83
-	ret
+; .EnergySpores:
+; 	ld a, CARD_LOCATION_DISCARD_PILE
+; 	ld e, GRASS_ENERGY
+; 	call CheckIfAnyCardIDinLocation
+; 	jp nc, .zero_score
+; 	call AIProcessButDontPlayEnergy_SkipEvolution
+; 	jp nc, .zero_score
+; 	ld a, $83
+; 	ret
 
 ; only incentivize attack if player's active card,
 ; has any energy cards attached, and if so,

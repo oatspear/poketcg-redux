@@ -2399,11 +2399,9 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer SporeName                                          ; 0x0884
 	textpointer InflictSleepDescription
 	textpointer SlashName                                          ; 0x0889
-	textpointer EnergySporesName
 	textpointer Attach2EnergyFromDiscardToAnyPkmnDescription
 	textpointer FungalGrowthName
-	textpointer ShiftName                                          ; 0x0890
-	textpointer ShiftDescription                                   ; 0x0891
+	textpointer FungalGrowthDescriptionCont
 	textpointer InflictConfusionAndPoisonDescription
 	textpointer RazorLeafName                                      ; 0x089a
 	textpointer LureName                                           ; 0x089e
@@ -3085,6 +3083,10 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer DoubleHitDescription
 	textpointer TripleHitName
 	textpointer TripleHitDescription
+	textpointer LethargySporesName
+	textpointer LethargySporesDescription
+	textpointer ShiftName
+	textpointer ShiftDescription
 
 	; unused
 	; textpointer SwimFreelyName

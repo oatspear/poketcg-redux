@@ -23,8 +23,22 @@
 - **Toxic**: removed.
 - New attack: **Toxic Needle** (GC): 30 damage; inflicts Double Poison; inflicts Paralysis if the Defending Pokémon was not affected with any status.
 
+#### Paras
+- **Spore**: removed.
+- **Slash**: removed.
+- New attack: **Swarm** (G): 10 damage; put 1 Basic Pokémon from deck onto play; if the Bench was full, +10 damage.
+- New attack: **Leech Life** (CC): 20 damage; heals damage equal to the damage done.
+
+#### Parasect
+- **Energy Spores**: removed.
+- **Fungal Growth**: reworked.
+- New Pokémon Power: **Lethargy Spores**: at the end of your turns, if this is your Active Pokémon and it has some energies attached to it, inflict Drowsiness.
+- New attack: **Fungal Growth** (GC): 20 damage; attach 2 Basic Energies from your discard pile in any way you like; if this has 3 or more energies, heal 20 damage.
+
 #### Venonat
 - Increased HP from 40 to 50.
+- **Leech Life**: removed.
+- New attack: **Bug Bite** (G): 10 damage; discards any Tools attached to the Defending Pokémon; does double damage if a Tool was discarded.
 
 #### Venomoth
 - **Assassin Flight**: removed.

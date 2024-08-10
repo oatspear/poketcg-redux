@@ -16,10 +16,6 @@ SlashName: ; 58f87 (16:4f87)
 	text "Slash"
 	done
 
-EnergySporesName:
-	text "Energy Spores"
-	done
-
 Attach2EnergyFromDiscardToAnyPkmnDescription:
 	text "Choose up to 2 Basic Energy cards"
 	line "from your discard pile and attach"
@@ -31,15 +27,10 @@ FungalGrowthName:
 	text "Fungal Growth"
 	done
 
-ShiftName:
-	text "Shift"
-	done
-
-ShiftDescription:
-	text "Once during your turn, you may"
-	line "change the type of this Pokémon to"
-	line "the type of any other Pokémon in"
-	line "play, other than Colorless."
+FungalGrowthDescriptionCont:
+	text "If this Pokémon has 3 or more"
+	line "Energies attached to it, heal"
+	line "20 damage from this Pokémon."
 	done
 
 InflictConfusionAndPoisonDescription:

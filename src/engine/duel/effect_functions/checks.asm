@@ -728,6 +728,18 @@ CheckDefendingPokemonHasStatus:
 	ret
 
 
+; return carry if the Defending Pokémon is not asleep
+CheckDefendingPokemonIsAsleep:
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetNonTurnDuelistVariable
+	and CNF_SLP_PRZ
+	cp ASLEEP
+	ret z ; return if asleep
+	ldtx hl, OpponentIsNotAsleepText
+	scf
+	ret
+
+
 ; Loop over turn holder's Pokemon and return whether any have status conditions.
 ; Returns:
 ;    a: first status condition found or zero if none found

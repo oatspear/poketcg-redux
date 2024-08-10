@@ -1,5 +1,36 @@
 
 
+; attack 1
+energy GRASS, 1 ; energies
+tx SporeName ; name
+tx InflictSleepDescription ; description
+dw NONE ; description (cont)
+db 0 ; damage
+db DAMAGE_NORMAL ; category
+dw InflictSleepEffectCommands ; effect commands
+db INFLICT_SLEEP ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_SPORE ; animation
+
+; attack 2
+energy GRASS, 1, COLORLESS, 2 ; energies
+tx FungalGrowthName ; name
+tx LeechLifeDescription ; description
+tx InflictSleepDescription ; description (cont)
+db 20 ; damage
+db DAMAGE_NORMAL ; category
+dw FungalGrowthEffectCommands ; effect commands
+db INFLICT_SLEEP | HEAL_USER ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_SPORE ; animation
+
+
+
+
 VenomPowderName:
 	text "Venom Powder"
 	done
