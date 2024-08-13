@@ -2341,28 +2341,28 @@ ScytherCard:
 	tx SwordsDanceName ; name
 	tx NextTurnDoubleDamageDescription ; description
 	dw NONE ; description (cont)
-	db 0 ; damage
-	db RESIDUAL ; category
+	db 10 ; damage
+	db DAMAGE_NORMAL ; category
 	dw SwordsDanceEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db SPECIAL_AI_HANDLING ; flags 3
 	db 0
-	db ATK_ANIM_GLOW_EFFECT ; animation
+	db ATK_ANIM_SLASH ; animation
 
 	; attack 2
-	energy COLORLESS, 3 ; energies
-	tx SlashName ; name
-	dw NONE ; description
+	energy COLORLESS, 2 ; energies
+	tx StrafeName ; name
+	tx SwitchThisPokemonDescription ; description
 	dw NONE ; description (cont)
-	db 30 ; damage
+	db 20 ; damage
 	db DAMAGE_NORMAL ; category
-	dw NONE ; effect commands
+	dw SwitchUserEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_SLASH ; animation
+	db ATK_ANIM_QUICK_ATTACK ; animation
 
 	db 0 ; retreat cost
 	db WR_FIRE ; weakness
