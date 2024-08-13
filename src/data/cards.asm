@@ -1486,6 +1486,20 @@ ParasCard:
 	dw NONE ; pre-evo name
 
 	; attack 1
+	energy COLORLESS, 1 ; energies
+	tx NutritionSupportName ; name
+	tx AttachEnergyFromHandDescription ; description
+	dw NONE ; description (cont)
+	db 0 ; damage
+	db RESIDUAL ; category
+	dw Accelerate1EnergyFromHandEffectCommands ; effect commands
+	db NONE ; flags 1
+	db NONE ; flags 2
+	db SPECIAL_AI_HANDLING ; flags 3
+	db 0
+	db ATK_ANIM_GLOW_EFFECT ; animation
+
+	; attack 2
 	energy GRASS, 1 ; energies
 	tx SwarmName ; name
 	tx SwarmDescription ; description
@@ -1498,20 +1512,6 @@ ParasCard:
 	db NONE ; flags 3
 	db 3
 	db ATK_ANIM_HIT ; animation
-
-	; attack 2
-	energy COLORLESS, 2 ; energies
-	tx LeechLifeName ; name
-	tx LeechLifeDescription ; description
-	dw NONE ; description (cont)
-	db 20 ; damage
-	db DAMAGE_NORMAL ; category
-	dw LeechLifeEffectCommands ; effect commands
-	db NONE ; flags 1
-	db HEAL_USER ; flags 2
-	db NONE ; flags 3
-	db 3
-	db ATK_ANIM_DRAIN ; animation
 
 	db 0 ; retreat cost
 	db WR_FIRE ; weakness

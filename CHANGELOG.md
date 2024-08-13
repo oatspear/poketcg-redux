@@ -26,8 +26,8 @@
 #### Paras
 - **Spore**: removed.
 - **Slash**: removed.
+- New attack: **Nutrition Support** (C): attach 1 basic energy from the hand to 1 Pokémon.
 - New attack: **Swarm** (G): 10 damage; put 1 Basic Pokémon from deck onto play; if the Bench was full, +10 damage.
-- New attack: **Leech Life** (CC): 20 damage; heals damage equal to the damage done.
 
 #### Parasect
 - **Energy Spores**: removed.

@@ -51,6 +51,8 @@ HandleSpecialAIAttacks:
 	jp z, .EnergySpike
 	cp DRAGONITE_LV45
 	jp z, .EnergySpike
+	cp PARAS
+	jp z, .NutritionSupport
 	cp EXEGGCUTE
 	jp z, .NutritionSupport
 	cp TANGELA_LV12
