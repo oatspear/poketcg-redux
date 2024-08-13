@@ -12,10 +12,6 @@ InflictSleepDescription:
 	done
 ENDC
 
-SlashName: ; 58f87 (16:4f87)
-	text "Slash"
-	done
-
 Attach2EnergyFromDiscardToAnyPkmnDescription:
 	text "Choose up to 2 Basic Energy cards"
 	line "from your discard pile and attach"

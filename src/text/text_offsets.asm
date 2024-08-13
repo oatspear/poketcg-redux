@@ -2398,7 +2398,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PetalDanceDescription                              ; 0x087f
 	textpointer SporeName                                          ; 0x0884
 	textpointer InflictSleepDescription
-	textpointer SlashName                                          ; 0x0889
 	textpointer Attach2EnergyFromDiscardToAnyPkmnDescription
 	textpointer FungalGrowthName
 	textpointer FungalGrowthDescriptionCont
