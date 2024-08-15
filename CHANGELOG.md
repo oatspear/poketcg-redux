@@ -56,9 +56,9 @@
 #### Pinsir
 - Increased HP from 60 to 70.
 - **Iron Grip**: removed.
-- **Guillotine**: reduced cost from (GGC) to (GC).
-- **Guillotine**: can only be used on Pokémon with 40 HP or less, down from 50 HP or less.
-- New attack: **Bug Bite** (G): 10 damage; discards any Tools attached to the Defending Pokémon; does double damage if a Tool was discarded.
+- **Guillotine**: reduced cost from (GGC) to (CC).
+- **Guillotine**: can only be used on Pokémon with 30 HP or less, down from 50 HP or less.
+- New attack: **Rend** (G): 10 damage; +20 damage if the Defending Pokémon is damaged.
 
 ### Colorless Changes
 

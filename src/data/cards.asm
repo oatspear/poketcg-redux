@@ -2389,12 +2389,12 @@ PinsirCard:
 
 	; attack 1
 	energy GRASS, 1 ; energies
-	tx BugBiteName ; name
-	tx PluckDescription ; description
+	tx RendName ; name
+	tx Bonus20IfOpponentIsDamagedDescription ; description
 	dw NONE ; description (cont)
 	db 10 ; damage
 	db DAMAGE_PLUS ; category
-	dw PluckEffectCommands ; effect commands
+	dw RendEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -2402,13 +2402,13 @@ PinsirCard:
 	db ATK_ANIM_HIT ; animation
 
 	; attack 2
-	energy GRASS, 1, COLORLESS, 1 ; energies
+	energy COLORLESS, 2 ; energies
 	tx GuillotineName ; name
-	tx Guillotine40Description ; description
+	tx Guillotine30Description ; description
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category
-	dw Guillotine40EffectCommands ; effect commands
+	dw Guillotine30EffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db SPECIAL_AI_HANDLING ; flags 3

@@ -289,8 +289,8 @@ ChopDownEffectCommands:
 	dbw EFFECTCMDTYPE_AI, ChopDown_AIEffect
 	db  $00
 
-Guillotine40EffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDefendingPokemonHas40HpOrLess
+Guillotine30EffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDefendingPokemonHas30HpOrLess
 	; fallthrough
 
 Guillotine50EffectCommands:

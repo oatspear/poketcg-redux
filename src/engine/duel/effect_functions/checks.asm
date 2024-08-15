@@ -633,9 +633,9 @@ CheckSomePokemonWithEnoughHP:
 
 
 ; output:
-;   carry: set if the Defending Pokémon has more than 40 HP remaining
-CheckDefendingPokemonHas40HpOrLess:
-	ld a, 40
+;   carry: set if the Defending Pokémon has more than 30 HP remaining
+CheckDefendingPokemonHas30HpOrLess:
+	ld a, 30
 	jr CheckDefendingPokemonHasLowHp
 
 ; output:

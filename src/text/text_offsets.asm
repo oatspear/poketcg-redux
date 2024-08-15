@@ -2427,7 +2427,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer NextTurnDoubleDamageDescription
 	textpointer BugBiteName
 	textpointer GuillotineName
-	textpointer Guillotine40Description
+	textpointer Guillotine30Description
 	textpointer Guillotine50Description
 	textpointer Guillotine70Description
 	textpointer EmberName                                          ; 0x08d4

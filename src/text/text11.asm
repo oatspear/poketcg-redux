@@ -151,9 +151,9 @@ GuillotineName:
 	text "Guillotine"
 	done
 
-Guillotine40Description:
+Guillotine30Description:
 	text "If the Defending Pokémon has"
-	line "40 HP or less remaining,"
+	line "30 HP or less remaining,"
 	line "it is Knocked Out."
 	done
 
