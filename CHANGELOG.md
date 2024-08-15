@@ -32,8 +32,8 @@
 #### Parasect
 - **Energy Spores**: removed.
 - **Fungal Growth**: reworked.
-- New Pokémon Power: **Lethargy Spores**: at the end of your turns, if this is your Active Pokémon and it has some energies attached to it, inflict Drowsiness.
-- New attack: **Fungal Growth** (GC): 20 damage; attach 2 Basic Energies from your discard pile in any way you like; if this has 3 or more energies, heal 20 damage.
+- New attack: **Fungal Growth** (G): attach 1 Basic Energy from the hand to 1 Pokémon; inflict Drowsiness.
+- New attack: **Leech Life** (CC): 30 damage; heal the same amount of damage dealt.
 
 #### Venonat
 - Increased HP from 40 to 50.

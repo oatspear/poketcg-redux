@@ -53,6 +53,8 @@ HandleSpecialAIAttacks:
 	jp z, .EnergySpike
 	cp PARAS
 	jp z, .NutritionSupport
+	cp PARASECT
+	jp z, .NutritionSupport
 	cp EXEGGCUTE
 	jp z, .NutritionSupport
 	cp TANGELA_LV12

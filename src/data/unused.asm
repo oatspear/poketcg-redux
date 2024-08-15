@@ -1,5 +1,35 @@
 
 
+LethargySporesName:
+	text "Lethargy Spores"
+	done
+
+LethargySporesDescription:
+	text "At the end of your turns, if this is"
+	line "your Active Pokémon and it has any"
+	line "Energies attached to it, leave the"
+	line "opponent's Active Pokémon Drowsy."
+	done
+
+
+; attack 1
+energy 0 ; energies
+tx LethargySporesName ; name
+tx LethargySporesDescription ; description
+tx PokemonPowerDescriptionCont ; description (cont)
+db 0 ; damage
+db POKEMON_POWER ; category
+dw PassivePowerEffectCommands ; effect commands
+db INFLICT_SLEEP ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 1
+db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
+
+
+
+
+
 ; attack 1
 energy GRASS, 1 ; energies
 tx SporeName ; name

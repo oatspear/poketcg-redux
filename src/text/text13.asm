@@ -241,17 +241,6 @@ TripleHitDescription:
 	line "Energies attached to it."
 	done
 
-LethargySporesName:
-	text "Lethargy Spores"
-	done
-
-LethargySporesDescription:
-	text "At the end of your turns, if this is"
-	line "your Active Pokémon and it has any"
-	line "Energies attached to it, leave the"
-	line "opponent's Active Pokémon Drowsy."
-	done
-
 ShiftName:
 	text "Shift"
 	done

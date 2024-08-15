@@ -1537,32 +1537,32 @@ ParasectCard:
 	tx ParasName ; pre-evo name
 
 	; attack 1
-	energy 0 ; energies
-	tx LethargySporesName ; name
-	tx LethargySporesDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	energy GRASS, 1 ; energies
+	tx FungalGrowthName ; name
+	tx AttachEnergyFromHandDescription ; description
+	tx InflictSleepDescription ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
-	dw PassivePowerEffectCommands ; effect commands
+	db RESIDUAL ; category
+	dw FungalGrowthEffectCommands ; effect commands
 	db INFLICT_SLEEP ; flags 1
 	db NONE ; flags 2
-	db NONE ; flags 3
-	db 1
-	db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
+	db SPECIAL_AI_HANDLING ; flags 3
+	db 0
+	db ATK_ANIM_GLOW_EFFECT ; animation
 
 	; attack 2
-	energy GRASS, 1, COLORLESS, 1 ; energies
-	tx FungalGrowthName ; name
-	tx Attach2EnergyFromDiscardToAnyPkmnDescription ; description
-	tx FungalGrowthDescriptionCont ; description (cont)
-	db 20 ; damage
+	energy COLORLESS, 2 ; energies
+	tx LeechLifeName ; name
+	tx LeechLifeDescription ; description
+	dw NONE ; description (cont)
+	db 30 ; damage
 	db DAMAGE_NORMAL ; category
-	dw EnergySporesEffectCommands ; effect commands
+	dw LeechLifeEffectCommands ; effect commands
 	db NONE ; flags 1
-	db NONE ; flags 2
-	db NONE ; flags 3  | SPECIAL_AI_HANDLING
-	db 0
-	db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
+	db HEAL_USER ; flags 2
+	db NONE ; flags 3
+	db 3
+	db ATK_ANIM_DRAIN ; animation
 
 	db 1 ; retreat cost
 	db WR_FIRE ; weakness

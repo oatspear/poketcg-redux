@@ -3082,8 +3082,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer DoubleHitDescription
 	textpointer TripleHitName
 	textpointer TripleHitDescription
-	textpointer LethargySporesName
-	textpointer LethargySporesDescription
 	textpointer ShiftName
 	textpointer ShiftDescription
 

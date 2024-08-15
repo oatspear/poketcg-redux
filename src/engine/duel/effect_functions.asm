@@ -1061,12 +1061,6 @@ VoltSwitchEffect:
 ; Compound Attacks
 ; ------------------------------------------------------------------------------
 
-FungalGrowthEffect:
-	call AttachEnergyFromDiscard_AttachToPokemonEffect
-	call CheckArenaPokemonHas3OrMoreEnergiesAttached
-	ret c  ; not enough energies
-	jp Heal20DamageEffect
-
 
 ToxicNeedleEffect:
 	ld a, DUELVARS_ARENA_CARD_STATUS
@@ -3386,11 +3380,6 @@ QueenPressEffect:
 	jp ApplySubstatus1ToAttackingCard
 
 
-EnergySpores_PlayerSelectEffect:
-	ldtx hl, Choose2EnergyCardsFromDiscardPileToAttachText
-	jp HandleEnergyCardsInDiscardPileSelection
-
-
 AttachBasicEnergyFromDiscardPile_PlayerSelectEffect:
 	ldtx hl, Choose1BasicEnergyCardFromDiscardPileText
 	call DrawWideTextBox_WaitForInput
@@ -3448,14 +3437,6 @@ AttachBasicEnergyFromDiscardPileToBench_AISelectEffect:
 	ld a, PLAY_AREA_BENCH_1
 	ldh [hTempPlayAreaLocation_ffa1], a
 	ret
-
-
-EnergySpores_AISelectEffect:
-; AI picks first 2 energy cards
-	call CreateEnergyCardListFromDiscardPile_OnlyBasic
-	; call CreateEnergyCardListFromDiscardPile_AllEnergy
-	ld a, 2
-	jr PickFirstNCardsFromList_SelectEffect
 
 
 Attach1DarknessEnergyFromDiscard_SelectEffect:

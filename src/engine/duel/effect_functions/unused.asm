@@ -1,6 +1,63 @@
 ;
 
 
+; assume:
+;  - ArePokemonPowersDisabled has been called
+LethargySpores_StatusEffect:
+	ld a, DUELVARS_ARENA_CARD
+	call GetTurnDuelistVariable
+	call GetCardIDFromDeckIndex
+	ld a, e
+	cp PARASECT
+	ret nz  ; not Parasect
+; do not inflict Sleep twice
+	call CheckDefendingPokemonIsAsleep
+	ret nc  ; already asleep
+; check that the ability can be used
+	call CheckCannotUseDueToStatus
+	ret c
+	call CheckArenaPokemonHasAnyEnergiesAttached
+	ret c
+; inflict status
+	xor a
+	ld [wEffectFunctionsFeedbackIndex], a
+	call SleepEffect
+	jr ApplyStatusAndPlayAnimationAdhoc
+
+
+FungalGrowthEffectCommands:
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, FungalGrowthEffect
+	; fallthrough to EnergySporesEffectCommands
+
+EnergySporesEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDiscardPileHasBasicEnergyCards
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, EnergySpores_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, EnergySpores_AISelectEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, AttachEnergyFromDiscard_AttachToPokemonEffect
+	db  $00
+
+;
+FungalGrowthEffect:
+	call AttachEnergyFromDiscard_AttachToPokemonEffect
+	call CheckArenaPokemonHas3OrMoreEnergiesAttached
+	ret c  ; not enough energies
+	jp Heal20DamageEffect
+
+;
+EnergySpores_PlayerSelectEffect:
+	ldtx hl, Choose2EnergyCardsFromDiscardPileToAttachText
+	jp HandleEnergyCardsInDiscardPileSelection
+
+EnergySpores_AISelectEffect:
+; AI picks first 2 energy cards
+	call CreateEnergyCardListFromDiscardPile_OnlyBasic
+	; call CreateEnergyCardListFromDiscardPile_AllEnergy
+	ld a, 2
+	jr PickFirstNCardsFromList_SelectEffect
+
+
+
+
 FungalGrowthEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SleepEffect
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, LeechLifeEffect
