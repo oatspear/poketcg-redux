@@ -47,9 +47,11 @@
 - New attack: **Baton Pass** (G): 20 damage; switch the user; move all energies attached to the user to the new Active Pokémon.
 
 #### Scyther
+- Reduced HP from 70 to 60.
+- Increased Retreat Cost from 0 to 1.
 - **Swords Dance**: increased base damage from zero to 10.
 - **Slash**: removed.
-- New attack: **Strafe** (CC): 20 damage; switch the user.
+- New attack: **U-Turn** (CC): 30 damage; switch the user.
 
 #### Pinsir
 - Increased HP from 60 to 70.

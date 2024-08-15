@@ -189,13 +189,17 @@ StealthPoisonEffectCommands:
 	dbw EFFECTCMDTYPE_AI_SELECTION, SwitchUser_AISelectEffect
 	db  $00
 
-OldTeleportEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckBenchIsNotEmpty
-	; fallthrough
 SwitchUserEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckBenchIsNotEmpty
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, ForceSwitchUser_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, SwitchUser_AISelectEffect
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, SwitchUser_SwitchEffect
+	db  $00
+
+MaySwitchUserEffectCommands:
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, SwitchUser_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, SwitchUser_AISelectEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, SwitchUser_SwitchEffect
 	db  $00
 
 RapidSpinEffectCommands:

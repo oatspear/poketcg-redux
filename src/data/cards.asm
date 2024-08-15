@@ -2332,7 +2332,7 @@ ScytherCard:
 	db STAR ; rarity
 	db COLOSSEUM | JUNGLE ; sets
 	db SCYTHER
-	db 70 ; hp
+	db 60 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
 
@@ -2352,10 +2352,10 @@ ScytherCard:
 
 	; attack 2
 	energy COLORLESS, 2 ; energies
-	tx StrafeName ; name
+	tx UTurnName ; name
 	tx SwitchThisPokemonDescription ; description
 	dw NONE ; description (cont)
-	db 20 ; damage
+	db 30 ; damage
 	db DAMAGE_NORMAL ; category
 	dw SwitchUserEffectCommands ; effect commands
 	db NONE ; flags 1
@@ -2364,7 +2364,7 @@ ScytherCard:
 	db 0
 	db ATK_ANIM_QUICK_ATTACK ; animation
 
-	db 0 ; retreat cost
+	db 1 ; retreat cost
 	db WR_FIRE ; weakness
 	db WR_FIGHTING ; resistance
 	tx MantisName ; category
@@ -3283,11 +3283,11 @@ MoltresLv37Card:
 	; attack 1
 	energy FIRE, 1, COLORLESS, 1 ; energies
 	tx StrafeName ; name
-	tx SwitchThisPokemonDescription ; description
+	tx MaySwitchThisPokemonDescription ; description
 	dw NONE ; description (cont)
 	db 20 ; damage
 	db DAMAGE_NORMAL ; category
-	dw SwitchUserEffectCommands ; effect commands
+	dw MaySwitchUserEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -5008,11 +5008,11 @@ ArticunoLv37Card:
 	; attack 1
 	energy WATER, 1, COLORLESS, 1 ; energies
 	tx StrafeName ; name
-	tx SwitchThisPokemonDescription ; description
+	tx MaySwitchThisPokemonDescription ; description
 	dw NONE ; description (cont)
 	db 20 ; damage
 	db DAMAGE_NORMAL ; category
-	dw SwitchUserEffectCommands ; effect commands
+	dw MaySwitchUserEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -6098,11 +6098,11 @@ ZapdosLv68Card:
 	; attack 1
 	energy LIGHTNING, 1, COLORLESS, 1 ; energies
 	tx StrafeName ; name
-	tx SwitchThisPokemonDescription ; description
+	tx MaySwitchThisPokemonDescription ; description
 	dw NONE ; description (cont)
 	db 20 ; damage
 	db DAMAGE_NORMAL ; category
-	dw SwitchUserEffectCommands ; effect commands
+	dw MaySwitchUserEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -7398,11 +7398,11 @@ AbraCard:
 	; attack 2
 	energy PSYCHIC, 1 ; energies
 	tx TeleportBlastName ; name
-	tx SwitchThisPokemonDescription ; description
+	tx MaySwitchThisPokemonDescription ; description
 	dw NONE ; description (cont)
 	db 20 ; damage
 	db DAMAGE_NORMAL ; category
-	dw SwitchUserEffectCommands ; effect commands
+	dw MaySwitchUserEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -8214,11 +8214,11 @@ MewLv15Card:
 	; attack 2
 	energy COLORLESS, 2 ; energies
 	tx TeleportBlastName ; name
-	tx SwitchThisPokemonDescription ; description
+	tx MaySwitchThisPokemonDescription ; description
 	dw NONE ; description (cont)
 	db 20 ; damage
 	db DAMAGE_NORMAL ; category
-	dw SwitchUserEffectCommands ; effect commands
+	dw MaySwitchUserEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3

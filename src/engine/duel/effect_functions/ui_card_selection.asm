@@ -463,6 +463,12 @@ HandlePlayerSelectionPokemonInBench:
 	bank1call HasAlivePokemonInBench
 	jr HandlePlayerSelectionPokemonInPlayArea.loop_input
 
+HandlePlayerSelectionPokemonInBench_AllowExamine:
+	bank1call HasAlivePokemonInBench
+	ld a, $01
+	ld [wcbd4], a
+	jr HandlePlayerSelectionPokemonInPlayArea.loop_input
+
 
 ; input:
 ;   a: how to test the selected Pokémon (CARDTEST_* constants)

@@ -2268,6 +2268,14 @@ DragOff_SwitchAndDamageEffect:
 	jp DealDamageToArenaPokemon_CustomAnim
 
 
+ForceSwitchUser_PlayerSelectEffect:
+	ldtx hl, SelectPkmnOnBenchToSwitchWithActiveText
+	call DrawWideTextBox_WaitForInput
+	call HandlePlayerSelectionPokemonInBench_AllowExamine
+	ldh [hTemp_ffa0], a
+	ret
+
+
 SwitchUser_PlayerSelectEffect:
 	ld a, $ff
 	ldh [hTemp_ffa0], a

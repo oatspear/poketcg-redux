@@ -2723,6 +2723,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer IncreaseAttackCostby1Description
 	textpointer QuiverDanceName
 	textpointer Attach1EnergyFromDeckToThisPokemonDescription
+	textpointer UTurnName
 
 ; ------------------------------------------------------------------------------
 ; text12.asm
@@ -3034,6 +3035,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer DamageAllFriendlyBenched20Description
 	textpointer NoxiousScalesName
 	textpointer NoxiousScalesDescription
+	textpointer MaySwitchThisPokemonDescription
 
 ; ------------------------------------------------------------------------------
 ; text13.asm

@@ -1717,3 +1717,7 @@ Attach1EnergyFromDeckToThisPokemonDescription:
 	line "card and attach it to this Pokémon."
 	line "Shuffle your deck afterward."
 	done
+
+UTurnName:
+	text "U-Turn"
+	done

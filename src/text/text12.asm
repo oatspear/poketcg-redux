@@ -1591,3 +1591,8 @@ NoxiousScalesDescription:
 	line "attached to it, that Pokémon is"
 	line "Badly Poisoned and Confused."
 	done
+
+MaySwitchThisPokemonDescription:
+	text "You may switch this Pokémon with"
+	line "1 of your Benched Pokémon."
+	done
