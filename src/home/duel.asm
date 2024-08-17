@@ -1347,6 +1347,7 @@ SwapPlayAreaPokemon:
 ; OATS set SUBSTATUS3 on the new Active Pokémon
 	ld l, DUELVARS_ARENA_CARD_SUBSTATUS3
 	set SUBSTATUS3_THIS_TURN_ACTIVE, [hl]
+	res SUBSTATUS3_THIS_TURN_ROOTED, [hl]
 ; ---------------------------------------------
 	set CARD_LOCATION_PLAY_AREA_F, d
 	set CARD_LOCATION_PLAY_AREA_F, e

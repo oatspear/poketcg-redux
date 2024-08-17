@@ -888,7 +888,12 @@ GetRetreatCostPenalty:
 	ld a, DUELVARS_ARENA_CARD_SUBSTATUS2
 	call GetTurnDuelistVariable
 	cp SUBSTATUS2_RETREAT_PLUS_1
-	jr nz, .no_substatus
+	jr nz, .rooted
+	inc c
+.rooted
+	ld l, DUELVARS_ARENA_CARD_SUBSTATUS3
+	bit SUBSTATUS3_THIS_TURN_ROOTED, [hl]
+	jr z, .no_substatus
 	inc c
 .no_substatus
 	xor a  ; PLAY_AREA_ARENA
@@ -1026,6 +1031,7 @@ UpdateSubstatusConditions_EndOfTurn:
 	; res SUBSTATUS3_THIS_TURN_ACTIVE, [hl]
 	; res SUBSTATUS3_THIS_TURN_DOUBLE_DAMAGE, [hl]
 	; res SUBSTATUS3_THIS_TURN_CANNOT_ATTACK, [hl]
+	; res SUBSTATUS3_THIS_TURN_ROOTED, [hl]
 	ld l, DUELVARS_ARENA_CARD_SUBSTATUS2
 	ld [hl], $0
 	ld l, DUELVARS_ABILITY_FLAGS
