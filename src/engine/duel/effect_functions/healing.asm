@@ -2,15 +2,14 @@
 ; Healing
 ; ------------------------------------------------------------------------------
 
-LeechHalfDamageEffect:
-	ld hl, wDealtDamage
-	ld a, [hli]  ; wDamageEffectiveness
-	or a
-	ret z  ; no damage
-	call HalfARoundedUp
-	ld e, a
-	ld d, [hl]
-	jr ApplyAndAnimateHPRecovery
+; leech up to 20 against poisoned targets
+; leech 10 damage otherwise
+VampiricAura_LeechEffect:
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetNonTurnDuelistVariable
+	and POISONED | DOUBLE_POISONED
+	jr z, Leech10DamageEffect
+	jr LeechUpTo20DamageEffect
 
 
 LeechLifeEffect:

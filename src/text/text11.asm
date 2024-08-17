@@ -1547,9 +1547,9 @@ VampiricAuraDescription:
 	text "If your Active Pokémon has any"
 	line "attached <DARKNESS> Energy, its attacks"
 	line "that do damage to the Defending"
-	line "Pokémon also heal your Active"
-	line "Pokémon for up to 20 damage (10 if"
-	line "the attack only did 10 damage)."
+	line "Pokémon also heal 10 damage from it"
+	line "(or up to 20, if the Defending"
+	line "Pokémon is Poisoned)."
 	done
 
 ReactivePoisonName:

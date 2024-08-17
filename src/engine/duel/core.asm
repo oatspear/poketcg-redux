@@ -6815,9 +6815,7 @@ HandleOnAttackEffects:
 .vampiric_aura
 	call IsVampiricAuraActive
 	jr nc, .done
-	; farcall Leech10DamageEffect
-	; farcall LeechHalfDamageEffect
-	farcall LeechUpTo20DamageEffect
+	farcall VampiricAura_LeechEffect
 .done
 	; jp HandleBurnDiscardEnergy
 	; fallthrough

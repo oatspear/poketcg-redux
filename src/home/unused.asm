@@ -146,6 +146,28 @@ CheckReducedAccuracySubstatus:
 
 
 
+;
+VampiricAuraDescription:
+	text "If your Active Pokémon has any"
+	line "attached <DARKNESS> Energy, its attacks"
+	line "that do damage to the Defending"
+	line "Pokémon also heal your Active"
+	line "Pokémon for up to 20 damage (10 if"
+	line "the attack only did 10 damage)."
+	done
+
+LeechHalfDamageEffect:
+	ld hl, wDealtDamage
+	ld a, [hli]  ; wDamageEffectiveness
+	or a
+	ret z  ; no damage
+	call HalfARoundedUp
+	ld e, a
+	ld d, [hl]
+	jr ApplyAndAnimateHPRecovery
+
+
+
 HandleOnAttackEffects:
 	call IsVampiricAuraActive
 	jr nc, .splashing_attacks

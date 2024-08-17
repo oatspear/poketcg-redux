@@ -60,6 +60,12 @@
 - **Guillotine**: can only be used on Pokémon with 30 HP or less, down from 50 HP or less.
 - New attack: **Rend** (G): 10 damage; +20 damage if the Defending Pokémon is damaged.
 
+### Darkness Changes
+
+#### Golbat
+- **Vampiric Aura**: leeches 10 damage by default, down from 20.
+- **Vampiric Aura**: leeches 20 damage against Poisoned Pokémon.
+
 ### Colorless Changes
 
 #### Doduo
