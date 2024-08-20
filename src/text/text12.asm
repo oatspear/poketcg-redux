@@ -6,14 +6,6 @@ Heal10DamageDescription:
 	text "Heal 10 damage from this Pokémon."
 	done
 
-VineWhipName: ; 57644 (15:7644)
-	text "Vine Whip"
-	done
-
-PoisonPowderName: ; 5764f (15:764f)
-	text "Poisonpowder"
-	done
-
 InflictPoisonDescription: ; 5765d (15:765d)
 	text "The Defending Pokémon is now"
 	line "Poisoned."
@@ -259,15 +251,6 @@ LeechLifeDescription: ; 588b3 (16:48b3)
 	text "Heal from this Pokémon the same"
 	line "amount of damage you did to the"
 	line "Defending Pokémon."
-	done
-
-GrowthName:
-	text "Growth"
-	done
-
-GrowthDescription:
-	text "Attach a Basic Energy card from"
-	line "your hand to this Pokémon."
 	done
 
 SproutName:

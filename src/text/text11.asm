@@ -38,8 +38,8 @@ RazorLeafName: ; 59403 (16:5403)
 	text "Razor Leaf"
 	done
 
-LureName:
-	text "Lure"
+IngrainName:
+	text "Ingrain"
 	done
 
 AcidName:

@@ -1709,12 +1709,12 @@ BellsproutCard:
 
 	; attack 1
 	energy COLORLESS, 1 ; energies
-	tx GrowthName ; name
-	tx GrowthDescription ; description
-	dw NONE ; description (cont)
+	tx IngrainName ; name
+	tx Attach1GrassEnergyFromDiscardDescription ; description
+	tx Heal10DamageDescription ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category
-	dw GrowthEffectCommands ; effect commands
+	dw MendEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db SPECIAL_AI_HANDLING ; flags 3
@@ -1722,18 +1722,18 @@ BellsproutCard:
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
 	; attack 2
-	energy GRASS, 1, COLORLESS, 1 ; energies
-	tx VineWhipName ; name
-	dw NONE ; description
+	energy GRASS, 1 ; energies
+	tx PoisonWhipName ; name
+	tx InflictPoisonDescription ; description
 	dw NONE ; description (cont)
 	db 20 ; damage
 	db DAMAGE_NORMAL ; category
-	dw NONE ; effect commands
-	db NONE ; flags 1
+	dw InflictPoisonEffectCommands ; effect commands
+	db INFLICT_POISON ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_WHIP ; animation
+	db ATK_ANIM_POISON_WHIP ; animation
 
 	db 0 ; retreat cost
 	db WR_FIRE ; weakness

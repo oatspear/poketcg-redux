@@ -30,7 +30,7 @@ HandleSpecialAIAttacks:
 	cp GRIMER
 	jp z, .GatherToxins
 	cp BELLSPROUT
-	jp z, .Growth
+	jp z, .Ingrain
 	cp ZAPDOS_LV68
 	jp z, .BigThunder
 	cp MEOWTH_LV15
@@ -256,6 +256,10 @@ HandleSpecialAIAttacks:
 
 .Mend:
 	ld e, FIGHTING_ENERGY
+	jr .accelerate_self_from_discard_got_energy
+
+.Ingrain:
+	ld e, GRASS_ENERGY
 	jr .accelerate_self_from_discard_got_energy
 
 .Flare:

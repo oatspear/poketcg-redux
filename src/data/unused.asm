@@ -1,4 +1,30 @@
 
+
+GrowthName:
+	text "Growth"
+	done
+
+GrowthDescription:
+	text "Attach a Basic Energy card from"
+	line "your hand to this Pokémon."
+	done
+
+; attack 1
+energy COLORLESS, 1 ; energies
+tx GrowthName ; name
+tx GrowthDescription ; description
+dw NONE ; description (cont)
+db 0 ; damage
+db RESIDUAL ; category
+dw GrowthEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db SPECIAL_AI_HANDLING ; flags 3
+db 0
+db ATK_ANIM_GLOW_EFFECT ; animation
+
+
+
 PoisonLureName:
 	text "Poison Lure"
 	done

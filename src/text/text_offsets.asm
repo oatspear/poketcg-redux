@@ -2403,7 +2403,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer FungalGrowthDescriptionCont
 	textpointer InflictConfusionAndPoisonDescription
 	textpointer RazorLeafName                                      ; 0x089a
-	textpointer LureName                                           ; 0x089e
+	textpointer IngrainName
 	textpointer AcidName
 	textpointer FlytrapName
 	textpointer FlytrapDescription
@@ -2729,8 +2729,6 @@ TextOffsets:: ; 34000 (d:4000)
 
 	textpointer LeechSeedName                                      ; 0x080b
 	textpointer Heal10DamageDescription                            ; 0x080c
-	textpointer VineWhipName                                       ; 0x0810
-	textpointer PoisonPowderName                                   ; 0x0811
 	textpointer InflictPoisonDescription
 	textpointer MegaDrainName                                      ; 0x0818
 	textpointer Heal20DamageDescription
@@ -2778,8 +2776,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ToxicWasteDescriptionCont
 	textpointer LeechLifeName                                      ; 0x086a
 	textpointer LeechLifeDescription                               ; 0x086b
-	textpointer GrowthName
-	textpointer GrowthDescription
 	textpointer SproutName
 	textpointer SproutDescription
 	textpointer AromatherapyName
