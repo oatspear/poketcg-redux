@@ -42,17 +42,6 @@ LureName:
 	text "Lure"
 	done
 
-PoisonLureName:
-	text "Poison Lure"
-	done
-
-PoisonLureDescription:
-	text "Switch 1 of your opponent's Benched"
-	line "Pokémon with their Active Pokémon."
-	line "The new Defending Pokémon is now"
-	line "Poisoned."
-	done
-
 AcidName:
 	text "Acid"
 	done

@@ -1759,18 +1759,18 @@ WeepinbellCard:
 	tx BellsproutName ; pre-evo name
 
 	; attack 1
-	energy GRASS, 1 ; energies
-	tx PoisonLureName ; name
-	tx PoisonLureDescription ; description
-	dw NONE ; description (cont)
+	energy 0 ; energies
+	tx WaftingScentName ; name
+	tx WaftingScentDescription ; description
+	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db RESIDUAL ; category
-	dw PoisonLureEffectCommands ; effect commands
-	db INFLICT_POISON ; flags 1
-	db SWITCH_OPPONENT_POKEMON ; flags 2
+	db POKEMON_POWER ; category
+	dw WaftingScentEffectCommands ; effect commands
+	db NONE ; flags 1
+	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_LURE ; animation
+	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
 	energy GRASS, 1, COLORLESS, 1 ; energies

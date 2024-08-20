@@ -23,11 +23,6 @@ BurnEffect:
 	lb bc, CNF_SLP_PRZ, BURNED
 	jr ApplyStatusEffect
 
-Paralysis50PercentEffect: ; 2c011 (b:4011)
-	ldtx de, ParalysisCheckText
-	call TossCoin_BankB
-	ret nc
-
 ParalysisEffect: ; 2c018 (b:4018)
 	lb bc, PSN_DBLPSN_BRN, PARALYZED
 	jr ApplyStatusEffect
@@ -138,26 +133,6 @@ SelfPoisonEffect:
 	call PoisonEffect
 	jp SwapTurn
 
-; If heads, Poison + Paralysis.
-; If tails, Poison + Sleep.
-PollenFrenzy_Status50PercentEffect:
-	ldtx de, ParalysisCheckText
-	call TossCoin_BankB
-	jr nc, .tails
-; heads
-	call ParalysisEffect
-	jp PoisonEffect
-.tails
-	call SleepEffect
-	jp PoisonEffect
-
-; If heads, defending Pokémon becomes asleep.
-; If tails, defending Pokémon becomes poisoned.
-SleepOrPoisonEffect:
-	ldtx de, AsleepIfHeadsPoisonedIfTailsText
-	call TossCoin_BankB
-	jp c, SleepEffect
-	jp PoisonEffect
 
 ; Poisons the Defending Pokémon if an evolution card was chosen.
 PoisonEvolution_PoisonEffect:
@@ -165,6 +140,7 @@ PoisonEvolution_PoisonEffect:
 	cp $ff
 	ret z ; skip if no evolution card was chosen
 	jp PoisonEffect
+
 
 ; If the Defending Pokémon is Basic, it is Paralyzed
 ParalysisIfBasicEffect:
@@ -228,6 +204,7 @@ SleepEffect_PlayArea:
 ; outputs:
 ;   [wNoEffectFromWhichStatus]: set with the input status condition
 ;   carry: set if able to apply status
+; preserves: de
 ApplyStatusEffectToPlayAreaPokemon:
 	ld a, e
 	push bc
@@ -254,13 +231,14 @@ ApplyStatusEffectToPlayAreaPokemon:
 	cp SNORLAX
 	jr nz, .can_induce_status
 	; ...unless already so, or if affected by Toxic Gas
-	call CheckCannotUseDueToStatus
+	ld a, e
+	call CheckCannotUseDueToStatus_Anywhere  ; preserves bc, de
 	jr c, .can_induce_status
 
 .cant_induce_status
 	ld a, c
 	ld [wNoEffectFromWhichStatus], a
-	call SetNoEffectFromStatus
+	call SetNoEffectFromStatus  ; preserves hl, bc, de
 	or a
 	ret
 

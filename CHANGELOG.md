@@ -46,6 +46,10 @@
 - New Pokémon Power: **Noxious Scales**: when this Pokémon moves into the Active Spot, inflict Poison; if it has 3 or more attached energies, inflict Double Poison and Confusion.
 - New attack: **Baton Pass** (G): 20 damage; switch the user; move all energies attached to the user to the new Active Pokémon.
 
+#### Weepinbell
+- **Poison Lure**: removed.
+- New Pokémon Power: **Wafting Scent**: discard an attached Energy; the opponent's Active Pokémon is Poisoned and Burned.
+
 #### Scyther
 - Reduced HP from 70 to 60.
 - Increased Retreat Cost from 0 to 1.

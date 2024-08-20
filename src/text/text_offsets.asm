@@ -2404,8 +2404,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer InflictConfusionAndPoisonDescription
 	textpointer RazorLeafName                                      ; 0x089a
 	textpointer LureName                                           ; 0x089e
-	textpointer PoisonLureName
-	textpointer PoisonLureDescription
 	textpointer AcidName
 	textpointer FlytrapName
 	textpointer FlytrapDescription
@@ -3086,6 +3084,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer TripleHitDescription
 	textpointer ShiftName
 	textpointer ShiftDescription
+	textpointer WaftingScentName
+	textpointer WaftingScentDescription
 
 	; unused
 	; textpointer SwimFreelyName

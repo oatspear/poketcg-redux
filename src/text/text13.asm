@@ -252,6 +252,18 @@ ShiftDescription:
 	line "play, other than Colorless."
 	done
 
+WaftingScentName:
+	text "Wafting Scent"
+	done
+
+WaftingScentDescription:
+	text "Once during your turn, you may"
+	line "discard an Energy attached to this"
+	line "Pokémon. If you do, your opponent's"
+	line "Active Pokémon is now Burned and"
+	line "Poisoned."
+	done
+
 ; ------------------------------------------------------------------------------
 ; Unused Text
 ; ------------------------------------------------------------------------------

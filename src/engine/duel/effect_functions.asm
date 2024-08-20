@@ -18,6 +18,49 @@ INCLUDE "engine/duel/effect_functions/status.asm"
 INCLUDE "engine/duel/effect_functions/substatus.asm"
 
 
+WaftingScent_DiscardSleepEffect:
+	call SetUsedPokemonPowerThisTurn_RestoreTrigger
+	ldh a, [hEnergyTransEnergyCard]
+	cp $ff
+	ret z
+; discard energy
+	call PutCardInDiscardPile
+; inflict status
+	call SwapTurn
+	ld e, PLAY_AREA_ARENA
+	call BurnEffect_PlayArea
+	call SwapTurn
+; handle failure
+	jr c, .burn_animation
+	ldtx hl, ThereWasNoEffectFromBurnText
+	call DrawWideTextBox_WaitForInput
+	jr .poison
+
+.burn_animation
+	; bank1call DrawDuelMainScene
+	xor a
+	ld [wDuelAnimLocationParam], a
+	ld a, ATK_ANIM_BURN
+	bank1call PlayAdhocAnimationOnPlayAreaArena_NoEffectiveness
+
+.poison
+	call SwapTurn
+	ld e, PLAY_AREA_ARENA
+	call PoisonEffect_PlayArea
+	call SwapTurn
+; handle failure
+	jr c, .poison_animation
+	ldtx hl, ThereWasNoEffectFromPoisonText
+	jp DrawWideTextBox_WaitForInput
+.poison_animation
+	; bank1call DrawDuelMainScene
+	xor a
+	ld [wDuelAnimLocationParam], a
+	ld a, ATK_ANIM_POISON
+	bank1call PlayAdhocAnimationOnPlayAreaArena_NoEffectiveness
+	ret
+
+
 HyperHypnosis_DiscardSleepEffect:
 	call SetUsedPokemonPowerThisTurn_RestoreTrigger
 	ldh a, [hEnergyTransEnergyCard]
@@ -41,38 +84,6 @@ HyperHypnosis_DiscardSleepEffect:
 	ld a, ATK_ANIM_SLEEP
 	bank1call PlayAdhocAnimationOnPlayAreaArena_NoEffectiveness
 	ret
-
-
-; ------------------------------------------------------------------------------
-; Coin Flip
-; ------------------------------------------------------------------------------
-
-
-TossCoin_BankB:
-	jp TossCoin
-
-TossCoinATimes_BankB:
-	jp TossCoinATimes
-
-
-TossACoins:
-	cp 2
-	jp nc, TossCoinATimes
-	jp TossCoin
-
-
-Serial_TossCoin:
-	ld a, $1
-
-Serial_TossCoinATimes:
-	push de
-	push af
-	ld a, OPPACTION_TOSS_COIN_A_TIMES
-	call SetOppAction_SerialSendDuelData
-	pop af
-	pop de
-	call SerialSend8Bytes
-	jp TossCoinATimes
 
 
 ; ------------------------------------------------------------------------------
@@ -289,6 +300,7 @@ SyncShuffleDeck:
 INCLUDE "engine/duel/effect_functions/checks.asm"
 
 
+WaftingScenet_PreconditionCheck:
 HyperHypnosis_PreconditionCheck:
 	call CheckPokemonPowerCanBeUsed_StoreTrigger
 	ret c
@@ -6472,7 +6484,8 @@ Potion_HealEffect:
 
 GamblerEffect: ; 2f3f9 (b:73f9)
 	ldtx de, CardCheckIfHeads8CardsIfTails1CardText
-	call TossCoin_BankB
+	; call TossCoin_BankB
+	ld a, 1
 	ldh [hTemp_ffa0], a
 ; discard Gambler card from hand
 	ldh a, [hTempCardIndex_ff9f]

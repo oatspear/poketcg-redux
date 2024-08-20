@@ -1,4 +1,31 @@
 
+PoisonLureName:
+	text "Poison Lure"
+	done
+
+PoisonLureDescription:
+	text "Switch 1 of your opponent's Benched"
+	line "Pokémon with their Active Pokémon."
+	line "The new Defending Pokémon is now"
+	line "Poisoned."
+	done
+
+; attack 1
+energy GRASS, 1 ; energies
+tx PoisonLureName ; name
+tx PoisonLureDescription ; description
+dw NONE ; description (cont)
+db 0 ; damage
+db RESIDUAL ; category
+dw PoisonLureEffectCommands ; effect commands
+db INFLICT_POISON ; flags 1
+db SWITCH_OPPONENT_POKEMON ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_LURE ; animation
+
+
+
 
 LethargySporesName:
 	text "Lethargy Spores"
