@@ -809,8 +809,7 @@ ReduceDamageBy20Description:
 	line "Defending Pokémon to this Pokémon"
 	line "during your opponent's next turn by"
 	line "20 (after applying Weakness and"
-	line "Resistance). (Benching either"
-	line "Pokémon ends this effect.)"
+	line "Resistance)."
 	done
 
 RageDescription:
