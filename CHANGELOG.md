@@ -58,6 +58,11 @@
 - New Pokémon Power: **Grass Knot**: when your Active Pokémon does damage to the Defending Pokémon with an attack, if it has any attached Grass Energies, increase the Defending Pokémon's Retreat Cost by 1.
 - New attack: **Acidic Drain** (GC): 20 damage; heal 10 damage; inflict Poison and Burn.
 
+#### Victreebel
+- Increased HP from 90 to 100.
+- **Razor Leaf**: removed.
+- New attack: **Fragrance Trap** (G): 10 damage; switch the Defending Pokémon before doing damage; inflict Poison; if the user has 3 or more Energies, also inflict Confusion and Burn.
+
 #### Scyther
 - Reduced HP from 70 to 60.
 - Increased Retreat Cost from 0 to 1.

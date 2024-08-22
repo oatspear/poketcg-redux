@@ -145,17 +145,6 @@ PsychicNovaDescription:
 	line "discard your hand."
 	done
 
-DragOffName:
-	text "Drag Off"
-	done
-
-DragOffDescription:
-	text "Switch in 1 of your opponent's"
-	line "Benched Pokémon to the Active Spot."
-	line "This attack does 30 damage to the"
-	line "new Active Pokémon."
-	done
-
 QuickSearchName:
 	text "Quick Search"
 	done
@@ -267,6 +256,25 @@ GrassKnotDescription:
 ; ------------------------------------------------------------------------------
 ; Unused Text
 ; ------------------------------------------------------------------------------
+
+; DragOffName:
+; 	text "Drag Off"
+; 	done
+
+; DragOffDescription:
+; 	text "Switch in 1 of your opponent's"
+; 	line "Benched Pokémon to the Active Spot."
+; 	line "This attack does 30 damage to the"
+; 	line "new Active Pokémon."
+; 	done
+
+; RazorLeafName:
+; 	text "Razor Leaf"
+; 	done
+
+; IngrainName:
+; 	text "Ingrain"
+; 	done
 
 ; AcidName:
 ; 	text "Acid"

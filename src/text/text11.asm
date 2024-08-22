@@ -34,14 +34,6 @@ InflictConfusionAndPoisonDescription:
 	line "Confused and Poisoned."
 	done
 
-RazorLeafName: ; 59403 (16:5403)
-	text "Razor Leaf"
-	done
-
-IngrainName:
-	text "Ingrain"
-	done
-
 FlytrapName:
 	text "Flytrap"
 	done

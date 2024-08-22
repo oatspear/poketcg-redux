@@ -2182,6 +2182,14 @@ LureAbility_PreconditionCheck:
 	jp CheckPokemonPowerCanBeUsed_StoreTrigger
 
 
+FragranceTrap_PlayerSelectEffect:
+	xor a  ; PLAY_AREA_ARENA
+	ldh [hTempPlayAreaLocation_ffa1], a
+	call CheckOpponentBenchIsNotEmpty
+	ret c
+	; jr Lure_SelectSwitchPokemon
+	; fallthrough
+
 ; return in hTempPlayAreaLocation_ffa1 the PLAY_AREA_* location
 ; of the Bench Pokemon that was selected for switch
 Lure_SelectSwitchPokemon:
@@ -2227,6 +2235,35 @@ LureAbility_SwitchDefendingPokemon:
 	ldh [hTempPlayAreaLocation_ff9d], a
 	call SetUsedPokemonPowerThisTurn
 	jp Lure_SwitchDefendingPokemon
+
+
+FragranceTrap_SwitchEffect:
+	ld a, ATK_ANIM_LURE
+	ldh [hTemp_ffa0], a
+	; jr DragOff_SwitchEffect
+	; fallthrough
+
+DragOff_SwitchEffect:
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	or a
+	ret z  ; no switch
+; back up attack variables
+	ld a, [wLoadedAttackAnimation]
+	ld c, a
+	ld a, [wTempNonTurnDuelistCardID]
+	ld b, a
+	push bc
+; switch the Defending Pokémon
+	ldh a, [hTemp_ffa0]
+	bank1call PlayAdhocAnimationOnPlayAreaArena_NoEffectiveness
+	call Lure_SwitchDefendingPokemon
+; restore attack variables
+	pop bc
+	ld a, c
+	ld [wLoadedAttackAnimation], a
+	ld a, b
+	ld [wTempNonTurnDuelistCardID], a
+	ret
 
 
 DragOff_SwitchAndDamageEffect:
@@ -5018,14 +5055,7 @@ RapidSpin_SwitchEffect:
 
 SilverWhirlwind_SwitchEffect:
 	call Whirlwind_SwitchEffect
-	xor a
-	ld [wEffectFunctionsFeedbackIndex], a
-	call PoisonEffect
-	call CheckArenaPokemonHas3OrMoreEnergiesAttached
-	jp c, ApplyStatusAndPlayAnimationAdhoc
-	call BurnEffect
-	call SleepEffect
-	jp ApplyStatusAndPlayAnimationAdhoc
+	jp SilverWhirlwind_StatusEffect
 
 
 ; return carry if Defending Pokemon has no attacks

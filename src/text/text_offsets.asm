@@ -2402,8 +2402,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer FungalGrowthName
 	textpointer FungalGrowthDescriptionCont
 	textpointer InflictConfusionAndPoisonDescription
-	textpointer RazorLeafName                                      ; 0x089a
-	textpointer IngrainName
 	textpointer FlytrapName
 	textpointer FlytrapDescription
 	textpointer ToxicGasName                                       ; 0x08aa
@@ -3029,6 +3027,9 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer NoxiousScalesDescription
 	textpointer MaySwitchThisPokemonDescription
 	textpointer AcidicDrainName
+	textpointer FragranceTrapName
+	textpointer FragranceTrapDescription
+	textpointer FragranceTrapDescriptionCont
 
 ; ------------------------------------------------------------------------------
 ; text13.asm
@@ -3060,8 +3061,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer DarkPrisonDescription
 	textpointer PsychicNovaName
 	textpointer PsychicNovaDescription
-	textpointer DragOffName
-	textpointer DragOffDescription
 	textpointer QuickSearchName
 	textpointer QuickSearchDescription
 	textpointer SafeguardName

@@ -1805,7 +1805,7 @@ VictreebelCard:
 	db STAR ; rarity
 	db EVOLUTION | JUNGLE ; sets
 	db VICTREEBEL
-	db 90 ; hp
+	db 100 ; hp
 	db STAGE2 ; stage
 	tx WeepinbellName ; pre-evo name
 
@@ -1841,22 +1841,19 @@ VictreebelCard:
 	; Heal 20 damage from this Pokémon.
 	; The Defending Pokémon can't retreat during your opponent's next turn.
 
-	; Corrosive Acid (GGC) 50
-	; Flip a coin. If heads, your opponent's Active Pokémon is now Burned.
-
 	; attack 1
 	energy GRASS, 1 ; energies
-	tx RazorLeafName ; name
-	dw NONE ; description
-	dw NONE ; description (cont)
-	db 30 ; damage
+	tx FragranceTrapName ; name
+	tx FragranceTrapDescription ; description
+	tx FragranceTrapDescriptionCont ; description (cont)
+	db 10 ; damage
 	db DAMAGE_NORMAL ; category
-	dw NONE ; effect commands
-	db NONE ; flags 1
+	dw FragranceTrapEffectCommands ; effect commands
+	db INFLICT_POISON | INFLICT_CONFUSION ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_SLASH ; animation
+	db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
 
 	; attack 2
 	energy GRASS, 2, COLORLESS, 1 ; energies

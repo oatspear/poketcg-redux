@@ -107,6 +107,28 @@ PoisonConfusionEffect:
 ; ------------------------------------------------------------------------------
 
 
+FragranceTrap_StatusEffect:
+	xor a
+	ld [wEffectFunctionsFeedbackIndex], a
+	call PoisonEffect
+	call CheckArenaPokemonHas3OrMoreEnergiesAttached
+	jp c, ApplyStatusAndPlayAnimationAdhoc
+	call BurnEffect
+	call ConfusionEffect
+	jp ApplyStatusAndPlayAnimationAdhoc
+
+
+SilverWhirlwind_StatusEffect:
+	xor a
+	ld [wEffectFunctionsFeedbackIndex], a
+	call PoisonEffect
+	call CheckArenaPokemonHas3OrMoreEnergiesAttached
+	jp c, ApplyStatusAndPlayAnimationAdhoc
+	call BurnEffect
+	call SleepEffect
+	jp ApplyStatusAndPlayAnimationAdhoc
+
+
 ; Poison and Burn.
 AcidicDrain_PoisonBurnEffect:
 	call PoisonEffect

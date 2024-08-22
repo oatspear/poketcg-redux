@@ -93,6 +93,7 @@ AbilityLureEffectCommands:
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Lure_SelectSwitchPokemon
 	db  $00
 
+; unused
 PoisonLureEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, PoisonLure_SwitchEffect
 	; fallthrough to LureEffectCommands
@@ -111,6 +112,13 @@ DragOffEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DragOff_SwitchAndDamageEffect
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Lure_SelectSwitchPokemon
 	dbw EFFECTCMDTYPE_AI_SELECTION, Lure_GetOpponentBenchPokemonWithLowestHP
+	db  $00
+
+FragranceTrapEffectCommands:
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, FragranceTrap_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, Lure_GetOpponentBenchPokemonWithLowestHP
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, FragranceTrap_SwitchEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, FragranceTrap_StatusEffect
 	db  $00
 
 PrimalSwirlEffectCommands:
