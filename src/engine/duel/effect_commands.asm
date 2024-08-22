@@ -462,6 +462,11 @@ WaterGunEffectCommands:
 	dbw EFFECTCMDTYPE_AI, WaterGunEffect
 	db  $00
 
+EnergyBallEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, EnergyBallEffect
+	dbw EFFECTCMDTYPE_AI, EnergyBallEffect
+	db  $00
+
 FlailEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Flail_HPCheck
 	dbw EFFECTCMDTYPE_AI, Flail_AIEffect

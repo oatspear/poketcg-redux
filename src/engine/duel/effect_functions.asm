@@ -1542,6 +1542,16 @@ INCLUDE "engine/duel/effect_functions/card_lists.asm"
 ; ------------------------------------------------------------------------------
 
 
+GetNumAttachedGrassEnergy:
+	; ldh a, [hTempPlayAreaLocation_ff9d]
+	; ld e, a
+	ld e, PLAY_AREA_ARENA
+	call GetPlayAreaCardAttachedEnergies
+	call HandleEnergyColorOverride
+	ld a, [wAttachedEnergies + GRASS]
+	ret
+
+
 GetNumAttachedFireEnergy:
 	; ldh a, [hTempPlayAreaLocation_ff9d]
 	; ld e, a

@@ -253,6 +253,15 @@ GrassKnotDescription:
 	line "Pokémon's Retreat Cost by <COLORLESS>."
 	done
 
+EnergyBallName:
+	text "Energy Ball"
+	done
+
+EnergyBallDescription:
+	text "This attack does 10 damage for each"
+	line "<GRASS> Energy attached to this Pokémon."
+	done
+
 ; ------------------------------------------------------------------------------
 ; Unused Text
 ; ------------------------------------------------------------------------------

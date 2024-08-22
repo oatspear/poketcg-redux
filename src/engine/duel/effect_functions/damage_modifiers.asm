@@ -89,6 +89,15 @@ WaterGunEffect:
 	jp SetDefiniteAIDamage
 
 
+; 10 damage for each Grass Energy
+EnergyBallEffect:
+  call GetNumAttachedGrassEnergy
+	call ATimes10
+	call SetDefiniteDamage ; damage = 10 * Water Energy
+; set attack damage
+	jp SetDefiniteAIDamage
+
+
 ; 10 damage for each Fire Energy
 FireSpin_DamageMultiplierEffect:
   call GetNumAttachedFireEnergy

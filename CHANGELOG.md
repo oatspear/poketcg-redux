@@ -65,6 +65,10 @@
 - New attack: **Fragrance Trap** (G): 10 damage; switch the Defending Pokémon before doing damage; inflict Poison; if the user has 3 or more Energies, also inflict Confusion and Burn.
 - New attack: **Swallow Up** (GCC): 30 damage; +50 damage if the Defending Pokémon has less HP than the user; heal 40 damage if the attack Knocks Out the Defending Pokémon.
 
+#### Exeggcute
+- **Leech Seed**: removed.
+- New attack: **Energy Ball** (G): 10 damage per attached Grass Energy.
+
 #### Scyther
 - Reduced HP from 70 to 60.
 - Increased Retreat Cost from 0 to 1.

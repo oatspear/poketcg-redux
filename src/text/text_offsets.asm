@@ -3079,6 +3079,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ShiftDescription
 	textpointer GrassKnotName
 	textpointer GrassKnotDescription
+	textpointer EnergyBallName
+	textpointer EnergyBallDescription
 
 	; unused
 	; textpointer SwimFreelyName
