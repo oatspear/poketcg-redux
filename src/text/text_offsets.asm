@@ -2914,10 +2914,9 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer SteamrollerDescription
 	textpointer TrampleDescription
 	textpointer ConstrictName
-	textpointer ConstrictDescription
+	textpointer ConstrictDescriptionCont
 	textpointer WickedTentacleName
 	textpointer WickedTentacleDescription
-	textpointer PoisonOrConfusionIfPoisonedDescription
 	textpointer PrimalGuidanceName
 	textpointer PrimalGuidanceDescription
 	textpointer PrimalSwirlName

@@ -2227,8 +2227,8 @@ TangelaLv12Card:
 	; attack 2
 	energy GRASS, 1, COLORLESS, 1 ; energies
 	tx ConstrictName ; name
-	tx ConstrictDescription ; description
-	dw NONE ; description (cont)
+	tx IncreaseRetreatCostDescription ; description
+	tx ConstrictDescriptionCont ; description (cont)
 	db 10 ; damage
 	db DAMAGE_PLUS ; category
 	dw ConstrictEffectCommands ; effect commands
@@ -3681,8 +3681,8 @@ TentacoolCard:
 	; attack 2
 	energy COLORLESS, 2 ; energies
 	tx ConstrictName ; name
-	tx ConstrictDescription ; description
-	dw NONE ; description (cont)
+	tx IncreaseRetreatCostDescription ; description
+	tx ConstrictDescriptionCont ; description (cont)
 	db 10 ; damage
 	db DAMAGE_PLUS ; category
 	dw ConstrictEffectCommands ; effect commands
@@ -3732,10 +3732,10 @@ TentacruelCard:
 	; attack 2
 	energy WATER, 1, COLORLESS, 1 ; energies
 	tx JellyfishStingName ; name
-	tx PoisonOrConfusionIfPoisonedDescription ; description
-	dw NONE ; description (cont)
-	db 30 ; damage
-	db DAMAGE_NORMAL ; category
+	tx InflictConfusionAndPoisonDescription ; description
+	tx ConstrictDescriptionCont ; description (cont)
+	db 10 ; damage
+	db DAMAGE_PLUS ; category
 	dw JellyfishStingEffectCommands ; effect commands
 	db INFLICT_POISON | INFLICT_CONFUSION ; flags 1
 	db NONE ; flags 2

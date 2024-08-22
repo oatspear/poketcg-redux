@@ -1,5 +1,17 @@
 ;
 
+JellyfishStingEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, JellyfishSting_PoisonConfusionEffect
+	db  $00
+
+; Poison; Confusion if Poisoned.
+JellyfishSting_PoisonConfusionEffect:
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetNonTurnDuelistVariable
+	and DOUBLE_POISONED
+	jp z, PoisonEffect  ; not yet Poisoned
+	jp ConfusionEffect
+
 
 BindEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ParalysisIfBasicEffect

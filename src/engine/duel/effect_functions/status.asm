@@ -135,15 +135,6 @@ AcidicDrain_PoisonBurnEffect:
 	jp BurnEffect
 
 
-; Poison; Confusion if Poisoned.
-JellyfishSting_PoisonConfusionEffect:
-	ld a, DUELVARS_ARENA_CARD_STATUS
-	call GetNonTurnDuelistVariable
-	and DOUBLE_POISONED
-	jp z, PoisonEffect  ; not yet Poisoned
-	jp ConfusionEffect
-
-
 ; Defending Pokémon and user become confused.
 ; Defending Pokémon also becomes Poisoned.
 FoulOdorEffect:

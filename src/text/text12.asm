@@ -962,12 +962,10 @@ ConstrictName:
 	text "Constrict"
 	done
 
-ConstrictDescription:
-	text "Until your next turn, increase the"
-	line "Defending Pokémon's Retreat Cost"
-	line "by 1 <COLORLESS>. Then, this attack does"
-	line "10 more damage for each <COLORLESS> in"
-	line "that Pokémon's Retreat Cost."
+ConstrictDescriptionCont:
+	text "This attack does 10 more damage"
+	line "for each <COLORLESS> in the Defending"
+	line "Pokémon's Retreat Cost."
 	done
 
 WickedTentacleName:
@@ -979,12 +977,6 @@ WickedTentacleDescription:
 	line "Defending Pokémon to one of your"
 	line "opponent's Benched Pokémon."
 	line "Both Pokémon are now Poisoned."
-	done
-
-PoisonOrConfusionIfPoisonedDescription:
-	text "The Defending Pokémon is now"
-	line "Poisoned. If it was already"
-	line "Poisoned, it is now Confused."
 	done
 
 PrimalGuidanceName:

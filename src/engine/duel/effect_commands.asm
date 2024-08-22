@@ -391,7 +391,8 @@ InflictConfusionAndPoisonEffectCommands:
 	db  $00
 
 JellyfishStingEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, JellyfishSting_PoisonConfusionEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, JellyfishStingEffect
+	dbw EFFECTCMDTYPE_AI, Constrict_AIEffect
 	db  $00
 
 PokemonPowerHealEffectCommands:

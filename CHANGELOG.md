@@ -92,6 +92,13 @@
 - **Guillotine**: can only be used on Pokémon with 30 HP or less, down from 50 HP or less.
 - New attack: **Rend** (G): 10 damage; +20 damage if the Defending Pokémon is damaged.
 
+### Water Changes
+
+#### Tentacruel
+- **Jellyfish Sting**: base damage reduced from 30 to 10.
+- **Jellyfish Sting**: always inflicts both Poison and Confusion.
+- **Jellyfish Sting**: does +10 damage for each (C) in the Defending Pokémon's Retreat Cost.
+
 ### Darkness Changes
 
 #### Golbat

@@ -1029,6 +1029,12 @@ VoltSwitchEffect:
 ; Compound Attacks
 ; ------------------------------------------------------------------------------
 
+; Poison, Confusion, bonus damage based on Retreat Cost
+JellyfishStingEffect:
+	call Constrict_DamageBoostEffect
+	call PoisonEffect
+	jp ConfusionEffect
+
 
 Ingrain_RetrieveAndHealEffect:
 	call TempListLength
