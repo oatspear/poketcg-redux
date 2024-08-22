@@ -915,6 +915,22 @@ DeadlyPoison_AIEffect:
 ; Based on Damage Counters
 ; ------------------------------------------------------------------------------
 
+SwallowUp_DamageBoostEffect:
+	ld a, DUELVARS_ARENA_CARD_HP
+	call GetTurnDuelistVariable
+	ld e, a
+	ld a, DUELVARS_ARENA_CARD_HP
+	call GetNonTurnDuelistVariable
+	cp e
+	ld a, 50
+	jp c, AddToDamage
+	ret
+
+SwallowUp_AIEffect:
+	call SwallowUp_DamageBoostEffect
+	jp SetDefiniteAIDamage
+
+
 ChopDown_DamageBoostEffect:
 	ld a, DUELVARS_ARENA_CARD_HP
 	call GetNonTurnDuelistVariable

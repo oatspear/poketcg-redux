@@ -134,11 +134,6 @@ PanicVineEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PanicVine_ConfusionTrapEffect
 	db  $00
 
-FlytrapEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, UnableToRetreatEffect
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Leech20DamageEffect
-	db  $00
-
 SproutEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDeckIsNotEmpty
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, SelectedCard_AddToHandFromDeckEffect
@@ -295,6 +290,12 @@ PrimalThunderEffectCommands:
 
 PsychicNovaEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, PsychicNova_DrawbackEffect
+	db  $00
+
+SwallowUpEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SwallowUp_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, SwallowUp_HealEffect
+	dbw EFFECTCMDTYPE_AI, SwallowUp_AIEffect
 	db  $00
 
 ChopDownEffectCommands:

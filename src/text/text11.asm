@@ -34,14 +34,20 @@ InflictConfusionAndPoisonDescription:
 	line "Confused and Poisoned."
 	done
 
-FlytrapName:
-	text "Flytrap"
+SwallowUpName:
+	text "Swallow Up"
 	done
 
-FlytrapDescription:
-	text "Heal 20 damage from this Pokémon."
-	line "The Defending Pokémon can't retreat"
-	line "during your opponent's next turn."
+SwallowUpDescription:
+	text "If the Defending Pokémon has less"
+	line "HP remaining than this Pokémon,"
+	line "this attack does 50 more damage."
+	done
+
+SwallowUpDescriptionCont:
+	text "If this attack Knocks Out the"
+	line "Defending Pokémon, heal 40 damage"
+	line "from this Pokémon."
 	done
 
 ToxicGasName:
@@ -54,11 +60,7 @@ ToxicGasDescription:
 	line "other than Toxic Gases."
 	done
 
-HypnoblastName:
-	text "Hypnoblast"
-	done
-
-TeleportBlastName: ; 5988c (16:588c)
+TeleportBlastName:
 	text "Teleport Blast"
 	done
 

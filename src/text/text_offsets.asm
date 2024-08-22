@@ -2402,11 +2402,11 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer FungalGrowthName
 	textpointer FungalGrowthDescriptionCont
 	textpointer InflictConfusionAndPoisonDescription
-	textpointer FlytrapName
-	textpointer FlytrapDescription
+	textpointer SwallowUpName
+	textpointer SwallowUpDescription
+	textpointer SwallowUpDescriptionCont
 	textpointer ToxicGasName                                       ; 0x08aa
 	textpointer ToxicGasDescription                                ; 0x08ab
-	textpointer HypnoblastName                                     ; 0x08ae
 	textpointer TeleportBlastName                                  ; 0x08b3
 	textpointer SwitchThisPokemonDescription
 	textpointer DamagePerEnergyAttachedToBothActiveDescription

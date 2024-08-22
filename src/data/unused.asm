@@ -796,6 +796,10 @@ db ATK_ANIM_BLIZZARD ; animation
 
 
 
+HypnoblastName:
+	text "Hypnoblast"
+	done
+
 ; attack 2
 energy PSYCHIC, 1, COLORLESS, 1 ; energies
 tx HypnoblastName ; name

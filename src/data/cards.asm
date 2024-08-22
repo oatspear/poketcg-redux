@@ -1856,17 +1856,17 @@ VictreebelCard:
 	db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
 
 	; attack 2
-	energy GRASS, 2, COLORLESS, 1 ; energies
-	tx FlytrapName ; name
-	tx FlytrapDescription ; description
-	dw NONE ; description (cont)
-	db 40 ; damage
-	db DAMAGE_NORMAL ; category
-	dw FlytrapEffectCommands ; effect commands
+	energy GRASS, 1, COLORLESS, 2 ; energies
+	tx SwallowUpName ; name
+	tx SwallowUpDescription ; description
+	tx SwallowUpDescriptionCont ; description (cont)
+	db 30 ; damage
+	db DAMAGE_PLUS ; category
+	dw SwallowUpEffectCommands ; effect commands
 	db NONE ; flags 1
-	db HEAL_USER | FLAG_2_BIT_6 ; flags 2
+	db HEAL_USER ; flags 2
 	db NONE ; flags 3
-	db 1
+	db 40
 	db ATK_ANIM_DRAIN ; animation
 
 	db 2 ; retreat cost
