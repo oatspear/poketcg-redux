@@ -398,10 +398,6 @@ PetalDanceEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, PetalDance_BonusEffect
 	db  $00
 
-PollenFrenzyEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PollenFrenzy_Status50PercentEffect
-	db  $00
-
 RainbowTeamEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, RainbowTeam_OncePerTurnCheck
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, RainbowTeam_AttachEnergyEffect
@@ -481,10 +477,6 @@ AmnesiaEffectCommands:
 	dbw EFFECTCMDTYPE_AI_SELECTION, Amnesia_AISelectEffect
 	db  $00
 
-Paralysis50PercentEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Paralysis50PercentEffect
-	db  $00
-
 ParalysisRecoil20EffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ParalysisEffect
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Recoil20Effect
@@ -532,10 +524,9 @@ AdaptiveEvolutionEffectCommands:
 	db  $00
 
 SilverWhirlwindEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SleepOrPoisonEffect
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Whirlwind_SwitchEffect
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Whirlwind_SelectEffect
 	dbw EFFECTCMDTYPE_AI_SWITCH_DEFENDING_PKMN, Whirlwind_SelectEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, SilverWhirlwind_SwitchEffect
 	db  $00
 
 FocusEnergyEffectCommands:

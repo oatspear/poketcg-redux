@@ -398,7 +398,7 @@ VenusaurLv67Card:
 	dw NONE ; description (cont)
 	db 20 ; damage
 	db DAMAGE_NORMAL ; category
-	dw PollenFrenzyEffectCommands ; effect commands
+	dw JellyfishStingEffectCommands ; effect commands
 	db INFLICT_POISON | INFLICT_PARALYSIS | INFLICT_SLEEP ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -1287,7 +1287,7 @@ OddishCard:
 	dw NONE ; description (cont)
 	db 10 ; damage
 	db DAMAGE_NORMAL ; category
-	dw Paralysis50PercentEffectCommands ; effect commands
+	dw BindEffectCommands ; effect commands
 	db INFLICT_PARALYSIS ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -9245,7 +9245,7 @@ LickitungCard:
 	dw NONE ; description (cont)
 	db 10 ; damage
 	db DAMAGE_NORMAL ; category
-	dw Paralysis50PercentEffectCommands ; effect commands
+	dw BindEffectCommands ; effect commands
 	db INFLICT_PARALYSIS ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -9642,7 +9642,7 @@ SnorlaxCard:
 	dw NONE ; description (cont)
 	db 30 ; damage
 	db DAMAGE_NORMAL ; category
-	dw Paralysis50PercentEffectCommands ; effect commands
+	dw BindEffectCommands ; effect commands
 	db INFLICT_PARALYSIS ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3

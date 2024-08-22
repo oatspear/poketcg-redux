@@ -1537,7 +1537,7 @@ VampiricAuraDescription:
 	line "attached <DARKNESS> Energy, its attacks"
 	line "that do damage to the Defending"
 	line "Pokémon also heal 10 damage from it"
-	line "(or up to 20, if the Defending"
+	line "(20 damage, if the Defending"
 	line "Pokémon is Poisoned)."
 	done
 

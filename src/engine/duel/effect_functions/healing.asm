@@ -2,14 +2,14 @@
 ; Healing
 ; ------------------------------------------------------------------------------
 
-; leech up to 20 against poisoned targets
+; leech 20 against poisoned targets
 ; leech 10 damage otherwise
 VampiricAura_LeechEffect:
 	ld a, DUELVARS_ARENA_CARD_STATUS
 	call GetNonTurnDuelistVariable
 	and POISONED | DOUBLE_POISONED
 	jr z, Leech10DamageEffect
-	jr LeechUpTo20DamageEffect
+	jr Leech20DamageEffect
 
 
 LeechLifeEffect:
@@ -30,16 +30,6 @@ Leech10DamageEffect:
 Heal10DamageEffect:
 	ld de, 10
 	jr ApplyAndAnimateHPRecovery
-
-
-LeechUpTo20DamageEffect:
-	ld hl, wDealtDamage
-	ld a, [hli]
-	or a
-	ret z ; return if no damage dealt
-	cp 20
-	jr c, Heal10DamageEffect
-	jr Heal20DamageEffect
 
 
 Leech20DamageEffect:

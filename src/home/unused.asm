@@ -167,6 +167,16 @@ LeechHalfDamageEffect:
 	jr ApplyAndAnimateHPRecovery
 
 
+;
+LeechUpTo20DamageEffect:
+	ld hl, wDealtDamage
+	ld a, [hli]
+	or a
+	ret z ; return if no damage dealt
+	cp 20
+	jr c, Heal10DamageEffect
+	jr Heal20DamageEffect
+
 
 HandleOnAttackEffects:
 	call IsVampiricAuraActive
