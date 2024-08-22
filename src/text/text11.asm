@@ -1700,3 +1700,12 @@ Attach1EnergyFromDeckToThisPokemonDescription:
 UTurnName:
 	text "U-Turn"
 	done
+
+IngrainName:
+	text "Ingrain"
+	done
+
+IngrainDescriptionCont:
+	text "Heal 10 damage from this Pokémon"
+	line "for each Energy retrieved this way."
+	done

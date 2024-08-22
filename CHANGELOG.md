@@ -2,6 +2,9 @@
 
 ## Version 0.11.0
 
+### Removed Cards
+- Tangela Lv8
+
 ### Grass Changes
 
 #### Caterpie
@@ -68,6 +71,12 @@
 #### Exeggcute
 - **Leech Seed**: removed.
 - New attack: **Energy Ball** (G): 10 damage per attached Grass Energy.
+
+#### Tangela Lv12
+- **Nutrition Support**: removed.
+- **Grass Knot**: removed.
+- New attack: **Ingrain** (C): retrieve up to 2 Basic Energies from the discard pile; heal 10 damage for each retrieved Energy.
+- New attack: **Constrict** (GC): 10 damage; increase opponent's retreat cost by 1 and deal +10 damage for each (C) in retreat cost.
 
 #### Scyther
 - Reduced HP from 70 to 60.

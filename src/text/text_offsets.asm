@@ -2416,7 +2416,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer SelfdestructName                                   ; 0x08c0
 	; textpointer Selfdestruct40Description
 	textpointer Selfdestruct50Description
-	textpointer BindName                                           ; 0x08c4
 	textpointer PoisonWhipName                                     ; 0x08c7
 	textpointer SwordsDanceName                                    ; 0x08ca
 	textpointer NextTurnDoubleDamageDescription
@@ -2720,6 +2719,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer QuiverDanceDescriptionCont
 	textpointer Attach1EnergyFromDeckToThisPokemonDescription
 	textpointer UTurnName
+	textpointer IngrainName
+	textpointer IngrainDescriptionCont
 
 ; ------------------------------------------------------------------------------
 ; text12.asm
@@ -2856,13 +2857,10 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer DoubleDamageIfMorePrizesDescription
 	textpointer NutritionSupportName
 	; textpointer NutritionSupportDescription
-	textpointer PanicVineName
-	textpointer PanicVineDescription
 	textpointer UltravisionName
 	textpointer TutorAnyCardFromTop4DeckDescription
 	textpointer TropicalStormName
 	textpointer TropicalStormDescription
-	textpointer ParalysisIfBasicDescription
 	textpointer IsCuredOfStatusAndEffectsText
 	textpointer HealingEnergyName
 	textpointer HealingEnergyDescription
@@ -2904,6 +2902,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer IfAttachedEnergy10BonusDamageDescription
 	textpointer MuddyWaterName
 	textpointer Retrieve1BasicEnergyDescription
+	textpointer Retrieve2BasicEnergiesDescription
 	textpointer EnergySoakName
 	textpointer EnergySoakDescription
 	textpointer EnergyJoltName

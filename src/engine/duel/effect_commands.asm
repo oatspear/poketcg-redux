@@ -130,10 +130,6 @@ ConstrictEffectCommands:
 	dbw EFFECTCMDTYPE_AI, Constrict_AIEffect
 	db  $00
 
-PanicVineEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PanicVine_ConfusionTrapEffect
-	db  $00
-
 SproutEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDeckIsNotEmpty
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, SelectedCard_AddToHandFromDeckEffect
@@ -259,11 +255,6 @@ ToxicEffectCommands:
 
 ToxicNeedleEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ToxicNeedleEffect
-	db  $00
-
-GrassKnotEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, GrassKnot_DamageBoostEffect
-	dbw EFFECTCMDTYPE_AI, GrassKnot_AIEffect
 	db  $00
 
 RageFistEffectCommands:
@@ -525,10 +516,6 @@ ThunderWaveEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ParalysisEffect
 	dbw EFFECTCMDTYPE_DISCARD_ENERGY, DiscardEnergy_DiscardEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, ThunderWave_AISelectEffect
-	db  $00
-
-BindEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ParalysisIfBasicEffect
 	db  $00
 
 CowardiceEffectCommands:
@@ -1747,6 +1734,14 @@ EnergyAssistEffectCommands:
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, EnergyAssist_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, AttachBasicEnergyFromDiscardPileToBench_AISelectEffect
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, AccelerateFromDiscard_AttachEnergyToPlayAreaEffect
+	db  $00
+
+
+IngrainEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDiscardPileHasBasicEnergyCards
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Retrieve2BasicEnergy_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, Retrieve2BasicEnergy_AISelectEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Ingrain_RetrieveAndHealEffect
 	db  $00
 
 

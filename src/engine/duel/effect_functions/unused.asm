@@ -1,6 +1,50 @@
 ;
 
 
+BindEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ParalysisIfBasicEffect
+	db  $00
+
+; If the Defending Pokémon is Basic, it is Paralyzed
+ParalysisIfBasicEffect:
+	ld a, DUELVARS_ARENA_CARD_STAGE
+	call GetNonTurnDuelistVariable
+	or a
+	jp z, ParalysisEffect  ; BASIC
+	ret
+
+
+PanicVineEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PanicVine_ConfusionTrapEffect
+	db  $00
+
+PanicVine_ConfusionTrapEffect:
+	call UnableToRetreatEffect
+	jp ConfusionEffect
+
+
+GrassKnotEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, GrassKnot_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AI, GrassKnot_AIEffect
+	db  $00
+
+; +20 damage per retreat cost of opponent
+GrassKnot_DamageBoostEffect:
+	call SwapTurn
+	xor a ; PLAY_AREA_ARENA
+	ldh [hTempPlayAreaLocation_ff9d], a
+	call GetPlayAreaCardRetreatCost  ; retreat cost in a
+	call SwapTurn
+	add a  ; x20 per retreat cost
+	call ATimes10
+	jp AddToDamage
+
+GrassKnot_AIEffect:
+	call GrassKnot_DamageBoostEffect
+	jp SetDefiniteAIDamage
+
+
+
 SilverWhirlwind_StatusEffect:
 	xor a
 	ld [wEffectFunctionsFeedbackIndex], a
@@ -795,18 +839,6 @@ EnergyConversionEffectCommands:
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Retrieve2BasicEnergy_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, Retrieve2BasicEnergy_AISelectEffect
 	db  $00
-
-
-Retrieve2BasicEnergy_PlayerSelectEffect:
-	ldtx hl, Choose2EnergyCardsFromDiscardPileForHandText
-	jp HandleEnergyCardsInDiscardPileSelection
-
-
-Retrieve2BasicEnergy_AISelectEffect:
-	call CreateEnergyCardListFromDiscardPile_OnlyBasic
-	; call CreateEnergyCardListFromDiscardPile_AllEnergy
-	ld a, 2
-	jp PickFirstNCardsFromList_SelectEffect
 
 
 GetMadEffectCommands:

@@ -281,10 +281,6 @@ EnergyBallDescription:
 ; 	text "Razor Leaf"
 ; 	done
 
-; IngrainName:
-; 	text "Ingrain"
-; 	done
-
 ; AcidName:
 ; 	text "Acid"
 ; 	done

@@ -1,5 +1,53 @@
 
 
+ParalysisIfBasicDescription:
+	text "If the Defending Pokémon is a"
+	line "Basic Pokémon, it is now Paralyzed."
+	done
+
+; attack 1
+energy COLORLESS, 2 ; energies
+tx BindName ; name
+tx ParalysisIfBasicDescription ; description
+dw NONE ; description (cont)
+db 10 ; damage
+db DAMAGE_NORMAL ; category
+dw BindEffectCommands ; effect commands
+db INFLICT_PARALYSIS ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_HIT ; animation
+
+
+
+PanicVineName:
+	text "Panic Vine"
+	done
+
+PanicVineDescription:
+	text "The Defending Pokémon is now"
+	line "Confused. It is unable to retreat"
+	line "during your opponent's next turn."
+	done
+
+
+; attack 2
+energy GRASS, 1, COLORLESS, 2 ; energies
+tx PanicVineName ; name
+tx PanicVineDescription ; description
+dw NONE ; description (cont)
+db 20 ; damage
+db DAMAGE_NORMAL ; category
+dw PanicVineEffectCommands ; effect commands
+db INFLICT_CONFUSION ; flags 1
+db FLAG_2_BIT_6 ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_WHIP ; animation
+
+
+
 GrowthName:
 	text "Growth"
 	done

@@ -170,15 +170,6 @@ PoisonEvolution_PoisonEffect:
 	jp PoisonEffect
 
 
-; If the Defending Pokémon is Basic, it is Paralyzed
-ParalysisIfBasicEffect:
-	ld a, DUELVARS_ARENA_CARD_STAGE
-	call GetNonTurnDuelistVariable
-	or a
-	jp z, ParalysisEffect  ; BASIC
-	ret
-
-
 ; ------------------------------------------------------------------------------
 ; Play Area Status Effects
 ; ------------------------------------------------------------------------------

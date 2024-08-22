@@ -842,22 +842,6 @@ Constrict_AIEffect:
 	jp SetDefiniteAIDamage
 
 
-; +20 damage per retreat cost of opponent
-GrassKnot_DamageBoostEffect:
-	call SwapTurn
-	xor a ; PLAY_AREA_ARENA
-	ldh [hTempPlayAreaLocation_ff9d], a
-	call GetPlayAreaCardRetreatCost  ; retreat cost in a
-	call SwapTurn
-	add a  ; x20 per retreat cost
-	call ATimes10
-	jp AddToDamage
-
-GrassKnot_AIEffect:
-	call GrassKnot_DamageBoostEffect
-	jp SetDefiniteAIDamage
-
-
 ; ------------------------------------------------------------------------------
 ; Based on Status Conditions
 ; ------------------------------------------------------------------------------

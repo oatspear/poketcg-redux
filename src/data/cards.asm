@@ -45,7 +45,6 @@ CardPointers:
 	dw ExeggutorCard
 	dw KoffingCard
 	dw WeezingCard
-	dw TangelaLv8Card
 	dw TangelaLv12Card
 	dw ScytherCard
 	dw PinsirCard
@@ -520,7 +519,7 @@ MetapodCard:
 	db NONE ; flags 1
 	db HEAL_USER ; flags 2
 	db NONE ; flags 3
-	db 0
+	db 2
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
 	db 1 ; retreat cost
@@ -557,7 +556,7 @@ ButterfreeCard:
 	db NONE ; flags 1
 	db HEAL_USER ; flags 2
 	db NONE ; flags 3
-	db 1
+	db 2
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
 	; attack 2
@@ -1287,7 +1286,7 @@ OddishCard:
 	dw NONE ; description (cont)
 	db 10 ; damage
 	db DAMAGE_NORMAL ; category
-	dw BindEffectCommands ; effect commands
+	dw NONE ; effect commands
 	db INFLICT_PARALYSIS ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -1459,7 +1458,7 @@ VileplumeCard:
 	db NONE ; flags 1
 	db HEAL_USER ; flags 2
 	db NONE ; flags 3
-	db 0
+	db 1
 	db ATK_ANIM_PETAL_DANCE ; animation
 
 	db 2 ; retreat cost
@@ -1866,7 +1865,7 @@ VictreebelCard:
 	db NONE ; flags 1
 	db HEAL_USER ; flags 2
 	db NONE ; flags 3
-	db 40
+	db 4
 	db ATK_ANIM_DRAIN ; animation
 
 	db 2 ; retreat cost
@@ -2200,80 +2199,29 @@ WeezingCard:
 	tx WeezingDescription ; description
 	db 0
 
-TangelaLv8Card:
-	db TYPE_PKMN_GRASS ; type
-	gfx TangelaLv8CardGfx ; gfx
-	tx TangelaName ; name
-	db CIRCLE ; rarity
-	db LABORATORY | NONE ; sets
-	db TANGELA_LV8
-	db 60 ; hp
-	db BASIC ; stage
-	dw NONE ; pre-evo name
-
-	; attack 1
-	energy COLORLESS, 2 ; energies
-	tx BindName ; name
-	tx ParalysisIfBasicDescription ; description
-	dw NONE ; description (cont)
-	db 10 ; damage
-	db DAMAGE_NORMAL ; category
-	dw BindEffectCommands ; effect commands
-	db INFLICT_PARALYSIS ; flags 1
-	db NONE ; flags 2
-	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_HIT ; animation
-
-	; attack 2
-	energy GRASS, 1, COLORLESS, 2 ; energies
-	tx PanicVineName ; name
-	tx PanicVineDescription ; description
-	dw NONE ; description (cont)
-	db 20 ; damage
-	db DAMAGE_NORMAL ; category
-	dw PanicVineEffectCommands ; effect commands
-	db INFLICT_CONFUSION ; flags 1
-	db FLAG_2_BIT_6 ; flags 2
-	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_WHIP ; animation
-
-	db 1 ; retreat cost
-	db WR_FIRE ; weakness
-	db NONE ; resistance
-	tx VineName ; category
-	db 114 ; Pokedex number
-	db 0
-	db 8 ; level
-	db 3, 3 ; length
-	dw 77 * 10 ; weight
-	tx TangelaDescription ; description
-	db 0
-
 TangelaLv12Card:
 	db TYPE_PKMN_GRASS ; type
 	gfx TangelaLv12CardGfx ; gfx
 	tx TangelaName ; name
 	db CIRCLE ; rarity
 	db COLOSSEUM | GB ; sets
-	db TANGELA_LV12
+	db TANGELA
 	db 60 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
 
 	; attack 1
 	energy COLORLESS, 1 ; energies
-	tx NutritionSupportName ; name
-	tx AttachEnergyFromHandDescription ; description
-	dw NONE ; description (cont)
+	tx IngrainName ; name
+	tx Retrieve2BasicEnergiesDescription ; description
+	tx IngrainDescriptionCont ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category
-	dw Accelerate1EnergyFromHandEffectCommands ; effect commands
+	dw IngrainEffectCommands ; effect commands
 	db NONE ; flags 1
-	db NONE ; flags 2
+	db HEAL_USER ; flags 2
 	db SPECIAL_AI_HANDLING ; flags 3
-	db 0
+	db 2
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
 	; attack 2
@@ -2283,7 +2231,7 @@ TangelaLv12Card:
 	dw NONE ; description (cont)
 	db 10 ; damage
 	db DAMAGE_PLUS ; category
-	dw GrassKnotEffectCommands ; effect commands
+	dw ConstrictEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -4900,7 +4848,7 @@ ArticunoLv35Card:
 	db NONE ; flags 1
 	db HEAL_USER ; flags 2
 	db SPECIAL_AI_HANDLING ; flags 3
-	db 20
+	db 2
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
 IF SLEEP_WITH_COIN_FLIP
@@ -8032,7 +7980,7 @@ MewtwoLv53Card:
 	db NONE ; flags 1
 	db HEAL_USER ; flags 2
 	db SPECIAL_AI_HANDLING ; flags 3
-	db 20
+	db 2
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
 	; attack 2
@@ -8756,7 +8704,7 @@ JigglypuffCard:
 	db DRAW_CARD ; flags 1
 	db HEAL_USER ; flags 2
 	db NONE ; flags 3
-	db 0
+	db 1
 	db ATK_ANIM_LURE ; animation
 
 	; attack 2
@@ -9222,7 +9170,7 @@ LickitungCard:
 	dw NONE ; description (cont)
 	db 10 ; damage
 	db DAMAGE_NORMAL ; category
-	dw BindEffectCommands ; effect commands
+	dw NONE ; effect commands
 	db INFLICT_PARALYSIS ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -9619,7 +9567,7 @@ SnorlaxCard:
 	dw NONE ; description (cont)
 	db 30 ; damage
 	db DAMAGE_NORMAL ; category
-	dw BindEffectCommands ; effect commands
+	dw NONE ; effect commands
 	db INFLICT_PARALYSIS ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3

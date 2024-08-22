@@ -11,6 +11,14 @@ ChoosePokemonFromDeck_AISelectEffect:
 	ret
 
 
+;
+Retrieve2BasicEnergy_AISelectEffect:
+	call CreateEnergyCardListFromDiscardPile_OnlyBasic
+	; call CreateEnergyCardListFromDiscardPile_AllEnergy
+	ld a, 2
+	jp PickFirstNCardsFromList_SelectEffect
+
+
 OptionalDoubleDamage_AISelectEffect:
 	call ApplyDamageModifiers_DamageToTarget  ; damage in e
 	ld a, DUELVARS_ARENA_CARD_HP

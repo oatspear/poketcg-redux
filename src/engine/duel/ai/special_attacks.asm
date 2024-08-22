@@ -55,8 +55,8 @@ HandleSpecialAIAttacks:
 	jp z, .NutritionSupport
 	cp EXEGGCUTE
 	jp z, .NutritionSupport
-	cp TANGELA_LV12
-	jp z, .NutritionSupport
+	cp TANGELA
+	jp z, .Ingrain
 	cp DRATINI
 	jp z, .DragonDance
 	cp HORSEA
@@ -250,6 +250,13 @@ HandleSpecialAIAttacks:
 ; 	ld a, $82
 ; 	ret
 
+.Ingrain:
+	call CreateEnergyCardListFromHand
+	ret nc
+; encourage the attack if there are no energies in hand
+	ld a, $82
+	ret
+
 .Mend:
 	ld e, FIGHTING_ENERGY
 	jr .accelerate_self_from_discard_got_energy
@@ -300,15 +307,15 @@ HandleSpecialAIAttacks:
 
 ; if the Pokémon has less than 2 Energies attached to it,
 ; return a score of $80 + 3.
-.Growth:
-	call CreateEnergyCardListFromHand
-	jp c, .zero_score
-	call GetPlayAreaCardAttachedEnergies
-	ld a, [wTotalAttachedEnergies]
-	cp 2
-	jp nc, .zero_score
-	ld a, $83
-	ret
+; .Growth:
+; 	call CreateEnergyCardListFromHand
+; 	jp c, .zero_score
+; 	call GetPlayAreaCardAttachedEnergies
+; 	ld a, [wTotalAttachedEnergies]
+; 	cp 2
+; 	jp nc, .zero_score
+; 	ld a, $83
+; 	ret
 
 ; return score of $80 + 3.
 .BigThunder:

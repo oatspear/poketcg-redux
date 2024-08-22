@@ -655,16 +655,6 @@ NutritionSupportName:
 ; 	line "Then, shuffle your deck."
 ; 	done
 
-PanicVineName:
-	text "Panic Vine"
-	done
-
-PanicVineDescription:
-	text "The Defending Pokémon is now"
-	line "Confused. It is unable to retreat"
-	line "during your opponent's next turn."
-	done
-
 UltravisionName:
 	text "Ultravision"
 	done
@@ -683,11 +673,6 @@ TropicalStormDescription:
 	text "This attack deals 20 damage for"
 	line "each of your Pokémon with any"
 	line "attached energies."
-	done
-
-ParalysisIfBasicDescription:
-	text "If the Defending Pokémon is a"
-	line "Basic Pokémon, it is now Paralyzed."
 	done
 
 IsCuredOfStatusAndEffectsText:
@@ -907,6 +892,11 @@ MuddyWaterName:
 Retrieve1BasicEnergyDescription:
 	text "You may put a Basic Energy card from"
 	line "your discard pile into your hand."
+	done
+
+Retrieve2BasicEnergiesDescription:
+	text "Put up to 2 Energy cards from your"
+	line "discard pile into your hand."
 	done
 
 EnergySoakName:

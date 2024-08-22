@@ -1656,9 +1656,9 @@ WeezingCardGfx::
 	INCBIN "gfx/cards/weezing.2bpp"
 	INCBIN "gfx/cards/weezing.pal"
 
-TangelaLv8CardGfx::
-	INCBIN "gfx/cards/tangela1.2bpp"
-	INCBIN "gfx/cards/tangela1.pal"
+; TangelaLv8CardGfx::
+; 	INCBIN "gfx/cards/tangela1.2bpp"
+; 	INCBIN "gfx/cards/tangela1.pal"
 
 TangelaLv12CardGfx::
 	INCBIN "gfx/cards/tangela2.2bpp"

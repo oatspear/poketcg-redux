@@ -1030,6 +1030,17 @@ VoltSwitchEffect:
 ; ------------------------------------------------------------------------------
 
 
+Ingrain_RetrieveAndHealEffect:
+	call TempListLength
+	or a
+	ret z
+	push af
+	call SelectedCardList_AddToHandFromDiscardPileEffect
+	pop af
+	call ATimes10
+	jp HealADamageEffect
+
+
 ToxicNeedleEffect:
 	ld a, DUELVARS_ARENA_CARD_STATUS
 	call GetNonTurnDuelistVariable
@@ -1181,11 +1192,6 @@ Constrict_TrapDamageBoostEffect:
 AquaLauncherEffect:
 	call Deal50DamageToTarget_DamageEffect
 	jp ReduceDamageTakenBy20Effect
-
-
-PanicVine_ConfusionTrapEffect:
-	call UnableToRetreatEffect
-	jp ConfusionEffect
 
 
 ; heal up to 30 damage from user and put it to sleep
@@ -3234,6 +3240,12 @@ GetHowMuchEnergyCardIsWorth:
 	xor a
 	ret
 
+
+
+Retrieve2BasicEnergy_PlayerSelectEffect:
+	ldtx hl, Choose2EnergyCardsFromDiscardPileForHandText
+	; jp HandleEnergyCardsInDiscardPileSelection
+	; fallthrough
 
 ; draws list of Energy Cards in Discard Pile
 ; for Player to select from.
