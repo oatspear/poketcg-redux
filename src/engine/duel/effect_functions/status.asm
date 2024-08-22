@@ -107,6 +107,12 @@ PoisonConfusionEffect:
 ; ------------------------------------------------------------------------------
 
 
+; Poison and Burn.
+AcidicDrain_PoisonBurnEffect:
+	call PoisonEffect
+	jp BurnEffect
+
+
 ; Poison; Confusion if Poisoned.
 JellyfishSting_PoisonConfusionEffect:
 	ld a, DUELVARS_ARENA_CARD_STATUS

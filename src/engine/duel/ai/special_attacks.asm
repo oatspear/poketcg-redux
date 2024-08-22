@@ -67,8 +67,6 @@ HandleSpecialAIAttacks:
 	jp z, .HyperBeam
 	cp DRAGONAIR
 	jp z, .HyperBeam
-	cp WEEPINBELL
-	jp z, .HyperBeam
 	cp NIDORANF
 	jr z, .CallForFamily
 	cp KANGASKHAN

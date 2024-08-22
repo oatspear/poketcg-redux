@@ -42,10 +42,6 @@ IngrainName:
 	text "Ingrain"
 	done
 
-AcidName:
-	text "Acid"
-	done
-
 FlytrapName:
 	text "Flytrap"
 	done
@@ -476,6 +472,11 @@ ScaldName:
 
 InflictBurnDescription:
 	text "The Defending Pokémon is now Burned."
+	done
+
+InflictPoisonBurnDescription:
+	text "The Defending Pokémon is now"
+	line "Poisoned and Burned."
 	done
 
 EnergyBurstName:

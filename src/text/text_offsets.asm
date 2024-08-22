@@ -2404,7 +2404,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer InflictConfusionAndPoisonDescription
 	textpointer RazorLeafName                                      ; 0x089a
 	textpointer IngrainName
-	textpointer AcidName
 	textpointer FlytrapName
 	textpointer FlytrapDescription
 	textpointer ToxicGasName                                       ; 0x08aa
@@ -2490,6 +2489,7 @@ TextOffsets:: ; 34000 (d:4000)
 	; textpointer WaterfallDescription
 	textpointer ScaldName
 	textpointer InflictBurnDescription
+	textpointer InflictPoisonBurnDescription
 	textpointer EnergyBurstName
 	textpointer Counter20DamageDescription
 	textpointer ShellPressName
@@ -3028,6 +3028,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer NoxiousScalesName
 	textpointer NoxiousScalesDescription
 	textpointer MaySwitchThisPokemonDescription
+	textpointer AcidicDrainName
 
 ; ------------------------------------------------------------------------------
 ; text13.asm

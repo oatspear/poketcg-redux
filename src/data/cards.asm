@@ -1774,15 +1774,15 @@ WeepinbellCard:
 
 	; attack 2
 	energy GRASS, 1, COLORLESS, 1 ; energies
-	tx AcidName ; name
-	tx Discard1EnergyFromTargetDescription ; description
-	dw NONE ; description (cont)
+	tx AcidicDrainName ; name
+	tx InflictPoisonBurnDescription ; description
+	tx Heal10DamageDescription ; description (cont)
 	db 20 ; damage
 	db DAMAGE_NORMAL ; category
-	dw Discard1EnergyFromOpponentEffectCommands ; effect commands
-	db NONE ; flags 1
+	dw AcidicDrainEffectCommands ; effect commands
+	db INFLICT_POISON ; flags 1
 	db NONE ; flags 2
-	db SPECIAL_AI_HANDLING ; flags 3
+	db NONE ; flags 3
 	db 0
 	db ATK_ANIM_GOO ; animation
 
@@ -1833,10 +1833,6 @@ VictreebelCard:
 
 	; Energy Dissolve (GCC) 50
 	; Discard an Energy attached to the Defending Pokémon at the end of your opponent's next turn.
-
-	; Acidic Drain (GC) 30
-	; The Defending Pokémon is now Poisoned and Burned.
-	; Remove 3 damage counters from Victreebel.
 
 	; Pollen Hazard (G) 20
 	; Your opponent's Active Pokémon is now Poisoned, Burned, and Confused.

@@ -54,7 +54,9 @@
 
 #### Weepinbell
 - **Poison Lure**: removed.
+- **Acid**: removed.
 - New Pokémon Power: **Grass Knot**: when your Active Pokémon does damage to the Defending Pokémon with an attack, if it has any attached Grass Energies, increase the Defending Pokémon's Retreat Cost by 1.
+- New attack: **Acidic Drain** (GC): 20 damage; heal 10 damage; inflict Poison and Burn.
 
 #### Scyther
 - Reduced HP from 70 to 60.

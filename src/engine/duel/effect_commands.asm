@@ -59,6 +59,11 @@ InflictPoisonEffectCommands:
 	; dbw EFFECTCMDTYPE_AI, PoisonFang_AIEffect
 	db  $00
 
+AcidicDrainEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, AcidicDrain_PoisonBurnEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Heal10DamageEffect
+	db  $00
+
 PoisonPaybackEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PoisonPaybackEffect
 	dbw EFFECTCMDTYPE_AI, DoubleDamageIfUserIsDamaged_AIEffect

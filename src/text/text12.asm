@@ -1569,3 +1569,7 @@ MaySwitchThisPokemonDescription:
 	text "You may switch this Pokémon with"
 	line "1 of your Benched Pokémon."
 	done
+
+AcidicDrainName:
+	text "Acidic Drain"
+	done

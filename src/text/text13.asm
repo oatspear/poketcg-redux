@@ -268,6 +268,10 @@ GrassKnotDescription:
 ; Unused Text
 ; ------------------------------------------------------------------------------
 
+; AcidName:
+; 	text "Acid"
+; 	done
+
 ; RelentlessFlamesDescription:
 ; 	text "This attack does 20 damage for each"
 ; 	line "Prize card your opponent has taken."
