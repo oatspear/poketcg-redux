@@ -1684,6 +1684,13 @@ QuiverDanceName:
 	text "Quiver Dance"
 	done
 
+QuiverDanceDescriptionCont:
+	text "Heal 20 damage from this Pokémon."
+	line "During your next turn, this"
+	line "Pokémon's attack's base damage"
+	line "is doubled."
+	done
+
 Attach1EnergyFromDeckToThisPokemonDescription:
 	text "Search your deck for a Basic Energy"
 	line "card and attach it to this Pokémon."

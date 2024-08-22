@@ -119,11 +119,11 @@ FragranceTrap_StatusEffect:
 
 
 SilverWhirlwind_StatusEffect:
+	call CheckArenaPokemonHas3OrMoreEnergiesAttached
+	ret c
 	xor a
 	ld [wEffectFunctionsFeedbackIndex], a
 	call PoisonEffect
-	call CheckArenaPokemonHas3OrMoreEnergiesAttached
-	jp c, ApplyStatusAndPlayAnimationAdhoc
 	call BurnEffect
 	call SleepEffect
 	jp ApplyStatusAndPlayAnimationAdhoc

@@ -2717,6 +2717,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer IntimidatingRoarDescription
 	textpointer IncreaseAttackCostby1Description
 	textpointer QuiverDanceName
+	textpointer QuiverDanceDescriptionCont
 	textpointer Attach1EnergyFromDeckToThisPokemonDescription
 	textpointer UTurnName
 

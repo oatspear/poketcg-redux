@@ -290,19 +290,17 @@ SilverWhirlwindName:
 
 IF SLEEP_WITH_COIN_FLIP
 SilverWhirlwindDescriptionCont:
-	text "The new Defending Pokémon is now"
-	line "Poisoned. If this Pokémon has 3 or"
-	line "more Energies attached to it, the"
-	line "new Defending Pokémon is now also"
-	line "Asleep and Burned."
+	text "If this Pokémon has 3 or more"
+	line "Energies attached to it, the"
+	line "new Defending Pokémon is now"
+	line "Asleep, Poisoned and Burned."
 	done
 ELSE
 SilverWhirlwindDescriptionCont:
-	text "The new Defending Pokémon is now"
-	line "Poisoned. If this Pokémon has 3 or"
-	line "more Energies attached to it, the"
-	line "new Defending Pokémon is now also"
-	line "Drowsy and Burned."
+	text "If this Pokémon has 3 or more"
+	line "Energies attached to it, the"
+	line "new Defending Pokémon is now"
+	line "Drowsy, Poisoned and Burned."
 	done
 ENDC
 

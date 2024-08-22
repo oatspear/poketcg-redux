@@ -547,10 +547,10 @@ ButterfreeCard:
 	tx MetapodName ; pre-evo name
 
 	; attack 1
-	energy COLORLESS, 1 ; energies
+	energy GRASS, 1 ; energies
 	tx QuiverDanceName ; name
 	tx Attach1EnergyFromDeckToThisPokemonDescription ; description
-	tx Heal30DamageDescription ; description (cont)
+	tx QuiverDanceDescriptionCont ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category
 	dw QuiverDanceEffectCommands ; effect commands

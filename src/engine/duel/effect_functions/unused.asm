@@ -1,5 +1,20 @@
 ;
 
+
+SilverWhirlwind_StatusEffect:
+	xor a
+	ld [wEffectFunctionsFeedbackIndex], a
+	call PoisonEffect
+	call CheckArenaPokemonHas3OrMoreEnergiesAttached
+	jp c, ApplyStatusAndPlayAnimationAdhoc
+	call BurnEffect
+	call SleepEffect
+	jp ApplyStatusAndPlayAnimationAdhoc
+
+
+
+
+
 WaftingScentName:
 	text "Wafting Scent"
 	done
