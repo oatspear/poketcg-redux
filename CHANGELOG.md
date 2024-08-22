@@ -49,8 +49,8 @@
 #### Bellsprout
 - **Growth**: removed.
 - **Vine Whip**: removed.
-- New attack: **Ingrain** (C): attach a Grass Energy from the discard pile; heal 10 damage.
-- New attack: **Poison Whip** (G): 20 damage; inflict Poison.
+- New attack: **Pester** (C): 10 damage; +20 damage if the Defending Pokémon has status.
+- New attack: **Poison Whip** (GC): 20 damage; inflict Poison.
 
 #### Weepinbell
 - **Poison Lure**: removed.

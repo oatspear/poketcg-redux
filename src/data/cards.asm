@@ -1709,20 +1709,20 @@ BellsproutCard:
 
 	; attack 1
 	energy COLORLESS, 1 ; energies
-	tx IngrainName ; name
-	tx Attach1GrassEnergyFromDiscardDescription ; description
-	tx Heal10DamageDescription ; description (cont)
-	db 0 ; damage
-	db RESIDUAL ; category
-	dw MendEffectCommands ; effect commands
+	tx PesterName ; name
+	tx PesterDescription ; description
+	dw NONE ; description (cont)
+	db 10 ; damage
+	db DAMAGE_PLUS ; category
+	dw PesterEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
-	db SPECIAL_AI_HANDLING ; flags 3
-	db 0
-	db ATK_ANIM_GLOW_EFFECT ; animation
+	db NONE ; flags 3
+	db 3
+	db ATK_ANIM_HIT ; animation
 
 	; attack 2
-	energy GRASS, 1 ; energies
+	energy GRASS, 1, COLORLESS, 1 ; energies
 	tx PoisonWhipName ; name
 	tx InflictPoisonDescription ; description
 	dw NONE ; description (cont)

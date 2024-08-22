@@ -797,7 +797,7 @@ PesterName:
 PesterDescription:
 	text "If the Defending Pokémon is affected"
 	line "by a Special Condition, this attack"
-	line "does double damage."
+	line "does 20 more damage."
 	done
 
 SweetKissName:

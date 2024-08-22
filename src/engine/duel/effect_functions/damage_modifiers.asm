@@ -885,11 +885,12 @@ ReactivePoison_AIEffect:
   jp SetDefiniteAIDamage
 
 
-; double damage if the Defending Pokémon has a status condition
+; +20 damage if the Defending Pokémon has a status condition
 Pester_DamageBoostEffect:
   call CheckDefendingPokemonHasStatus
   ret c
-  jp DoubleDamage_DamageBoostEffect
+  ld a, 20
+  jp AddToDamage
 
 Pester_AIEffect:
   call Pester_DamageBoostEffect
