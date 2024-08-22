@@ -122,3 +122,10 @@ ApplySubstatus2ToDefendingCard:
 ; ------------------------------------------------------------------------------
 ; Substatus 3 (Misc)
 ; ------------------------------------------------------------------------------
+
+
+GrassKnot_RootEffect:
+	ld a, DUELVARS_ARENA_CARD_SUBSTATUS3
+	call GetNonTurnDuelistVariable
+	set SUBSTATUS3_THIS_TURN_ROOTED, [hl]
+	ret

@@ -2859,8 +2859,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer DoubleDamageIfMorePrizesDescription
 	textpointer NutritionSupportName
 	; textpointer NutritionSupportDescription
-	textpointer GrassKnotName
-	textpointer GrassKnotDescription
 	textpointer PanicVineName
 	textpointer PanicVineDescription
 	textpointer UltravisionName
@@ -3080,8 +3078,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer TripleHitDescription
 	textpointer ShiftName
 	textpointer ShiftDescription
-	textpointer WaftingScentName
-	textpointer WaftingScentDescription
+	textpointer GrassKnotName
+	textpointer GrassKnotDescription
 
 	; unused
 	; textpointer SwimFreelyName

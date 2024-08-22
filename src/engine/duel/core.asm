@@ -6805,17 +6805,23 @@ Func_6ba2:
 	jp WaitForWideTextBoxInput
 
 
+; all of these effects trigger only if some damage was dealt
 HandleOnAttackEffects:
-	call IsCursedFlamesActive
-	jr nc, .vampiric_aura
 	ld a, [wDealtDamage]
 	or a
-	jr z, .vampiric_aura
+	jr z, .done
+; the attack did some damage
+	call IsCursedFlamesActive
+	jr nc, .vampiric_aura
 	farcall Discard1CardFromOpponentsDeckEffect
 .vampiric_aura
 	call IsVampiricAuraActive
-	jr nc, .done
+	jr nc, .grass_knot
 	farcall VampiricAura_LeechEffect
+.grass_knot
+	call IsGrassKnotActive
+	jr nc, .done
+	farcall GrassKnot_RootEffect
 .done
 	; jp HandleBurnDiscardEnergy
 	; fallthrough

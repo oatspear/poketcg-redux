@@ -1,5 +1,70 @@
 ;
 
+WaftingScentName:
+	text "Wafting Scent"
+	done
+
+WaftingScentDescription:
+	text "Once during your turn, you may"
+	line "discard an Energy attached to this"
+	line "Pokémon. If you do, your opponent's"
+	line "Active Pokémon is now Burned and"
+	line "Poisoned."
+	done
+
+WaftingScentEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, WaftingScenet_PreconditionCheck
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, DiscardEnergyAbility_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, WaftingScent_DiscardSleepEffect
+	db  $00
+
+WaftingScenet_PreconditionCheck:
+	call CheckPokemonPowerCanBeUsed_StoreTrigger
+	ret c
+	jp CheckPlayAreaPokemonHasAnyEnergiesAttached
+
+WaftingScent_DiscardSleepEffect:
+	call SetUsedPokemonPowerThisTurn_RestoreTrigger
+	ldh a, [hEnergyTransEnergyCard]
+	cp $ff
+	ret z
+; discard energy
+	call PutCardInDiscardPile
+; inflict status
+	call SwapTurn
+	ld e, PLAY_AREA_ARENA
+	call BurnEffect_PlayArea
+	call SwapTurn
+; handle failure
+	jr c, .burn_animation
+	ldtx hl, ThereWasNoEffectFromBurnText
+	call DrawWideTextBox_WaitForInput
+	jr .poison
+
+.burn_animation
+	; bank1call DrawDuelMainScene
+	xor a
+	ld [wDuelAnimLocationParam], a
+	ld a, ATK_ANIM_BURN
+	bank1call PlayAdhocAnimationOnPlayAreaArena_NoEffectiveness
+
+.poison
+	call SwapTurn
+	ld e, PLAY_AREA_ARENA
+	call PoisonEffect_PlayArea
+	call SwapTurn
+; handle failure
+	jr c, .poison_animation
+	ldtx hl, ThereWasNoEffectFromPoisonText
+	jp DrawWideTextBox_WaitForInput
+.poison_animation
+	; bank1call DrawDuelMainScene
+	xor a
+	ld [wDuelAnimLocationParam], a
+	ld a, ATK_ANIM_POISON
+	bank1call PlayAdhocAnimationOnPlayAreaArena_NoEffectiveness
+	ret
+
 
 ; assume:
 ;  - ArePokemonPowersDisabled has been called

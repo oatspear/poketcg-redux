@@ -664,16 +664,6 @@ NutritionSupportName:
 ; 	line "Then, shuffle your deck."
 ; 	done
 
-GrassKnotName:
-	text "Grass Knot"
-	done
-
-GrassKnotDescription:
-	text "This attack does 20 more damage for"
-	line "each <COLORLESS> in the Defending Pokémon's"
-	line "Retreat Cost."
-	done
-
 PanicVineName:
 	text "Panic Vine"
 	done

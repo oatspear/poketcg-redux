@@ -54,7 +54,7 @@
 
 #### Weepinbell
 - **Poison Lure**: removed.
-- New Pokémon Power: **Wafting Scent**: discard an attached Energy; the opponent's Active Pokémon is Poisoned and Burned.
+- New Pokémon Power: **Grass Knot**: when your Active Pokémon does damage to the Defending Pokémon with an attack, if it has any attached Grass Energies, increase the Defending Pokémon's Retreat Cost by 1.
 
 #### Scyther
 - Reduced HP from 70 to 60.

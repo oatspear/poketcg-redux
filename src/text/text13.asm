@@ -252,16 +252,16 @@ ShiftDescription:
 	line "play, other than Colorless."
 	done
 
-WaftingScentName:
-	text "Wafting Scent"
+GrassKnotName:
+	text "Grass Knot"
 	done
 
-WaftingScentDescription:
-	text "Once during your turn, you may"
-	line "discard an Energy attached to this"
-	line "Pokémon. If you do, your opponent's"
-	line "Active Pokémon is now Burned and"
-	line "Poisoned."
+GrassKnotDescription:
+	text "If your Active Pokémon has any"
+	line "attached <GRASS> Energy, its attacks"
+	line "that do damage to the Defending"
+	line "Pokémon also increase the Defending"
+	line "Pokémon's Retreat Cost by <COLORLESS>."
 	done
 
 ; ------------------------------------------------------------------------------

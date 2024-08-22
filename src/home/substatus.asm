@@ -510,6 +510,17 @@ IsSafeguardActive:
 
 
 ; returns carry if the turn holder's Active Pokémon benefits
+; from Grass Knot
+; output:
+;   carry: set if Grass Knot is active
+IsGrassKnotActive:
+	ld b, PLAY_AREA_ARENA
+	ld c, GRASS
+	ld e, WEEPINBELL
+	jr IsSpecialEnergyPowerActive
+
+
+; returns carry if the turn holder's Active Pokémon benefits
 ; from Cursed Flames
 ; output:
 ;   carry: set if Cursed Flames is active

@@ -1760,12 +1760,12 @@ WeepinbellCard:
 
 	; attack 1
 	energy 0 ; energies
-	tx WaftingScentName ; name
-	tx WaftingScentDescription ; description
+	tx GrassKnotName ; name
+	tx GrassKnotDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKEMON_POWER ; category
-	dw WaftingScentEffectCommands ; effect commands
+	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -1815,10 +1815,6 @@ VictreebelCard:
 	; Pokémon Power: Fragrance Trap
 	; Once during your turn (before your attack), you may flip a coin.
 	; If heads, switch 1 of your opponent's Benched Pokémon with their Active Pokémon.
-
-	; Pokémon Power: Wafting Scent
-	; Once during your turn, before your attack, you may discard a Grass Energy
-	; attached to this Pokémon. If you do, your opponent's Active Pokémon is now Confused and Poisoned.
 
 	; Reactive Poison (G) 10
 	; This attack does 60 more damage for each Special Condition affecting your opponent's Active Pokémon.
@@ -2301,8 +2297,8 @@ TangelaLv12Card:
 
 	; attack 2
 	energy GRASS, 1, COLORLESS, 1 ; energies
-	tx GrassKnotName ; name
-	tx GrassKnotDescription ; description
+	tx ConstrictName ; name
+	tx ConstrictDescription ; description
 	dw NONE ; description (cont)
 	db 10 ; damage
 	db DAMAGE_PLUS ; category

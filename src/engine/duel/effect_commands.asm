@@ -881,12 +881,6 @@ InflictSleepEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SleepEffect
 	db  $00
 
-WaftingScentEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, WaftingScenet_PreconditionCheck
-	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, DiscardEnergyAbility_PlayerSelectEffect
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, WaftingScent_DiscardSleepEffect
-	db  $00
-
 HyperHypnosisEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, HyperHypnosis_PreconditionCheck
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, DiscardEnergyAbility_PlayerSelectEffect

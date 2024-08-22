@@ -18,49 +18,6 @@ INCLUDE "engine/duel/effect_functions/status.asm"
 INCLUDE "engine/duel/effect_functions/substatus.asm"
 
 
-WaftingScent_DiscardSleepEffect:
-	call SetUsedPokemonPowerThisTurn_RestoreTrigger
-	ldh a, [hEnergyTransEnergyCard]
-	cp $ff
-	ret z
-; discard energy
-	call PutCardInDiscardPile
-; inflict status
-	call SwapTurn
-	ld e, PLAY_AREA_ARENA
-	call BurnEffect_PlayArea
-	call SwapTurn
-; handle failure
-	jr c, .burn_animation
-	ldtx hl, ThereWasNoEffectFromBurnText
-	call DrawWideTextBox_WaitForInput
-	jr .poison
-
-.burn_animation
-	; bank1call DrawDuelMainScene
-	xor a
-	ld [wDuelAnimLocationParam], a
-	ld a, ATK_ANIM_BURN
-	bank1call PlayAdhocAnimationOnPlayAreaArena_NoEffectiveness
-
-.poison
-	call SwapTurn
-	ld e, PLAY_AREA_ARENA
-	call PoisonEffect_PlayArea
-	call SwapTurn
-; handle failure
-	jr c, .poison_animation
-	ldtx hl, ThereWasNoEffectFromPoisonText
-	jp DrawWideTextBox_WaitForInput
-.poison_animation
-	; bank1call DrawDuelMainScene
-	xor a
-	ld [wDuelAnimLocationParam], a
-	ld a, ATK_ANIM_POISON
-	bank1call PlayAdhocAnimationOnPlayAreaArena_NoEffectiveness
-	ret
-
-
 HyperHypnosis_DiscardSleepEffect:
 	call SetUsedPokemonPowerThisTurn_RestoreTrigger
 	ldh a, [hEnergyTransEnergyCard]
@@ -300,7 +257,6 @@ SyncShuffleDeck:
 INCLUDE "engine/duel/effect_functions/checks.asm"
 
 
-WaftingScenet_PreconditionCheck:
 HyperHypnosis_PreconditionCheck:
 	call CheckPokemonPowerCanBeUsed_StoreTrigger
 	ret c
