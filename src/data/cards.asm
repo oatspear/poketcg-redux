@@ -2814,8 +2814,8 @@ ArcanineLv34Card:
 	; attack 2
 	energy FIRE, 2 ; energies
 	tx FlamesOfRageName ; name
-	tx FlamesOfRageDescription ; description
-	dw NONE ; description (cont)
+	tx Discard2EnergiesDescription ; description
+	tx RageDescription ; description (cont)
 	db 40 ; damage
 	db DAMAGE_PLUS ; category
 	dw FlamesOfRageEffectCommands ; effect commands
@@ -9881,8 +9881,8 @@ DragoniteLv45Card:
 	; attack 2
 	energy COLORLESS, 3 ; energies
 	tx OutrageName ; name
-	tx OutrageDescription ; description
-	dw NONE ; description (cont)
+	tx Discard1EnergyDescription ; description
+	tx RageDescription ; description (cont)
 	db 30 ; damage
 	db DAMAGE_PLUS ; category
 	dw OutrageEffectCommands ; effect commands

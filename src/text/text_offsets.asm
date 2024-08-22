@@ -2443,7 +2443,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer QuickAttackName                                    ; 0x08f7
 	textpointer IfActiveThisTurn10BonusDamageDescription
 	textpointer FlamesOfRageName                                   ; 0x08f9
-	textpointer FlamesOfRageDescription                            ; 0x08fa
 	textpointer RecklessChargeName
 	; textpointer StompName
 	textpointer AgilityName                                        ; 0x0909
@@ -2851,7 +2850,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer FlameChargeName
 	textpointer Tutor1FireEnergyDescription
 	textpointer OutrageName
-	textpointer OutrageDescription
 	textpointer AscensionName
 	textpointer AscensionDescription
 	textpointer DoubleDamageIfMorePrizesDescription

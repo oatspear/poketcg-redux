@@ -90,14 +90,9 @@ SmogDescription:
 	line "opponent's Benched Pokémon."
 	done
 
-SelfdestructName: ; 59abe (16:5abe)
+SelfdestructName:
 	text "Selfdestruct"
 	done
-
-; Selfdestruct40Description:
-; 	text "This Pokémon does 40 damage to"
-; 	line "itself."
-; 	done
 
 Selfdestruct50Description:
 	text "This Pokémon does 50 damage to"
@@ -108,11 +103,11 @@ BindName:
 	text "Bind"
 	done
 
-PoisonWhipName: ; 59c3a (16:5c3a)
+PoisonWhipName:
 	text "Poison Whip"
 	done
 
-SwordsDanceName: ; 59cb4 (16:5cb4)
+SwordsDanceName:
 	text "Swords Dance"
 	done
 
@@ -148,7 +143,7 @@ Guillotine70Description:
 	line "it is Knocked Out."
 	done
 
-EmberName: ; 59e0e (16:5e0e)
+EmberName:
 	text "Ember"
 	done
 
@@ -157,7 +152,7 @@ Discard1EnergyDescription:
 	line "to this Pokémon."
 	done
 
-FlamethrowerName: ; 59ee6 (16:5ee6)
+FlamethrowerName:
 	text "Flamethrower"
 	done
 
@@ -192,8 +187,8 @@ FireSpinDescription:
 	done
 
 Discard2EnergiesDescription:
-	text "Discard 2 Energy cards attached to"
-	line "this Pokémon."
+	text "Discard 2 Energy cards attached"
+	line "to this Pokémon."
 	done
 
 SingeName:
@@ -204,11 +199,11 @@ ConfuseRayName:
 	text "Confuse Ray"
 	done
 
-FireBlastName: ; 5a231 (16:6231)
+FireBlastName:
 	text "Fire Blast"
 	done
 
-FireFangName: ; 5a2ec (16:62ec)
+FireFangName:
 	text "Fire Fang"
 	done
 
@@ -216,7 +211,7 @@ FlareName:
 	text "Flare"
 	done
 
-QuickAttackName: ; 5a55c (16:655c)
+QuickAttackName:
 	text "Quick Attack"
 	done
 
@@ -226,15 +221,8 @@ IfActiveThisTurn10BonusDamageDescription:
 	line "does 10 more damage."
 	done
 
-FlamesOfRageName: ; 5a5d8 (16:65d8)
+FlamesOfRageName:
 	text "Flames of Rage"
-	done
-
-FlamesOfRageDescription: ; 5a5e8 (16:65e8)
-	text "Discard 2 Energy cards attached to"
-	line "this Pokémon. This attack does 10"
-	line "more damage for each damage counter"
-	line "on this Pokémon."
 	done
 
 RecklessChargeName:
@@ -825,9 +813,10 @@ ReduceDamageBy20Description:
 	line "Pokémon ends this effect.)"
 	done
 
-RageDescription: ; 5f27f (17:727f)
-	text "Does 10 additional damage for each"
-	line "damage counter on this Pokémon."
+RageDescription:
+	text "This attack does 10 additional"
+	line "damage for each damage counter"
+	line "on this Pokémon."
 	done
 
 BattleArmorName:
