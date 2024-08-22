@@ -2739,22 +2739,18 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PollenFrenzyDescription
 	textpointer SolarBeamName                                      ; 0x081e
 	textpointer StringShotName                                     ; 0x0821
-	textpointer MayInflictParalysisDescription                     ; 0x0822
 	textpointer StunSporeName                                      ; 0x0828
 	textpointer WhirlwindName                                      ; 0x082c
 	textpointer OpponentSwitchesPokemonDescription                 ; 0x082d
 	textpointer PoisonStingName                                    ; 0x0833
-	textpointer TwineedleName                                      ; 0x083b
 	textpointer TerrorStrikeName                                   ; 0x0845
 	textpointer PoisonFangName                                     ; 0x0847
-	textpointer FurySwipesName                                     ; 0x084b
 	textpointer SwiftName
 	textpointer RapidSpinName
 	textpointer BothPlayersSwitchDescription
 	textpointer OverrunName
 	textpointer Damage1BenchedPokemon30Description
 	textpointer NoWeaknessResistanceForBenchDescriptionCont
-	textpointer CombustionName                                     ; unused
 	textpointer Discard1CardFromOpponentsDeckDescription
 	textpointer Discard2CardsFromOpponentsDeckDescription
 	textpointer MultiplePokemonOfTheSameColorText

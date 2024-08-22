@@ -69,13 +69,8 @@ SolarBeamName: ; 57a51 (15:7a51)
 ; 	line "this Pokémon."
 ; 	done
 
-StringShotName: ; 57ac3 (15:7ac3)
+StringShotName:
 	text "String Shot"
-	done
-
-MayInflictParalysisDescription: ; 57ad0 (15:7ad0)
-	text "Flip a coin. If heads, the Defending"
-	line "Pokémon is now Paralyzed."
 	done
 
 ; HardenName:
@@ -90,15 +85,15 @@ MayInflictParalysisDescription: ; 57ad0 (15:7ad0)
 ; 	line "that damage."
 ; 	done
 
-StunSporeName: ; 57c14 (15:7c14)
+StunSporeName:
 	text "Stun Spore"
 	done
 
-WhirlwindName: ; 57c8e (15:7c8e)
+WhirlwindName:
 	text "Whirlwind"
 	done
 
-OpponentSwitchesPokemonDescription: ; 57c99 (15:7c99)
+OpponentSwitchesPokemonDescription:
 	text "Your opponent switches their"
 	line "Active Pokémon with one of their"
 	line "Benched Pokémon."
@@ -108,20 +103,12 @@ PoisonStingName: ; 57ea1 (15:7ea1)
 	text "Poison Sting"
 	done
 
-TwineedleName: ; 58070 (16:4070)
-	text "Twineedle"
-	done
-
 TerrorStrikeName: ; 581ad (16:41ad)
 	text "Terror Strike"
 	done
 
 PoisonFangName: ; 58277 (16:4277)
 	text "Poison Fang"
-	done
-
-FurySwipesName: ; 582ef (16:42ef)
-	text "Fury Swipes"
 	done
 
 SwiftName:
@@ -150,10 +137,6 @@ Damage1BenchedPokemon30Description:
 NoWeaknessResistanceForBenchDescriptionCont:
 	text "Don't apply Weakness and Resistance"
 	line "for Benched Pokémon."
-	done
-
-CombustionName:
-	text "Combustion"
 	done
 
 Discard1CardFromOpponentsDeckDescription:

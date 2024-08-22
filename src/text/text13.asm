@@ -262,6 +262,10 @@ EnergyBallDescription:
 	line "<GRASS> Energy attached to this Pokémon."
 	done
 
+FixmeText:
+	text "FIXME"
+	done
+
 ; ------------------------------------------------------------------------------
 ; Unused Text
 ; ------------------------------------------------------------------------------

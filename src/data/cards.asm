@@ -1282,7 +1282,7 @@ OddishCard:
 	; attack 2
 	energy GRASS, 1 ; energies
 	tx StunSporeName ; name
-	tx MayInflictParalysisDescription ; description
+	tx FixmeText ; description
 	dw NONE ; description (cont)
 	db 10 ; damage
 	db DAMAGE_NORMAL ; category
@@ -9166,7 +9166,7 @@ LickitungCard:
 	; attack 1
 	energy COLORLESS, 1 ; energies
 	tx LickName ; name
-	tx MayInflictParalysisDescription ; description
+	tx FixmeText ; description
 	dw NONE ; description (cont)
 	db 10 ; damage
 	db DAMAGE_NORMAL ; category
@@ -9563,7 +9563,7 @@ SnorlaxCard:
 	; attack 2
 	energy COLORLESS, 3 ; energies
 	tx BodySlamName ; name
-	tx MayInflictParalysisDescription ; description
+	tx FixmeText ; description
 	dw NONE ; description (cont)
 	db 30 ; damage
 	db DAMAGE_NORMAL ; category
