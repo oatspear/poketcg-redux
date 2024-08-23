@@ -1042,6 +1042,10 @@ PrankEffectCommands:
 	dbw EFFECTCMDTYPE_AI_SELECTION, Prank_AISelectEffect
 	db  $00
 
+MassiveBloomEffectCommands:
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Heal20DamageFromAllEnergizedPokemon_HealEffect
+	; fallthrough to KarateChopEffectCommands
+
 KarateChopEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, KarateChop_DamageSubtractionEffect
 	dbw EFFECTCMDTYPE_AI, KarateChop_AIEffect

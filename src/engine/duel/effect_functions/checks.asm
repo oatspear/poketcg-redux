@@ -407,10 +407,11 @@ CheckSomeMatchingPokemonInBench:
 ;   a: how to test the selected Pokémon (CARDTEST_* constants)
 ;   e: PLAY_AREA_* of the tested Pokémon
 ; output:
-;   a: PLAY_AREA_* of the first matching Pokémon | $ff
 ;   carry: set if there is no match
 CheckPlayAreaPokemonMatchesPattern:
 	ld [wDataTableIndex], a
+	; fallthrough
+CheckPlayAreaPokemonMatchesStoredPattern:
 	ld a, DUELVARS_ARENA_CARD
 	add e
 	call GetTurnDuelistVariable
@@ -937,6 +938,8 @@ CheckPlayedEnergyThisTurn:
 DynamicCardTypeTest:
 	ld [wDynamicFunctionArgument], a
 	ld a, [wDataTableIndex]
+	cp $ff
+	ret z
 	push hl
 	ld hl, CardTypeTest_FunctionTable
 	call JumpToFunctionInTable

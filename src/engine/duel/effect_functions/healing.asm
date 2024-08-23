@@ -264,26 +264,31 @@ PlayHealingAnimation_PlayAreaPokemon:
 
 
 Heal10DamageFromAll_HealEffect:
+	ld a, $ff
 	ld d, 10
-	jr HealNDamageFromAll
+	jr HealNDamageFromAllMatchingPokemon
 
 Heal20DamageFromAll_HealEffect:
+	ld a, $ff
 	ld d, 20
-	jr HealNDamageFromAll
+	jr HealNDamageFromAllMatchingPokemon
 
 Heal30DamageFromAll_HealEffect:
+	ld a, $ff
 	ld d, 30
-	; jr HealNDamageFromAll
+	; jr HealNDamageFromAllMatchingPokemon
 	; fallthrough
 
 ; Heals some damage from all friendly Pokémon in Play Area (Active and Benched).
 ; input:
+;   a - CARDTEST_* constant for pattern matching | $ff to match all
 ;   d - amount to heal
 ; uses: a, de, hl
 ; preserves: bc
 ; output:
 ;   carry: set if no Pokémon had damage to heal
-HealNDamageFromAll:
+HealNDamageFromAllMatchingPokemon:
+	ld [wDataTableIndex], a
 	push bc
 ; play the global healing wind animation (uses bc)
 	; ld a, ATK_ANIM_HEALING_WIND
@@ -297,6 +302,16 @@ HealNDamageFromAll:
 
 ; go through every Pokemon in the Play Area and heal c damage.
 .loop_play_area
+	ld a, e
+	ldh [hTempPlayAreaLocation_ff9d], a
+	; e: PLAY_AREA_* of the tested Pokémon
+	push de
+	push bc
+	call CheckPlayAreaPokemonMatchesStoredPattern
+	pop bc
+	pop de
+	jr c, .no_damage
+; there is a match
 	push de
 	call HealPlayAreaCardHP
 	pop de
@@ -312,6 +327,12 @@ HealNDamageFromAll:
 	ret nz  ; some were healed
 	scf
 	ret  ; none healed
+
+
+Heal20DamageFromAllEnergizedPokemon_HealEffect:
+	ld a, CARDTEST_ENERGIZED_POKEMON
+	ld d, 20
+	jr HealNDamageFromAllMatchingPokemon
 
 
 HealAllDamageEffect:
