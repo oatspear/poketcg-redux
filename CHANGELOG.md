@@ -7,6 +7,13 @@
 
 ### Grass Changes
 
+#### Venusaur Lv67
+- Increased HP from 100 to 120.
+- **Pollen Frenzy**: removed.
+- **Solarbeam**: reduced cost from (GGG) to (GC).
+- **Solarbeam**: reduced damage from 70 to 40.
+- New attack: **Massive Bloom** (GGC): 80 damage; does 10 less damage for each damage counter on the user; heals 20 damage from each of the user's Pokémon with any attached energies.
+
 #### Caterpie
 - **String Shot**: no longer inflicts Paralysis.
 - **String Shot**: increases the cost of the Defending Pokémon's attacks by (C) during the opponent's next turn.

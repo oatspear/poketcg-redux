@@ -721,8 +721,9 @@ KarateChopName:
 	done
 
 KarateChopDescription:
-	text "Does 10 less damage for each"
-	line "damage counter on this Pokémon."
+	text "This attack does 10 less damage"
+	line "for each damage counter on"
+	line "this Pokémon."
 	done
 
 ChopDownName:

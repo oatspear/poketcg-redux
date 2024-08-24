@@ -2735,8 +2735,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer DoExcessDamageToTheNewActivePokemonText
 	textpointer EnergyTransName                                    ; 0x081c
 	textpointer EnergyTransDescription                             ; 0x081d
-	textpointer PollenFrenzyName
-	textpointer PollenFrenzyDescription
 	textpointer SolarBeamName                                      ; 0x081e
 	textpointer StringShotName                                     ; 0x0821
 	textpointer StunSporeName                                      ; 0x0828
@@ -3023,6 +3021,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer FragranceTrapName
 	textpointer FragranceTrapDescription
 	textpointer FragranceTrapDescriptionCont
+	textpointer MassiveBloomName
+	textpointer EnergyBloomDescription
 
 ; ------------------------------------------------------------------------------
 ; text13.asm

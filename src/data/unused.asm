@@ -1,4 +1,39 @@
 
+PollenFrenzyName:
+	text "Pollen Frenzy"
+	done
+
+IF SLEEP_WITH_COIN_FLIP
+PollenFrenzyDescription:
+	text "Flip a coin. If heads, the Defending"
+	line "Pokémon is now Paralyzed and"
+	line "Poisoned. If tails, the Defending"
+	line "Pokémon is now Asleep and Poisoned."
+	done
+ELSE
+PollenFrenzyDescription:
+	text "Flip a coin. If heads, the Defending"
+	line "Pokémon is now Paralyzed and"
+	line "Poisoned. If tails, the Defending"
+	line "Pokémon is now Drowsy and Poisoned."
+	done
+ENDC
+
+; attack 1
+energy GRASS, 1, COLORLESS, 1 ; energies
+tx PollenFrenzyName ; name
+tx PollenFrenzyDescription ; description
+dw NONE ; description (cont)
+db 20 ; damage
+db DAMAGE_NORMAL ; category
+dw PollenFrenzyEffectCommands ; effect commands
+db INFLICT_POISON | INFLICT_PARALYSIS | INFLICT_SLEEP ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
+
+
 
 ParalysisIfBasicDescription:
 	text "If the Defending Pokémon is a"

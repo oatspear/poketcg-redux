@@ -386,30 +386,16 @@ VenusaurLv67Card:
 	db STAR ; rarity
 	db EVOLUTION | NONE ; sets
 	db VENUSAUR_LV67
-	db 100 ; hp
+	db 120 ; hp
 	db STAGE2 ; stage
 	tx IvysaurName ; pre-evo name
 
 	; attack 1
 	energy GRASS, 1, COLORLESS, 1 ; energies
-	tx PollenFrenzyName ; name
-	tx PollenFrenzyDescription ; description
-	dw NONE ; description (cont)
-	db 20 ; damage
-	db DAMAGE_NORMAL ; category
-	dw JellyfishStingEffectCommands ; effect commands
-	db INFLICT_POISON | INFLICT_PARALYSIS | INFLICT_SLEEP ; flags 1
-	db NONE ; flags 2
-	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
-
-	; attack 2
-	energy GRASS, 3 ; energies
 	tx SolarBeamName ; name
 	dw NONE ; description
 	dw NONE ; description (cont)
-	db 70 ; damage
+	db 40 ; damage
 	db DAMAGE_NORMAL ; category
 	dw NONE ; effect commands
 	db NONE ; flags 1
@@ -417,6 +403,20 @@ VenusaurLv67Card:
 	db NONE ; flags 3
 	db 0
 	db ATK_ANIM_BEAM ; animation
+
+	; attack 2
+	energy GRASS, 2, COLORLESS, 1 ; energies
+	tx MassiveBloomName ; name
+	tx KarateChopDescription ; description
+	tx EnergyBloomDescription ; description (cont)
+	db 80 ; damage
+	db DAMAGE_MINUS ; category
+	dw MassiveBloomEffectCommands ; effect commands
+	db NONE ; flags 1
+	db HEAL_USER ; flags 2
+	db NONE ; flags 3
+	db 2
+	db ATK_ANIM_PETAL_DANCE ; animation
 
 	db 2 ; retreat cost
 	db WR_FIRE ; weakness

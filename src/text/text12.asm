@@ -39,27 +39,7 @@ EnergyTransDescription: ; 5796e (15:796e)
 	line "one of your Pokémon to another."
 	done
 
-PollenFrenzyName:
-	text "Pollen Frenzy"
-	done
-
-IF SLEEP_WITH_COIN_FLIP
-PollenFrenzyDescription:
-	text "Flip a coin. If heads, the Defending"
-	line "Pokémon is now Paralyzed and"
-	line "Poisoned. If tails, the Defending"
-	line "Pokémon is now Asleep and Poisoned."
-	done
-ELSE
-PollenFrenzyDescription:
-	text "Flip a coin. If heads, the Defending"
-	line "Pokémon is now Paralyzed and"
-	line "Poisoned. If tails, the Defending"
-	line "Pokémon is now Drowsy and Poisoned."
-	done
-ENDC
-
-SolarBeamName: ; 57a51 (15:7a51)
+SolarBeamName:
 	text "Solarbeam"
 	done
 
@@ -1546,4 +1526,13 @@ FragranceTrapDescriptionCont:
 	line "more Energies attached to it, the"
 	line "new Defending Pokémon is now also"
 	line "Confused and Burned."
+	done
+
+MassiveBloomName:
+	text "Massive Bloom"
+	done
+
+EnergyBloomDescription:
+	text "Heal 20 damage from each of your"
+	line "Pokémon that has attached Energies."
 	done
