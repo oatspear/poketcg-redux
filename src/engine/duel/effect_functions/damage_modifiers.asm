@@ -154,9 +154,10 @@ SpeedImpact_AIEffect:
 
 
 Psychic_DamageBoostEffect:
+	call SwapTurn
 	call GetEnergyAttachedMultiplierDamage
+	call SwapTurn
 	ld hl, wDamage
-	ld a, e
 	add [hl]
 ; cap damage at 250
 	; ld [hli], a
@@ -173,51 +174,22 @@ Psychic_AIEffect:
 	jp SetDefiniteAIDamage
 
 
-; output in de the number of energy cards
-; attached to the Defending Pokemon times 10.
-; used for attacks that deal 10x number of energy
-; cards attached to the Defending card.
+; input:
+;   e: PLAY_AREA_* of the target Pokémon
+; output:
+;   a: the number of energies attached to the
+;      turn holder's Pokémon times 10.
+; assume:
+;   - call SwapTurn
 GetEnergyAttachedMultiplierDamage:
-	call SwapTurn
-	ld a, DUELVARS_CARD_LOCATIONS
-	call GetTurnDuelistVariable
-
-	ld c, 0
-.loop
-	ld a, [hl]
-	cp CARD_LOCATION_ARENA
-	jr nz, .next
-	; is in Arena
-	ld a, l
-	call GetCardIDFromDeckIndex
-	call GetCardType
-	and TYPE_ENERGY
-	jr z, .next
-	; is Energy attached to Arena card
-	inc c
-.next
-	inc l
-	ld a, l
-	cp DECK_SIZE
-	jr c, .loop
-
-	call SwapTurn
-	ld l, c
-	ld h, $00
-	ld b, $00
-	add hl, hl ; hl =  2 * c
-	add hl, hl ; hl =  4 * c
-	add hl, bc ; hl =  5 * c
-	add hl, hl ; hl = 10 * c
-; cap damage at 250
-	; ld d, h
-	ld d, 0
-	ld e, l
-	ld a, h
-	or a
-	ret z
-	ld e, MAX_DAMAGE
-	ret
+	ld e, PLAY_AREA_ARENA
+	call GetPlayAreaCardAttachedEnergies
+	ld a, [wTotalAttachedEnergies]
+; cap if number of energies >= 25
+	cp 26
+	jp c, ATimes10
+	ld a, 25
+	jp ATimes10
 
 
 ;
