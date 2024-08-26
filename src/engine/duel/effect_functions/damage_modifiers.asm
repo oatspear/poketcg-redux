@@ -155,19 +155,10 @@ SpeedImpact_AIEffect:
 
 Psychic_DamageBoostEffect:
 	call SwapTurn
+	ld e, PLAY_AREA_ARENA
 	call GetEnergyAttachedMultiplierDamage
 	call SwapTurn
-	ld hl, wDamage
-	add [hl]
-; cap damage at 250
-	; ld [hli], a
-	; ld a, d
-	; adc [hl]
-	ld [hl], a
-	ret nc  ; no overflow
-	ld a, MAX_DAMAGE
-	ld [hl], a
-	ret
+	jp AddToDamage
 
 Psychic_AIEffect:
 	call Psychic_DamageBoostEffect
@@ -182,7 +173,6 @@ Psychic_AIEffect:
 ; assume:
 ;   - call SwapTurn
 GetEnergyAttachedMultiplierDamage:
-	ld e, PLAY_AREA_ARENA
 	call GetPlayAreaCardAttachedEnergies
 	ld a, [wTotalAttachedEnergies]
 ; cap if number of energies >= 25
@@ -190,6 +180,15 @@ GetEnergyAttachedMultiplierDamage:
 	jp c, ATimes10
 	ld a, 25
 	jp ATimes10
+
+
+Solarbeam_DamageBoostEffect:
+	ldh a, [hTempRetreatCostCards]
+	cp $ff
+	ret z
+	ld e, PLAY_AREA_ARENA
+	call GetEnergyAttachedMultiplierDamage
+	jp AddToDamage
 
 
 ;
