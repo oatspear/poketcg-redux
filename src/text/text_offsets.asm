@@ -2841,6 +2841,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer DragonRageName
 	textpointer DragonRageDescription
 	textpointer AttachEnergyFromHandDescription
+	textpointer AttachEnergyFromHandToThisPokemonDescription
 	textpointer EnergyHurricaneName
 	textpointer Accelerate1EnergyFromDeckDescription
 	textpointer FlameChargeName
@@ -3023,6 +3024,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer FragranceTrapDescriptionCont
 	textpointer MassiveBloomName
 	textpointer EnergyBloomDescription
+	textpointer SolarbeamDescription
 
 ; ------------------------------------------------------------------------------
 ; text13.asm

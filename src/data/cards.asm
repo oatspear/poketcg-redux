@@ -391,15 +391,15 @@ VenusaurLv67Card:
 	tx IvysaurName ; pre-evo name
 
 	; attack 1
-	energy GRASS, 1, COLORLESS, 1 ; energies
+	energy GRASS, 1 ; energies
 	tx SolarBeamName ; name
-	dw NONE ; description
-	dw NONE ; description (cont)
-	db 40 ; damage
-	db DAMAGE_NORMAL ; category
-	dw NONE ; effect commands
+	tx AttachEnergyFromHandToThisPokemonDescription ; description
+	tx SolarbeamDescription ; description (cont)
+	db 10 ; damage
+	db DAMAGE_PLUS ; category
+	dw SolarbeamEffectCommands ; effect commands
 	db NONE ; flags 1
-	db NONE ; flags 2
+	db ATTACHED_ENERGY_BOOST ; flags 2
 	db NONE ; flags 3
 	db 0
 	db ATK_ANIM_BEAM ; animation

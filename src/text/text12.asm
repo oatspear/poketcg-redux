@@ -567,6 +567,11 @@ AttachEnergyFromHandDescription:
 	line "your hand to 1 of your Pokémon."
 	done
 
+AttachEnergyFromHandToThisPokemonDescription:
+	text "Attach a Basic Energy card from"
+	line "your hand to this Pokémon."
+	done
+
 EnergyHurricaneName:
 	text "Energy Hurricane"
 	done
@@ -1535,4 +1540,10 @@ MassiveBloomName:
 EnergyBloomDescription:
 	text "Heal 20 damage from each of your"
 	line "Pokémon that has attached Energies."
+	done
+
+SolarbeamDescription:
+	text "This attack does 20 more damage"
+	line "for each Energy attached to"
+	line "this Pokémon."
 	done

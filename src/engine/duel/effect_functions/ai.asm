@@ -47,6 +47,11 @@ Prank_AISelectEffect:
 ; ------------------------------------------------------------------------------
 
 
+Solarbeam_AIEffect:
+	call Solarbeam_DamageBoostEffect
+	jp SetDefiniteAIDamage
+
+
 DoubleHit_AIEffect:
 	call CheckArenaPokemonHas2OrMoreEnergiesAttached
 	ret c

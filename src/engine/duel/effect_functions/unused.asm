@@ -2,6 +2,43 @@
 
 
 SolarbeamEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckAttachedEnergyFromHandToThisPokemonThisTurn
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Solarbeam_DamageMultiplierEffect
+	dbw EFFECTCMDTYPE_AI, Solarbeam_DamageMultiplierEffect
+	db  $00
+
+
+; returns carry if the turn holder did not play any energy cards
+; from the hand onto this Pokémon during their turn
+; input:
+;   hTempPlayAreaLocation_ff9d: PLAY_AREA_* of the Pokémon to test
+CheckAttachedEnergyFromHandToThisPokemonThisTurn:
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	add DUELVARS_ARENA_CARD_FLAGS
+	call GetTurnDuelistVariable
+	and ATTACHED_ENERGY_FROM_HAND_THIS_TURN
+	ret nz
+	scf
+	ret
+
+;
+Solarbeam_DamageMultiplierEffect:
+	call GetPlayAreaCardAttachedEnergies
+	ld a, [wTotalAttachedEnergies]
+	add a  ; x2
+; cap if number of energies >= 25
+	cp 26
+	jr c, .capped
+	ld a, 25
+.capped
+	call ATimes10
+	jp SetDefiniteAIDamage
+
+
+
+
+
+SolarbeamEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, AttachEnergyFromHand_HandCheck
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, AttachEnergyFromHand_OnlyActive_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, AttachEnergyFromHand_OnlyActive_AISelectEffect

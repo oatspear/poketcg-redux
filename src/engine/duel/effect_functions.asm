@@ -5398,8 +5398,10 @@ AttachEnergyFromHand_AISelectEffect:
 	ret
 
 AttachEnergyFromHand_OnlyActive_AISelectEffect:
-; AI doesn't select any card
-	ld a, $ff
+	ld c, TRUE
+	call Helper_CreateEnergyCardListFromHand
+; pick the first card from the list
+	ld a, [wDuelTempList]
 	ldh [hEnergyTransEnergyCard], a
 ; always choose Active Pokémon
 	xor a  ; PLAY_AREA_ARENA
