@@ -182,13 +182,17 @@ GetEnergyAttachedMultiplierDamage:
 	jp ATimes10
 
 
-Solarbeam_DamageBoostEffect:
-	ldh a, [hTempRetreatCostCards]
-	cp $ff
-	ret z
-	ld e, PLAY_AREA_ARENA
-	call GetEnergyAttachedMultiplierDamage
-	jp AddToDamage
+Solarbeam_DamageMultiplierEffect:
+	call GetPlayAreaCardAttachedEnergies
+	ld a, [wTotalAttachedEnergies]
+	add a  ; x2
+; cap if number of energies >= 25
+	cp 26
+	jr c, .capped
+	ld a, 25
+.capped
+	call ATimes10
+	jp SetDefiniteAIDamage
 
 
 ;

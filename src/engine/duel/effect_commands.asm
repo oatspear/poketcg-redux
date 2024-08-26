@@ -1502,11 +1502,10 @@ Accelerate1EnergyFromHandEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, AttachEnergyFromHand_AttachEnergyEffect
 	db  $00
 
-GrowthEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, AttachEnergyFromHand_HandCheck
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, AttachEnergyFromHand_AttachEnergyEffect
-	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, AttachEnergyFromHand_OnlyActive_PlayerSelectEffect
-	dbw EFFECTCMDTYPE_AI_SELECTION, AttachEnergyFromHand_OnlyActive_AISelectEffect
+SolarbeamEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckAttachedEnergyFromHandToThisPokemonThisTurn
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Solarbeam_DamageMultiplierEffect
+	dbw EFFECTCMDTYPE_AI, Solarbeam_DamageMultiplierEffect
 	db  $00
 
 EnergyLiftEffectCommands:

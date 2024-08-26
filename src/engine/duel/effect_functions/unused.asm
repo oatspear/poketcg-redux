@@ -1,5 +1,47 @@
 ;
 
+
+SolarbeamEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, AttachEnergyFromHand_HandCheck
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, AttachEnergyFromHand_OnlyActive_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, AttachEnergyFromHand_OnlyActive_AISelectEffect
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, AttachEnergyFromHand_AttachEnergyEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Solarbeam_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AI, Solarbeam_AIEffect
+	db  $00
+
+
+; damage boost if energy attached is optional
+Solarbeam_DamageBoostEffect:
+	ldh a, [hEnergyTransEnergyCard]
+	cp $ff
+	ret z
+.got_energy
+	ld e, PLAY_AREA_ARENA
+	call GetEnergyAttachedMultiplierDamage
+	jp AddToDamage
+
+Solarbeam_AIEffect:
+	ld c, TRUE
+	call Helper_CreateEnergyCardListFromHand
+	ret c  ; no energies
+	call Solarbeam_DamageBoostEffect.got_energy
+	jp SetDefiniteAIDamage
+
+
+
+
+GrowthEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, AttachEnergyFromHand_HandCheck
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, AttachEnergyFromHand_OnlyActive_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, AttachEnergyFromHand_OnlyActive_AISelectEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, AttachEnergyFromHand_AttachEnergyEffect
+	db  $00
+
+
+
+
+
 JellyfishStingEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, JellyfishSting_PoisonConfusionEffect
 	db  $00
