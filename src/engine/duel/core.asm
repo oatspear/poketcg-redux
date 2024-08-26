@@ -685,9 +685,13 @@ PlayEnergyCard:
 	or PLAYED_ENERGY_THIS_TURN
 	ld [wAlreadyPlayedEnergyOrSupporter], a
 .play_energy
+	ld a, DUELVARS_ARENA_CARD_FLAGS
+	call GetTurnDuelistVariable
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	ldh [hTempPlayAreaLocation_ffa1], a
 	ld e, a
+	add l
+	set ATTACHED_ENERGY_FROM_HAND_THIS_TURN_F, [hl]
 	ldh a, [hTempCardIndex_ff98]
 	ldh [hTemp_ffa0], a
 	call PutHandCardInPlayArea
@@ -6481,9 +6485,13 @@ OppAction_FinishTurnWithoutAttacking:
 
 ; attach an energy card from hand to the arena or a benched Pokemon
 OppAction_PlayEnergyCard:
+	ld a, DUELVARS_ARENA_CARD_FLAGS
+	call GetTurnDuelistVariable
 	ldh a, [hTempPlayAreaLocation_ffa1]
 	ldh [hTempPlayAreaLocation_ff9d], a
 	ld e, a
+	add l
+	set ATTACHED_ENERGY_FROM_HAND_THIS_TURN_F, [hl]
 	ldh a, [hTemp_ffa0]
 	ldh [hTempCardIndex_ff98], a
 	call PutHandCardInPlayArea
@@ -8027,7 +8035,8 @@ SetAllPlayAreaPokemonCanEvolve:
 	ld c, a
 	ld l, DUELVARS_ARENA_CARD_FLAGS
 .next_pkmn_loop
-	res 5, [hl]
+	res ATTACHED_ENERGY_FROM_HAND_THIS_TURN_F, [hl]
+	res USED_PKMN_POWER_THIS_TURN_F, [hl]
 	set CAN_EVOLVE_THIS_TURN_F, [hl]
 	inc l
 	dec c
