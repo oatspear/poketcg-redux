@@ -430,10 +430,6 @@ RetreatAidDescription:
 	line "have in play with Retreat Aid."
 	done
 
-TongueStretchName: ; 628aa (18:68aa)
-	text "Tongue Stretch"
-	done
-
 FetchName: ; 62a4e (18:6a4e)
 	text "Fetch"
 	done
@@ -546,6 +542,10 @@ ShadowClawDescription:
 Discard1CardFromOpponentsHandDescription:
 	text "Discard a random card from your"
 	line "opponent's hand."
+	done
+
+GluttonFrenzyName:
+	text "Glutton Frenzy"
 	done
 
 DragonDanceName:

@@ -191,6 +191,14 @@ DealDamageToTargetA_DE_DamageEffect:
 	jp SwapTurn
 
 
+LickingShot_DamageEffect:
+	ld e, PLAY_AREA_ARENA
+	call GetEnergyAttachedMultiplierDamage
+	ld e, a
+	ld d, 0
+	jr DealDamageToTarget_DE_DamageEffect
+
+
 ; input:
 ;   a: ATK_ANIM_* constant
 ;   de: amount of damage

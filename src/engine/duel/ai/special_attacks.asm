@@ -65,6 +65,8 @@ HandleSpecialAIAttacks:
 	jp z, .HyperBeam
 	cp DRAGONAIR
 	jp z, .HyperBeam
+	cp LICKITUNG
+	jp z, .GluttonFrenzy
 	cp NIDORANF
 	jr z, .CallForFamily
 	cp KANGASKHAN
@@ -414,6 +416,14 @@ HandleSpecialAIAttacks:
 ; 	jp nc, .zero_score
 ; 	ld a, $83
 ; 	ret
+
+.GluttonFrenzy:
+	ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND
+	call GetNonTurnDuelistVariable
+	or a
+	jr z, .HyperBeam  ; no cards in hand to discard
+	ld a, $82  ; slightly encourage
+	ret
 
 ; only incentivize attack if player's active card,
 ; has any energy cards attached, and if so,

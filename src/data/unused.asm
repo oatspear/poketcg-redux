@@ -1110,6 +1110,17 @@ db 0
 db ATK_ANIM_WHIRLPOOL ; animation
 
 
+EnergyAbsorptionName: ; 61065 (18:5065)
+	text "Energy Absorption"
+	done
+
+EnergyAbsorptionDescription: ; 61078 (18:5078)
+	text "Choose up to 2 Basic Energy cards"
+	line "from your discard pile and attach"
+	line "them to this Pokémon."
+	done
+
+
 ; attack 1
 energy PSYCHIC, 1 ; energies
 tx EnergyAbsorptionName ; name
@@ -1763,6 +1774,16 @@ ClefableLv28Card:
 
 
 ;
+
+PsywaveName:
+	text "Psywave"
+	done
+
+PsywaveDescription:
+	text "Put 1 damage counter on the"
+	line "Defending Pokémon for each"
+	line "Energy attached to it."
+	done
 
 MewLv23Card:
 	db TYPE_PKMN_PSYCHIC ; type

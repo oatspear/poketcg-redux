@@ -2582,7 +2582,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer SleepingGasName                                    ; 0x0a94
 	textpointer DestinyBondName
 	textpointer DestinyBondDescription
-	textpointer LickName                                           ; 0x0a9a
 	textpointer NightmareName                                      ; 0x0aa1
 	textpointer HyperHypnosisName
 	textpointer HyperHypnosisDescription
@@ -2594,23 +2593,16 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer CurseDescription
 	textpointer PainAmplifierName                                  ; 0x0aa6
 	textpointer PainAmplifierDescription                           ; 0x0aa7
-	textpointer DarkMindName                                       ; 0x0aa8
 	textpointer BenchBarrierName
 	textpointer BenchBarrierDescription
 	textpointer MeditateName
 	textpointer MeditateDescription
-	textpointer PainBurstName                                      ; unused
-	textpointer PainBurstDescription                               ; unused
 	textpointer PsyburnName
 	textpointer PsyburnDescription
 	textpointer PsychicName
 	textpointer PsychicDescription
-	textpointer EnergyAbsorptionName                               ; 0x0ac6
-	textpointer EnergyAbsorptionDescription                        ; 0x0ac7
 	textpointer NeutralizingShieldName                             ; 0x0acb
 	textpointer NeutralizingShieldDescription                      ; 0x0acc
-	textpointer PsywaveName                                        ; 0x0ad2
-	textpointer PsywaveDescription                                 ; 0x0ad3
 	textpointer DevolutionBeamName                                 ; 0x0ad4
 	textpointer DevolutionBeamDescription                          ; 0x0ad5
 	textpointer SlicingWindName                                    ; 0x0adf
@@ -2622,7 +2614,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer HurricaneName
 	textpointer HurricaneDescription
 	textpointer TwisterName                                        ; 0x0ae4
-	textpointer CrunchName
 	textpointer SynthesisName
 	textpointer SynthesisDescription
 	textpointer SoothingMelodyName
@@ -2721,6 +2712,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer UTurnName
 	textpointer IngrainName
 	textpointer IngrainDescriptionCont
+	textpointer LickingShotName
+	textpointer LickingShotDescription
 
 ; ------------------------------------------------------------------------------
 ; text12.asm
@@ -2812,7 +2805,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer Bonus20IfOpponentPlayedSupporterDescription
 	textpointer RetreatAidName                                     ; 0x0b2b
 	textpointer RetreatAidDescription                              ; 0x0b2c
-	textpointer TongueStretchName                                  ; 0x0b31
 	textpointer FetchName
 	textpointer Draw1CardDescription                               ; 0x0b3b
 	textpointer Draw2CardsDescription
@@ -2837,6 +2829,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ShadowClawName
 	textpointer ShadowClawDescription
 	textpointer Discard1CardFromOpponentsHandDescription
+	textpointer GluttonFrenzyName
 	textpointer DragonDanceName
 	textpointer DragonRageName
 	textpointer DragonRageDescription

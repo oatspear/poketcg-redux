@@ -270,6 +270,16 @@ FixmeText:
 ; Unused Text
 ; ------------------------------------------------------------------------------
 
+; PainBurstName:
+; 	text "Pain Burst"
+; 	done
+
+; PainBurstDescription:
+; 	text "This attack does 10 more damage"
+; 	line "for each damage counter on the"
+; 	line "Defending Pokémon."
+; 	done
+
 ; DragOffName:
 ; 	text "Drag Off"
 ; 	done

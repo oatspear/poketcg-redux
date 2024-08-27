@@ -982,11 +982,7 @@ DestinyBondDescription:
 	line "Knock Out that Pokémon."
 	done
 
-LickName: ; 60623 (18:4623)
-	text "Lick"
-	done
-
-NightmareName: ; 60801 (18:4801)
+NightmareName:
 	text "Nightmare"
 	done
 
@@ -1058,10 +1054,6 @@ PainAmplifierDescription:
 	line "already has damage counters on it."
 	done
 
-DarkMindName: ; 609b7 (18:49b7)
-	text "Dark Mind"
-	done
-
 BenchBarrierName:
 	text "Bench Barrier"
 	done
@@ -1080,16 +1072,6 @@ MeditateDescription:
 	text "This attack can only be used"
 	line "if you have 5 or more cards"
 	line "in your hand."
-	done
-
-PainBurstName:
-	text "Pain Burst"
-	done
-
-PainBurstDescription:
-	text "This attack does 10 more damage"
-	line "for each damage counter on the"
-	line "Defending Pokémon."
 	done
 
 PsyburnName:
@@ -1115,16 +1097,6 @@ PsychicDescription:
 	line "the Defending Pokémon."
 	done
 
-EnergyAbsorptionName: ; 61065 (18:5065)
-	text "Energy Absorption"
-	done
-
-EnergyAbsorptionDescription: ; 61078 (18:5078)
-	text "Choose up to 2 Basic Energy cards"
-	line "from your discard pile and attach"
-	line "them to this Pokémon."
-	done
-
 NeutralizingShieldName:
 	text "Neutralizing Shield"
 	done
@@ -1134,16 +1106,6 @@ NeutralizingShieldDescription:
 	line "including damage, done to this"
 	line "Pokémon by your opponent's"
 	line "Evolved Pokémon."
-	done
-
-PsywaveName:
-	text "Psywave"
-	done
-
-PsywaveDescription:
-	text "Put 1 damage counter on the"
-	line "Defending Pokémon for each"
-	line "Energy attached to it."
 	done
 
 DevolutionBeamName:
@@ -1199,10 +1161,6 @@ HurricaneDescription:
 
 TwisterName:
 	text "Twister"
-	done
-
-CrunchName:
-	text "Crunch"
 	done
 
 SynthesisName:
@@ -1709,4 +1667,14 @@ IngrainName:
 IngrainDescriptionCont:
 	text "Heal 10 damage from this Pokémon"
 	line "for each Energy retrieved this way."
+	done
+
+LickingShotName:
+	text "Licking Shot"
+	done
+
+LickingShotDescription:
+	text "This attack does 10 damage to 1 of"
+	line "your opponent's Pokémon for each"
+	line "Energy attached to this Pokémon."
 	done

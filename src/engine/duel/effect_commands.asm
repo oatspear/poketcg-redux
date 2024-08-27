@@ -616,10 +616,14 @@ Discard2EnergiesEffectCommands:
 	dbw EFFECTCMDTYPE_AI_SELECTION, Discard2Energies_AISelectEffect
 	db  $00
 
+GluttonFrenzyEffectCommands:
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, GluttonFrenzy_DiscardEffect
+	; fallthrough to Discard1EnergyFromOpponentEffectCommands
+
 Discard1EnergyFromOpponentEffectCommands:
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DiscardOpponentEnergy_DiscardEffect
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, DiscardOpponentEnergy_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, DiscardOpponentEnergy_AISelectEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DiscardOpponentEnergy_DiscardEffect
 	db  $00
 
 EvolutionaryFlameEffectCommands:
@@ -786,6 +790,7 @@ TradeEffectCommands:
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Trade_PlayerHandCardSelection
 	db  $00
 
+; unused
 KnockOffEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Discard1RandomCardFromOpponentsHandEffect
 	db  $00
@@ -1571,6 +1576,12 @@ Deal40ToAnyPokemonEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Deal40DamageToTarget_DamageEffect
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, DamageTargetPokemon_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, DamageTargetPokemon_AISelectEffect
+	db  $00
+
+LickingShotEffectCommands:
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, DamageTargetPokemon_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, DamageTargetPokemon_AISelectEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, LickingShot_DamageEffect
 	db  $00
 
 AquaLauncherEffectCommands:

@@ -1029,6 +1029,11 @@ VoltSwitchEffect:
 ; Compound Attacks
 ; ------------------------------------------------------------------------------
 
+GluttonFrenzy_DiscardEffect:
+	call DiscardOpponentEnergy_DiscardEffect
+	jp Discard1RandomCardFromOpponentsHandEffect
+
+
 ; Poison, Confusion, bonus damage based on Retreat Cost
 JellyfishStingEffect:
 	call Constrict_DamageBoostEffect

@@ -9159,37 +9159,37 @@ LickitungCard:
 	db DIAMOND ; rarity
 	db MYSTERY | JUNGLE ; sets
 	db LICKITUNG
-	db 70 ; hp
+	db 60 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
 
 	; attack 1
 	energy COLORLESS, 1 ; energies
-	tx LickName ; name
-	tx FixmeText ; description
+	tx LickingShotName ; name
+	tx LickingShotDescription ; description
 	dw NONE ; description (cont)
-	db 10 ; damage
-	db DAMAGE_NORMAL ; category
-	dw NONE ; effect commands
-	db INFLICT_PARALYSIS ; flags 1
-	db NONE ; flags 2
-	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_GOO ; animation
-
-	; attack 2
-	energy COLORLESS, 2 ; energies
-	tx TongueStretchName ; name
-	tx Deal20ToBenchDescription ; description
-	tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category
-	dw Deal20ToBenchEffectCommands ; effect commands
+	dw LickingShotEffectCommands ; effect commands
 	db DAMAGE_TO_OPPONENT_BENCH ; flags 1
-	db FLAG_2_BIT_6 ; flags 2
+	db ATTACHED_ENERGY_BOOST ; flags 2
 	db NONE ; flags 3
-	db 3
-	db ATK_ANIM_STRETCH_KICK ; animation
+	db 0
+	db ATK_ANIM_GLOW_EFFECT ; animation
+
+	; attack 2
+	energy COLORLESS, 3 ; energies
+	tx GluttonFrenzyName ; name
+	tx Discard1EnergyFromTargetDescription ; description
+	tx Discard1CardFromOpponentsHandDescription ; description (cont)
+	db 20 ; damage
+	db DAMAGE_NORMAL ; category
+	dw GluttonFrenzyEffectCommands ; effect commands
+	db NONE ; flags 1
+	db NONE ; flags 2
+	db SPECIAL_AI_HANDLING ; flags 3
+	db 0
+	db ATK_ANIM_GOO ; animation
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness

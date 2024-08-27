@@ -124,6 +124,13 @@
 - **Rage**: removed.
 - New attack: **Triple Hit** (C): 10 damage; if the user has 2 Energies, does damage twice; if the user has 3 or more Energies, does damage thrice.
 
+#### Lickitung
+- Reduced HP from 70 to 60.
+- **Lick**: removed.
+- **Tongue Stretch**: removed.
+- New attack: **Licking Shot** (C): does 10 damage to 1 of the opponent's Pokémon for each Energy attached to the user.
+- New attack: **Glutton Frenzy** (CCC): 20 damage; discard an Energy from the Defending Pokémon; discard a random card from the opponent's hand.
+
 
 ## Version 0.10.0
 
