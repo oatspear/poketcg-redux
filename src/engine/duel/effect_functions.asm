@@ -2288,13 +2288,6 @@ DragOff_SwitchEffect:
 	ret
 
 
-DragOff_SwitchAndDamageEffect:
-	call Lure_SwitchDefendingPokemon
-	ld de, 30  ; damage
-	ld a, ATK_ANIM_WHIP_NO_GLOW
-	jp DealDamageToArenaPokemon_CustomAnim
-
-
 ForceSwitchUser_PlayerSelectEffect:
 	ldtx hl, SelectPkmnOnBenchToSwitchWithActiveText
 	call DrawWideTextBox_WaitForInput

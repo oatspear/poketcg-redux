@@ -1,5 +1,22 @@
 ;
 
+DragOffEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckOpponentBenchIsNotEmpty
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DragOff_SwitchAndDamageEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Lure_SelectSwitchPokemon
+	dbw EFFECTCMDTYPE_AI_SELECTION, Lure_GetOpponentBenchPokemonWithLowestHP
+	db  $00
+
+DragOff_SwitchAndDamageEffect:
+	call Lure_SwitchDefendingPokemon
+	ld de, 30  ; damage
+	ld a, ATK_ANIM_WHIP_NO_GLOW
+	jp DealDamageToArenaPokemon_CustomAnim
+
+
+
+
+
 
 SolarbeamEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckAttachedEnergyFromHandToThisPokemonThisTurn
