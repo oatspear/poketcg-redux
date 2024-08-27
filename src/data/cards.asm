@@ -304,17 +304,17 @@ IvysaurCard:
 
 	; attack 2
 	energy GRASS, 1, COLORLESS, 1 ; energies
-	tx PoisonWhipName ; name
-	tx InflictPoisonDescription ; description
+	tx SolarbeamName ; name
+	tx SolarbeamDescription ; description
 	dw NONE ; description (cont)
-	db 30 ; damage
-	db DAMAGE_NORMAL ; category
-	dw InflictPoisonEffectCommands ; effect commands
-	db INFLICT_POISON ; flags 1
-	db NONE ; flags 2
+	db 20 ; damage
+	db DAMAGE_PLUS ; category
+	dw SolarbeamEffectCommands ; effect commands
+	db NONE ; flags 1
+	db ATTACHED_ENERGY_BOOST ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_POISON_WHIP ; animation
+	db ATK_ANIM_BEAM ; animation
 
 	db 1 ; retreat cost
 	db WR_FIRE ; weakness
@@ -392,9 +392,9 @@ VenusaurLv67Card:
 
 	; attack 1
 	energy GRASS, 1 ; energies
-	tx SolarBeamName ; name
-	tx AttachEnergyFromHandToThisPokemonDescription ; description
-	tx SolarbeamDescription ; description (cont)
+	tx SolarbeamName ; name
+	tx SolarbeamDescription ; description
+	dw NONE ; description (cont)
 	db 10 ; damage
 	db DAMAGE_PLUS ; category
 	dw SolarbeamEffectCommands ; effect commands

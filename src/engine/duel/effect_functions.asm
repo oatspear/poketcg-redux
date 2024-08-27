@@ -5348,6 +5348,7 @@ AttachEnergyFromHand_OnlyActive_PlayerSelectEffect:
 	ldh [hTempPlayAreaLocation_ffa1], a
 	call Helper_SelectEnergyFromHand
 	ldh [hEnergyTransEnergyCard], a
+	or a  ; ignore carry
 	ret
 
 EnergyLift_PlayerSelectEffect:

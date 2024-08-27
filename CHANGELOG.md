@@ -7,6 +7,10 @@
 
 ### Grass Changes
 
+#### Ivysaur
+- **Poison Whip**: removed.
+- New attack: **Solarbeam** (GC): 20 damage; you may attach a Basic Energy from the hand to the user; if you do, double the attack's damage.
+
 #### Venusaur Lv67
 - Increased HP from 100 to 120.
 - **Pollen Frenzy**: removed.

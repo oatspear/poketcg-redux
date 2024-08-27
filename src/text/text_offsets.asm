@@ -2728,7 +2728,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer DoExcessDamageToTheNewActivePokemonText
 	textpointer EnergyTransName                                    ; 0x081c
 	textpointer EnergyTransDescription                             ; 0x081d
-	textpointer SolarBeamName                                      ; 0x081e
+	textpointer SolarbeamName
+	textpointer SolarbeamDescription
 	textpointer StringShotName                                     ; 0x0821
 	textpointer StunSporeName                                      ; 0x0828
 	textpointer WhirlwindName                                      ; 0x082c
@@ -2834,7 +2835,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer DragonRageName
 	textpointer DragonRageDescription
 	textpointer AttachEnergyFromHandDescription
-	textpointer AttachEnergyFromHandToThisPokemonDescription
 	textpointer EnergyHurricaneName
 	textpointer Accelerate1EnergyFromDeckDescription
 	textpointer FlameChargeName
@@ -3017,7 +3017,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer FragranceTrapDescriptionCont
 	textpointer MassiveBloomName
 	textpointer EnergyBloomDescription
-	textpointer SolarbeamDescription
 
 ; ------------------------------------------------------------------------------
 ; text13.asm

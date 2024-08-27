@@ -65,7 +65,7 @@ SolarbeamEffectCommands:
 	db  $00
 
 
-; damage boost if energy attached is optional
+; +10/Energy damage boost if energy attached is optional
 Solarbeam_DamageBoostEffect:
 	ldh a, [hEnergyTransEnergyCard]
 	cp $ff
@@ -81,6 +81,35 @@ Solarbeam_AIEffect:
 	ret c  ; no energies
 	call Solarbeam_DamageBoostEffect.got_energy
 	jp SetDefiniteAIDamage
+
+
+;
+SolarbeamEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, AttachEnergyFromHand_HandCheck
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, AttachEnergyFromHand_OnlyActive_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, AttachEnergyFromHand_OnlyActive_AISelectEffect
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, AttachEnergyFromHand_AttachEnergyEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Solarbeam_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AI, Solarbeam_AIEffect
+	db  $00
+
+Solarbeam_AIEffect:
+	call Solarbeam_DamageBoostEffect
+	jp SetDefiniteAIDamage
+
+; x20 damage boost if energy attached is mandatory
+Solarbeam_DamageBoostEffect:
+	ld e, PLAY_AREA_ARENA
+	call GetPlayAreaCardAttachedEnergies
+	ld a, [wTotalAttachedEnergies]
+	add a  ; x2
+; cap if number of energies >= 25
+	cp 25
+	jr c, .capped
+	ld a, 24
+.capped
+	call ATimes10
+	jp AddToDamage
 
 
 

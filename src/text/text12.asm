@@ -39,15 +39,16 @@ EnergyTransDescription: ; 5796e (15:796e)
 	line "one of your Pokémon to another."
 	done
 
-SolarBeamName:
+SolarbeamName:
 	text "Solarbeam"
 	done
 
-; SolarBeamDescription:
-; 	text "Deal 10 additional damage for each"
-; 	line "<GRASS> or <FIRE> Energy attached to"
-; 	line "this Pokémon."
-; 	done
+SolarbeamDescription:
+	text "You may attach a Basic Energy card"
+	line "from your hand to this Pokémon."
+	line "If you do, double this attack's"
+	line "damage."
+	done
 
 StringShotName:
 	text "String Shot"
@@ -565,11 +566,6 @@ DragonRageDescription:
 AttachEnergyFromHandDescription:
 	text "Attach a Basic Energy card from"
 	line "your hand to 1 of your Pokémon."
-	done
-
-AttachEnergyFromHandToThisPokemonDescription:
-	text "Attach a Basic Energy card from"
-	line "your hand to this Pokémon."
 	done
 
 EnergyHurricaneName:
@@ -1540,10 +1536,4 @@ MassiveBloomName:
 EnergyBloomDescription:
 	text "Heal 20 damage from each of your"
 	line "Pokémon that has attached Energies."
-	done
-
-SolarbeamDescription:
-	text "This attack does 20 more damage"
-	line "for each Energy attached to"
-	line "this Pokémon."
 	done

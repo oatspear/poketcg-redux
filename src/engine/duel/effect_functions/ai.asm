@@ -48,7 +48,10 @@ Prank_AISelectEffect:
 
 
 Solarbeam_AIEffect:
-	call Solarbeam_DamageBoostEffect
+	ld c, TRUE
+	call Helper_CreateEnergyCardListFromHand
+	ret c  ; no energies
+	call Solarbeam_DamageBoostEffect.got_energy
 	jp SetDefiniteAIDamage
 
 
