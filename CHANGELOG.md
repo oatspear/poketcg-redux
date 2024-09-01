@@ -14,11 +14,9 @@
 #### Venusaur Lv67
 - Increased HP from 100 to 120.
 - **Pollen Frenzy**: removed.
-- **Solarbeam**: reduced cost from (GGG) to (G).
-- **Solarbeam**: reduced damage from 70 to 10.
-- **Solarbeam**: must attach a Basic Energy from the hand to use the attack.
-- **Solarbeam**: does +20 damage for each Energy attached to the user.
+- **Solarbeam**: removed.
 - New attack: **Massive Bloom** (GGC): 80 damage; does 10 less damage for each damage counter on the user; heals 20 damage from each of the user's Pokémon with any attached energies.
+- New attack: **Earthquake** (GGCC): 60 damage; does 20 damage to each player's Benched Pokémon.
 
 #### Caterpie
 - **String Shot**: no longer inflicts Paralysis.

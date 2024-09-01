@@ -44,7 +44,9 @@ HandleSpecialAIAttacks:
 	cp DUGTRIO
 	jp z, .Earthquake
 	cp NIDOKING
-	jp z, .Earthquake
+	jp z, .Earthquake20
+	cp VENUSAUR_LV67
+	jp z, .Earthquake20
 	cp ELECTRODE_LV35
 	jp z, .EnergySpike
 	cp DRAGONITE_LV45
@@ -342,7 +344,12 @@ HandleSpecialAIAttacks:
 ; dismiss attack if number of own benched cards which would
 ; be KOd is greater than or equal to the number
 ; of prize cards left for player.
+.Earthquake20:
+	ld c, 30
+	jr .earthquake_logic
 .Earthquake:
+	ld c, 20
+.earthquake_logic
 	ld a, DUELVARS_BENCH
 	call GetTurnDuelistVariable
 
@@ -355,7 +362,7 @@ HandleSpecialAIAttacks:
 	ld a, e
 	add DUELVARS_ARENA_CARD_HP
 	call GetTurnDuelistVariable
-	cp 20
+	cp c
 	jr nc, .loop_earthquake
 	inc d
 	jr .loop_earthquake

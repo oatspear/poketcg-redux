@@ -707,6 +707,11 @@ DamageAllBenchedPokemon10Description:
 	line "player's Benched Pokémon."
 	done
 
+DamageAllBenchedPokemon20Description:
+	text "This attack does 20 damage to each"
+	line "player's Benched Pokémon."
+	done
+
 TantrumName:
 	text "Tantrum"
 	done

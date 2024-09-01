@@ -391,20 +391,6 @@ VenusaurLv67Card:
 	tx IvysaurName ; pre-evo name
 
 	; attack 1
-	energy GRASS, 1 ; energies
-	tx SolarbeamName ; name
-	tx SolarbeamDescription ; description
-	dw NONE ; description (cont)
-	db 10 ; damage
-	db DAMAGE_PLUS ; category
-	dw SolarbeamEffectCommands ; effect commands
-	db NONE ; flags 1
-	db ATTACHED_ENERGY_BOOST ; flags 2
-	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_BEAM ; animation
-
-	; attack 2
 	energy GRASS, 2, COLORLESS, 1 ; energies
 	tx MassiveBloomName ; name
 	tx KarateChopDescription ; description
@@ -417,6 +403,20 @@ VenusaurLv67Card:
 	db NONE ; flags 3
 	db 2
 	db ATK_ANIM_PETAL_DANCE ; animation
+
+	; attack 2
+	energy GRASS, 2, COLORLESS, 2 ; energies
+	tx EarthquakeName ; name
+	tx DamageAllBenchedPokemon20Description ; description
+	tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
+	db 60 ; damage
+	db DAMAGE_NORMAL ; category
+	dw Earthquake10EffectCommands ; effect commands
+	db NONE ; flags 1
+	db NONE ; flags 2
+	db SPECIAL_AI_HANDLING ; flags 3
+	db 0
+	db ATK_ANIM_HIT ; animation
 
 	db 2 ; retreat cost
 	db WR_FIRE ; weakness

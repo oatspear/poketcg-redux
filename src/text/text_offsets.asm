@@ -2528,6 +2528,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer DigUnderName
 	textpointer EarthquakeName
 	textpointer DamageAllBenchedPokemon10Description
+	textpointer DamageAllBenchedPokemon20Description
 	textpointer TantrumName                                        ; 0x0a1f
 	textpointer TantrumDescription                                 ; 0x0a20
 	textpointer KarateChopName                                     ; 0x0a27
