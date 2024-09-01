@@ -148,8 +148,8 @@ AdaptiveEvolutionDescription:
 	line "first turn or the turn you play it."
 	done
 
-PowerLariatName:
-	text "Power Lariat"
+EvopressName:
+	text "Evopress"
 	done
 
 PowerLariatDescription:

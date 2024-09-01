@@ -2750,7 +2750,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ConfusionName
 	textpointer AdaptiveEvolutionName
 	textpointer AdaptiveEvolutionDescription
-	textpointer PowerLariatName
+	textpointer EvopressName
 	textpointer PowerLariatDescription
 	textpointer RetaliateName
 	textpointer RetaliateDescription
