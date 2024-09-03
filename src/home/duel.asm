@@ -898,7 +898,9 @@ EvolvePokemonCard:
 	ld a, e
 	add DUELVARS_ARENA_CARD_FLAGS
 	ld l, a
-	ld [hl], $00
+	ld a, [hl]
+	and $0f  ; retain lower nybble
+	ld [hl], a
 	ld a, e
 	add DUELVARS_ARENA_CARD_CHANGED_TYPE
 	ld l, a
@@ -1732,8 +1734,16 @@ PlayAttackAnimation_DealAttackDamage:
 	ld [hl], e
 	inc hl
 	ld [hl], d
-	ld a, DUELVARS_ARENA_CARD_HP
+
+	ld a, DUELVARS_ARENA_CARD_FLAGS
 	call GetNonTurnDuelistVariable
+	ld a, e
+	or a
+	jr z, .damage_flag
+	set DAMAGED_SINCE_LAST_TURN_F, [hl]
+.damage_flag
+
+	ld l, DUELVARS_ARENA_CARD_HP
 
 ; register overkill damage
 	ld b, a  ; Defending Pokémon's HP
@@ -2522,8 +2532,15 @@ DealDamageToPlayAreaPokemon:
 	xor a  ; PLAY_AREA_ARENA
 .got_damage
 	ld c, $00
-	add DUELVARS_ARENA_CARD_HP
+	add DUELVARS_ARENA_CARD_FLAGS
 	call GetTurnDuelistVariable
+	ld a, e
+	or a
+	jr z, .damage_flag
+	set DAMAGED_SINCE_LAST_TURN_F, [hl]
+.damage_flag
+	ld l, DUELVARS_ARENA_CARD_HP
+	ld a, [hl]
 	push af
 	bank1call PlayAttackAnimation_DealAttackDamageSimple
 	pop af

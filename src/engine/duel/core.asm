@@ -7021,6 +7021,7 @@ HandleBetweenTurnsEvents:
 	; jr c, .something_to_handle
 ;.nothing_to_handle
 	call ClearStatusFromBenchedPokemon
+	call ClearPokemonFlags_EndOfTurn
 	call DiscardAttachedPluspowers
 	call SwapTurn
 	call DiscardAttachedDefenders
@@ -7078,6 +7079,7 @@ HandleBetweenTurnsEvents:
 
 .discard_pluspower
 	call ClearStatusFromBenchedPokemon
+	call ClearPokemonFlags_EndOfTurn
 	call DiscardAttachedPluspowers
 	call SwapTurn
 	ld a, DUELVARS_ARENA_CARD
@@ -7232,6 +7234,17 @@ ENDC
 	dec e
 	jr nz, .loop
 	ret
+
+ClearPokemonFlags_EndOfTurn:
+	ld a, DUELVARS_ARENA_CARD_FLAGS
+	call GetTurnDuelistVariable
+	ld e, MAX_PLAY_AREA_POKEMON
+.loop
+	res DAMAGED_SINCE_LAST_TURN_F, [hl]
+	inc hl
+	dec e
+	ret z
+	jr .loop
 
 ; discard any PLUSPOWER attached to the turn holder's arena and/or bench Pokemon
 ; FIXME refactor into single function
