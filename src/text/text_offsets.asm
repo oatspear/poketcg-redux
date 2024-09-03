@@ -2732,7 +2732,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer SolarbeamName
 	textpointer SolarbeamDescription
 	textpointer StringShotName                                     ; 0x0821
-	textpointer StunSporeName                                      ; 0x0828
+	textpointer StunSporeName
+	textpointer StunSporeDescription
 	textpointer WhirlwindName                                      ; 0x082c
 	textpointer OpponentSwitchesPokemonDescription                 ; 0x082d
 	textpointer PoisonStingName                                    ; 0x0833

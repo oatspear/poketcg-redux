@@ -70,6 +70,12 @@ StunSporeName:
 	text "Stun Spore"
 	done
 
+StunSporeDescription:
+	text "If this Pokémon was damaged since"
+	line "your last turn, the Defending"
+	line "Pokémon is now Paralyzed."
+	done
+
 WhirlwindName:
 	text "Whirlwind"
 	done

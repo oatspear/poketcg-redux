@@ -485,6 +485,10 @@ ParalysisRecoil20EffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Recoil20Effect
 	db  $00
 
+ParalysisIfDamagedSinceLastTurnEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ParalysisIfDamagedSinceLastTurnEffect
+	db  $00
+
 ; unused
 ParalysisIfDiscardedEnergyEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, OptionalDiscardEnergy_PlayerSelectEffect

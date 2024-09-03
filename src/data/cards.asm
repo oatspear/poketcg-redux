@@ -1282,11 +1282,11 @@ OddishCard:
 	; attack 2
 	energy GRASS, 1 ; energies
 	tx StunSporeName ; name
-	tx FixmeText ; description
+	tx StunSporeDescription ; description
 	dw NONE ; description (cont)
 	db 10 ; damage
 	db DAMAGE_NORMAL ; category
-	dw NONE ; effect commands
+	dw ParalysisIfDamagedSinceLastTurnEffectCommands ; effect commands
 	db INFLICT_PARALYSIS ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3

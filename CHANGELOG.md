@@ -46,6 +46,8 @@
 
 #### Oddish
 - **Sprout**: removed.
+- **Stun Spore**: removed coin flip.
+- **Stun Spore**: inflicts Paralysis if the user took damage since the player's last turn.
 - New attack: **Collect** (C): draw 2 cards.
 
 #### Paras

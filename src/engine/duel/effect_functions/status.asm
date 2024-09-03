@@ -9,6 +9,14 @@ ParalysisIfSelectedCardEffect:
 	jr ParalysisEffect
 
 
+ParalysisIfDamagedSinceLastTurnEffect:
+	ld a, DUELVARS_ARENA_CARD_FLAGS
+	call GetTurnDuelistVariable
+	bit DAMAGED_SINCE_LAST_TURN_F, a
+	ret z
+	jr ParalysisEffect
+
+
 PoisonEffect: ; 2c007 (b:4007)
 	lb bc, CNF_SLP_PRZ, POISONED
 	jr ApplyStatusEffect

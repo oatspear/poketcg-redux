@@ -41,6 +41,8 @@ HandleSpecialAIAttacks:
 	jp z, .Collect
 	cp JYNX
 	jp z, .Collect
+	cp ODDISH
+	jp z, .Collect
 	cp DUGTRIO
 	jp z, .Earthquake
 	cp NIDOKING
@@ -75,8 +77,6 @@ HandleSpecialAIAttacks:
 	jr z, .CallForFamily
 	cp CLEFAIRY
 	jr z, .TutorPokemon
-	cp ODDISH
-	jr z, .Sprout
 	cp BULBASAUR
 	jr z, .Sprout
 	cp ARTICUNO_LV35
