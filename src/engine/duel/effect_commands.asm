@@ -346,8 +346,8 @@ Heal20DamageEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Heal20DamageEffect
 	db  $00
 
-Leech30DamageEffectCommands:
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Leech30DamageEffect
+Heal30DamageEffectCommands:
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Heal30DamageEffect
 	db  $00
 
 EnergyTransEffectCommands:

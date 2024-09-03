@@ -335,36 +335,36 @@ VenusaurLv64Card:
 	db STAR ; rarity
 	db PROMOTIONAL | GB ; sets
 	db VENUSAUR_LV64
-	db 100 ; hp
+	db 120 ; hp
 	db STAGE2 ; stage
 	tx IvysaurName ; pre-evo name
 
 	; attack 1
 	energy GRASS, 2 ; energies
 	tx MegaDrainName ; name
-	tx Heal20DamageDescription ; description
+	tx Heal30DamageDescription ; description
 	dw NONE ; description (cont)
-	db 40 ; damage
+	db 30 ; damage
 	db DAMAGE_NORMAL ; category
-	dw Heal20DamageEffectCommands ; effect commands
+	dw Heal30DamageEffectCommands ; effect commands
 	db NONE ; flags 1
 	db HEAL_USER ; flags 2
 	db NONE ; flags 3
-	db 2
+	db 3
 	db ATK_ANIM_DRAIN ; animation
 
 	; attack 2
 	energy COLORLESS, 3 ; energies
 	tx DoubleEdgeName ; name
-	tx Recoil20Description ; description
+	tx Recoil30Description ; description
 	dw NONE ; description (cont)
-	db 60 ; damage
+	db 80 ; damage
 	db DAMAGE_NORMAL ; category
-	dw Recoil20EffectCommands ; effect commands
-	db HIGH_RECOIL ; flags 1
+	dw Recoil30EffectCommands ; effect commands
+	db LOW_RECOIL ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
-	db 20
+	db 30
 	db ATK_ANIM_HIT_RECOIL ; animation
 
 	db 2 ; retreat cost

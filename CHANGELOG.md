@@ -11,6 +11,13 @@
 - **Poison Whip**: removed.
 - New attack: **Solarbeam** (GC): 20 damage; you may attach a Basic Energy from the hand to the user; if you do, double the attack's damage.
 
+#### Venusaur Lv64
+- Increased HP from 100 to 120.
+- **Mega Drain**: reduced damage from 40 to 30.
+- **Mega Drain**: increased healing from 20 to 30.
+- **Double Edge**: increased recoil from 20 to 30.
+- **Double Edge**: increased damage from 60 to 80.
+
 #### Venusaur Lv67
 - Increased HP from 100 to 120.
 - **Pollen Frenzy**: removed.
