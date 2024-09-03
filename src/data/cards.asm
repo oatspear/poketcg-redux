@@ -1267,13 +1267,13 @@ OddishCard:
 
 	; attack 1
 	energy COLORLESS, 1 ; energies
-	tx SproutName ; name
-	tx SproutDescription ; description
+	tx CollectName ; name
+	tx Draw2CardsDescription ; description
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category
-	dw SproutEffectCommands ; effect commands
-	db NONE ; flags 1
+	dw Draw2CardsEffectCommands ; effect commands
+	db DRAW_CARD ; flags 1
 	db NONE ; flags 2
 	db SPECIAL_AI_HANDLING ; flags 3
 	db 0

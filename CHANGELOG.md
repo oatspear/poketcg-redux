@@ -44,6 +44,10 @@
 - **Toxic**: removed.
 - New attack: **Toxic Needle** (GC): 30 damage; inflicts Double Poison; inflicts Paralysis if the Defending Pokémon was not affected with any status.
 
+#### Oddish
+- **Sprout**: removed.
+- New attack: **Collect** (C): draw 2 cards.
+
 #### Paras
 - **Spore**: removed.
 - **Slash**: removed.
