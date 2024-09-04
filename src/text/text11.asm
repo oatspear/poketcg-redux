@@ -550,13 +550,6 @@ FoulOdorName:
 	text "Foul Odor"
 	done
 
-FoulOdorDescription:
-	text "Both the Defending Pokémon and"
-	line "this Pokémon are now Confused."
-	line "The Defending Pokémon is now"
-	line "Poisoned."
-	done
-
 HealName: ; 58d17 (16:4d17)
 	text "Heal"
 	done

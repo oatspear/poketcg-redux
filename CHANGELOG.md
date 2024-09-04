@@ -50,6 +50,12 @@
 - **Stun Spore**: inflicts Paralysis if the user took damage since the player's last turn.
 - New attack: **Collect** (C): draw 2 cards.
 
+#### Gloom
+- Increased HP from 70 to 80.
+- **Foul Odor**: reduced cost from (GG) to (GC).
+- **Foul Odor**: no longer inflicts Confusion.
+- **Foul Odor**: inflicts Paralysis if the user took damage since the player's last turn.
+
 #### Paras
 - **Spore**: removed.
 - **Slash**: removed.

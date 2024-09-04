@@ -1312,7 +1312,7 @@ GloomCard:
 	db DIAMOND ; rarity
 	db MYSTERY | JUNGLE ; sets
 	db GLOOM
-	db 70 ; hp
+	db 80 ; hp
 	db STAGE1 ; stage
 	tx OddishName ; pre-evo name
 
@@ -1351,15 +1351,15 @@ GloomCard:
 	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy GRASS, 2 ; energies
+	energy GRASS, 1, COLORLESS, 1 ; energies
 	tx FoulOdorName ; name
-	tx FoulOdorDescription ; description
-	dw NONE ; description (cont)
+	tx InflictPoisonDescription ; description
+	tx StunSporeDescription ; description (cont)
 	db 20 ; damage
 	db DAMAGE_NORMAL ; category
 	dw FoulOdorEffectCommands ; effect commands
-	db INFLICT_POISON | INFLICT_CONFUSION ; flags 1
-	db FLAG_2_BIT_7 ; flags 2
+	db INFLICT_POISON | INFLICT_PARALYSIS ; flags 1
+	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
 	db ATK_ANIM_FOUL_ODOR ; animation

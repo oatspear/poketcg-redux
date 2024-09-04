@@ -143,12 +143,12 @@ AcidicDrain_PoisonBurnEffect:
 	jp BurnEffect
 
 
-; Defending Pokémon and user become confused.
-; Defending Pokémon also becomes Poisoned.
+; Defending Pokémon becomes Poisoned.
+; Defending Pokémon becomes Paralyzed if the user took damage.
 FoulOdorEffect:
 	call PoisonEffect
-	call ConfusionEffect
-	; fallthrough
+	jp ParalysisIfDamagedSinceLastTurnEffect
+
 
 SelfConfusionEffect:
 	call SwapTurn

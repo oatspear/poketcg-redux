@@ -1,5 +1,16 @@
 ;
 
+
+; Defending Pokémon and user become confused.
+; Defending Pokémon also becomes Poisoned.
+FoulOdorEffect:
+	call PoisonEffect
+	call ConfusionEffect
+	; fallthrough to SelfConfusionEffect
+
+
+
+
 DragOffEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckOpponentBenchIsNotEmpty
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DragOff_SwitchAndDamageEffect

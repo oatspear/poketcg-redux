@@ -2390,7 +2390,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer AssassinFlightName
 	textpointer AssassinFlightDescription
 	textpointer FoulOdorName                                       ; 0x0878
-	textpointer FoulOdorDescription                                ; 0x0879
 	textpointer HealName                                           ; 0x087c
 	textpointer HealDescription                                    ; 0x087d
 	textpointer AllergicPollenName
