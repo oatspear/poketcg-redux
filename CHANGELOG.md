@@ -146,6 +146,11 @@
 - New attack: **Licking Shot** (C): does 10 damage to 1 of the opponent's Pokémon for each Energy attached to the user.
 - New attack: **Glutton Frenzy** (CCC): 20 damage; discard an Energy from the Defending Pokémon; discard a random card from the opponent's hand.
 
+#### Snorlax
+- Increased HP from 70 to 80.
+- **Body Slam**: removed.
+- New attack: **Heavy Slam** (CCC): 50 damage; unable to attack next turn.
+
 
 ## Version 0.10.0
 

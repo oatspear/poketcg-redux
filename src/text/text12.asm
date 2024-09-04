@@ -505,8 +505,8 @@ ThickSkinnedDescription:
 	done
 ENDC
 
-BodySlamName: ; 63088 (18:7088)
-	text "Body Slam"
+HeavySlamName:
+	text "Heavy Slam"
 	done
 
 HelpingHandName:

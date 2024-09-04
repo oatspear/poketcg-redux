@@ -2823,7 +2823,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ConversionBeamDescription
 	textpointer ThickSkinnedName                                   ; 0x0b56
 	textpointer ThickSkinnedDescription                            ; 0x0b57
-	textpointer BodySlamName                                       ; 0x0b58
+	textpointer HeavySlamName
 	textpointer HelpingHandName
 	textpointer HelpingHandDescription
 	textpointer CollectName

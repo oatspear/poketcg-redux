@@ -9542,7 +9542,7 @@ SnorlaxCard:
 	db STAR ; rarity
 	db COLOSSEUM | JUNGLE ; sets
 	db SNORLAX
-	db 70 ; hp
+	db 80 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
 
@@ -9562,17 +9562,17 @@ SnorlaxCard:
 
 	; attack 2
 	energy COLORLESS, 3 ; energies
-	tx BodySlamName ; name
-	tx FixmeText ; description
+	tx HeavySlamName ; name
+	tx NextTurnUnableToAttackDescription ; description
 	dw NONE ; description (cont)
-	db 30 ; damage
+	db 50 ; damage
 	db DAMAGE_NORMAL ; category
-	dw NONE ; effect commands
-	db INFLICT_PARALYSIS ; flags 1
+	dw NextTurnUnableToAttackEffectCommands ; effect commands
+	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_BIG_HIT ; animation
+	db ATK_ANIM_HIT ; animation
 
 	db 2 ; retreat cost
 	db WR_FIGHTING ; weakness
