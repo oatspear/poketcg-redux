@@ -8157,7 +8157,7 @@ PidgeyCard:
 	db CIRCLE ; rarity
 	db EVOLUTION | NONE ; sets
 	db PIDGEY
-	db 40 ; hp
+	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
 

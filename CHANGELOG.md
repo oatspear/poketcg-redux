@@ -146,6 +146,9 @@
 
 ### Colorless Changes
 
+#### Pidgey
+- Increased HP from 40 to 50.
+
 #### Doduo
 - **Reckless Charge**: removed.
 - New attack: **Double Hit** (C): 10 damage; if the user has 2 or more Energies, does damage twice.
