@@ -6906,18 +6906,6 @@ PokemonFlute_PlaceInPlayAreaText:
 	jp SwapTurn
 
 
-PokemonFlute_DisablePowersEffect:
-	ld a, DUELVARS_MISC_TURN_FLAGS
-	call GetTurnDuelistVariable
-	set TURN_FLAG_PKMN_POWERS_DISABLED_F, [hl]
-	ld a, DUELVARS_MISC_TURN_FLAGS
-	call GetNonTurnDuelistVariable
-	set TURN_FLAG_PKMN_POWERS_DISABLED_F, [hl]
-	ret
-
-
-
-
 ScoopUpNet_PlayerSelectEffect:
 	ldtx hl, ChoosePokemonToReturnToTheHandText
 	call DrawWideTextBox_WaitForInput
