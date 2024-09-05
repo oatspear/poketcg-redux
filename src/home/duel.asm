@@ -1533,6 +1533,7 @@ OnPokemonPlayedInitVariablesAndPowers:
 	ld a, [wLoadedAttackCategory]
 	cp POKEMON_POWER
 	ret nz
+; this Pokémon has a Pokémon Power
 	bank1call DisplayUsePokemonPowerScreen
 	ldh a, [hTempCardIndex_ff98]
 	call LoadCardDataToBuffer1_FromDeckIndex
@@ -1544,18 +1545,11 @@ OnPokemonPlayedInitVariablesAndPowers:
 	ldtx hl, HavePokemonPowerText
 	call DrawWideTextBox_WaitForInput
 	call ExchangeRNG
-	; ld a, [wLoadedCard1ID]
-	; cp WEEZING
-	; jr z, .use_pokemon_power
-	ld a, $01 ; check only Weezing
-	call CheckCannotUseDueToStatus_OnlyToxicGasIfANon0
-	jr c, .unable_to_use
-	ld a, DUELVARS_MISC_TURN_FLAGS
-	call GetTurnDuelistVariable
-	bit TURN_FLAG_PKMN_POWERS_DISABLED_F, a
-	jr z, .use_pokemon_power
+; check for Toxic Gas
+	call ArePokemonPowersDisabled
+	jr nc, .use_pokemon_power
 .unable_to_use
-	bank1call DisplayUsePokemonPowerScreen
+	; bank1call DisplayUsePokemonPowerScreen
 	ldtx hl, UnableToUsePkmnPowerDueToDisableEffectText
 	call DrawWideTextBox_WaitForInput
 	jp ExchangeRNG
