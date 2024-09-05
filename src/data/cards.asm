@@ -1326,7 +1326,7 @@ GloomCard:
 
 	; attack 1
 	energy 0 ; energies
-	tx AromatherapyDescription ; name
+	tx AromatherapyName ; name
 	tx AromatherapyDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
