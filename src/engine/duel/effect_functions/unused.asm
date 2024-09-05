@@ -1,5 +1,20 @@
 ;
 
+PokemonFluteEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PokemonFlute_DisablePowersEffect
+	db  $00
+
+PokemonFlute_DisablePowersEffect:
+	ld a, DUELVARS_MISC_TURN_FLAGS
+	call GetTurnDuelistVariable
+	set TURN_FLAG_PKMN_POWERS_DISABLED_F, [hl]
+	ld a, DUELVARS_MISC_TURN_FLAGS
+	call GetNonTurnDuelistVariable
+	set TURN_FLAG_PKMN_POWERS_DISABLED_F, [hl]
+	ret
+
+
+
 PokemonPowerHealEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Heal_OncePerTurnCheck
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Heal_RemoveDamageEffect
