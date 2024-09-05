@@ -262,33 +262,6 @@ HandleNoDamageOrEffectSubstatus:
 	jr .no_damage_or_effect
 
 
-; if the Pokemon being attacked is HAUNTER_LV17, and its Transparency is active,
-; there is a 50% chance that any damage or effect is prevented
-; return carry if damage is prevented
-; HandleTransparency:
-; 	ld a, [wTempNonTurnDuelistCardID]
-; 	cp HAUNTER_LV17
-; 	jr z, .transparency
-; .done
-; 	or a
-; 	ret
-; .transparency
-; 	ld a, [wLoadedAttackCategory]
-; 	cp POKEMON_POWER
-; 	jr z, .done ; Transparency has no effect against Pkmn Powers
-; 	call CheckCannotUseDueToStatus
-; 	jr c, .done
-; 	xor a
-; 	ld [wDuelDisplayedScreen], a
-; 	ldtx de, TransparencyCheckText
-; 	call TossCoin
-; 	ret nc
-; 	ld a, NO_DAMAGE_OR_EFFECT_TRANSPARENCY
-; 	ld [wNoDamageOrEffect], a
-; 	ldtx hl, NoDamageOrEffectDueToTransparencyText
-; 	scf
-; 	ret
-
 ; return carry and return the appropriate text id in hl if the target has an
 ; special status or power that prevents any damage or effect done to it this turn
 ; input: a = NO_DAMAGE_OR_EFFECT_*
@@ -323,24 +296,18 @@ NoDamageOrEffectTextIDTable:
 	tx NoDamageOrEffectDueToTransparencyText ; NO_DAMAGE_OR_EFFECT_TRANSPARENCY
 	tx NoDamageOrEffectDueToNShieldText      ; NO_DAMAGE_OR_EFFECT_NSHIELD
 
+
 ; returns carry if turn holder's card in location a is paralyzed, asleep, confused,
 ; and/or toxic gas in play, meaning that attack and/or pkmn power cannot be used
 ; preserves: bc, de
 CheckCannotUseDueToStatus_Anywhere:
 	add DUELVARS_ARENA_CARD_STATUS
-	jr CheckCannotUseDueToStatus_OnlyToxicGasIfANon0.status_check
+	jr CheckCannotUseDueToStatus.status_check
 
 ; returns carry if turn holder's arena card is paralyzed, asleep, confused,
 ; and/or toxic gas in play, meaning that attack and/or pkmn power cannot be used
 ; preserves: bc, de
 CheckCannotUseDueToStatus:
-	xor a  ; PLAY_AREA_ARENA
-
-; same as above, but if a is non-0, only toxic gas is checked
-; preserves: bc, de
-CheckCannotUseDueToStatus_OnlyToxicGasIfANon0:
-	or a
-	jr nz, .check_toxic_gas
 	ld a, DUELVARS_ARENA_CARD_STATUS
 .status_check
 	call GetTurnDuelistVariable
@@ -348,10 +315,38 @@ CheckCannotUseDueToStatus_OnlyToxicGasIfANon0:
 	ldtx hl, CannotUseDueToStatusText
 	scf
 	ret nz  ; return carry
-.check_toxic_gas
+.toxic_gas
 	call ArePokemonPowersDisabled
 	ret nc
 	ldtx hl, UnableToUsePkmnPowerText
+	ret
+
+
+; input:
+;   b: PLAY_AREA_* of the target Pokémon
+; output:
+;      hl: text pointer to failure reason
+;   carry: set if the Power cannot be used due to status,
+;          or if it was already used this turn
+; preserves: bc, de
+CheckPokemonPowerReadyState:
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	add b
+	call GetTurnDuelistVariable
+	and CNF_SLP_PRZ
+	jr z, .check_already_used
+	ldtx hl, CannotUseDueToStatusText
+	jr .unavailable
+.check_already_used
+	ld a, DUELVARS_ARENA_CARD_FLAGS
+	add b
+	ld l, a
+	ld a, [hl]
+	and USED_PKMN_POWER_THIS_TURN
+	ret z
+	ldtx hl, OnlyOncePerTurnText
+.unavailable
+	scf
 	ret
 
 
@@ -362,80 +357,62 @@ CheckCannotUseDueToStatus_OnlyToxicGasIfANon0:
 ;   a: 1 if Pokémon Powers cannot be used | 0
 ;   carry: set if Pokémon Powers cannot be used
 ArePokemonPowersDisabled:
-	call IsToxicGasActive
-	ld a, 1
-	ret c
-	ld a, DUELVARS_MISC_TURN_FLAGS
-	call GetTurnDuelistVariable
-	and 1 << TURN_FLAG_PKMN_POWERS_DISABLED_F
-	ret z
-	ld a, 1
-	scf
-	ret
+	call IsOpponentToxicGasActive
+	; jr IsToxicGasActive
+	; fallthrough
 
-
-; Check whether Toxic Gas (Weezing) is found in either player's Active Spot,
+; Check whether Toxic Gas (Weezing) is found on the turn holder's Active Spot,
 ; and whether it is Pokémon Power capable.
-; Returns carry if the Pokémon card is at least found once.
-; outputs:
+; Returns carry if the Pokémon card is found
+; output:
 ;   a: 0 if not found; 1 if found
-;   carry: set iff found
+;   carry: set iff found and capable of using the Power
 ; preserves: hl, bc, de
 IsToxicGasActive:
-	push bc
-	ld c, WEEZING
-	call IsActiveSpotPokemonPowerActive
-	pop bc
-	ret
+	ld a, WEEZING
+	jr IsActiveSpotPokemonPowerActive
 
-; Check whether a given Pokémon is found in either player's Active Spot,
-; and whether it is Pokémon Power capable.
-; Returns carry if the Pokémon card is at least found once.
+IsOpponentToxicGasActive:
+	call SwapTurn
+	call IsToxicGasActive
+	jp SwapTurn
+
+
+; Check whether a given Pokémon is found in the turn holder's
+; Active Spot, and whether it is Pokémon Power capable.
+; Returns carry if the Pokémon card is found.
 ; input:
-;   c: ID of the Pokémon to check
-; outputs:
+;   a: ID of the Pokémon to check
+; output:
 ;   a: 0 if not found; 1 if found
-;   carry: set iff found
+;   carry: set iff found and capable of using the Power
 ; preserves: hl, bc, de
 IsActiveSpotPokemonPowerActive:
 	push hl
-	push de
-	; push bc
-	; ld a, WEEZING
-	; ld [wTempPokemonID_ce7c], a
-	call .check_active_spot
-	jr c, .found
-	call SwapTurn
-	call .check_active_spot
-	call SwapTurn
-	; jr c, .found
-; not found
-	; xor a
-.found
-	; pop bc
-	pop de
-	pop hl
-	ret
-
-.check_active_spot
+	push bc
+	ld c, a
+; check whether it is the correct Pokémon
 	ld a, DUELVARS_ARENA_CARD
 	call GetTurnDuelistVariable
-; check if it is the right Pokémon
+	push de
 	call GetCardIDFromDeckIndex  ; preserves bc
 	ld a, e
+	pop de
 	cp c
-	jr z, .is_this_pokemon
-.nope
-	xor a  ; reset carry
-	ret
-.is_this_pokemon
-; check if the Pokémon is affected with a status condition
-	ld a, DUELVARS_ARENA_CARD_STATUS
-	call GetTurnDuelistVariable
-	and CNF_SLP_PRZ
 	jr nz, .nope
+; check whether Pokémon Powers can be used at this location
+	ld b, PLAY_AREA_ARENA
+	call CheckPokemonPowerReadyState
+	jr c, .nope
+.yup
 	ld a, 1
 	scf
+	jr .done
+.nope
+	xor a  ; reset carry
+.done
+	pop bc
+	pop hl
 	ret
 
 
@@ -474,26 +451,37 @@ IsBodyguardActive:
 	jp GetFirstPokemonWithAvailablePower  ; preserves: hl, bc, de
 
 
+; return carry if a Pokémon Power capable Vileplume
+; is found in the non-turn holder's Active Spot.
+; preserves: bc, de
+IsHayFeverActive:
+	ld a, VILEPLUME
+	jr IsOpponentActiveSpotAuraActive
+
+
 ; return carry if a Pokémon Power capable Omastar
 ; is found in the non-turn holder's Active Spot.
 ; preserves: bc, de
 IsPrehistoricPowerActive:
+	ld a, OMASTAR
+	jr IsOpponentActiveSpotAuraActive
+
+
+; return carry if a Pokémon Power capable Pokémon
+; is found in the non-turn holder's Active Spot,
+; and the turn holder does not have Toxic Gas
+; input:
+;   a: Pokémon ID of the aura to check
+; preserves: bc, de
+IsOpponentActiveSpotAuraActive:
+	call SwapTurn  ; preserves af
+	call IsActiveSpotPokemonPowerActive
 	call SwapTurn
-	ld a, DUELVARS_ARENA_CARD
-	call GetTurnDuelistVariable
-	push de
-	call GetCardIDFromDeckIndex  ; preserves bc
-	ld a, e
-	pop de
-	cp OMASTAR
-	jr nz, .nope
-	call CheckCannotUseDueToStatus
-	call SwapTurn
+	ret nc  ; the opponent does not have the Pokémon Power
+; check for Toxic Gas on the turn holder's side
+	call IsToxicGasActive
 	ccf
 	ret
-.nope
-	or a  ; reset carry
-	jp SwapTurn
 
 
 ; returns carry if the turn holder's Pokémon in the given location
@@ -663,7 +651,7 @@ CountPokemonIDInPlayArea:
 .loop_play_area
 	ld a, DUELVARS_ARENA_CARD
 	add b
-	dec a  ; b starts at 1, we want a 0-based index
+	dec a  ; zero-based index
 	call GetTurnDuelistVariable
 	cp $ff
 	jr z, .done
@@ -672,13 +660,11 @@ CountPokemonIDInPlayArea:
 	ld a, [wTempPokemonID_ce7c]
 	cp e
 	jr nz, .skip
-; check if the Pokémon is affected with a status condition
-	ld a, DUELVARS_ARENA_CARD_STATUS
-	add b
-	dec a  ; b starts at 1, we want a 0-based index
-	call GetTurnDuelistVariable
-	and CNF_SLP_PRZ
-	jr nz, .skip
+; check if the Pokémon's Power can be used
+	dec b  ; zero-based index
+	call CheckPokemonPowerReadyState
+	inc b  ; restore index
+	jr c, .skip
 	inc c
 .skip
 	dec b
@@ -729,20 +715,9 @@ GetFirstPokemonWithAvailablePower:
 	ld a, [wTempPokemonID_ce7c]
 	cp e
 	jr nz, .skip
-; check if the Pokémon is affected with a status condition
-	ld a, DUELVARS_ARENA_CARD_STATUS
-	add b
-	ld l, a
-	ld a, [hl]
-	and CNF_SLP_PRZ
-	jr nz, .skip
-; check if this Pokémon's Power has been used
-	ld a, DUELVARS_ARENA_CARD_FLAGS
-	add b
-	ld l, a
-	ld a, [hl]
-	and USED_PKMN_POWER_THIS_TURN
-	jr nz, .skip
+; check if this Pokémon's Power can be used
+	call CheckPokemonPowerReadyState
+	jr c, .skip
 ; found a valid Pokémon
 	ld a, b  ; get the PLAY_AREA_* offset
 	scf
@@ -974,7 +949,10 @@ CheckCantUseItemsThisTurn:
 	call GetTurnDuelistVariable
 	or a
 	bit SUBSTATUS3_HEADACHE, [hl]
-	ret z
+	jr nz, .unable
+	call IsHayFeverActive
+	ret nc
+.unable
 	ldtx hl, UnableToUseItemCardThisTurnText
 	scf
 	ret
@@ -1032,7 +1010,6 @@ UpdateSubstatusConditions_StartOfTurn:
 UpdateSubstatusConditions_EndOfTurn:
 	ld a, DUELVARS_MISC_TURN_FLAGS
 	call GetTurnDuelistVariable
-	; res TURN_FLAG_PKMN_POWERS_DISABLED_F, [hl]
 	; res TURN_FLAG_TOSSED_TAILS_F, [hl]
 	; res TURN_FLAG_KO_OPPONENT_POKEMON_F, [hl]
 	ld [hl], $0
