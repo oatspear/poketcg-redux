@@ -1325,25 +1325,13 @@ GloomCard:
 	; Both the Defending Pokémon and Gloom are now Asleep (after doing damage).
 
 	; attack 1
-	; energy COLORLESS, 1 ; energies
-	; tx AromatherapyName ; name
-	; tx Heal20DamageFromAllDescription ; description
-	; dw NONE ; description (cont)
-	; db 0 ; damage
-	; db RESIDUAL ; category
-	; dw Heal20DamageFromAllEffectCommands ; effect commands
-	; db NONE ; flags 1
-	; db HEAL_USER ; flags 2
-	; db NONE ; flags 3
-	; db 0
-	; db ATK_ANIM_RECOVER ; animation
 	energy 0 ; energies
-	tx HealName ; name
-	tx HealDescription ; description
+	tx AromatherapyDescription ; name
+	tx AromatherapyDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKEMON_POWER ; category
-	dw PokemonPowerHealEffectCommands ; effect commands
+	dw AromatherapyEffectCommands ; effect commands
 	db NONE ; flags 1
 	db HEAL_USER ; flags 2
 	db NONE ; flags 3

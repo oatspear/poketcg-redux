@@ -263,6 +263,11 @@ PlayHealingAnimation_PlayAreaPokemon:
 	ret
 
 
+Aromatherapy_HealEffect:
+	call SetUsedPokemonPowerThisTurn
+	; jr Heal10DamageFromAll_HealEffect
+	; fallthrough
+
 Heal10DamageFromAll_HealEffect:
 	ld a, $ff
 	ld d, 10

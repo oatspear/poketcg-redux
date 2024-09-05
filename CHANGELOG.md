@@ -52,9 +52,11 @@
 
 #### Gloom
 - Increased HP from 70 to 80.
+- **Heal**: removed.
 - **Foul Odor**: reduced cost from (GG) to (GC).
 - **Foul Odor**: no longer inflicts Confusion.
 - **Foul Odor**: inflicts Paralysis if the user took damage since the player's last turn.
+- New Pokémon Power: **Aromatherapy**: once per turn, if the Pokémon has any attached Energies, heal 10 damage from each of the player's Pokémon.
 
 #### Paras
 - **Spore**: removed.

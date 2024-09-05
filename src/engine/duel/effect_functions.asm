@@ -263,6 +263,7 @@ HyperHypnosis_PreconditionCheck:
 	jp CheckPlayAreaPokemonHasAnyEnergiesAttached
 
 
+Aromatherapy_PreconditionCheck:
 Mischief_PreconditionCheck:
 	call CheckPokemonPowerCanBeUsed_StoreTrigger
 	ret c

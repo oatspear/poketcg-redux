@@ -387,9 +387,9 @@ JellyfishStingEffectCommands:
 	dbw EFFECTCMDTYPE_AI, Constrict_AIEffect
 	db  $00
 
-PokemonPowerHealEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Heal_OncePerTurnCheck
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Heal_RemoveDamageEffect
+AromatherapyEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Aromatherapy_PreconditionCheck
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Aromatherapy_HealEffect
 	db  $00
 
 PetalDanceEffectCommands:

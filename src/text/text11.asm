@@ -550,13 +550,11 @@ FoulOdorName:
 	text "Foul Odor"
 	done
 
-HealName: ; 58d17 (16:4d17)
-	text "Heal"
-	done
-
-HealDescription: ; 58d1d (16:4d1d)
-	text "Once during your turn, you may heal"
-	line "10 damage from 1 of your Pokémon."
+AromatherapyDescription:
+	text "Once during your turn, if this"
+	line "Pokémon has any attached Energies,"
+	line "you may heal 10 damage from each"
+	line "of your Pokémon."
 	done
 
 AllergicPollenName:

@@ -1,5 +1,79 @@
 ;
 
+PokemonPowerHealEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Heal_OncePerTurnCheck
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Heal_RemoveDamageEffect
+	db  $00
+
+
+;
+Heal_OncePerTurnCheck:
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	ldh [hTemp_ffa0], a
+	add DUELVARS_ARENA_CARD_FLAGS
+	call GetTurnDuelistVariable
+	and USED_PKMN_POWER_THIS_TURN
+	jr nz, .already_used
+
+	call CheckIfPlayAreaHasAnyDamage
+	ret c ; no damage counters to heal
+
+	ldh a, [hTemp_ffa0]
+	call CheckCannotUseDueToStatus_Anywhere
+	ret
+
+.already_used
+	ldtx hl, OnlyOncePerTurnText
+	scf
+	ret
+
+Heal_RemoveDamageEffect:
+; OATS no longer requires a coin flip
+	ld a, 1
+	ldh [hAIPkmnPowerEffectParam], a
+	; ldtx de, IfHeadsHealIsSuccessfulText
+	; call TossCoin_BankB
+	; ldh [hAIPkmnPowerEffectParam], a
+	; jr nc, .done
+
+	ld a, DUELVARS_DUELIST_TYPE
+	call GetTurnDuelistVariable
+	cp DUELIST_TYPE_LINK_OPP
+	jr z, .link_opp
+	and DUELIST_TYPE_AI_OPP
+	jr nz, .done
+
+; player
+	ldtx hl, ChoosePkmnToHealText
+	call DrawWideTextBox_WaitForInput
+.loop
+	ld a, CARDTEST_DAMAGED_POKEMON
+	call HandlePlayerSelectionMatchingPokemonInPlayArea_AllowCancel
+	jr c, .loop
+	ldh [hPlayAreaEffectTarget], a
+	call SerialSend8Bytes
+	jr .done
+
+.link_opp
+	call SerialRecv8Bytes
+	ldh [hPlayAreaEffectTarget], a
+	; fallthrough
+
+.done
+; flag Pkmn Power as being used
+	ldh a, [hTemp_ffa0]
+	add DUELVARS_ARENA_CARD_FLAGS
+	call GetTurnDuelistVariable
+	set USED_PKMN_POWER_THIS_TURN_F, [hl]
+; heal the selected Pokémon
+	ldh a, [hPlayAreaEffectTarget]
+	ld e, a   ; location
+	ld d, 10  ; damage
+	call HealPlayAreaCardHP
+	jp ExchangeRNG
+
+
+
 
 ; Defending Pokémon and user become confused.
 ; Defending Pokémon also becomes Poisoned.
