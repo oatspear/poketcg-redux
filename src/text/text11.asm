@@ -557,18 +557,25 @@ AromatherapyDescription:
 	line "of your Pokémon."
 	done
 
-AllergicPollenName:
-	text "Allergic Pollen"
+HayFeverName:
+	text "Hay Fever"
 	done
 
-PetalDanceName:
-	text "Petal Dance"
+HayFeverDescription:
+	text "While this is your Active Pokémon,"
+	line "your opponent cannot play Item cards"
+	line "from their hand."
 	done
 
-PetalDanceDescription:
-	text "Heal 20 damage from each of your"
-	line "Pokémon. This Pokémon is now"
-	line "Confused."
+PollenBurstName:
+	text "Pollen Burst"
+	done
+
+PollenBurstDescription:
+	text "If this Pokémon was damaged since"
+	line "your last turn, the Defending"
+	line "Pokémon is now Poisoned, Burned"
+	line "and Paralyzed."
 	done
 
 SparkName: ; 5cf47 (17:4f47)

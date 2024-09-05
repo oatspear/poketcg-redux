@@ -1030,6 +1030,11 @@ VoltSwitchEffect:
 ; Compound Attacks
 ; ------------------------------------------------------------------------------
 
+PollenBurstEffect:
+	call KarateChop_DamageSubtractionEffect
+	jp PollenBurst_StatusEffect
+
+
 GluttonFrenzy_DiscardEffect:
 	call DiscardOpponentEnergy_DiscardEffect
 	jp Discard1RandomCardFromOpponentsHandEffect
@@ -2789,11 +2794,6 @@ Heal_RemoveDamageEffect:
 	ld d, 10  ; damage
 	call HealPlayAreaCardHP
 	jp ExchangeRNG
-
-
-PetalDance_BonusEffect:
-	call Heal20DamageFromAll_HealEffect
-	jp SelfConfusionEffect
 
 
 HelpingHand_CheckUse:

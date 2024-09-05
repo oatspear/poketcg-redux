@@ -1,3 +1,50 @@
+AllergicPollenName:
+	text "Allergic Pollen"
+	done
+
+; attack 1
+energy GRASS, 1, COLORLESS, 1 ; energies
+tx AllergicPollenName ; name
+tx UnableToUseItemsDescription ; description
+dw NONE ; description (cont)
+db 20 ; damage
+db DAMAGE_NORMAL ; category
+dw HeadacheEffectCommands ; effect commands
+db NONE ; flags 1
+db FLAG_2_BIT_6 ; flags 2
+db NONE ; flags 3
+db 2
+db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
+
+
+PetalDanceName:
+	text "Petal Dance"
+	done
+
+PetalDanceDescription:
+	text "Heal 20 damage from each of your"
+	line "Pokémon. This Pokémon is now"
+	line "Confused."
+	done
+
+
+; attack 2
+energy GRASS, 2, COLORLESS, 1 ; energies
+tx PetalDanceName ; name
+tx PetalDanceDescription ; description
+dw NONE ; description (cont)
+db 50 ; damage
+db DAMAGE_NORMAL ; category
+dw PetalDanceEffectCommands ; effect commands
+db NONE ; flags 1
+db HEAL_USER ; flags 2
+db NONE ; flags 3
+db 1
+db ATK_ANIM_PETAL_DANCE ; animation
+
+
+
+
 
 PollenFrenzyName:
 	text "Pollen Frenzy"

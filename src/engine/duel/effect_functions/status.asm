@@ -115,6 +115,16 @@ PoisonConfusionEffect:
 ; ------------------------------------------------------------------------------
 
 
+PollenBurst_StatusEffect:
+	ld a, DUELVARS_ARENA_CARD_FLAGS
+	call GetTurnDuelistVariable
+	bit DAMAGED_SINCE_LAST_TURN_F, a
+	ret z
+	call PoisonEffect
+	call BurnEffect
+	jp ParalysisEffect
+
+
 FragranceTrap_StatusEffect:
 	xor a
 	ld [wEffectFunctionsFeedbackIndex], a

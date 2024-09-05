@@ -392,10 +392,6 @@ AromatherapyEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Aromatherapy_HealEffect
 	db  $00
 
-PetalDanceEffectCommands:
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, PetalDance_BonusEffect
-	db  $00
-
 RainbowTeamEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, RainbowTeam_OncePerTurnCheck
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, RainbowTeam_AttachEnergyEffect
@@ -487,6 +483,11 @@ ParalysisRecoil20EffectCommands:
 
 ParalysisIfDamagedSinceLastTurnEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ParalysisIfDamagedSinceLastTurnEffect
+	db  $00
+
+PollenBurstEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PollenBurstEffect
+	dbw EFFECTCMDTYPE_AI, KarateChop_AIEffect
 	db  $00
 
 ; unused

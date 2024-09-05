@@ -1371,7 +1371,7 @@ VileplumeCard:
 	db STAR ; rarity
 	db MYSTERY | JUNGLE ; sets
 	db VILEPLUME
-	db 100 ; hp
+	db 120 ; hp
 	db STAGE2 ; stage
 	tx GloomName ; pre-evo name
 
@@ -1422,32 +1422,32 @@ VileplumeCard:
 	; The Defending Pokémon is now Poisoned and Asleep.
 
 	; attack 1
-	energy GRASS, 1, COLORLESS, 1 ; energies
-	tx AllergicPollenName ; name
-	tx UnableToUseItemsDescription ; description
-	dw NONE ; description (cont)
-	db 20 ; damage
-	db DAMAGE_NORMAL ; category
-	dw HeadacheEffectCommands ; effect commands
+	energy 0 ; energies
+	tx HayFeverName ; name
+	tx HayFeverDescription ; description
+	tx PokemonPowerDescriptionCont ; description (cont)
+	db 0 ; damage
+	db POKEMON_POWER ; category
+	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
-	db FLAG_2_BIT_6 ; flags 2
+	db NONE ; flags 2
 	db NONE ; flags 3
-	db 2
-	db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
+	db 0
+	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
 	energy GRASS, 2, COLORLESS, 1 ; energies
-	tx PetalDanceName ; name
-	tx PetalDanceDescription ; description
-	dw NONE ; description (cont)
-	db 50 ; damage
-	db DAMAGE_NORMAL ; category
-	dw PetalDanceEffectCommands ; effect commands
-	db NONE ; flags 1
-	db HEAL_USER ; flags 2
+	tx PollenBurstName ; name
+	tx KarateChopDescription ; description
+	tx PollenBurstDescription ; description (cont)
+	db 80 ; damage
+	db DAMAGE_MINUS ; category
+	dw PollenBurstEffectCommands ; effect commands
+	db INFLICT_POISON | INFLICT_PARALYSIS ; flags 1
+	db NONE ; flags 2
 	db NONE ; flags 3
 	db 1
-	db ATK_ANIM_PETAL_DANCE ; animation
+	db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
 
 	db 2 ; retreat cost
 	db WR_FIRE ; weakness

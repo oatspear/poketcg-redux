@@ -2391,9 +2391,10 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer AssassinFlightDescription
 	textpointer FoulOdorName                                       ; 0x0878
 	textpointer AromatherapyDescription
-	textpointer AllergicPollenName
-	textpointer PetalDanceName                                     ; 0x087e
-	textpointer PetalDanceDescription                              ; 0x087f
+	textpointer HayFeverName
+	textpointer HayFeverDescription
+	textpointer PollenBurstName
+	textpointer PollenBurstDescription
 	textpointer SporeName                                          ; 0x0884
 	textpointer InflictSleepDescription
 	textpointer Attach2EnergyFromDiscardToAnyPkmnDescription

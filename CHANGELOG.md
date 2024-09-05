@@ -58,6 +58,13 @@
 - **Foul Odor**: inflicts Paralysis if the user took damage since the player's last turn.
 - New Pokémon Power: **Aromatherapy**: once per turn, if the Pokémon has any attached Energies, heal 10 damage from each of the player's Pokémon.
 
+#### Vileplume
+- Increased HP from 100 to 120.
+- **Allergic Pollen**: removed.
+- **Petal Dance**: removed.
+- New Pokémon Power: **Hay Fever**: while Active, prevents the opponent from playing Item cards.
+- New attack: **Pollen Burst** (GGC): 80 damage; does -10 damage per damage counter on the user; inflicts Poison, Burn and Paralysis if the user took damage since the player's last turn.
+
 #### Paras
 - **Spore**: removed.
 - **Slash**: removed.

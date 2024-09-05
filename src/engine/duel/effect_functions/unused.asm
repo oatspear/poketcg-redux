@@ -1,5 +1,15 @@
 ;
 
+
+PetalDanceEffectCommands:
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, PetalDance_BonusEffect
+	db  $00
+
+PetalDance_BonusEffect:
+	call Heal20DamageFromAll_HealEffect
+	jp SelfConfusionEffect
+
+
 PokemonFluteEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PokemonFlute_DisablePowersEffect
 	db  $00
