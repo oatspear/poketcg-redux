@@ -51,7 +51,7 @@ HandleSpecialAIAttacks:
 	jp z, .Earthquake20
 	cp ELECTRODE_LV35
 	jp z, .EnergySpike
-	cp DRAGONITE_LV45
+	cp DRAGONAIR
 	jp z, .EnergySpike
 	cp PARAS
 	jp z, .NutritionSupport
@@ -67,7 +67,7 @@ HandleSpecialAIAttacks:
 	jp z, .DragonDance
 	cp RED_GYARADOS
 	jp z, .HyperBeam
-	cp DRAGONAIR
+	cp DRAGONITE_LV45
 	jp z, .HyperBeam
 	cp LICKITUNG
 	jp z, .GluttonFrenzy

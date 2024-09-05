@@ -173,6 +173,14 @@
 - **Body Slam**: removed.
 - New attack: **Heavy Slam** (CCC): 50 damage; unable to attack next turn.
 
+#### Dragonair
+- **Hyper Beam**: removed.
+- New attack: **Energy Hurricane** (CC): 20 damage; attach an Energy from the deck to 1 Pokémon.
+
+#### Dragonite Lv45
+- **Energy Hurricane**: removed.
+- New attack: **Hyper Beam** (CCC): 70 damage; discard 1 Energy from both Active Pokémon.
+
 
 ## Version 0.10.0
 

@@ -9676,18 +9676,18 @@ DragonairCard:
 	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy COLORLESS, 3 ; energies
-	tx HyperBeamName ; name
-	tx Discard1EnergyFromTargetDescription ; description
+	energy COLORLESS, 2 ; energies
+	tx EnergyHurricaneName ; name
+	tx Accelerate1EnergyFromDeckDescription ; description
 	dw NONE ; description (cont)
-	db 30 ; damage
+	db 20 ; damage
 	db DAMAGE_NORMAL ; category
-	dw Discard1EnergyFromOpponentEffectCommands ; effect commands
+	dw Accelerate1EnergyFromDeckEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db SPECIAL_AI_HANDLING ; flags 3
 	db 0
-	db ATK_ANIM_HYPER_BEAM ; animation
+	db ATK_ANIM_WHIRLWIND ; animation
 
 	db 1 ; retreat cost
 	db NONE ; weakness
@@ -9790,17 +9790,17 @@ DragoniteLv45Card:
 
 	; attack 1
 	energy COLORLESS, 3 ; energies
-	tx EnergyHurricaneName ; name
-	tx Accelerate1EnergyFromDeckDescription ; description
+	tx HyperBeamName ; name
+	tx Discard1EnergyFromTargetDescription ; description
 	dw NONE ; description (cont)
-	db 50 ; damage
+	db 70 ; damage
 	db DAMAGE_NORMAL ; category
-	dw Accelerate1EnergyFromDeckEffectCommands ; effect commands
+	dw Discard1EnergyFromOpponentEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db SPECIAL_AI_HANDLING ; flags 3
 	db 0
-	db ATK_ANIM_WHIRLWIND ; animation
+	db ATK_ANIM_HYPER_BEAM ; animation
 
 	; attack 2
 	energy COLORLESS, 3 ; energies
