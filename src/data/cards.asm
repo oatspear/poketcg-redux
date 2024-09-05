@@ -8535,11 +8535,11 @@ FearowCard:
 	; attack 2
 	energy COLORLESS, 3 ; energies
 	tx DrillPeckName ; name
-	dw NONE ; description
+	tx Discard1EnergyFromTargetDescription ; description
 	dw NONE ; description (cont)
-	db 50 ; damage
+	db 40 ; damage
 	db DAMAGE_NORMAL ; category
-	dw NONE ; effect commands
+	dw Discard1EnergyFromOpponentEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3

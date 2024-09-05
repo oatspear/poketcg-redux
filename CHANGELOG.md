@@ -149,6 +149,10 @@
 #### Pidgey
 - Increased HP from 40 to 50.
 
+#### Fearow
+- **Drill Peck**: reduced damage from 50 to 40.
+- **Drill Peck**: discards an Energy from the Defending Pokémon.
+
 #### Doduo
 - **Reckless Charge**: removed.
 - New attack: **Double Hit** (C): 10 damage; if the user has 2 or more Energies, does damage twice.
