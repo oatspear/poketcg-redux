@@ -174,7 +174,9 @@
 - New attack: **Heavy Slam** (CCC): 50 damage; unable to attack next turn.
 
 #### Dragonair
+- **Draconic Evolution**: removed.
 - **Hyper Beam**: removed.
+- New Pokémon Power: **Elemental Mastery**: if your Active Pokémon has 2 or more colors of Energy, its attacks do +10 damage.
 - New attack: **Energy Hurricane** (CC): 20 damage; attach an Energy from the deck to 1 Pokémon.
 
 #### Dragonite Lv45
