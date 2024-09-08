@@ -941,61 +941,6 @@ Put1DamageCounterOnTarget_DamageEffect:
 	ret
 
 
-; Remove status conditions from target PLAY_AREA_* and attach an Energy from Hand.
-; input:
-;   [hTempPlayAreaLocation_ffa1]: PLAY_AREA_* of target card
-DraconicEvolutionEffect:
-	; ldtx hl, DraconicEvolutionActivatesText
-	; call DrawWideTextBox_WaitForInput
-; heal damage
-	ldh a, [hTempPlayAreaLocation_ffa1]
-	ld e, a   ; location
-	ld d, 20  ; damage
-	call HealPlayAreaCardHP
-	; bank1call DrawDuelHUDs
-; check energy cards in hand
-	call AttachEnergyFromHand_HandCheck
-; choose energy card to attach
-	call nc, DraconicEvolution_AttachEnergyFromHandEffect
-	or a
-	ret
-
-
-; Choose a Basic Energy from hand and attach it to a Pokémon.
-; inputs:
-;   [wDuelTempList]: list of Basic Energy cards in hand
-DraconicEvolution_AttachEnergyFromHandEffect:
-	ld a, DUELVARS_DUELIST_TYPE
-	call GetTurnDuelistVariable
-	cp DUELIST_TYPE_LINK_OPP
-	jr z, .link_opp
-	and DUELIST_TYPE_AI_OPP
-	jr nz, .ai_opp
-
-; player
-	call Helper_SelectEnergyFromHand
-	ldh [hEnergyTransEnergyCard], a
-	ld d, a
-	ldh a, [hTempPlayAreaLocation_ffa1]
-	ld e, a
-	call SerialSend8Bytes
-	jp AttachEnergyFromHand_AttachEnergyEffect
-
-.link_opp
-	call SerialRecv8Bytes
-	ld a, d
-	ldh [hEnergyTransEnergyCard], a
-	ld a, e
-	ldh [hTempPlayAreaLocation_ffa1], a
-	jp AttachEnergyFromHand_AttachEnergyEffect
-
-.ai_opp
-; AI selects the first card
-	ld a, [wDuelTempList]
-	ldh [hEnergyTransEnergyCard], a
-	jp AttachEnergyFromHand_AttachEnergyEffect
-
-
 ; input:
 ;   [hTempPlayAreaLocation_ffa1]: PLAY_AREA_* of the Pokémon that switched in
 ;                                 (now with the previous Active Pokémon)

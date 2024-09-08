@@ -9663,8 +9663,8 @@ DragonairCard:
 
 	; attack 1
 	energy 0 ; energies
-	tx DraconicEvolutionName ; name
-	tx DraconicEvolutionDescription ; description
+	tx ElementalMasteryName ; name
+	tx ElementalMasteryDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKEMON_POWER ; category

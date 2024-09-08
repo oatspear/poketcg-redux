@@ -6963,13 +6963,13 @@ HandleOnPlayEnergyEffects:
 
 
 HandleOnEvolvePokemonEffects:
-	ld a, DRAGONAIR  ; Draconic Evolution
-	call CountPokemonIDInPlayArea
-	jr nc, .done  ; no Pkmn Power-capable Dragonair was found
-	ldh a, [hTempPlayAreaLocation_ff9d]
-	ldh [hTempPlayAreaLocation_ffa1], a
-	call DrawDuelMainScene
-	farcall DraconicEvolutionEffect
+;	ld a, DRAGONAIR  ; Draconic Evolution
+;	call CountPokemonIDInPlayArea
+;	jr nc, .done  ; no Pkmn Power-capable Dragonair was found
+;	ldh a, [hTempPlayAreaLocation_ff9d]
+;	ldh [hTempPlayAreaLocation_ffa1], a
+;	call DrawDuelMainScene
+;	farcall DraconicEvolutionEffect
 .done
 	ret
 

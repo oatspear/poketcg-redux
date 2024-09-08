@@ -598,6 +598,43 @@ IsSpecialEnergyPowerActive:
 	ret
 
 
+; returns carry if the turn holder's Pokémon Power
+; that enhances Energies is active
+; output:
+;   carry: set if the Power is active
+; preserves: bc, de
+IsElementalMasteryActive:
+	call ArePokemonPowersDisabled  ; preserves bc, de
+	ccf
+	ret nc
+	ld a, DRAGONAIR
+	call GetFirstPokemonWithAvailablePower  ; preserves hl, bc, de
+	ret nc  ; not found
+; Feedback is returned in wAttachedEnergies and wTotalAttachedEnergies.
+	push de
+	ld e, PLAY_AREA_ARENA
+	call GetPlayAreaCardAttachedEnergies  ; preserves hl, bc, de
+	push bc
+	call HandleEnergyColorOverride  ; preserves de
+	pop bc
+	ld d, 0  ; counter
+	ld e, NUM_COLORED_TYPES
+	ld hl, wAttachedEnergies
+.loop
+	ld a, [hli]
+	or a
+	jr z, .next
+	inc d
+.next
+	dec e
+	jr nz, .loop
+	ld a, d
+	pop de
+	cp 2
+	ccf
+	ret  ; carry set if two or more colors
+
+
 ; return carry if the Active Pokémon is unable to evolve due to substatus
 ; preserves: bc, de
 IsUnableToEvolve:

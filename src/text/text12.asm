@@ -833,16 +833,15 @@ NightAmbushDescription:
 	; line "one of your Benched Pokémon."
 	done
 
-DraconicEvolutionName:
-	text "Draconic Evolution"
+ElementalMasteryName:
+	text "Elemental Mastery"
 	done
 
-DraconicEvolutionDescription:
-	text "When you play a card from your hand"
-	line "to evolve 1 of your Pokémon, heal"
-	line "20 damage from that Pokémon."
-	line "You may attach a Basic Energy card"
-	line "in your hand to that Pokémon."
+ElementalMasteryDescription:
+	text "If your Active Pokémon has 2 or more"
+	line "colors of Energy attached to it, its"
+	line "attacks do 10 more damage to the"
+	line "opponent's Active Pokémon."
 	done
 
 RainSplashName:

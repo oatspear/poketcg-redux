@@ -2885,8 +2885,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer FamilyPowerDescription
 	textpointer NightAmbushName
 	textpointer NightAmbushDescription
-	textpointer DraconicEvolutionName
-	textpointer DraconicEvolutionDescription
+	textpointer ElementalMasteryName
+	textpointer ElementalMasteryDescription
 	textpointer RainSplashName
 	textpointer IfAttachedEnergy10BonusDamageDescription
 	textpointer MuddyWaterName

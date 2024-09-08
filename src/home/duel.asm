@@ -2330,6 +2330,13 @@ HandleDamageBoostingPowers:
 	push de
 	call IsFightingFuryActive
 	pop de
+	jr nc, .elemental_mastery
+	ld hl, 10
+	call AddToDamage_DE
+.elemental_mastery
+	push de
+	call IsElementalMasteryActive
+	pop de
 	ret nc
 	ld hl, 10
 	jp AddToDamage_DE

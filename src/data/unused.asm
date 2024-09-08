@@ -1,3 +1,32 @@
+DraconicEvolutionName:
+	text "Draconic Evolution"
+	done
+
+DraconicEvolutionDescription:
+	text "When you play a card from your hand"
+	line "to evolve 1 of your Pokémon, heal"
+	line "20 damage from that Pokémon."
+	line "You may attach a Basic Energy card"
+	line "in your hand to that Pokémon."
+	done
+
+; attack 1
+energy 0 ; energies
+tx DraconicEvolutionName ; name
+tx DraconicEvolutionDescription ; description
+tx PokemonPowerDescriptionCont ; description (cont)
+db 0 ; damage
+db POKEMON_POWER ; category
+dw PassivePowerEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_PKMN_POWER_1 ; animation
+
+
+
+
 AllergicPollenName:
 	text "Allergic Pollen"
 	done
