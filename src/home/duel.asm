@@ -2476,13 +2476,13 @@ DealDamageToPlayAreaPokemon:
 	jr z, .got_damage
 
 ; handle damage modifiers depending on play area location
-	ld a, [wTempPlayAreaLocation_cceb]
+	; ld a, [wTempPlayAreaLocation_cceb]
 	or a ; cp PLAY_AREA_ARENA
 	jr z, .arena_target
 
 .bench_target
 ; 1. apply Defender reduction
-	ld a, [wTempPlayAreaLocation_cceb]
+	; ld a, [wTempPlayAreaLocation_cceb]
 	or CARD_LOCATION_PLAY_AREA
 	ld b, a
 	call ApplyAttachedDefender
@@ -2540,7 +2540,9 @@ DealDamageToPlayAreaPokemon:
 	jr z, .damage_flag
 	set DAMAGED_SINCE_LAST_TURN_F, [hl]
 .damage_flag
-	ld l, DUELVARS_ARENA_CARD_HP
+	ld a, [wTempPlayAreaLocation_cceb]
+	add DUELVARS_ARENA_CARD_HP
+	ld l, a
 	ld a, [hl]
 	push af
 	bank1call PlayAttackAnimation_DealAttackDamageSimple
