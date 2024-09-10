@@ -4137,6 +4137,11 @@ Selfdestruct100Bench20Effect:
 	ld a, 100
 .recoil
 	call DealRecoilDamageToSelf
+	; jr Earthquake20Effect
+	; fallthrough
+
+; deal 20 damage to all benched Pokémon
+Earthquake20Effect:
 	call DamageAllFriendlyPokemon20Effect
 	jp DamageAllOpponentBenched20Effect
 

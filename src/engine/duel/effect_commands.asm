@@ -1068,6 +1068,10 @@ Earthquake10EffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Earthquake10Effect
 	db  $00
 
+Earthquake20EffectCommands:
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Earthquake20Effect
+	db  $00
+
 EvolutionaryThunderEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, PassivePowerEffect
 	dbw EFFECTCMDTYPE_PKMN_POWER_TRIGGER, DamageAllOpponentPokemon10Effect_ThunderAnim

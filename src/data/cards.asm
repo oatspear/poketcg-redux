@@ -411,7 +411,7 @@ VenusaurLv67Card:
 	tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
 	db 60 ; damage
 	db DAMAGE_NORMAL ; category
-	dw Earthquake10EffectCommands ; effect commands
+	dw Earthquake20EffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db SPECIAL_AI_HANDLING ; flags 3
