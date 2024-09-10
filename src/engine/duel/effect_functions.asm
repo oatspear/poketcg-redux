@@ -591,8 +591,13 @@ DoubleHitEffect:
 .hit
 	ld d, 0
 	ld e, a
+	xor a  ; REFRESH_DUEL_SCREEN
+	ld [wDuelDisplayedScreen], a  ; trick to avoid graphical glitch
 	ld a, ATK_ANIM_HIT_NO_GLOW
-	jp DealDamageToArenaPokemon_CustomAnim
+	call DealDamageToArenaPokemon_CustomAnim
+	ld a, DUEL_MAIN_SCENE
+	ld [wDuelDisplayedScreen], a
+	ret
 
 
 Affliction_DamageEffect:
