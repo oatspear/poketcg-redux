@@ -563,8 +563,9 @@ HayFeverName:
 
 HayFeverDescription:
 	text "While this is your Active Pokémon,"
-	line "your opponent cannot play Item cards"
-	line "from their hand."
+	line "whenever your opponent plays an Item"
+	line "card from their hand, leave the"
+	line "opponent's Active Pokémon Paralyzed."
 	done
 
 PollenBurstName:
@@ -575,7 +576,7 @@ PollenBurstDescription:
 	text "If this Pokémon was damaged since"
 	line "your last turn, the Defending"
 	line "Pokémon is now Poisoned, Burned"
-	line "and Paralyzed."
+	line "and Confused."
 	done
 
 SparkName: ; 5cf47 (17:4f47)

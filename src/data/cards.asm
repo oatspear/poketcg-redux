@@ -1371,7 +1371,7 @@ VileplumeCard:
 	db STAR ; rarity
 	db MYSTERY | JUNGLE ; sets
 	db VILEPLUME
-	db 120 ; hp
+	db 110 ; hp
 	db STAGE2 ; stage
 	tx GloomName ; pre-evo name
 

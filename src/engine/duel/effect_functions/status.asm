@@ -122,7 +122,7 @@ PollenBurst_StatusEffect:
 	ret z
 	call PoisonEffect
 	call BurnEffect
-	jp ParalysisEffect
+	jp ConfusionEffect
 
 
 FragranceTrap_StatusEffect:
@@ -336,6 +336,30 @@ ApplyStatusEffectToAllOpponentBenchedPokemon:
 ; ------------------------------------------------------------------------------
 ; Pokémon Powers
 ; ------------------------------------------------------------------------------
+
+
+HayFever_ParalysisEffect:
+	ld a, [wGarbageEaterDamageToHeal]  ; used an item?
+	or a
+	ret z  ; nothing to do
+	call IsHayFeverActive
+	ret nc  ; nothing to do
+; play initial animation
+	call SwapTurn
+	ld a, DUEL_MAIN_SCENE
+	ld [wDuelDisplayedScreen], a
+	ld a, ATK_ANIM_SLEEPING_GAS
+	ld b, PLAY_AREA_ARENA
+	bank1call PlayAdhocAnimationOnDuelScene_NoEffectiveness
+; reset status queue
+	xor a
+	ld [wEffectFunctionsFeedbackIndex], a
+; apply status
+	xor a  ; PLAY_AREA_ARENA
+	ldh [hTempPlayAreaLocation_ff9d], a
+	call ParalysisEffect
+	call ApplyStatusAndPlayAnimationAdhoc
+	jp SwapTurn
 
 
 NoxiousScalesEffect:

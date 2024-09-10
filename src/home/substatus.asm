@@ -986,9 +986,10 @@ CheckCantUseItemsThisTurn:
 	call GetTurnDuelistVariable
 	or a
 	bit SUBSTATUS3_HEADACHE, [hl]
-	jr nz, .unable
-	call IsHayFeverActive
-	ret nc
+	ret z
+	; jr nz, .unable
+	; call IsHayFeverActive
+	; ret nc
 .unable
 	ldtx hl, UnableToUseItemCardThisTurnText
 	scf

@@ -270,6 +270,12 @@ FixmeText:
 ; Unused Text
 ; ------------------------------------------------------------------------------
 
+; HayFeverDescription:
+; 	text "While this is your Active Pokémon,"
+; 	line "your opponent cannot play Item cards"
+; 	line "from their hand."
+; 	done
+
 ; PainBurstName:
 ; 	text "Pain Burst"
 ; 	done
