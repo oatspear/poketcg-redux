@@ -124,9 +124,7 @@ DamageAllBenchedPokemon:
 	ld b, PLAY_AREA_ARENA
 	jr .skip_to_bench
 .loop
-	push bc
-	call DealDamageToPlayAreaPokemon_RegularAnim
-	pop bc
+	call DealDamageToPlayAreaPokemon_RegularAnim  ; preserves hl, bc, de
 .skip_to_bench
 	inc b
 	dec c
