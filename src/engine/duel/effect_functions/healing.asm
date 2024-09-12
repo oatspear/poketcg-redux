@@ -265,6 +265,9 @@ PlayHealingAnimation_PlayAreaPokemon:
 
 Aromatherapy_HealEffect:
 	call SetUsedPokemonPowerThisTurn
+; play the global healing wind animation
+	ld a, ATK_ANIM_HEALING_WIND
+	bank1call PlayAdhocAnimationOnPlayAreaArena_NoEffectiveness
 	; jr Heal10DamageFromAll_HealEffect
 	; fallthrough
 

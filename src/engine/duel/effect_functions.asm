@@ -980,6 +980,17 @@ VoltSwitchEffect:
 ; Compound Attacks
 ; ------------------------------------------------------------------------------
 
+; if evolution takes place, it overrides the effect queue and Poison does not
+; apply to the Defending Pokémon, even though the animation plays
+PoisonEvolution_EvolveEffect:
+	ld a, [wEffectFunctionsFeedbackIndex]
+	push af
+	call EvolutionFromDeck_EvolveEffect
+	pop af
+	ld [wEffectFunctionsFeedbackIndex], a
+	ret
+
+
 PollenBurstEffect:
 	call KarateChop_DamageSubtractionEffect
 	jp PollenBurst_StatusEffect
@@ -2246,6 +2257,10 @@ DragOff_SwitchEffect:
 	ld [wLoadedAttackAnimation], a
 	ld a, b
 	ld [wTempNonTurnDuelistCardID], a
+; refresh screen to show new Pokémon
+	xor a  ; REFRESH_DUEL_SCREEN
+	ld [wDuelDisplayedScreen], a
+	bank1call DrawDuelMainScene
 	ret
 
 
@@ -4597,6 +4612,7 @@ Accelerate1EnergyFromDeck_AttachEnergyEffect:
 
 QuiverDance_AttachEnergyEffect:
 	call Accelerate1EnergyFromDeck_AttachEnergyEffect
+	call FocusEnergyEffect
 	ldh a, [hTempPlayAreaLocation_ffa1]
 	ld e, a   ; location
 	ld d, 30  ; damage
@@ -5037,6 +5053,10 @@ RapidSpin_SwitchEffect:
 
 SilverWhirlwind_SwitchEffect:
 	call Whirlwind_SwitchEffect
+; refresh screen to show new Pokémon
+	xor a  ; REFRESH_DUEL_SCREEN
+	ld [wDuelDisplayedScreen], a
+	bank1call DrawDuelMainScene
 	jp SilverWhirlwind_StatusEffect
 
 

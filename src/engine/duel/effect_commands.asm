@@ -161,7 +161,7 @@ HatchEffectCommands:
 PoisonEvolutionEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDeckIsNotEmpty
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PoisonEffect
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, EvolutionFromDeck_EvolveEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, PoisonEvolution_EvolveEffect
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, EvolveArenaPokemonFromDeck_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, EvolveArenaPokemonFromDeck_AISelectEffect
 	db  $00

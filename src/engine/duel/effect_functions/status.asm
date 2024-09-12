@@ -18,20 +18,20 @@ ParalysisIfDamagedSinceLastTurnEffect:
 
 
 PoisonEffect: ; 2c007 (b:4007)
-	lb bc, CNF_SLP_PRZ, POISONED
+	lb bc, $ff, POISONED
 	jr ApplyStatusEffect
 
 ; Defending Pokémon becomes double poisoned (takes 20 damage per turn rather than 10)
 DoublePoisonEffect:
-	lb bc, CNF_SLP_PRZ, DOUBLE_POISONED
+	lb bc, $ff, DOUBLE_POISONED
 	jr ApplyStatusEffect
 
 ; Defending Pokémon becomes burned
 BurnEffect:
-	lb bc, CNF_SLP_PRZ, BURNED
+	lb bc, $ff, BURNED
 	jr ApplyStatusEffect
 
-ParalysisEffect: ; 2c018 (b:4018)
+ParalysisEffect:
 	lb bc, PSN_DBLPSN_BRN, PARALYZED
 	jr ApplyStatusEffect
 
@@ -194,17 +194,17 @@ TargetedPoisonEffect:
 
 ; input e: PLAY_AREA_* of the target Pokémon
 PoisonEffect_PlayArea:
-	lb bc, CNF_SLP_PRZ, POISONED
+	lb bc, $ff, POISONED
 	jr ApplyStatusEffectToPlayAreaPokemon
 
 ; input e: PLAY_AREA_* of the target Pokémon
 DoublePoisonEffect_PlayArea:
-	lb bc, CNF_SLP_PRZ, DOUBLE_POISONED
+	lb bc, $ff, DOUBLE_POISONED
 	jr ApplyStatusEffectToPlayAreaPokemon
 
 ; input e: PLAY_AREA_* of the target Pokémon
 BurnEffect_PlayArea:
-	lb bc, CNF_SLP_PRZ, BURNED
+	lb bc, $ff, BURNED
 	jr ApplyStatusEffectToPlayAreaPokemon
 
 ; input e: PLAY_AREA_* of the target Pokémon
@@ -345,21 +345,25 @@ HayFever_ParalysisEffect:
 	call IsHayFeverActive
 	ret nc  ; nothing to do
 ; play initial animation
-	call SwapTurn
-	ld a, DUEL_MAIN_SCENE
-	ld [wDuelDisplayedScreen], a
-	ld a, ATK_ANIM_SLEEPING_GAS
+	bank1call DrawDuelMainScene
+	ld a, ATK_ANIM_HAY_FEVER
 	ld b, PLAY_AREA_ARENA
 	bank1call PlayAdhocAnimationOnDuelScene_NoEffectiveness
-; reset status queue
-	xor a
-	ld [wEffectFunctionsFeedbackIndex], a
-; apply status
+; try to apply status
 	xor a  ; PLAY_AREA_ARENA
-	ldh [hTempPlayAreaLocation_ff9d], a
-	call ParalysisEffect
-	call ApplyStatusAndPlayAnimationAdhoc
-	jp SwapTurn
+	call IsSafeguardActive
+	lb bc, PSN_DBLPSN_BRN, PARALYZED
+	jp c, ApplyStatusEffect.cant_induce_status
+; play animation and paralyze card
+	ld a, ATK_ANIM_HAY_FEVER_PARALYSIS
+	bank1call PlayAdhocAnimationOnPlayAreaArena_NoEffectiveness
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetTurnDuelistVariable
+	and PSN_DBLPSN_BRN
+	or PARALYZED
+	ld [hl], a
+	bank1call DrawDuelHUDs
+	ret
 
 
 NoxiousScalesEffect:
@@ -377,6 +381,9 @@ NoxiousScalesEffect:
 ; check whether Pokémon Powers can be used
 	call ArePokemonPowersDisabled
 	ret c  ; Powers are disabled
+	ld b, PLAY_AREA_ARENA
+	call CheckPokemonPowerReadyState
+	ret c  ; unable to use Power
 ; check whether the opponent's Active Pokémon is still alive
 	ld a, DUELVARS_ARENA_CARD_HP
 	call GetNonTurnDuelistVariable
@@ -385,6 +392,7 @@ NoxiousScalesEffect:
 ; reset status queue
 	xor a
 	ld [wEffectFunctionsFeedbackIndex], a
+	ldh [hTempPlayAreaLocation_ff9d], a
 ; check whether additional status should be applied
 	call CheckArenaPokemonHas3OrMoreEnergiesAttached
 	jr c, .just_poison

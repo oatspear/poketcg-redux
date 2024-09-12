@@ -939,6 +939,7 @@ DynamicCardTypeTest:
 	ld [wDynamicFunctionArgument], a
 	ld a, [wDataTableIndex]
 	cp $ff
+	scf
 	ret z
 	push hl
 	ld hl, CardTypeTest_FunctionTable

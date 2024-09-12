@@ -1749,7 +1749,7 @@ PlayAttackAnimation_DealAttackDamage:
 .got_excess_damage
 	ld [wOverkillDamage], a
 
-	ld b, $0
+	ld b, PLAY_AREA_ARENA
 	ld a, [wDamageEffectiveness]
 	ld c, a
 	push de
