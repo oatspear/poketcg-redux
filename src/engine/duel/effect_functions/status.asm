@@ -46,38 +46,16 @@ SleepEffect: ; 2c030 (b:4030)
 
 ApplyStatusEffect:
 	call SwapTurn
-	xor a  ; PLAY_AREA_ARENA
-	push bc
-	call IsSafeguardActive
-	pop bc
-	call SwapTurn
-	jr c, .cant_induce_status
-
-	ldh a, [hWhoseTurn]
-	ld hl, wWhoseTurn
-	cp [hl]
-	jr nz, .can_induce_status
-	ld a, [wTempNonTurnDuelistCardID]
-	cp CLEFAIRY_DOLL
-	jr z, .cant_induce_status
-	cp MYSTERIOUS_FOSSIL
-	jr z, .cant_induce_status
-	; Snorlax's Thick Skinned prevents it from being statused...
-	cp SNORLAX
-	jr nz, .can_induce_status
-	call SwapTurn
-	; ...unless already so, or if affected by Toxic Gas
-	call CheckCannotUseDueToStatus
+	ld e, PLAY_AREA_ARENA
+	call CanBeAffectedByStatus  ; preserves bc, de
 	call SwapTurn
 	jr c, .can_induce_status
-
 .cant_induce_status
 	ld a, c
 	ld [wNoEffectFromWhichStatus], a
 	call SetNoEffectFromStatus
 	or a
 	ret
-
 .can_induce_status
 	ld hl, wEffectFunctionsFeedbackIndex
 	push hl
@@ -99,6 +77,47 @@ ApplyStatusEffect:
 	inc [hl]
 	scf
 	ret
+
+
+; assumes:
+;   - call SwapTurn if needed
+; input:
+;   e: PLAY_AREA_* of the target Pokémon
+; outputs:
+;   carry: set if able to apply status
+; preserves: bc, de
+CanBeAffectedByStatus:
+	ld a, DUELVARS_ARENA_CARD
+	add e
+	call GetTurnDuelistVariable
+	cp $ff
+	ret z  ; empty slot
+
+	ld a, e
+	push bc
+	push de
+	call IsSafeguardActive
+	pop de
+	pop bc
+	ccf
+	ret nc  ; safeguarded
+
+	push de
+	call GetCardIDFromDeckIndex
+	ld a, e
+	pop de
+	cp CLEFAIRY_DOLL
+	ret z  ; cannot induce status
+	cp MYSTERIOUS_FOSSIL
+	ret z  ; cannot induce status
+; Snorlax's Thick Skinned prevents it from being statused...
+	cp SNORLAX
+	scf
+	ret nz  ; can induce status
+; ...unless already so, or if affected by Toxic Gas
+	ld a, e
+	; carry if Pokémon Power is turned off
+	jp CheckCannotUseDueToStatus_Anywhere  ; preserves bc, de
 
 
 PoisonConfusionEffect:
@@ -234,42 +253,14 @@ SleepEffect_PlayArea:
 ;   carry: set if able to apply status
 ; preserves: de
 ApplyStatusEffectToPlayAreaPokemon:
-	ld a, e
-	push bc
-	push de
-	call IsSafeguardActive
-	pop de
-	pop bc
-	jr c, .cant_induce_status
-
-	ld a, DUELVARS_ARENA_CARD
-	add e
-	call GetTurnDuelistVariable
-	cp $ff
-	jr z, .cant_induce_status
-	push de
-	call GetCardIDFromDeckIndex
-	ld a, e
-	pop de
-	cp CLEFAIRY_DOLL
-	jr z, .cant_induce_status
-	cp MYSTERIOUS_FOSSIL
-	jr z, .cant_induce_status
-	; Snorlax's Thick Skinned prevents it from being statused...
-	cp SNORLAX
-	jr nz, .can_induce_status
-	; ...unless already so, or if affected by Toxic Gas
-	ld a, e
-	call CheckCannotUseDueToStatus_Anywhere  ; preserves bc, de
+	call CanBeAffectedByStatus  ; preserves bc, de
 	jr c, .can_induce_status
-
 .cant_induce_status
 	ld a, c
 	ld [wNoEffectFromWhichStatus], a
 	call SetNoEffectFromStatus  ; preserves hl, bc, de
 	or a
 	ret
-
 .can_induce_status
 	ld a, DUELVARS_ARENA_CARD_STATUS
 	add e
@@ -344,16 +335,16 @@ HayFever_ParalysisEffect:
 	ret z  ; nothing to do
 	call IsHayFeverActive
 	ret nc  ; nothing to do
+
+	ld e, PLAY_AREA_ARENA
+	call CanBeAffectedByStatus
+	jp c, ApplyStatusEffectToPlayAreaPokemon.cant_induce_status
+
 ; play initial animation
 	bank1call DrawDuelMainScene
 	ld a, ATK_ANIM_HAY_FEVER
 	ld b, PLAY_AREA_ARENA
 	bank1call PlayAdhocAnimationOnDuelScene_NoEffectiveness
-; try to apply status
-	xor a  ; PLAY_AREA_ARENA
-	call IsSafeguardActive
-	lb bc, PSN_DBLPSN_BRN, PARALYZED
-	jp c, ApplyStatusEffect.cant_induce_status
 ; play animation and paralyze card
 	ld a, ATK_ANIM_HAY_FEVER_PARALYSIS
 	bank1call PlayAdhocAnimationOnPlayAreaArena_NoEffectiveness
@@ -379,10 +370,7 @@ NoxiousScalesEffect:
 	cp VENOMOTH
 	ret nz  ; not Venomoth
 ; check whether Pokémon Powers can be used
-	call ArePokemonPowersDisabled
-	ret c  ; Powers are disabled
-	ld b, PLAY_AREA_ARENA
-	call CheckPokemonPowerReadyState
+	call CheckCannotUseDueToStatus
 	ret c  ; unable to use Power
 ; check whether the opponent's Active Pokémon is still alive
 	ld a, DUELVARS_ARENA_CARD_HP
