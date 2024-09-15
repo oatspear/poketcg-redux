@@ -301,20 +301,19 @@ NoDamageOrEffectTextIDTable:
 ; and/or toxic gas in play, meaning that attack and/or pkmn power cannot be used
 ; preserves: bc, de
 CheckCannotUseDueToStatus_Anywhere:
-	add DUELVARS_ARENA_CARD_STATUS
 	jr CheckCannotUseDueToStatus.status_check
 
 ; returns carry if turn holder's arena card is paralyzed, asleep, confused,
 ; and/or toxic gas in play, meaning that attack and/or pkmn power cannot be used
 ; preserves: bc, de
 CheckCannotUseDueToStatus:
-	ld a, DUELVARS_ARENA_CARD_STATUS
+	xor a  ; PLAY_AREA_ARENA
 .status_check
-	call GetTurnDuelistVariable
-	and CNF_SLP_PRZ
-	ldtx hl, CannotUseDueToStatusText
-	scf
-	ret nz  ; return carry
+	push bc
+	ld b, a
+	call CheckPokemonPowerReadyState
+	pop bc
+	ret c
 .toxic_gas
 	call ArePokemonPowersDisabled
 	ret nc
