@@ -608,8 +608,8 @@ WasKnockedOutText: ; 36eaa (d:6eaa)
 	done
 
 HavePokemonPowerText: ; 36ebe (d:6ebe)
-	text "<RAMTEXT> have"
-	line "Pokémon Power."
+	text "<RAMTEXT> has"
+	line "a Pokémon Power."
 	done
 
 UnableToUsePkmnPowerDueToDisableEffectText:

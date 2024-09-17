@@ -124,7 +124,7 @@ ENDC
 	ld a, AI_TRAINER_CARD_PHASE_05
 	call AIProcessHandTrainerCards
 IF DEBUG_MODE
-	ldtx hl, CombustionName
+	ldtx hl, SingeName
 	call DrawWideTextBox_WaitForInput
 ENDC
 
@@ -346,7 +346,7 @@ ENDC
 	ld a, AI_TRAINER_CARD_PHASE_12
 	call AIProcessHandTrainerCards
 IF DEBUG_MODE
-	ldtx hl, RazorLeafName
+	ldtx hl, ScaldName
 	call DrawWideTextBox_WaitForInput
 ENDC
 

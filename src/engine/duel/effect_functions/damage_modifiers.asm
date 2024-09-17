@@ -89,6 +89,15 @@ WaterGunEffect:
 	jp SetDefiniteAIDamage
 
 
+; 10 damage for each Grass Energy
+EnergyBallEffect:
+  call GetNumAttachedGrassEnergy
+	call ATimes10
+	call SetDefiniteDamage ; damage = 10 * Water Energy
+; set attack damage
+	jp SetDefiniteAIDamage
+
+
 ; 10 damage for each Fire Energy
 FireSpin_DamageMultiplierEffect:
   call GetNumAttachedFireEnergy
@@ -145,70 +154,40 @@ SpeedImpact_AIEffect:
 
 
 Psychic_DamageBoostEffect:
+	call SwapTurn
+	ld e, PLAY_AREA_ARENA
 	call GetEnergyAttachedMultiplierDamage
-	ld hl, wDamage
-	ld a, e
-	add [hl]
-; cap damage at 250
-	; ld [hli], a
-	; ld a, d
-	; adc [hl]
-	ld [hl], a
-	ret nc  ; no overflow
-	ld a, MAX_DAMAGE
-	ld [hl], a
-	ret
+	call SwapTurn
+	jp AddToDamage
 
 Psychic_AIEffect:
 	call Psychic_DamageBoostEffect
 	jp SetDefiniteAIDamage
 
 
-; output in de the number of energy cards
-; attached to the Defending Pokemon times 10.
-; used for attacks that deal 10x number of energy
-; cards attached to the Defending card.
+; input:
+;   e: PLAY_AREA_* of the target Pokémon
+; output:
+;   a: the number of energies attached to the
+;      turn holder's Pokémon times 10.
+; assume:
+;   - call SwapTurn
 GetEnergyAttachedMultiplierDamage:
-	call SwapTurn
-	ld a, DUELVARS_CARD_LOCATIONS
-	call GetTurnDuelistVariable
+	call GetPlayAreaCardAttachedEnergies
+	ld a, [wTotalAttachedEnergies]
+; cap if number of energies >= 25
+	cp 26
+	jp c, ATimes10
+	ld a, 25
+	jp ATimes10
 
-	ld c, 0
-.loop
-	ld a, [hl]
-	cp CARD_LOCATION_ARENA
-	jr nz, .next
-	; is in Arena
-	ld a, l
-	call GetCardIDFromDeckIndex
-	call GetCardType
-	and TYPE_ENERGY
-	jr z, .next
-	; is Energy attached to Arena card
-	inc c
-.next
-	inc l
-	ld a, l
-	cp DECK_SIZE
-	jr c, .loop
 
-	call SwapTurn
-	ld l, c
-	ld h, $00
-	ld b, $00
-	add hl, hl ; hl =  2 * c
-	add hl, hl ; hl =  4 * c
-	add hl, bc ; hl =  5 * c
-	add hl, hl ; hl = 10 * c
-; cap damage at 250
-	; ld d, h
-	ld d, 0
-	ld e, l
-	ld a, h
-	or a
+Solarbeam_DamageBoostEffect:
+	ldh a, [hEnergyTransEnergyCard]
+	cp $ff
 	ret z
-	ld e, MAX_DAMAGE
-	ret
+.got_energy
+	jp DoubleDamage_DamageBoostEffect
 
 
 ;
@@ -833,22 +812,6 @@ Constrict_AIEffect:
 	jp SetDefiniteAIDamage
 
 
-; +20 damage per retreat cost of opponent
-GrassKnot_DamageBoostEffect:
-	call SwapTurn
-	xor a ; PLAY_AREA_ARENA
-	ldh [hTempPlayAreaLocation_ff9d], a
-	call GetPlayAreaCardRetreatCost  ; retreat cost in a
-	call SwapTurn
-	add a  ; x20 per retreat cost
-	call ATimes10
-	jp AddToDamage
-
-GrassKnot_AIEffect:
-	call GrassKnot_DamageBoostEffect
-	jp SetDefiniteAIDamage
-
-
 ; ------------------------------------------------------------------------------
 ; Based on Status Conditions
 ; ------------------------------------------------------------------------------
@@ -885,11 +848,12 @@ ReactivePoison_AIEffect:
   jp SetDefiniteAIDamage
 
 
-; double damage if the Defending Pokémon has a status condition
+; +20 damage if the Defending Pokémon has a status condition
 Pester_DamageBoostEffect:
   call CheckDefendingPokemonHasStatus
   ret c
-  jp DoubleDamage_DamageBoostEffect
+  ld a, 20
+  jp AddToDamage
 
 Pester_AIEffect:
   call Pester_DamageBoostEffect
@@ -913,6 +877,22 @@ DeadlyPoison_AIEffect:
 ; ------------------------------------------------------------------------------
 ; Based on Damage Counters
 ; ------------------------------------------------------------------------------
+
+SwallowUp_DamageBoostEffect:
+	ld a, DUELVARS_ARENA_CARD_HP
+	call GetTurnDuelistVariable
+	ld e, a
+	ld a, DUELVARS_ARENA_CARD_HP
+	call GetNonTurnDuelistVariable
+	cp e
+	ld a, 50
+	jp c, AddToDamage
+	ret
+
+SwallowUp_AIEffect:
+	call SwallowUp_DamageBoostEffect
+	jp SetDefiniteAIDamage
+
 
 ChopDown_DamageBoostEffect:
 	ld a, DUELVARS_ARENA_CARD_HP

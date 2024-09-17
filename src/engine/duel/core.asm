@@ -685,9 +685,13 @@ PlayEnergyCard:
 	or PLAYED_ENERGY_THIS_TURN
 	ld [wAlreadyPlayedEnergyOrSupporter], a
 .play_energy
+	ld a, DUELVARS_ARENA_CARD_FLAGS
+	call GetTurnDuelistVariable
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	ldh [hTempPlayAreaLocation_ffa1], a
 	ld e, a
+	add l
+	set ATTACHED_ENERGY_FROM_HAND_THIS_TURN_F, [hl]
 	ldh a, [hTempCardIndex_ff98]
 	ldh [hTemp_ffa0], a
 	call PutHandCardInPlayArea
@@ -6481,9 +6485,13 @@ OppAction_FinishTurnWithoutAttacking:
 
 ; attach an energy card from hand to the arena or a benched Pokemon
 OppAction_PlayEnergyCard:
+	ld a, DUELVARS_ARENA_CARD_FLAGS
+	call GetTurnDuelistVariable
 	ldh a, [hTempPlayAreaLocation_ffa1]
 	ldh [hTempPlayAreaLocation_ff9d], a
 	ld e, a
+	add l
+	set ATTACHED_ENERGY_FROM_HAND_THIS_TURN_F, [hl]
 	ldh a, [hTemp_ffa0]
 	ldh [hTempCardIndex_ff98], a
 	call PutHandCardInPlayArea
@@ -6805,19 +6813,23 @@ Func_6ba2:
 	jp WaitForWideTextBoxInput
 
 
+; all of these effects trigger only if some damage was dealt
 HandleOnAttackEffects:
-	call IsCursedFlamesActive
-	jr nc, .vampiric_aura
 	ld a, [wDealtDamage]
 	or a
-	jr z, .vampiric_aura
+	jr z, .done
+; the attack did some damage
+	call IsCursedFlamesActive
+	jr nc, .vampiric_aura
 	farcall Discard1CardFromOpponentsDeckEffect
 .vampiric_aura
 	call IsVampiricAuraActive
+	jr nc, .grass_knot
+	farcall VampiricAura_LeechEffect
+.grass_knot
+	call IsGrassKnotActive
 	jr nc, .done
-	; farcall Leech10DamageEffect
-	; farcall LeechHalfDamageEffect
-	farcall LeechUpTo20DamageEffect
+	farcall GrassKnot_RootEffect
 .done
 	; jp HandleBurnDiscardEnergy
 	; fallthrough
@@ -6902,6 +6914,7 @@ HandleOnUsePokemonPowerEffects:
 
 HandleOnPlayTrainerEffects:
 	farcall GarbageEater_HealEffect
+	farcall HayFever_ParalysisEffect
 	ret
 
 
@@ -6951,13 +6964,13 @@ HandleOnPlayEnergyEffects:
 
 
 HandleOnEvolvePokemonEffects:
-	ld a, DRAGONAIR  ; Draconic Evolution
-	call CountPokemonIDInPlayArea
-	jr nc, .done  ; no Pkmn Power-capable Dragonair was found
-	ldh a, [hTempPlayAreaLocation_ff9d]
-	ldh [hTempPlayAreaLocation_ffa1], a
-	call DrawDuelMainScene
-	farcall DraconicEvolutionEffect
+;	ld a, DRAGONAIR  ; Draconic Evolution
+;	call CountPokemonIDInPlayArea
+;	jr nc, .done  ; no Pkmn Power-capable Dragonair was found
+;	ldh a, [hTempPlayAreaLocation_ff9d]
+;	ldh [hTempPlayAreaLocation_ffa1], a
+;	call DrawDuelMainScene
+;	farcall DraconicEvolutionEffect
 .done
 	ret
 
@@ -7009,6 +7022,7 @@ HandleBetweenTurnsEvents:
 	; jr c, .something_to_handle
 ;.nothing_to_handle
 	call ClearStatusFromBenchedPokemon
+	call ClearPokemonFlags_EndOfTurn
 	call DiscardAttachedPluspowers
 	call SwapTurn
 	call DiscardAttachedDefenders
@@ -7066,6 +7080,7 @@ HandleBetweenTurnsEvents:
 
 .discard_pluspower
 	call ClearStatusFromBenchedPokemon
+	call ClearPokemonFlags_EndOfTurn
 	call DiscardAttachedPluspowers
 	call SwapTurn
 	ld a, DUELVARS_ARENA_CARD
@@ -7220,6 +7235,17 @@ ENDC
 	dec e
 	jr nz, .loop
 	ret
+
+ClearPokemonFlags_EndOfTurn:
+	ld a, DUELVARS_ARENA_CARD_FLAGS
+	call GetTurnDuelistVariable
+	ld e, MAX_PLAY_AREA_POKEMON
+.loop
+	res DAMAGED_SINCE_LAST_TURN_F, [hl]
+	inc hl
+	dec e
+	ret z
+	jr .loop
 
 ; discard any PLUSPOWER attached to the turn holder's arena and/or bench Pokemon
 ; FIXME refactor into single function
@@ -7741,6 +7767,7 @@ ReplaceKnockedOutPokemon:
 	ldtx hl, DuelistPlacedACardText
 	call DisplayCardDetailScreen
 	call ExchangeRNG
+	farcall NoxiousScalesEffect
 	farcall SpikesDamageEffect
 	or a
 	ret
@@ -8022,7 +8049,8 @@ SetAllPlayAreaPokemonCanEvolve:
 	ld c, a
 	ld l, DUELVARS_ARENA_CARD_FLAGS
 .next_pkmn_loop
-	res 5, [hl]
+	res ATTACHED_ENERGY_FROM_HAND_THIS_TURN_F, [hl]
+	res USED_PKMN_POWER_THIS_TURN_F, [hl]
 	set CAN_EVOLVE_THIS_TURN_F, [hl]
 	inc l
 	dec c

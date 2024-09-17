@@ -1,3 +1,318 @@
+DraconicEvolutionName:
+	text "Draconic Evolution"
+	done
+
+DraconicEvolutionDescription:
+	text "When you play a card from your hand"
+	line "to evolve 1 of your Pokémon, heal"
+	line "20 damage from that Pokémon."
+	line "You may attach a Basic Energy card"
+	line "in your hand to that Pokémon."
+	done
+
+; attack 1
+energy 0 ; energies
+tx DraconicEvolutionName ; name
+tx DraconicEvolutionDescription ; description
+tx PokemonPowerDescriptionCont ; description (cont)
+db 0 ; damage
+db POKEMON_POWER ; category
+dw PassivePowerEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_PKMN_POWER_1 ; animation
+
+
+
+
+AllergicPollenName:
+	text "Allergic Pollen"
+	done
+
+; attack 1
+energy GRASS, 1, COLORLESS, 1 ; energies
+tx AllergicPollenName ; name
+tx UnableToUseItemsDescription ; description
+dw NONE ; description (cont)
+db 20 ; damage
+db DAMAGE_NORMAL ; category
+dw HeadacheEffectCommands ; effect commands
+db NONE ; flags 1
+db FLAG_2_BIT_6 ; flags 2
+db NONE ; flags 3
+db 2
+db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
+
+
+PetalDanceName:
+	text "Petal Dance"
+	done
+
+PetalDanceDescription:
+	text "Heal 20 damage from each of your"
+	line "Pokémon. This Pokémon is now"
+	line "Confused."
+	done
+
+
+; attack 2
+energy GRASS, 2, COLORLESS, 1 ; energies
+tx PetalDanceName ; name
+tx PetalDanceDescription ; description
+dw NONE ; description (cont)
+db 50 ; damage
+db DAMAGE_NORMAL ; category
+dw PetalDanceEffectCommands ; effect commands
+db NONE ; flags 1
+db HEAL_USER ; flags 2
+db NONE ; flags 3
+db 1
+db ATK_ANIM_PETAL_DANCE ; animation
+
+
+
+
+
+PollenFrenzyName:
+	text "Pollen Frenzy"
+	done
+
+IF SLEEP_WITH_COIN_FLIP
+PollenFrenzyDescription:
+	text "Flip a coin. If heads, the Defending"
+	line "Pokémon is now Paralyzed and"
+	line "Poisoned. If tails, the Defending"
+	line "Pokémon is now Asleep and Poisoned."
+	done
+ELSE
+PollenFrenzyDescription:
+	text "Flip a coin. If heads, the Defending"
+	line "Pokémon is now Paralyzed and"
+	line "Poisoned. If tails, the Defending"
+	line "Pokémon is now Drowsy and Poisoned."
+	done
+ENDC
+
+; attack 1
+energy GRASS, 1, COLORLESS, 1 ; energies
+tx PollenFrenzyName ; name
+tx PollenFrenzyDescription ; description
+dw NONE ; description (cont)
+db 20 ; damage
+db DAMAGE_NORMAL ; category
+dw PollenFrenzyEffectCommands ; effect commands
+db INFLICT_POISON | INFLICT_PARALYSIS | INFLICT_SLEEP ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
+
+
+
+ParalysisIfBasicDescription:
+	text "If the Defending Pokémon is a"
+	line "Basic Pokémon, it is now Paralyzed."
+	done
+
+; attack 1
+energy COLORLESS, 2 ; energies
+tx BindName ; name
+tx ParalysisIfBasicDescription ; description
+dw NONE ; description (cont)
+db 10 ; damage
+db DAMAGE_NORMAL ; category
+dw BindEffectCommands ; effect commands
+db INFLICT_PARALYSIS ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_HIT ; animation
+
+
+
+PanicVineName:
+	text "Panic Vine"
+	done
+
+PanicVineDescription:
+	text "The Defending Pokémon is now"
+	line "Confused. It is unable to retreat"
+	line "during your opponent's next turn."
+	done
+
+
+; attack 2
+energy GRASS, 1, COLORLESS, 2 ; energies
+tx PanicVineName ; name
+tx PanicVineDescription ; description
+dw NONE ; description (cont)
+db 20 ; damage
+db DAMAGE_NORMAL ; category
+dw PanicVineEffectCommands ; effect commands
+db INFLICT_CONFUSION ; flags 1
+db FLAG_2_BIT_6 ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_WHIP ; animation
+
+
+
+GrowthName:
+	text "Growth"
+	done
+
+GrowthDescription:
+	text "Attach a Basic Energy card from"
+	line "your hand to this Pokémon."
+	done
+
+; attack 1
+energy COLORLESS, 1 ; energies
+tx GrowthName ; name
+tx GrowthDescription ; description
+dw NONE ; description (cont)
+db 0 ; damage
+db RESIDUAL ; category
+dw GrowthEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db SPECIAL_AI_HANDLING ; flags 3
+db 0
+db ATK_ANIM_GLOW_EFFECT ; animation
+
+
+
+PoisonLureName:
+	text "Poison Lure"
+	done
+
+PoisonLureDescription:
+	text "Switch 1 of your opponent's Benched"
+	line "Pokémon with their Active Pokémon."
+	line "The new Defending Pokémon is now"
+	line "Poisoned."
+	done
+
+; attack 1
+energy GRASS, 1 ; energies
+tx PoisonLureName ; name
+tx PoisonLureDescription ; description
+dw NONE ; description (cont)
+db 0 ; damage
+db RESIDUAL ; category
+dw PoisonLureEffectCommands ; effect commands
+db INFLICT_POISON ; flags 1
+db SWITCH_OPPONENT_POKEMON ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_LURE ; animation
+
+
+
+
+LethargySporesName:
+	text "Lethargy Spores"
+	done
+
+LethargySporesDescription:
+	text "At the end of your turns, if this is"
+	line "your Active Pokémon and it has any"
+	line "Energies attached to it, leave the"
+	line "opponent's Active Pokémon Drowsy."
+	done
+
+
+; attack 1
+energy 0 ; energies
+tx LethargySporesName ; name
+tx LethargySporesDescription ; description
+tx PokemonPowerDescriptionCont ; description (cont)
+db 0 ; damage
+db POKEMON_POWER ; category
+dw PassivePowerEffectCommands ; effect commands
+db INFLICT_SLEEP ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 1
+db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
+
+
+
+
+
+; attack 1
+energy GRASS, 1 ; energies
+tx SporeName ; name
+tx InflictSleepDescription ; description
+dw NONE ; description (cont)
+db 0 ; damage
+db DAMAGE_NORMAL ; category
+dw InflictSleepEffectCommands ; effect commands
+db INFLICT_SLEEP ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_SPORE ; animation
+
+; attack 2
+energy GRASS, 1, COLORLESS, 2 ; energies
+tx FungalGrowthName ; name
+tx LeechLifeDescription ; description
+tx InflictSleepDescription ; description (cont)
+db 20 ; damage
+db DAMAGE_NORMAL ; category
+dw FungalGrowthEffectCommands ; effect commands
+db INFLICT_SLEEP | HEAL_USER ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_SPORE ; animation
+
+
+
+
+VenomPowderName:
+	text "Venom Powder"
+	done
+
+; attack 2
+energy GRASS, 1 ; energies
+tx VenomPowderName ; name
+tx InflictConfusionAndPoisonDescription ; description
+dw NONE ; description (cont)
+db 20 ; damage
+db DAMAGE_NORMAL ; category
+dw InflictConfusionAndPoisonEffectCommands ; effect commands
+db INFLICT_POISON | INFLICT_CONFUSION ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
+
+
+
+
+HealingWindName: ; 631e4 (18:71e4)
+	text "Healing Wind"
+	done
+
+; attack 1
+energy COLORLESS, 1 ; energies
+tx HealingWindName ; name
+tx Heal20DamageFromAllDescription ; description
+dw NONE ; description (cont)
+db 0 ; damage
+db RESIDUAL ; category
+dw Heal20DamageFromAllEffectCommands ; effect commands
+db NONE ; flags 1
+db HEAL_USER ; flags 2
+db NONE ; flags 3
+db 1
+db ATK_ANIM_RECOVER ; animation
+; db ATK_ANIM_NONE ; animation
+
 
 
 
@@ -640,6 +955,10 @@ db ATK_ANIM_BLIZZARD ; animation
 
 
 
+HypnoblastName:
+	text "Hypnoblast"
+	done
+
 ; attack 2
 energy PSYCHIC, 1, COLORLESS, 1 ; energies
 tx HypnoblastName ; name
@@ -865,6 +1184,17 @@ db NONE ; flags 2
 db NONE ; flags 3  | SPECIAL_AI_HANDLING
 db 0
 db ATK_ANIM_WHIRLPOOL ; animation
+
+
+EnergyAbsorptionName: ; 61065 (18:5065)
+	text "Energy Absorption"
+	done
+
+EnergyAbsorptionDescription: ; 61078 (18:5078)
+	text "Choose up to 2 Basic Energy cards"
+	line "from your discard pile and attach"
+	line "them to this Pokémon."
+	done
 
 
 ; attack 1
@@ -1520,6 +1850,16 @@ ClefableLv28Card:
 
 
 ;
+
+PsywaveName:
+	text "Psywave"
+	done
+
+PsywaveDescription:
+	text "Put 1 damage counter on the"
+	line "Defending Pokémon for each"
+	line "Energy attached to it."
+	done
 
 MewLv23Card:
 	db TYPE_PKMN_PSYCHIC ; type

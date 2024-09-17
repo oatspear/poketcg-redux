@@ -145,17 +145,6 @@ PsychicNovaDescription:
 	line "discard your hand."
 	done
 
-DragOffName:
-	text "Drag Off"
-	done
-
-DragOffDescription:
-	text "Switch in 1 of your opponent's"
-	line "Benched Pokémon to the Active Spot."
-	line "This attack does 30 damage to the"
-	line "new Active Pokémon."
-	done
-
 QuickSearchName:
 	text "Quick Search"
 	done
@@ -218,9 +207,103 @@ CursedFlamesDescription:
 	line "of your opponent's deck."
 	done
 
+DoubleHitName:
+	text "Double Hit"
+	done
+
+DoubleHitDescription:
+	text "If this Pokémon has 2 or more"
+	line "Energies attached to it, this"
+	line "attack does damage to the"
+	line "Defending Pokémon twice."
+	done
+
+TripleHitName:
+	text "Triple Hit"
+	done
+
+TripleHitDescription:
+	text "This attack does damage to the"
+	line "Defending Pokémon twice if this"
+	line "Pokémon has 2 Energies attached to"
+	line "it, or thrice if it has 3 or more"
+	line "Energies attached to it."
+	done
+
+ShiftName:
+	text "Shift"
+	done
+
+ShiftDescription:
+	text "Once during your turn, you may"
+	line "change the type of this Pokémon to"
+	line "the type of any other Pokémon in"
+	line "play, other than Colorless."
+	done
+
+GrassKnotName:
+	text "Grass Knot"
+	done
+
+GrassKnotDescription:
+	text "If your Active Pokémon has any"
+	line "attached <GRASS> Energy, its attacks"
+	line "that do damage to the Defending"
+	line "Pokémon also increase the Defending"
+	line "Pokémon's Retreat Cost by <COLORLESS>."
+	done
+
+EnergyBallName:
+	text "Energy Ball"
+	done
+
+EnergyBallDescription:
+	text "This attack does 10 damage for each"
+	line "<GRASS> Energy attached to this Pokémon."
+	done
+
+FixmeText:
+	text "FIXME"
+	done
+
 ; ------------------------------------------------------------------------------
 ; Unused Text
 ; ------------------------------------------------------------------------------
+
+; HayFeverDescription:
+; 	text "While this is your Active Pokémon,"
+; 	line "your opponent cannot play Item cards"
+; 	line "from their hand."
+; 	done
+
+; PainBurstName:
+; 	text "Pain Burst"
+; 	done
+
+; PainBurstDescription:
+; 	text "This attack does 10 more damage"
+; 	line "for each damage counter on the"
+; 	line "Defending Pokémon."
+; 	done
+
+; DragOffName:
+; 	text "Drag Off"
+; 	done
+
+; DragOffDescription:
+; 	text "Switch in 1 of your opponent's"
+; 	line "Benched Pokémon to the Active Spot."
+; 	line "This attack does 30 damage to the"
+; 	line "new Active Pokémon."
+; 	done
+
+; RazorLeafName:
+; 	text "Razor Leaf"
+; 	done
+
+; AcidName:
+; 	text "Acid"
+; 	done
 
 ; RelentlessFlamesDescription:
 ; 	text "This attack does 20 damage for each"

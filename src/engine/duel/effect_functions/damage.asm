@@ -124,9 +124,7 @@ DamageAllBenchedPokemon:
 	ld b, PLAY_AREA_ARENA
 	jr .skip_to_bench
 .loop
-	push bc
-	call DealDamageToPlayAreaPokemon_RegularAnim
-	pop bc
+	call DealDamageToPlayAreaPokemon_RegularAnim  ; preserves hl, bc, de
 .skip_to_bench
 	inc b
 	dec c
@@ -189,6 +187,14 @@ DealDamageToTargetA_DE_DamageEffect:
 	; ld de, 30
 	call DealDamageToPlayAreaPokemon_RegularAnim
 	jp SwapTurn
+
+
+LickingShot_DamageEffect:
+	ld e, PLAY_AREA_ARENA
+	call GetEnergyAttachedMultiplierDamage
+	ld e, a
+	ld d, 0
+	jr DealDamageToTarget_DE_DamageEffect
 
 
 ; input:

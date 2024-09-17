@@ -31,7 +31,7 @@ PointerTable_AttackAnimation:
 	dw AttackAnimation_ThunderShock        ; ATK_ANIM_THUNDERSHOCK
 	dw AttackAnimation_ThunderShock        ; ATK_ANIM_THUNDER
 	dw AttackAnimation_Thunderbolt         ; ATK_ANIM_THUNDERBOLT
-	dw AttackAnimation_ThunderShock        ; ATK_ANIM_9
+	dw AttackAnimation_HitNoGlow           ; ATK_ANIM_HIT_NO_GLOW
 	dw AttackAnimation_BigLightning        ; ATK_ANIM_THUNDER_WHOLE_SCREEN
 	dw AttackAnimation_BigLightning        ; ATK_ANIM_11
 	dw AttackAnimation_BigLightning        ; ATK_ANIM_THUNDERSTORM
@@ -151,7 +151,7 @@ PointerTable_AttackAnimation:
 	dw AttackAnimation_Sleep               ; ATK_ANIM_SLEEP
 	dw AttackAnimation_ImakuniConfusion    ; ATK_ANIM_IMAKUNI_CONFUSION
 	dw AttackAnimation_SleepingGas         ; ATK_ANIM_SLEEPING_GAS
-	dw AttackAnimation_560f                ; ATK_ANIM_129
+	dw AttackAnimation_HayFever            ; ATK_ANIM_HAY_FEVER
 	dw AttackAnimation_ThunderPlayArea     ; ATK_ANIM_THUNDER_PLAY_AREA
 	dw AttackAnimation_CatPunchPlayArea    ; ATK_ANIM_CAT_PUNCH_PLAY_AREA
 	dw AttackAnimation_FiregiverPlayer     ; ATK_ANIM_FIREGIVER_PLAYER
@@ -159,7 +159,7 @@ PointerTable_AttackAnimation:
 	dw AttackAnimation_HealingWindPlayArea ; ATK_ANIM_HEALING_WIND_PLAY_AREA
 	dw AttackAnimation_Gale                ; ATK_ANIM_GALE
 	dw AttackAnimation_Expand              ; ATK_ANIM_EXPAND
-	dw AttackAnimation_564f                ; ATK_ANIM_137
+	dw AttackAnimation_HayFeverParalysis   ; ATK_ANIM_HAY_FEVER_PARALYSIS
 	dw AttackAnimation_FullHeal            ; ATK_ANIM_FULL_HEAL
 	dw AttackAnimation_5659                ; ATK_ANIM_139
 	dw AttackAnimation_ProtectNoGlow       ; ATK_ANIM_PROTECT_NO_GLOW
@@ -169,8 +169,11 @@ PointerTable_AttackAnimation:
 	dw AttackAnimation_5673                ; ATK_ANIM_144
 	assert_table_length NUM_ATK_ANIMS
 
-AttackAnimation_Hit: ; (6:52c6)
+AttackAnimation_Hit:
 	anim_player         DUEL_ANIM_GLOW
+	; fallthrough to AttackAnimation_HitNoGlow
+
+AttackAnimation_HitNoGlow:
 	anim_opponent       DUEL_ANIM_HIT
 	anim_normal         DUEL_ANIM_SHAKE1
 	anim_opponent       DUEL_ANIM_SHOW_DAMAGE
@@ -892,8 +895,13 @@ AttackAnimation_SleepingGas:
 	anim_opponent       DUEL_ANIM_WHITE_GAS
 	anim_end
 
-AttackAnimation_560f:
-	anim_opponent       DUEL_ANIM_QUESTION_MARK
+AttackAnimation_HayFever:
+	anim_opponent       DUEL_ANIM_GLOW
+	anim_player         DUEL_ANIM_POWDER
+	anim_end
+
+AttackAnimation_HayFeverParalysis:
+	anim_player         DUEL_ANIM_PARALYSIS
 	anim_end
 
 AttackAnimation_ThunderPlayArea:
@@ -942,11 +950,6 @@ AttackAnimation_Expand:
 	anim_opponent       DUEL_ANIM_HIT
 	anim_normal         DUEL_ANIM_SHAKE1
 	anim_opponent       DUEL_ANIM_SHOW_DAMAGE
-	anim_end
-
-AttackAnimation_564f:
-	anim_player         DUEL_ANIM_POISON
-	anim_player         DUEL_ANIM_SHOW_DAMAGE
 	anim_end
 
 AttackAnimation_FullHeal:

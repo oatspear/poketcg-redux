@@ -11,6 +11,14 @@ ChoosePokemonFromDeck_AISelectEffect:
 	ret
 
 
+;
+Retrieve2BasicEnergy_AISelectEffect:
+	call CreateEnergyCardListFromDiscardPile_OnlyBasic
+	; call CreateEnergyCardListFromDiscardPile_AllEnergy
+	ld a, 2
+	jp PickFirstNCardsFromList_SelectEffect
+
+
 OptionalDoubleDamage_AISelectEffect:
 	call ApplyDamageModifiers_DamageToTarget  ; damage in e
 	ld a, DUELVARS_ARENA_CARD_HP
@@ -37,6 +45,42 @@ Prank_AISelectEffect:
 ; ------------------------------------------------------------------------------
 ; AI Scoring
 ; ------------------------------------------------------------------------------
+
+
+Solarbeam_AIEffect:
+	ld c, TRUE
+	call Helper_CreateEnergyCardListFromHand
+	ret c  ; no energies
+	call Solarbeam_DamageBoostEffect.got_energy
+	jp SetDefiniteAIDamage
+
+
+DoubleHit_AIEffect:
+	call CheckArenaPokemonHas2OrMoreEnergiesAttached
+	ret c
+	ld a, [wDamage]
+	add a
+	call AddToDamage
+	jp SetDefiniteAIDamage
+
+
+TripleHit_AIEffect:
+	call CheckArenaPokemonHas3OrMoreEnergiesAttached
+	cp 2
+	ret c  ; once
+; twice
+	dec a
+	ld c, a
+	ld a, [wDamage]
+	ld d, a
+	add d
+	dec c
+	jr z, .update
+; thrice
+	add d
+.update
+	call AddToDamage
+	jp SetDefiniteAIDamage
 
 
 Put1DamageCounterOnTarget_AIEffect:

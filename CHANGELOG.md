@@ -1,5 +1,189 @@
 # Pokémon TCG Rebalanced
 
+## Version 0.11.0
+
+### Removed Cards
+- Tangela Lv8
+
+### Grass Changes
+
+#### Ivysaur
+- **Poison Whip**: removed.
+- New attack: **Solarbeam** (GC): 20 damage; you may attach a Basic Energy from the hand to the user; if you do, double the attack's damage.
+
+#### Venusaur Lv64
+- Increased HP from 100 to 120.
+- **Mega Drain**: reduced damage from 40 to 30.
+- **Mega Drain**: increased healing from 20 to 30.
+- **Double Edge**: increased recoil from 20 to 30.
+- **Double Edge**: increased damage from 60 to 80.
+
+#### Venusaur Lv67
+- Increased HP from 100 to 120.
+- **Pollen Frenzy**: removed.
+- **Solarbeam**: removed.
+- New attack: **Massive Bloom** (GGC): 80 damage; does 10 less damage for each damage counter on the user; heals 20 damage from each of the user's Pokémon with any attached energies.
+- New attack: **Earthquake** (GGCC): 60 damage; does 20 damage to each player's Benched Pokémon.
+
+#### Caterpie
+- **String Shot**: no longer inflicts Paralysis.
+- **String Shot**: increases the cost of the Defending Pokémon's attacks by (C) during the opponent's next turn.
+
+#### Butterfree
+- Increased HP from 80 to 100.
+- **Healing Wind**: removed.
+- **Silver Whirlwind**: reduced cost from (GCC) to (G).
+- **Silver Whirlwind**: reduced damage from 30 to 20.
+- **Silver Whirlwind**: inflicts status on the new Defending Pokémon, after the opponent switches.
+- **Silver Whirlwind**: only inflicts status if the user has 3 or more attached energies; inflicts Poison, Burn and Drowsiness.
+- New attack: **Quiver Dance** (G): attach a Basic Energy from the deck to this Pokémon; heal 20 damage; doubles attack damage during the next turn.
+
+#### Beedrill
+- Increased HP from 80 to 100.
+- **Assassin Flight**: increased damage from 40 to 50.
+- **Toxic**: removed.
+- New attack: **Toxic Needle** (GC): 30 damage; inflicts Double Poison; inflicts Paralysis if the Defending Pokémon was not affected with any status.
+
+#### Oddish
+- **Sprout**: removed.
+- **Stun Spore**: removed coin flip.
+- **Stun Spore**: inflicts Paralysis if the user took damage since the player's last turn.
+- New attack: **Collect** (C): draw 2 cards.
+
+#### Gloom
+- Increased HP from 70 to 80.
+- **Heal**: removed.
+- **Foul Odor**: reduced cost from (GG) to (GC).
+- **Foul Odor**: no longer inflicts Confusion.
+- **Foul Odor**: inflicts Paralysis if the user took damage since the player's last turn.
+- New Pokémon Power: **Aromatherapy**: once per turn, if the Pokémon has any attached Energies, heal 10 damage from each of the player's Pokémon.
+
+#### Vileplume
+- Increased HP from 100 to 110.
+- **Allergic Pollen**: removed.
+- **Petal Dance**: removed.
+- New Pokémon Power: **Hay Fever**: while Active, inflicts Paralysis whenever the opponent plays Item cards.
+- New attack: **Pollen Burst** (GGC): 80 damage; does -10 damage per damage counter on the user; inflicts Poison, Burn and Confusion if the user took damage since the player's last turn.
+
+#### Paras
+- **Spore**: removed.
+- **Slash**: removed.
+- New attack: **Nutrition Support** (C): attach 1 basic energy from the hand to 1 Pokémon.
+- New attack: **Swarm** (G): 10 damage; put 1 Basic Pokémon from deck onto play; if the Bench was full, +10 damage.
+
+#### Parasect
+- **Energy Spores**: removed.
+- **Fungal Growth**: reworked.
+- New attack: **Fungal Growth** (G): attach 1 Basic Energy from the hand to 1 Pokémon; inflict Drowsiness.
+- New attack: **Leech Life** (CC): 30 damage; heal the same amount of damage dealt.
+
+#### Venonat
+- Increased HP from 40 to 50.
+- **Leech Life**: removed.
+- New attack: **Bug Bite** (G): 10 damage; discards any Tools attached to the Defending Pokémon; does double damage if a Tool was discarded.
+
+#### Venomoth
+- **Assassin Flight**: removed.
+- **Venom Powder**: removed.
+- New Pokémon Power: **Noxious Scales**: when this Pokémon moves into the Active Spot, inflict Poison; if it has 3 or more attached energies, inflict Double Poison and Confusion.
+- New attack: **Baton Pass** (G): 20 damage; switch the user; move all energies attached to the user to the new Active Pokémon.
+
+#### Bellsprout
+- **Growth**: removed.
+- **Vine Whip**: removed.
+- New attack: **Pester** (C): 10 damage; +20 damage if the Defending Pokémon has status.
+- New attack: **Poison Whip** (GC): 20 damage; inflict Poison.
+
+#### Weepinbell
+- **Poison Lure**: removed.
+- **Acid**: removed.
+- New Pokémon Power: **Grass Knot**: when your Active Pokémon does damage to the Defending Pokémon with an attack, if it has any attached Grass Energies, increase the Defending Pokémon's Retreat Cost by 1.
+- New attack: **Acidic Drain** (GC): 20 damage; heal 10 damage; inflict Poison and Burn.
+
+#### Victreebel
+- Increased HP from 90 to 100.
+- **Razor Leaf**: removed.
+- **Flytrap**: removed.
+- New attack: **Fragrance Trap** (G): 10 damage; switch the Defending Pokémon before doing damage; inflict Poison; if the user has 3 or more Energies, also inflict Confusion and Burn.
+- New attack: **Swallow Up** (GCC): 30 damage; +50 damage if the Defending Pokémon has less HP than the user; heal 40 damage if the attack Knocks Out the Defending Pokémon.
+
+#### Exeggcute
+- **Leech Seed**: removed.
+- New attack: **Energy Ball** (G): 10 damage per attached Grass Energy.
+
+#### Tangela Lv12
+- **Nutrition Support**: removed.
+- **Grass Knot**: removed.
+- New attack: **Ingrain** (C): retrieve up to 2 Basic Energies from the discard pile; heal 10 damage for each retrieved Energy.
+- New attack: **Constrict** (GC): 10 damage; increase opponent's retreat cost by 1 and deal +10 damage for each (C) in retreat cost.
+
+#### Scyther
+- Reduced HP from 70 to 60.
+- Increased Retreat Cost from 0 to 1.
+- **Swords Dance**: increased base damage from zero to 10.
+- **Slash**: removed.
+- New attack: **U-Turn** (CC): 30 damage; switch the user.
+
+#### Pinsir
+- Increased HP from 60 to 70.
+- **Iron Grip**: removed.
+- **Guillotine**: reduced cost from (GGC) to (CC).
+- **Guillotine**: can only be used on Pokémon with 30 HP or less, down from 50 HP or less.
+- New attack: **Rend** (G): 10 damage; +20 damage if the Defending Pokémon is damaged.
+
+### Water Changes
+
+#### Tentacruel
+- **Jellyfish Sting**: base damage reduced from 30 to 10.
+- **Jellyfish Sting**: always inflicts both Poison and Confusion.
+- **Jellyfish Sting**: does +10 damage for each (C) in the Defending Pokémon's Retreat Cost.
+
+### Darkness Changes
+
+#### Golbat
+- **Vampiric Aura**: leeches 10 damage by default, down from 20.
+- **Vampiric Aura**: leeches 20 damage against Poisoned Pokémon.
+
+### Colorless Changes
+
+#### Pidgey
+- Increased HP from 40 to 50.
+
+#### Fearow
+- **Drill Peck**: reduced damage from 50 to 40.
+- **Drill Peck**: discards an Energy from the Defending Pokémon.
+
+#### Doduo
+- **Reckless Charge**: removed.
+- New attack: **Double Hit** (C): 10 damage; if the user has 2 or more Energies, does damage twice.
+
+#### Dodrio
+- **Rage**: removed.
+- New attack: **Triple Hit** (C): 10 damage; if the user has 2 Energies, does damage twice; if the user has 3 or more Energies, does damage thrice.
+
+#### Lickitung
+- Reduced HP from 70 to 60.
+- **Lick**: removed.
+- **Tongue Stretch**: removed.
+- New attack: **Licking Shot** (C): does 10 damage to 1 of the opponent's Pokémon for each Energy attached to the user.
+- New attack: **Glutton Frenzy** (CCC): 20 damage; discard an Energy from the Defending Pokémon; discard a random card from the opponent's hand.
+
+#### Snorlax
+- Increased HP from 70 to 80.
+- **Body Slam**: removed.
+- New attack: **Heavy Slam** (CCC): 50 damage; unable to attack next turn.
+
+#### Dragonair
+- **Draconic Evolution**: removed.
+- **Hyper Beam**: removed.
+- New Pokémon Power: **Elemental Mastery**: if your Active Pokémon has 2 or more colors of Energy, its attacks do +10 damage.
+- New attack: **Energy Hurricane** (CC): 20 damage; attach an Energy from the deck to 1 Pokémon.
+
+#### Dragonite Lv45
+- **Energy Hurricane**: removed.
+- New attack: **Hyper Beam** (CCC): 70 damage; discard 1 Energy from both Active Pokémon.
+
+
 ## Version 0.10.0
 
 ### Grass Changes

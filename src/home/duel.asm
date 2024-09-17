@@ -898,7 +898,9 @@ EvolvePokemonCard:
 	ld a, e
 	add DUELVARS_ARENA_CARD_FLAGS
 	ld l, a
-	ld [hl], $00
+	ld a, [hl]
+	and $0f  ; retain lower nybble
+	ld [hl], a
 	ld a, e
 	add DUELVARS_ARENA_CARD_CHANGED_TYPE
 	ld l, a
@@ -1310,6 +1312,7 @@ ENDC
 	call SwapPlayAreaPokemon
 ; OATS trigger "on Active" Pokémon Powers
 	call ClearChangedTypesIfWeezing
+	farcall NoxiousScalesEffect
 	farcall SpikesDamageEffect
 	ret
 
@@ -1346,6 +1349,7 @@ SwapPlayAreaPokemon:
 ; OATS set SUBSTATUS3 on the new Active Pokémon
 	ld l, DUELVARS_ARENA_CARD_SUBSTATUS3
 	set SUBSTATUS3_THIS_TURN_ACTIVE, [hl]
+	res SUBSTATUS3_THIS_TURN_ROOTED, [hl]
 ; ---------------------------------------------
 	set CARD_LOCATION_PLAY_AREA_F, d
 	set CARD_LOCATION_PLAY_AREA_F, e
@@ -1529,6 +1533,7 @@ OnPokemonPlayedInitVariablesAndPowers:
 	ld a, [wLoadedAttackCategory]
 	cp POKEMON_POWER
 	ret nz
+; this Pokémon has a Pokémon Power
 	bank1call DisplayUsePokemonPowerScreen
 	ldh a, [hTempCardIndex_ff98]
 	call LoadCardDataToBuffer1_FromDeckIndex
@@ -1540,18 +1545,11 @@ OnPokemonPlayedInitVariablesAndPowers:
 	ldtx hl, HavePokemonPowerText
 	call DrawWideTextBox_WaitForInput
 	call ExchangeRNG
-	; ld a, [wLoadedCard1ID]
-	; cp WEEZING
-	; jr z, .use_pokemon_power
-	ld a, $01 ; check only Weezing
-	call CheckCannotUseDueToStatus_OnlyToxicGasIfANon0
-	jr c, .unable_to_use
-	ld a, DUELVARS_MISC_TURN_FLAGS
-	call GetTurnDuelistVariable
-	bit TURN_FLAG_PKMN_POWERS_DISABLED_F, a
-	jr z, .use_pokemon_power
+; check for Toxic Gas
+	call ArePokemonPowersDisabled
+	jr nc, .use_pokemon_power
 .unable_to_use
-	bank1call DisplayUsePokemonPowerScreen
+	; bank1call DisplayUsePokemonPowerScreen
 	ldtx hl, UnableToUsePkmnPowerDueToDisableEffectText
 	call DrawWideTextBox_WaitForInput
 	jp ExchangeRNG
@@ -1730,8 +1728,16 @@ PlayAttackAnimation_DealAttackDamage:
 	ld [hl], e
 	inc hl
 	ld [hl], d
-	ld a, DUELVARS_ARENA_CARD_HP
+
+	ld a, DUELVARS_ARENA_CARD_FLAGS
 	call GetNonTurnDuelistVariable
+	ld a, e
+	or a
+	jr z, .damage_flag
+	set DAMAGED_SINCE_LAST_TURN_F, [hl]
+.damage_flag
+
+	ld l, DUELVARS_ARENA_CARD_HP
 
 ; register overkill damage
 	ld b, a  ; Defending Pokémon's HP
@@ -1743,7 +1749,7 @@ PlayAttackAnimation_DealAttackDamage:
 .got_excess_damage
 	ld [wOverkillDamage], a
 
-	ld b, $0
+	ld b, PLAY_AREA_ARENA
 	ld a, [wDamageEffectiveness]
 	ld c, a
 	push de
@@ -2324,6 +2330,13 @@ HandleDamageBoostingPowers:
 	push de
 	call IsFightingFuryActive
 	pop de
+	jr nc, .elemental_mastery
+	ld hl, 10
+	call AddToDamage_DE
+.elemental_mastery
+	push de
+	call IsElementalMasteryActive
+	pop de
 	ret nc
 	ld hl, 10
 	jp AddToDamage_DE
@@ -2463,13 +2476,13 @@ DealDamageToPlayAreaPokemon:
 	jr z, .got_damage
 
 ; handle damage modifiers depending on play area location
-	ld a, [wTempPlayAreaLocation_cceb]
+	; ld a, [wTempPlayAreaLocation_cceb]
 	or a ; cp PLAY_AREA_ARENA
 	jr z, .arena_target
 
 .bench_target
 ; 1. apply Defender reduction
-	ld a, [wTempPlayAreaLocation_cceb]
+	; ld a, [wTempPlayAreaLocation_cceb]
 	or CARD_LOCATION_PLAY_AREA
 	ld b, a
 	call ApplyAttachedDefender
@@ -2520,8 +2533,17 @@ DealDamageToPlayAreaPokemon:
 	xor a  ; PLAY_AREA_ARENA
 .got_damage
 	ld c, $00
-	add DUELVARS_ARENA_CARD_HP
+	add DUELVARS_ARENA_CARD_FLAGS
 	call GetTurnDuelistVariable
+	ld a, e
+	or a
+	jr z, .damage_flag
+	set DAMAGED_SINCE_LAST_TURN_F, [hl]
+.damage_flag
+	ld a, [wTempPlayAreaLocation_cceb]
+	add DUELVARS_ARENA_CARD_HP
+	ld l, a
+	ld a, [hl]
 	push af
 	bank1call PlayAttackAnimation_DealAttackDamageSimple
 	pop af

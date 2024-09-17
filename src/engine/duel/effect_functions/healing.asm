@@ -2,15 +2,14 @@
 ; Healing
 ; ------------------------------------------------------------------------------
 
-LeechHalfDamageEffect:
-	ld hl, wDealtDamage
-	ld a, [hli]  ; wDamageEffectiveness
-	or a
-	ret z  ; no damage
-	call HalfARoundedUp
-	ld e, a
-	ld d, [hl]
-	jr ApplyAndAnimateHPRecovery
+; leech 20 against poisoned targets
+; leech 10 damage otherwise
+VampiricAura_LeechEffect:
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetNonTurnDuelistVariable
+	and POISONED | DOUBLE_POISONED
+	jr z, Leech10DamageEffect
+	jr Leech20DamageEffect
 
 
 LeechLifeEffect:
@@ -31,16 +30,6 @@ Leech10DamageEffect:
 Heal10DamageEffect:
 	ld de, 10
 	jr ApplyAndAnimateHPRecovery
-
-
-LeechUpTo20DamageEffect:
-	ld hl, wDealtDamage
-	ld a, [hli]
-	or a
-	ret z ; return if no damage dealt
-	cp 20
-	jr c, Heal10DamageEffect
-	jr Heal20DamageEffect
 
 
 Leech20DamageEffect:
@@ -74,6 +63,19 @@ Leech30DamageEffect:
 
 Heal30DamageEffect:
 	ld de, 30
+	jr ApplyAndAnimateHPRecovery
+
+
+SwallowUp_HealEffect:
+	ld a, DUELVARS_ARENA_CARD_HP
+	call GetNonTurnDuelistVariable
+	or a
+	ret nz  ; not Knocked Out
+	; jr Heal40DamageEffect
+	; fallthrough
+
+Heal40DamageEffect:
+	ld de, 40
 	jr ApplyAndAnimateHPRecovery
 
 
@@ -261,27 +263,40 @@ PlayHealingAnimation_PlayAreaPokemon:
 	ret
 
 
+Aromatherapy_HealEffect:
+	call SetUsedPokemonPowerThisTurn
+; play the global healing wind animation
+	ld a, ATK_ANIM_HEALING_WIND
+	bank1call PlayAdhocAnimationOnPlayAreaArena_NoEffectiveness
+	; jr Heal10DamageFromAll_HealEffect
+	; fallthrough
+
 Heal10DamageFromAll_HealEffect:
+	ld a, $ff
 	ld d, 10
-	jr HealNDamageFromAll
+	jr HealNDamageFromAllMatchingPokemon
 
 Heal20DamageFromAll_HealEffect:
+	ld a, $ff
 	ld d, 20
-	jr HealNDamageFromAll
+	jr HealNDamageFromAllMatchingPokemon
 
 Heal30DamageFromAll_HealEffect:
+	ld a, $ff
 	ld d, 30
-	; jr HealNDamageFromAll
+	; jr HealNDamageFromAllMatchingPokemon
 	; fallthrough
 
 ; Heals some damage from all friendly Pokémon in Play Area (Active and Benched).
 ; input:
+;   a - CARDTEST_* constant for pattern matching | $ff to match all
 ;   d - amount to heal
 ; uses: a, de, hl
 ; preserves: bc
 ; output:
 ;   carry: set if no Pokémon had damage to heal
-HealNDamageFromAll:
+HealNDamageFromAllMatchingPokemon:
+	ld [wDataTableIndex], a
 	push bc
 ; play the global healing wind animation (uses bc)
 	; ld a, ATK_ANIM_HEALING_WIND
@@ -295,6 +310,16 @@ HealNDamageFromAll:
 
 ; go through every Pokemon in the Play Area and heal c damage.
 .loop_play_area
+	ld a, e
+	ldh [hTempPlayAreaLocation_ff9d], a
+	; e: PLAY_AREA_* of the tested Pokémon
+	push de
+	push bc
+	call CheckPlayAreaPokemonMatchesStoredPattern
+	pop bc
+	pop de
+	jr c, .no_damage
+; there is a match
 	push de
 	call HealPlayAreaCardHP
 	pop de
@@ -310,6 +335,12 @@ HealNDamageFromAll:
 	ret nz  ; some were healed
 	scf
 	ret  ; none healed
+
+
+Heal20DamageFromAllEnergizedPokemon_HealEffect:
+	ld a, CARDTEST_ENERGIZED_POKEMON
+	ld d, 20
+	jr HealNDamageFromAllMatchingPokemon
 
 
 HealAllDamageEffect:

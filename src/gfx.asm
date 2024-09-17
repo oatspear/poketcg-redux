@@ -1519,8 +1519,8 @@ VenusaurLv64CardGfx::
 	INCBIN "gfx/cards/venusaur1.pal"
 
 VenusaurLv67CardGfx::
-	INCBIN "gfx/cards/venusaur2.2bpp"
-	INCBIN "gfx/cards/venusaur2.pal"
+	INCBIN "gfx/cards/venusaur4.2bpp"
+	INCBIN "gfx/cards/venusaur4.pal"
 
 CaterpieCardGfx::
 	INCBIN "gfx/cards/caterpie.2bpp"
@@ -1656,9 +1656,9 @@ WeezingCardGfx::
 	INCBIN "gfx/cards/weezing.2bpp"
 	INCBIN "gfx/cards/weezing.pal"
 
-TangelaLv8CardGfx::
-	INCBIN "gfx/cards/tangela1.2bpp"
-	INCBIN "gfx/cards/tangela1.pal"
+; TangelaLv8CardGfx::
+; 	INCBIN "gfx/cards/tangela1.2bpp"
+; 	INCBIN "gfx/cards/tangela1.pal"
 
 TangelaLv12CardGfx::
 	INCBIN "gfx/cards/tangela2.2bpp"

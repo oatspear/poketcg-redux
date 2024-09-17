@@ -29,8 +29,6 @@ HandleSpecialAIAttacks:
 	jp z, .Concentration
 	cp GRIMER
 	jp z, .GatherToxins
-	cp BELLSPROUT
-	jp z, .Growth
 	cp ZAPDOS_LV68
 	jp z, .BigThunder
 	cp MEOWTH_LV15
@@ -43,38 +41,42 @@ HandleSpecialAIAttacks:
 	jp z, .Collect
 	cp JYNX
 	jp z, .Collect
+	cp ODDISH
+	jp z, .Collect
 	cp DUGTRIO
 	jp z, .Earthquake
 	cp NIDOKING
-	jp z, .Earthquake
+	jp z, .Earthquake20
+	cp VENUSAUR_LV67
+	jp z, .Earthquake20
 	cp ELECTRODE_LV35
 	jp z, .EnergySpike
-	cp DRAGONITE_LV45
+	cp DRAGONAIR
 	jp z, .EnergySpike
+	cp PARAS
+	jp z, .NutritionSupport
+	cp PARASECT
+	jp z, .NutritionSupport
 	cp EXEGGCUTE
 	jp z, .NutritionSupport
-	cp TANGELA_LV12
-	jp z, .NutritionSupport
+	cp TANGELA
+	jp z, .Ingrain
 	cp DRATINI
 	jp z, .DragonDance
 	cp HORSEA
 	jp z, .DragonDance
-	cp PARASECT
-	jp z, .EnergySpores
 	cp RED_GYARADOS
 	jp z, .HyperBeam
-	cp DRAGONAIR
+	cp DRAGONITE_LV45
 	jp z, .HyperBeam
-	cp WEEPINBELL
-	jp z, .HyperBeam
+	cp LICKITUNG
+	jp z, .GluttonFrenzy
 	cp NIDORANF
 	jr z, .CallForFamily
 	cp KANGASKHAN
 	jr z, .CallForFamily
 	cp CLEFAIRY
 	jr z, .TutorPokemon
-	cp ODDISH
-	jr z, .Sprout
 	cp BULBASAUR
 	jr z, .Sprout
 	cp ARTICUNO_LV35
@@ -252,6 +254,13 @@ HandleSpecialAIAttacks:
 ; 	ld a, $82
 ; 	ret
 
+.Ingrain:
+	call CreateEnergyCardListFromHand
+	ret nc
+; encourage the attack if there are no energies in hand
+	ld a, $82
+	ret
+
 .Mend:
 	ld e, FIGHTING_ENERGY
 	jr .accelerate_self_from_discard_got_energy
@@ -302,15 +311,15 @@ HandleSpecialAIAttacks:
 
 ; if the Pokémon has less than 2 Energies attached to it,
 ; return a score of $80 + 3.
-.Growth:
-	call CreateEnergyCardListFromHand
-	jp c, .zero_score
-	call GetPlayAreaCardAttachedEnergies
-	ld a, [wTotalAttachedEnergies]
-	cp 2
-	jp nc, .zero_score
-	ld a, $83
-	ret
+; .Growth:
+; 	call CreateEnergyCardListFromHand
+; 	jp c, .zero_score
+; 	call GetPlayAreaCardAttachedEnergies
+; 	ld a, [wTotalAttachedEnergies]
+; 	cp 2
+; 	jp nc, .zero_score
+; 	ld a, $83
+; 	ret
 
 ; return score of $80 + 3.
 .BigThunder:
@@ -335,7 +344,12 @@ HandleSpecialAIAttacks:
 ; dismiss attack if number of own benched cards which would
 ; be KOd is greater than or equal to the number
 ; of prize cards left for player.
+.Earthquake20:
+	ld c, 30
+	jr .earthquake_logic
 .Earthquake:
+	ld c, 20
+.earthquake_logic
 	ld a, DUELVARS_BENCH
 	call GetTurnDuelistVariable
 
@@ -348,7 +362,7 @@ HandleSpecialAIAttacks:
 	ld a, e
 	add DUELVARS_ARENA_CARD_HP
 	call GetTurnDuelistVariable
-	cp 20
+	cp c
 	jr nc, .loop_earthquake
 	inc d
 	jr .loop_earthquake
@@ -400,14 +414,22 @@ HandleSpecialAIAttacks:
 	ld a, $83
 	ret
 
-.EnergySpores:
-	ld a, CARD_LOCATION_DISCARD_PILE
-	ld e, GRASS_ENERGY
-	call CheckIfAnyCardIDinLocation
-	jp nc, .zero_score
-	call AIProcessButDontPlayEnergy_SkipEvolution
-	jp nc, .zero_score
-	ld a, $83
+; .EnergySpores:
+; 	ld a, CARD_LOCATION_DISCARD_PILE
+; 	ld e, GRASS_ENERGY
+; 	call CheckIfAnyCardIDinLocation
+; 	jp nc, .zero_score
+; 	call AIProcessButDontPlayEnergy_SkipEvolution
+; 	jp nc, .zero_score
+; 	ld a, $83
+; 	ret
+
+.GluttonFrenzy:
+	ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND
+	call GetNonTurnDuelistVariable
+	or a
+	jr z, .HyperBeam  ; no cards in hand to discard
+	ld a, $82  ; slightly encourage
 	ret
 
 ; only incentivize attack if player's active card,

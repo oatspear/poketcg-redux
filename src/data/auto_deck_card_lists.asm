@@ -516,8 +516,7 @@ FlowerGardenCardList:
 	card_item BELLSPROUT,               2
 	card_item WEEPINBELL,               1
 	card_item VICTREEBEL,               1
-	card_item TANGELA_LV8,              2
-	card_item TANGELA_LV12,             1
+	card_item TANGELA,                  3
 	card_item LICKITUNG,                2
 	card_item POKEMON_TRADER,           2
 	card_item POKEMON_BREEDER,          3
@@ -997,7 +996,7 @@ BulbasaurAndFriendsCardList:
 	card_item NIDORANF,         2
 	card_item NIDORANM,         2
 	card_item NIDORINO,         1
-	card_item TANGELA_LV12,     1
+	card_item TANGELA,          1
 	card_item PIKACHU_LV12,     2
 	card_item RAICHU_LV40,      1
 	card_item MAGNEMITE_LV15,   1

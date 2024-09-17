@@ -6,14 +6,6 @@ Heal10DamageDescription:
 	text "Heal 10 damage from this Pokémon."
 	done
 
-VineWhipName: ; 57644 (15:7644)
-	text "Vine Whip"
-	done
-
-PoisonPowderName: ; 5764f (15:764f)
-	text "Poisonpowder"
-	done
-
 InflictPoisonDescription: ; 5765d (15:765d)
 	text "The Defending Pokémon is now"
 	line "Poisoned."
@@ -47,43 +39,19 @@ EnergyTransDescription: ; 5796e (15:796e)
 	line "one of your Pokémon to another."
 	done
 
-PollenFrenzyName:
-	text "Pollen Frenzy"
-	done
-
-IF SLEEP_WITH_COIN_FLIP
-PollenFrenzyDescription:
-	text "Flip a coin. If heads, the Defending"
-	line "Pokémon is now Paralyzed and"
-	line "Poisoned. If tails, the Defending"
-	line "Pokémon is now Asleep and Poisoned."
-	done
-ELSE
-PollenFrenzyDescription:
-	text "Flip a coin. If heads, the Defending"
-	line "Pokémon is now Paralyzed and"
-	line "Poisoned. If tails, the Defending"
-	line "Pokémon is now Drowsy and Poisoned."
-	done
-ENDC
-
-SolarBeamName: ; 57a51 (15:7a51)
+SolarbeamName:
 	text "Solarbeam"
 	done
 
-; SolarBeamDescription:
-; 	text "Deal 10 additional damage for each"
-; 	line "<GRASS> or <FIRE> Energy attached to"
-; 	line "this Pokémon."
-; 	done
-
-StringShotName: ; 57ac3 (15:7ac3)
-	text "String Shot"
+SolarbeamDescription:
+	text "You may attach a Basic Energy card"
+	line "from your hand to this Pokémon."
+	line "If you do, double this attack's"
+	line "damage."
 	done
 
-MayInflictParalysisDescription: ; 57ad0 (15:7ad0)
-	text "Flip a coin. If heads, the Defending"
-	line "Pokémon is now Paralyzed."
+StringShotName:
+	text "String Shot"
 	done
 
 ; HardenName:
@@ -98,15 +66,21 @@ MayInflictParalysisDescription: ; 57ad0 (15:7ad0)
 ; 	line "that damage."
 ; 	done
 
-StunSporeName: ; 57c14 (15:7c14)
+StunSporeName:
 	text "Stun Spore"
 	done
 
-WhirlwindName: ; 57c8e (15:7c8e)
+StunSporeDescription:
+	text "If this Pokémon was damaged since"
+	line "your last turn, the Defending"
+	line "Pokémon is now Paralyzed."
+	done
+
+WhirlwindName:
 	text "Whirlwind"
 	done
 
-OpponentSwitchesPokemonDescription: ; 57c99 (15:7c99)
+OpponentSwitchesPokemonDescription:
 	text "Your opponent switches their"
 	line "Active Pokémon with one of their"
 	line "Benched Pokémon."
@@ -116,20 +90,12 @@ PoisonStingName: ; 57ea1 (15:7ea1)
 	text "Poison Sting"
 	done
 
-TwineedleName: ; 58070 (16:4070)
-	text "Twineedle"
-	done
-
 TerrorStrikeName: ; 581ad (16:41ad)
 	text "Terror Strike"
 	done
 
 PoisonFangName: ; 58277 (16:4277)
 	text "Poison Fang"
-	done
-
-FurySwipesName: ; 582ef (16:42ef)
-	text "Fury Swipes"
 	done
 
 SwiftName:
@@ -160,10 +126,6 @@ NoWeaknessResistanceForBenchDescriptionCont:
 	line "for Benched Pokémon."
 	done
 
-CombustionName:
-	text "Combustion"
-	done
-
 Discard1CardFromOpponentsDeckDescription:
 	text "Discard 1 card from the top"
 	line "of your opponent's deck."
@@ -192,8 +154,8 @@ AdaptiveEvolutionDescription:
 	line "first turn or the turn you play it."
 	done
 
-PowerLariatName:
-	text "Power Lariat"
+EvopressName:
+	text "Evopress"
 	done
 
 PowerLariatDescription:
@@ -225,8 +187,14 @@ RoutDescription:
 	line "Benched Pokémon."
 	done
 
-ToxicName:
-	text "Toxic"
+ToxicNeedleName:
+	text "Toxic Needle"
+	done
+
+ToxicNeedleDescriptionCont:
+	text "If the Defending Pokémon was"
+	line "not affected with any Special"
+	line "Conditions, it is now Paralyzed."
 	done
 
 ToxicDescription:
@@ -253,15 +221,6 @@ LeechLifeDescription: ; 588b3 (16:48b3)
 	text "Heal from this Pokémon the same"
 	line "amount of damage you did to the"
 	line "Defending Pokémon."
-	done
-
-GrowthName:
-	text "Growth"
-	done
-
-GrowthDescription:
-	text "Attach a Basic Energy card from"
-	line "your hand to this Pokémon."
 	done
 
 SproutName:
@@ -300,20 +259,18 @@ SilverWhirlwindName:
 	done
 
 IF SLEEP_WITH_COIN_FLIP
-SilverWhirlwindDescription:
-	text "Flip a coin. If heads, the Defending"
-	line "Pokémon is now Asleep. If tails, it"
-	line "is now Poisoned. Then, your opponent"
-	line "switches their Active Pokémon with"
-	line "one of their Benched Pokémon."
+SilverWhirlwindDescriptionCont:
+	text "If this Pokémon has 3 or more"
+	line "Energies attached to it, the"
+	line "new Defending Pokémon is now"
+	line "Asleep, Poisoned and Burned."
 	done
 ELSE
-SilverWhirlwindDescription:
-	text "Flip a coin. If heads, the Defending"
-	line "Pokémon is now Drowsy. If tails, it"
-	line "is now Poisoned. Then, your opponent"
-	line "switches their Active Pokémon with"
-	line "one of their Benched Pokémon."
+SilverWhirlwindDescriptionCont:
+	text "If this Pokémon has 3 or more"
+	line "Energies attached to it, the"
+	line "new Defending Pokémon is now"
+	line "Drowsy, Poisoned and Burned."
 	done
 ENDC
 
@@ -480,10 +437,6 @@ RetreatAidDescription:
 	line "have in play with Retreat Aid."
 	done
 
-TongueStretchName: ; 628aa (18:68aa)
-	text "Tongue Stretch"
-	done
-
 FetchName: ; 62a4e (18:6a4e)
 	text "Fetch"
 	done
@@ -552,12 +505,8 @@ ThickSkinnedDescription:
 	done
 ENDC
 
-BodySlamName: ; 63088 (18:7088)
-	text "Body Slam"
-	done
-
-HealingWindName: ; 631e4 (18:71e4)
-	text "Healing Wind"
+HeavySlamName:
+	text "Heavy Slam"
 	done
 
 HelpingHandName:
@@ -600,6 +549,10 @@ ShadowClawDescription:
 Discard1CardFromOpponentsHandDescription:
 	text "Discard a random card from your"
 	line "opponent's hand."
+	done
+
+GluttonFrenzyName:
+	text "Glutton Frenzy"
 	done
 
 DragonDanceName:
@@ -645,13 +598,6 @@ OutrageName:
 	text "Outrage"
 	done
 
-OutrageDescription:
-	text "Discard an Energy card attached to"
-	line "this Pokémon. This attack does 10"
-	line "more damage for each damage counter"
-	line "on this Pokémon."
-	done
-
 AscensionName:
 	text "Ascension"
 	done
@@ -679,26 +625,6 @@ NutritionSupportName:
 ; 	line "Then, shuffle your deck."
 ; 	done
 
-GrassKnotName:
-	text "Grass Knot"
-	done
-
-GrassKnotDescription:
-	text "This attack does 20 more damage for"
-	line "each <COLORLESS> in the Defending Pokémon's"
-	line "Retreat Cost."
-	done
-
-PanicVineName:
-	text "Panic Vine"
-	done
-
-PanicVineDescription:
-	text "The Defending Pokémon is now"
-	line "Confused. It is unable to retreat"
-	line "during your opponent's next turn."
-	done
-
 UltravisionName:
 	text "Ultravision"
 	done
@@ -717,11 +643,6 @@ TropicalStormDescription:
 	text "This attack deals 20 damage for"
 	line "each of your Pokémon with any"
 	line "attached energies."
-	done
-
-ParalysisIfBasicDescription:
-	text "If the Defending Pokémon is a"
-	line "Basic Pokémon, it is now Paralyzed."
 	done
 
 IsCuredOfStatusAndEffectsText:
@@ -822,7 +743,7 @@ PesterName:
 PesterDescription:
 	text "If the Defending Pokémon is affected"
 	line "by a Special Condition, this attack"
-	line "does double damage."
+	line "does 20 more damage."
 	done
 
 SweetKissName:
@@ -912,16 +833,15 @@ NightAmbushDescription:
 	; line "one of your Benched Pokémon."
 	done
 
-DraconicEvolutionName:
-	text "Draconic Evolution"
+ElementalMasteryName:
+	text "Elemental Mastery"
 	done
 
-DraconicEvolutionDescription:
-	text "When you play a card from your hand"
-	line "to evolve 1 of your Pokémon, heal"
-	line "20 damage from that Pokémon."
-	line "You may attach a Basic Energy card"
-	line "in your hand to that Pokémon."
+ElementalMasteryDescription:
+	text "If your Active Pokémon has 2 or more"
+	line "colors of Energy attached to it, its"
+	line "attacks do 10 more damage to the"
+	line "opponent's Active Pokémon."
 	done
 
 RainSplashName:
@@ -941,6 +861,11 @@ MuddyWaterName:
 Retrieve1BasicEnergyDescription:
 	text "You may put a Basic Energy card from"
 	line "your discard pile into your hand."
+	done
+
+Retrieve2BasicEnergiesDescription:
+	text "Put up to 2 Energy cards from your"
+	line "discard pile into your hand."
 	done
 
 EnergySoakName:
@@ -1023,12 +948,10 @@ ConstrictName:
 	text "Constrict"
 	done
 
-ConstrictDescription:
-	text "Until your next turn, increase the"
-	line "Defending Pokémon's Retreat Cost"
-	line "by 1 <COLORLESS>. Then, this attack does"
-	line "10 more damage for each <COLORLESS> in"
-	line "that Pokémon's Retreat Cost."
+ConstrictDescriptionCont:
+	text "This attack does 10 more damage"
+	line "for each <COLORLESS> in the Defending"
+	line "Pokémon's Retreat Cost."
 	done
 
 WickedTentacleName:
@@ -1040,12 +963,6 @@ WickedTentacleDescription:
 	line "Defending Pokémon to one of your"
 	line "opponent's Benched Pokémon."
 	line "Both Pokémon are now Poisoned."
-	done
-
-PoisonOrConfusionIfPoisonedDescription:
-	text "The Defending Pokémon is now"
-	line "Poisoned. If it was already"
-	line "Poisoned, it is now Confused."
 	done
 
 PrimalGuidanceName:
@@ -1575,4 +1492,53 @@ LandCrushName:
 DamageAllFriendlyBenched20Description:
 	text "This attack does 20 damage to"
 	line "each of your Benched Pokémon."
+	done
+
+NoxiousScalesName:
+	text "Noxious Scales"
+	done
+
+NoxiousScalesDescription:
+	text "Whenever this Pokémon moves into the"
+	line "Active Spot during your turn, Poison"
+	line "the opponent's Active Pokémon. If"
+	line "this Pokémon has 3 or more Energies"
+	line "attached to it, that Pokémon is"
+	line "Badly Poisoned and Confused."
+	done
+
+MaySwitchThisPokemonDescription:
+	text "You may switch this Pokémon with"
+	line "1 of your Benched Pokémon."
+	done
+
+AcidicDrainName:
+	text "Acidic Drain"
+	done
+
+FragranceTrapName:
+	text "Fragrance Trap"
+	done
+
+FragranceTrapDescription:
+	text "Before doing damage, switch in"
+	line "1 of your opponent's Benched"
+	line "Pokémon to the Active Spot."
+	done
+
+FragranceTrapDescriptionCont:
+	text "The new Defending Pokémon is now"
+	line "Poisoned. If this Pokémon has 3 or"
+	line "more Energies attached to it, the"
+	line "new Defending Pokémon is now also"
+	line "Confused and Burned."
+	done
+
+MassiveBloomName:
+	text "Massive Bloom"
+	done
+
+EnergyBloomDescription:
+	text "Heal 20 damage from each of your"
+	line "Pokémon that has attached Energies."
 	done

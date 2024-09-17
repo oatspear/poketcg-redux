@@ -12,14 +12,6 @@ InflictSleepDescription:
 	done
 ENDC
 
-SlashName: ; 58f87 (16:4f87)
-	text "Slash"
-	done
-
-EnergySporesName:
-	text "Energy Spores"
-	done
-
 Attach2EnergyFromDiscardToAnyPkmnDescription:
 	text "Choose up to 2 Basic Energy cards"
 	line "from your discard pile and attach"
@@ -31,19 +23,10 @@ FungalGrowthName:
 	text "Fungal Growth"
 	done
 
-ShiftName:
-	text "Shift"
-	done
-
-ShiftDescription:
-	text "Once during your turn, you may"
-	line "change the type of this Pokémon to"
-	line "the type of any other Pokémon in"
-	line "play, other than Colorless."
-	done
-
-VenomPowderName:
-	text "Venom Powder"
+FungalGrowthDescriptionCont:
+	text "If this Pokémon has 3 or more"
+	line "Energies attached to it, heal"
+	line "20 damage from this Pokémon."
 	done
 
 InflictConfusionAndPoisonDescription:
@@ -51,46 +34,20 @@ InflictConfusionAndPoisonDescription:
 	line "Confused and Poisoned."
 	done
 
-RazorLeafName: ; 59403 (16:5403)
-	text "Razor Leaf"
+SwallowUpName:
+	text "Swallow Up"
 	done
 
-LureName:
-	text "Lure"
+SwallowUpDescription:
+	text "If the Defending Pokémon has less"
+	line "HP remaining than this Pokémon,"
+	line "this attack does 50 more damage."
 	done
 
-PoisonLureName:
-	text "Poison Lure"
-	done
-
-PoisonLureDescription:
-	text "Switch 1 of your opponent's Benched"
-	line "Pokémon with their Active Pokémon."
-	line "The new Defending Pokémon is now"
-	line "Poisoned."
-	done
-
-CorrosiveAcidName:
-	text "Corrosive Acid"
-	done
-
-AcidName:
-	text "Acid"
-	done
-
-AcidDescription:
-	text "The Defending Pokémon can't retreat"
-	line "during your opponent's next turn."
-	done
-
-FlytrapName:
-	text "Flytrap"
-	done
-
-FlytrapDescription:
-	text "Heal 20 damage from this Pokémon."
-	line "The Defending Pokémon can't retreat"
-	line "during your opponent's next turn."
+SwallowUpDescriptionCont:
+	text "If this attack Knocks Out the"
+	line "Defending Pokémon, heal 40 damage"
+	line "from this Pokémon."
 	done
 
 ToxicGasName:
@@ -103,11 +60,7 @@ ToxicGasDescription:
 	line "other than Toxic Gases."
 	done
 
-HypnoblastName:
-	text "Hypnoblast"
-	done
-
-TeleportBlastName: ; 5988c (16:588c)
+TeleportBlastName:
 	text "Teleport Blast"
 	done
 
@@ -137,14 +90,9 @@ SmogDescription:
 	line "opponent's Benched Pokémon."
 	done
 
-SelfdestructName: ; 59abe (16:5abe)
+SelfdestructName:
 	text "Selfdestruct"
 	done
-
-; Selfdestruct40Description:
-; 	text "This Pokémon does 40 damage to"
-; 	line "itself."
-; 	done
 
 Selfdestruct50Description:
 	text "This Pokémon does 50 damage to"
@@ -155,11 +103,11 @@ BindName:
 	text "Bind"
 	done
 
-PoisonWhipName: ; 59c3a (16:5c3a)
+PoisonWhipName:
 	text "Poison Whip"
 	done
 
-SwordsDanceName: ; 59cb4 (16:5cb4)
+SwordsDanceName:
 	text "Swords Dance"
 	done
 
@@ -169,12 +117,18 @@ NextTurnDoubleDamageDescription:
 	line "is doubled."
 	done
 
-IronGripName: ; 59d7d (16:5d7d)
-	text "Irongrip"
+BugBiteName:
+	text "Bug Bite"
 	done
 
 GuillotineName:
 	text "Guillotine"
+	done
+
+Guillotine30Description:
+	text "If the Defending Pokémon has"
+	line "30 HP or less remaining,"
+	line "it is Knocked Out."
 	done
 
 Guillotine50Description:
@@ -189,7 +143,7 @@ Guillotine70Description:
 	line "it is Knocked Out."
 	done
 
-EmberName: ; 59e0e (16:5e0e)
+EmberName:
 	text "Ember"
 	done
 
@@ -198,7 +152,7 @@ Discard1EnergyDescription:
 	line "to this Pokémon."
 	done
 
-FlamethrowerName: ; 59ee6 (16:5ee6)
+FlamethrowerName:
 	text "Flamethrower"
 	done
 
@@ -233,8 +187,8 @@ FireSpinDescription:
 	done
 
 Discard2EnergiesDescription:
-	text "Discard 2 Energy cards attached to"
-	line "this Pokémon."
+	text "Discard 2 Energy cards attached"
+	line "to this Pokémon."
 	done
 
 SingeName:
@@ -245,11 +199,11 @@ ConfuseRayName:
 	text "Confuse Ray"
 	done
 
-FireBlastName: ; 5a231 (16:6231)
+FireBlastName:
 	text "Fire Blast"
 	done
 
-FireFangName: ; 5a2ec (16:62ec)
+FireFangName:
 	text "Fire Fang"
 	done
 
@@ -257,7 +211,7 @@ FlareName:
 	text "Flare"
 	done
 
-QuickAttackName: ; 5a55c (16:655c)
+QuickAttackName:
 	text "Quick Attack"
 	done
 
@@ -267,15 +221,8 @@ IfActiveThisTurn10BonusDamageDescription:
 	line "does 10 more damage."
 	done
 
-FlamesOfRageName: ; 5a5d8 (16:65d8)
+FlamesOfRageName:
 	text "Flames of Rage"
-	done
-
-FlamesOfRageDescription: ; 5a5e8 (16:65e8)
-	text "Discard 2 Energy cards attached to"
-	line "this Pokémon. This attack does 10"
-	line "more damage for each damage counter"
-	line "on this Pokémon."
 	done
 
 RecklessChargeName:
@@ -509,6 +456,11 @@ InflictBurnDescription:
 	text "The Defending Pokémon is now Burned."
 	done
 
+InflictPoisonBurnDescription:
+	text "The Defending Pokémon is now"
+	line "Poisoned and Burned."
+	done
+
 EnergyBurstName:
 	text "Energy Burst"
 	done
@@ -589,43 +541,42 @@ AssassinFlightName:
 AssassinFlightDescription:
 	text "You can only use this attack if the"
 	line "opponent's Active Pokémon is"
-	line "affected by a Special Condition."
-	line "Deal 40 damage to 1 of the"
-	line "opponent's Benched Pokémon."
+	line "affected with a Special Condition."
+	line "This attack does 50 damage to 1"
+	line "of your opponent's Benched Pokémon."
 	done
 
 FoulOdorName:
 	text "Foul Odor"
 	done
 
-FoulOdorDescription:
-	text "Both the Defending Pokémon and"
-	line "this Pokémon are now Confused."
-	line "The Defending Pokémon is now"
-	line "Poisoned."
+AromatherapyDescription:
+	text "Once during your turn, if this"
+	line "Pokémon has any attached Energies,"
+	line "you may heal 10 damage from each"
+	line "of your Pokémon."
 	done
 
-HealName: ; 58d17 (16:4d17)
-	text "Heal"
+HayFeverName:
+	text "Hay Fever"
 	done
 
-HealDescription: ; 58d1d (16:4d1d)
-	text "Once during your turn, you may heal"
-	line "10 damage from 1 of your Pokémon."
+HayFeverDescription:
+	text "While this is your Active Pokémon,"
+	line "whenever your opponent plays an Item"
+	line "card from their hand, leave the"
+	line "opponent's Active Pokémon Paralyzed."
 	done
 
-AllergicPollenName:
-	text "Allergic Pollen"
+PollenBurstName:
+	text "Pollen Burst"
 	done
 
-PetalDanceName:
-	text "Petal Dance"
-	done
-
-PetalDanceDescription:
-	text "Heal 20 damage from each of your"
-	line "Pokémon. This Pokémon is now"
-	line "Confused."
+PollenBurstDescription:
+	text "If this Pokémon was damaged since"
+	line "your last turn, the Defending"
+	line "Pokémon is now Poisoned, Burned"
+	line "and Confused."
 	done
 
 SparkName: ; 5cf47 (17:4f47)
@@ -755,6 +706,11 @@ DamageAllBenchedPokemon10Description:
 	line "player's Benched Pokémon."
 	done
 
+DamageAllBenchedPokemon20Description:
+	text "This attack does 20 damage to each"
+	line "player's Benched Pokémon."
+	done
+
 TantrumName:
 	text "Tantrum"
 	done
@@ -769,8 +725,9 @@ KarateChopName:
 	done
 
 KarateChopDescription:
-	text "Does 10 less damage for each"
-	line "damage counter on this Pokémon."
+	text "This attack does 10 less damage"
+	line "for each damage counter on"
+	line "this Pokémon."
 	done
 
 ChopDownName:
@@ -857,13 +814,13 @@ ReduceDamageBy20Description:
 	line "Defending Pokémon to this Pokémon"
 	line "during your opponent's next turn by"
 	line "20 (after applying Weakness and"
-	line "Resistance). (Benching either"
-	line "Pokémon ends this effect.)"
+	line "Resistance)."
 	done
 
-RageDescription: ; 5f27f (17:727f)
-	text "Does 10 additional damage for each"
-	line "damage counter on this Pokémon."
+RageDescription:
+	text "This attack does 10 additional"
+	line "damage for each damage counter"
+	line "on this Pokémon."
 	done
 
 BattleArmorName:
@@ -1029,11 +986,7 @@ DestinyBondDescription:
 	line "Knock Out that Pokémon."
 	done
 
-LickName: ; 60623 (18:4623)
-	text "Lick"
-	done
-
-NightmareName: ; 60801 (18:4801)
+NightmareName:
 	text "Nightmare"
 	done
 
@@ -1105,10 +1058,6 @@ PainAmplifierDescription:
 	line "already has damage counters on it."
 	done
 
-DarkMindName: ; 609b7 (18:49b7)
-	text "Dark Mind"
-	done
-
 BenchBarrierName:
 	text "Bench Barrier"
 	done
@@ -1127,16 +1076,6 @@ MeditateDescription:
 	text "This attack can only be used"
 	line "if you have 5 or more cards"
 	line "in your hand."
-	done
-
-PainBurstName:
-	text "Pain Burst"
-	done
-
-PainBurstDescription:
-	text "This attack does 10 more damage"
-	line "for each damage counter on the"
-	line "Defending Pokémon."
 	done
 
 PsyburnName:
@@ -1162,16 +1101,6 @@ PsychicDescription:
 	line "the Defending Pokémon."
 	done
 
-EnergyAbsorptionName: ; 61065 (18:5065)
-	text "Energy Absorption"
-	done
-
-EnergyAbsorptionDescription: ; 61078 (18:5078)
-	text "Choose up to 2 Basic Energy cards"
-	line "from your discard pile and attach"
-	line "them to this Pokémon."
-	done
-
 NeutralizingShieldName:
 	text "Neutralizing Shield"
 	done
@@ -1181,16 +1110,6 @@ NeutralizingShieldDescription:
 	line "including damage, done to this"
 	line "Pokémon by your opponent's"
 	line "Evolved Pokémon."
-	done
-
-PsywaveName:
-	text "Psywave"
-	done
-
-PsywaveDescription:
-	text "Put 1 damage counter on the"
-	line "Defending Pokémon for each"
-	line "Energy attached to it."
 	done
 
 DevolutionBeamName:
@@ -1246,10 +1165,6 @@ HurricaneDescription:
 
 TwisterName:
 	text "Twister"
-	done
-
-CrunchName:
-	text "Crunch"
 	done
 
 SynthesisName:
@@ -1567,9 +1482,9 @@ VampiricAuraDescription:
 	text "If your Active Pokémon has any"
 	line "attached <DARKNESS> Energy, its attacks"
 	line "that do damage to the Defending"
-	line "Pokémon also heal your Active"
-	line "Pokémon for up to 20 damage (10 if"
-	line "the attack only did 10 damage)."
+	line "Pokémon also heal 10 damage from it"
+	line "(20 damage, if the Defending"
+	line "Pokémon is Poisoned)."
 	done
 
 ReactivePoisonName:
@@ -1720,4 +1635,50 @@ IntimidatingRoarDescription:
 	line "switch out your opponent's Active"
 	line "Pokémon to the Bench. (Your opponent"
 	line "chooses the new Active Pokémon.)"
+	done
+
+IncreaseAttackCostby1Description:
+	text "During your opponent's next turn,"
+	line "the Defending Pokémon pays <COLORLESS> more"
+	line "to attack."
+	done
+
+QuiverDanceName:
+	text "Quiver Dance"
+	done
+
+QuiverDanceDescriptionCont:
+	text "Heal 20 damage from this Pokémon."
+	line "During your next turn, this"
+	line "Pokémon's attack's base damage"
+	line "is doubled."
+	done
+
+Attach1EnergyFromDeckToThisPokemonDescription:
+	text "Search your deck for a Basic Energy"
+	line "card and attach it to this Pokémon."
+	line "Shuffle your deck afterward."
+	done
+
+UTurnName:
+	text "U-Turn"
+	done
+
+IngrainName:
+	text "Ingrain"
+	done
+
+IngrainDescriptionCont:
+	text "Heal 10 damage from this Pokémon"
+	line "for each Energy retrieved this way."
+	done
+
+LickingShotName:
+	text "Licking Shot"
+	done
+
+LickingShotDescription:
+	text "This attack does 10 damage to 1 of"
+	line "your opponent's Pokémon for each"
+	line "Energy attached to this Pokémon."
 	done

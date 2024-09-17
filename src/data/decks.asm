@@ -91,7 +91,7 @@ UnnamedDeck:
 	; card_item JOLTEON_LV24,     4
 	; card_item VOLTORB,          4
 	; card_item EEVEE,            4
-	; card_item TANGELA_LV12,     4
+	; card_item TANGELA,          4
 	; card_item VENUSAUR_LV64,    4
 	; card_item BULBASAUR,        4
 	; card_item IVYSAUR,          4
@@ -367,7 +367,7 @@ UnnamedDeck2:
 	; card_item JOLTEON_LV24,     4
 	; card_item VOLTORB,          4
 	; card_item EEVEE,            4
-	; card_item TANGELA_LV12,     4
+	; card_item TANGELA,          4
 	; card_item VENUSAUR_LV64,    4
 	; card_item BULBASAUR,        4
 	; card_item IVYSAUR,          4
@@ -749,7 +749,7 @@ BulbasaurAndFriendsDeck:
 	card_item NIDORANF,         2
 	card_item NIDORANM,         2
 	card_item NIDORINO,         1
-	card_item TANGELA_LV12,     1
+	card_item TANGELA,          1
 	card_item FLAREON_LV28,     1
 	card_item SEEL,             1
 	card_item DEWGONG,          1
@@ -1532,7 +1532,7 @@ EtceteraDeck:
 	card_item CATERPIE,         2
 	card_item WEEDLE,           2
 	card_item ODDISH,           2
-	card_item TANGELA_LV12,     2
+	card_item TANGELA,          2
 	card_item CHARMANDER,       2
 	card_item MAGMAR_LV31,      1
 	card_item PIKACHU_LV12,     2
@@ -1563,8 +1563,7 @@ FlowerGardenDeck:
 	card_item BELLSPROUT,               2
 	card_item WEEPINBELL,               1
 	card_item VICTREEBEL,               1
-	card_item TANGELA_LV8,              2
-	card_item TANGELA_LV12,             2
+	card_item TANGELA,                  4
 	card_item LICKITUNG,                2
 	card_item PROFESSOR_OAK,            2
 	card_item BILL,                     4

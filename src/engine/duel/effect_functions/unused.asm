@@ -1,5 +1,519 @@
 ;
 
+
+; Remove status conditions from target PLAY_AREA_* and attach an Energy from Hand.
+; input:
+;   [hTempPlayAreaLocation_ffa1]: PLAY_AREA_* of target card
+DraconicEvolutionEffect:
+	; ldtx hl, DraconicEvolutionActivatesText
+	; call DrawWideTextBox_WaitForInput
+; heal damage
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	ld e, a   ; location
+	ld d, 20  ; damage
+	call HealPlayAreaCardHP
+	; bank1call DrawDuelHUDs
+; check energy cards in hand
+	call AttachEnergyFromHand_HandCheck
+; choose energy card to attach
+	call nc, DraconicEvolution_AttachEnergyFromHandEffect
+	or a
+	ret
+
+
+; Choose a Basic Energy from hand and attach it to a Pokémon.
+; inputs:
+;   [wDuelTempList]: list of Basic Energy cards in hand
+DraconicEvolution_AttachEnergyFromHandEffect:
+	ld a, DUELVARS_DUELIST_TYPE
+	call GetTurnDuelistVariable
+	cp DUELIST_TYPE_LINK_OPP
+	jr z, .link_opp
+	and DUELIST_TYPE_AI_OPP
+	jr nz, .ai_opp
+
+; player
+	call Helper_SelectEnergyFromHand
+	ldh [hEnergyTransEnergyCard], a
+	ld d, a
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	ld e, a
+	call SerialSend8Bytes
+	jp AttachEnergyFromHand_AttachEnergyEffect
+
+.link_opp
+	call SerialRecv8Bytes
+	ld a, d
+	ldh [hEnergyTransEnergyCard], a
+	ld a, e
+	ldh [hTempPlayAreaLocation_ffa1], a
+	jp AttachEnergyFromHand_AttachEnergyEffect
+
+.ai_opp
+; AI selects the first card
+	ld a, [wDuelTempList]
+	ldh [hEnergyTransEnergyCard], a
+	jp AttachEnergyFromHand_AttachEnergyEffect
+
+
+
+
+PetalDanceEffectCommands:
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, PetalDance_BonusEffect
+	db  $00
+
+PetalDance_BonusEffect:
+	call Heal20DamageFromAll_HealEffect
+	jp SelfConfusionEffect
+
+
+PokemonFluteEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PokemonFlute_DisablePowersEffect
+	db  $00
+
+PokemonFlute_DisablePowersEffect:
+	ld a, DUELVARS_MISC_TURN_FLAGS
+	call GetTurnDuelistVariable
+	set TURN_FLAG_PKMN_POWERS_DISABLED_F, [hl]
+	ld a, DUELVARS_MISC_TURN_FLAGS
+	call GetNonTurnDuelistVariable
+	set TURN_FLAG_PKMN_POWERS_DISABLED_F, [hl]
+	ret
+
+
+
+PokemonPowerHealEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Heal_OncePerTurnCheck
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Heal_RemoveDamageEffect
+	db  $00
+
+
+;
+Heal_OncePerTurnCheck:
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	ldh [hTemp_ffa0], a
+	add DUELVARS_ARENA_CARD_FLAGS
+	call GetTurnDuelistVariable
+	and USED_PKMN_POWER_THIS_TURN
+	jr nz, .already_used
+
+	call CheckIfPlayAreaHasAnyDamage
+	ret c ; no damage counters to heal
+
+	ldh a, [hTemp_ffa0]
+	call CheckCannotUseDueToStatus_Anywhere
+	ret
+
+.already_used
+	ldtx hl, OnlyOncePerTurnText
+	scf
+	ret
+
+Heal_RemoveDamageEffect:
+; OATS no longer requires a coin flip
+	ld a, 1
+	ldh [hAIPkmnPowerEffectParam], a
+	; ldtx de, IfHeadsHealIsSuccessfulText
+	; call TossCoin_BankB
+	; ldh [hAIPkmnPowerEffectParam], a
+	; jr nc, .done
+
+	ld a, DUELVARS_DUELIST_TYPE
+	call GetTurnDuelistVariable
+	cp DUELIST_TYPE_LINK_OPP
+	jr z, .link_opp
+	and DUELIST_TYPE_AI_OPP
+	jr nz, .done
+
+; player
+	ldtx hl, ChoosePkmnToHealText
+	call DrawWideTextBox_WaitForInput
+.loop
+	ld a, CARDTEST_DAMAGED_POKEMON
+	call HandlePlayerSelectionMatchingPokemonInPlayArea_AllowCancel
+	jr c, .loop
+	ldh [hPlayAreaEffectTarget], a
+	call SerialSend8Bytes
+	jr .done
+
+.link_opp
+	call SerialRecv8Bytes
+	ldh [hPlayAreaEffectTarget], a
+	; fallthrough
+
+.done
+; flag Pkmn Power as being used
+	ldh a, [hTemp_ffa0]
+	add DUELVARS_ARENA_CARD_FLAGS
+	call GetTurnDuelistVariable
+	set USED_PKMN_POWER_THIS_TURN_F, [hl]
+; heal the selected Pokémon
+	ldh a, [hPlayAreaEffectTarget]
+	ld e, a   ; location
+	ld d, 10  ; damage
+	call HealPlayAreaCardHP
+	jp ExchangeRNG
+
+
+
+
+; Defending Pokémon and user become confused.
+; Defending Pokémon also becomes Poisoned.
+FoulOdorEffect:
+	call PoisonEffect
+	call ConfusionEffect
+	; fallthrough to SelfConfusionEffect
+
+
+
+
+DragOffEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckOpponentBenchIsNotEmpty
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DragOff_SwitchAndDamageEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Lure_SelectSwitchPokemon
+	dbw EFFECTCMDTYPE_AI_SELECTION, Lure_GetOpponentBenchPokemonWithLowestHP
+	db  $00
+
+DragOff_SwitchAndDamageEffect:
+	call Lure_SwitchDefendingPokemon
+	ld de, 30  ; damage
+	ld a, ATK_ANIM_WHIP_NO_GLOW
+	jp DealDamageToArenaPokemon_CustomAnim
+
+
+
+
+
+
+SolarbeamEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckAttachedEnergyFromHandToThisPokemonThisTurn
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Solarbeam_DamageMultiplierEffect
+	dbw EFFECTCMDTYPE_AI, Solarbeam_DamageMultiplierEffect
+	db  $00
+
+
+; returns carry if the turn holder did not play any energy cards
+; from the hand onto this Pokémon during their turn
+; input:
+;   hTempPlayAreaLocation_ff9d: PLAY_AREA_* of the Pokémon to test
+CheckAttachedEnergyFromHandToThisPokemonThisTurn:
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	add DUELVARS_ARENA_CARD_FLAGS
+	call GetTurnDuelistVariable
+	and ATTACHED_ENERGY_FROM_HAND_THIS_TURN
+	ret nz
+	scf
+	ret
+
+;
+Solarbeam_DamageMultiplierEffect:
+	call GetPlayAreaCardAttachedEnergies
+	ld a, [wTotalAttachedEnergies]
+	add a  ; x2
+; cap if number of energies >= 25
+	cp 26
+	jr c, .capped
+	ld a, 25
+.capped
+	call ATimes10
+	jp SetDefiniteAIDamage
+
+
+
+
+
+SolarbeamEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, AttachEnergyFromHand_HandCheck
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, AttachEnergyFromHand_OnlyActive_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, AttachEnergyFromHand_OnlyActive_AISelectEffect
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, AttachEnergyFromHand_AttachEnergyEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Solarbeam_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AI, Solarbeam_AIEffect
+	db  $00
+
+
+; +10/Energy damage boost if energy attached is optional
+Solarbeam_DamageBoostEffect:
+	ldh a, [hEnergyTransEnergyCard]
+	cp $ff
+	ret z
+.got_energy
+	ld e, PLAY_AREA_ARENA
+	call GetEnergyAttachedMultiplierDamage
+	jp AddToDamage
+
+Solarbeam_AIEffect:
+	ld c, TRUE
+	call Helper_CreateEnergyCardListFromHand
+	ret c  ; no energies
+	call Solarbeam_DamageBoostEffect.got_energy
+	jp SetDefiniteAIDamage
+
+
+;
+SolarbeamEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, AttachEnergyFromHand_HandCheck
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, AttachEnergyFromHand_OnlyActive_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, AttachEnergyFromHand_OnlyActive_AISelectEffect
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, AttachEnergyFromHand_AttachEnergyEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Solarbeam_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AI, Solarbeam_AIEffect
+	db  $00
+
+Solarbeam_AIEffect:
+	call Solarbeam_DamageBoostEffect
+	jp SetDefiniteAIDamage
+
+; x20 damage boost if energy attached is mandatory
+Solarbeam_DamageBoostEffect:
+	ld e, PLAY_AREA_ARENA
+	call GetPlayAreaCardAttachedEnergies
+	ld a, [wTotalAttachedEnergies]
+	add a  ; x2
+; cap if number of energies >= 25
+	cp 25
+	jr c, .capped
+	ld a, 24
+.capped
+	call ATimes10
+	jp AddToDamage
+
+
+
+
+GrowthEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, AttachEnergyFromHand_HandCheck
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, AttachEnergyFromHand_OnlyActive_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, AttachEnergyFromHand_OnlyActive_AISelectEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, AttachEnergyFromHand_AttachEnergyEffect
+	db  $00
+
+
+
+
+
+JellyfishStingEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, JellyfishSting_PoisonConfusionEffect
+	db  $00
+
+; Poison; Confusion if Poisoned.
+JellyfishSting_PoisonConfusionEffect:
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetNonTurnDuelistVariable
+	and DOUBLE_POISONED
+	jp z, PoisonEffect  ; not yet Poisoned
+	jp ConfusionEffect
+
+
+BindEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ParalysisIfBasicEffect
+	db  $00
+
+; If the Defending Pokémon is Basic, it is Paralyzed
+ParalysisIfBasicEffect:
+	ld a, DUELVARS_ARENA_CARD_STAGE
+	call GetNonTurnDuelistVariable
+	or a
+	jp z, ParalysisEffect  ; BASIC
+	ret
+
+
+PanicVineEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PanicVine_ConfusionTrapEffect
+	db  $00
+
+PanicVine_ConfusionTrapEffect:
+	call UnableToRetreatEffect
+	jp ConfusionEffect
+
+
+GrassKnotEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, GrassKnot_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AI, GrassKnot_AIEffect
+	db  $00
+
+; +20 damage per retreat cost of opponent
+GrassKnot_DamageBoostEffect:
+	call SwapTurn
+	xor a ; PLAY_AREA_ARENA
+	ldh [hTempPlayAreaLocation_ff9d], a
+	call GetPlayAreaCardRetreatCost  ; retreat cost in a
+	call SwapTurn
+	add a  ; x20 per retreat cost
+	call ATimes10
+	jp AddToDamage
+
+GrassKnot_AIEffect:
+	call GrassKnot_DamageBoostEffect
+	jp SetDefiniteAIDamage
+
+
+
+SilverWhirlwind_StatusEffect:
+	xor a
+	ld [wEffectFunctionsFeedbackIndex], a
+	call PoisonEffect
+	call CheckArenaPokemonHas3OrMoreEnergiesAttached
+	jp c, ApplyStatusAndPlayAnimationAdhoc
+	call BurnEffect
+	call SleepEffect
+	jp ApplyStatusAndPlayAnimationAdhoc
+
+
+
+
+
+WaftingScentName:
+	text "Wafting Scent"
+	done
+
+WaftingScentDescription:
+	text "Once during your turn, you may"
+	line "discard an Energy attached to this"
+	line "Pokémon. If you do, your opponent's"
+	line "Active Pokémon is now Burned and"
+	line "Poisoned."
+	done
+
+WaftingScentEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, WaftingScenet_PreconditionCheck
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, DiscardEnergyAbility_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, WaftingScent_DiscardSleepEffect
+	db  $00
+
+WaftingScenet_PreconditionCheck:
+	call CheckPokemonPowerCanBeUsed_StoreTrigger
+	ret c
+	jp CheckPlayAreaPokemonHasAnyEnergiesAttached
+
+WaftingScent_DiscardSleepEffect:
+	call SetUsedPokemonPowerThisTurn_RestoreTrigger
+	ldh a, [hEnergyTransEnergyCard]
+	cp $ff
+	ret z
+; discard energy
+	call PutCardInDiscardPile
+; inflict status
+	call SwapTurn
+	ld e, PLAY_AREA_ARENA
+	call BurnEffect_PlayArea
+	call SwapTurn
+; handle failure
+	jr c, .burn_animation
+	ldtx hl, ThereWasNoEffectFromBurnText
+	call DrawWideTextBox_WaitForInput
+	jr .poison
+
+.burn_animation
+	; bank1call DrawDuelMainScene
+	xor a
+	ld [wDuelAnimLocationParam], a
+	ld a, ATK_ANIM_BURN
+	bank1call PlayAdhocAnimationOnPlayAreaArena_NoEffectiveness
+
+.poison
+	call SwapTurn
+	ld e, PLAY_AREA_ARENA
+	call PoisonEffect_PlayArea
+	call SwapTurn
+; handle failure
+	jr c, .poison_animation
+	ldtx hl, ThereWasNoEffectFromPoisonText
+	jp DrawWideTextBox_WaitForInput
+.poison_animation
+	; bank1call DrawDuelMainScene
+	xor a
+	ld [wDuelAnimLocationParam], a
+	ld a, ATK_ANIM_POISON
+	bank1call PlayAdhocAnimationOnPlayAreaArena_NoEffectiveness
+	ret
+
+
+; assume:
+;  - ArePokemonPowersDisabled has been called
+LethargySpores_StatusEffect:
+	ld a, DUELVARS_ARENA_CARD
+	call GetTurnDuelistVariable
+	call GetCardIDFromDeckIndex
+	ld a, e
+	cp PARASECT
+	ret nz  ; not Parasect
+; do not inflict Sleep twice
+	call CheckDefendingPokemonIsAsleep
+	ret nc  ; already asleep
+; check that the ability can be used
+	call CheckCannotUseDueToStatus
+	ret c
+	call CheckArenaPokemonHasAnyEnergiesAttached
+	ret c
+; inflict status
+	xor a
+	ld [wEffectFunctionsFeedbackIndex], a
+	call SleepEffect
+	jr ApplyStatusAndPlayAnimationAdhoc
+
+
+FungalGrowthEffectCommands:
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, FungalGrowthEffect
+	; fallthrough to EnergySporesEffectCommands
+
+EnergySporesEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDiscardPileHasBasicEnergyCards
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, EnergySpores_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, EnergySpores_AISelectEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, AttachEnergyFromDiscard_AttachToPokemonEffect
+	db  $00
+
+;
+FungalGrowthEffect:
+	call AttachEnergyFromDiscard_AttachToPokemonEffect
+	call CheckArenaPokemonHas3OrMoreEnergiesAttached
+	ret c  ; not enough energies
+	jp Heal20DamageEffect
+
+;
+EnergySpores_PlayerSelectEffect:
+	ldtx hl, Choose2EnergyCardsFromDiscardPileToAttachText
+	jp HandleEnergyCardsInDiscardPileSelection
+
+EnergySpores_AISelectEffect:
+; AI picks first 2 energy cards
+	call CreateEnergyCardListFromDiscardPile_OnlyBasic
+	; call CreateEnergyCardListFromDiscardPile_AllEnergy
+	ld a, 2
+	jr PickFirstNCardsFromList_SelectEffect
+
+
+
+
+FungalGrowthEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SleepEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, LeechLifeEffect
+	db  $00
+
+
+
+TripleHit_StoreExtraDamageEffect:
+	xor a
+	ldh [hTempList], a
+	ldh [hTempList + 1], a
+	call CheckArenaPokemonHas3OrMoreEnergiesAttached
+	jr c, .check_twice
+	ld a, [wLoadedAttackDamage]
+	ldh [hTempList], a
+	ldh [hTempList + 1], a
+	ret
+.check_twice
+	cp 2
+	ccf
+	ret nc  ; must not return carry
+	ld a, [wLoadedAttackDamage]
+	ldh [hTempList], a
+	or a
+	ret
+
+
+
 ThunderPunchEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, ThunderPunch_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_DISCARD_ENERGY, DiscardEnergy_DiscardEffect
@@ -629,18 +1143,6 @@ EnergyConversionEffectCommands:
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Retrieve2BasicEnergy_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, Retrieve2BasicEnergy_AISelectEffect
 	db  $00
-
-
-Retrieve2BasicEnergy_PlayerSelectEffect:
-	ldtx hl, Choose2EnergyCardsFromDiscardPileForHandText
-	jp HandleEnergyCardsInDiscardPileSelection
-
-
-Retrieve2BasicEnergy_AISelectEffect:
-	call CreateEnergyCardListFromDiscardPile_OnlyBasic
-	; call CreateEnergyCardListFromDiscardPile_AllEnergy
-	ld a, 2
-	jp PickFirstNCardsFromList_SelectEffect
 
 
 GetMadEffectCommands:

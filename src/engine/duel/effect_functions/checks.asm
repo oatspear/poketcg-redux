@@ -407,10 +407,11 @@ CheckSomeMatchingPokemonInBench:
 ;   a: how to test the selected Pokémon (CARDTEST_* constants)
 ;   e: PLAY_AREA_* of the tested Pokémon
 ; output:
-;   a: PLAY_AREA_* of the first matching Pokémon | $ff
 ;   carry: set if there is no match
 CheckPlayAreaPokemonMatchesPattern:
 	ld [wDataTableIndex], a
+	; fallthrough
+CheckPlayAreaPokemonMatchesStoredPattern:
 	ld a, DUELVARS_ARENA_CARD
 	add e
 	call GetTurnDuelistVariable
@@ -633,23 +634,37 @@ CheckSomePokemonWithEnoughHP:
 
 
 ; output:
+;   carry: set if the Defending Pokémon has more than 30 HP remaining
+CheckDefendingPokemonHas30HpOrLess:
+	ld a, 30
+	jr CheckDefendingPokemonHasLowHp
+
+; output:
 ;   carry: set if the Defending Pokémon has more than 50 HP remaining
 CheckDefendingPokemonHas50HpOrLess:
-	ld a, DUELVARS_ARENA_CARD_HP
-	call GetNonTurnDuelistVariable
-	cp 51
-	ccf
-	ret nc
-	ldtx hl, ThatPokemonHasTooMuchHPText
-	ret
-
+	ld a, 50
+	jr CheckDefendingPokemonHasLowHp
 
 ; output:
 ;   carry: set if the Defending Pokémon has more than 70 HP remaining
 CheckDefendingPokemonHas70HpOrLess:
+	ld a, 70
+	; jr CheckDefendingPokemonHasLowHp
+	; fallthrough
+
+; input:
+;   a: HP threshold to test against
+; output:
+;   carry: set if the Defending Pokémon has more than `a` HP remaining
+; preserves: bc, de
+CheckDefendingPokemonHasLowHp:
+	inc a
+	ld h, a
+	push hl
 	ld a, DUELVARS_ARENA_CARD_HP
 	call GetNonTurnDuelistVariable
-	cp 71
+	pop hl
+	cp h
 	ccf
 	ret nc
 	ldtx hl, ThatPokemonHasTooMuchHPText
@@ -710,6 +725,18 @@ CheckDefendingPokemonHasStatus:
 	or a
 	ret nz
 	ldtx hl, NotAffectedBySpecialConditionsText
+	scf
+	ret
+
+
+; return carry if the Defending Pokémon is not asleep
+CheckDefendingPokemonIsAsleep:
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetNonTurnDuelistVariable
+	and CNF_SLP_PRZ
+	cp ASLEEP
+	ret z ; return if asleep
+	ldtx hl, OpponentIsNotAsleepText
 	scf
 	ret
 
@@ -787,8 +814,14 @@ CheckIfPlayAreaHasAnyEnergies:
 
 
 ; return carry if has less than 2 Energy cards
-Check2EnergiesAttached:
+CheckArenaPokemonHas2OrMoreEnergiesAttached:
 	ld a, 2
+	ldtx hl, NotEnoughEnergyCardsText
+	jr GetNumAttachedEnergiesAtMostA_Arena
+
+; return carry if has less than 3 Energy cards
+CheckArenaPokemonHas3OrMoreEnergiesAttached:
+	ld a, 3
 	ldtx hl, NotEnoughEnergyCardsText
 	jr GetNumAttachedEnergiesAtMostA_Arena
 
@@ -905,6 +938,9 @@ CheckPlayedEnergyThisTurn:
 DynamicCardTypeTest:
 	ld [wDynamicFunctionArgument], a
 	ld a, [wDataTableIndex]
+	cp $ff
+	scf
+	ret z
 	push hl
 	ld hl, CardTypeTest_FunctionTable
 	call JumpToFunctionInTable
