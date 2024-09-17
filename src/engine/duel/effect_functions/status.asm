@@ -93,15 +93,6 @@ CanBeAffectedByStatus:
 	cp $ff
 	ret z  ; empty slot
 
-	ld a, e
-	push bc
-	push de
-	call IsSafeguardActive
-	pop de
-	pop bc
-	ccf
-	ret nc  ; safeguarded
-
 	push de
 	call GetCardIDFromDeckIndex
 	ld a, e
@@ -112,12 +103,21 @@ CanBeAffectedByStatus:
 	ret z  ; cannot induce status
 ; Snorlax's Thick Skinned prevents it from being statused...
 	cp SNORLAX
-	scf
-	ret nz  ; can induce status
+	jr nz, .safeguard
 ; ...unless already so, or if affected by Toxic Gas
 	ld a, e
-	; carry if Pokémon Power is turned off
-	jp CheckCannotUseDueToStatus_Anywhere  ; preserves bc, de
+	call CheckCannotUseDueToStatus_Anywhere  ; preserves bc, de
+	ret nc  ; Pokémon Power is active
+
+.safeguard
+	ld a, e
+	push bc
+	push de
+	call IsSafeguardActive
+	pop de
+	pop bc
+	ccf
+	ret  ; nc if safeguarded
 
 
 PoisonConfusionEffect:
@@ -338,7 +338,7 @@ HayFever_ParalysisEffect:
 
 	ld e, PLAY_AREA_ARENA
 	call CanBeAffectedByStatus
-	jp c, ApplyStatusEffectToPlayAreaPokemon.cant_induce_status
+	jp nc, ApplyStatusEffectToPlayAreaPokemon.cant_induce_status
 
 ; play initial animation
 	bank1call DrawDuelMainScene
