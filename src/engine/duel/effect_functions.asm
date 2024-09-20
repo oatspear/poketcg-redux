@@ -7376,6 +7376,29 @@ PokeBall_PlayerSelectEffect:
 	ret
 
 
+UltraBall_PlayerSelectEffect:
+	call HandlePlayerSelectionPokemonFromDeck
+	ldh [hTempList + 2], a  ; placed after the selected cards to discard
+	ret
+
+
+UltraBall_DiscardAddToHandEffect:
+; discard cards from hand
+	ld hl, hTempList
+	ld a, [hli]
+	call RemoveCardFromHand
+	call PutCardInDiscardPile
+	ld a, [hli]
+	call RemoveCardFromHand
+	call PutCardInDiscardPile
+
+; add card from deck to hand
+	ld a, [hl]
+	call SearchCardInDeckAndSetToJustDrawn
+	call AddCardToHand
+	jp SyncShuffleDeck
+
+
 ; return carry if no eligible cards in the Discard Pile
 FishingTail_DiscardPileCheck:
 Recycle_DiscardPileCheck:

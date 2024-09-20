@@ -203,24 +203,25 @@
 	const SWITCH                      ; $ca
 	const POKEMON_CENTER              ; $cb
 	const POKE_BALL                   ; $cc
-	const SCOOP_UP                    ; $cd
-	const COMPUTER_SEARCH             ; $ce
-	const POKEDEX                     ; $cf
-	const PLUSPOWER                   ; $d0
-	const DEFENDER                    ; $d1
-	const ITEM_FINDER                 ; $d2
-	const GIOVANNI                    ; $d3
-	const DEVOLUTION_SPRAY            ; $d4
-	const POTION                      ; $d5
-	const SUPER_POTION                ; $d6
-	const FULL_HEAL                   ; $d7
-	const REVIVE                      ; $d8
-	const MAINTENANCE                 ; $d9
-	const POKEMON_FLUTE               ; $da
-	const GAMBLER                     ; $db
-	const RECYCLE                     ; $dc
-	const RARE_CANDY                  ; $dd
-	const POKEMON_NURSE               ; $de
+	const ULTRA_BALL                  ; $cd
+	const SCOOP_UP                    ; $ce
+	const COMPUTER_SEARCH             ; $cf
+	const POKEDEX                     ; $d0
+	const PLUSPOWER                   ; $d1
+	const DEFENDER                    ; $d2
+	const ITEM_FINDER                 ; $d3
+	const GIOVANNI                    ; $d4
+	const DEVOLUTION_SPRAY            ; $d5
+	const POTION                      ; $d6
+	const SUPER_POTION                ; $d7
+	const FULL_HEAL                   ; $d8
+	const REVIVE                      ; $d9
+	const MAINTENANCE                 ; $da
+	const POKEMON_FLUTE               ; $db
+	const GAMBLER                     ; $dc
+	const RECYCLE                     ; $dd
+	const RARE_CANDY                  ; $de
+	const POKEMON_NURSE               ; $df
 DEF NUM_CARDS EQU const_value - 1
 
 DEF ENERGY_IDS_START  EQU GRASS_ENERGY

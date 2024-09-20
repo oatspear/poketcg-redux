@@ -1401,3 +1401,10 @@ EnergySwitch_PreconditionCheck:
 	call CheckBenchIsNotEmpty
 	ret c
 	jp CheckIfPlayAreaHasAnyEnergies
+
+
+UltraBall_PreconditionCheck:
+	ld c, 3
+	call CheckHandSizeIsAtLeastC
+	ret c
+	jp CheckDeckIsNotEmpty

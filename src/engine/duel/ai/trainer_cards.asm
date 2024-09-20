@@ -4547,6 +4547,11 @@ AIDecide_Pokeball:
 	call LookForCardIDInLocation
 	ret
 
+AIPlay_Ultraball:
+AIDecide_Ultraball:
+	or a
+	ret
+
 AIPlay_ComputerSearch:
 	ld a, [wCurrentAIFlags]
 	or AI_FLAG_MODIFIED_HAND

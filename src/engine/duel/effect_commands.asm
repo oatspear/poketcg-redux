@@ -1953,6 +1953,13 @@ PokeBallEffectCommands:
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, PokeBall_PlayerSelectEffect
 	db  $00
 
+UltraBallEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, UltraBall_PreconditionCheck
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, HandlePlayerSelection2HandCardsToDiscardExcludeSelf
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, UltraBall_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, UltraBall_DiscardAddToHandEffect
+	db  $00
+
 RecycleEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, Recycle_DiscardPileCheck
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Recycle_AddToDeckEffect

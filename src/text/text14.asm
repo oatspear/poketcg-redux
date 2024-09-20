@@ -275,6 +275,18 @@ PokeBallDescription:
 	line "Shuffle your deck afterward."
 	done
 
+UltraBallName:
+	text "Ultra Ball"
+	done
+
+UltraBallDescription:
+	text "You must discard 2 other cards from"
+	line "your hand to use this card. Search"
+	line "your deck for a Pokémon, reveal it,"
+	line "and put it into your hand."
+	line "Then, shuffle your deck."
+	done
+
 ScoopUpNetName:
 	text "Scoop Up Net"
 	done

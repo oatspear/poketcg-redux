@@ -205,6 +205,7 @@ CardPointers:
 	dw SwitchCard
 	dw PokemonCenterCard
 	dw PokeBallCard
+	dw UltraBallCard
 	dw ScoopUpNetCard
 	dw ComputerSearchCard
 	dw PokedexCard
@@ -10112,6 +10113,17 @@ PokeBallCard:
 	db POKE_BALL
 	dw PokeBallEffectCommands ; effect commands
 	tx PokeBallDescription ; description
+	dw NONE ; description (cont)
+
+UltraBallCard:
+	db TYPE_TRAINER ; type
+	gfx PokeBallCardGfx ; gfx
+	tx UltraBallName ; name
+	db DIAMOND ; rarity
+	db COLOSSEUM | NONE ; sets
+	db ULTRA_BALL
+	dw UltraBallEffectCommands ; effect commands
+	tx UltraBallDescription ; description
 	dw NONE ; description (cont)
 
 ScoopUpNetCard:
