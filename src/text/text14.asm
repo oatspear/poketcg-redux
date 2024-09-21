@@ -465,9 +465,12 @@ RecycleName:
 	done
 
 RecycleDescription:
-	text "Put a Pokémon or Basic Energy card"
-	line "in your discard pile on the top of"
-	line "your deck."
+	text "Choose one:"
+	line "1. Shuffle up to 2 Pokémon or Basic"
+	line "   Energy cards from your discard"
+	line "   pile back into your deck."
+	line "2. Draw 1 card. Then, put this card"
+	line "   on the bottom of your deck."
 	done
 
 AlreadyHasAToolAttachedText:

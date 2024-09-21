@@ -300,7 +300,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ThereIsNoInTheDeckText                             ; 0x013b
 	textpointer WouldYouLikeToCheckTheDeckText                     ; 0x013c
 	textpointer ThereAreNoEligibleCardsInTheDiscardPileText
-	textpointer PleaseSelectTheDeckText                            ; 0x013d
+	textpointer PleaseSelectAnOptionText
 	textpointer ChooseAnyPokemonFromDeckText
 	textpointer AnyPokemonDeckText
 	textpointer BasicPokemonDeckText                               ; 0x0143

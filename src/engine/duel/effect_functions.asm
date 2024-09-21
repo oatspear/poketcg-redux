@@ -6072,9 +6072,16 @@ MoveDiscardPileCardToTopOfDeckEffect:
 ; put card on top of the deck and show it on screen if
 ; it wasn't the Player who played the Trainer card.
 Recycle_AddToDeckEffect:
-	call SelectedCard_AddToDeckFromDiscardPileEffect
-	ldtx hl, CardWasChosenText
-	jp SelectedCard_ShowDetailsIfOpponentsTurn
+	ldh a, [hTempList]
+	or a
+	jp z, SelectedDiscardPileCards_ShuffleIntoDeckEffect
+; cycle this card back into deck
+	ldh a, [hTempCardIndex_ff9f]
+	push af
+	call Draw1CardEffect
+	pop af
+	call RemoveCardFromHand  ; preserves af, hl bc, de
+	jp ReturnCardToBottomOfDeck
 
 
 Prank_AddToDeckEffect:
@@ -7395,22 +7402,14 @@ UltraBall_DiscardAddToHandEffect:
 	jp SyncShuffleDeck
 
 
-; return carry if no eligible cards in the Discard Pile
-FishingTail_DiscardPileCheck:
-Recycle_DiscardPileCheck:
-	call CheckDiscardPileNotEmpty
-	ret c
-	call RemoveTrainerCardsFromCardList
-	ld bc, DOUBLE_COLORLESS_ENERGY
-	call RemoveCardIDFromCardList
-	call CountCardsInDuelTempList
-	cp 1
-	ldtx hl, ThereAreNoCardsInTheDiscardPileText
-	ret
+; return carry if no eligible cards in the Discard Pile and deck is empty
+; Recycle_PreconditionCheck:
+; 	call CheckDeckIsNotEmpty
+; 	ret nc
+; 	jp CreatePokemonAndBasicEnergyCardListFromDiscardPile
 
 
 FishingTail_PlayerSelection:
-Recycle_PlayerSelection:
 ; assume: wDuelTempList is initialized from Recycle_DiscardPileCheck
 	; call CreateDiscardPileCardList
 	; call RemoveTrainerCardsFromCardList
@@ -7435,6 +7434,39 @@ FishingTail_AISelection:
 .got_card
 	ldh [hTemp_ffa0], a
 	or a
+	ret
+
+;
+Recycle_PlayerSelectEffect:
+	bank1call DrawDuelMainScene
+	ldtx hl, PleaseSelectAnOptionText
+	call TwoItemHorizontalMenu
+	ldh a, [hKeysHeld]
+	and B_BUTTON
+	jr nz, .cancel
+	ldh a, [hCurMenuItem]
+	ldh [hTempList], a ; store selection index (0/1)
+	or a
+	jr z, .discard_pile
+; cycle card into deck
+	call CheckDeckIsNotEmpty
+	jr c, .cant_use
+	ret
+
+.discard_pile
+; assume: wDuelTempList initialized from precondition
+	call CreatePokemonAndBasicEnergyCardListFromDiscardPile
+	jr c, .cant_use
+	call ChooseUpTo2Cards_PlayerDiscardPileSelection
+	ldh a, [hTempList]
+	inc a  ; $ff turns into 0
+	cp 1   ; set carry if cancelled selection
+	ret
+
+.cant_use
+	call DrawWideTextBox_WaitForInput
+.cancel
+	scf
 	ret
 
 

@@ -1,5 +1,46 @@
 ;
 
+RecycleEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, Recycle_DiscardPileCheck
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Recycle_PlayerSelection
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Recycle_AddToDeckEffect
+	db  $00
+
+Recycle_DiscardPileCheck:
+	call CheckDiscardPileNotEmpty
+	ret c
+	call RemoveTrainerCardsFromCardList
+	ld bc, DOUBLE_COLORLESS_ENERGY
+	call RemoveCardIDFromCardList
+	call CountCardsInDuelTempList
+	cp 1
+	ldtx hl, ThereAreNoCardsInTheDiscardPileText
+	ret
+;
+Recycle_PlayerSelection:
+; assume: wDuelTempList is initialized from Recycle_DiscardPileCheck
+	; call CreateDiscardPileCardList
+	; call RemoveTrainerCardsFromCardList
+	bank1call InitAndDrawCardListScreenLayout_MenuTypeSelectCheck
+	ldtx hl, PleaseSelectCardText
+	ldtx de, PlayerDiscardPileText
+	bank1call SetCardListHeaderText
+.read_input
+	bank1call DisplayCardList
+	jr c, .read_input ; can't cancel with B button
+; Discard Pile card was chosen
+	ldh a, [hTempCardIndex_ff98]
+	ldh [hTemp_ffa0], a
+	ret
+
+; put card on top of the deck and show it on screen if
+; it wasn't the Player who played the Trainer card.
+Recycle_AddToDeckEffect:
+	call SelectedCard_AddToDeckFromDiscardPileEffect
+	ldtx hl, CardWasChosenText
+	jp SelectedCard_ShowDetailsIfOpponentsTurn
+
+
 
 ; Remove status conditions from target PLAY_AREA_* and attach an Energy from Hand.
 ; input:

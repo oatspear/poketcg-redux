@@ -12,6 +12,13 @@
 ### Removed Cards
 - Clefairy Doll
 
+### Trainer Changes
+
+#### Recycle
+- Offers one of two options.
+  1. Shuffle two Pokémon or Basic Energy cards from the discard pile into deck.
+  2. Draw 1 card and put this card on the bottom of the deck.
+
 
 ## Version 0.11.0
 

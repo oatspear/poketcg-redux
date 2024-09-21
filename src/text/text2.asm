@@ -393,9 +393,9 @@ ThereAreNoEligibleCardsInTheDiscardPileText:
 	line "in the Discard Pile."
 	done
 
-PleaseSelectTheDeckText: ; 39254 (e:5254)
-	text "Please select the Deck:"
-	line "            Yours   Opponent's"
+PleaseSelectAnOptionText:
+	text "Please select an option:"
+	line "            First   Second"
 	done
 
 ChooseAnyPokemonFromDeckText:

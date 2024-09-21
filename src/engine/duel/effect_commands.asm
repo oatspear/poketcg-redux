@@ -1956,9 +1956,9 @@ UltraBallEffectCommands:
 	db  $00
 
 RecycleEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, Recycle_DiscardPileCheck
+	; dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, Recycle_PreconditionCheck
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Recycle_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Recycle_AddToDeckEffect
-	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Recycle_PlayerSelection
 	db  $00
 
 ReviveEffectCommands:
