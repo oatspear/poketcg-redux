@@ -4221,6 +4221,27 @@ DamageSwap_CheckDamage: ; 2db8e (b:5b8e)
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	jp CheckCannotUseDueToStatus_Anywhere
 
+;
+ProcedureForDamageSwapText: ; 38e90 (e:4e90)
+	text "Procedure for Damage Swap:"
+	line ""
+	line "1. Choose a Pokémon to move a"
+	line "   Damage counter from and press"
+	line "   the A Button."
+	line ""
+	line "2. Choose a Pokémon to move the"
+	line "   Damage counter to and press"
+	line "   the A Button."
+	line ""
+	line "3. Repeat steps 1 and 2."
+	line ""
+	line "4. Press the B Button to end."
+	line ""
+	line "5. You cannot move the counter if"
+	line "   it will Knock Out the Pokémon."
+	done
+
+
 DamageSwap_SelectAndSwapEffect: ; 2dba2 (b:5ba2)
 	ld a, DUELVARS_DUELIST_TYPE
 	call GetTurnDuelistVariable

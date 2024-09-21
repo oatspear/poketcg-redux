@@ -340,23 +340,15 @@ ChooseTheOrderOfTheCardsText: ; 38e70 (e:4e70)
 	line "of the cards."
 	done
 
-ProcedureForDamageSwapText: ; 38e90 (e:4e90)
-	text "Procedure for Damage Swap:"
+ProcedureForRecycleText:
+	text "Options for Recycle:"
 	line ""
-	line "1. Choose a Pokémon to move a"
-	line "   Damage counter from and press"
-	line "   the A Button."
+	line "1. Shuffle up to 2 Pokémon or Basic"
+	line "   Energy cards from your discard"
+	line "   pile back into your deck."
 	line ""
-	line "2. Choose a Pokémon to move the"
-	line "   Damage counter to and press"
-	line "   the A Button."
-	line ""
-	line "3. Repeat steps 1 and 2."
-	line ""
-	line "4. Press the B Button to end."
-	line ""
-	line "5. You cannot move the counter if"
-	line "   it will Knock Out the Pokémon."
+	line "2. Draw 1 card. Then, put this card"
+	line "   on the bottom of your deck."
 	done
 
 ProcedureForStrangeBehaviorText:

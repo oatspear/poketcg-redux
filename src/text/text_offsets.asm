@@ -294,7 +294,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer Choose2EnergyCardsFromDiscardPileForHandText       ; 0x0133
 	textpointer ChooseAnEnergyCardText                             ; 0x0134
 	textpointer ChooseTheOrderOfTheCardsText                       ; 0x0136
-	textpointer ProcedureForDamageSwapText                         ; 0x0137
+	textpointer ProcedureForRecycleText
 	textpointer ProcedureForStrangeBehaviorText                    ; 0x0139
 	textpointer ChooseOppAttackToBeUsedWithMetronomeText           ; 0x013a
 	textpointer ThereIsNoInTheDeckText                             ; 0x013b

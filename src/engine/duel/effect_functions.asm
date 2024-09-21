@@ -7438,7 +7438,9 @@ FishingTail_AISelection:
 
 ;
 Recycle_PlayerSelectEffect:
-	bank1call DrawDuelMainScene
+	; bank1call DrawDuelMainScene
+	ldtx hl, ProcedureForRecycleText
+	bank1call DrawWholeScreenTextBox
 	ldtx hl, PleaseSelectAnOptionText
 	call TwoItemHorizontalMenu
 	ldh a, [hKeysHeld]
