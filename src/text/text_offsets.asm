@@ -3131,7 +3131,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PokemonBreederDescription
 	textpointer RareCandyName
 	textpointer RareCandyDescription
-	textpointer ClefairyDollName                                   ; 0x0b78
 	textpointer TrainerCardAsPokemonDescription
 	textpointer TrainerCardAsPokemonDescriptionCont
 	textpointer EnergyRetrievalName                                ; 0x0b7d

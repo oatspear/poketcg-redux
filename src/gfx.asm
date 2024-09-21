@@ -2317,10 +2317,6 @@ PokemonBreederCardGfx::
 	INCBIN "gfx/cards/pokemonbreeder.2bpp"
 	INCBIN "gfx/cards/pokemonbreeder.pal"
 
-ClefairyDollCardGfx::
-	INCBIN "gfx/cards/clefairydoll.2bpp"
-	INCBIN "gfx/cards/clefairydoll.pal"
-
 MysteriousFossilCardGfx::
 	INCBIN "gfx/cards/mysteriousfossil.2bpp"
 	INCBIN "gfx/cards/mysteriousfossil.pal"

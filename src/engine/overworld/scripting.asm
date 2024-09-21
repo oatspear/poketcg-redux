@@ -1484,10 +1484,10 @@ ChallengeCupPrizeCards:
 	db PIKACHU_LV16
 	tx PikachuTradeCardName
 
-	db SURFING_PIKACHU_LV13
+	db SURFING_PIKACHU
 	tx SurfingPikachuTradeCardName
 
-	db SURFING_PIKACHU_LV13
+	db SURFING_PIKACHU
 	tx SurfingPikachuTradeCardName
 
 	db ELECTABUZZ_LV20

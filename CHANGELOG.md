@@ -9,6 +9,9 @@
 - Discards 2 other cards from the hand in order to use it.
 - Add any Pokémon from the deck to the hand.
 
+### Removed Cards
+- Clefairy Doll
+
 
 ## Version 0.11.0
 

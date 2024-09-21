@@ -2301,7 +2301,7 @@ ShuffleDeckAndDrawSevenCards:
 	push hl
 	push bc
 	call LoadCardDataToBuffer1_FromDeckIndex
-	call IsLoadedCard1BasicPokemon.skip_mysterious_fossil_clefairy_doll
+	call IsLoadedCard1BasicPokemon.skip_mysterious_fossil
 	pop bc
 	pop hl
 	or b
@@ -2316,18 +2316,16 @@ ShuffleDeckAndDrawSevenCards:
 	ret
 
 ; return nc if the card at wLoadedCard1 is a basic Pokemon card
-; MYSTERIOUS_FOSSIL and CLEFAIRY_DOLL do count as basic Pokemon cards
+; MYSTERIOUS_FOSSIL counts as basic Pokemon cards
 IsLoadedCard1BasicPokemon:
 	ld a, [wLoadedCard1ID]
 	cp MYSTERIOUS_FOSSIL
 	jr z, .basic
-	cp CLEFAIRY_DOLL
-	jr z, .basic
 ;	fallthrough
 
 ; return nc if the card at wLoadedCard1 is a basic Pokemon card
-; MYSTERIOUS_FOSSIL and CLEFAIRY_DOLL do NOT count unless already checked
-.skip_mysterious_fossil_clefairy_doll
+; MYSTERIOUS_FOSSIL does NOT count unless already checked
+.skip_mysterious_fossil
 	ld a, [wLoadedCard1Type]
 	cp TYPE_ENERGY
 	jr nc, .energy_trainer_nonbasic
@@ -2344,7 +2342,7 @@ IsLoadedCard1BasicPokemon:
 	scf
 	ret
 
-.basic ; MYSTERIOUS_FOSSIL or CLEFAIRY_DOLL
+.basic ; MYSTERIOUS_FOSSIL
 	ld a, $01
 	or a
 	ret ; nz
@@ -7464,7 +7462,7 @@ HandleBurnDamage:
 
 ; given the deck index of a turn holder's card in register a,
 ; and a pointer in hl to the wLoadedCard* buffer where the card data is loaded,
-; check if the card is Clefairy Doll or Mysterious Fossil, and, if so, convert it
+; check if the card is Mysterious Fossil, and, if so, convert it
 ; to a Pokemon card in the wLoadedCard* buffer, using .trainer_to_pkmn_data.
 ConvertSpecialTrainerCardToPokemon:
 	ld c, a
@@ -7484,16 +7482,9 @@ ConvertSpecialTrainerCardToPokemon:
 	ret z ; return if the card is not in the arena or bench
 	ld a, e
 	cp MYSTERIOUS_FOSSIL
-	jr nz, .check_for_clefairy_doll
-	ld a, d
-	cp $00 ; MYSTERIOUS_FOSSIL >> 8
-	jr z, .start_ram_data_overwrite
-	ret
-.check_for_clefairy_doll
-	cp CLEFAIRY_DOLL
 	ret nz
 	ld a, d
-	cp $00 ; CLEFAIRY_DOLL >> 8
+	cp $00 ; MYSTERIOUS_FOSSIL >> 8
 	ret nz
 .start_ram_data_overwrite
 	push de
@@ -7810,7 +7801,7 @@ CountKnockedOutPokemonAndTakeThatManyPrizes:
 ; return in wNumberPrizeCardsToTake the amount of Pokemon in the turn holder's
 ; play area that are still there despite having 0 HP.
 ; that is, the number of Pokemon that have just been knocked out.
-; Clefairy Doll and Mysterious Fossil don't count.
+; Mysterious Fossil does not count.
 CountKnockedOutPokemon:
 	ld a, DUELVARS_ARENA_CARD_HP
 	call GetTurnDuelistVariable
@@ -7834,7 +7825,7 @@ CountKnockedOutPokemon:
 ; OATS begin support trainer subtypes
 	cp TYPE_TRAINER
 	; original: jr z
-	jr nc, .next ; jump if this is a trainer card (Clefairy Doll or Mysterious Fossil)
+	jr nc, .next ; jump if this is a trainer card (Mysterious Fossil)
 ; OATS end support trainer subtypes
 	inc b
 .next

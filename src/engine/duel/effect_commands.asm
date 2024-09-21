@@ -1860,11 +1860,6 @@ ComputerSearchEffectCommands:
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, ComputerSearch_PlayerSelection
 	db  $00
 
-ClefairyDollEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, ClefairyDoll_BenchCheck
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ClefairyDoll_PlaceInPlayAreaEffect
-	db  $00
-
 MrFujiEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckBenchIsNotEmpty
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, MrFuji_PlayerSelection

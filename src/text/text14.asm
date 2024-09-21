@@ -184,10 +184,6 @@ RareCandyDescription:
 	line "that Pokémon anyway."
 	done
 
-ClefairyDollName:
-	text "Clefairy Doll"
-	done
-
 TrainerCardAsPokemonDescription:
 	text "Play this card as if it were a 20 HP"
 	line "<COLORLESS> Basic Pokémon. At any"

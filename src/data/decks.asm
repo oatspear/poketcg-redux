@@ -1423,7 +1423,7 @@ LonelyFriendsDeck:
 	card_item WATER_ENERGY,           13
 	card_item DOUBLE_COLORLESS_ENERGY, 4
 	card_item SCYTHER,                 4
-	card_item POLIWAG,                 4
+	card_item KANGASKHAN,              4
 	card_item OMANYTE,                 2
 	card_item OMASTAR,                 1
 	card_item AERODACTYL,              1
@@ -1431,7 +1431,7 @@ LonelyFriendsDeck:
 	card_item WIGGLYTUFF_LV36,         4
 	card_item PROFESSOR_OAK,           2
 	card_item BILL,                    2
-	card_item CLEFAIRY_DOLL,           4
+	card_item ENERGY_SEARCH,           4
 	card_item MYSTERIOUS_FOSSIL,       4
 	card_item SCOOP_UP,                2
 	card_item POTION,                  4
@@ -1468,7 +1468,7 @@ PikachuDeck:
 	card_item PIKACHU_LV12,             2
 	card_item PIKACHU_LV16,             2
 	card_item FLYING_PIKACHU,           4
-	card_item SURFING_PIKACHU_LV13,     4
+	card_item SURFING_PIKACHU,          4
 	card_item RAICHU_LV40,              2
 	card_item RAICHU_LV45,              2
 	card_item BILL,                     4

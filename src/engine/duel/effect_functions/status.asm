@@ -97,8 +97,6 @@ CanBeAffectedByStatus:
 	call GetCardIDFromDeckIndex
 	ld a, e
 	pop de
-	cp CLEFAIRY_DOLL
-	ret z  ; cannot induce status
 	cp MYSTERIOUS_FOSSIL
 	ret z  ; cannot induce status
 ; Snorlax's Thick Skinned prevents it from being statused...

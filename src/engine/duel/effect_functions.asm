@@ -5536,9 +5536,7 @@ ImakuniEffect: ; 2f216 (b:7216)
 	call LoadCardDataToBuffer1_FromDeckIndex
 	ld a, [wLoadedCard1ID]
 
-; cannot confuse Clefairy Doll and Mysterious Fossil
-	cp CLEFAIRY_DOLL
-	jr z, .failed
+; cannot confuse Mysterious Fossil
 	cp MYSTERIOUS_FOSSIL
 	jr z, .failed
 
@@ -6491,7 +6489,6 @@ Defender_AttachDefenderEffect:
 
 
 ; return carry if Bench is full.
-ClefairyDoll_BenchCheck:
 MysteriousFossil_BenchCheck:
 	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
 	call GetTurnDuelistVariable
@@ -6500,7 +6497,6 @@ MysteriousFossil_BenchCheck:
 	ldtx hl, NoSpaceOnTheBenchText
 	ret
 
-ClefairyDoll_PlaceInPlayAreaEffect:
 MysteriousFossil_PlaceInPlayAreaEffect:
 	ldh a, [hTempCardIndex_ff9f]
 	jp PutHandPokemonCardInPlayArea

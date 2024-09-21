@@ -4296,15 +4296,16 @@ AIDecide_PokemonFlute:
 	scf
 	ret
 
-AIPlay_ClefairyDollOrMysteriousFossil:
+
+AIPlay_MysteriousFossil:
 	ld a, [wAITrainerCardToPlay]
 	ldh [hTempCardIndex_ff9f], a
 	ld a, OPPACTION_EXECUTE_TRAINER_EFFECTS
 	bank1call AIMakeDecision
 	ret
 
-; AI logic for playing Clefairy Doll
-AIDecide_ClefairyDollOrMysteriousFossil:
+; AI logic for playing Mysterious Fossil
+AIDecide_MysteriousFossil:
 ; if has max number of Play Area Pokemon, skip
 	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
 	call GetTurnDuelistVariable
@@ -4314,12 +4315,12 @@ AIDecide_ClefairyDollOrMysteriousFossil:
 ; store number of Play Area Pokemon cards
 	ld [wce06], a
 
-; if the Arena card is Wigglytuff, return carry
+; if the Arena card is Surfing Pikachu, return carry
 	ld a, DUELVARS_ARENA_CARD
 	call GetTurnDuelistVariable
 	call GetCardIDFromDeckIndex
 	ld a, e
-	cp WIGGLYTUFF_LV36
+	cp SURFING_PIKACHU
 	jr z, .set_carry
 
 ; if number of Play Area Pokemon >= 4, return no carry
@@ -4333,6 +4334,7 @@ AIDecide_ClefairyDollOrMysteriousFossil:
 .no_carry
 	or a
 	ret
+
 
 AIPlay_Pokeball:
 	ld a, [wAITrainerCardToPlay]

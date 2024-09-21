@@ -195,7 +195,6 @@ CardPointers:
 	dw ImakuniCard
 	dw PokemonTraderCard
 	dw PokemonBreederCard
-	dw ClefairyDollCard
 	dw MysteriousFossilCard
 	dw EnergyRetrievalCard
 	dw EnergyRecyclerCard
@@ -5131,7 +5130,7 @@ SurfingPikachuLv13Card:
 	tx SurfingPikachuName ; name
 	db PROMOSTAR ; rarity
 	db PROMOTIONAL | PRO ; sets
-	db SURFING_PIKACHU_LV13
+	db SURFING_PIKACHU
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -10004,17 +10003,6 @@ PokemonBreederCard:
 	dw PokemonBreederEffectCommands ; effect commands
 	tx PokemonBreederDescription ; description
 	dw NONE ; description (cont)
-
-ClefairyDollCard:
-	db TYPE_TRAINER ; type
-	gfx ClefairyDollCardGfx ; gfx
-	tx ClefairyDollName ; name
-	db STAR ; rarity
-	db EVOLUTION | NONE ; sets
-	db CLEFAIRY_DOLL
-	dw ClefairyDollEffectCommands ; effect commands
-	tx TrainerCardAsPokemonDescription ; description
-	tx TrainerCardAsPokemonDescriptionCont ; description (cont)
 
 MysteriousFossilCard:
 	db TYPE_TRAINER ; type
