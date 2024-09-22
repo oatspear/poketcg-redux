@@ -1835,7 +1835,7 @@ ItemFinderEffectCommands:
 	db  $00
 
 DefenderEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Defender_PlayerSelection
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, AttachPokemonTool_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Defender_AttachDefenderEffect
 	db  $00
 

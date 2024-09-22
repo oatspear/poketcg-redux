@@ -6454,8 +6454,9 @@ ItemFinder_PlayerSelection:
 	ret
 
 
-Defender_PlayerSelection: ; 2f488 (b:7488)
-	ldtx hl, ChoosePokemonToAttachDefenderToText
+AttachPokemonTool_PlayerSelectEffect:
+	call LoadCard1NameToRamText
+	ldtx hl, ChoosePokemonToAttachToolToText
 	call DrawWideTextBox_WaitForInput
 .loop
 	call HandlePlayerSelectionPokemonInPlayArea_AllowCancel

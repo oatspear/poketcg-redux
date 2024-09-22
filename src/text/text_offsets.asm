@@ -326,7 +326,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer Choose2CardsFromHandToDiscardText                  ; 0x0155
 	textpointer Choose2HandCardsFromHandToReturnToDeckText         ; 0x0156
 	textpointer ChooseCardToPlaceInHandText                        ; 0x0157
-	textpointer ChoosePokemonToAttachDefenderToText                ; 0x0158
+	textpointer ChoosePokemonToAttachToolToText
 	textpointer ChoosePokemonToReturnToTheDeckText
 	textpointer ChoosePokemonToPlaceInPlayText
 	textpointer ChoosePokemonToEvolveText

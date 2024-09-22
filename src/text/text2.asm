@@ -509,9 +509,9 @@ ChooseCardToPlaceInHandText: ; 39666 (e:5666)
 	line "place in the Hand."
 	done
 
-ChoosePokemonToAttachDefenderToText: ; 3968b (e:568b)
-	text "Choose a Pokémon to"
-	line "attach Defender to."
+ChoosePokemonToAttachToolToText:
+	text "Choose a Pokémon to attach"
+	line "<RAMTEXT> to."
 	done
 
 ChoosePokemonToReturnToTheDeckText:
