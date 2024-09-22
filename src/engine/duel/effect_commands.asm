@@ -1961,6 +1961,12 @@ RecycleEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Recycle_AddToDeckEffect
 	db  $00
 
+SuperRodEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, SuperRod_DiscardPileCheck
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, SuperRod_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SuperRod_AddToDeckEffect
+	db  $00
+
 ReviveEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, Revive_BenchCheck
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Revive_PlayerSelection

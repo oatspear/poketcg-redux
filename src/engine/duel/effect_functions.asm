@@ -7472,6 +7472,14 @@ Recycle_PlayerSelectEffect:
 	ret
 
 
+SuperRod_PlayerSelectEffect:
+	call ChooseUpTo3Cards_PlayerDiscardPileSelection
+	ldh a, [hTempList]
+	inc a  ; $ff turns into 0
+	cp 1   ; set carry if cancelled selection
+	ret
+
+
 ; input:
 ;   hl: pointer to text to display
 SelectedCard_ShowDetailsIfOpponentsTurn:
@@ -7626,6 +7634,7 @@ ChooseUpToNCardsFromCardList_PlayerSelectionLoop:
 	ret
 
 
+SuperRod_AddToDeckEffect:
 SelectedDiscardPileCards_ShuffleIntoDeckEffect:
 ; return selected cards to the deck
 	ld hl, hTempList

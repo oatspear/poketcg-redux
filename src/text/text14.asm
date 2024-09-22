@@ -473,6 +473,16 @@ RecycleDescription:
 	line "   on the bottom of your deck."
 	done
 
+SuperRodName:
+	text "Super Rod"
+	done
+
+SuperRodDescription:
+	text "Shuffle up to 3 Pokémon or Basic"
+	line "Energy cards from your discard pile"
+	line "back into your deck."
+	done
+
 AlreadyHasAToolAttachedText:
 	text "That Pokémon already has a Tool"
 	line "attached to it."

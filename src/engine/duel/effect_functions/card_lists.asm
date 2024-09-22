@@ -331,6 +331,7 @@ CreatePokemonCardListFromDiscardPile:
 	ret
 
 
+SuperRod_DiscardPileCheck:
 FishingTail_DiscardPileCheck:
 CreatePokemonAndBasicEnergyCardListFromDiscardPile:
 	call CheckDiscardPileNotEmpty
