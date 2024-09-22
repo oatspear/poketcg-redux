@@ -175,11 +175,7 @@ EvolutionFromDeck_EvolveEffect:
 	add DUELVARS_ARENA_CARD
 	call GetTurnDuelistVariable
 	call LoadCardDataToBuffer1_FromDeckIndex
-	ld hl, wLoadedCard1Name
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	call LoadTxRam2
+	call LoadCard1NameToRamText
 
 	call EvolvePokemonCard
 

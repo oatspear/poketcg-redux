@@ -7362,11 +7362,7 @@ PrintNonTurnDuelistCardIDText:
 	ld a, [wTempNonTurnDuelistCardID]
 	ld e, a
 	call LoadCardDataToBuffer1_FromCardID
-	ld hl, wLoadedCard1Name
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	call LoadTxRam2
+	call LoadCard1NameToRamText
 	pop hl
 	jp DrawWideTextBox_PrintText
 

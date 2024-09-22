@@ -607,10 +607,6 @@ KnockOutDefendingPokemonEffect:
 	call SwapTurn
 	call LoadCardDataToBuffer2_FromDeckIndex
 	call SwapTurn
-	ld hl, wLoadedCard2Name
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	call LoadTxRam2
+	call LoadCard2NameToRamText
 	ldtx hl, WasKnockedOutText
 	jp DrawWideTextBox_WaitForInput

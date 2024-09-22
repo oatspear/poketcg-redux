@@ -1537,11 +1537,7 @@ OnPokemonPlayedInitVariablesAndPowers:
 	bank1call DisplayUsePokemonPowerScreen
 	ldh a, [hTempCardIndex_ff98]
 	call LoadCardDataToBuffer1_FromDeckIndex
-	ld hl, wLoadedCard1Name
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	call LoadTxRam2
+	call LoadCard1NameToRamText
 	ldtx hl, HavePokemonPowerText
 	call DrawWideTextBox_WaitForInput
 	call ExchangeRNG
@@ -2414,11 +2410,7 @@ PrintKnockedOut:
 	ld a, [wTempNonTurnDuelistCardID]
 	ld e, a
 	call LoadCardDataToBuffer1_FromCardID
-	ld hl, wLoadedCard1Name
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	call LoadTxRam2
+	call LoadCard1NameToRamText
 	ldtx hl, WasKnockedOutText
 	call DrawWideTextBox_PrintText
 	ld a, 40
@@ -2628,6 +2620,22 @@ LoadAttackNameToRam2b:
 	ld a, [hli]
 	ld [wTxRam2_b + 1], a
 	ret
+
+
+LoadCard1NameToRamText:
+	ld hl, wLoadedCard1Name
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	jp LoadTxRam2
+
+
+LoadCard2NameToRamText:
+	ld hl, wLoadedCard2Name
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	jp LoadTxRam2
 
 
 Func_1bb4:

@@ -104,11 +104,7 @@ RareCandy_EvolveEffect:
 	add DUELVARS_ARENA_CARD
 	call GetTurnDuelistVariable
 	call LoadCardDataToBuffer1_FromDeckIndex
-	ld hl, wLoadedCard1Name
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	call LoadTxRam2
+	call LoadCard1NameToRamText
 
 ; evolve card and overwrite its stage as STAGE2_WITHOUT_STAGE1
 	ldh a, [hTempCardIndex_ff98]
@@ -4836,11 +4832,7 @@ ReturnPokemonAndAttachedCardsToHandEffect:
 	pop af
 
 	call LoadCardDataToBuffer1_FromDeckIndex
-	ld hl, wLoadedCard1Name
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	call LoadTxRam2
+	call LoadCard1NameToRamText
 	ldtx hl, PokemonAndAllAttachedCardsReturnedToHandText
 	call DrawWideTextBox_WaitForInput
 	xor a
@@ -6724,11 +6716,7 @@ _ReturnBenchedPokemonToDeckEffect:
 	jr c, .done
 	ldh a, [hTempCardIndex_ff98]
 	call LoadCardDataToBuffer1_FromDeckIndex
-	ld hl, wLoadedCard1Name
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	call LoadTxRam2
+	call LoadCard1NameToRamText
 	bank1call DrawLargePictureOfCard
 	ldtx hl, PokemonAndAllAttachedCardsWereReturnedToDeckText
 	call DrawWideTextBox_WaitForInput

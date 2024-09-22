@@ -40,11 +40,12 @@ _ShowPromotionalCardScreen:
 	call PauseSong
 	ld a, MUSIC_MEDAL
 	call PlaySong
-	ld hl, wLoadedCard1Name
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	bank1call LoadTxRam2 ; switch to bank 1, but call a home func
+	; ld hl, wLoadedCard1Name
+	; ld a, [hli]
+	; ld h, [hl]
+	; ld l, a
+	; bank1call LoadTxRam2 ; switch to bank 1, but call a home func
+	call LoadCard1NameToRamText
 	ld a, PLAYER_TURN
 	ldh [hWhoseTurn], a
 	pop hl

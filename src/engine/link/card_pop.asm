@@ -36,11 +36,7 @@ _DoCardPop:
 ; and play the corresponding song
 	ld a, [wLoadedCard1ID]
 	call AddCardToCollectionAndUpdateAlbumProgress
-	ld hl, wLoadedCard1Name
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	call LoadTxRam2
+	call LoadCard1NameToRamText
 	ld a, PLAYER_TURN
 	ldh [hWhoseTurn], a
 	ld a, SFX_5D
