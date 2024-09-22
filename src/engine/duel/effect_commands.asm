@@ -1839,6 +1839,16 @@ DefenderEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Defender_AttachToolEffect
 	db  $00
 
+LumBerryEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, AttachPokemonTool_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, LumBerry_AttachToolEffect
+	db  $00
+
+SitrusBerryEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, AttachPokemonTool_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SitrusBerry_AttachToolEffect
+	db  $00
+
 MysteriousFossilEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, MysteriousFossil_BenchCheck
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, MysteriousFossil_PlaceInPlayAreaEffect

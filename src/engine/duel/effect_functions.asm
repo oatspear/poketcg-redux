@@ -6468,6 +6468,14 @@ AttachPokemonTool_PlayerSelectEffect:
 	jr .loop
 
 
+SitrusBerry_AttachToolEffect:
+	ld a, POKEMON_TOOL_SITRUS_BERRY
+	jr AttachPokemonTool
+
+LumBerry_AttachToolEffect:
+	ld a, POKEMON_TOOL_LUM_BERRY
+	jr AttachPokemonTool
+
 Defender_AttachToolEffect:
 	ld a, POKEMON_TOOL_DEFENDER
 	; jr AttachPokemonTool
