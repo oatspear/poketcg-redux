@@ -6461,7 +6461,7 @@ AttachPokemonTool_PlayerSelectEffect:
 .loop
 	call HandlePlayerSelectionPokemonInPlayArea_AllowCancel
 	ret c  ; cancelled
-	ldh [hTemp_ffa0], a
+	ldh [hTempPlayAreaLocation_ffa1], a
 	call CheckPokemonHasNoToolsAttached
 	ret nc
 	call DrawWideTextBox_WaitForInput
@@ -6469,20 +6469,20 @@ AttachPokemonTool_PlayerSelectEffect:
 
 Defender_AttachDefenderEffect:
 ; attach Trainer card to Play Area Pokemon
-	ldh a, [hTemp_ffa0]
+	ldh a, [hTempPlayAreaLocation_ffa1]
 	ld e, a
 	ldh a, [hTempCardIndex_ff9f]
 	call PutHandCardInPlayArea
 
 ; store Defender as the attached tool
-	ldh a, [hTemp_ffa0]
+	ldh a, [hTempPlayAreaLocation_ffa1]
 	add DUELVARS_ARENA_CARD_ATTACHED_TOOL
 	call GetTurnDuelistVariable
 	ld [hl], POKEMON_TOOL_DEFENDER
 	call IsPlayerTurn
 	ret c
 
-	ldh a, [hTemp_ffa0]
+	ldh a, [hTempPlayAreaLocation_ffa1]
 	ldh [hTempPlayAreaLocation_ff9d], a
 	bank1call Func_2c10b
 	ret
