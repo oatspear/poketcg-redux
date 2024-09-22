@@ -6467,18 +6467,28 @@ AttachPokemonTool_PlayerSelectEffect:
 	call DrawWideTextBox_WaitForInput
 	jr .loop
 
-Defender_AttachDefenderEffect:
-; attach Trainer card to Play Area Pokemon
+
+Defender_AttachToolEffect:
+	ld a, POKEMON_TOOL_DEFENDER
+	; jr AttachPokemonTool
+	; fallthrough
+
+; input:
+;   a: POKEMON_TOOL_* constant
+AttachPokemonTool:
+	ld d, a
+; attach Trainer card to Play Area Pokémon
 	ldh a, [hTempPlayAreaLocation_ffa1]
 	ld e, a
 	ldh a, [hTempCardIndex_ff9f]
-	call PutHandCardInPlayArea
+	call PutHandCardInPlayArea  ; preserves bc, de
 
-; store Defender as the attached tool
+; store this card as the attached tool
 	ldh a, [hTempPlayAreaLocation_ffa1]
 	add DUELVARS_ARENA_CARD_ATTACHED_TOOL
 	call GetTurnDuelistVariable
-	ld [hl], POKEMON_TOOL_DEFENDER
+	ld a, d
+	ld [hl], a
 	call IsPlayerTurn
 	ret c
 

@@ -1836,7 +1836,7 @@ ItemFinderEffectCommands:
 
 DefenderEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, AttachPokemonTool_PlayerSelectEffect
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Defender_AttachDefenderEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Defender_AttachToolEffect
 	db  $00
 
 MysteriousFossilEffectCommands:
