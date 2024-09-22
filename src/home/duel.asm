@@ -257,6 +257,7 @@ AddCardToHand:
 
 ; removes a card from the turn holder's hand and decrements the number of cards in the hand
 ; the card is identified by register a, which contains the deck index (0-59) of the card
+; preserves: af, hl, bc, de
 RemoveCardFromHand:
 	push af
 	push hl
@@ -1210,9 +1211,10 @@ PutHandPokemonCardInPlayArea:
    ; e = play area location offset (PLAY_AREA_*)
 ; returns:
    ; a = CARD_LOCATION_PLAY_AREA + e
+; preserves: bc, de
 PutHandCardInPlayArea:
-	call RemoveCardFromHand
-	call GetTurnDuelistVariable
+	call RemoveCardFromHand  ; preserves af, hl, bc, de
+	call GetTurnDuelistVariable  ; preserves bc, de
 	ld a, e
 	or CARD_LOCATION_PLAY_AREA
 	ld [hl], a
