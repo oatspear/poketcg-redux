@@ -206,8 +206,8 @@
 	const SCOOP_UP                    ; $cd
 	const COMPUTER_SEARCH             ; $ce
 	const POKEDEX                     ; $cf
-	const PLUSPOWER                   ; $d0
-	const DEFENDER                    ; $d1
+	const RECYCLE                     ; $d0
+	const RARE_CANDY                  ; $d1
 	const ITEM_FINDER                 ; $d2
 	const GIOVANNI                    ; $d3
 	const DEVOLUTION_SPRAY            ; $d4
@@ -218,9 +218,9 @@
 	const MAINTENANCE                 ; $d9
 	const POKEMON_FLUTE               ; $da
 	const GAMBLER                     ; $db
-	const RECYCLE                     ; $dc
-	const RARE_CANDY                  ; $dd
-	const POKEMON_NURSE               ; $de
+	const POKEMON_NURSE               ; $dc
+	const PLUSPOWER                   ; $dd
+	const DEFENDER                    ; $de
 DEF NUM_CARDS EQU const_value - 1
 
 DEF ENERGY_IDS_START  EQU GRASS_ENERGY

@@ -208,8 +208,8 @@ CardPointers:
 	dw ScoopUpNetCard
 	dw ComputerSearchCard
 	dw PokedexCard
-	dw PlusPowerCard
-	dw DefenderCard
+	dw RecycleCard
+	dw RareCandyCard
 	dw ItemFinderCard
 	dw GiovanniCard
 	dw DevolutionSprayCard
@@ -220,9 +220,9 @@ CardPointers:
 	dw MaintenanceCard
 	dw PokemonFluteCard
 	dw GamblerCard
-	dw RecycleCard
-	dw RareCandyCard
 	dw PokemonNurseCard
+	dw PlusPowerCard
+	dw DefenderCard
 	dw NULL
 	assert_table_length NUM_CARDS + 2
 
