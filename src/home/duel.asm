@@ -391,6 +391,18 @@ PutPlayAreaToolInDiscardPile:
 	ret
 
 
+; returns carry if the given ID is a Pokémon Tool
+; input:
+;   de: card ID
+IsPokemonToolID:
+	ld a, e
+	sub PLUSPOWER  ; first Tool ID
+; values below will set carry
+; tools will not set carry
+	ccf
+	ret
+
+
 ; return in the z flag whether turn holder's prize a (0-7) has been drawn or not
 ; z: drawn, nz: not drawn
 CheckPrizeTaken:
