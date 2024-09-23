@@ -2800,12 +2800,9 @@ DrawDuelHUD:
 	call GetTurnDuelistVariable
 	cp $ff
 	ret z  ; no tools
-
 	call GetCardIDFromDeckIndex
 	ld a, e
 	cp PLUSPOWER
-
-	; cp POKEMON_TOOL_PLUSPOWER
 	jr nz, .not_pluspower
 	ld a, SYM_PLUSPOWER
 	jp WriteByteToBGMap0
@@ -5452,12 +5449,9 @@ PrintPlayAreaCardHeader:
 	ld c, a
 	ld b, 17  ; previously 15
 	ld a, [hl]
-
 	call GetCardIDFromDeckIndex
 	ld a, e
 	cp PLUSPOWER
-
-	; cp POKEMON_TOOL_PLUSPOWER
 	jr nz, .not_pluspower
 	ld a, SYM_PLUSPOWER
 	jp WriteByteToBGMap0
