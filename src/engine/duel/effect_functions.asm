@@ -6468,39 +6468,17 @@ AttachPokemonTool_PlayerSelectEffect:
 	jr .loop
 
 
-SitrusBerry_AttachToolEffect:
-	ld a, POKEMON_TOOL_SITRUS_BERRY
-	jr AttachPokemonTool
-
-LumBerry_AttachToolEffect:
-	ld a, POKEMON_TOOL_LUM_BERRY
-	jr AttachPokemonTool
-
-Defender_AttachToolEffect:
-	ld a, POKEMON_TOOL_DEFENDER
-	; jr AttachPokemonTool
-	; fallthrough
-
-; input:
-;   a: POKEMON_TOOL_* constant
-AttachPokemonTool:
-	ld d, a
-; attach Trainer card to Play Area Pokémon
+PokemonTool_AttachToolEffect:
 	ldh a, [hTempPlayAreaLocation_ffa1]
 	ld e, a
-	ldh a, [hTempCardIndex_ff9f]
-	call PutHandCardInPlayArea  ; preserves bc, de
-
-; store this card as the attached tool
-	ldh a, [hTempPlayAreaLocation_ffa1]
 	add DUELVARS_ARENA_CARD_ATTACHED_TOOL
 	call GetTurnDuelistVariable
-	; ld a, d
 	ldh a, [hTempCardIndex_ff9f]
+; store the attached tool and put it in play
 	ld [hl], a
+	call PutHandCardInPlayArea
 	call IsPlayerTurn
 	ret c
-
 	ldh a, [hTempPlayAreaLocation_ffa1]
 	ldh [hTempPlayAreaLocation_ff9d], a
 	bank1call Func_2c10b
@@ -6749,18 +6727,14 @@ PlusPower_PreconditionCheck:
 	jp CheckPokemonHasNoToolsAttached
 
 PlusPowerEffect:
-; attach Trainer card to Arena Pokemon
-	ld e, PLAY_AREA_ARENA
-	ldh a, [hTempCardIndex_ff9f]
-	call PutHandCardInPlayArea
-
 ; store PlusPower as the attached tool
 	ld a, DUELVARS_ARENA_CARD_ATTACHED_TOOL
 	call GetTurnDuelistVariable
-	; ld [hl], POKEMON_TOOL_PLUSPOWER
+; attach Trainer card to Arena Pokemon
 	ldh a, [hTempCardIndex_ff9f]
 	ld [hl], a
-	ret
+	ld e, PLAY_AREA_ARENA
+	jp PutHandCardInPlayArea
 
 
 Switch_PlayerSelection:

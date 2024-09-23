@@ -1836,17 +1836,17 @@ ItemFinderEffectCommands:
 
 DefenderEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, AttachPokemonTool_PlayerSelectEffect
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Defender_AttachToolEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PokemonTool_AttachToolEffect
 	db  $00
 
 LumBerryEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, AttachPokemonTool_PlayerSelectEffect
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, LumBerry_AttachToolEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PokemonTool_AttachToolEffect
 	db  $00
 
 SitrusBerryEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, AttachPokemonTool_PlayerSelectEffect
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SitrusBerry_AttachToolEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PokemonTool_AttachToolEffect
 	db  $00
 
 MysteriousFossilEffectCommands:
