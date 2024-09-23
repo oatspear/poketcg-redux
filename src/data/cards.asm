@@ -223,6 +223,8 @@ CardPointers:
 	dw PokemonNurseCard
 	dw PlusPowerCard
 	dw DefenderCard
+	dw SitrusBerryCard
+	dw LumBerryCard
 	dw NULL
 	assert_table_length NUM_CARDS + 2
 
@@ -10158,6 +10160,8 @@ PlusPowerCard:
 	tx PlusPowerDescription ; description
 	dw NONE ; description (cont)
 
+SitrusBerryCard:
+LumBerryCard:
 DefenderCard:
 	db TYPE_TRAINER ; type
 	gfx DefenderCardGfx ; gfx
