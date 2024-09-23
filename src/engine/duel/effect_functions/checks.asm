@@ -324,7 +324,7 @@ CheckNoDuplicateColorsInPlayArea:
 CheckPokemonHasNoToolsAttached:
 	add DUELVARS_ARENA_CARD_ATTACHED_TOOL
 	call GetTurnDuelistVariable
-	or a
+	cp $ff
 	ret z
 ; there is an attached tool
 	ldtx hl, AlreadyHasAToolAttachedText

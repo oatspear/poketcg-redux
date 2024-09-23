@@ -6495,7 +6495,8 @@ AttachPokemonTool:
 	ldh a, [hTempPlayAreaLocation_ffa1]
 	add DUELVARS_ARENA_CARD_ATTACHED_TOOL
 	call GetTurnDuelistVariable
-	ld a, d
+	; ld a, d
+	ldh a, [hTempCardIndex_ff9f]
 	ld [hl], a
 	call IsPlayerTurn
 	ret c
@@ -6756,7 +6757,9 @@ PlusPowerEffect:
 ; store PlusPower as the attached tool
 	ld a, DUELVARS_ARENA_CARD_ATTACHED_TOOL
 	call GetTurnDuelistVariable
-	ld [hl], POKEMON_TOOL_PLUSPOWER
+	; ld [hl], POKEMON_TOOL_PLUSPOWER
+	ldh a, [hTempCardIndex_ff9f]
+	ld [hl], a
 	ret
 
 

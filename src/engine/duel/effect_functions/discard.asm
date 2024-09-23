@@ -203,58 +203,8 @@ DiscardAllCardsFromHand:
 ; Discard Other Cards
 ; ------------------------------------------------------------------------------
 
-DiscardArenaTool_DiscardEffect:
-  xor a  ; PLAY_AREA_ARENA
-  ; fallthrough
-
-; input:
-;   a: PLAY_AREA_* of the target
-; output:
-;   carry: set if a Tool was discarded
-; preserves: nothing
-DiscardPlayAreaTool_DiscardEffect:
-  ld c, a
-  add DUELVARS_ARENA_CARD_ATTACHED_TOOL
-	call GetTurnDuelistVariable
-  or a
-  ret z  ; no attached tools
-; reset duel variable
-  xor a
-	ld [hl], a
-; store target card location to search for
-  ld a, CARD_LOCATION_PLAY_AREA
-  or c
-  ld c, a
-; loop card locations and move tool to discard pile
-  ld l, DUELVARS_CARD_LOCATIONS
-.next_card
-	ld a, [hl]
-	cp c
-	jr nz, .skip  ; not in target play area location
-	ld a, l
-	call GetCardIDFromDeckIndex  ; preserves af, hl, bc
-  ld a, e
-  cp MYSTERIOUS_FOSSIL
-  jr z, .skip  ; not a Tool
-	call GetCardType  ; preserves hl, bc
-	cp TYPE_TRAINER
-	jr nz, .skip  ; not a trainer card
-	ld a, l
-; assume: there is only one attached tool at a time
-; no need to search for more cards
-	call PutCardInDiscardPile
-  scf
-  ret
-.skip
-	inc l
-	ld a, l
-	cp DECK_SIZE
-	jr c, .next_card
-  xor a
-	ret
-
 
 DiscardOpponentTool_DiscardEffect:
   call SwapTurn
-  call DiscardArenaTool_DiscardEffect
+  call PutArenaToolInDiscardPile
   jp SwapTurn

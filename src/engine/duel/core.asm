@@ -2798,9 +2798,14 @@ DrawDuelHUD:
 	inc c
 	ld a, DUELVARS_ARENA_CARD_ATTACHED_TOOL
 	call GetTurnDuelistVariable
-	or a
+	cp $ff
 	ret z  ; no tools
-	cp POKEMON_TOOL_PLUSPOWER
+
+	call GetCardIDFromDeckIndex
+	ld a, e
+	cp PLUSPOWER
+
+	; cp POKEMON_TOOL_PLUSPOWER
 	jr nz, .not_pluspower
 	ld a, SYM_PLUSPOWER
 	jp WriteByteToBGMap0
@@ -5440,14 +5445,19 @@ PrintPlayAreaCardHeader:
 	ld a, [wCurPlayAreaSlot]
 	add DUELVARS_ARENA_CARD_ATTACHED_TOOL
 	call GetTurnDuelistVariable
-	or a
+	cp $ff
 	ret z
 	ld a, [wCurPlayAreaY]
 	inc a
 	ld c, a
 	ld b, 17  ; previously 15
 	ld a, [hl]
-	cp POKEMON_TOOL_PLUSPOWER
+
+	call GetCardIDFromDeckIndex
+	ld a, e
+	cp PLUSPOWER
+
+	; cp POKEMON_TOOL_PLUSPOWER
 	jr nz, .not_pluspower
 	ld a, SYM_PLUSPOWER
 	jp WriteByteToBGMap0
@@ -7245,43 +7255,45 @@ ClearPokemonFlags_EndOfTurn:
 	ret z
 	jr .loop
 
-; discard any PLUSPOWER attached to the turn holder's arena and/or bench Pokemon
-; FIXME refactor into single function
-DiscardAttachedPluspowers:
-	ld a, DUELVARS_ARENA_CARD_ATTACHED_TOOL
-	call GetTurnDuelistVariable
-	ld e, MAX_PLAY_AREA_POKEMON
-.unattach_pluspower_loop
-	ld a, [hl]
-	cp POKEMON_TOOL_PLUSPOWER
-	jr nz, .next
-	xor a
-	ld [hl], a
-.next
-	inc hl
-	dec e
-	jr nz, .unattach_pluspower_loop
-	ld de, PLUSPOWER
-	jp MoveCardToDiscardPileIfInPlayArea
 
-; discard any DEFENDER attached to the turn holder's arena and/or bench Pokemon
-; FIXME refactor into single function
+; discard any PLUSPOWER attached to the turn holder's arena and/or bench Pokémon
+DiscardAttachedPluspowers:
+	ld de, PLUSPOWER
+	jr DiscardAttachedToolsWithID
+
+; discard any DEFENDER attached to the turn holder's arena and/or bench Pokémon
 DiscardAttachedDefenders:
+	ld de, DEFENDER
+	; jr DiscardAttachedToolsWithID
+	; fallthrough
+
+; discard any tools with given ID attached to the turn holder's arena or bench Pokémon
+; input:
+;   de: ID of the Pokémon Tool to discard
+DiscardAttachedToolsWithID:
 	ld a, DUELVARS_ARENA_CARD_ATTACHED_TOOL
 	call GetTurnDuelistVariable
-	ld e, MAX_PLAY_AREA_POKEMON
+	ld c, MAX_PLAY_AREA_POKEMON
 .unattach_defender_loop
 	ld a, [hl]
-	cp POKEMON_TOOL_DEFENDER
+	cp $ff
+	jr z, .next  ; no attached tools
+	push de
+	call GetCardIDFromDeckIndex
+	ld a, e
+	pop de
+	cp e
 	jr nz, .next
-	xor a
-	ld [hl], a
+; put in discard pile and reset duel variable
+	ld a, [hl]
+	call PutCardInDiscardPile
+	ld [hl], $ff
 .next
 	inc hl
-	dec e
+	dec c
 	jr nz, .unattach_defender_loop
-	ld de, DEFENDER
-	jp MoveCardToDiscardPileIfInPlayArea
+	ret
+
 
 ; return carry if the turn holder's arena Pokemon card is poisoned or burned.
 ; also return the status condition in a.

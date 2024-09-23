@@ -364,6 +364,33 @@ MoveDiscardPileCardToHand:
 	ret
 
 
+; output:
+;   carry: set if a Tool was discarded
+; preserves: bc, de
+PutArenaToolInDiscardPile:
+	xor a  ; PLAY_AREA_ARENA
+	; fallthrough
+
+; input:
+;   a: PLAY_AREA_* of the target
+; output:
+;   carry: set if a Tool was discarded
+; preserves: bc, de
+PutPlayAreaToolInDiscardPile:
+	add DUELVARS_ARENA_CARD_ATTACHED_TOOL
+	call GetTurnDuelistVariable
+	cp $ff
+	ret z  ; no attached tools
+; reset duel variable
+	ld [hl], $ff
+; move tool to discard pile
+; assume: there is only one attached tool at a time
+; no need to search for more cards
+	call PutCardInDiscardPile
+	scf
+	ret
+
+
 ; return in the z flag whether turn holder's prize a (0-7) has been drawn or not
 ; z: drawn, nz: not drawn
 CheckPrizeTaken:
@@ -1253,6 +1280,8 @@ EmptyPlayAreaSlot:
 	ld d, $ff
 	ld a, DUELVARS_ARENA_CARD
 	call .init_duelvar
+	ld a, DUELVARS_ARENA_CARD_ATTACHED_TOOL
+	call .init_duelvar
 	ld d, 0
 	ld a, DUELVARS_ARENA_CARD_HP
 	call .init_duelvar
@@ -1260,8 +1289,6 @@ EmptyPlayAreaSlot:
 	call .init_duelvar
 .zero_vars
 	ld a, DUELVARS_ARENA_CARD_CHANGED_TYPE
-	call .init_duelvar
-	ld a, DUELVARS_ARENA_CARD_ATTACHED_TOOL
 	call .init_duelvar
 	ld a, DUELVARS_ARENA_CARD_UNUSED
 ; OATS must also reset status conditions
@@ -2705,35 +2732,6 @@ GetPlayAreaCardRetreatCost:
 	ld [wLoadedCard1RetreatCost], a
 	ret
 
-
-; move the turn holder's card with ID at de to the discard pile
-; if it's currently in the play area.
-MoveCardToDiscardPileIfInPlayArea:
-	ld c, e
-	ld b, d
-	ld l, DUELVARS_CARD_LOCATIONS
-.next_card
-	ld a, [hl]
-	and CARD_LOCATION_PLAY_AREA
-	jr z, .skip ; jump if card not in arena
-	ld a, l
-	call GetCardIDFromDeckIndex
-	ld a, c
-	cp e
-	jr nz, .skip ; jump if not the card id provided in c
-	ld a, b
-	cp d ; card IDs are 8-bit so d is always 0
-	jr nz, .skip
-	ld a, l
-	push bc
-	call PutCardInDiscardPile
-	pop bc
-.skip
-	inc l
-	ld a, l
-	cp DECK_SIZE
-	jr c, .next_card
-	ret
 
 ; calculate damage and max HP of card at PLAY_AREA_* in e.
 ; input:
