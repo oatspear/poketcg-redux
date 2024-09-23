@@ -1834,17 +1834,7 @@ ItemFinderEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ItemFinder_DiscardAddToHandEffect
 	db  $00
 
-DefenderEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, AttachPokemonTool_PlayerSelectEffect
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PokemonTool_AttachToolEffect
-	db  $00
-
-LumBerryEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, AttachPokemonTool_PlayerSelectEffect
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PokemonTool_AttachToolEffect
-	db  $00
-
-SitrusBerryEffectCommands:
+PokemonToolEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, AttachPokemonTool_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PokemonTool_AttachToolEffect
 	db  $00

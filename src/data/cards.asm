@@ -10165,7 +10165,7 @@ DefenderCard:
 	db DIAMOND ; rarity
 	db COLOSSEUM | NONE ; sets
 	db DEFENDER
-	dw DefenderEffectCommands ; effect commands
+	dw PokemonToolEffectCommands ; effect commands
 	tx DefenderDescription ; description
 	dw NONE ; description (cont)
 
