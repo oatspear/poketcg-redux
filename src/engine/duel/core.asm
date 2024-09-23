@@ -6992,6 +6992,67 @@ HandleOnRetreatEffects:
 
 HandleEndOfTurnEvents:
 ; reset end of turn variables
+; handle Sitrus Berry and Lum Berry
+	call SwapTurn
+	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+	call GetTurnDuelistVariable
+	ld b, PLAY_AREA_ARENA
+	ld c, a
+	ld l, DUELVARS_ARENA_CARD_ATTACHED_TOOL
+	ld e, l
+	ld d, h
+	ld l, DUELVARS_ARENA_CARD_STATUS
+.loop
+	ld a, [de]
+	push de
+	call GetCardIDFromDeckIndex  ; preserves hl, bc
+	ld a, e
+	pop de
+
+; sitrus_berry
+	cp SITRUS_BERRY
+	jr nz, .lum_berry
+	jr .next
+	push bc
+	call GetCardDamageAndMaxHP  ; preserves: hl, b, de
+	pop bc
+	cp 20
+	jr c, .next
+; heal damage
+	push de
+	push hl
+	ld d, 20
+	ld e, b
+	farcall HealPlayAreaCardHP.damaged  ; preserves bc
+	pop hl
+	pop de
+	jr .discard_tool
+
+.lum_berry
+	cp LUM_BERRY
+	jr nz, .next
+; check status
+	ld a, [hl]
+	or a
+	jr z, .next
+; clear status
+	xor a
+	ld [hl], a
+	; jr .discard_tool
+
+.discard_tool
+	ld a, [de]
+	call PutCardInDiscardPile
+	ld a, $ff
+	ld [de], a
+.next
+	inc hl
+	inc de
+	inc b
+	dec c
+	jr nz, .loop
+	call SwapTurn
+
 ; return if Pokémon Powers are disabled
 	call ArePokemonPowersDisabled
 	ret c

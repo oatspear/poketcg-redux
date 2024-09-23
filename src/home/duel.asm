@@ -2751,6 +2751,7 @@ GetPlayAreaCardRetreatCost:
 ; output:
 ;	a = damage;
 ;	c = max HP.
+; preserves: hl, b, de
 GetCardDamageAndMaxHP:
 	push hl
 	push de
