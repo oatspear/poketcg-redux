@@ -137,7 +137,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PlayCheck1Text                                     ; 0x0084
 	textpointer PlayCheck2Text                                     ; 0x0085
 	textpointer SelectCheckText                                    ; 0x0086
-	textpointer Text0087                                           ; 0x0087
 	textpointer DuelistIsThinkingText                              ; 0x0088
 	textpointer ClearOpponentNameText                              ; 0x0089
 	textpointer SelectComputerOpponentText                         ; 0x008a

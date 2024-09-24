@@ -632,13 +632,6 @@ SelectCheckText: ; 36f31 (d:6f31)
 	line "  Check"
 	done
 
-Text0087: ; 36f43 (d:6f43)
-	textfw3 "B"
-	textfw0 "<RAMNUM>"
-	textfw3 "S"
-	textfw0 "<RAMNUM>"
-	done
-
 DuelistIsThinkingText: ; 36f4a (d:6f4a)
 	text "<RAMNAME> is thinking."
 	done
