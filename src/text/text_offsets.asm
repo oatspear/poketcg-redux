@@ -141,28 +141,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ClearOpponentNameText                              ; 0x0089
 	textpointer SelectComputerOpponentText                         ; 0x008a
 	textpointer NumberOfPrizesText                                 ; 0x008b
-	textpointer Text008c                                           ; 0x008c
-	textpointer Text008d                                           ; 0x008d
-	textpointer Text008e                                           ; 0x008e
-	textpointer Text008f                                           ; 0x008f
-	textpointer Text0090                                           ; 0x0090
-	textpointer Text0091                                           ; 0x0091
 	textpointer Player2Text                                        ; 0x0092
-	textpointer Text0093                                           ; 0x0093
-	textpointer Text0094                                           ; 0x0094
-	textpointer Text0095                                           ; 0x0095
-	textpointer Text0096                                           ; 0x0096
-	textpointer Text0097                                           ; 0x0097
-	textpointer Text0098                                           ; 0x0098
-	textpointer Text0099                                           ; 0x0099
-	textpointer Text009a                                           ; 0x009a
-	textpointer Text009b                                           ; 0x009b
-	textpointer Text009c                                           ; 0x009c
-	textpointer Text009d                                           ; 0x009d
-	textpointer Text009e                                           ; 0x009e
-	textpointer Text009f                                           ; 0x009f
-	textpointer Text00a0                                           ; 0x00a0
-	textpointer Text00a1                                           ; 0x00a1
 	textpointer ResetBackUpRamText                                 ; 0x00a2
 	textpointer YourDataWasDestroyedSomehowText                    ; 0x00a3
 	textpointer NoCardsInHandText                                  ; 0x00a4
