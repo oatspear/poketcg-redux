@@ -7077,13 +7077,8 @@ HandleBetweenTurnsEvents:
 	jr nz, .something_to_handle
 ;	call PreprocessHealingNectar
 ;	jr c, .something_to_handle
-; OATS poison only ticks for the turn holder
-; OATS sleep checks are no longer done between turns
-	; call SwapTurn
-	; call IsArenaPokemonPoisonedOrBurned
-	; call SwapTurn
-	; jr c, .something_to_handle
-;.nothing_to_handle
+
+.nothing_to_handle
 	call ClearStatusFromBenchedPokemon
 	call ClearPokemonFlags_EndOfTurn
 	call DiscardAttachedPluspowers
@@ -7142,26 +7137,13 @@ HandleBetweenTurnsEvents:
 	call WaitForWideTextBoxInput
 
 .discard_pluspower
-	call ClearStatusFromBenchedPokemon
-	call ClearPokemonFlags_EndOfTurn
-	call DiscardAttachedPluspowers
+	call .nothing_to_handle
 	call SwapTurn
 	ld a, DUELVARS_ARENA_CARD
 	call GetTurnDuelistVariable
 	call GetCardIDFromDeckIndex
 	ld a, e
 	ld [wTempNonTurnDuelistCardID], a
-; OATS poison damage only for the turn holder
-	; ld l, DUELVARS_ARENA_CARD_STATUS
-	; ld a, [hl]
-	; or a
-	; jr z, .asm_6c3a
-	; call HandlePoisonDamage
-; OATS sleep check is no longer handled between turns
-	; jr c, .asm_6c3a
-	; call HandleSleepCheck
-.asm_6c3a
-	call DiscardAttachedDefenders
 	call SwapTurn
 	jp ClearKnockedOutPokemon_TakePrizes_CheckGameOutcome
 
