@@ -821,16 +821,6 @@ NoAttackMayBeChoosenText: ; 3781b (d:781b)
 	text "No Attacks may be choosen."
 	done
 
-; YouDidNotReceiveAnAttackToMirrorMoveText: ; 37837 (d:7837)
-; 	text "You did not receive an Attack"
-; 	line "to Mirror Move."
-; 	done
-
-ThisAttackCannotBeUsedTwiceText: ; 37866 (d:7866)
-	text "This attack cannot"
-	line "be used twice."
-	done
-
 NoWeaknessText: ; 37889 (d:7889)
 	text "No Weakness."
 	done
@@ -868,11 +858,6 @@ NoGrassEnergyText: ; 37946 (d:7946)
 	text "No Grass Energy."
 	done
 
-CannotUseSinceTheresOnly1PkmnText: ; 37958 (d:7958)
-	text "Cannot use since there's only"
-	line "1 Pokémon."
-	done
-
 CannotUseBecauseItWillBeKnockedOutText: ; 37982 (d:7982)
 	text "Cannot use because"
 	line "it will be Knocked Out."
@@ -898,10 +883,6 @@ ENDC
 
 UnableToUsePkmnPowerText:
 	text "Unable to use Pokémon Powers."
-	done
-
-Text00d5: ; 37a3a (d:7a3a)
-	text "Transmission Error."
 	done
 
 BackUpIsBrokenText: ; 37a59 (d:7a59)
@@ -940,16 +921,6 @@ PrintingWasInterruptedText: ; 37b42 (d:7b42)
 CardPopCannotBePlayedWithTheGameBoyText: ; 37b5d (d:7b5d)
 	text "Card Pop! can only be played"
 	line "with a Game Boy Color."
-	done
-
-ParalysisCheckText: ; 37c15 (d:7c15)
-	text "Paralysis check!"
-	line "If Heads, opponent is Paralyzed."
-	done
-
-ConfusionCheckText: ; 37ca8 (d:7ca8)
-	text "Confusion check! If Heads,"
-	line "opponent becomes Confused."
 	done
 
 CardCheckIfHeads8CardsIfTails1CardText: ; 37f24 (d:7f24)

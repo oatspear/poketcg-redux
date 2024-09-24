@@ -1443,6 +1443,11 @@ PrimalTentacle_SwitchTrapAndDevolveEffect:
 
 
 
+;
+UnableToEvolveDueToPrehistoricPowerText: ; 38359 (e:4359)
+	text "Unable to evolve due to the"
+	line "effects of Prehistoric Power."
+	done
 
 ; return carry if a Pokémon Power capable Aerodactyl
 ; is found in either player's Active Spot.
@@ -4056,6 +4061,11 @@ Whirlpool_DiscardEffect: ; 2d214 (b:5214)
 	ret
 
 
+;
+ParalysisCheckText: ; 37c15 (d:7c15)
+	text "Paralysis check!"
+	line "If Heads, opponent is Paralyzed."
+	done
 
 Quickfreeze_Paralysis50PercentEffect: ; 2d2f3 (b:52f3)
 	ldtx de, ParalysisCheckText
@@ -4573,6 +4583,12 @@ TripleAttackX20X10_AIEffect: ; 2e4d6 (b:64d6)
 	lb de, 30, 60
 	jp SetExpectedAIDamage
 
+;
+DamageCheckIfHeadsXDamageText: ; 37fcd (d:7fcd)
+	text "Damage check!"
+	line "If Heads, x <RAMNUM> damage!!"
+	done
+
 TripleAttackX20X10_MultiplierEffect: ; 2e4de (b:64de)
 	ld hl, 20
 	call LoadTxRam3
@@ -4664,6 +4680,12 @@ Heads20Plus10Damage_AIEffect:
 	ld a, (20 + 10) / 2
 	lb de, 20, 30
 	jp SetExpectedAIDamage
+
+;
+DamageCheckIfHeadsPlusDamageText: ; 37fa8 (d:7fa8)
+	text "Damage check!"
+	line "If Heads, +<RAMNUM> damage!!"
+	done
 
 Heads10BonusDamage_DamageBoostEffect:
 	ld hl, 10
@@ -5930,6 +5952,11 @@ CurseEffectCommands:
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Curse_PlayerSelectEffect
 	db  $00
 
+CannotUseSinceTheresOnly1PkmnText: ; 37958 (d:7958)
+	text "Cannot use since there's only"
+	line "1 Pokémon."
+	done
+
 ; returns carry if Pkmn Power cannot be used, and
 ; sets the correct text in hl for failure.
 Curse_CheckDamageAndBench: ; 2d7fc (b:57fc)
@@ -6328,6 +6355,11 @@ BoyfriendsEffect: ; 2c998 (b:4998)
 	ret
 
 
+;
+IfHeadsOpponentCannotAttackText: ; 3816a (e:416a)
+text "If Heads, opponent cannot Attack"
+line "next turn!"
+done
 
 TailWagEffect: ; 2e94e (b:694e)
 	ldtx de, IfHeadsOpponentCannotAttackText
@@ -6800,6 +6832,11 @@ SpearowMirrorMove_BeforeDamage: ; 2e987 (b:6987)
 SpearowMirrorMove_AfterDamage: ; 2e989 (b:6989)
 	jp MirrorMoveEffects.AfterDamage
 
+; YouDidNotReceiveAnAttackToMirrorMoveText: ; 37837 (d:7837)
+; 	text "You did not receive an Attack"
+; 	line "to Mirror Move."
+; 	done
+
 ; these are effect commands that Mirror Move uses
 ; in order to mimic last turn's attack.
 ; it covers all possible effect steps to perform its commands
@@ -7193,6 +7230,12 @@ DancingEmbers_MultiplierEffect: ; 2d6ab (b:56ab)
 	ret
 
 
+;
+TrapCheckText:
+	text "Trap check! If Heads,"
+	line "unable to Retreat during next turn."
+	done
+
 ; If heads, defending Pokemon can't retreat next turn
 UnableToRetreat50PercentEffect:
 	ldtx de, TrapCheckText
@@ -7431,6 +7474,12 @@ Conversion1_WeaknessCheck: ; 2edd5 (b:6dd5)
 	scf
 	ret
 
+;
+ChooseWeaknessYouWishToChangeText: ; 385cf (e:45cf)
+	text "Choose the Weakness you wish"
+	line "to change with Conversion 1."
+	done
+
 Conversion1_PlayerSelectEffect: ; 2eded (b:6ded)
 	ldtx hl, ChooseWeaknessYouWishToChangeText
 	xor a ; PLAY_AREA_ARENA
@@ -7480,6 +7529,12 @@ Conversion2_ResistanceCheck: ; 2ee1f (b:6e1f)
 	scf
 	ret
 
+;
+ChooseResistanceYouWishToChangeText: ; 3860a (e:460a)
+	text "Choose the Resistance you wish"
+	line "to change with Conversion 2."
+	done
+
 Conversion2_PlayerSelectEffect: ; 2ee31 (b:6e31)
 	ldtx hl, ChooseResistanceYouWishToChangeText
 	ld a, $80
@@ -7506,6 +7561,13 @@ Conversion2_AISelectEffect: ; 2ee3c (b:6e3c)
 	call AISelectConversionColor
 	call SwapTurn
 	ret
+
+;
+ChangedTheResistanceOfPokemonToColorText: ; 386af (e:46af)
+	text "Changed the Resistance of"
+	line ""
+	text "<RAMTEXT> to <RAMTEXT>."
+	done
 
 Conversion2_ChangeResistanceEffect: ; 2ee5e (b:6e5e)
 ; apply changed resistance
@@ -7912,6 +7974,11 @@ SuperEnergyRetrieval_DiscardAndAddToHandEffect: ; 2fdfa (b:7dfa)
 
 
 ;
+IfHeadsNoDamageNextTurnText: ; 37f56 (d:7f56)
+	text "If Heads, prevent damage"
+	line "during opponent's next turn!"
+	done
+
 WithdrawEffect: ; 2d120 (b:5120)
 	ldtx de, IfHeadsNoDamageNextTurnText
 	call TossCoin_BankB
@@ -7972,6 +8039,11 @@ LeekSlap_OncePerDuelCheck: ; 2eb1f (b:6b1f)
 	scf
 	ret
 
+ThisAttackCannotBeUsedTwiceText: ; 37866 (d:7866)
+	text "This attack cannot"
+	line "be used twice."
+	done
+
 LeekSlap_SetUsedThisDuelFlag: ; 2eb2c (b:6b2c)
 	ld a, DUELVARS_ARENA_CARD_FLAGS
 	call GetTurnDuelistVariable
@@ -8007,6 +8079,11 @@ BoneAttackEffect: ; 2e30f (b:630f)
 
 
 ;
+IfHeadsDoNotReceiveDamageOrEffectText: ; 38124 (e:4124)
+	text "If Heads, do not receive damage"
+	line "or effect of opponent's next Attack!"
+	done
+
 SeadraAgilityEffect: ; 2d08b (b:508b)
 	ldtx de, IfHeadsDoNotReceiveDamageOrEffectText
 	call TossCoin_BankB

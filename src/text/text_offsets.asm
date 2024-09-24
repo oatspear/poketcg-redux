@@ -179,8 +179,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer NotEnoughPsychicEnergyText
 	textpointer ThereAreNoTrainerCardsInDiscardPileText            ; 0x00c4
 	textpointer NoAttackMayBeChoosenText                           ; 0x00c5
-	; textpointer YouDidNotReceiveAnAttackToMirrorMoveText           ; 0x00c6
-	textpointer ThisAttackCannotBeUsedTwiceText                    ; 0x00c7
 	textpointer NoWeaknessText                                     ; 0x00c8
 	textpointer NoResistanceText                                   ; 0x00c9
 	textpointer OnlyOncePerTurnText                                ; 0x00ca
@@ -188,13 +186,11 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer CannotBeUsedInTurnWhichWasPlayedText               ; 0x00cc
 	textpointer ThereIsNoEnergyCardAttachedText                    ; 0x00cd
 	textpointer NoGrassEnergyText                                  ; 0x00ce
-	textpointer CannotUseSinceTheresOnly1PkmnText                  ; 0x00cf
 	textpointer CannotUseBecauseItWillBeKnockedOutText             ; 0x00d0
 	textpointer CanOnlyBeUsedOnTheBenchText                        ; 0x00d1
 	textpointer ThereAreNoPokemonOnBenchText                       ; 0x00d2
 	textpointer OpponentIsNotAsleepText                            ; 0x00d3
 	textpointer UnableToUsePkmnPowerText
-	textpointer Text00d5                                           ; 0x00d5
 	textpointer BackUpIsBrokenText                                 ; 0x00d6
 	textpointer PrinterIsNotConnectedText                          ; 0x00d7
 	textpointer BatteriesHaveLostTheirChargeText                   ; 0x00d8
@@ -203,34 +199,18 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PrinterPacketErrorText                             ; 0x00db
 	textpointer PrintingWasInterruptedText                         ; 0x00dc
 	textpointer CardPopCannotBePlayedWithTheGameBoyText            ; 0x00dd
-	textpointer ParalysisCheckText                                 ; 0x00e0
-	textpointer ConfusionCheckText                                 ; 0x00e3
 	textpointer CardCheckIfHeads8CardsIfTails1CardText             ; 0x00f0
-	textpointer IfHeadsNoDamageNextTurnText                        ; 0x00f1
-	textpointer DamageCheckIfHeadsPlusDamageText                   ; 0x00f3
-	textpointer DamageCheckIfHeadsXDamageText                      ; 0x00f4
 	textpointer YouMayDiscard1EnergyToHealBurnText
 	textpointer AlreadyRetreatedThisTurnText                       ; 0x00f4
-	textpointer TrapCheckText                                      ; 0x00f5
-	; textpointer TransparencyCheckText                              ; 0x00f6
 	textpointer ConfusionCheckDamageText                           ; 0x00f7
-	textpointer ConfusionCheckRetreatText                          ; 0x00f8
 	textpointer PokemonsSleepCheckText                             ; 0x00f9
-	textpointer PoisonedIfHeadsConfusedIfTailsText                 ; 0x00fa
-	textpointer AsleepIfHeadsPoisonedIfTailsText
-	textpointer IfHeadsDoNotReceiveDamageOrEffectText              ; 0x00fb
-	textpointer IfHeadsOpponentCannotAttackText                    ; 0x00fc
-	textpointer AttackUnsuccessfulText                             ; 0x00fd
 	textpointer UnableToRetreatDueToTrapText
 	textpointer UnableToUseItemCardThisTurnText
 	textpointer UnableToAttackDueToEffectText
 	textpointer UnableToUseAttackDueToAmnesiaText                  ; 0x0103
 	textpointer KnockedOutDueToDestinyBondText                     ; 0x0104
 	textpointer ReceivesDamageDueToStrikeBackText                 ; 0x0105
-	textpointer UnableToEvolveDueToPrehistoricPowerText            ; 0x0106
 	textpointer NoDamageOrEffectDueToAgilityText
-	; textpointer NoDamageQueenPressText
-	textpointer UnableToUseAttackDueToNShieldText                  ; 0x010a
 	textpointer NoDamageOrEffectDueToNShieldText                   ; 0x010b
 	textpointer NoDamageOrEffectDueToTransparencyText              ; 0x010c
 	textpointer PutInPlayWithTransformText
@@ -241,7 +221,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ChooseResistanceYouWishToChangeText                ; 0x0112
 	textpointer ChoosePokemonWishToColorChangeText                 ; 0x0113
 	textpointer ChangedTheWeaknessOfPokemonToColorText             ; 0x0114
-	textpointer ChangedTheResistanceOfPokemonToColorText           ; 0x0115
 	textpointer ChangedTheColorOfText                              ; 0x0116
 	textpointer Draw1CardFromTheDeckText                           ; 0x0117
 	textpointer Draw2CardsFromTheDeckText                          ; 0x0117

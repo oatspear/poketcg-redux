@@ -136,6 +136,10 @@ UseAttackOrPokemonPower:
 
 
 
+;
+AttackUnsuccessfulText: ; 38197 (e:4197)
+	text "Attack unsuccessful."
+	done
 
 ; return carry if the turn holder's attack was unsuccessful due to reduced accuracy effect
 HandleReducedAccuracySubstatus:
