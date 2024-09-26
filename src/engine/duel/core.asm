@@ -4609,11 +4609,15 @@ DisplayEnergyOrTrainerCardPage:
 	ld a, [wLoadedCard1Type]
 	cp TYPE_TRAINER
 	jr c, .not_trainer_card
-	ld hl, CardPageItemTextData
-	jr z, .got_card_tag
-	cp TYPE_TRAINER_SUPPORTER
-	jr nz, .got_card_tag
 	ld hl, CardPageSupporterTextData
+	cp TYPE_TRAINER_SUPPORTER
+	jr z, .got_card_tag
+; Item or Tool
+	ld hl, CardPageItemTextData
+	ld a, [wLoadedCard1ID]
+	cp PLUSPOWER
+	jr c, .got_card_tag
+	ld hl, CardPageToolTextData
 .got_card_tag
 	call PlaceTextItems
 .not_trainer_card
@@ -4634,6 +4638,11 @@ DisplayEnergyOrTrainerCardPage:
 
 CardPageItemTextData:
 	textitem 2, 5, ItemText
+	db $ff
+
+CardPageToolTextData:
+	textitem 2, 5, ItemText
+	textitem 2, 6, ToolText
 	db $ff
 
 CardPageSupporterTextData:
