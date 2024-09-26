@@ -225,6 +225,7 @@ CardPointers:
 	dw DefenderCard
 	dw SitrusBerryCard
 	dw LumBerryCard
+	dw LeftoversCard
 	dw NULL
 	assert_table_length NUM_CARDS + 2
 
@@ -10338,4 +10339,15 @@ LumBerryCard:
 	db LUM_BERRY
 	dw PokemonToolEffectCommands ; effect commands
 	tx LumBerryDescription ; description
+	dw NONE ; description (cont)
+
+LeftoversCard:
+	db TYPE_TRAINER ; type
+	gfx LeftoversCardGfx ; gfx
+	tx LeftoversName ; name
+	db DIAMOND ; rarity
+	db COLOSSEUM | NONE ; sets
+	db LEFTOVERS
+	dw PokemonToolEffectCommands ; effect commands
+	tx LeftoversDescription ; description
 	dw NONE ; description (cont)

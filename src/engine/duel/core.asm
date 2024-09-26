@@ -7005,6 +7005,7 @@ HandleBetweenTurnsEvents:
 
 	call HandleSitrusBerry
 	call HandleLumBerry
+	call HandleLeftovers
 	call SwapTurn
 	call HandleSitrusBerry
 	call HandleLumBerry
@@ -7133,6 +7134,28 @@ HandleLumBerry:
 	inc b
 	dec c
 	jr nz, .loop
+	ret
+
+
+;
+HandleLeftovers:
+	ld a, DUELVARS_ARENA_CARD_ATTACHED_TOOL
+	call GetTurnDuelistVariable
+	call GetCardIDFromDeckIndex  ; preserves hl, bc
+	ld a, e
+	cp LEFTOVERS
+	ret nz  ; not Leftovers
+	ld e, PLAY_AREA_ARENA
+	call GetCardDamageAndMaxHP  ; preserves: hl, b, de
+	or a
+	ret z  ; no damage
+; heal damage
+	push af
+	call ShowBetweenTurnsTransitionAtMostOnce
+	pop af
+	ld d, 10
+	ld e, PLAY_AREA_ARENA
+	farcall HealPlayAreaCardHP.damaged  ; preserves bc
 	ret
 
 

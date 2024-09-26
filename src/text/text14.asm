@@ -507,6 +507,17 @@ LumBerryDescription:
 	line "discard this card."
 	done
 
+LeftoversName:
+	text "Leftovers"
+	done
+
+LeftoversDescription:
+	text "At the end of your turn, if the"
+	line "Pokémon this card is attached to is"
+	line "in the Active Spot, heal 10 damage"
+	line "from it."
+	done
+
 AlreadyHasAToolAttachedText:
 	text "That Pokémon already has a Tool"
 	line "attached to it."

@@ -255,8 +255,9 @@ cards = {
 	0xdc: "POKEMON_NURSE",
 	0xdd: "PLUSPOWER",
 	0xde: "DEFENDER",
-	0xde: "SITRUS_BERRY",
-	0xde: "LUM_BERRY",
+	0xdf: "SITRUS_BERRY",
+	0xe0: "LUM_BERRY",
+	0xe1: "LEFTOVERS",
 	0xff: "$ff",
 }
 

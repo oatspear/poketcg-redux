@@ -2411,3 +2411,7 @@ SitrusBerryCardGfx::
 LumBerryCardGfx::
 	INCBIN "gfx/cards/lumberry.2bpp"
 	INCBIN "gfx/cards/lumberry.pal"
+
+LeftoversCardGfx::
+	INCBIN "gfx/cards/leftovers.2bpp"
+	INCBIN "gfx/cards/leftovers.pal"

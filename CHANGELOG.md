@@ -17,6 +17,10 @@
 - Pokémon Tool Trainer card.
 - At the end of each turn, if the holder has status, heals all status and discards the tool.
 
+#### Leftovers
+- Pokémon Tool Trainer card.
+- At the end of the owner's turn, if the holder is in the Active Spot, heals 10 damage.
+
 ### Removed Cards
 - Clefairy Doll
 
