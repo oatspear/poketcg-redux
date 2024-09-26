@@ -2348,6 +2348,10 @@ DevolutionSprayCardGfx::
 
 SECTION "Card Gfx 11", ROMX
 
+UltraBallCardGfx::
+	INCBIN "gfx/cards/ultraball.2bpp"
+	INCBIN "gfx/cards/ultraball.pal"
+
 PotionCardGfx::
 	INCBIN "gfx/cards/potion.2bpp"
 	INCBIN "gfx/cards/potion.pal"

@@ -10107,7 +10107,7 @@ PokeBallCard:
 
 UltraBallCard:
 	db TYPE_TRAINER ; type
-	gfx PokeBallCardGfx ; gfx
+	gfx UltraBallCardGfx ; gfx
 	tx UltraBallName ; name
 	db DIAMOND ; rarity
 	db COLOSSEUM | NONE ; sets
