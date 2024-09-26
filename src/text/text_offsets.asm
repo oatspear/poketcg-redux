@@ -3112,10 +3112,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ComputerSearchDescription                          ; 0x0b90
 	textpointer PokedexName                                        ; 0x0b91
 	textpointer PokedexDescription                                 ; 0x0b92
-	textpointer PlusPowerName                                      ; 0x0b93
-	textpointer PlusPowerDescription                               ; 0x0b94
-	textpointer DefenderName                                       ; 0x0b95
-	textpointer DefenderDescription                                ; 0x0b96
 	textpointer ItemFinderName                                     ; 0x0b97
 	textpointer ItemFinderDescription                              ; 0x0b98
 	textpointer GiovanniName
@@ -3143,6 +3139,14 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer SuperRodDescription
 	textpointer PokemonNurseName
 	textpointer PokemonNurseDescription
+	textpointer PlusPowerName
+	textpointer PlusPowerDescription
+	textpointer DefenderName
+	textpointer DefenderDescription
+	textpointer SitrusBerryName
+	textpointer SitrusBerryDescription
+	textpointer LumBerryName
+	textpointer LumBerryDescription
 	textpointer DarknessEnergyName                                 ; 0x0bae
 	textpointer DarknessEnergyDescription                          ; 0x0baf
 	textpointer AlreadyHasAToolAttachedText

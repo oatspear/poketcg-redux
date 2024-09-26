@@ -10149,30 +10149,6 @@ PokedexCard:
 	tx PokedexDescription ; description
 	dw NONE ; description (cont)
 
-PlusPowerCard:
-	db TYPE_TRAINER ; type
-	gfx PlusPowerCardGfx ; gfx
-	tx PlusPowerName ; name
-	db DIAMOND ; rarity
-	db COLOSSEUM | NONE ; sets
-	db PLUSPOWER
-	dw PlusPowerEffectCommands ; effect commands
-	tx PlusPowerDescription ; description
-	dw NONE ; description (cont)
-
-SitrusBerryCard:
-LumBerryCard:
-DefenderCard:
-	db TYPE_TRAINER ; type
-	gfx DefenderCardGfx ; gfx
-	tx DefenderName ; name
-	db DIAMOND ; rarity
-	db COLOSSEUM | NONE ; sets
-	db DEFENDER
-	dw PokemonToolEffectCommands ; effect commands
-	tx DefenderDescription ; description
-	dw NONE ; description (cont)
-
 ItemFinderCard:
 	db TYPE_TRAINER ; type
 	gfx ItemFinderCardGfx ; gfx
@@ -10314,4 +10290,52 @@ PokemonNurseCard:
 	db POKEMON_NURSE
 	dw PokemonNurseEffectCommands ; effect commands
 	tx PokemonNurseDescription ; description
+	dw NONE ; description (cont)
+
+; ------------------------------------------------------------------------------
+; Pokémon Tools
+; ------------------------------------------------------------------------------
+
+PlusPowerCard:
+	db TYPE_TRAINER ; type
+	gfx PlusPowerCardGfx ; gfx
+	tx PlusPowerName ; name
+	db DIAMOND ; rarity
+	db COLOSSEUM | NONE ; sets
+	db PLUSPOWER
+	dw PlusPowerEffectCommands ; effect commands
+	tx PlusPowerDescription ; description
+	dw NONE ; description (cont)
+
+DefenderCard:
+	db TYPE_TRAINER ; type
+	gfx DefenderCardGfx ; gfx
+	tx DefenderName ; name
+	db DIAMOND ; rarity
+	db COLOSSEUM | NONE ; sets
+	db DEFENDER
+	dw PokemonToolEffectCommands ; effect commands
+	tx DefenderDescription ; description
+	dw NONE ; description (cont)
+
+SitrusBerryCard:
+	db TYPE_TRAINER ; type
+	gfx DefenderCardGfx ; gfx
+	tx SitrusBerryName ; name
+	db DIAMOND ; rarity
+	db COLOSSEUM | NONE ; sets
+	db SITRUS_BERRY
+	dw PokemonToolEffectCommands ; effect commands
+	tx SitrusBerryDescription ; description
+	dw NONE ; description (cont)
+
+LumBerryCard:
+	db TYPE_TRAINER ; type
+	gfx DefenderCardGfx ; gfx
+	tx LumBerryName ; name
+	db DIAMOND ; rarity
+	db COLOSSEUM | NONE ; sets
+	db LUM_BERRY
+	dw PokemonToolEffectCommands ; effect commands
+	tx LumBerryDescription ; description
 	dw NONE ; description (cont)

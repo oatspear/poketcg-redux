@@ -326,31 +326,6 @@ PokedexDescription:
 	line "the top of your deck in any order."
 	done
 
-PlusPowerName:
-	text "PlusPower"
-	done
-
-PlusPowerDescription:
-	text "Attach this card to your Active"
-	line "Pokémon. At the end of your turn,"
-	line "discard this card. If this Pokémon's"
-	line "attack does damage to any Active"
-	line "Pokémon, the attack does 10 more"
-	line "damage to that Active Pokémon."
-	done
-
-DefenderName:
-	text "Defender"
-	done
-
-DefenderDescription:
-	text "Attach this card to 1 of your"
-	line "Pokémon. At the end of your"
-	line "opponent's next turn, discard"
-	line "this card. Damage done to that"
-	line "Pokémon by attacks is reduced by 20."
-	done
-
 ItemFinderName:
 	text "Item Finder"
 	done
@@ -481,6 +456,55 @@ SuperRodDescription:
 	text "Shuffle up to 3 Pokémon or Basic"
 	line "Energy cards from your discard pile"
 	line "back into your deck."
+	done
+
+PlusPowerName:
+	text "PlusPower"
+	done
+
+PlusPowerDescription:
+	text "Attach this card to your Active"
+	line "Pokémon. At the end of your turn,"
+	line "discard this card. If this Pokémon's"
+	line "attack does damage to any Active"
+	line "Pokémon, the attack does 10 more"
+	line "damage to that Active Pokémon."
+	done
+
+DefenderName:
+	text "Defender"
+	done
+
+DefenderDescription:
+	text "Attach this card to 1 of your"
+	line "Pokémon. At the end of your"
+	line "opponent's next turn, discard"
+	line "this card. Damage done to that"
+	line "Pokémon by attacks is reduced by 20."
+	done
+
+SitrusBerryName:
+	text "Sitrus Berry"
+	done
+
+SitrusBerryDescription:
+	text "At the end of each turn, if the"
+	line "Pokémon this card is attached to"
+	line "has 2 or more damage counters on it,"
+	line "heal 20 damage from it and discard"
+	line "this card."
+	done
+
+LumBerryName:
+	text "Lum Berry"
+	done
+
+LumBerryDescription:
+	text "At the end of each turn, if the"
+	line "Pokémon this card is attached to is"
+	line "affected by any Special Conditions,"
+	line "it recovers from all of them, and"
+	line "discard this card."
 	done
 
 AlreadyHasAToolAttachedText:
