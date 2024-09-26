@@ -9,6 +9,14 @@
 - Discards 2 other cards from the hand in order to use it.
 - Add any Pokémon from the deck to the hand.
 
+#### Sitrus Berry
+- Pokémon Tool Trainer card.
+- At the end of each turn, if the holder has 2 or more damage counters on it, heals 20 damage and discards the tool.
+
+#### Lum Berry
+- Pokémon Tool Trainer card.
+- At the end of each turn, if the holder has status, heals all status and discards the tool.
+
 ### Removed Cards
 - Clefairy Doll
 
