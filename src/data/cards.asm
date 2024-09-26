@@ -10331,7 +10331,7 @@ SitrusBerryCard:
 
 LumBerryCard:
 	db TYPE_TRAINER ; type
-	gfx DefenderCardGfx ; gfx
+	gfx LumBerryCardGfx ; gfx
 	tx LumBerryName ; name
 	db DIAMOND ; rarity
 	db COLOSSEUM | NONE ; sets
