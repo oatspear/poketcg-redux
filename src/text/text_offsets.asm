@@ -48,6 +48,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer IsCuredOfSleepText                                 ; 0x0029
 	textpointer IsCuredOfParalysisText                             ; 0x002a
 	textpointer IsCuredOfBurnText
+	textpointer IsCuredOfStatusText
 	textpointer BetweenTurnsText                                   ; 0x002b
 	textpointer NoEnergyCardsText                                  ; 0x002d
 	textpointer IsThisOKText                                       ; 0x002e
@@ -217,8 +218,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer SelectPkmnOnBenchToSwitchWithActiveText            ; 0x010e
 	textpointer SelectPokemonToPlaceInTheArenaText                 ; 0x010f
 	textpointer DuelistIsSelectingPokemonToPlaceInArenaText        ; 0x0110
-	textpointer ChooseWeaknessYouWishToChangeText                  ; 0x0111
-	textpointer ChooseResistanceYouWishToChangeText                ; 0x0112
 	textpointer ChoosePokemonWishToColorChangeText                 ; 0x0113
 	textpointer ChangedTheWeaknessOfPokemonToColorText             ; 0x0114
 	textpointer ChangedTheColorOfText                              ; 0x0116

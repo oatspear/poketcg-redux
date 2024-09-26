@@ -207,6 +207,11 @@ IsCuredOfBurnText:
 	line "cured of Burn."
 	done
 
+IsCuredOfStatusText:
+	text "<RAMTEXT> is"
+	line "cured of Special Conditions."
+	done
+
 BetweenTurnsText: ; 36553 (d:6553)
 	text "Between Turns."
 	done
