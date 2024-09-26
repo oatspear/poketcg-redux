@@ -2341,20 +2341,12 @@ EnergySwitchCardGfx::
 	INCBIN "gfx/cards/energyswitch.2bpp"
 	INCBIN "gfx/cards/energyswitch.pal"
 
-; EnergyRemovalCardGfx::
-; 	INCBIN "gfx/cards/energyremoval.2bpp"
-; 	INCBIN "gfx/cards/energyremoval.pal"
-
-; SuperEnergyRemovalCardGfx::
-; 	INCBIN "gfx/cards/superenergyremoval.2bpp"
-; 	INCBIN "gfx/cards/superenergyremoval.pal"
-
-
-SECTION "Card Gfx 11", ROMX
-
 SwitchCardGfx::
 	INCBIN "gfx/cards/switch.2bpp"
 	INCBIN "gfx/cards/switch.pal"
+
+
+SECTION "Card Gfx 11", ROMX
 
 PokemonCenterCardGfx::
 	INCBIN "gfx/cards/pokemoncenter.2bpp"
@@ -2376,21 +2368,9 @@ PokedexCardGfx::
 	INCBIN "gfx/cards/pokedex.2bpp"
 	INCBIN "gfx/cards/pokedex.pal"
 
-PlusPowerCardGfx::
-	INCBIN "gfx/cards/pluspower.2bpp"
-	INCBIN "gfx/cards/pluspower.pal"
-
-DefenderCardGfx::
-	INCBIN "gfx/cards/defender.2bpp"
-	INCBIN "gfx/cards/defender.pal"
-
 ItemFinderCardGfx::
 	INCBIN "gfx/cards/itemfinder.2bpp"
 	INCBIN "gfx/cards/itemfinder.pal"
-
-;GustOfWindCardGfx::
-;	INCBIN "gfx/cards/gustofwind.2bpp"
-;	INCBIN "gfx/cards/gustofwind.pal"
 
 DevolutionSprayCardGfx::
 	INCBIN "gfx/cards/devolutionspray.2bpp"
@@ -2439,6 +2419,18 @@ ScoopUpNetCardGfx::
 GiovanniCardGfx::
 	INCBIN "gfx/cards/giovanni.2bpp"
 	INCBIN "gfx/cards/giovanni.pal"
+
+PlusPowerCardGfx::
+	INCBIN "gfx/cards/pluspower.2bpp"
+	INCBIN "gfx/cards/pluspower.pal"
+
+DefenderCardGfx::
+	INCBIN "gfx/cards/defender.2bpp"
+	INCBIN "gfx/cards/defender.pal"
+
+SitrusBerryCardGfx::
+	INCBIN "gfx/cards/sitrusberry.2bpp"
+	INCBIN "gfx/cards/sitrusberry.pal"
 
 ; Section grows too big here
 

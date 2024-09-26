@@ -10320,7 +10320,7 @@ DefenderCard:
 
 SitrusBerryCard:
 	db TYPE_TRAINER ; type
-	gfx DefenderCardGfx ; gfx
+	gfx SitrusBerryCardGfx ; gfx
 	tx SitrusBerryName ; name
 	db DIAMOND ; rarity
 	db COLOSSEUM | NONE ; sets
