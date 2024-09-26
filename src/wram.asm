@@ -1132,7 +1132,7 @@ wEndOfTurnPowerVariables::
 wGarbageEaterDamageToHeal:: ; cdc0
 	ds $1
 
-wAfflictionAffectedPlayArea:: ; cdc1
+wAlreadyDisplayedBetweenTurnsScreen:: ; cdc1
 	ds $1
 
 ; unused free space

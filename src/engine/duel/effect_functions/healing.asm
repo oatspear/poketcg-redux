@@ -198,9 +198,7 @@ HealPlayAreaCardHP:
 	ld d, a                     ; else, heal at most a damage
 .got_amount_to_heal
 ; play heal animation
-	push bc
-	call PlayHealingAnimation_PlayAreaPokemon
-	pop bc
+	bank1call PlayHealingAnimation_PlayAreaPokemon
 
 ; heal the target Pokemon
 	ld a, DUELVARS_ARENA_CARD_HP
@@ -229,38 +227,6 @@ HealPlayAreaCardHP:
 ; .skip_cap
 	; ld [hl], e ; apply new HP to arena card
 	; ret
-
-
-
-; plays a healing animation for a play area Pokémon
-; (shows the Play Area screen and the arrow up with healing animation)
-; input:
-;   d: amount of damage to heal
-;   e: PLAY_AREA_* location of card to heal
-; preserves: de
-PlayHealingAnimation_PlayAreaPokemon:
-; play heal animation
-	push de
-	ld b, e
-; animation requires damage to heal in de, not d
-	ld e, d
-	ld d, $00
-	ld a, ATK_ANIM_HEALING_WIND_PLAY_AREA
-	bank1call PlayAdhocAnimationOnPlayAreaLocation_Weakness  ; preserves de
-	ld l, e
-	ld h, d
-
-; print Pokemon card name and damage healed
-	call LoadTxRam3
-	pop de
-	push de
-	ld a, DUELVARS_ARENA_CARD
-	add e
-	call LoadCardNameAndLevelFromVarToRam2
-	ldtx hl, PokemonHealedDamageText
-	call DrawWideTextBox_WaitForInput
-	pop de
-	ret
 
 
 Aromatherapy_HealEffect:

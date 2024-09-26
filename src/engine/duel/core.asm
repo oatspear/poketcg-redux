@@ -175,7 +175,6 @@ MainDuelLoop:
 	ld a, [wDuelFinished]
 	or a
 	jr nz, .duel_finished
-	call HandleEndOfTurnEvents
 	call UpdateSubstatusConditions_EndOfTurn
 	call HandleBetweenTurnsEvents
 	call Func_3b31
@@ -6990,154 +6989,36 @@ HandleOnRetreatEffects:
 	ret
 
 
-HandleEndOfTurnEvents:
-; reset end of turn variables
-; handle Sitrus Berry and Lum Berry
-	call SwapTurn
-	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
-	call GetTurnDuelistVariable
-	ld b, PLAY_AREA_ARENA
-	ld c, a
-	ld l, DUELVARS_ARENA_CARD_ATTACHED_TOOL
-	ld e, l
-	ld d, h
-	ld l, DUELVARS_ARENA_CARD_STATUS
-.loop
-	ld a, [de]
-	push de
-	call GetCardIDFromDeckIndex  ; preserves hl, bc
-	ld a, e
-	pop de
-
-; sitrus_berry
-	cp SITRUS_BERRY
-	jr nz, .lum_berry
-	jr .next
-	push bc
-	call GetCardDamageAndMaxHP  ; preserves: hl, b, de
-	pop bc
-	cp 20
-	jr c, .next
-; heal damage
-	push de
-	push hl
-	ld d, 20
-	ld e, b
-	farcall HealPlayAreaCardHP.damaged  ; preserves bc
-	pop hl
-	pop de
-	jr .discard_tool
-
-.lum_berry
-	cp LUM_BERRY
-	jr nz, .next
-; check status
-	ld a, [hl]
-	or a
-	jr z, .next
-; clear status
-	xor a
-	ld [hl], a
-	; jr .discard_tool
-
-.discard_tool
-	ld a, [de]
-	call PutCardInDiscardPile
-	ld a, $ff
-	ld [de], a
-.next
-	inc hl
-	inc de
-	inc b
-	dec c
-	jr nz, .loop
-	call SwapTurn
-
-; return if Pokémon Powers are disabled
-	call ArePokemonPowersDisabled
-	ret c
-
-; check for Haunter's Affliction Ability
-	; ld a, HAUNTER_LV22
-	; call CountPokemonIDInPlayArea
-	; jr nc, .done
-	farcall Affliction_CountPokemonAndSetVariable
-.done
-	ret
-
-
 ; apply and/or refresh status conditions and other events that trigger between turns
 HandleBetweenTurnsEvents:
-	call IsArenaPokemonPoisonedOrBurned
-	jr c, .something_to_handle
-	cp PARALYZED
-	jr z, .something_to_handle
-	ld a, [wAfflictionAffectedPlayArea]
-	or a
-	jr nz, .something_to_handle
-;	call PreprocessHealingNectar
-;	jr c, .something_to_handle
+	xor a
+	ld [wAlreadyDisplayedBetweenTurnsScreen], a
 
-.nothing_to_handle
+	call HandleSitrusBerry
+	call HandleLumBerry
+	call SwapTurn
+	call HandleSitrusBerry
+	call HandleLumBerry
+	call SwapTurn
+
+	call ArePokemonPowersDisabled
+	call nc, HandleEndOfTurnEffect_Affliction
+	call HandleEndOfTurnEffect_StatusConditions
+
+; handle things that do not trigger a Between Turns transition
 	call ClearStatusFromBenchedPokemon
 	call ClearPokemonFlags_EndOfTurn
 	call DiscardAttachedPluspowers
 	call SwapTurn
 	call DiscardAttachedDefenders
-	jp SwapTurn
+	call SwapTurn
 
-.something_to_handle
-; turn holder's arena Pokemon is paralyzed, poisoned or double poisoned
-; or there are End of Turn Pokémon Powers to trigger
-	call Func_3b21
-	call ZeroObjectPositionsAndToggleOAMCopy
-	call EmptyScreen
-	ld a, BOXMSG_BETWEEN_TURNS
-	call DrawDuelBoxMessage
-	ldtx hl, BetweenTurnsText
-	call DrawWideTextBox_WaitForInput
-
-; handle Haunter's Affliction
-	farcall Affliction_DamageEffect
-
-; handle status conditions
-.status_conditions
-	ld a, DUELVARS_ARENA_CARD
-	call GetTurnDuelistVariable
-	call GetCardIDFromDeckIndex
-	ld a, e
-	ld [wTempNonTurnDuelistCardID], a
-; handle Gloom's Healing Nectar
-;	call HandleHealingNectar
-; handle status
-	ld l, DUELVARS_ARENA_CARD_STATUS
-	ld a, [hl]
+	ld a, [wAlreadyDisplayedBetweenTurnsScreen]
 	or a
-	jr z, .discard_pluspower
-	; has status condition
-	call HandlePoisonDamage
-	ld a, [hl]
-	call HandleBurnDamage
-	jr c, .discard_pluspower
-; OATS sleep check is no longer between turns
-	; call HandleSleepCheck
-	ld a, [hl]
-	and CNF_SLP_PRZ
-	cp PARALYZED
-	jr nz, .discard_pluspower
-	; heal paralysis
-	ld a, PSN_DBLPSN_BRN
-	and [hl]
-	ld [hl], a
-	call Func_6c7e
-	ldtx hl, IsCuredOfParalysisText
-	call PrintNonTurnDuelistCardIDText
-	ld a, DUEL_ANIM_HEAL
-	call Func_6cab
-	call WaitForWideTextBoxInput
+	ret z  ; done
 
-.discard_pluspower
-	call .nothing_to_handle
+; if something triggered Between Turns screen,
+; check if some Pokémon were Knocked Out
 	call SwapTurn
 	ld a, DUELVARS_ARENA_CARD
 	call GetTurnDuelistVariable
@@ -7146,6 +7027,194 @@ HandleBetweenTurnsEvents:
 	ld [wTempNonTurnDuelistCardID], a
 	call SwapTurn
 	jp ClearKnockedOutPokemon_TakePrizes_CheckGameOutcome
+
+
+ShowBetweenTurnsTransitionAtMostOnce:
+	ld a, [wAlreadyDisplayedBetweenTurnsScreen]
+	or a
+	ret nz  ; already displayed
+	ld a, TRUE
+	ld [wAlreadyDisplayedBetweenTurnsScreen], a
+	call Func_3b21
+	call ZeroObjectPositionsAndToggleOAMCopy
+	call EmptyScreen
+	ld a, BOXMSG_BETWEEN_TURNS
+	call DrawDuelBoxMessage
+	ldtx hl, BetweenTurnsText
+	jp DrawWideTextBox_WaitForInput
+
+
+;
+HandleSitrusBerry:
+	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+	call GetTurnDuelistVariable
+	ld b, PLAY_AREA_ARENA
+	ld c, a
+	ld l, DUELVARS_ARENA_CARD_ATTACHED_TOOL
+.loop
+	ld a, [hl]
+	call GetCardIDFromDeckIndex  ; preserves hl, bc
+	ld a, e
+	cp SITRUS_BERRY
+	jr nz, .next
+	push bc
+	call GetCardDamageAndMaxHP  ; preserves: hl, b, de
+	pop bc
+	cp 20
+	jr c, .next
+; heal damage
+	push af
+	push hl
+	push bc
+	call ShowBetweenTurnsTransitionAtMostOnce
+	pop bc
+	pop hl
+	pop af
+	push hl
+	ld d, 20
+	ld e, b
+	farcall HealPlayAreaCardHP.damaged  ; preserves bc
+	pop hl
+; discard tool
+	ld a, [hl]
+	call PutCardInDiscardPile
+	ld a, $ff
+	ld [hl], a
+.next
+	inc hl
+	inc b
+	dec c
+	jr nz, .loop
+	ret
+
+
+HandleLumBerry:
+	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+	call GetTurnDuelistVariable
+	ld b, PLAY_AREA_ARENA
+	ld c, a
+	ld l, DUELVARS_ARENA_CARD_STATUS
+	ld e, l
+	ld d, h
+	ld l, DUELVARS_ARENA_CARD_ATTACHED_TOOL
+.loop
+	ld a, [hl]
+	push de
+	call GetCardIDFromDeckIndex  ; preserves hl, bc
+	ld a, e
+	pop de
+	cp LUM_BERRY
+	jr nz, .next
+; check status
+	ld a, [de]
+	or a
+	jr z, .next
+; clear status
+	xor a
+	ld [de], a
+	call AnimateLumBerryEffect
+; discard tool
+	ld a, [hl]
+	call PutCardInDiscardPile
+	ld a, $ff
+	ld [hl], a
+.next
+	inc hl
+	inc de
+	inc b
+	dec c
+	jr nz, .loop
+	ret
+
+
+; plays a healing animation for a play area Pokémon
+; and cures that Pokémon of status
+; input:
+;   b: PLAY_AREA_* offset of card to heal
+; preserves: hl, bc, de
+AnimateLumBerryEffect:
+	push hl
+	push de
+	push bc
+	call ShowBetweenTurnsTransitionAtMostOnce
+	ld c, WEAKNESS
+	ld a, ATK_ANIM_GLOW_PLAY_AREA
+	call PlayAdhocAnimationOnPlayAreaLocation
+	pop bc
+	push bc
+	ld a, DUELVARS_ARENA_CARD
+	add b
+	call LoadCardNameAndLevelFromVarToRam2
+	ldtx hl, IsCuredOfStatusText
+	call DrawWideTextBox_WaitForInput
+	pop bc
+	pop de
+	pop hl
+	ret
+
+
+HandleEndOfTurnEffect_Affliction:
+	ld a, HAUNTER_LV22
+	call CountPokemonIDInPlayArea
+	ret nc  ; none found
+
+	call SwapTurn
+	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+	call GetTurnDuelistVariable
+	ld c, a  ; loop counter
+	ld d, 10  ; damage
+	ld e, PLAY_AREA_ARENA  ; target
+	ld l, DUELVARS_ARENA_CARD_STATUS
+.loop_play_area
+	ld a, [hli]
+	or a
+	jr z, .next
+	push hl
+	push bc
+	push de
+	call ShowBetweenTurnsTransitionAtMostOnce
+	pop de
+	pop bc
+	pop hl
+	call Bank1_ApplyDirectDamage_RegularAnim  ; preserves: hl, de, bc
+.next
+	inc e
+	dec c
+	jr nz, .loop_play_area
+	jp SwapTurn
+
+
+HandleEndOfTurnEffect_StatusConditions:
+	ld a, DUELVARS_ARENA_CARD
+	call GetTurnDuelistVariable
+	call GetCardIDFromDeckIndex
+	ld a, e
+	ld [wTempNonTurnDuelistCardID], a
+	ld l, DUELVARS_ARENA_CARD_STATUS
+	ld a, [hl]
+	or a
+	ret z  ; no status
+; has status condition
+	call HandlePoisonDamage
+	ld a, [hl]
+	ret c  ; KO
+	call HandleBurnDamage
+	ret c  ; KO
+	ld a, [hl]
+	and CNF_SLP_PRZ
+	cp PARALYZED
+	ret nz
+; heal paralysis
+	ld a, PSN_DBLPSN_BRN
+	and [hl]
+	ld [hl], a
+	call ShowBetweenTurnsTransitionAtMostOnce
+	call Func_6c7e
+	ldtx hl, IsCuredOfParalysisText
+	call PrintNonTurnDuelistCardIDText
+	ld a, DUEL_ANIM_HEAL
+	call Func_6cab
+	jp WaitForWideTextBoxInput
 
 
 ; unreferenced
@@ -7332,21 +7401,72 @@ DiscardAttachedToolsWithID:
 	ret
 
 
-; return carry if the turn holder's arena Pokemon card is poisoned or burned.
-; also return the status condition in a.
-IsArenaPokemonPoisonedOrBurned:
-	ld a, DUELVARS_ARENA_CARD_STATUS
+; Puts damage counters on the target at location in e,
+;   without counting as attack damage (does not trigger damage reduction, etc.)
+; This is a mix between DealDamageToPlayAreaPokemon_RegularAnim (bank 0)
+;   and HandlePoisonDamage (bank 1).
+; inputs:
+;   d: amount of damage to deal
+;   e: PLAY_AREA_* of the target
+; output:
+;   carry: set if the target was Knocked Out
+; preserves: hl, de, bc
+Bank1_ApplyDirectDamage_RegularAnim:
+	ld a, ATK_ANIM_BENCH_HIT
+	ld [wLoadedAttackAnimation], a
+	; fallthrough
+
+Bank1_ApplyDirectDamage:
+	push hl
+	push de
+	push bc
+	ld a, e
+	ld [wTempPlayAreaLocation_cceb], a
+	or a ; cp PLAY_AREA_ARENA
+	jr nz, .bench
+; arena
+	ld a, [wNoDamageOrEffect]
+	or a
+	jr nz, .no_damage
+	jr .skip_no_damage_or_effect_check
+.bench
+	call IsBodyguardActive
+	jr nc, .skip_no_damage_or_effect_check
+.no_damage
+	ld d, 0
+.skip_no_damage_or_effect_check
+	xor a
+	ld [wNoDamageOrEffect], a
+	ld e, d
+	ld d, 0
+	push de
+	ld a, [wTempPlayAreaLocation_cceb]
+	add DUELVARS_ARENA_CARD
 	call GetTurnDuelistVariable
+	call GetCardIDFromDeckIndex
+	ld a, e
+	ld [wTempNonTurnDuelistCardID], a
+	pop de
+	ld a, [wTempPlayAreaLocation_cceb]
+	ld b, a
+	ld c, 0
+	add DUELVARS_ARENA_CARD_HP
+	ld l, a
+	push af
+	call Func_7415
+	call PlayAttackAnimation_DealAttackDamageSimple
+	pop af
 	or a
-	ret z
-	and PSN_DBLPSN_BRN
-	ld a, [hl]
-	jr nz, .set_carry
-	or a
+	jr z, .skip_knocked_out
+	call PrintKnockedOutIfHLZero
+	call WaitForWideTextBoxInput
+	scf  ; signal KO
+.skip_knocked_out
+	pop bc
+	pop de
+	pop hl
 	ret
-.set_carry
-	scf
-	ret
+
 
 Func_6c7e:
 	ld a, [wDuelDisplayedScreen]
@@ -7421,6 +7541,9 @@ HandlePoisonDamage:
 	bit POISONED_F, [hl]
 	ret z ; quit if not poisoned
 
+	push hl
+	call ShowBetweenTurnsTransitionAtMostOnce
+	pop hl
 ; load damage and text according to normal/double poison
 	push hl
 	bit DOUBLE_POISONED_F, [hl]
@@ -7470,6 +7593,9 @@ HandleBurnDamage:
 	bit BURNED_F, [hl]
 	ret z ; quit if not burned
 
+	push hl
+	call ShowBetweenTurnsTransitionAtMostOnce
+	pop hl
 ; load damage and text for burn
 	push hl
 	ldtx hl, Received20DamageDueToBurnText
@@ -8152,13 +8278,21 @@ InitializeDuelVariables:
 	dec c
 	jr nz, .init_duel_variables_loop
 	ld l, DUELVARS_ARENA_CARD
-	ld c, 1 + MAX_BENCH_POKEMON + 1
+	ld c, MAX_PLAY_AREA_POKEMON + 1
 .init_play_area
 ; initialize to $ff card in arena as well as cards in bench (plus a terminator)
-	ld [hl], -1
+	ld [hl], $ff
 	inc l
 	dec c
 	jr nz, .init_play_area
+	ld l, DUELVARS_ARENA_CARD_ATTACHED_TOOL
+	ld c, MAX_PLAY_AREA_POKEMON
+.init_tools
+; initialize to $ff card in arena as well as cards in bench (plus a terminator)
+	ld [hl], $ff
+	inc l
+	dec c
+	jr nz, .init_tools
 	ret
 
 ; draw [wDuelInitialPrizes] cards from the turn holder's deck and place them as prizes:
@@ -8739,6 +8873,38 @@ PlayAdhocAnimationOnDuelScene:
 	ld h, a
 	call PlayAttackAnimation  ; preserves hl, bc, de
 	jp WaitAttackAnimation    ; preserves de, (hl, bc)?
+
+
+; plays a healing animation for a play area Pokémon
+; (shows the Play Area screen and the arrow up with healing animation)
+; input:
+;   d: amount of damage to heal
+;   e: PLAY_AREA_* location of card to heal
+; preserves: bc, de
+PlayHealingAnimation_PlayAreaPokemon:
+; play heal animation
+	push bc
+	push de
+	ld b, e
+; animation requires damage to heal in de, not d
+	ld e, d
+	ld d, $00
+	ld a, ATK_ANIM_HEALING_WIND_PLAY_AREA
+	call PlayAdhocAnimationOnPlayAreaLocation_Weakness  ; preserves de
+	ld l, e
+	ld h, d
+; print Pokemon card name and damage healed
+	call LoadTxRam3
+	pop de
+	push de
+	ld a, DUELVARS_ARENA_CARD
+	add e
+	call LoadCardNameAndLevelFromVarToRam2
+	ldtx hl, PokemonHealedDamageText
+	call DrawWideTextBox_WaitForInput
+	pop de
+	pop bc
+	ret
 
 
 PlayInflictStatusAnimation:

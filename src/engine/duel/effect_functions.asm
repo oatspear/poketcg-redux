@@ -596,29 +596,6 @@ DoubleHitEffect:
 	ret
 
 
-Affliction_DamageEffect:
-	ld a, [wAfflictionAffectedPlayArea]
-	or a
-	ret z
-
-	call SwapTurn
-	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
-	call GetTurnDuelistVariable
-	ld c, a  ; loop counter
-	ld d, 10  ; damage
-	ld e, PLAY_AREA_ARENA  ; target
-	ld a, DUELVARS_ARENA_CARD_STATUS
-	call GetTurnDuelistVariable
-.loop_play_area
-	ld a, [hli]
-	or a
-	call nz, ApplyDirectDamage_RegularAnim
-	inc e
-	dec c
-	jr nz, .loop_play_area
-	jp SwapTurn
-
-
 PrimalThunder_DrawbackEffect:
 	call CheckOpponentHasMorePrizeCardsRemaining
 	ret c  ; opponent Prizes < user Prizes (losing)
@@ -791,24 +768,6 @@ GarbageEater_HealEffect:
 	call HealPlayAreaCardHP
 	pop hl
 	jr .loop_play_area
-
-
-; Stores in [wAfflictionAffectedPlayArea] whether there are Pokémon to damage
-; from status in the opponent's play area.
-; Stores 0 if there are no Affliction capable Pokémon in play.
-Affliction_CountPokemonAndSetVariable:
-	xor a
-	ld [wAfflictionAffectedPlayArea], a
-
-	ld a, HAUNTER_LV22
-	call CountPokemonIDInPlayArea
-	ret nc  ; none found
-
-	call SwapTurn
-	call CheckIfPlayAreaHasAnyStatus
-	or a
-	ld [wAfflictionAffectedPlayArea], a
-	jp SwapTurn
 
 
 StrangeBehavior_SelectAndSwapEffect:
