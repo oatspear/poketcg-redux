@@ -4179,13 +4179,11 @@ DisplayCardPage_PokemonOverview:
 	call DrawCardPageSet2AndRarityIcons
 	; print (Y coord at [wCurPlayAreaY]) card name, level, type, energies, HP, location...
 	call PrintPlayAreaCardInformationAndLocation
+	; print attached tool, if any
+	call PrintPokemonAttachedTool
 
 ; common for both card page types
 .print_numbers_and_energies
-	; print Pokedex number in the bottom right corner (16,16)
-	lb bc, 16, 16
-	ld a, [wLoadedCard1PokedexNumber]
-	call WriteTwoByteNumberInTxSymbolFormat
 	; print the name, damage, and energy cost of each attack and/or Pokemon power that exists
 	; first attack at 5,10 and second at 5,12
 	lb bc, 5, 10
@@ -4199,10 +4197,12 @@ DisplayCardPage_PokemonOverview:
 	ld e, c
 	ld hl, wLoadedCard1Atk2Name
 	call PrintAttackOrPkmnPowerInformation
-	; print the retreat cost (some amount of colorless energies) at 8,14
+	; print the retreat cost (some amount of colorless energies), originally at 8,14
 	inc c
 	inc c ; 14
-	ld b, 8
+	inc c ; 15
+	inc c ; 16
+	ld b, 14  ; 8
 	ld a, [wLoadedCard1RetreatCost]
 	ld e, a
 	inc e
@@ -4215,7 +4215,7 @@ DisplayCardPage_PokemonOverview:
 	jr .retreat_cost_loop
 .retreat_cost_done
 	; print the colors (energies) of the weakness(es) and resistance(s)
-	inc c ; 15
+	; inc c ; 15
 	ld a, [wCardPageType]
 	or a
 	jr z, .wr_from_loaded_card
@@ -4234,9 +4234,10 @@ DisplayCardPage_PokemonOverview:
 	ld e, a
 .got_wr
 	ld a, d
-	ld b, 8
+	ld b, 2  ; 8
 	call PrintCardPageWeaknessesOrResistances
-	inc c ; 16
+	; inc c ; 16
+	ld b, 8
 	ld a, e
 	call PrintCardPageWeaknessesOrResistances
 	ret
@@ -4389,6 +4390,25 @@ PrintPokemonCardPageGenericInformation:
 	call DrawCardPageSet2AndRarityIcons
 	ret
 
+
+PrintPokemonAttachedTool:
+	ld a, [wCurPlayAreaSlot]
+	add DUELVARS_ARENA_CARD_ATTACHED_TOOL
+	call GetTurnDuelistVariable
+	cp $ff
+	ret z  ; no tool
+	call LoadCardDataToBuffer2_FromDeckIndex
+	; print text ID pointed to by hl at 7,e
+	ld hl, wLoadedCard2Name
+	ld d, 7
+	ld e, 14
+	call InitTextPrinting_ProcessTextFromPointerToID
+	ld b, 4
+	ld c, 14
+	ld a, SYM_DEFENDER
+	jp WriteByteToBGMap0
+
+
 ; draws the 20x18 surrounding box and also colorizes the card image
 DrawCardPageSurroundingBox:
 	ld hl, wTextBoxFrameType
@@ -4404,10 +4424,9 @@ DrawCardPageSurroundingBox:
 	ret
 
 CardPageRetreatWRNumberTextData:
-	textitem 1, 14, RetreatCostText
 	textitem 1, 15, WeaknessText
-	textitem 1, 16, ResistanceText
-	textitem 15, 16, NumberText
+	textitem 6, 15, ResistanceText
+	textitem 12, 15, RetreatCostText
 	db $ff
 
 ; CardPageLvHPTextTileData:
@@ -4481,6 +4500,10 @@ DisplayCardPage_PokemonDescription:
 	; draw the card symbol associated to its TYPE_* at 3,2
 	lb de, 3, 2
 	call DrawCardSymbol
+	; print Pokedex number in the bottom right corner, originally (16,16)
+	lb bc, 16, 11
+	ld a, [wLoadedCard1PokedexNumber]
+	call WriteTwoByteNumberInTxSymbolFormat
 	; print the Level and HP numbers at 12,2 and 16,2 respectively
 	lb bc, 12, 2
 	ld a, [wLoadedCard1Level]
@@ -4563,6 +4586,7 @@ DrawCardPageSet2AndRarityIcons:
 CardPageLengthWeightTextData:
 	textitem 1, 11, LengthText
 	textitem 1, 12, WeightText
+	textitem 15, 11, NumberText
 	db $ff
 
 CardPageLvHPTextTileData:
