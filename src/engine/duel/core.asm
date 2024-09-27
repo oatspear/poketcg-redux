@@ -2791,7 +2791,7 @@ DrawDuelHUD:
 	; print number of attached Pluspower and Defender with respective icon, if any
 	ld hl, wHUDEnergyAndHPBarsX
 	ld a, [hli]
-	add 8  ; previously 6, use old position that displayed the number
+	add 7  ; previously 6, use old position that displayed the number
 	ld b, a
 	ld c, [hl] ; wHUDEnergyAndHPBarsY
 	inc c
