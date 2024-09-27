@@ -2799,16 +2799,16 @@ DrawDuelHUD:
 	call GetTurnDuelistVariable
 	cp $ff
 	ret z  ; no tools
-	call GetCardIDFromDeckIndex
-	ld a, e
-	cp PLUSPOWER
-	jr nz, .not_pluspower
+	; call GetCardIDFromDeckIndex
+	; ld a, e
+	; cp PLUSPOWER
+	; jr nz, .not_pluspower
 	ld a, SYM_PLUSPOWER
 	jp WriteByteToBGMap0
-.not_pluspower
-	inc c
-	ld a, SYM_DEFENDER
-	jp WriteByteToBGMap0
+;.not_pluspower
+;	inc c
+;	ld a, SYM_DEFENDER
+;	jp WriteByteToBGMap0
 
 ; draws an horizontal line that separates the arena side of each duelist
 ; also colorizes the line on CGB
@@ -5456,17 +5456,17 @@ PrintPlayAreaCardHeader:
 	inc a
 	ld c, a
 	ld b, 17  ; previously 15
-	ld a, [hl]
-	call GetCardIDFromDeckIndex
-	ld a, e
-	cp PLUSPOWER
-	jr nz, .not_pluspower
+	; ld a, [hl]
+	; call GetCardIDFromDeckIndex
+	; ld a, e
+	; cp PLUSPOWER
+	; jr nz, .not_pluspower
 	ld a, SYM_PLUSPOWER
 	jp WriteByteToBGMap0
-.not_pluspower
-	ld b, 18  ; previously 17
-	ld a, SYM_DEFENDER
-	jp WriteByteToBGMap0
+; .not_pluspower
+; 	ld b, 18  ; previously 17
+; 	ld a, SYM_DEFENDER
+; 	jp WriteByteToBGMap0
 
 FaceDownCardTileNumbers:
 ; starting tile number, cgb palette (grey, yellow/red, green/blue, pink/orange)
