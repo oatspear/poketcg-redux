@@ -21,6 +21,10 @@
 - Pokémon Tool Trainer card.
 - At the end of the owner's turn, if the holder is in the Active Spot, heals 10 damage.
 
+#### Rocky Helmet
+- Pokémon Tool Trainer card.
+- Returns 10 damage back to an attacker.
+
 ### Removed Cards
 - Clefairy Doll
 
