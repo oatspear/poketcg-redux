@@ -518,6 +518,19 @@ LeftoversDescription:
 	line "from it."
 	done
 
+RockyHelmetName:
+	text "Rocky Helmet"
+	done
+
+RockyHelmetDescription:
+	text "If the Pokémon this card is attached"
+	line "to is your Active Pokémon and is"
+	line "damaged by an opponent's attack,"
+	line "even if that Pokémon is Knocked Out,"
+	line "put 1 damage counter on the"
+	line "Attacking Pokémon."
+	done
+
 AlreadyHasAToolAttachedText:
 	text "That Pokémon already has a Tool"
 	line "attached to it."

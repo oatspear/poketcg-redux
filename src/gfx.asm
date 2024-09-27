@@ -2415,3 +2415,7 @@ LumBerryCardGfx::
 LeftoversCardGfx::
 	INCBIN "gfx/cards/leftovers.2bpp"
 	INCBIN "gfx/cards/leftovers.pal"
+
+RockyHelmetCardGfx::
+	INCBIN "gfx/cards/rockyhelmet.2bpp"
+	INCBIN "gfx/cards/rockyhelmet.pal"

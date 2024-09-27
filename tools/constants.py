@@ -258,6 +258,7 @@ cards = {
 	0xdf: "SITRUS_BERRY",
 	0xe0: "LUM_BERRY",
 	0xe1: "LEFTOVERS",
+	0xe2: "ROCKY_HELMET",
 	0xff: "$ff",
 }
 

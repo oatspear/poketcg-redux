@@ -3149,6 +3149,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer LumBerryDescription
 	textpointer LeftoversName
 	textpointer LeftoversDescription
+	textpointer RockyHelmetName
+	textpointer RockyHelmetDescription
 	textpointer DarknessEnergyName                                 ; 0x0bae
 	textpointer DarknessEnergyDescription                          ; 0x0baf
 	textpointer AlreadyHasAToolAttachedText

@@ -1281,7 +1281,16 @@ IsCounterattackActive:
 	call AddToDamage_DE
 
 .rocky_helmet
-	; TODO
+	ld a, DUELVARS_ARENA_CARD_ATTACHED_TOOL
+	call GetTurnDuelistVariable
+	push de
+	call GetCardIDFromDeckIndex  ; preserves af, hl, bc
+	ld a, e
+	pop de
+	cp ROCKY_HELMET
+	jr nz, .counter_substatus
+	ld hl, 10
+	call AddToDamage_DE
 
 .counter_substatus
 	ld a, DUELVARS_ARENA_CARD_SUBSTATUS1

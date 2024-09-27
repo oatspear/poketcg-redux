@@ -226,6 +226,7 @@ CardPointers:
 	dw SitrusBerryCard
 	dw LumBerryCard
 	dw LeftoversCard
+	dw RockyHelmetCard
 	dw NULL
 	assert_table_length NUM_CARDS + 2
 
@@ -10350,4 +10351,15 @@ LeftoversCard:
 	db LEFTOVERS
 	dw PokemonToolEffectCommands ; effect commands
 	tx LeftoversDescription ; description
+	dw NONE ; description (cont)
+
+RockyHelmetCard:
+	db TYPE_TRAINER ; type
+	gfx RockyHelmetCardGfx ; gfx
+	tx RockyHelmetName ; name
+	db DIAMOND ; rarity
+	db COLOSSEUM | NONE ; sets
+	db ROCKY_HELMET
+	dw PokemonToolEffectCommands ; effect commands
+	tx RockyHelmetDescription ; description
 	dw NONE ; description (cont)

@@ -224,6 +224,7 @@
 	const SITRUS_BERRY                ; $df
 	const LUM_BERRY                   ; $e0
 	const LEFTOVERS                   ; $e1
+	const ROCKY_HELMET                ; $e2
 DEF NUM_CARDS EQU const_value - 1
 
 DEF ENERGY_IDS_START  EQU GRASS_ENERGY
