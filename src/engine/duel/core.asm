@@ -7169,6 +7169,8 @@ AnimateLumBerryEffect:
 	push de
 	push bc
 	call ShowBetweenTurnsTransitionAtMostOnce
+	pop bc
+	push bc
 	ld c, WEAKNESS
 	ld a, ATK_ANIM_GLOW_PLAY_AREA
 	call PlayAdhocAnimationOnPlayAreaLocation
