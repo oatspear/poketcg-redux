@@ -4407,6 +4407,8 @@ PrintPokemonAttachedTool:
 ; draws the 20x18 surrounding box and also colorizes the card image
 DrawCardPageSurroundingBox:
 	ld hl, wTextBoxFrameType
+	; ld a, $5
+	; ld [hl], a
 	set 7, [hl] ; colorize textbox border also on SGB (with SGB1)
 	push hl
 	lb de, 0, 0
