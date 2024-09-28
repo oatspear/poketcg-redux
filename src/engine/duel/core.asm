@@ -3841,8 +3841,7 @@ LoadLoaded1CardGfx:
 	ld h, [hl]
 	ld l, a
 	lb bc, $30, TILE_SIZE
-	call LoadCardGfx
-	ret
+	jp LoadCardGfx
 
 SetBGP7OrSGB2ToCardPalette:
 	ld a, [wConsole]
@@ -3851,8 +3850,8 @@ SetBGP7OrSGB2ToCardPalette:
 	cp CONSOLE_SGB
 	jr z, .sgb
 	ld a, $07 ; CGB BG Palette 7
-	call CopyCGBCardPalette
-	ret
+	jp CopyCGBCardPalette
+
 .sgb
 	ld hl, wCardPalette
 	ld de, wTempSGBPacket + 1 ; PAL Packet color #0 (PAL23's SGB2)
@@ -3872,8 +3871,7 @@ SetBGP6OrSGB3ToCardPalette:
 	cp CONSOLE_SGB
 	jr z, SetSGB3ToCardPalette
 	ld a, $06 ; CGB BG Palette 6
-	call CopyCGBCardPalette
-	ret
+	jp CopyCGBCardPalette
 
 SetSGB3ToCardPalette:
 	ld hl, wCardPalette + 2
@@ -3942,16 +3940,15 @@ ApplyBGP6OrSGB3ToCardImage:
 	cp CONSOLE_SGB
 	jr z, .sgb
 	ld a, $06 ; CGB BG Palette 6
-	call ApplyCardCGBAttributes
-	ret
+	jp ApplyCardCGBAttributes
+
 .sgb
 	ld a, 3 << 0 + 3 << 2 ; Color Palette Designation
 ;	fallthrough
 
 SendCardAttrBlkPacket:
 	call CreateCardAttrBlkPacket
-	call SendSGB
-	ret
+	jp SendSGB
 
 ApplyBGP7OrSGB2ToCardImage:
 	ld a, [wConsole]
@@ -3960,8 +3957,8 @@ ApplyBGP7OrSGB2ToCardImage:
 	cp CONSOLE_SGB
 	jr z, .sgb
 	ld a, $07 ; CGB BG Palette 7
-	call ApplyCardCGBAttributes
-	ret
+	jp ApplyCardCGBAttributes
+
 .sgb
 	ld a, 2 << 0 + 2 << 2 ; Color Palette Designation
 	jr SendCardAttrBlkPacket
@@ -3975,8 +3972,8 @@ Func_5a81:
 	lb de, 0, 5
 	call ApplyBGP7OrSGB2ToCardImage
 	lb de, 12, 1
-	call ApplyBGP6OrSGB3ToCardImage
-	ret
+	jp ApplyBGP6OrSGB3ToCardImage
+
 .sgb
 	ld a, 2 << 0 + 2 << 2 ; Data Set #1: Color Palette Designation
 	lb de, 0, 5 ; Data Set #1: X, Y
@@ -3989,8 +3986,7 @@ Func_5a81:
 	lb de, 12, 1 ; Data Set #2: X, Y
 	call CreateCardAttrBlkPacket_DataSet
 	pop hl
-	call SendSGB
-	ret
+	jp SendSGB
 
 CreateCardAttrBlkPacket:
 ; sgb ATTR_BLK, 1 ; sgb_command, length
@@ -4185,8 +4181,8 @@ DisplayCardPage_PokemonOverview:
 ; common for both card page types
 .print_numbers_and_energies
 	; print the name, damage, and energy cost of each attack and/or Pokemon power that exists
-	; first attack at 5,10 and second at 5,12
-	lb bc, 5, 10
+	; first attack originally at 5,10 and second at 5,12
+	lb bc, 5, 11
 
 .attacks
 	ld e, c
@@ -4201,7 +4197,6 @@ DisplayCardPage_PokemonOverview:
 	inc c
 	inc c ; 14
 	inc c ; 15
-	inc c ; 16
 	ld b, 14  ; 8
 	ld a, [wLoadedCard1RetreatCost]
 	ld e, a
@@ -4283,7 +4278,7 @@ PrintAttackOrPkmnPowerInformation:
 	; print attack damage at 15,(e+1) if non-0
 	ld b, 15 ; unless damage has three digits, this is effectively 16
 	ld c, e
-	inc c
+	; inc c
 	call WriteTwoByteNumberInTxSymbolFormat
 .print_category
 	pop hl
@@ -4298,7 +4293,7 @@ PrintAttackOrPkmnPowerInformation:
 	add SYM_PLUS - DAMAGE_PLUS
 	ld b, 18
 	ld c, e
-	inc c
+	; inc c
 	call WriteByteToBGMap0
 	jr .print_energy_cost
 .print_energy_cost
@@ -4398,13 +4393,13 @@ PrintPokemonAttachedTool:
 	cp $ff
 	ret z  ; no tool
 	call LoadCardDataToBuffer2_FromDeckIndex
-	; print text ID pointed to by hl at 7,e
+	; print text ID pointed to by hl
 	ld hl, wLoadedCard2Name
 	ld d, 7
-	ld e, 14
+	ld e, 10
 	call InitTextPrinting_ProcessTextFromPointerToID
-	ld b, 4
-	ld c, 14
+	ld b, 5
+	ld c, 10
 	ld a, SYM_DEFENDER
 	jp WriteByteToBGMap0
 
@@ -4420,8 +4415,7 @@ DrawCardPageSurroundingBox:
 	pop hl
 	res 7, [hl]
 	lb de, 6, 4
-	call ApplyBGP6OrSGB3ToCardImage
-	ret
+	jp ApplyBGP6OrSGB3ToCardImage
 
 CardPageRetreatWRNumberTextData:
 	textitem 1, 15, WeaknessText
