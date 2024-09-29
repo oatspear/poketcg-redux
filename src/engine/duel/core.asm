@@ -3602,8 +3602,8 @@ CardPageDisplayPointerTable:
 	dw DisplayCardPage_PokemonAttack1Page2  ; CARDPAGE_POKEMON_ATTACK1_2
 	dw DisplayCardPage_PokemonAttack2Page1  ; CARDPAGE_POKEMON_ATTACK2_1
 	dw DisplayCardPage_PokemonAttack2Page2  ; CARDPAGE_POKEMON_ATTACK2_2
+	dw DisplayCardPage_PokemonAttachedTool  ; CARDPAGE_POKEMON_TOOL
 	dw DisplayCardPage_PokemonDescription ; CARDPAGE_POKEMON_DESCRIPTION
-	dw DrawDuelMainScene
 	dw DrawDuelMainScene
 	dw DisplayCardPage_Energy ; CARDPAGE_ENERGY
 	dw DisplayCardPage_Energy ; CARDPAGE_ENERGY + 1
@@ -3690,9 +3690,10 @@ CardPageSwitchPointerTable:
 	dw CardPageSwitch_PokemonAttack1Page2 ; CARDPAGE_POKEMON_ATTACK1_2
 	dw CardPageSwitch_PokemonAttack2Page1 ; CARDPAGE_POKEMON_ATTACK2_1
 	dw CardPageSwitch_PokemonAttack2Page2 ; CARDPAGE_POKEMON_ATTACK2_2
+	dw CardPageSwitch_PokemonAttachedTool ; CARDPAGE_POKEMON_TOOL
 	dw CardPageSwitch_PokemonOverviewOrDescription ; CARDPAGE_POKEMON_DESCRIPTION
 	dw CardPageSwitch_PokemonEnd
-	dw CardPageSwitch_08
+	; dw CardPageSwitch_08
 	dw CardPageSwitch_EnergyOrTrainerPage1 ; CARDPAGE_ENERGY
 	dw CardPageSwitch_TrainerPage2 ; CARDPAGE_ENERGY + 1
 	dw CardPageSwitch_EnergyEnd
@@ -3742,6 +3743,25 @@ CheckCardPageExists:
 	or [hl]
 	ret
 
+; return with current page if this is a Play Area Pokémon
+; and it has a Pokémon Tool attached to it
+CardPageSwitch_PokemonAttachedTool:
+	ld a, [wCardPageType]
+	or a
+	ret z  ; CARDPAGETYPE_NOT_PLAY_AREA
+; CARDPAGETYPE_PLAY_AREA
+	ld a, [wCurPlayAreaSlot]
+	add DUELVARS_ARENA_CARD_ATTACHED_TOOL
+	call GetTurnDuelistVariable
+	cp $ff
+	jr z, .no_tool
+	ld a, CARDPAGE_POKEMON_TOOL
+	or a
+	ret
+.no_tool
+	xor a
+	ret
+
 ; return with CARDPAGE_POKEMON_OVERVIEW
 CardPageSwitch_PokemonEnd:
 	ld a, CARDPAGE_POKEMON_OVERVIEW
@@ -3749,10 +3769,10 @@ CardPageSwitch_PokemonEnd:
 	ret
 
 ; return with CARDPAGE_ENERGY + 1
-CardPageSwitch_08:
-	ld a, CARDPAGE_ENERGY + 1
-	scf
-	ret
+; CardPageSwitch_08:
+; 	ld a, CARDPAGE_ENERGY + 1
+; 	scf
+; 	ret
 
 ; return with current page
 CardPageSwitch_EnergyOrTrainerPage1:
@@ -4176,6 +4196,8 @@ DisplayCardPage_PokemonOverview:
 	; print (Y coord at [wCurPlayAreaY]) card name, level, type, energies, HP, location...
 	call PrintPlayAreaCardInformationAndLocation
 	; print attached tool, if any
+	lb de, 7, 10
+	lb bc, 5, 10
 	call PrintPokemonAttachedTool
 
 ; common for both card page types
@@ -4382,10 +4404,12 @@ PrintPokemonCardPageGenericInformation:
 	lb bc, 18, 1
 	inc a
 	call JPWriteByteToBGMap0
-	call DrawCardPageSet2AndRarityIcons
-	ret
+	jp DrawCardPageSet2AndRarityIcons
 
 
+; input:
+;   bc: x,y coordinates to print the tool symbol
+;   de: x,y coordinates to print the name
 PrintPokemonAttachedTool:
 	ld a, [wCurPlayAreaSlot]
 	add DUELVARS_ARENA_CARD_ATTACHED_TOOL
@@ -4395,11 +4419,9 @@ PrintPokemonAttachedTool:
 	call LoadCardDataToBuffer2_FromDeckIndex
 	; print text ID pointed to by hl
 	ld hl, wLoadedCard2Name
-	ld d, 7
-	ld e, 10
+	push bc
 	call InitTextPrinting_ProcessTextFromPointerToID
-	ld b, 5
-	ld c, 10
+	pop bc
 	ld a, SYM_DEFENDER
 	jp WriteByteToBGMap0
 
@@ -4476,6 +4498,23 @@ DisplayPokemonAttackCardPage:
 ; print, if non-null, the description of the trainer card, energy card, attack,
 ; or Pokemon power, given as a pointer to text id in hl, starting from 1,11
 PrintAttackOrNonPokemonCardDescription:
+	ld a, [hli]
+	or [hl]
+	ret z
+	dec hl
+	lb de, 1, 11
+	jp PrintAttackOrCardDescription
+
+
+DisplayCardPage_PokemonAttachedTool:
+; print surrounding box, card name at 5,1, type, set 2, and rarity
+	call PrintPokemonCardPageGenericInformation
+; print name of the attached tool at line 2
+	lb bc, 5, 2
+	lb de, 7, 2
+	call PrintPokemonAttachedTool
+; print description of the attached tool
+	ld hl, wLoadedCard2NonPokemonDescription
 	ld a, [hli]
 	or [hl]
 	ret z
