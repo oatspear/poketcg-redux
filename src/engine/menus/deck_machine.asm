@@ -206,10 +206,10 @@ Func_af1d:
 	ld [wNameBuffer], a
 	bank1call SendCard
 	ret c
-	call EnableSRAM
-	ld hl, wCurDeckCards
-	call DecrementDeckCardsInCollection
-	call DisableSRAM
+	; call EnableSRAM
+	; ld hl, wCurDeckCards
+	; call DecrementDeckCardsInCollection
+	; call DisableSRAM
 	call SaveGame
 	ld hl, wNameBuffer
 	ld de, wDefaultText
@@ -1494,11 +1494,11 @@ HandleDismantleDeckToMakeSpace:
 	call EnableSRAM
 	call CopyListFromHLToDE
 	pop hl
-	push hl
-	ld bc, DECK_NAME_SIZE
-	add hl, bc
-	call AddDeckToCollection
-	pop hl
+	; push hl
+	; ld bc, DECK_NAME_SIZE
+	; add hl, bc
+	; call AddDeckToCollection
+	; pop hl
 	ld a, DECK_STRUCT_SIZE
 	call ClearNBytesFromHL
 	call DisableSRAM
@@ -1586,7 +1586,7 @@ TryBuildDeckMachineDeck:
 	; remove the needed cards from collection
 	ld hl, wDeckToBuild + DECK_NAME_SIZE
 	call SafelySwitchToSRAM0
-	call DecrementDeckCardsInCollection
+	; call DecrementDeckCardsInCollection
 
 	; copy the deck cards from the buffer
 	; to the deck slot that was chosen
@@ -1687,11 +1687,11 @@ TryBuildDeckMachineDeck:
 	call HtimesL
 	ld bc, sBuiltDecks
 	add hl, bc
-	push hl
-	ld bc, DECK_NAME_SIZE
-	add hl, bc
-	call AddDeckToCollection
-	pop hl
+	; push hl
+	; ld bc, DECK_NAME_SIZE
+	; add hl, bc
+	; call AddDeckToCollection
+	; pop hl
 	ld a, DECK_STRUCT_SIZE
 	call ClearNBytesFromHL
 	ret

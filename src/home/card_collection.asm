@@ -4,25 +4,25 @@ GetAmountOfCardsOwned:
 	push bc
 	call EnableSRAM
 	ld hl, $0000
-	ld de, sDeck1Cards
-	ld c, NUM_DECKS
-.next_deck
-	ld a, [de]
-	or a
-	jr z, .skip_deck ; jump if deck empty
-	ld a, c
-	ld bc, DECK_SIZE
-	add hl, bc
-	ld c, a
-.skip_deck
-	ld a, sDeck2Cards - sDeck1Cards
-	add e
-	ld e, a
-	ld a, $0
-	adc d
-	ld d, a ; de = sDeck*Cards[x]
-	dec c
-	jr nz, .next_deck
+; 	ld de, sDeck1Cards
+; 	ld c, NUM_DECKS
+; .next_deck
+; 	ld a, [de]
+; 	or a
+; 	jr z, .skip_deck ; jump if deck empty
+; 	ld a, c
+; 	ld bc, DECK_SIZE
+; 	add hl, bc
+; 	ld c, a
+; .skip_deck
+; 	ld a, sDeck2Cards - sDeck1Cards
+; 	add e
+; 	ld e, a
+; 	ld a, $0
+; 	adc d
+; 	ld d, a ; de = sDeck*Cards[x]
+; 	dec c
+; 	jr nz, .next_deck
 	; hl = DECK_SIZE * (no. of non-empty decks)
 	ld de, sCardCollection
 .next_card
@@ -38,58 +38,6 @@ GetAmountOfCardsOwned:
 	call DisableSRAM
 	pop bc
 	pop de
-	ret
-
-; return carry if the count in sCardCollection plus the count in each deck (sDeck*)
-; of the card with id given in a is 0 (if card not owned).
-; also return the count (total owned amount) in a.
-GetCardCountInCollectionAndDecks:
-	push hl
-	push de
-	push bc
-	call EnableSRAM
-	ld c, a
-	ld b, $0
-	ld hl, sDeck1Cards
-	ld d, NUM_DECKS
-.next_deck
-	ld a, [hl]
-	or a
-	jr z, .deck_done ; jump if deck empty
-	push hl
-	ld e, DECK_SIZE
-.next_card
-	ld a, [hli]
-	cp c
-	jr nz, .no_match
-	inc b ; this deck card matches card c
-.no_match
-	dec e
-	jr nz, .next_card
-	pop hl
-.deck_done
-	push de
-	ld de, sDeck2Cards - sDeck1Cards
-	add hl, de
-	pop de
-	dec d
-	jr nz, .next_deck
-	; all decks done
-	ld h, HIGH(sCardCollection)
-	ld l, c
-	ld a, [hl]
-	bit CARD_NOT_OWNED_F, a
-	jr nz, .done
-	add b ; if card seen, add b to count
-.done
-	and CARD_COUNT_MASK
-	call DisableSRAM
-	pop bc
-	pop de
-	pop hl
-	or a
-	ret nz
-	scf
 	ret
 
 ; return carry if the count in sCardCollection of the card with id given in a is 0.
@@ -114,36 +62,36 @@ CreateTempCardCollection:
 	ld de, wTempCardCollection
 	ld bc, CARD_COLLECTION_SIZE
 	call CopyDataHLtoDE
-	ld de, sDeck1Name
-	call AddDeckCardsToTempCardCollection
-	ld de, sDeck2Name
-	call AddDeckCardsToTempCardCollection
-	ld de, sDeck3Name
-	call AddDeckCardsToTempCardCollection
-	ld de, sDeck4Name
-	call AddDeckCardsToTempCardCollection
+	; ld de, sDeck1Name
+	; call AddDeckCardsToTempCardCollection
+	; ld de, sDeck2Name
+	; call AddDeckCardsToTempCardCollection
+	; ld de, sDeck3Name
+	; call AddDeckCardsToTempCardCollection
+	; ld de, sDeck4Name
+	; call AddDeckCardsToTempCardCollection
 	call DisableSRAM
 	ret
 
 ; adds the cards from a deck to wTempCardCollection given de = sDeck*Name
-AddDeckCardsToTempCardCollection:
-	ld a, [de]
-	or a
-	ret z ; return if empty name (empty deck)
-	ld hl, sDeck1Cards - sDeck1Name
-	add hl, de
-	ld e, l
-	ld d, h
-	ld h, HIGH(wTempCardCollection)
-	ld c, DECK_SIZE
-.next_card_loop
-	ld a, [de] ; count of current card being added
-	inc de ; move to next card for next iteration
-	ld l, a
-	inc [hl] ; increment count
-	dec c
-	jr nz, .next_card_loop
-	ret
+; AddDeckCardsToTempCardCollection:
+; 	ld a, [de]
+; 	or a
+; 	ret z ; return if empty name (empty deck)
+; 	ld hl, sDeck1Cards - sDeck1Name
+; 	add hl, de
+; 	ld e, l
+; 	ld d, h
+; 	ld h, HIGH(wTempCardCollection)
+; 	ld c, DECK_SIZE
+; .next_card_loop
+; 	ld a, [de] ; count of current card being added
+; 	inc de ; move to next card for next iteration
+; 	ld l, a
+; 	inc [hl] ; increment count
+; 	dec c
+; 	jr nz, .next_card_loop
+; 	ret
 
 ; add card with id given in a to sCardCollection, provided that
 ; the player has less than MAX_AMOUNT_OF_CARD (99) of them

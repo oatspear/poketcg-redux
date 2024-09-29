@@ -121,7 +121,7 @@ DrawDecksScreen:
 ; mark is as valid in wDecksValid
 
 ; deck 1
-	ld a, [hffb5] ; should be ldh
+	ldh a, [hffb5]
 	bit 0, a
 	jr z, .skip_name_1
 	ld hl, sDeck1Name
@@ -135,7 +135,7 @@ DrawDecksScreen:
 	ld [wDeck1Valid], a
 
 .deck_2
-	ld a, [hffb5] ; should be ldh
+	ldh a, [hffb5]
 	bit 1, a
 	jr z, .skip_name_2
 	ld hl, sDeck2Name
@@ -149,7 +149,7 @@ DrawDecksScreen:
 	ld [wDeck2Valid], a
 
 .deck_3
-	ld a, [hffb5] ; should be ldh
+	ldh a, [hffb5]
 	bit 2, a
 	jr z, .skip_name_3
 	ld hl, sDeck3Name
@@ -163,7 +163,7 @@ DrawDecksScreen:
 	ld [wDeck3Valid], a
 
 .deck_4
-	ld a, [hffb5] ; should be ldh
+	ldh a, [hffb5]
 	bit 3, a
 	jr z, .skip_name_4
 	ld hl, sDeck4Name
@@ -721,7 +721,7 @@ DismantleDeck:
 	ld a, NAME_BUFFER_LENGTH
 	call ClearNBytesFromHL
 	call GetPointerToDeckCards
-	call AddDeckToCollection
+	; call AddDeckToCollection
 	ld a, DECK_SIZE
 	call ClearNBytesFromHL
 .done_dismantle
@@ -1129,8 +1129,11 @@ CreateFilteredCardList:
 	jr z, .next_card ; jump if never seen card
 	or a
 	jr nz, .ok ; has at least 1
-	call IsCardInAnyDeck
-	jr c, .next_card ; jump if not in any deck
+; OATS let cards be used in multiple decks
+	; call IsCardInAnyDeck
+	; jr c, .next_card ; jump if not in any deck
+	jr .next_card
+; -----------
 .ok
 	push hl
 	ld bc, wOwnedCardsCountList
@@ -1496,14 +1499,14 @@ PrintFilteredCardList:
 	call CopyNBytesFromHLToDE
 	call DisableSRAM
 
-	ld a, [wIncludeCardsInDeck]
-	or a
-	jr z, .ok
-	call GetPointerToDeckCards
-	ld d, h
-	ld e, l
-	call IncrementDeckCardsInTempCollection
-.ok
+; 	ld a, [wIncludeCardsInDeck]
+; 	or a
+; 	jr z, .ok
+; 	call GetPointerToDeckCards
+; 	ld d, h
+; 	ld e, l
+; 	call IncrementDeckCardsInTempCollection
+; .ok
 	pop af
 
 	call CreateFilteredCardList
@@ -3327,55 +3330,55 @@ CreateCardCollectionListWithDeckCards:
 	call CopyNBytesFromHLToDE
 	call DisableSRAM
 
-; deck_1
-	ld a, [hffb5] ; should be ldh
-	bit DECK_1_F, a
-	jr z, .deck_2
-	ld de, sDeck1Cards
-	call IncrementDeckCardsInTempCollection
-.deck_2
-	ld a, [hffb5] ; should be ldh
-	bit DECK_2_F, a
-	jr z, .deck_3
-	ld de, sDeck2Cards
-	call IncrementDeckCardsInTempCollection
-.deck_3
-	ld a, [hffb5] ; should be ldh
-	bit DECK_3_F, a
-	jr z, .deck_4
-	ld de, sDeck3Cards
-	call IncrementDeckCardsInTempCollection
-.deck_4
-	ld a, [hffb5] ; should be ldh
-	bit DECK_4_F, a
-	ret z
-	ld de, sDeck4Cards
-	call IncrementDeckCardsInTempCollection
+; ; deck_1
+; 	ld a, [hffb5] ; should be ldh
+; 	bit DECK_1_F, a
+; 	jr z, .deck_2
+; 	ld de, sDeck1Cards
+; 	call IncrementDeckCardsInTempCollection
+; .deck_2
+; 	ld a, [hffb5] ; should be ldh
+; 	bit DECK_2_F, a
+; 	jr z, .deck_3
+; 	ld de, sDeck2Cards
+; 	call IncrementDeckCardsInTempCollection
+; .deck_3
+; 	ld a, [hffb5] ; should be ldh
+; 	bit DECK_3_F, a
+; 	jr z, .deck_4
+; 	ld de, sDeck3Cards
+; 	call IncrementDeckCardsInTempCollection
+; .deck_4
+; 	ld a, [hffb5] ; should be ldh
+; 	bit DECK_4_F, a
+; 	ret z
+; 	ld de, sDeck4Cards
+; 	call IncrementDeckCardsInTempCollection
 	ret
 
 ; goes through cards in deck in de
 ; and for each card ID, increments its corresponding
 ; entry in wTempCardCollection
-IncrementDeckCardsInTempCollection:
-	call EnableSRAM
-	ld bc, wTempCardCollection
-	ld h, DECK_SIZE
-.loop
-	ld a, [de]
-	inc de
-	or a
-	jr z, .done
-	push hl
-	ld h, $0
-	ld l, a
-	add hl, bc
-	inc [hl]
-	pop hl
-	dec h
-	jr nz, .loop
-.done
-	call DisableSRAM
-	ret
+; IncrementDeckCardsInTempCollection:
+; 	call EnableSRAM
+; 	ld bc, wTempCardCollection
+; 	ld h, DECK_SIZE
+; .loop
+; 	ld a, [de]
+; 	inc de
+; 	or a
+; 	jr z, .done
+; 	push hl
+; 	ld h, $0
+; 	ld l, a
+; 	add hl, bc
+; 	inc [hl]
+; 	pop hl
+; 	dec h
+; 	jr nz, .loop
+; .done
+; 	call DisableSRAM
+; 	ret
 
 ; prints the name, level and storage count of the cards
 ; that are visible in the list window

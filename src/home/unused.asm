@@ -1,3 +1,56 @@
+; return carry if the count in sCardCollection plus the count in each deck (sDeck*)
+; of the card with id given in a is 0 (if card not owned).
+; also return the count (total owned amount) in a.
+GetCardCountInCollectionAndDecks:
+	push hl
+	push de
+	push bc
+	call EnableSRAM
+	ld c, a
+	ld b, $0
+	ld hl, sDeck1Cards
+	ld d, NUM_DECKS
+.next_deck
+	ld a, [hl]
+	or a
+	jr z, .deck_done ; jump if deck empty
+	push hl
+	ld e, DECK_SIZE
+.next_card
+	ld a, [hli]
+	cp c
+	jr nz, .no_match
+	inc b ; this deck card matches card c
+.no_match
+	dec e
+	jr nz, .next_card
+	pop hl
+.deck_done
+	push de
+	ld de, sDeck2Cards - sDeck1Cards
+	add hl, de
+	pop de
+	dec d
+	jr nz, .next_deck
+; all decks done
+	ld h, HIGH(sCardCollection)
+	ld l, c
+	ld a, [hl]
+	bit CARD_NOT_OWNED_F, a
+	jr nz, .done
+	add b ; if card seen, add b to count
+.done
+	and CARD_COUNT_MASK
+	call DisableSRAM
+	pop bc
+	pop de
+	pop hl
+	or a
+	ret nz
+	scf
+	ret
+
+
 ; if de > 0, increases de by 10 for each Pluspower found in location b
 ApplyAttachedPluspower:
 	ld a, e
