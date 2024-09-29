@@ -438,8 +438,8 @@ IfOpponentPlayedSupporter20BonusDamage_AIEffect:
 IfOpponentHasAttachedToolDoubleDamage_AIEffect:
 	ld a, DUELVARS_ARENA_CARD_ATTACHED_TOOL
 	call GetNonTurnDuelistVariable
-  or a
-  ret z  ; no attached tools
+	cp $ff
+	ret z  ; no attached tools
 	call DoubleDamage_DamageBoostEffect
 	jp SetDefiniteAIDamage
 

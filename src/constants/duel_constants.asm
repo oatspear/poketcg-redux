@@ -147,13 +147,6 @@ DEF DBLPSN_DAMAGE  EQU 20
 DEF BURN_DAMAGE    EQU 20
 
 
-; TOOL constants (DUELVARS_ARENA_CARD_ATTACHED_TOOL)
-; a value of zero means that there is no tool attached
-	const_def 1
-	const POKEMON_TOOL_PLUSPOWER          ; $01
-	const POKEMON_TOOL_DEFENDER           ; $02
-
-
 ; substatus conditions (DUELVARS_ARENA_CARD_SUBSTATUS*)
 
 ; SUBSTATUS1 (DUELVARS_ARENA_CARD_SUBSTATUS1) are checked on a defending Pokemon

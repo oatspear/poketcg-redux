@@ -175,7 +175,6 @@ MainDuelLoop:
 	ld a, [wDuelFinished]
 	or a
 	jr nz, .duel_finished
-	call HandleEndOfTurnEvents
 	call UpdateSubstatusConditions_EndOfTurn
 	call HandleBetweenTurnsEvents
 	call Func_3b31
@@ -2301,7 +2300,7 @@ ShuffleDeckAndDrawSevenCards:
 	push hl
 	push bc
 	call LoadCardDataToBuffer1_FromDeckIndex
-	call IsLoadedCard1BasicPokemon.skip_mysterious_fossil_clefairy_doll
+	call IsLoadedCard1BasicPokemon.skip_mysterious_fossil
 	pop bc
 	pop hl
 	or b
@@ -2316,18 +2315,16 @@ ShuffleDeckAndDrawSevenCards:
 	ret
 
 ; return nc if the card at wLoadedCard1 is a basic Pokemon card
-; MYSTERIOUS_FOSSIL and CLEFAIRY_DOLL do count as basic Pokemon cards
+; MYSTERIOUS_FOSSIL counts as basic Pokemon cards
 IsLoadedCard1BasicPokemon:
 	ld a, [wLoadedCard1ID]
 	cp MYSTERIOUS_FOSSIL
 	jr z, .basic
-	cp CLEFAIRY_DOLL
-	jr z, .basic
 ;	fallthrough
 
 ; return nc if the card at wLoadedCard1 is a basic Pokemon card
-; MYSTERIOUS_FOSSIL and CLEFAIRY_DOLL do NOT count unless already checked
-.skip_mysterious_fossil_clefairy_doll
+; MYSTERIOUS_FOSSIL does NOT count unless already checked
+.skip_mysterious_fossil
 	ld a, [wLoadedCard1Type]
 	cp TYPE_ENERGY
 	jr nc, .energy_trainer_nonbasic
@@ -2344,7 +2341,7 @@ IsLoadedCard1BasicPokemon:
 	scf
 	ret
 
-.basic ; MYSTERIOUS_FOSSIL or CLEFAIRY_DOLL
+.basic ; MYSTERIOUS_FOSSIL
 	ld a, $01
 	or a
 	ret ; nz
@@ -2794,20 +2791,22 @@ DrawDuelHUD:
 	; print number of attached Pluspower and Defender with respective icon, if any
 	ld hl, wHUDEnergyAndHPBarsX
 	ld a, [hli]
-	add 8  ; previously 6, use old position that displayed the number
+	add 7  ; previously 6, use old position that displayed the number
 	ld b, a
 	ld c, [hl] ; wHUDEnergyAndHPBarsY
 	inc c
 	ld a, DUELVARS_ARENA_CARD_ATTACHED_TOOL
 	call GetTurnDuelistVariable
-	or a
+	cp $ff
 	ret z  ; no tools
-	cp POKEMON_TOOL_PLUSPOWER
-	jr nz, .not_pluspower
-	ld a, SYM_PLUSPOWER
-	jp WriteByteToBGMap0
-.not_pluspower
-	inc c
+	; call GetCardIDFromDeckIndex
+	; ld a, e
+	; cp PLUSPOWER
+	; jr nz, .not_pluspower
+	; ld a, SYM_PLUSPOWER
+	; jp WriteByteToBGMap0
+;.not_pluspower
+;	inc c
 	ld a, SYM_DEFENDER
 	jp WriteByteToBGMap0
 
@@ -3603,8 +3602,8 @@ CardPageDisplayPointerTable:
 	dw DisplayCardPage_PokemonAttack1Page2  ; CARDPAGE_POKEMON_ATTACK1_2
 	dw DisplayCardPage_PokemonAttack2Page1  ; CARDPAGE_POKEMON_ATTACK2_1
 	dw DisplayCardPage_PokemonAttack2Page2  ; CARDPAGE_POKEMON_ATTACK2_2
+	dw DisplayCardPage_PokemonAttachedTool  ; CARDPAGE_POKEMON_TOOL
 	dw DisplayCardPage_PokemonDescription ; CARDPAGE_POKEMON_DESCRIPTION
-	dw DrawDuelMainScene
 	dw DrawDuelMainScene
 	dw DisplayCardPage_Energy ; CARDPAGE_ENERGY
 	dw DisplayCardPage_Energy ; CARDPAGE_ENERGY + 1
@@ -3691,9 +3690,10 @@ CardPageSwitchPointerTable:
 	dw CardPageSwitch_PokemonAttack1Page2 ; CARDPAGE_POKEMON_ATTACK1_2
 	dw CardPageSwitch_PokemonAttack2Page1 ; CARDPAGE_POKEMON_ATTACK2_1
 	dw CardPageSwitch_PokemonAttack2Page2 ; CARDPAGE_POKEMON_ATTACK2_2
+	dw CardPageSwitch_PokemonAttachedTool ; CARDPAGE_POKEMON_TOOL
 	dw CardPageSwitch_PokemonOverviewOrDescription ; CARDPAGE_POKEMON_DESCRIPTION
 	dw CardPageSwitch_PokemonEnd
-	dw CardPageSwitch_08
+	; dw CardPageSwitch_08
 	dw CardPageSwitch_EnergyOrTrainerPage1 ; CARDPAGE_ENERGY
 	dw CardPageSwitch_TrainerPage2 ; CARDPAGE_ENERGY + 1
 	dw CardPageSwitch_EnergyEnd
@@ -3743,6 +3743,25 @@ CheckCardPageExists:
 	or [hl]
 	ret
 
+; return with current page if this is a Play Area Pokémon
+; and it has a Pokémon Tool attached to it
+CardPageSwitch_PokemonAttachedTool:
+	ld a, [wCardPageType]
+	or a
+	ret z  ; CARDPAGETYPE_NOT_PLAY_AREA
+; CARDPAGETYPE_PLAY_AREA
+	ld a, [wCurPlayAreaSlot]
+	add DUELVARS_ARENA_CARD_ATTACHED_TOOL
+	call GetTurnDuelistVariable
+	cp $ff
+	jr z, .no_tool
+	ld a, CARDPAGE_POKEMON_TOOL
+	or a
+	ret
+.no_tool
+	xor a
+	ret
+
 ; return with CARDPAGE_POKEMON_OVERVIEW
 CardPageSwitch_PokemonEnd:
 	ld a, CARDPAGE_POKEMON_OVERVIEW
@@ -3750,10 +3769,10 @@ CardPageSwitch_PokemonEnd:
 	ret
 
 ; return with CARDPAGE_ENERGY + 1
-CardPageSwitch_08:
-	ld a, CARDPAGE_ENERGY + 1
-	scf
-	ret
+; CardPageSwitch_08:
+; 	ld a, CARDPAGE_ENERGY + 1
+; 	scf
+; 	ret
 
 ; return with current page
 CardPageSwitch_EnergyOrTrainerPage1:
@@ -3842,8 +3861,7 @@ LoadLoaded1CardGfx:
 	ld h, [hl]
 	ld l, a
 	lb bc, $30, TILE_SIZE
-	call LoadCardGfx
-	ret
+	jp LoadCardGfx
 
 SetBGP7OrSGB2ToCardPalette:
 	ld a, [wConsole]
@@ -3852,8 +3870,8 @@ SetBGP7OrSGB2ToCardPalette:
 	cp CONSOLE_SGB
 	jr z, .sgb
 	ld a, $07 ; CGB BG Palette 7
-	call CopyCGBCardPalette
-	ret
+	jp CopyCGBCardPalette
+
 .sgb
 	ld hl, wCardPalette
 	ld de, wTempSGBPacket + 1 ; PAL Packet color #0 (PAL23's SGB2)
@@ -3873,8 +3891,7 @@ SetBGP6OrSGB3ToCardPalette:
 	cp CONSOLE_SGB
 	jr z, SetSGB3ToCardPalette
 	ld a, $06 ; CGB BG Palette 6
-	call CopyCGBCardPalette
-	ret
+	jp CopyCGBCardPalette
 
 SetSGB3ToCardPalette:
 	ld hl, wCardPalette + 2
@@ -3943,16 +3960,15 @@ ApplyBGP6OrSGB3ToCardImage:
 	cp CONSOLE_SGB
 	jr z, .sgb
 	ld a, $06 ; CGB BG Palette 6
-	call ApplyCardCGBAttributes
-	ret
+	jp ApplyCardCGBAttributes
+
 .sgb
 	ld a, 3 << 0 + 3 << 2 ; Color Palette Designation
 ;	fallthrough
 
 SendCardAttrBlkPacket:
 	call CreateCardAttrBlkPacket
-	call SendSGB
-	ret
+	jp SendSGB
 
 ApplyBGP7OrSGB2ToCardImage:
 	ld a, [wConsole]
@@ -3961,8 +3977,8 @@ ApplyBGP7OrSGB2ToCardImage:
 	cp CONSOLE_SGB
 	jr z, .sgb
 	ld a, $07 ; CGB BG Palette 7
-	call ApplyCardCGBAttributes
-	ret
+	jp ApplyCardCGBAttributes
+
 .sgb
 	ld a, 2 << 0 + 2 << 2 ; Color Palette Designation
 	jr SendCardAttrBlkPacket
@@ -3976,8 +3992,8 @@ Func_5a81:
 	lb de, 0, 5
 	call ApplyBGP7OrSGB2ToCardImage
 	lb de, 12, 1
-	call ApplyBGP6OrSGB3ToCardImage
-	ret
+	jp ApplyBGP6OrSGB3ToCardImage
+
 .sgb
 	ld a, 2 << 0 + 2 << 2 ; Data Set #1: Color Palette Designation
 	lb de, 0, 5 ; Data Set #1: X, Y
@@ -3990,8 +4006,7 @@ Func_5a81:
 	lb de, 12, 1 ; Data Set #2: X, Y
 	call CreateCardAttrBlkPacket_DataSet
 	pop hl
-	call SendSGB
-	ret
+	jp SendSGB
 
 CreateCardAttrBlkPacket:
 ; sgb ATTR_BLK, 1 ; sgb_command, length
@@ -4180,16 +4195,16 @@ DisplayCardPage_PokemonOverview:
 	call DrawCardPageSet2AndRarityIcons
 	; print (Y coord at [wCurPlayAreaY]) card name, level, type, energies, HP, location...
 	call PrintPlayAreaCardInformationAndLocation
+	; print attached tool, if any
+	lb de, 7, 10
+	lb bc, 5, 10
+	call PrintPokemonAttachedTool
 
 ; common for both card page types
 .print_numbers_and_energies
-	; print Pokedex number in the bottom right corner (16,16)
-	lb bc, 16, 16
-	ld a, [wLoadedCard1PokedexNumber]
-	call WriteTwoByteNumberInTxSymbolFormat
 	; print the name, damage, and energy cost of each attack and/or Pokemon power that exists
-	; first attack at 5,10 and second at 5,12
-	lb bc, 5, 10
+	; first attack originally at 5,10 and second at 5,12
+	lb bc, 5, 11
 
 .attacks
 	ld e, c
@@ -4200,10 +4215,11 @@ DisplayCardPage_PokemonOverview:
 	ld e, c
 	ld hl, wLoadedCard1Atk2Name
 	call PrintAttackOrPkmnPowerInformation
-	; print the retreat cost (some amount of colorless energies) at 8,14
+	; print the retreat cost (some amount of colorless energies), originally at 8,14
 	inc c
 	inc c ; 14
-	ld b, 8
+	inc c ; 15
+	ld b, 14  ; 8
 	ld a, [wLoadedCard1RetreatCost]
 	ld e, a
 	inc e
@@ -4216,7 +4232,7 @@ DisplayCardPage_PokemonOverview:
 	jr .retreat_cost_loop
 .retreat_cost_done
 	; print the colors (energies) of the weakness(es) and resistance(s)
-	inc c ; 15
+	; inc c ; 15
 	ld a, [wCardPageType]
 	or a
 	jr z, .wr_from_loaded_card
@@ -4235,9 +4251,10 @@ DisplayCardPage_PokemonOverview:
 	ld e, a
 .got_wr
 	ld a, d
-	ld b, 8
+	ld b, 2  ; 8
 	call PrintCardPageWeaknessesOrResistances
-	inc c ; 16
+	; inc c ; 16
+	ld b, 8
 	ld a, e
 	call PrintCardPageWeaknessesOrResistances
 	ret
@@ -4283,7 +4300,7 @@ PrintAttackOrPkmnPowerInformation:
 	; print attack damage at 15,(e+1) if non-0
 	ld b, 15 ; unless damage has three digits, this is effectively 16
 	ld c, e
-	inc c
+	; inc c
 	call WriteTwoByteNumberInTxSymbolFormat
 .print_category
 	pop hl
@@ -4298,7 +4315,7 @@ PrintAttackOrPkmnPowerInformation:
 	add SYM_PLUS - DAMAGE_PLUS
 	ld b, 18
 	ld c, e
-	inc c
+	; inc c
 	call WriteByteToBGMap0
 	jr .print_energy_cost
 .print_energy_cost
@@ -4387,12 +4404,33 @@ PrintPokemonCardPageGenericInformation:
 	lb bc, 18, 1
 	inc a
 	call JPWriteByteToBGMap0
-	call DrawCardPageSet2AndRarityIcons
-	ret
+	jp DrawCardPageSet2AndRarityIcons
+
+
+; input:
+;   bc: x,y coordinates to print the tool symbol
+;   de: x,y coordinates to print the name
+PrintPokemonAttachedTool:
+	ld a, [wCurPlayAreaSlot]
+	add DUELVARS_ARENA_CARD_ATTACHED_TOOL
+	call GetTurnDuelistVariable
+	cp $ff
+	ret z  ; no tool
+	call LoadCardDataToBuffer2_FromDeckIndex
+	; print text ID pointed to by hl
+	ld hl, wLoadedCard2Name
+	push bc
+	call InitTextPrinting_ProcessTextFromPointerToID
+	pop bc
+	ld a, SYM_DEFENDER
+	jp WriteByteToBGMap0
+
 
 ; draws the 20x18 surrounding box and also colorizes the card image
 DrawCardPageSurroundingBox:
 	ld hl, wTextBoxFrameType
+	; ld a, $5
+	; ld [hl], a
 	set 7, [hl] ; colorize textbox border also on SGB (with SGB1)
 	push hl
 	lb de, 0, 0
@@ -4401,14 +4439,12 @@ DrawCardPageSurroundingBox:
 	pop hl
 	res 7, [hl]
 	lb de, 6, 4
-	call ApplyBGP6OrSGB3ToCardImage
-	ret
+	jp ApplyBGP6OrSGB3ToCardImage
 
 CardPageRetreatWRNumberTextData:
-	textitem 1, 14, RetreatCostText
 	textitem 1, 15, WeaknessText
-	textitem 1, 16, ResistanceText
-	textitem 15, 16, NumberText
+	textitem 6, 15, ResistanceText
+	textitem 12, 15, RetreatCostText
 	db $ff
 
 ; CardPageLvHPTextTileData:
@@ -4470,6 +4506,23 @@ PrintAttackOrNonPokemonCardDescription:
 	jp PrintAttackOrCardDescription
 
 
+DisplayCardPage_PokemonAttachedTool:
+; print surrounding box, card name at 5,1, type, set 2, and rarity
+	call PrintPokemonCardPageGenericInformation
+; print name of the attached tool at line 2
+	lb bc, 5, 2
+	lb de, 7, 2
+	call PrintPokemonAttachedTool
+; print description of the attached tool
+	ld hl, wLoadedCard2NonPokemonDescription
+	ld a, [hli]
+	or [hl]
+	ret z
+	dec hl
+	lb de, 1, 11
+	jp PrintAttackOrCardDescription
+
+
 DisplayCardPage_PokemonDescription:
 	; print surrounding box, card name at 5,1, type, set 2, and rarity
 	call PrintPokemonCardPageGenericInformation
@@ -4482,6 +4535,10 @@ DisplayCardPage_PokemonDescription:
 	; draw the card symbol associated to its TYPE_* at 3,2
 	lb de, 3, 2
 	call DrawCardSymbol
+	; print Pokedex number in the bottom right corner, originally (16,16)
+	lb bc, 16, 11
+	ld a, [wLoadedCard1PokedexNumber]
+	call WriteTwoByteNumberInTxSymbolFormat
 	; print the Level and HP numbers at 12,2 and 16,2 respectively
 	lb bc, 12, 2
 	ld a, [wLoadedCard1Level]
@@ -4564,6 +4621,7 @@ DrawCardPageSet2AndRarityIcons:
 CardPageLengthWeightTextData:
 	textitem 1, 11, LengthText
 	textitem 1, 12, WeightText
+	textitem 15, 11, NumberText
 	db $ff
 
 CardPageLvHPTextTileData:
@@ -4610,11 +4668,15 @@ DisplayEnergyOrTrainerCardPage:
 	ld a, [wLoadedCard1Type]
 	cp TYPE_TRAINER
 	jr c, .not_trainer_card
-	ld hl, CardPageItemTextData
-	jr z, .got_card_tag
-	cp TYPE_TRAINER_SUPPORTER
-	jr nz, .got_card_tag
 	ld hl, CardPageSupporterTextData
+	cp TYPE_TRAINER_SUPPORTER
+	jr z, .got_card_tag
+; Item or Tool
+	ld hl, CardPageItemTextData
+	ld a, [wLoadedCard1ID]
+	cp PLUSPOWER
+	jr c, .got_card_tag
+	ld hl, CardPageToolTextData
 .got_card_tag
 	call PlaceTextItems
 .not_trainer_card
@@ -4635,6 +4697,11 @@ DisplayEnergyOrTrainerCardPage:
 
 CardPageItemTextData:
 	textitem 2, 5, ItemText
+	db $ff
+
+CardPageToolTextData:
+	textitem 2, 5, ItemText
+	textitem 2, 6, ToolText
 	db $ff
 
 CardPageSupporterTextData:
@@ -5442,19 +5509,21 @@ PrintPlayAreaCardHeader:
 	ld a, [wCurPlayAreaSlot]
 	add DUELVARS_ARENA_CARD_ATTACHED_TOOL
 	call GetTurnDuelistVariable
-	or a
+	cp $ff
 	ret z
 	ld a, [wCurPlayAreaY]
 	inc a
 	ld c, a
 	ld b, 17  ; previously 15
-	ld a, [hl]
-	cp POKEMON_TOOL_PLUSPOWER
-	jr nz, .not_pluspower
-	ld a, SYM_PLUSPOWER
-	jp WriteByteToBGMap0
-.not_pluspower
-	ld b, 18  ; previously 17
+	; ld a, [hl]
+	; call GetCardIDFromDeckIndex
+	; ld a, e
+	; cp PLUSPOWER
+	; jr nz, .not_pluspower
+	; ld a, SYM_PLUSPOWER
+	; jp WriteByteToBGMap0
+; .not_pluspower
+; 	ld b, 18  ; previously 17
 	ld a, SYM_DEFENDER
 	jp WriteByteToBGMap0
 
@@ -6988,119 +7057,257 @@ HandleOnRetreatEffects:
 	ret
 
 
-HandleEndOfTurnEvents:
-; reset end of turn variables
-; return if Pokémon Powers are disabled
-	call ArePokemonPowersDisabled
-	ret c
-
-; check for Haunter's Affliction Ability
-	; ld a, HAUNTER_LV22
-	; call CountPokemonIDInPlayArea
-	; jr nc, .done
-	farcall Affliction_CountPokemonAndSetVariable
-.done
-	ret
-
-
 ; apply and/or refresh status conditions and other events that trigger between turns
 HandleBetweenTurnsEvents:
-	call IsArenaPokemonPoisonedOrBurned
-	jr c, .something_to_handle
-	cp PARALYZED
-	jr z, .something_to_handle
-	ld a, [wAfflictionAffectedPlayArea]
-	or a
-	jr nz, .something_to_handle
-;	call PreprocessHealingNectar
-;	jr c, .something_to_handle
-; OATS poison only ticks for the turn holder
-; OATS sleep checks are no longer done between turns
-	; call SwapTurn
-	; call IsArenaPokemonPoisonedOrBurned
-	; call SwapTurn
-	; jr c, .something_to_handle
-;.nothing_to_handle
+	xor a
+	ld [wAlreadyDisplayedBetweenTurnsScreen], a
+
+	call HandleSitrusBerry
+	call HandleLumBerry
+	call HandleLeftovers
+	call SwapTurn
+	call HandleSitrusBerry
+	call HandleLumBerry
+	call SwapTurn
+
+	call ArePokemonPowersDisabled
+	call nc, HandleEndOfTurnEffect_Affliction
+	call HandleEndOfTurnEffect_StatusConditions
+
+; handle things that do not trigger a Between Turns transition
 	call ClearStatusFromBenchedPokemon
 	call ClearPokemonFlags_EndOfTurn
 	call DiscardAttachedPluspowers
 	call SwapTurn
 	call DiscardAttachedDefenders
-	jp SwapTurn
+	call SwapTurn
 
-.something_to_handle
-; turn holder's arena Pokemon is paralyzed, poisoned or double poisoned
-; or there are End of Turn Pokémon Powers to trigger
+	ld a, [wAlreadyDisplayedBetweenTurnsScreen]
+	or a
+	ret z  ; done
+
+; if something triggered Between Turns screen,
+; check if some Pokémon were Knocked Out
+	call SwapTurn
+	ld a, DUELVARS_ARENA_CARD
+	call GetTurnDuelistVariable
+	call GetCardIDFromDeckIndex
+	ld a, e
+	ld [wTempNonTurnDuelistCardID], a
+	call SwapTurn
+	jp ClearKnockedOutPokemon_TakePrizes_CheckGameOutcome
+
+
+ShowBetweenTurnsTransitionAtMostOnce:
+	ld a, [wAlreadyDisplayedBetweenTurnsScreen]
+	or a
+	ret nz  ; already displayed
+	ld a, TRUE
+	ld [wAlreadyDisplayedBetweenTurnsScreen], a
 	call Func_3b21
 	call ZeroObjectPositionsAndToggleOAMCopy
 	call EmptyScreen
 	ld a, BOXMSG_BETWEEN_TURNS
 	call DrawDuelBoxMessage
 	ldtx hl, BetweenTurnsText
+	jp DrawWideTextBox_WaitForInput
+
+
+;
+HandleSitrusBerry:
+	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+	call GetTurnDuelistVariable
+	ld b, PLAY_AREA_ARENA
+	ld c, a
+	ld l, DUELVARS_ARENA_CARD_ATTACHED_TOOL
+.loop
+	ld a, [hl]
+	call GetCardIDFromDeckIndex  ; preserves hl, bc
+	ld a, e
+	cp SITRUS_BERRY
+	jr nz, .next
+	push bc
+	call GetCardDamageAndMaxHP  ; preserves: hl, b, de
+	pop bc
+	cp 20
+	jr c, .next
+; heal damage
+	push af
+	push hl
+	push bc
+	call ShowBetweenTurnsTransitionAtMostOnce
+	pop bc
+	pop hl
+	pop af
+	push hl
+	ld d, 20
+	ld e, b
+	farcall HealPlayAreaCardHP.damaged  ; preserves bc
+	pop hl
+; discard tool
+	ld a, [hl]
+	call PutCardInDiscardPile
+	ld a, $ff
+	ld [hl], a
+.next
+	inc hl
+	inc b
+	dec c
+	jr nz, .loop
+	ret
+
+
+HandleLumBerry:
+	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+	call GetTurnDuelistVariable
+	ld b, PLAY_AREA_ARENA
+	ld c, a
+	ld l, DUELVARS_ARENA_CARD_STATUS
+	ld e, l
+	ld d, h
+	ld l, DUELVARS_ARENA_CARD_ATTACHED_TOOL
+.loop
+	ld a, [hl]
+	push de
+	call GetCardIDFromDeckIndex  ; preserves hl, bc
+	ld a, e
+	pop de
+	cp LUM_BERRY
+	jr nz, .next
+; check status
+	ld a, [de]
+	or a
+	jr z, .next
+; clear status
+	xor a
+	ld [de], a
+	call AnimateLumBerryEffect
+; discard tool
+	ld a, [hl]
+	call PutCardInDiscardPile
+	ld a, $ff
+	ld [hl], a
+.next
+	inc hl
+	inc de
+	inc b
+	dec c
+	jr nz, .loop
+	ret
+
+
+;
+HandleLeftovers:
+	ld a, DUELVARS_ARENA_CARD_ATTACHED_TOOL
+	call GetTurnDuelistVariable
+	call GetCardIDFromDeckIndex  ; preserves hl, bc
+	ld a, e
+	cp LEFTOVERS
+	ret nz  ; not Leftovers
+	ld e, PLAY_AREA_ARENA
+	call GetCardDamageAndMaxHP  ; preserves: hl, b, de
+	or a
+	ret z  ; no damage
+; heal damage
+	push af
+	call ShowBetweenTurnsTransitionAtMostOnce
+	pop af
+	ld d, 10
+	ld e, PLAY_AREA_ARENA
+	farcall HealPlayAreaCardHP.damaged  ; preserves bc
+	ret
+
+
+; plays a healing animation for a play area Pokémon
+; and cures that Pokémon of status
+; input:
+;   b: PLAY_AREA_* offset of card to heal
+; preserves: hl, bc, de
+AnimateLumBerryEffect:
+	push hl
+	push de
+	push bc
+	call ShowBetweenTurnsTransitionAtMostOnce
+	pop bc
+	push bc
+	ld c, WEAKNESS
+	ld a, ATK_ANIM_GLOW_PLAY_AREA
+	call PlayAdhocAnimationOnPlayAreaLocation
+	pop bc
+	push bc
+	ld a, DUELVARS_ARENA_CARD
+	add b
+	call LoadCardNameAndLevelFromVarToRam2
+	ldtx hl, IsCuredOfStatusText
 	call DrawWideTextBox_WaitForInput
+	pop bc
+	pop de
+	pop hl
+	ret
 
-; handle Haunter's Affliction
-	farcall Affliction_DamageEffect
 
-; handle status conditions
-.status_conditions
+HandleEndOfTurnEffect_Affliction:
+	ld a, HAUNTER_LV22
+	call CountPokemonIDInPlayArea
+	ret nc  ; none found
+
+	call SwapTurn
+	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+	call GetTurnDuelistVariable
+	ld c, a  ; loop counter
+	ld d, 10  ; damage
+	ld e, PLAY_AREA_ARENA  ; target
+	ld l, DUELVARS_ARENA_CARD_STATUS
+.loop_play_area
+	ld a, [hli]
+	or a
+	jr z, .next
+	push hl
+	push bc
+	push de
+	call ShowBetweenTurnsTransitionAtMostOnce
+	pop de
+	pop bc
+	pop hl
+	call Bank1_ApplyDirectDamage_RegularAnim  ; preserves: hl, de, bc
+.next
+	inc e
+	dec c
+	jr nz, .loop_play_area
+	jp SwapTurn
+
+
+HandleEndOfTurnEffect_StatusConditions:
 	ld a, DUELVARS_ARENA_CARD
 	call GetTurnDuelistVariable
 	call GetCardIDFromDeckIndex
 	ld a, e
 	ld [wTempNonTurnDuelistCardID], a
-; handle Gloom's Healing Nectar
-;	call HandleHealingNectar
-; handle status
 	ld l, DUELVARS_ARENA_CARD_STATUS
 	ld a, [hl]
 	or a
-	jr z, .discard_pluspower
-	; has status condition
+	ret z  ; no status
+; has status condition
 	call HandlePoisonDamage
 	ld a, [hl]
+	ret c  ; KO
 	call HandleBurnDamage
-	jr c, .discard_pluspower
-; OATS sleep check is no longer between turns
-	; call HandleSleepCheck
+	ret c  ; KO
 	ld a, [hl]
 	and CNF_SLP_PRZ
 	cp PARALYZED
-	jr nz, .discard_pluspower
-	; heal paralysis
+	ret nz
+; heal paralysis
 	ld a, PSN_DBLPSN_BRN
 	and [hl]
 	ld [hl], a
+	call ShowBetweenTurnsTransitionAtMostOnce
 	call Func_6c7e
 	ldtx hl, IsCuredOfParalysisText
 	call PrintNonTurnDuelistCardIDText
 	ld a, DUEL_ANIM_HEAL
 	call Func_6cab
-	call WaitForWideTextBoxInput
-
-.discard_pluspower
-	call ClearStatusFromBenchedPokemon
-	call ClearPokemonFlags_EndOfTurn
-	call DiscardAttachedPluspowers
-	call SwapTurn
-	ld a, DUELVARS_ARENA_CARD
-	call GetTurnDuelistVariable
-	call GetCardIDFromDeckIndex
-	ld a, e
-	ld [wTempNonTurnDuelistCardID], a
-; OATS poison damage only for the turn holder
-	; ld l, DUELVARS_ARENA_CARD_STATUS
-	; ld a, [hl]
-	; or a
-	; jr z, .asm_6c3a
-	; call HandlePoisonDamage
-; OATS sleep check is no longer handled between turns
-	; jr c, .asm_6c3a
-	; call HandleSleepCheck
-.asm_6c3a
-	call DiscardAttachedDefenders
-	call SwapTurn
-	jp ClearKnockedOutPokemon_TakePrizes_CheckGameOutcome
+	jp WaitForWideTextBoxInput
 
 
 ; unreferenced
@@ -7247,59 +7454,112 @@ ClearPokemonFlags_EndOfTurn:
 	ret z
 	jr .loop
 
-; discard any PLUSPOWER attached to the turn holder's arena and/or bench Pokemon
-; FIXME refactor into single function
-DiscardAttachedPluspowers:
-	ld a, DUELVARS_ARENA_CARD_ATTACHED_TOOL
-	call GetTurnDuelistVariable
-	ld e, MAX_PLAY_AREA_POKEMON
-.unattach_pluspower_loop
-	ld a, [hl]
-	cp POKEMON_TOOL_PLUSPOWER
-	jr nz, .next
-	xor a
-	ld [hl], a
-.next
-	inc hl
-	dec e
-	jr nz, .unattach_pluspower_loop
-	ld de, PLUSPOWER
-	jp MoveCardToDiscardPileIfInPlayArea
 
-; discard any DEFENDER attached to the turn holder's arena and/or bench Pokemon
-; FIXME refactor into single function
+; discard any PLUSPOWER attached to the turn holder's arena and/or bench Pokémon
+DiscardAttachedPluspowers:
+	ld de, PLUSPOWER
+	jr DiscardAttachedToolsWithID
+
+; discard any DEFENDER attached to the turn holder's arena and/or bench Pokémon
 DiscardAttachedDefenders:
+	ld de, DEFENDER
+	; jr DiscardAttachedToolsWithID
+	; fallthrough
+
+; discard any tools with given ID attached to the turn holder's arena or bench Pokémon
+; input:
+;   de: ID of the Pokémon Tool to discard
+DiscardAttachedToolsWithID:
 	ld a, DUELVARS_ARENA_CARD_ATTACHED_TOOL
 	call GetTurnDuelistVariable
-	ld e, MAX_PLAY_AREA_POKEMON
+	ld c, MAX_PLAY_AREA_POKEMON
 .unattach_defender_loop
 	ld a, [hl]
-	cp POKEMON_TOOL_DEFENDER
+	cp $ff
+	jr z, .next  ; no attached tools
+	push de
+	call GetCardIDFromDeckIndex
+	ld a, e
+	pop de
+	cp e
 	jr nz, .next
-	xor a
-	ld [hl], a
+; put in discard pile and reset duel variable
+	ld a, [hl]
+	call PutCardInDiscardPile
+	ld [hl], $ff
 .next
 	inc hl
-	dec e
+	dec c
 	jr nz, .unattach_defender_loop
-	ld de, DEFENDER
-	jp MoveCardToDiscardPileIfInPlayArea
+	ret
 
-; return carry if the turn holder's arena Pokemon card is poisoned or burned.
-; also return the status condition in a.
-IsArenaPokemonPoisonedOrBurned:
-	ld a, DUELVARS_ARENA_CARD_STATUS
+
+; Puts damage counters on the target at location in e,
+;   without counting as attack damage (does not trigger damage reduction, etc.)
+; This is a mix between DealDamageToPlayAreaPokemon_RegularAnim (bank 0)
+;   and HandlePoisonDamage (bank 1).
+; inputs:
+;   d: amount of damage to deal
+;   e: PLAY_AREA_* of the target
+; output:
+;   carry: set if the target was Knocked Out
+; preserves: hl, de, bc
+Bank1_ApplyDirectDamage_RegularAnim:
+	ld a, ATK_ANIM_BENCH_HIT
+	ld [wLoadedAttackAnimation], a
+	; fallthrough
+
+Bank1_ApplyDirectDamage:
+	push hl
+	push de
+	push bc
+	ld a, e
+	ld [wTempPlayAreaLocation_cceb], a
+	or a ; cp PLAY_AREA_ARENA
+	jr nz, .bench
+; arena
+	ld a, [wNoDamageOrEffect]
+	or a
+	jr nz, .no_damage
+	jr .skip_no_damage_or_effect_check
+.bench
+	call IsBodyguardActive
+	jr nc, .skip_no_damage_or_effect_check
+.no_damage
+	ld d, 0
+.skip_no_damage_or_effect_check
+	xor a
+	ld [wNoDamageOrEffect], a
+	ld e, d
+	ld d, 0
+	push de
+	ld a, [wTempPlayAreaLocation_cceb]
+	add DUELVARS_ARENA_CARD
 	call GetTurnDuelistVariable
+	call GetCardIDFromDeckIndex
+	ld a, e
+	ld [wTempNonTurnDuelistCardID], a
+	pop de
+	ld a, [wTempPlayAreaLocation_cceb]
+	ld b, a
+	ld c, 0
+	add DUELVARS_ARENA_CARD_HP
+	ld l, a
+	push af
+	call Func_7415
+	call PlayAttackAnimation_DealAttackDamageSimple
+	pop af
 	or a
-	ret z
-	and PSN_DBLPSN_BRN
-	ld a, [hl]
-	jr nz, .set_carry
-	or a
+	jr z, .skip_knocked_out
+	call PrintKnockedOutIfHLZero
+	call WaitForWideTextBoxInput
+	scf  ; signal KO
+.skip_knocked_out
+	pop bc
+	pop de
+	pop hl
 	ret
-.set_carry
-	scf
-	ret
+
 
 Func_6c7e:
 	ld a, [wDuelDisplayedScreen]
@@ -7364,11 +7624,7 @@ PrintNonTurnDuelistCardIDText:
 	ld a, [wTempNonTurnDuelistCardID]
 	ld e, a
 	call LoadCardDataToBuffer1_FromCardID
-	ld hl, wLoadedCard1Name
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	call LoadTxRam2
+	call LoadCard1NameToRamText
 	pop hl
 	jp DrawWideTextBox_PrintText
 
@@ -7378,6 +7634,9 @@ HandlePoisonDamage:
 	bit POISONED_F, [hl]
 	ret z ; quit if not poisoned
 
+	push hl
+	call ShowBetweenTurnsTransitionAtMostOnce
+	pop hl
 ; load damage and text according to normal/double poison
 	push hl
 	bit DOUBLE_POISONED_F, [hl]
@@ -7427,6 +7686,9 @@ HandleBurnDamage:
 	bit BURNED_F, [hl]
 	ret z ; quit if not burned
 
+	push hl
+	call ShowBetweenTurnsTransitionAtMostOnce
+	pop hl
 ; load damage and text for burn
 	push hl
 	ldtx hl, Received20DamageDueToBurnText
@@ -7464,7 +7726,7 @@ HandleBurnDamage:
 
 ; given the deck index of a turn holder's card in register a,
 ; and a pointer in hl to the wLoadedCard* buffer where the card data is loaded,
-; check if the card is Clefairy Doll or Mysterious Fossil, and, if so, convert it
+; check if the card is Mysterious Fossil, and, if so, convert it
 ; to a Pokemon card in the wLoadedCard* buffer, using .trainer_to_pkmn_data.
 ConvertSpecialTrainerCardToPokemon:
 	ld c, a
@@ -7484,16 +7746,9 @@ ConvertSpecialTrainerCardToPokemon:
 	ret z ; return if the card is not in the arena or bench
 	ld a, e
 	cp MYSTERIOUS_FOSSIL
-	jr nz, .check_for_clefairy_doll
-	ld a, d
-	cp $00 ; MYSTERIOUS_FOSSIL >> 8
-	jr z, .start_ram_data_overwrite
-	ret
-.check_for_clefairy_doll
-	cp CLEFAIRY_DOLL
 	ret nz
 	ld a, d
-	cp $00 ; CLEFAIRY_DOLL >> 8
+	cp $00 ; MYSTERIOUS_FOSSIL >> 8
 	ret nz
 .start_ram_data_overwrite
 	push de
@@ -7810,7 +8065,7 @@ CountKnockedOutPokemonAndTakeThatManyPrizes:
 ; return in wNumberPrizeCardsToTake the amount of Pokemon in the turn holder's
 ; play area that are still there despite having 0 HP.
 ; that is, the number of Pokemon that have just been knocked out.
-; Clefairy Doll and Mysterious Fossil don't count.
+; Mysterious Fossil does not count.
 CountKnockedOutPokemon:
 	ld a, DUELVARS_ARENA_CARD_HP
 	call GetTurnDuelistVariable
@@ -7834,7 +8089,7 @@ CountKnockedOutPokemon:
 ; OATS begin support trainer subtypes
 	cp TYPE_TRAINER
 	; original: jr z
-	jr nc, .next ; jump if this is a trainer card (Clefairy Doll or Mysterious Fossil)
+	jr nc, .next ; jump if this is a trainer card (Mysterious Fossil)
 ; OATS end support trainer subtypes
 	inc b
 .next
@@ -8116,13 +8371,21 @@ InitializeDuelVariables:
 	dec c
 	jr nz, .init_duel_variables_loop
 	ld l, DUELVARS_ARENA_CARD
-	ld c, 1 + MAX_BENCH_POKEMON + 1
+	ld c, MAX_PLAY_AREA_POKEMON + 1
 .init_play_area
 ; initialize to $ff card in arena as well as cards in bench (plus a terminator)
-	ld [hl], -1
+	ld [hl], $ff
 	inc l
 	dec c
 	jr nz, .init_play_area
+	ld l, DUELVARS_ARENA_CARD_ATTACHED_TOOL
+	ld c, MAX_PLAY_AREA_POKEMON
+.init_tools
+; initialize to $ff card in arena as well as cards in bench (plus a terminator)
+	ld [hl], $ff
+	inc l
+	dec c
+	jr nz, .init_tools
 	ret
 
 ; draw [wDuelInitialPrizes] cards from the turn holder's deck and place them as prizes:
@@ -8703,6 +8966,38 @@ PlayAdhocAnimationOnDuelScene:
 	ld h, a
 	call PlayAttackAnimation  ; preserves hl, bc, de
 	jp WaitAttackAnimation    ; preserves de, (hl, bc)?
+
+
+; plays a healing animation for a play area Pokémon
+; (shows the Play Area screen and the arrow up with healing animation)
+; input:
+;   d: amount of damage to heal
+;   e: PLAY_AREA_* location of card to heal
+; preserves: bc, de
+PlayHealingAnimation_PlayAreaPokemon:
+; play heal animation
+	push bc
+	push de
+	ld b, e
+; animation requires damage to heal in de, not d
+	ld e, d
+	ld d, $00
+	ld a, ATK_ANIM_HEALING_WIND_PLAY_AREA
+	call PlayAdhocAnimationOnPlayAreaLocation_Weakness  ; preserves de
+	ld l, e
+	ld h, d
+; print Pokemon card name and damage healed
+	call LoadTxRam3
+	pop de
+	push de
+	ld a, DUELVARS_ARENA_CARD
+	add e
+	call LoadCardNameAndLevelFromVarToRam2
+	ldtx hl, PokemonHealedDamageText
+	call DrawWideTextBox_WaitForInput
+	pop de
+	pop bc
+	ret
 
 
 PlayInflictStatusAnimation:

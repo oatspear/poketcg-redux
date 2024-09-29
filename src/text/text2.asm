@@ -1,18 +1,3 @@
-IfHeadsNoDamageNextTurnText: ; 37f56 (d:7f56)
-	text "If Heads, prevent damage"
-	line "during opponent's next turn!"
-	done
-
-DamageCheckIfHeadsPlusDamageText: ; 37fa8 (d:7fa8)
-	text "Damage check!"
-	line "If Heads, +<RAMNUM> damage!!"
-	done
-
-DamageCheckIfHeadsXDamageText: ; 37fcd (d:7fcd)
-	text "Damage check!"
-	line "If Heads, x <RAMNUM> damage!!"
-	done
-
 YouMayDiscard1EnergyToHealBurnText:
 	text "You may discard an Energy"
 	line "to heal the Burn status."
@@ -22,61 +7,14 @@ AlreadyRetreatedThisTurnText:
 	text "Already retreated this turn."
 	done
 
-TrapCheckText:
-	text "Trap check! If Heads,"
-	line "unable to Retreat during next turn."
-	done
-
-; TransparencyCheckText: ; 3803b (e:403b)
-; 	text "Transparency check! If Heads,"
-; 	line "do not receive opponent's Attack!"
-; 	done
-
 ConfusionCheckDamageText: ; 3807c (e:407c)
 	text "Confusion check,"
 	line "If Tails, damage to yourself!"
 	done
 
-ConfusionCheckRetreatText: ; 380ac (e:40ac)
-	text "Confusion check!"
-	line "If Tails, unable to Retreat."
-	done
-
 PokemonsSleepCheckText:
-	; text "<RAMTEXT>'s Sleep check."
 	text "Sleep check!"
 	line "If Heads, wake up and attack."
-	done
-
-PoisonedIfHeadsConfusedIfTailsText: ; 380ed (e:40ed)
-	text "Heads: Opponent is Poisoned"
-	line "Tails: Opponent is Confused"
-	done
-
-IF SLEEP_WITH_COIN_FLIP
-AsleepIfHeadsPoisonedIfTailsText:
-	text "Heads: Opponent is Asleep"
-	line "Tails: Opponent is Poisoned"
-	done
-ELSE
-AsleepIfHeadsPoisonedIfTailsText:
-	text "Heads: Opponent is Drowsy"
-	line "Tails: Opponent is Poisoned"
-	done
-ENDC
-
-IfHeadsDoNotReceiveDamageOrEffectText: ; 38124 (e:4124)
-	text "If Heads, do not receive damage"
-	line "or effect of opponent's next Attack!"
-	done
-
-IfHeadsOpponentCannotAttackText: ; 3816a (e:416a)
-	text "If Heads, opponent cannot Attack"
-	line "next turn!"
-	done
-
-AttackUnsuccessfulText: ; 38197 (e:4197)
-	text "Attack unsuccessful."
 	done
 
 UnableToRetreatDueToTrapText:
@@ -108,24 +46,9 @@ ReceivesDamageDueToStrikeBackText:
 	line "due to a counterattack."
 	done
 
-UnableToEvolveDueToPrehistoricPowerText: ; 38359 (e:4359)
-	text "Unable to evolve due to the"
-	line "effects of Prehistoric Power."
-	done
-
 NoDamageOrEffectDueToAgilityText:
 	text "No damage or effect on next Attack"
 	line "due to the effects of Agility."
-	done
-
-; NoDamageQueenPressText:
-; 	text "No damage on next Attack due to the"
-; 	line "effects of Queen Press."
-; 	done
-
-UnableToUseAttackDueToNShieldText: ; 38459 (e:4459)
-	text "Unable to use this Attack due to"
-	line "the effects of N Shield."
 	done
 
 NoDamageOrEffectDueToNShieldText: ; 38494 (e:4494)
@@ -158,16 +81,6 @@ DuelistIsSelectingPokemonToPlaceInArenaText: ; 3859e (e:459e)
 	line "to place in the Arena."
 	done
 
-ChooseWeaknessYouWishToChangeText: ; 385cf (e:45cf)
-	text "Choose the Weakness you wish"
-	line "to change with Conversion 1."
-	done
-
-ChooseResistanceYouWishToChangeText: ; 3860a (e:460a)
-	text "Choose the Resistance you wish"
-	line "to change with Conversion 2."
-	done
-
 ChoosePokemonWishToColorChangeText: ; 38647 (e:4647)
 	text "Choose the Pokémon whose color you"
 	line "wish to change with Color change."
@@ -175,12 +88,6 @@ ChoosePokemonWishToColorChangeText: ; 38647 (e:4647)
 
 ChangedTheWeaknessOfPokemonToColorText: ; 3868d (e:468d)
 	text "Changed the Weakness of"
-	line ""
-	text "<RAMTEXT> to <RAMTEXT>."
-	done
-
-ChangedTheResistanceOfPokemonToColorText: ; 386af (e:46af)
-	text "Changed the Resistance of"
 	line ""
 	text "<RAMTEXT> to <RAMTEXT>."
 	done
@@ -340,23 +247,15 @@ ChooseTheOrderOfTheCardsText: ; 38e70 (e:4e70)
 	line "of the cards."
 	done
 
-ProcedureForDamageSwapText: ; 38e90 (e:4e90)
-	text "Procedure for Damage Swap:"
+ProcedureForRecycleText:
+	text "Options for Recycle:"
 	line ""
-	line "1. Choose a Pokémon to move a"
-	line "   Damage counter from and press"
-	line "   the A Button."
+	line "1. Shuffle up to 2 Pokémon or Basic"
+	line "   Energy cards from your discard"
+	line "   pile back into your deck."
 	line ""
-	line "2. Choose a Pokémon to move the"
-	line "   Damage counter to and press"
-	line "   the A Button."
-	line ""
-	line "3. Repeat steps 1 and 2."
-	line ""
-	line "4. Press the B Button to end."
-	line ""
-	line "5. You cannot move the counter if"
-	line "   it will Knock Out the Pokémon."
+	line "2. Draw 1 card. Then, put this card"
+	line "   on the bottom of your deck."
 	done
 
 ProcedureForStrangeBehaviorText:
@@ -393,9 +292,9 @@ ThereAreNoEligibleCardsInTheDiscardPileText:
 	line "in the Discard Pile."
 	done
 
-PleaseSelectTheDeckText: ; 39254 (e:5254)
-	text "Please select the Deck:"
-	line "            Yours   Opponent's"
+PleaseSelectAnOptionText:
+	text "Please select an option:"
+	line "            First   Second"
 	done
 
 ChooseAnyPokemonFromDeckText:
@@ -517,9 +416,9 @@ ChooseCardToPlaceInHandText: ; 39666 (e:5666)
 	line "place in the Hand."
 	done
 
-ChoosePokemonToAttachDefenderToText: ; 3968b (e:568b)
-	text "Choose a Pokémon to"
-	line "attach Defender to."
+ChoosePokemonToAttachToolToText:
+	text "Choose a Pokémon to attach"
+	line "<RAMTEXT> to."
 	done
 
 ChoosePokemonToReturnToTheDeckText:

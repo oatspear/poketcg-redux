@@ -343,7 +343,7 @@ CutePokemonCardList:
 	card_item PIKACHU_LV12,             2
 	card_item PIKACHU_LV16,             2
 	card_item FLYING_PIKACHU,           1
-	card_item SURFING_PIKACHU_LV13,     2
+	card_item SURFING_PIKACHU,          2
 	card_item RAICHU_LV40,              1
 	card_item RAICHU_LV45,              1
 	card_item JOLTEON_LV29,             1
@@ -354,7 +354,7 @@ CutePokemonCardList:
 	card_item EEVEE,                    4
 	card_item PROFESSOR_OAK,            2
 	card_item BILL,                     3
-	card_item CLEFAIRY_DOLL,            2
+	card_item ENERGY_SEARCH,            2
 	card_item SCOOP_UP,                 2
 	card_item COMPUTER_SEARCH,          1
 	card_item PLUSPOWER,                1

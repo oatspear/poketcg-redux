@@ -1108,11 +1108,7 @@ HandleDestinyBondSubstatus:
 	ld l, DUELVARS_ARENA_CARD
 	ld a, [hl]
 	call LoadCardDataToBuffer2_FromDeckIndex
-	ld hl, wLoadedCard2Name
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	call LoadTxRam2
+	call LoadCard2NameToRamText
 	ldtx hl, KnockedOutDueToDestinyBondText
 	jp DrawWideTextBox_WaitForInput
 
@@ -1214,11 +1210,7 @@ ApplyCounterattackDamage:
 	ld e, a
 	ld d, 0
 	call LoadCardDataToBuffer2_FromCardID
-	ld hl, wLoadedCard2Name
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	call LoadTxRam2
+	call LoadCard2NameToRamText
 	ld a, DUELVARS_ARENA_CARD_HP
 	call GetTurnDuelistVariable
 	pop de
@@ -1289,7 +1281,16 @@ IsCounterattackActive:
 	call AddToDamage_DE
 
 .rocky_helmet
-	; TODO
+	ld a, DUELVARS_ARENA_CARD_ATTACHED_TOOL
+	call GetTurnDuelistVariable
+	push de
+	call GetCardIDFromDeckIndex  ; preserves af, hl, bc
+	ld a, e
+	pop de
+	cp ROCKY_HELMET
+	jr nz, .counter_substatus
+	ld hl, 10
+	call AddToDamage_DE
 
 .counter_substatus
 	ld a, DUELVARS_ARENA_CARD_SUBSTATUS1

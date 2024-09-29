@@ -207,6 +207,11 @@ IsCuredOfBurnText:
 	line "cured of Burn."
 	done
 
+IsCuredOfStatusText:
+	text "<RAMTEXT> is"
+	line "cured of Special Conditions."
+	done
+
 BetweenTurnsText: ; 36553 (d:6553)
 	text "Between Turns."
 	done
@@ -632,13 +637,6 @@ SelectCheckText: ; 36f31 (d:6f31)
 	line "  Check"
 	done
 
-Text0087: ; 36f43 (d:6f43)
-	textfw3 "B"
-	textfw0 "<RAMNUM>"
-	textfw3 "S"
-	textfw0 "<RAMNUM>"
-	done
-
 DuelistIsThinkingText: ; 36f4a (d:6f4a)
 	text "<RAMNAME> is thinking."
 	done
@@ -655,143 +653,8 @@ NumberOfPrizesText: ; 36f82 (d:6f82)
 	text "Number of Prizes"
 	done
 
-Text008c: ; 36f94 (d:6f94)
-	text "Random 1"
-	done
-
-Text008d: ; 36f9e (d:6f9e)
-	text "Random 2"
-	done
-
-Text008e: ; 36fa8 (d:6fa8)
-	text "Random 3"
-	done
-
-Text008f: ; 36fb2 (d:6fb2)
-	text "Random 4"
-	done
-
-Text0090: ; 36fbc (d:6fbc)
-	text "Training COM"
-	done
-
-Text0091: ; 36fca (d:6fca)
-	text "Player 1"
-	done
-
 Player2Text: ; 36fd4 (d:6fd4)
 	text "Player 2"
-	done
-
-Text0093: ; 36fde (d:6fde)
-	text "Left to Right"
-	done
-
-Text0094: ; 36fed (d:6fed)
-	text "Right to Left"
-	done
-
-Text0095: ; 36ffc (d:6ffc)
-	text "START: Change"
-	line "    A: Execute"
-	line "    B: End"
-	done
-
-Text0096: ; 37025 (d:7025)
-	text "Other"
-	line "Poison"
-IF SLEEP_WITH_COIN_FLIP
-	line "Sleep"
-ELSE
-	line "Drowsiness"
-ENDC
-	line "Payalysis"
-	line "Confusion"
-	line "Double Poison"
-	line "Clear"
-	line "Foul Gas"
-	line "Opponent's Hand"
-	line "Discard from Hand"
-	line "Select Deck"
-	line "Select Discard"
-	line "From Hand to Deck"
-	line "Take Prize"
-	line "Change Player"
-	line "Shuffle Deck"
-	line "Discard Bench"
-	line "Change Card"
-	done
-
-Text0097: ; 370f9 (d:70f9)
-	text "WIN GAME"
-	line "LOSE GAME"
-	line "DRAW GAME"
-	line "CHANGE CASE"
-	line "PAUSE MODE"
-	line "CHANGE COMPUTER OPPONENT"
-	line "CHANGE PLAYER 2 TO COM"
-	line "FLIP 20"
-	line "SAVE NOW"
-	line "LOAD FILE"
-	done
-
-Text0098: ; 37179 (d:7179)
-	text "Save File"
-	done
-
-Text0099: ; 37184 (d:7184)
-	text "Load File"
-	line "  "
-	half2full
-	textfw0 "0"
-	text "  Last Saved File"
-	done
-
-Text009a: ; 371a6 (d:71a6)
-	text "Pause Mode is ON"
-	line "Press SELECT to Pause"
-	done
-
-Text009b: ; 371ce (d:71ce)
-	text "Pause Mode is OFF"
-	done
-
-Text009c: ; 371e1 (d:71e1)
-	text "Computer Mode is OFF"
-	done
-
-Text009d: ; 371f7 (d:71f7)
-	text "Computer Mode is ON"
-	done
-
-Text009e: ; 3720c (d:720c)
-	text "<GRASS> Pokémon"
-	line ""
-	text "<FIRE> Pokémon"
-	line ""
-	text "<WATER> Pokémon"
-	line ""
-	text "<LIGHTNING> Pokémon"
-	line ""
-	text "<FIGHTING> Pokémon"
-	line ""
-	text "<PSYCHIC> Pokémon"
-	line ""
-	text "<COLORLESS> Pokémon"
-	line "Trainer Card"
-	line "Energy Card"
-	done
-
-Text009f: ; 37279 (d:7279)
-	text "Card List"
-	done
-
-Text00a0: ; 37284 (d:7284)
-	text "Test Coin Flip"
-	done
-
-Text00a1: ; 37294 (d:7294)
-	text "End without Prizes?"
 	done
 
 ResetBackUpRamText: ; 372a9 (d:72a9)
@@ -963,16 +826,6 @@ NoAttackMayBeChoosenText: ; 3781b (d:781b)
 	text "No Attacks may be choosen."
 	done
 
-; YouDidNotReceiveAnAttackToMirrorMoveText: ; 37837 (d:7837)
-; 	text "You did not receive an Attack"
-; 	line "to Mirror Move."
-; 	done
-
-ThisAttackCannotBeUsedTwiceText: ; 37866 (d:7866)
-	text "This attack cannot"
-	line "be used twice."
-	done
-
 NoWeaknessText: ; 37889 (d:7889)
 	text "No Weakness."
 	done
@@ -1010,11 +863,6 @@ NoGrassEnergyText: ; 37946 (d:7946)
 	text "No Grass Energy."
 	done
 
-CannotUseSinceTheresOnly1PkmnText: ; 37958 (d:7958)
-	text "Cannot use since there's only"
-	line "1 Pokémon."
-	done
-
 CannotUseBecauseItWillBeKnockedOutText: ; 37982 (d:7982)
 	text "Cannot use because"
 	line "it will be Knocked Out."
@@ -1040,10 +888,6 @@ ENDC
 
 UnableToUsePkmnPowerText:
 	text "Unable to use Pokémon Powers."
-	done
-
-Text00d5: ; 37a3a (d:7a3a)
-	text "Transmission Error."
 	done
 
 BackUpIsBrokenText: ; 37a59 (d:7a59)
@@ -1082,16 +926,6 @@ PrintingWasInterruptedText: ; 37b42 (d:7b42)
 CardPopCannotBePlayedWithTheGameBoyText: ; 37b5d (d:7b5d)
 	text "Card Pop! can only be played"
 	line "with a Game Boy Color."
-	done
-
-ParalysisCheckText: ; 37c15 (d:7c15)
-	text "Paralysis check!"
-	line "If Heads, opponent is Paralyzed."
-	done
-
-ConfusionCheckText: ; 37ca8 (d:7ca8)
-	text "Confusion check! If Heads,"
-	line "opponent becomes Confused."
 	done
 
 CardCheckIfHeads8CardsIfTails1CardText: ; 37f24 (d:7f24)

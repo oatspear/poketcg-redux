@@ -184,10 +184,6 @@ RareCandyDescription:
 	line "that Pokémon anyway."
 	done
 
-ClefairyDollName:
-	text "Clefairy Doll"
-	done
-
 TrainerCardAsPokemonDescription:
 	text "Play this card as if it were a 20 HP"
 	line "<COLORLESS> Basic Pokémon. At any"
@@ -275,6 +271,18 @@ PokeBallDescription:
 	line "Shuffle your deck afterward."
 	done
 
+UltraBallName:
+	text "Ultra Ball"
+	done
+
+UltraBallDescription:
+	text "You must discard 2 other cards from"
+	line "your hand to use this card. Search"
+	line "your deck for a Pokémon, reveal it,"
+	line "and put it into your hand."
+	line "Then, shuffle your deck."
+	done
+
 ScoopUpNetName:
 	text "Scoop Up Net"
 	done
@@ -316,31 +324,6 @@ PokedexDescription:
 	line "you find there and put it into your"
 	line "hand. Put the other cards back on"
 	line "the top of your deck in any order."
-	done
-
-PlusPowerName:
-	text "PlusPower"
-	done
-
-PlusPowerDescription:
-	text "Attach this card to your Active"
-	line "Pokémon. At the end of your turn,"
-	line "discard this card. If this Pokémon's"
-	line "attack does damage to any Active"
-	line "Pokémon, the attack does 10 more"
-	line "damage to that Active Pokémon."
-	done
-
-DefenderName:
-	text "Defender"
-	done
-
-DefenderDescription:
-	text "Attach this card to 1 of your"
-	line "Pokémon. At the end of your"
-	line "opponent's next turn, discard"
-	line "this card. Damage done to that"
-	line "Pokémon by attacks is reduced by 20."
 	done
 
 ItemFinderName:
@@ -457,9 +440,95 @@ RecycleName:
 	done
 
 RecycleDescription:
-	text "Put a Pokémon or Basic Energy card"
-	line "in your discard pile on the top of"
-	line "your deck."
+	text "Choose one:"
+	line "1. Shuffle up to 2 Pokémon or Basic"
+	line "   Energy cards from your discard"
+	line "   pile back into your deck."
+	line "2. Draw 1 card. Then, put this card"
+	line "   on the bottom of your deck."
+	done
+
+SuperRodName:
+	text "Super Rod"
+	done
+
+SuperRodDescription:
+	text "Shuffle up to 3 Pokémon or Basic"
+	line "Energy cards from your discard pile"
+	line "back into your deck."
+	done
+
+PlusPowerName:
+	text "PlusPower"
+	done
+
+PlusPowerDescription:
+	text "Attach this card to your Active"
+	line "Pokémon. At the end of your turn,"
+	line "discard this card. If this Pokémon's"
+	line "attack does damage to any Active"
+	line "Pokémon, the attack does 10 more"
+	line "damage to that Active Pokémon."
+	done
+
+DefenderName:
+	text "Defender"
+	done
+
+DefenderDescription:
+	text "Attach this card to 1 of your"
+	line "Pokémon. At the end of your"
+	line "opponent's next turn, discard"
+	line "this card. Damage done to that"
+	line "Pokémon by attacks is reduced by 20."
+	done
+
+SitrusBerryName:
+	text "Sitrus Berry"
+	done
+
+SitrusBerryDescription:
+	text "At the end of each turn, if the"
+	line "Pokémon this card is attached to"
+	line "has 2 or more damage counters on it,"
+	line "heal 20 damage from it and discard"
+	line "this card."
+	done
+
+LumBerryName:
+	text "Lum Berry"
+	done
+
+LumBerryDescription:
+	text "At the end of each turn, if the"
+	line "Pokémon this card is attached to is"
+	line "affected by any Special Conditions,"
+	line "it recovers from all of them, and"
+	line "discard this card."
+	done
+
+LeftoversName:
+	text "Leftovers"
+	done
+
+LeftoversDescription:
+	text "At the end of your turn, if the"
+	line "Pokémon this card is attached to is"
+	line "in the Active Spot, heal 10 damage"
+	line "from it."
+	done
+
+RockyHelmetName:
+	text "Rocky Helmet"
+	done
+
+RockyHelmetDescription:
+	text "If the Pokémon this card is attached"
+	line "to is your Active Pokémon and is"
+	line "damaged by an opponent's attack,"
+	line "even if that Pokémon is Knocked Out,"
+	line "put 1 damage counter on the"
+	line "Attacking Pokémon."
 	done
 
 AlreadyHasAToolAttachedText:

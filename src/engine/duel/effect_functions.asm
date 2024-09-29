@@ -104,11 +104,7 @@ RareCandy_EvolveEffect:
 	add DUELVARS_ARENA_CARD
 	call GetTurnDuelistVariable
 	call LoadCardDataToBuffer1_FromDeckIndex
-	ld hl, wLoadedCard1Name
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	call LoadTxRam2
+	call LoadCard1NameToRamText
 
 ; evolve card and overwrite its stage as STAGE2_WITHOUT_STAGE1
 	ldh a, [hTempCardIndex_ff98]
@@ -600,29 +596,6 @@ DoubleHitEffect:
 	ret
 
 
-Affliction_DamageEffect:
-	ld a, [wAfflictionAffectedPlayArea]
-	or a
-	ret z
-
-	call SwapTurn
-	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
-	call GetTurnDuelistVariable
-	ld c, a  ; loop counter
-	ld d, 10  ; damage
-	ld e, PLAY_AREA_ARENA  ; target
-	ld a, DUELVARS_ARENA_CARD_STATUS
-	call GetTurnDuelistVariable
-.loop_play_area
-	ld a, [hli]
-	or a
-	call nz, ApplyDirectDamage_RegularAnim
-	inc e
-	dec c
-	jr nz, .loop_play_area
-	jp SwapTurn
-
-
 PrimalThunder_DrawbackEffect:
 	call CheckOpponentHasMorePrizeCardsRemaining
 	ret c  ; opponent Prizes < user Prizes (losing)
@@ -795,24 +768,6 @@ GarbageEater_HealEffect:
 	call HealPlayAreaCardHP
 	pop hl
 	jr .loop_play_area
-
-
-; Stores in [wAfflictionAffectedPlayArea] whether there are Pokémon to damage
-; from status in the opponent's play area.
-; Stores 0 if there are no Affliction capable Pokémon in play.
-Affliction_CountPokemonAndSetVariable:
-	xor a
-	ld [wAfflictionAffectedPlayArea], a
-
-	ld a, HAUNTER_LV22
-	call CountPokemonIDInPlayArea
-	ret nc  ; none found
-
-	call SwapTurn
-	call CheckIfPlayAreaHasAnyStatus
-	or a
-	ld [wAfflictionAffectedPlayArea], a
-	jp SwapTurn
 
 
 StrangeBehavior_SelectAndSwapEffect:
@@ -4836,11 +4791,7 @@ ReturnPokemonAndAttachedCardsToHandEffect:
 	pop af
 
 	call LoadCardDataToBuffer1_FromDeckIndex
-	ld hl, wLoadedCard1Name
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	call LoadTxRam2
+	call LoadCard1NameToRamText
 	ldtx hl, PokemonAndAllAttachedCardsReturnedToHandText
 	call DrawWideTextBox_WaitForInput
 	xor a
@@ -5536,9 +5487,7 @@ ImakuniEffect: ; 2f216 (b:7216)
 	call LoadCardDataToBuffer1_FromDeckIndex
 	ld a, [wLoadedCard1ID]
 
-; cannot confuse Clefairy Doll and Mysterious Fossil
-	cp CLEFAIRY_DOLL
-	jr z, .failed
+; cannot confuse Mysterious Fossil
 	cp MYSTERIOUS_FOSSIL
 	jr z, .failed
 
@@ -6074,9 +6023,16 @@ MoveDiscardPileCardToTopOfDeckEffect:
 ; put card on top of the deck and show it on screen if
 ; it wasn't the Player who played the Trainer card.
 Recycle_AddToDeckEffect:
-	call SelectedCard_AddToDeckFromDiscardPileEffect
-	ldtx hl, CardWasChosenText
-	jp SelectedCard_ShowDetailsIfOpponentsTurn
+	ldh a, [hTempList]
+	or a
+	jp z, SelectedDiscardPileCards_ShuffleIntoDeckEffect
+; cycle this card back into deck
+	ldh a, [hTempCardIndex_ff9f]
+	push af
+	call Draw1CardEffect
+	pop af
+	call RemoveCardFromHand  ; preserves af, hl bc, de
+	jp ReturnCardToBottomOfDeck
 
 
 Prank_AddToDeckEffect:
@@ -6457,41 +6413,38 @@ ItemFinder_PlayerSelection:
 	ret
 
 
-Defender_PlayerSelection: ; 2f488 (b:7488)
-	ldtx hl, ChoosePokemonToAttachDefenderToText
+AttachPokemonTool_PlayerSelectEffect:
+	call LoadCard1NameToRamText
+	ldtx hl, ChoosePokemonToAttachToolToText
 	call DrawWideTextBox_WaitForInput
 .loop
 	call HandlePlayerSelectionPokemonInPlayArea_AllowCancel
 	ret c  ; cancelled
-	ldh [hTemp_ffa0], a
+	ldh [hTempPlayAreaLocation_ffa1], a
 	call CheckPokemonHasNoToolsAttached
 	ret nc
 	call DrawWideTextBox_WaitForInput
 	jr .loop
 
-Defender_AttachDefenderEffect:
-; attach Trainer card to Play Area Pokemon
-	ldh a, [hTemp_ffa0]
-	ld e, a
-	ldh a, [hTempCardIndex_ff9f]
-	call PutHandCardInPlayArea
 
-; store Defender as the attached tool
-	ldh a, [hTemp_ffa0]
+PokemonTool_AttachToolEffect:
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	ld e, a
 	add DUELVARS_ARENA_CARD_ATTACHED_TOOL
 	call GetTurnDuelistVariable
-	ld [hl], POKEMON_TOOL_DEFENDER
+	ldh a, [hTempCardIndex_ff9f]
+; store the attached tool and put it in play
+	ld [hl], a
+	call PutHandCardInPlayArea
 	call IsPlayerTurn
 	ret c
-
-	ldh a, [hTemp_ffa0]
+	ldh a, [hTempPlayAreaLocation_ffa1]
 	ldh [hTempPlayAreaLocation_ff9d], a
 	bank1call Func_2c10b
 	ret
 
 
 ; return carry if Bench is full.
-ClefairyDoll_BenchCheck:
 MysteriousFossil_BenchCheck:
 	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
 	call GetTurnDuelistVariable
@@ -6500,7 +6453,6 @@ MysteriousFossil_BenchCheck:
 	ldtx hl, NoSpaceOnTheBenchText
 	ret
 
-ClefairyDoll_PlaceInPlayAreaEffect:
 MysteriousFossil_PlaceInPlayAreaEffect:
 	ldh a, [hTempCardIndex_ff9f]
 	jp PutHandPokemonCardInPlayArea
@@ -6721,11 +6673,7 @@ _ReturnBenchedPokemonToDeckEffect:
 	jr c, .done
 	ldh a, [hTempCardIndex_ff98]
 	call LoadCardDataToBuffer1_FromDeckIndex
-	ld hl, wLoadedCard1Name
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	call LoadTxRam2
+	call LoadCard1NameToRamText
 	bank1call DrawLargePictureOfCard
 	ldtx hl, PokemonAndAllAttachedCardsWereReturnedToDeckText
 	call DrawWideTextBox_WaitForInput
@@ -6738,16 +6686,14 @@ PlusPower_PreconditionCheck:
 	jp CheckPokemonHasNoToolsAttached
 
 PlusPowerEffect:
-; attach Trainer card to Arena Pokemon
-	ld e, PLAY_AREA_ARENA
-	ldh a, [hTempCardIndex_ff9f]
-	call PutHandCardInPlayArea
-
 ; store PlusPower as the attached tool
 	ld a, DUELVARS_ARENA_CARD_ATTACHED_TOOL
 	call GetTurnDuelistVariable
-	ld [hl], POKEMON_TOOL_PLUSPOWER
-	ret
+; attach Trainer card to Arena Pokemon
+	ldh a, [hTempCardIndex_ff9f]
+	ld [hl], a
+	ld e, PLAY_AREA_ARENA
+	jp PutHandCardInPlayArea
 
 
 Switch_PlayerSelection:
@@ -7376,20 +7322,37 @@ PokeBall_PlayerSelectEffect:
 	ret
 
 
-; return carry if no eligible cards in the Discard Pile
-FishingTail_DiscardPileCheck:
-Recycle_DiscardPileCheck:
-	call CheckDiscardPileNotEmpty
-	ret c
-	call RemoveTrainerCardsFromCardList
-	call CountCardsInDuelTempList
-	cp 1
-	ldtx hl, ThereAreNoCardsInTheDiscardPileText
+UltraBall_PlayerSelectEffect:
+	call HandlePlayerSelectionPokemonFromDeck
+	ldh [hTempList + 2], a  ; placed after the selected cards to discard
 	ret
 
 
+UltraBall_DiscardAddToHandEffect:
+; discard cards from hand
+	ld hl, hTempList
+	ld a, [hli]
+	call RemoveCardFromHand
+	call PutCardInDiscardPile
+	ld a, [hli]
+	call RemoveCardFromHand
+	call PutCardInDiscardPile
+
+; add card from deck to hand
+	ld a, [hl]
+	call SearchCardInDeckAndSetToJustDrawn
+	call AddCardToHand
+	jp SyncShuffleDeck
+
+
+; return carry if no eligible cards in the Discard Pile and deck is empty
+; Recycle_PreconditionCheck:
+; 	call CheckDeckIsNotEmpty
+; 	ret nc
+; 	jp CreatePokemonAndBasicEnergyCardListFromDiscardPile
+
+
 FishingTail_PlayerSelection:
-Recycle_PlayerSelection:
 ; assume: wDuelTempList is initialized from Recycle_DiscardPileCheck
 	; call CreateDiscardPileCardList
 	; call RemoveTrainerCardsFromCardList
@@ -7414,6 +7377,49 @@ FishingTail_AISelection:
 .got_card
 	ldh [hTemp_ffa0], a
 	or a
+	ret
+
+;
+Recycle_PlayerSelectEffect:
+	; bank1call DrawDuelMainScene
+	ldtx hl, ProcedureForRecycleText
+	bank1call DrawWholeScreenTextBox
+	ldtx hl, PleaseSelectAnOptionText
+	call TwoItemHorizontalMenu
+	ldh a, [hKeysHeld]
+	and B_BUTTON
+	jr nz, .cancel
+	ldh a, [hCurMenuItem]
+	ldh [hTempList], a ; store selection index (0/1)
+	or a
+	jr z, .discard_pile
+; cycle card into deck
+	call CheckDeckIsNotEmpty
+	jr c, .cant_use
+	ret
+
+.discard_pile
+; assume: wDuelTempList initialized from precondition
+	call CreatePokemonAndBasicEnergyCardListFromDiscardPile
+	jr c, .cant_use
+	call ChooseUpTo2Cards_PlayerDiscardPileSelection
+	ldh a, [hTempList]
+	inc a  ; $ff turns into 0
+	cp 1   ; set carry if cancelled selection
+	ret
+
+.cant_use
+	call DrawWideTextBox_WaitForInput
+.cancel
+	scf
+	ret
+
+
+SuperRod_PlayerSelectEffect:
+	call ChooseUpTo3Cards_PlayerDiscardPileSelection
+	ldh a, [hTempList]
+	inc a  ; $ff turns into 0
+	cp 1   ; set carry if cancelled selection
 	ret
 
 
@@ -7571,6 +7577,7 @@ ChooseUpToNCardsFromCardList_PlayerSelectionLoop:
 	ret
 
 
+SuperRod_AddToDeckEffect:
 SelectedDiscardPileCards_ShuffleIntoDeckEffect:
 ; return selected cards to the deck
 	ld hl, hTempList

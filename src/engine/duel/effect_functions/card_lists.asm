@@ -331,6 +331,20 @@ CreatePokemonCardListFromDiscardPile:
 	ret
 
 
+SuperRod_DiscardPileCheck:
+FishingTail_DiscardPileCheck:
+CreatePokemonAndBasicEnergyCardListFromDiscardPile:
+	call CheckDiscardPileNotEmpty
+	ret c
+	call RemoveTrainerCardsFromCardList
+	ld bc, DOUBLE_COLORLESS_ENERGY
+	call RemoveCardIDFromCardList
+	call CountCardsInDuelTempList
+	cp 1
+	ldtx hl, ThereAreNoCardsInTheDiscardPileText
+	ret
+
+
 ; creates in wDuelTempList list of attached Psychic Energy cards
 ; that are attached to the Turn Duelist's Arena card.
 CreateListOfPsychicEnergyAttachedToArena:

@@ -195,7 +195,6 @@ CardPointers:
 	dw ImakuniCard
 	dw PokemonTraderCard
 	dw PokemonBreederCard
-	dw ClefairyDollCard
 	dw MysteriousFossilCard
 	dw EnergyRetrievalCard
 	dw EnergyRecyclerCard
@@ -205,11 +204,12 @@ CardPointers:
 	dw SwitchCard
 	dw PokemonCenterCard
 	dw PokeBallCard
+	dw UltraBallCard
 	dw ScoopUpNetCard
 	dw ComputerSearchCard
 	dw PokedexCard
-	dw PlusPowerCard
-	dw DefenderCard
+	dw RecycleCard
+	dw RareCandyCard
 	dw ItemFinderCard
 	dw GiovanniCard
 	dw DevolutionSprayCard
@@ -220,9 +220,13 @@ CardPointers:
 	dw MaintenanceCard
 	dw PokemonFluteCard
 	dw GamblerCard
-	dw RecycleCard
-	dw RareCandyCard
 	dw PokemonNurseCard
+	dw PlusPowerCard
+	dw DefenderCard
+	dw SitrusBerryCard
+	dw LumBerryCard
+	dw LeftoversCard
+	dw RockyHelmetCard
 	dw NULL
 	assert_table_length NUM_CARDS + 2
 
@@ -5130,7 +5134,7 @@ SurfingPikachuLv13Card:
 	tx SurfingPikachuName ; name
 	db PROMOSTAR ; rarity
 	db PROMOTIONAL | PRO ; sets
-	db SURFING_PIKACHU_LV13
+	db SURFING_PIKACHU
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -10004,17 +10008,6 @@ PokemonBreederCard:
 	tx PokemonBreederDescription ; description
 	dw NONE ; description (cont)
 
-ClefairyDollCard:
-	db TYPE_TRAINER ; type
-	gfx ClefairyDollCardGfx ; gfx
-	tx ClefairyDollName ; name
-	db STAR ; rarity
-	db EVOLUTION | NONE ; sets
-	db CLEFAIRY_DOLL
-	dw ClefairyDollEffectCommands ; effect commands
-	tx TrainerCardAsPokemonDescription ; description
-	tx TrainerCardAsPokemonDescriptionCont ; description (cont)
-
 MysteriousFossilCard:
 	db TYPE_TRAINER ; type
 	gfx MysteriousFossilCardGfx ; gfx
@@ -10114,6 +10107,17 @@ PokeBallCard:
 	tx PokeBallDescription ; description
 	dw NONE ; description (cont)
 
+UltraBallCard:
+	db TYPE_TRAINER ; type
+	gfx UltraBallCardGfx ; gfx
+	tx UltraBallName ; name
+	db DIAMOND ; rarity
+	db COLOSSEUM | NONE ; sets
+	db ULTRA_BALL
+	dw UltraBallEffectCommands ; effect commands
+	tx UltraBallDescription ; description
+	dw NONE ; description (cont)
+
 ScoopUpNetCard:
 	db TYPE_TRAINER ; type
 	gfx ScoopUpNetCardGfx ; gfx
@@ -10145,28 +10149,6 @@ PokedexCard:
 	db POKEDEX
 	dw PokedexEffectCommands ; effect commands
 	tx PokedexDescription ; description
-	dw NONE ; description (cont)
-
-PlusPowerCard:
-	db TYPE_TRAINER ; type
-	gfx PlusPowerCardGfx ; gfx
-	tx PlusPowerName ; name
-	db DIAMOND ; rarity
-	db COLOSSEUM | NONE ; sets
-	db PLUSPOWER
-	dw PlusPowerEffectCommands ; effect commands
-	tx PlusPowerDescription ; description
-	dw NONE ; description (cont)
-
-DefenderCard:
-	db TYPE_TRAINER ; type
-	gfx DefenderCardGfx ; gfx
-	tx DefenderName ; name
-	db DIAMOND ; rarity
-	db COLOSSEUM | NONE ; sets
-	db DEFENDER
-	dw DefenderEffectCommands ; effect commands
-	tx DefenderDescription ; description
 	dw NONE ; description (cont)
 
 ItemFinderCard:
@@ -10310,4 +10292,74 @@ PokemonNurseCard:
 	db POKEMON_NURSE
 	dw PokemonNurseEffectCommands ; effect commands
 	tx PokemonNurseDescription ; description
+	dw NONE ; description (cont)
+
+; ------------------------------------------------------------------------------
+; Pokémon Tools
+; ------------------------------------------------------------------------------
+
+PlusPowerCard:
+	db TYPE_TRAINER ; type
+	gfx PlusPowerCardGfx ; gfx
+	tx PlusPowerName ; name
+	db DIAMOND ; rarity
+	db COLOSSEUM | NONE ; sets
+	db PLUSPOWER
+	dw PlusPowerEffectCommands ; effect commands
+	tx PlusPowerDescription ; description
+	dw NONE ; description (cont)
+
+DefenderCard:
+	db TYPE_TRAINER ; type
+	gfx DefenderCardGfx ; gfx
+	tx DefenderName ; name
+	db DIAMOND ; rarity
+	db COLOSSEUM | NONE ; sets
+	db DEFENDER
+	dw PokemonToolEffectCommands ; effect commands
+	tx DefenderDescription ; description
+	dw NONE ; description (cont)
+
+SitrusBerryCard:
+	db TYPE_TRAINER ; type
+	gfx SitrusBerryCardGfx ; gfx
+	tx SitrusBerryName ; name
+	db DIAMOND ; rarity
+	db COLOSSEUM | NONE ; sets
+	db SITRUS_BERRY
+	dw PokemonToolEffectCommands ; effect commands
+	tx SitrusBerryDescription ; description
+	dw NONE ; description (cont)
+
+LumBerryCard:
+	db TYPE_TRAINER ; type
+	gfx LumBerryCardGfx ; gfx
+	tx LumBerryName ; name
+	db DIAMOND ; rarity
+	db COLOSSEUM | NONE ; sets
+	db LUM_BERRY
+	dw PokemonToolEffectCommands ; effect commands
+	tx LumBerryDescription ; description
+	dw NONE ; description (cont)
+
+LeftoversCard:
+	db TYPE_TRAINER ; type
+	gfx LeftoversCardGfx ; gfx
+	tx LeftoversName ; name
+	db DIAMOND ; rarity
+	db COLOSSEUM | NONE ; sets
+	db LEFTOVERS
+	dw PokemonToolEffectCommands ; effect commands
+	tx LeftoversDescription ; description
+	dw NONE ; description (cont)
+
+RockyHelmetCard:
+	db TYPE_TRAINER ; type
+	gfx RockyHelmetCardGfx ; gfx
+	tx RockyHelmetName ; name
+	db DIAMOND ; rarity
+	db COLOSSEUM | NONE ; sets
+	db ROCKY_HELMET
+	dw PokemonToolEffectCommands ; effect commands
+	tx RockyHelmetDescription ; description
 	dw NONE ; description (cont)

@@ -1834,9 +1834,9 @@ ItemFinderEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ItemFinder_DiscardAddToHandEffect
 	db  $00
 
-DefenderEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Defender_PlayerSelection
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Defender_AttachDefenderEffect
+PokemonToolEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, AttachPokemonTool_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PokemonTool_AttachToolEffect
 	db  $00
 
 MysteriousFossilEffectCommands:
@@ -1858,11 +1858,6 @@ ComputerSearchEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDeckIsNotEmpty
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SelectedCard_AddToHandFromDeckEffect
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, ComputerSearch_PlayerSelection
-	db  $00
-
-ClefairyDollEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, ClefairyDoll_BenchCheck
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ClefairyDoll_PlaceInPlayAreaEffect
 	db  $00
 
 MrFujiEffectCommands:
@@ -1953,10 +1948,23 @@ PokeBallEffectCommands:
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, PokeBall_PlayerSelectEffect
 	db  $00
 
+UltraBallEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, UltraBall_PreconditionCheck
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, HandlePlayerSelection2HandCardsToDiscardExcludeSelf
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, UltraBall_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, UltraBall_DiscardAddToHandEffect
+	db  $00
+
 RecycleEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, Recycle_DiscardPileCheck
+	; dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, Recycle_PreconditionCheck
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Recycle_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Recycle_AddToDeckEffect
-	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Recycle_PlayerSelection
+	db  $00
+
+SuperRodEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, SuperRod_DiscardPileCheck
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, SuperRod_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SuperRod_AddToDeckEffect
 	db  $00
 
 ReviveEffectCommands:

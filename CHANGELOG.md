@@ -1,5 +1,41 @@
 # Pokémon TCG Rebalanced
 
+## Version 0.12.0
+
+### New Cards
+
+#### Ultra Ball
+- Item Trainer card.
+- Discards 2 other cards from the hand in order to use it.
+- Add any Pokémon from the deck to the hand.
+
+#### Sitrus Berry
+- Pokémon Tool Trainer card.
+- At the end of each turn, if the holder has 2 or more damage counters on it, heals 20 damage and discards the tool.
+
+#### Lum Berry
+- Pokémon Tool Trainer card.
+- At the end of each turn, if the holder has status, heals all status and discards the tool.
+
+#### Leftovers
+- Pokémon Tool Trainer card.
+- At the end of the owner's turn, if the holder is in the Active Spot, heals 10 damage.
+
+#### Rocky Helmet
+- Pokémon Tool Trainer card.
+- Returns 10 damage back to an attacker.
+
+### Removed Cards
+- Clefairy Doll
+
+### Trainer Changes
+
+#### Recycle
+- Offers one of two options.
+  1. Shuffle two Pokémon or Basic Energy cards from the discard pile into deck.
+  2. Draw 1 card and put this card on the bottom of the deck.
+
+
 ## Version 0.11.0
 
 ### Removed Cards

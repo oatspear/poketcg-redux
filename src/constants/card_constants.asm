@@ -98,7 +98,7 @@
 	const PIKACHU_LV12                ; $61
 	const PIKACHU_LV16                ; $62
 	const FLYING_PIKACHU              ; $63
-	const SURFING_PIKACHU_LV13        ; $64
+	const SURFING_PIKACHU             ; $64
 	const RAICHU_LV35                 ; $65
 	const RAICHU_LV40                 ; $66
 	const RAICHU_LV45                 ; $67
@@ -193,21 +193,21 @@
 	const IMAKUNI_CARD                ; $c0
 	const POKEMON_TRADER              ; $c1
 	const POKEMON_BREEDER             ; $c2
-	const CLEFAIRY_DOLL               ; $c3
-	const MYSTERIOUS_FOSSIL           ; $c4
-	const ENERGY_RETRIEVAL            ; $c5
-	const ENERGY_RECYCLER             ; $c6
-	const ENERGY_SEARCH               ; $c7
-	const ENERGY_REMOVAL              ; $c8
-	const ENERGY_SWITCH               ; $c9
-	const SWITCH                      ; $ca
-	const POKEMON_CENTER              ; $cb
-	const POKE_BALL                   ; $cc
+	const MYSTERIOUS_FOSSIL           ; $c3
+	const ENERGY_RETRIEVAL            ; $c4
+	const ENERGY_RECYCLER             ; $c5
+	const ENERGY_SEARCH               ; $c6
+	const ENERGY_REMOVAL              ; $c7
+	const ENERGY_SWITCH               ; $c8
+	const SWITCH                      ; $c9
+	const POKEMON_CENTER              ; $ca
+	const POKE_BALL                   ; $cb
+	const ULTRA_BALL                  ; $cc
 	const SCOOP_UP                    ; $cd
 	const COMPUTER_SEARCH             ; $ce
 	const POKEDEX                     ; $cf
-	const PLUSPOWER                   ; $d0
-	const DEFENDER                    ; $d1
+	const RECYCLE                     ; $d0
+	const RARE_CANDY                  ; $d1
 	const ITEM_FINDER                 ; $d2
 	const GIOVANNI                    ; $d3
 	const DEVOLUTION_SPRAY            ; $d4
@@ -218,9 +218,13 @@
 	const MAINTENANCE                 ; $d9
 	const POKEMON_FLUTE               ; $da
 	const GAMBLER                     ; $db
-	const RECYCLE                     ; $dc
-	const RARE_CANDY                  ; $dd
-	const POKEMON_NURSE               ; $de
+	const POKEMON_NURSE               ; $dc
+	const PLUSPOWER                   ; $dd
+	const DEFENDER                    ; $de
+	const SITRUS_BERRY                ; $df
+	const LUM_BERRY                   ; $e0
+	const LEFTOVERS                   ; $e1
+	const ROCKY_HELMET                ; $e2
 DEF NUM_CARDS EQU const_value - 1
 
 DEF ENERGY_IDS_START  EQU GRASS_ENERGY

@@ -1,3 +1,31 @@
+; move the turn holder's card with ID at de to the discard pile
+; if it's currently in the play area.
+MoveCardToDiscardPileIfInPlayArea:
+	ld c, e
+	ld b, d
+	ld l, DUELVARS_CARD_LOCATIONS
+.next_card
+	ld a, [hl]
+	and CARD_LOCATION_PLAY_AREA
+	jr z, .skip ; jump if card not in arena
+	ld a, l
+	call GetCardIDFromDeckIndex
+	ld a, c
+	cp e
+	jr nz, .skip ; jump if not the card id provided in c
+	ld a, b
+	cp d ; card IDs are 8-bit so d is always 0
+	jr nz, .skip
+	ld a, l
+	push bc
+	call PutCardInDiscardPile
+	pop bc
+.skip
+	inc l
+	ld a, l
+	cp DECK_SIZE
+	jr c, .next_card
+	ret
 
 
 ; begin the execution of an attack and handle the attack being
@@ -108,6 +136,10 @@ UseAttackOrPokemonPower:
 
 
 
+;
+AttackUnsuccessfulText: ; 38197 (e:4197)
+	text "Attack unsuccessful."
+	done
 
 ; return carry if the turn holder's attack was unsuccessful due to reduced accuracy effect
 HandleReducedAccuracySubstatus:

@@ -257,6 +257,7 @@ AddCardToHand:
 
 ; removes a card from the turn holder's hand and decrements the number of cards in the hand
 ; the card is identified by register a, which contains the deck index (0-59) of the card
+; preserves: af, hl, bc, de
 RemoveCardFromHand:
 	push af
 	push hl
@@ -360,6 +361,45 @@ MoveDiscardPileCardToHand:
 	pop bc
 	pop de
 	pop hl
+	ret
+
+
+; output:
+;   carry: set if a Tool was discarded
+; preserves: bc, de
+PutArenaToolInDiscardPile:
+	xor a  ; PLAY_AREA_ARENA
+	; fallthrough
+
+; input:
+;   a: PLAY_AREA_* of the target
+; output:
+;   carry: set if a Tool was discarded
+; preserves: bc, de
+PutPlayAreaToolInDiscardPile:
+	add DUELVARS_ARENA_CARD_ATTACHED_TOOL
+	call GetTurnDuelistVariable
+	cp $ff
+	ret z  ; no attached tools
+; reset duel variable
+	ld [hl], $ff
+; move tool to discard pile
+; assume: there is only one attached tool at a time
+; no need to search for more cards
+	call PutCardInDiscardPile
+	scf
+	ret
+
+
+; returns carry if the given ID is a Pokémon Tool
+; input:
+;   de: card ID
+IsPokemonToolID:
+	ld a, e
+	sub PLUSPOWER  ; first Tool ID
+; values below will set carry
+; tools will not set carry
+	ccf
 	ret
 
 
@@ -1210,9 +1250,10 @@ PutHandPokemonCardInPlayArea:
    ; e = play area location offset (PLAY_AREA_*)
 ; returns:
    ; a = CARD_LOCATION_PLAY_AREA + e
+; preserves: bc, de
 PutHandCardInPlayArea:
-	call RemoveCardFromHand
-	call GetTurnDuelistVariable
+	call RemoveCardFromHand  ; preserves af, hl, bc, de
+	call GetTurnDuelistVariable  ; preserves bc, de
 	ld a, e
 	or CARD_LOCATION_PLAY_AREA
 	ld [hl], a
@@ -1251,6 +1292,8 @@ EmptyPlayAreaSlot:
 	ld d, $ff
 	ld a, DUELVARS_ARENA_CARD
 	call .init_duelvar
+	ld a, DUELVARS_ARENA_CARD_ATTACHED_TOOL
+	call .init_duelvar
 	ld d, 0
 	ld a, DUELVARS_ARENA_CARD_HP
 	call .init_duelvar
@@ -1258,8 +1301,6 @@ EmptyPlayAreaSlot:
 	call .init_duelvar
 .zero_vars
 	ld a, DUELVARS_ARENA_CARD_CHANGED_TYPE
-	call .init_duelvar
-	ld a, DUELVARS_ARENA_CARD_ATTACHED_TOOL
 	call .init_duelvar
 	ld a, DUELVARS_ARENA_CARD_UNUSED
 ; OATS must also reset status conditions
@@ -1537,11 +1578,7 @@ OnPokemonPlayedInitVariablesAndPowers:
 	bank1call DisplayUsePokemonPowerScreen
 	ldh a, [hTempCardIndex_ff98]
 	call LoadCardDataToBuffer1_FromDeckIndex
-	ld hl, wLoadedCard1Name
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	call LoadTxRam2
+	call LoadCard1NameToRamText
 	ldtx hl, HavePokemonPowerText
 	call DrawWideTextBox_WaitForInput
 	call ExchangeRNG
@@ -2414,11 +2451,7 @@ PrintKnockedOut:
 	ld a, [wTempNonTurnDuelistCardID]
 	ld e, a
 	call LoadCardDataToBuffer1_FromCardID
-	ld hl, wLoadedCard1Name
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	call LoadTxRam2
+	call LoadCard1NameToRamText
 	ldtx hl, WasKnockedOutText
 	call DrawWideTextBox_PrintText
 	ld a, 40
@@ -2630,6 +2663,22 @@ LoadAttackNameToRam2b:
 	ret
 
 
+LoadCard1NameToRamText:
+	ld hl, wLoadedCard1Name
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	jp LoadTxRam2
+
+
+LoadCard2NameToRamText:
+	ld hl, wLoadedCard2Name
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	jp LoadTxRam2
+
+
 Func_1bb4:
 	call Func_3b31
 	bank1call DrawDuelMainScene
@@ -2696,41 +2745,13 @@ GetPlayAreaCardRetreatCost:
 	ret
 
 
-; move the turn holder's card with ID at de to the discard pile
-; if it's currently in the play area.
-MoveCardToDiscardPileIfInPlayArea:
-	ld c, e
-	ld b, d
-	ld l, DUELVARS_CARD_LOCATIONS
-.next_card
-	ld a, [hl]
-	and CARD_LOCATION_PLAY_AREA
-	jr z, .skip ; jump if card not in arena
-	ld a, l
-	call GetCardIDFromDeckIndex
-	ld a, c
-	cp e
-	jr nz, .skip ; jump if not the card id provided in c
-	ld a, b
-	cp d ; card IDs are 8-bit so d is always 0
-	jr nz, .skip
-	ld a, l
-	push bc
-	call PutCardInDiscardPile
-	pop bc
-.skip
-	inc l
-	ld a, l
-	cp DECK_SIZE
-	jr c, .next_card
-	ret
-
 ; calculate damage and max HP of card at PLAY_AREA_* in e.
 ; input:
 ;	e = PLAY_AREA_* of card;
 ; output:
 ;	a = damage;
 ;	c = max HP.
+; preserves: hl, b, de
 GetCardDamageAndMaxHP:
 	push hl
 	push de

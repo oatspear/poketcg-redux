@@ -324,7 +324,7 @@ CheckNoDuplicateColorsInPlayArea:
 CheckPokemonHasNoToolsAttached:
 	add DUELVARS_ARENA_CARD_ATTACHED_TOOL
 	call GetTurnDuelistVariable
-	or a
+	cp $ff
 	ret z
 ; there is an attached tool
 	ldtx hl, AlreadyHasAToolAttachedText
@@ -1401,3 +1401,10 @@ EnergySwitch_PreconditionCheck:
 	call CheckBenchIsNotEmpty
 	ret c
 	jp CheckIfPlayAreaHasAnyEnergies
+
+
+UltraBall_PreconditionCheck:
+	ld c, 3
+	call CheckHandSizeIsAtLeastC
+	ret c
+	jp CheckDeckIsNotEmpty
