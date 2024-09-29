@@ -2,6 +2,9 @@
 
 ## Version 0.13.0
 
+### Quality of Life
+- Player decks no longer discount cards from the available collection. Each card copy can go into multiple decks at the same time.
+
 ### New Cards
 
 #### X Attack
