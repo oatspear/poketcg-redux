@@ -336,20 +336,20 @@ Script_WonAtChallengeHall:
 	print_npc_text Text0544
 .ows_f4a4
 	zero_out_event_value EVENT_CHALLENGE_CUP_IN_MENU
-	print_npc_text Text0545
-	ask_question_jump_default_yes Text0546, .ows_f4bd
+	; print_npc_text Text0545
+	; ask_question_jump_default_yes Text0546, .ows_f4bd
 	test_if_event_equal EVENT_CHALLENGE_CUP_OPPONENT_NUMBER, 2
 	print_variable_npc_text Text0547, Text0548
-	start_challenge_hall_duel PRIZES_4, SAMS_PRACTICE_DECK_ID, MUSIC_STOP
+	start_challenge_hall_duel PRIZES_6, SAMS_PRACTICE_DECK_ID, MUSIC_STOP
 	quit_script_fully
 
-.ows_f4bd
-	print_npc_text Text0549
-	close_text_box
-	max_out_event_value EVENT_CHALLENGE_CUP_IN_MENU
-	open_menu
-	close_text_box
-	script_jump .ows_f4a4
+; .ows_f4bd
+; 	print_npc_text Text0549
+; 	close_text_box
+; 	max_out_event_value EVENT_CHALLENGE_CUP_IN_MENU
+; 	open_menu
+; 	close_text_box
+; 	script_jump .ows_f4a4
 
 NPCMovement_f4c8:
 	db EAST

@@ -4,6 +4,8 @@
 
 ### Quality of Life
 - Player decks no longer discount cards from the available collection. Each card copy can go into multiple decks at the same time.
+- The Challenge Hall is now always available.
+- Players are unable to modify or switch decks between Challenge Hall matches.
 
 ### New Cards
 
