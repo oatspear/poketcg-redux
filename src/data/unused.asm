@@ -1552,7 +1552,7 @@ SlowpokeLv9Card:
 	tx SlowpokeName ; name
 	db PROMOSTAR ; rarity
 	db PROMOTIONAL | PRO ; sets
-	db SLOWPOKE_LV9
+	db SLOWPOKE
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name

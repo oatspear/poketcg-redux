@@ -61,7 +61,7 @@ DeckPointers:
 UnnamedDeck:
 	; deck_list_start
 	; card_item PSYCHIC_ENERGY,         20
-	; card_item SLOWPOKE_LV9,            4
+	; card_item SLOWPOKE,                4
 	; card_item CLEFAIRY,                4
 	; card_item MEW_LV8,                 4
 	; card_item PIDGEOT_LV40,            2
@@ -162,7 +162,7 @@ UnnamedDeck:
 	; card_item PSYCHIC_ENERGY,   10
 	; card_item DARKNESS_ENERGY,  10
 	; card_item MANKEY,            4
-	; card_item SLOWPOKE_LV9,      4
+	; card_item SLOWPOKE,          4
 	; card_item SLOWBRO,           4
 	; card_item ABRA,              4
 	; card_item KADABRA,           4
@@ -192,7 +192,7 @@ UnnamedDeck:
 
 	; deck_list_start
 	; card_item PSYCHIC_ENERGY,  20
-	; card_item SLOWPOKE_LV9,     4
+	; card_item SLOWPOKE,         4
 	; card_item SLOWBRO,          4
 	; card_item CLEFAIRY,         4
 	; card_item SPEAROW,          4
@@ -207,7 +207,7 @@ UnnamedDeck:
 
 	; deck_list_start
 	; card_item PSYCHIC_ENERGY, 24
-	; card_item SLOWPOKE_LV9,    4
+	; card_item SLOWPOKE,        4
 	; card_item SLOWBRO,         4
 	; card_item CLEFAIRY,        4
 	; card_item MEW_LV15,        4
@@ -221,7 +221,7 @@ UnnamedDeck:
 
 	; deck_list_start
 	; card_item PSYCHIC_ENERGY,  24
-	; card_item SLOWPOKE_LV9,     4
+	; card_item SLOWPOKE,         4
 	; card_item CLEFAIRY,         4
 	; card_item MEW_LV15,         4
 	; card_item DROWZEE,          4
@@ -1402,7 +1402,7 @@ WaterfrontPokemonDeck:
 	card_item SEAKING,           1
 	card_item STARYU,            2
 	card_item STARMIE,           1
-	card_item SLOWPOKE_LV9,      2
+	card_item SLOWPOKE,          2
 	card_item SLOWBRO,           1
 	card_item FARFETCHD,         1
 	card_item DRATINI,           2
@@ -1647,7 +1647,7 @@ StrangePowerDeck:
 	deck_list_start
 	card_item PSYCHIC_ENERGY,          22
 	card_item DOUBLE_COLORLESS_ENERGY,  3
-	card_item SLOWPOKE_LV9,             3
+	card_item SLOWPOKE,                 3
 	card_item SLOWBRO,                  2
 	card_item DROWZEE,                  4
 	card_item HYPNO,                    3
@@ -1793,7 +1793,7 @@ FireBlastDeck:
 ImakuniDeck:
 	deck_list_start
 	card_item PSYCHIC_ENERGY, 24
-	card_item SLOWPOKE_LV9,    4
+	card_item SLOWPOKE,        4
 	card_item SLOWBRO,         4
 	card_item DROWZEE,         4
 	card_item HYPNO,           4

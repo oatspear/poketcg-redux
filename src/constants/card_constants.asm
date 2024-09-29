@@ -140,7 +140,7 @@
 	const ABRA                        ; $8b
 	const KADABRA                     ; $8c
 	const ALAKAZAM                    ; $8d
-	const SLOWPOKE_LV9                ; $8e
+	const SLOWPOKE                    ; $8e
 	const SLOWBRO                     ; $8f
 	const GASTLY                      ; $90
 	const HAUNTER_LV17                ; $91

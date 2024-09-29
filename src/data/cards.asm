@@ -7446,7 +7446,7 @@ SlowpokeLv9Card:
 	tx SlowpokeName ; name
 	db CIRCLE ; rarity
 	db LABORATORY | FOSSIL ; sets
-	db SLOWPOKE_LV9
+	db SLOWPOKE
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name

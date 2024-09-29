@@ -577,7 +577,7 @@ PsychicPowerCardList:
 	card_item ABRA,              3
 	card_item KADABRA,           2
 	card_item ALAKAZAM,          1
-	card_item SLOWPOKE_LV9,      2
+	card_item SLOWPOKE,          2
 	card_item SLOWBRO,           1
 	card_item GASTLY,            3
 	card_item HAUNTER_LV17,      1
@@ -627,7 +627,7 @@ DreamEaterHaunterCardList:
 ScavengingSlowbroCardList:
 	deck_list_start
 	card_item PSYCHIC_ENERGY,   23
-	card_item SLOWPOKE_LV9,      4
+	card_item SLOWPOKE,          4
 	card_item SLOWBRO,           3
 	card_item JYNX,              3
 	card_item MEWTWO_LV53,       2
@@ -646,7 +646,7 @@ StrangePowerCardList:
 	deck_list_start
 	card_item PSYCHIC_ENERGY,          25
 	card_item DOUBLE_COLORLESS_ENERGY,  1
-	card_item SLOWPOKE_LV9,             3
+	card_item SLOWPOKE,                 3
 	card_item SLOWBRO,                  2
 	card_item DROWZEE,                  4
 	card_item HYPNO,                    3

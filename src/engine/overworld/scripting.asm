@@ -1493,7 +1493,7 @@ ChallengeCupPrizeCards:
 	db ELECTABUZZ_LV20
 	tx ElectabuzzTradeCardName
 
-	db SLOWPOKE_LV9
+	db SLOWPOKE
 	tx SlowpokeTradeCardName
 
 	db MEWTWO_LV53

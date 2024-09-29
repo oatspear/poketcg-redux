@@ -175,7 +175,7 @@ cards = {
 	0x8c: "ABRA",
 	0x8d: "KADABRA",
 	0x8e: "ALAKAZAM",
-	0x8f: "SLOWPOKE_LV9",
+	0x8f: "SLOWPOKE",
 	0x90: "SLOWBRO",
 	0x91: "GASTLY",
 	0x92: "HAUNTER_LV17",
