@@ -73,7 +73,7 @@ IF DEBUG_FULL_COLLECTION_AT_START
 	ld a, c
 	ld l, a
 	ld a, [hl]
-	add 30
+	add 60
 	ld [hl], a
 	dec c
 	jr nz, .loop_debug_energies
