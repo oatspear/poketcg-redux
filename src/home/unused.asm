@@ -1,3 +1,34 @@
+; if de > 0, increases de by 10 for each Pluspower found in location b
+ApplyAttachedPluspower:
+	ld a, e
+	or d
+	ret z
+	push de
+	ld de, PLUSPOWER
+	call CountCardIDInLocation
+	pop de
+	call ATimes10
+	ld l, a
+	ld h, 0
+	jp AddToDamage_DE
+
+; reduces de by 20 for each Defender found in location b
+ApplyAttachedDefender:
+	ld a, e
+	or d
+	ret z
+	push de
+	ld de, DEFENDER
+	call CountCardIDInLocation
+	pop de
+	add a  ; x2
+	call ATimes10
+	ld l, a
+	ld h, 0
+	jp SubtractFromDamage_DE
+
+
+
 ; move the turn holder's card with ID at de to the discard pile
 ; if it's currently in the play area.
 MoveCardToDiscardPileIfInPlayArea:

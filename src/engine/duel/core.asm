@@ -7077,10 +7077,10 @@ HandleBetweenTurnsEvents:
 ; handle things that do not trigger a Between Turns transition
 	call ClearStatusFromBenchedPokemon
 	call ClearPokemonFlags_EndOfTurn
-	call DiscardAttachedPluspowers
-	call SwapTurn
-	call DiscardAttachedDefenders
-	call SwapTurn
+	; call DiscardAttachedPluspowers
+	; call SwapTurn
+	; call DiscardAttachedDefenders
+	; call SwapTurn
 
 	ld a, [wAlreadyDisplayedBetweenTurnsScreen]
 	or a
@@ -7453,45 +7453,6 @@ ClearPokemonFlags_EndOfTurn:
 	dec e
 	ret z
 	jr .loop
-
-
-; discard any PLUSPOWER attached to the turn holder's arena and/or bench Pokémon
-DiscardAttachedPluspowers:
-	ld de, PLUSPOWER
-	jr DiscardAttachedToolsWithID
-
-; discard any DEFENDER attached to the turn holder's arena and/or bench Pokémon
-DiscardAttachedDefenders:
-	ld de, DEFENDER
-	; jr DiscardAttachedToolsWithID
-	; fallthrough
-
-; discard any tools with given ID attached to the turn holder's arena or bench Pokémon
-; input:
-;   de: ID of the Pokémon Tool to discard
-DiscardAttachedToolsWithID:
-	ld a, DUELVARS_ARENA_CARD_ATTACHED_TOOL
-	call GetTurnDuelistVariable
-	ld c, MAX_PLAY_AREA_POKEMON
-.unattach_defender_loop
-	ld a, [hl]
-	cp $ff
-	jr z, .next  ; no attached tools
-	push de
-	call GetCardIDFromDeckIndex
-	ld a, e
-	pop de
-	cp e
-	jr nz, .next
-; put in discard pile and reset duel variable
-	ld a, [hl]
-	call PutCardInDiscardPile
-	ld [hl], $ff
-.next
-	inc hl
-	dec c
-	jr nz, .unattach_defender_loop
-	ret
 
 
 ; Puts damage counters on the target at location in e,

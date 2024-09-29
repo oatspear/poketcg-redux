@@ -2163,7 +2163,7 @@ ENDC
 IF DEBUG_MODE
 	call Debug_Print_DE
 ENDC
-	ld b, CARD_LOCATION_ARENA
+	ld b, PLAY_AREA_ARENA  ; CARD_LOCATION_ARENA
 	call ApplyAttachedPluspower
 ; 4. cap damage at 250
 IF DEBUG_MODE
@@ -2189,7 +2189,7 @@ IF DEBUG_MODE
 	call Debug_Print_DE
 ENDC
 	call SwapTurn
-	ld b, CARD_LOCATION_ARENA
+	ld b, PLAY_AREA_ARENA  ; CARD_LOCATION_ARENA
 	call ApplyAttachedDefender
 ; 7. apply damage reduction effects
 IF DEBUG_MODE
@@ -2254,7 +2254,7 @@ ApplyDamageModifiers_DamageToSelf:
 	xor a  ; PLAY_AREA_ARENA
 	call _DamageModifiers_HandleWeakness
 ; 3. apply pluspower bonuses
-	ld b, CARD_LOCATION_ARENA
+	ld b, PLAY_AREA_ARENA  ; CARD_LOCATION_ARENA
 	call ApplyAttachedPluspower
 ; 4. cap damage at 250
 	call CapMaximumDamage_DE  ; preserves bc
@@ -2263,7 +2263,7 @@ ApplyDamageModifiers_DamageToSelf:
 	ld b, a
 	call _DamageModifiers_HandleResistance
 ; 6. apply Defender reduction
-	ld b, CARD_LOCATION_ARENA
+	ld b, PLAY_AREA_ARENA  ; CARD_LOCATION_ARENA
 	call ApplyAttachedDefender
 ; 7. apply damage reduction effects
 	; skip
@@ -2331,34 +2331,54 @@ _DamageModifiers_HandleResistance:
 
 
 
-; if de > 0, increases de by 10 for each Pluspower found in location b
+; if de > 0, increases de by 10 if a Pluspower is found in location b
 ApplyAttachedPluspower:
 	ld a, e
 	or d
 	ret z
 	push de
+	ld a, b
 	ld de, PLUSPOWER
-	call CountCardIDInLocation
+	call CheckToolIDAttachedToPlayArea
 	pop de
-	call ATimes10
-	ld l, a
-	ld h, 0
+	ret c  ; no PlusPower
+	ld hl, 10
 	jp AddToDamage_DE
 
-; reduces de by 20 for each Defender found in location b
+; reduces de by 10 if a Defender is found in location b
 ApplyAttachedDefender:
 	ld a, e
 	or d
 	ret z
 	push de
-	ld de, DEFENDER
-	call CountCardIDInLocation
+	ld a, b
+	ld de, PLUSPOWER
+	call CheckToolIDAttachedToPlayArea
 	pop de
-	add a  ; x2
-	call ATimes10
-	ld l, a
-	ld h, 0
+	ret c  ; no PlusPower
+	ld hl, 10
 	jp SubtractFromDamage_DE
+
+
+; input:
+;   a: PLAY_AREA_*
+;   de: ID of a Pokémon Tool
+; output:
+;   carry: set if not attached
+CheckToolIDAttachedToPlayArea:
+	add DUELVARS_ARENA_CARD_ATTACHED_TOOL
+	call GetTurnDuelistVariable
+	cp $ff
+	jr z, .nope
+	push de
+	call GetCardIDFromDeckIndex  ; preserves hl, bc
+	ld a, e
+	pop de
+	cp e
+	ret z
+.nope
+	scf
+	ret
 
 
 HandleDamageBoostingPowers:
@@ -2516,7 +2536,7 @@ DealDamageToPlayAreaPokemon:
 .bench_target
 ; 1. apply Defender reduction
 	; ld a, [wTempPlayAreaLocation_cceb]
-	or CARD_LOCATION_PLAY_AREA
+	; or CARD_LOCATION_PLAY_AREA
 	ld b, a
 	call ApplyAttachedDefender
 ; 2. apply damage reduction effects

@@ -2,6 +2,20 @@
 
 ## Version 0.13.0
 
+### New Cards
+
+#### X Attack
+- Pokémon Tool Trainer card.
+- The holder's attacks do 10 more damage to the Defending Pokémon.
+
+#### X Defense
+- Pokémon Tool Trainer card.
+- The holder takes 10 less damage from attacks.
+
+### Removed Cards
+- PlusPower
+- Defender
+
 
 ## Version 0.12.0
 

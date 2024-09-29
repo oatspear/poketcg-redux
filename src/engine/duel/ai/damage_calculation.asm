@@ -168,7 +168,7 @@ _CalculateDamage_VersusDefendingPokemon:
 ; 3. apply pluspower bonuses
 .apply_pluspower
 	ldh a, [hTempPlayAreaLocation_ff9d]
-	add CARD_LOCATION_ARENA
+	; add CARD_LOCATION_ARENA
 	ld b, a
 	call ApplyAttachedPluspower
 ; 4. cap damage at 250
@@ -191,7 +191,7 @@ _CalculateDamage_VersusDefendingPokemon:
 .apply_defender
 	; apply pluspower and defender boosts
 	call SwapTurn
-	ld b, CARD_LOCATION_ARENA
+	ld b, PLAY_AREA_ARENA  ; CARD_LOCATION_ARENA
 	call ApplyAttachedDefender
 ; 7. apply damage reduction effects
 	ld a, [wDamageFlags]
@@ -395,7 +395,7 @@ CalculateDamage_FromDefendingPokemon: ; 1458c (5:458c)
 
 ; 3. apply pluspower bonuses
 .apply_pluspower
-	ld b, CARD_LOCATION_ARENA
+	ld b, PLAY_AREA_ARENA  ; CARD_LOCATION_ARENA
 	call ApplyAttachedPluspower
 ; 4. cap damage at 250
 	call CapMaximumDamage_DE
@@ -417,7 +417,7 @@ CalculateDamage_FromDefendingPokemon: ; 1458c (5:458c)
 .apply_defender
 	call SwapTurn
 	ldh a, [hTempPlayAreaLocation_ff9d]
-	add CARD_LOCATION_ARENA
+	; add CARD_LOCATION_ARENA
 	ld b, a
 	call ApplyAttachedDefender
 ; 7. apply damage reduction effects

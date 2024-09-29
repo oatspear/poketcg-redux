@@ -1,5 +1,70 @@
 ;
 
+
+; engine/duel/core.asm
+
+; discard any PLUSPOWER attached to the turn holder's arena and/or bench Pokémon
+DiscardAttachedPluspowers:
+	ld de, PLUSPOWER
+	jr DiscardAttachedToolsWithID
+
+; discard any DEFENDER attached to the turn holder's arena and/or bench Pokémon
+DiscardAttachedDefenders:
+	ld de, DEFENDER
+	; jr DiscardAttachedToolsWithID
+	; fallthrough
+
+; discard any tools with given ID attached to the turn holder's arena or bench Pokémon
+; input:
+;   de: ID of the Pokémon Tool to discard
+DiscardAttachedToolsWithID:
+	ld a, DUELVARS_ARENA_CARD_ATTACHED_TOOL
+	call GetTurnDuelistVariable
+	ld c, MAX_PLAY_AREA_POKEMON
+.unattach_defender_loop
+	ld a, [hl]
+	cp $ff
+	jr z, .next  ; no attached tools
+	push de
+	call GetCardIDFromDeckIndex
+	ld a, e
+	pop de
+	cp e
+	jr nz, .next
+; put in discard pile and reset duel variable
+	ld a, [hl]
+	call PutCardInDiscardPile
+	ld [hl], $ff
+.next
+	inc hl
+	dec c
+	jr nz, .unattach_defender_loop
+	ret
+
+
+
+PlusPowerEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, PlusPower_PreconditionCheck
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PlusPowerEffect
+	db  $00
+
+;
+PlusPower_PreconditionCheck:
+	xor a  ; PLAY_AREA_ARENA
+	jp CheckPokemonHasNoToolsAttached
+
+PlusPowerEffect:
+; store PlusPower as the attached tool
+	ld a, DUELVARS_ARENA_CARD_ATTACHED_TOOL
+	call GetTurnDuelistVariable
+; attach Trainer card to Arena Pokemon
+	ldh a, [hTempCardIndex_ff9f]
+	ld [hl], a
+	ld e, PLAY_AREA_ARENA
+	jp PutHandCardInPlayArea
+
+
+
 RecycleEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, Recycle_DiscardPileCheck
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Recycle_PlayerSelection

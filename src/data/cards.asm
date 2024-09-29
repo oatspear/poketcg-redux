@@ -10305,7 +10305,7 @@ PlusPowerCard:
 	db DIAMOND ; rarity
 	db COLOSSEUM | NONE ; sets
 	db PLUSPOWER
-	dw PlusPowerEffectCommands ; effect commands
+	dw PokemonToolEffectCommands ; effect commands
 	tx PlusPowerDescription ; description
 	dw NONE ; description (cont)
 

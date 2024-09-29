@@ -459,28 +459,23 @@ SuperRodDescription:
 	done
 
 PlusPowerName:
-	text "PlusPower"
+	text "X Attack"
 	done
 
 PlusPowerDescription:
-	text "Attach this card to your Active"
-	line "Pokémon. At the end of your turn,"
-	line "discard this card. If this Pokémon's"
-	line "attack does damage to any Active"
-	line "Pokémon, the attack does 10 more"
-	line "damage to that Active Pokémon."
+	text "The attacks of the Pokémon this card"
+	line "is attached to do 10 more damage to"
+	line "your opponent's Active Pokémon."
 	done
 
 DefenderName:
-	text "Defender"
+	text "X Defense"
 	done
 
 DefenderDescription:
-	text "Attach this card to 1 of your"
-	line "Pokémon. At the end of your"
-	line "opponent's next turn, discard"
-	line "this card. Damage done to that"
-	line "Pokémon by attacks is reduced by 20."
+	text "The Pokémon this card is attached to"
+	line "takes 10 less damage from attacks"
+	line "from your opponent's Pokémon."
 	done
 
 SitrusBerryName:

@@ -775,7 +775,8 @@ AIPlay_Pluspower:
 ; if active card cannot KO without the boost.
 ; outputs in a the attack to use.
 AIDecide_Pluspower1:
-	farcall PlusPower_PreconditionCheck
+	xor a  ; PLAY_AREA_ARENA
+	farcall CheckPokemonHasNoToolsAttached
 	jr c, .no_carry
 	xor a
 	ldh [hTempPlayAreaLocation_ff9d], a
@@ -873,7 +874,8 @@ AIDecide_Pluspower1:
 ; and has a minimum damage > 0.
 ; outputs in a the attack to use.
 AIDecide_Pluspower2:
-	farcall PlusPower_PreconditionCheck
+	xor a  ; PLAY_AREA_ARENA
+	farcall CheckPokemonHasNoToolsAttached
 	jr c, .no_carry
 	xor a
 	ldh [hTempPlayAreaLocation_ff9d], a

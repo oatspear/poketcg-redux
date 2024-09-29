@@ -1866,11 +1866,6 @@ MrFujiEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, MrFuji_ReturnToDeckAndDrawEffect
 	db  $00
 
-PlusPowerEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, PlusPower_PreconditionCheck
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PlusPowerEffect
-	db  $00
-
 SwitchEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckBenchIsNotEmpty
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Switch_PlayerSelection

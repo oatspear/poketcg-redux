@@ -6681,21 +6681,6 @@ _ReturnBenchedPokemonToDeckEffect:
 	jp SyncShuffleDeck
 
 
-PlusPower_PreconditionCheck:
-	xor a  ; PLAY_AREA_ARENA
-	jp CheckPokemonHasNoToolsAttached
-
-PlusPowerEffect:
-; store PlusPower as the attached tool
-	ld a, DUELVARS_ARENA_CARD_ATTACHED_TOOL
-	call GetTurnDuelistVariable
-; attach Trainer card to Arena Pokemon
-	ldh a, [hTempCardIndex_ff9f]
-	ld [hl], a
-	ld e, PLAY_AREA_ARENA
-	jp PutHandCardInPlayArea
-
-
 Switch_PlayerSelection:
 	ldtx hl, SelectPkmnOnBenchToSwitchWithActiveText
 	call DrawWideTextBox_WaitForInput
