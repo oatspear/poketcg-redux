@@ -217,9 +217,6 @@ Func_af1d:
 	xor a
 	ret
 
-; never reached
-	scf
-	ret
 
 Func_af98:
 	xor a
