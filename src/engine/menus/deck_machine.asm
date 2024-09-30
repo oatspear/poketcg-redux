@@ -206,10 +206,10 @@ Func_af1d:
 	ld [wNameBuffer], a
 	bank1call SendCard
 	ret c
-	; call EnableSRAM
-	; ld hl, wCurDeckCards
-	; call DecrementDeckCardsInCollection
-	; call DisableSRAM
+	call EnableSRAM
+	ld hl, wCurDeckCards
+	call DecrementDeckCardsInCollection
+	call DisableSRAM
 	call SaveGame
 	ld hl, wNameBuffer
 	ld de, wDefaultText
