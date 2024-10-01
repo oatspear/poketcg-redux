@@ -3051,8 +3051,7 @@ PrepareToBuildDeckConfigurationToSend:
 	call CopyListFromHLToDE
 	ld hl, .DeckConfigurationParams
 	call InitDeckBuildingParams
-	call HandleDeckBuildScreen
-	ret
+	jp HandleDeckBuildScreen
 
 .text
 	text "Cards chosen to send"
