@@ -38,6 +38,10 @@ MainMenu_NewGame:
 	ld [wAnimationsDisabled], a
 	ld a, [sTextSpeed]
 	ld [wTextSpeed], a
+	ld a, [sPlayerCurrency]
+	ld [wPlayerCurrency], a
+	ld a, [sPlayerCurrency + 1]
+	ld [wPlayerCurrency + 1], a
 	call DisableSRAM
 	ld a, MUSIC_STOP
 	call PlaySong

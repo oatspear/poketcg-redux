@@ -1077,6 +1077,10 @@ PlayerStatusNameText: ; 3e85f (f:685f)
 	text "Name <RAMNAME>"
 	done
 
+PlayerStatusCurrencyText:
+	text "Card Points "
+	done
+
 PlayerStatusAlbumText: ; 3e867 (f:6867)
 	text "Album           "
 	half2full
@@ -1303,15 +1307,15 @@ WhenYouCardPopWithFriendText: ; 3ec74 (f:6c74)
 
 ContinueFromDiarySummaryText: ; 3ecb9 (f:6cb9)
 	text "  <RAMNAME>  <RAMTEXT>"
-	line "      Master Medals Won "
+	line " Medals     "
 	half2full
 	textfw0 "<RAMNUM>"
-	text ""
-	line "      Album           "
+	text "      Points          "
+	line " Album           "
 	half2full
 	textfw0 "/"
 	text ""
-	line "      Play time         "
+	line " Play time         "
 	half2full
 	textfw3 ":"
 	text ""
@@ -1443,21 +1447,6 @@ DebugBoosterPackEnergyMenuText: ; 3f236 (f:7236)
 	line "2"
 	line "3"
 	line "4"
-	done
-
-Text0381: ; 3f23f (f:723f)
-	text "A                   TIME"
-	line "     TO      (Change with Start)"
-	line "            A+B: Stop Animation"
-	line "            Select: Exit"
-	done
-
-Text0382: ; 3f2b3 (f:72b3)
-	text "Left"
-	done
-
-Text0383: ; 3f2b9 (f:72b9)
-	text "Right"
 	done
 
 SPRText: ; 3f2c0 (f:72c0)

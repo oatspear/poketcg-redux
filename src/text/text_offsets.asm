@@ -449,6 +449,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ResetText                                          ; 0x0232
 	textpointer SaveText                                           ; 0x0233
 	textpointer NameText                                           ; 0x0234
+	textpointer BuyText
+	textpointer SellText
 	textpointer ThereIsOnly1DeckSoCannotBeDismantledText           ; 0x0235
 	textpointer ThereAreNoBasicPokemonInThisDeckText               ; 0x0236
 	textpointer YouMustIncludeABasicPokemonInTheDeckText           ; 0x0237
@@ -503,7 +505,9 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer YouMayOnlyCarry4DecksText                          ; 0x0268
 	textpointer ChooseADeckToDismantleText                         ; 0x0269
 	textpointer DismantledDeckText                                 ; 0x026a
-	textpointer Text026b                                           ; 0x026b
+	textpointer CardCopiesOwnedText
+	textpointer CardCostText
+	textpointer PlayerCurrencyValueText
 	textpointer ThisDeckCanOnlyBeBuiltIfYouDismantleText           ; 0x026c
 	textpointer YouDoNotOwnAllCardsNeededToBuildThisDeckText       ; 0x026d
 	textpointer BuiltDeckText                                      ; 0x026e
@@ -716,6 +720,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PauseMenuOptionsText                               ; 0x033d
 	textpointer DebugPauseMenuOptionsText                          ; 0x033e
 	textpointer PlayerStatusNameText                               ; 0x033f
+	textpointer PlayerStatusCurrencyText
 	textpointer PlayerStatusAlbumText                              ; 0x0340
 	textpointer PlayerStatusPlayTimeText                           ; 0x0341
 	textpointer PlayerDiaryTitleText                               ; 0x0342
@@ -781,9 +786,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer DebugBoosterPackMysteryMenuText                    ; 0x037e
 	textpointer DebugBoosterPackLaboratoryMenuText                 ; 0x037f
 	textpointer DebugBoosterPackEnergyMenuText                     ; 0x0380
-	textpointer Text0381                                           ; 0x0381
-	textpointer Text0382                                           ; 0x0382
-	textpointer Text0383                                           ; 0x0383
 	textpointer SPRText                                            ; 0x0384
 	textpointer WinLosePrizesDuelWithText                          ; 0x0385
 	textpointer UseDuelistsDeckText                                ; 0x0386

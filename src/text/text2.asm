@@ -1203,6 +1203,14 @@ NameText: ; 3babe (e:7abe)
 	text "Name"
 	done
 
+BuyText:
+	text "Buy"
+	done
+
+SellText:
+	text "Sell"
+	done
+
 ThereIsOnly1DeckSoCannotBeDismantledText: ; 3bac4 (e:7ac4)
 	text "There is only 1 Deck, so this"
 	line "Deck cannot be dismantled."
@@ -1431,7 +1439,14 @@ DismantledDeckText: ; 3bf63 (e:7f63)
 	text "<RAMTEXT>."
 	done
 
-Text026b: ; 3bf73 (e:7f73)
-	text "Please choose the Deck"
-	line "you wish to Build."
+CardCopiesOwnedText:
+	text "Owned: <RAMNUM>"
+	done
+
+CardCostText:
+	text "Cost: <RAMNUM>"
+	done
+
+PlayerCurrencyValueText:
+	text "Points: <RAMNUM>"
 	done

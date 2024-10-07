@@ -155,9 +155,10 @@ InitSaveData:
 	xor a
 	ld [sAnimationsDisabled], a
 	ld [sSkipDelayAllowed], a
-	ld [s0a004], a
 	ld [sTotalCardPopsDone], a
 	ld [sReceivedLegendaryCards], a
+	ld [sPlayerCurrency], a
+	ld [sPlayerCurrency + 1], a
 	farcall InitPromotionalCardAndDeckCounterSaveData
 	call DisableSRAM
 	ret

@@ -1955,8 +1955,23 @@ wNamingScreenCursorX:: ; d006
 wNamingScreenNamePosition:: ; d007
 	ds $2
 
+UNION
+
 wd009:: ; d009
 	ds $4
+
+NEXTU
+
+wCardAlbumOwnedCopies:: ; d009
+	ds $1
+
+wCardAlbumCardCost:: ; d00a
+	ds $1
+
+wCardAlbumCardID:: ; d00b
+	ds $2
+
+ENDU
 
 ; pointers to all decks of current deck machine
 wMachineDeckPtrs:: ; d00d
@@ -2692,7 +2707,11 @@ wd4ca:: ; d4ca
 wd4cb:: ; d4cb
 	ds $1
 
-	ds $3
+wd4cc:: ; d4cc  unused
+	ds $1
+
+wPlayerCurrency:: ; d4cd
+	ds $2
 
 ; used as an index to manipulate a sprite from wSpriteAnimBuffer
 wWhichSprite:: ; d4cf

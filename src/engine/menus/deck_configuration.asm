@@ -1249,6 +1249,56 @@ GetCountOfCardInCurDeck:
 	pop hl
 	ret
 
+; returns the maximum number of times that card e
+; appears in all decks
+; sets carry if the card is not found
+; preserves hl, bc, de
+GetMaxCountOfCardInAllDecks:
+	push hl
+	push bc
+	ld c, 0
+	ld hl, sDeck1Cards
+	call .CountAndSetMax
+	ld hl, sDeck2Cards
+	call .CountAndSetMax
+	ld hl, sDeck3Cards
+	call .CountAndSetMax
+	ld hl, sDeck4Cards
+	call .CountAndSetMax
+	ld a, c
+	pop bc
+	pop hl
+	or a
+	ret nz  ; found
+	scf
+	ret
+
+; input: deck pointer in hl
+; input: maximum in c
+; preserves de
+.CountAndSetMax
+	push bc
+	call EnableSRAM
+	ld b, DECK_SIZE
+	ld c, 0
+.loop
+	ld a, [hli]
+	cp e
+	jr nz, .skip
+	inc c
+.skip
+	dec b
+	jr nz, .loop
+	call DisableSRAM  ; preserves everything
+	ld a, c
+	pop bc
+	cp c
+	ret c  ; less than recorded maximum
+; new maximum
+	ld c, a
+	ret
+
+
 ; returns total count of card ID e
 ; looks it up in wFilteredCardList
 ; then uses the index to retrieve the count

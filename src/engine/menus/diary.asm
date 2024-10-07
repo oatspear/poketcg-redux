@@ -9,6 +9,8 @@ _PauseMenu_Diary:
 	call PrintLabels
 	lb bc, 1, 3
 	call DrawPauseMenuPlayerPortrait
+	lb bc, 16, 4
+	call PrintPlayerCurrency
 	lb bc, 12, 8
 	call PrintAlbumProgress
 	lb bc, 13, 10
@@ -38,7 +40,7 @@ DiaryScreenLabels:
 	tx PlayerDiaryTitleText
 
 	db 7, 4
-	tx PlayerStatusNameText
+	tx PlayerStatusCurrencyText
 
 	db 7, 6
 	tx PlayerDiaryMedalsWonText

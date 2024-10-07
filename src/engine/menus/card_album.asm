@@ -335,15 +335,6 @@ PrintCardSetListEntries:
 	call .AppendCardListIndex
 	call ProcessText
 	ld hl, wDefaultText
-	jr .asm_a76d
-
-	; this code is never reached
-	pop de
-	push hl
-	call InitTextPrinting
-	ld hl, Text_9a36
-
-.asm_a76d
 	call ProcessText
 	pop hl
 	ld a, b
@@ -623,6 +614,7 @@ GetFirstOwnedCardIndex:
 	ld [wFirstOwnedCardIndex], a
 	ret
 
+
 HandleCardAlbumScreen:
 	ld a, $01
 	ld [hffb4], a ; should be ldh
@@ -635,7 +627,7 @@ HandleCardAlbumScreen:
 .loop_input_1
 	call DoFrame
 	call HandleMenuInput
-	jp nc, .loop_input_1 ; can be jr
+	jr nc, .loop_input_1
 	ldh a, [hCurMenuItem]
 	cp $ff
 	ret z
@@ -674,6 +666,7 @@ HandleCardAlbumScreen:
 .asm_a968
 	call .GetNumCardEntries
 	xor a
+.got_cursor_pos_in_card_list
 	ld hl, .CardSelectionParams
 	call InitCardSelectionParams
 	ld a, [wNumEntriesInCurFilter]
@@ -707,14 +700,7 @@ HandleCardAlbumScreen:
 	ld [wTempCardListNumCursorPositions], a
 	ld a, [wCardListCursorPos]
 	ld [wTempCardListCursorPos], a
-	ld c, a
-	ld a, [wCardListVisibleOffset]
-	add c
-	ld hl, wOwnedCardsCountList
-	ld c, a
-	ld b, $00
-	add hl, bc
-	ld a, [hl]
+	call CountOwnedCopiesOfAlbumCard
 	cp CARD_NOT_OWNED
 	jr z, .loop_input_3
 
@@ -744,7 +730,7 @@ HandleCardAlbumScreen:
 	ld [wTempCardListCursorPos], a
 	ld a, [hffb3]
 	cp $ff
-	jr nz, .open_card_page
+	jp nz, OpenCardAlbumExchangeMenu
 	ldh a, [hCurMenuItem]
 	jp .album_card_list
 
@@ -957,3 +943,290 @@ HandleCardAlbumScreen:
 	textitem 5,  9, Item4LaboratoryText
 	textitem 5, 11, Item5PromotionalCardText
 	db $ff
+
+
+; input:
+;   a: position of cursor (e.g. wCardListCursorPos, wTempCardListCursorPos)
+CountOwnedCopiesOfAlbumCard_ZeroNotOwned:
+	call CountOwnedCopiesOfAlbumCard
+	cp CARD_NOT_OWNED
+	ret nz
+	xor a
+	ret
+
+; input:
+;   a: position of cursor (e.g. wCardListCursorPos, wTempCardListCursorPos)
+CountOwnedCopiesOfAlbumCard:
+	ld c, a
+	ld a, [wCardListVisibleOffset]
+	add c
+	ld hl, wOwnedCardsCountList
+	ld c, a
+	ld b, $00
+	add hl, bc
+	ld a, [hl]
+	ret
+
+
+; ------------------------------------------------------------------------------
+; Card Exchange
+; ------------------------------------------------------------------------------
+
+
+OpenCardAlbumExchangeMenu:
+	xor a
+	ld [wYourOrOppPlayAreaCurPosition], a
+	ld de, CardAlbumExchangeMenu_TransitionTable
+	ld hl, wMenuInputTablePointer
+	ld a, e
+	ld [hli], a
+	ld [hl], d
+	ld a, $ff
+	ld [wDuelInitialPrizesUpperBitsSet], a
+.skip_init
+	xor a
+	ld [wCheckMenuCursorBlinkCounter], a
+	; ld hl, HandleCardExchangeMenu
+	; jp hl
+	; fallthrough
+
+HandleCardExchangeMenu:
+	lb de, 0, 0
+	lb bc, 20, 6
+	call DrawRegularTextBox
+	call CardAlbum_PrintCardStats
+	ld hl, CardAlbumExchangeMenuData
+	call PlaceTextItems
+
+.do_frame
+	ld a, $1
+	ld [wVBlankOAMCopyToggle], a
+	call DoFrame
+	call YourOrOppPlayAreaScreen_HandleInput
+	jr nc, .do_frame
+	ld [wced6], a
+	cp $ff
+	jr nz, .asm_94b5
+.b_button
+	call HandleCardAlbumScreen.PrintCardCount
+	; xor a
+	; ld [wCardListVisibleOffset], a
+	call PrintCardSetListEntries
+	call EnableLCD
+	ld a, [wNumEntriesInCurFilter]
+	or a
+	call HandleCardAlbumScreen.GetNumCardEntries
+	ld a, [wCardListCursorPos]
+	jp HandleCardAlbumScreen.got_cursor_pos_in_card_list
+
+.asm_94b5
+	push af
+	call YourOrOppPlayAreaScreen_HandleInput.draw_cursor
+	ld a, $01
+	ld [wVBlankOAMCopyToggle], a
+	pop af
+	ld hl, .func_table
+	call JumpToFunctionInTable
+	ret c
+	; jr .b_button
+	jr OpenCardAlbumExchangeMenu.skip_init
+
+.func_table
+	dw CardAlbum_CheckCard ; Check
+	dw CardAlbum_BuyCard   ; Buy
+	dw CardAlbum_SellCard  ; Sell
+
+
+CardAlbumExchangeMenu_TransitionTable:
+	cursor_transition $18, $30, $00, $00, $00, $01, $02
+	cursor_transition $48, $30, $00, $01, $01, $02, $00
+	cursor_transition $70, $30, $00, $02, $02, $00, $01
+
+
+CardAlbumExchangeMenuData:
+	textitem  3, 4, CheckText
+	textitem  9, 4, BuyText
+	textitem 14, 4, SellText
+	db $ff
+
+
+CardAlbum_CheckCard:
+	call HandleCardAlbumScreen.open_card_page
+	scf
+	ret
+
+
+CardAlbum_BuyCard:
+	ld a, [wCardAlbumOwnedCopies]
+	cp MAX_AMOUNT_OF_CARD
+	ccf
+	ret c  ; already has max copies
+
+	ld a, [wPlayerCurrency + 1]
+	ld d, a
+	ld a, [wPlayerCurrency]
+	ld e, a
+	ld a, [wCardAlbumCardCost]
+	ld l, a
+	ld h, 0
+	call SubtractFromDamage_DE  ; de = de - hl
+	ccf
+	ret nc  ; not enough points
+
+; discount card cost from point total
+	ld a, d
+	ld [wPlayerCurrency + 1], a
+	ld a, e
+	ld [wPlayerCurrency], a
+
+; add card to collection
+	ld a, [wCardAlbumCardID]
+	call AddCardToCollection
+	ld a, [wCardListCursorPos]
+	call CountOwnedCopiesOfAlbumCard  ; just to set hl
+	and CARD_COUNT_MASK
+	inc a
+	ld [hl], a
+	or a  ; reset carry
+	ret
+
+
+CardAlbum_SellCard:
+	ld a, [wCardAlbumOwnedCopies]
+	cp 1
+	ccf
+	ret nc  ; no copies
+	cp 5
+	jr nc, .excess_copies
+
+; has between 1 and 4 copies
+	ld c, a  ; owned copies
+	ld a, [wCardAlbumCardID]
+	ld e, a
+	ld a, [wCardAlbumCardID + 1]
+	ld d, a
+	; call IsCardInAnyDeck  ; assume same bank
+	; ret nc  ; used in deck
+	call GetMaxCountOfCardInAllDecks  ; assume same bank
+	cp c  ; copies in deck == owned copies?
+	ret z  ; all copies are in being used
+	; fallthrough
+
+.excess_copies
+; increase sum by half the cost
+	ld a, [wCardAlbumCardCost]
+	srl a
+	or a
+	jr nz, .got_value
+	ld a, 1  ; min. 1 point
+.got_value
+	ld c, a
+	ld b, 0
+; add to currency
+	ld a, [wPlayerCurrency]
+	ld l, a
+	ld a, [wPlayerCurrency + 1]
+	ld h, a
+	add hl, bc
+	jr nc, .no_overflow
+; overflow
+	ld hl, $ffff
+.no_overflow
+	ld d, h
+	ld e, l
+	ld bc, MAX_CARD_POINTS + 1
+	call CompareDEtoBC
+	jr c, .capped
+	ld hl, MAX_CARD_POINTS
+.capped
+	ld a, h
+	ld [wPlayerCurrency + 1], a
+	ld a, l
+	ld [wPlayerCurrency], a
+
+; remove from collection
+	ld a, [wCardAlbumCardID]
+	call RemoveCardFromCollection
+	ld a, [wCardListCursorPos]
+	call CountOwnedCopiesOfAlbumCard  ; just to set hl
+	dec a
+	ld [hl], a
+	or a
+	ret
+
+
+CardAlbum_PrintCardStats:
+	ld a, [wCardListCursorPos]
+	call CountOwnedCopiesOfAlbumCard_ZeroNotOwned
+	ld [wCardAlbumOwnedCopies], a
+	ld l, a
+	ld h, $00
+	call LoadTxRam3
+	lb de, 2, 2
+	call InitTextPrinting
+	ldtx hl, CardCopiesOwnedText
+	call PrintTextNoDelay
+
+	call GetIDOfCurrentAlbumCard
+	call GetCardPointCost
+	ld [wCardAlbumCardCost], a
+	ld l, a
+	ld h, $00
+	call LoadTxRam3
+	lb de, 8, 2
+	call InitTextPrinting
+	ldtx hl, CardCostText
+	call PrintTextNoDelay
+
+	ld a, [wPlayerCurrency]
+	ld l, a
+	ld a, [wPlayerCurrency + 1]
+	ld h, a
+	call LoadTxRam3
+	lb de, 13, 2
+	call InitTextPrinting
+	ldtx hl, PlayerCurrencyValueText
+	jp PrintTextNoDelay
+
+
+; input:
+;   de: card ID
+; output:
+;   a, c: cost of the given card in points
+; preserves: hl, de
+GetCardPointCost:
+	ld a, e
+	call GetCardTypeRarityAndSet  ; preserves hl, de
+	ld a, b
+	ld c, 2
+	cp CIRCLE
+	jr z, .got_cost
+	ld c, 8
+	cp DIAMOND
+	jr z, .got_cost
+	ld c, 24
+	cp STAR
+	jr z, .got_cost
+; PROMOSTAR
+	ld c, 50
+.got_cost
+	ld a, c
+	ret
+
+
+GetIDOfCurrentAlbumCard:
+	ld a, [wCardListCursorPos]
+	call CountOwnedCopiesOfAlbumCard  ; just to set bc offset
+	; ld hl, wCurCardListPtr
+	; ld a, [hli]
+	; ld h, [hl]
+	; ld l, a
+	ld hl, wFilteredCardList
+	add hl, bc
+	ld a, [hl]
+	ld [wCardAlbumCardID], a
+	ld e, a
+	xor a
+	ld [wCardAlbumCardID + 1], a
+	ld d, a
+	ret

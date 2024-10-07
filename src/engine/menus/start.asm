@@ -278,22 +278,19 @@ PrintStartMenuDescriptionText:
 	lb de, 1, 12
 	call InitTextPrinting
 	ldtx hl, WhenYouCardPopWithFriendText
-	call PrintTextNoDelay
-	ret
+	jp PrintTextNoDelay
 
 .ContinueDuel
 	lb de, 1, 12
 	call InitTextPrinting
 	ldtx hl, TheGameWillContinueFromThePointInTheDuelText
-	call PrintTextNoDelay
-	ret
+	jp PrintTextNoDelay
 
 .NewGame
 	lb de, 1, 12
 	call InitTextPrinting
 	ldtx hl, StartANewGameText
-	call PrintTextNoDelay
-	ret
+	jp PrintTextNoDelay
 
 .ContinueFromDiary
 	; get OW map name
@@ -324,10 +321,12 @@ PrintStartMenuDescriptionText:
 	ld d, a
 	ld a, [wTotalNumCardsToCollect]
 	ld e, a
-	lb bc, 9, 14
+	lb bc, 7, 14
 	farcall PrintAlbumProgress_SkipGetProgress
-	lb bc, 10, 16
+	lb bc, 8, 16
 	farcall PrintPlayTime_SkipUpdateTime
+	lb bc, 15, 12
+	farcall PrintPlayerCurrency
 	ret
 
 ; asks the player whether it's okay to delete
