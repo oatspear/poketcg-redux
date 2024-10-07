@@ -116,9 +116,6 @@ INCLUDE "engine/promotional_card.asm"
 SECTION "Booster Pack Menu", ROMX
 INCLUDE "engine/menus/booster_pack.asm"
 
-SECTION "Unused Save Validation", ROMX
-INCLUDE "engine/unused_save_validation.asm"
-
 SECTION "Input Name", ROMX
 INCLUDE "engine/input_name.asm"
 
