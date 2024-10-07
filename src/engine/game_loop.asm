@@ -15,7 +15,6 @@ GameLoop:
 	ld a, 1
 	ld [wUppercaseHalfWidthLetters], a
 	ei
-	farcall StubbedUnusedSaveDataValidation
 	ldh a, [hKeysHeld]
 	cp A_BUTTON | B_BUTTON
 	jr z, .ask_erase_backup_ram

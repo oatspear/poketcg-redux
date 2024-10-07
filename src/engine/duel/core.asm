@@ -6032,7 +6032,6 @@ PrintUsedTrainerCardDescription:
 ; byte 0 is $01, bytes 1 and 2 are the checksum, byte 3 is [wDuelType]
 ; next $33a bytes come from DuelDataToSave
 SaveDuelData:
-	farcall StubbedUnusedSaveDataValidation
 	ld de, sCurrentDuel
 ;	fallthrough
 
