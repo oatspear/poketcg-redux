@@ -6,6 +6,9 @@
 - Player decks no longer discount cards from the available collection. Each card copy can go into multiple decks at the same time.
 - The Challenge Hall is now always available.
 - Players are unable to modify or switch decks between Challenge Hall matches.
+- The **Card Album** PC menu can now be used to buy or sell cards.
+- Cards are sold for half their cost.
+- Common cards cost 2 points, Uncommon cards cost 8 points, Rare cards cost 24 points, Promotional cards cost 50 points.
 
 ### New Cards
 
