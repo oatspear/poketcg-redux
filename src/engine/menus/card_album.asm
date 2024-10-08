@@ -1058,9 +1058,9 @@ CardAlbum_CheckCard:
 
 CardAlbum_BuyCard:
 	ld a, [wCardAlbumOwnedCopies]
-	cp MAX_AMOUNT_OF_CARD
-	ccf
-	ret c  ; already has max copies
+	; cp MAX_AMOUNT_OF_CARD
+	cp 4
+	ret nc  ; already has max copies
 
 	ld a, [wPlayerCurrency + 1]
 	ld d, a
