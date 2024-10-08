@@ -133,6 +133,7 @@ CreateCardSetList:
 	ld c, l
 	ld b, h
 .loop_owned_cards
+IF ALL_CARDS_VISIBLE_IN_ALBUM == 0
 	ld hl, wOwnedCardsCountList
 	add hl, bc
 	ld a, [hl]
@@ -140,6 +141,7 @@ CreateCardSetList:
 	jr nz, .found_owned
 	dec c
 	jr .loop_owned_cards
+ENDC
 
 .found_owned
 	inc c
@@ -165,9 +167,11 @@ CreateCardSetList:
 	ld b, a
 	ld hl, wTempCardCollection
 	add hl, de
+IF ALL_CARDS_VISIBLE_IN_ALBUM == 0
 	ld a, [hl]
 	cp CARD_NOT_OWNED
 	jr z, .skip_set_flag
+ENDC
 	ld a, [wOwnedPhantomCardFlags]
 	or b
 	ld [wOwnedPhantomCardFlags], a
@@ -311,6 +315,8 @@ PrintCardSetListEntries:
 	call LoadCardDataToBuffer1_FromCardID
 	push bc
 	push hl
+
+IF ALL_CARDS_VISIBLE_IN_ALBUM == 0
 	ld de, wOwnedCardsCountList
 	add hl, de
 	dec hl
@@ -321,6 +327,8 @@ PrintCardSetListEntries:
 	ld de, wDefaultText
 	call CopyListFromHLToDE
 	jr .print_text
+ENDC
+
 .owned
 	ld a, 13
 	call CopyCardNameAndLevel
@@ -471,11 +479,14 @@ HandleCardAlbumCardPage:
 	add b
 	ld c, a
 	ld b, $00
+
+IF ALL_CARDS_VISIBLE_IN_ALBUM == 0
 	ld hl, wOwnedCardsCountList
 	add hl, bc
 	ld a, [hl]
 	cp CARD_NOT_OWNED
 	jr z, .handle_input
+ENDC
 
 	ld hl, wCurCardListPtr
 	ld a, [hli]
@@ -604,11 +615,13 @@ GetFirstOwnedCardIndex:
 	ld hl, wOwnedCardsCountList
 	ld b, 0
 .loop_cards
+IF ALL_CARDS_VISIBLE_IN_ALBUM == 0
 	ld a, [hli]
 	cp CARD_NOT_OWNED
 	jr nz, .owned
 	inc b
 	jr .loop_cards
+ENDC
 .owned
 	ld a, b
 	ld [wFirstOwnedCardIndex], a
@@ -617,7 +630,7 @@ GetFirstOwnedCardIndex:
 
 HandleCardAlbumScreen:
 	ld a, $01
-	ld [hffb4], a ; should be ldh
+	ldh [hffb4], a
 
 	xor a
 .album_card_list
@@ -700,9 +713,12 @@ HandleCardAlbumScreen:
 	ld [wTempCardListNumCursorPositions], a
 	ld a, [wCardListCursorPos]
 	ld [wTempCardListCursorPos], a
+
+IF ALL_CARDS_VISIBLE_IN_ALBUM == 0
 	call CountOwnedCopiesOfAlbumCard
 	cp CARD_NOT_OWNED
 	jr z, .loop_input_3
+ENDC
 
 	; set wFilteredCardList as current card list
 	ld de, wFilteredCardList
@@ -974,6 +990,12 @@ CountOwnedCopiesOfAlbumCard:
 
 
 OpenCardAlbumExchangeMenu:
+IF ALL_CARDS_VISIBLE_IN_ALBUM == 0
+	ld a, [wCardListCursorPos]
+	call CountOwnedCopiesOfAlbumCard
+	cp CARD_NOT_OWNED
+	jr z, HandleCardExchangeMenu.b_button
+ENDC
 	xor a
 	ld [wYourOrOppPlayAreaCurPosition], a
 	ld de, CardAlbumExchangeMenu_TransitionTable
@@ -1013,8 +1035,8 @@ HandleCardExchangeMenu:
 	; ld [wCardListVisibleOffset], a
 	call PrintCardSetListEntries
 	call EnableLCD
-	ld a, [wNumEntriesInCurFilter]
-	or a
+	; ld a, [wNumEntriesInCurFilter]
+	; or a
 	call HandleCardAlbumScreen.GetNumCardEntries
 	ld a, [wCardListCursorPos]
 	jp HandleCardAlbumScreen.got_cursor_pos_in_card_list

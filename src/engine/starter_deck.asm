@@ -54,8 +54,8 @@ _AddStarterDeck:
 	dec c
 	jr nz, .loop_extra_cards
 
-IF DEBUG_FULL_COLLECTION_AT_START
 ; OATS DEBUG
+IF DEBUG_FULL_COLLECTION_AT_START
 ; add all cards to the initial collection
 	ld c, NUM_CARDS
 .loop_debug_collection
@@ -67,18 +67,19 @@ IF DEBUG_FULL_COLLECTION_AT_START
 	ld [hl], a
 	dec c
 	jr nz, .loop_debug_collection
+ENDC
 ; add a few extra energies
 	ld c, DARKNESS_ENERGY
 .loop_debug_energies
 	ld a, c
 	ld l, a
+	res CARD_NOT_OWNED_F, [hl]
 	ld a, [hl]
-	add 60
+	add 30
 	ld [hl], a
 	dec c
 	jr nz, .loop_debug_energies
 ; end OATS DEBUG
-ENDC
 
 	call DisableSRAM
 	ret
