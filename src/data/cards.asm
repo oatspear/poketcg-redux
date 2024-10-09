@@ -10325,7 +10325,7 @@ SitrusBerryCard:
 	gfx SitrusBerryCardGfx ; gfx
 	tx SitrusBerryName ; name
 	db DIAMOND ; rarity
-	db COLOSSEUM | NONE ; sets
+	db EVOLUTION | NONE ; sets
 	db SITRUS_BERRY
 	dw PokemonToolEffectCommands ; effect commands
 	tx SitrusBerryDescription ; description
@@ -10336,7 +10336,7 @@ LumBerryCard:
 	gfx LumBerryCardGfx ; gfx
 	tx LumBerryName ; name
 	db DIAMOND ; rarity
-	db COLOSSEUM | NONE ; sets
+	db EVOLUTION | NONE ; sets
 	db LUM_BERRY
 	dw PokemonToolEffectCommands ; effect commands
 	tx LumBerryDescription ; description
@@ -10347,7 +10347,7 @@ LeftoversCard:
 	gfx LeftoversCardGfx ; gfx
 	tx LeftoversName ; name
 	db DIAMOND ; rarity
-	db COLOSSEUM | NONE ; sets
+	db MYSTERY | NONE ; sets
 	db LEFTOVERS
 	dw PokemonToolEffectCommands ; effect commands
 	tx LeftoversDescription ; description
@@ -10358,7 +10358,7 @@ RockyHelmetCard:
 	gfx RockyHelmetCardGfx ; gfx
 	tx RockyHelmetName ; name
 	db DIAMOND ; rarity
-	db COLOSSEUM | NONE ; sets
+	db LABORATORY | NONE ; sets
 	db ROCKY_HELMET
 	dw PokemonToolEffectCommands ; effect commands
 	tx RockyHelmetDescription ; description
