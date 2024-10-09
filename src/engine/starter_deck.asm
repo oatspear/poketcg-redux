@@ -122,7 +122,11 @@ InitSaveData:
 ; marks all cards in Collection to not owned
 	call EnableSRAM
 	ld hl, sCardCollection
+IF ALL_CARDS_VISIBLE_IN_ALBUM
+	ld a, 0  ; seen, but not currently owned
+ELSE
 	ld a, CARD_NOT_OWNED
+ENDC
 .loop_collection
 	ld [hl], a
 	inc l

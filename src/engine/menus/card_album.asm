@@ -133,7 +133,6 @@ CreateCardSetList:
 	ld c, l
 	ld b, h
 .loop_owned_cards
-IF ALL_CARDS_VISIBLE_IN_ALBUM == 0
 	ld hl, wOwnedCardsCountList
 	add hl, bc
 	ld a, [hl]
@@ -141,7 +140,6 @@ IF ALL_CARDS_VISIBLE_IN_ALBUM == 0
 	jr nz, .found_owned
 	dec c
 	jr .loop_owned_cards
-ENDC
 
 .found_owned
 	inc c
@@ -167,11 +165,9 @@ ENDC
 	ld b, a
 	ld hl, wTempCardCollection
 	add hl, de
-IF ALL_CARDS_VISIBLE_IN_ALBUM == 0
 	ld a, [hl]
 	cp CARD_NOT_OWNED
 	jr z, .skip_set_flag
-ENDC
 	ld a, [wOwnedPhantomCardFlags]
 	or b
 	ld [wOwnedPhantomCardFlags], a
@@ -315,8 +311,6 @@ PrintCardSetListEntries:
 	call LoadCardDataToBuffer1_FromCardID
 	push bc
 	push hl
-
-IF ALL_CARDS_VISIBLE_IN_ALBUM == 0
 	ld de, wOwnedCardsCountList
 	add hl, de
 	dec hl
@@ -327,7 +321,6 @@ IF ALL_CARDS_VISIBLE_IN_ALBUM == 0
 	ld de, wDefaultText
 	call CopyListFromHLToDE
 	jr .print_text
-ENDC
 
 .owned
 	ld a, 13
@@ -479,14 +472,11 @@ HandleCardAlbumCardPage:
 	add b
 	ld c, a
 	ld b, $00
-
-IF ALL_CARDS_VISIBLE_IN_ALBUM == 0
 	ld hl, wOwnedCardsCountList
 	add hl, bc
 	ld a, [hl]
 	cp CARD_NOT_OWNED
 	jr z, .handle_input
-ENDC
 
 	ld hl, wCurCardListPtr
 	ld a, [hli]
@@ -615,13 +605,11 @@ GetFirstOwnedCardIndex:
 	ld hl, wOwnedCardsCountList
 	ld b, 0
 .loop_cards
-IF ALL_CARDS_VISIBLE_IN_ALBUM == 0
 	ld a, [hli]
 	cp CARD_NOT_OWNED
 	jr nz, .owned
 	inc b
 	jr .loop_cards
-ENDC
 .owned
 	ld a, b
 	ld [wFirstOwnedCardIndex], a
@@ -713,12 +701,9 @@ HandleCardAlbumScreen:
 	ld [wTempCardListNumCursorPositions], a
 	ld a, [wCardListCursorPos]
 	ld [wTempCardListCursorPos], a
-
-IF ALL_CARDS_VISIBLE_IN_ALBUM == 0
 	call CountOwnedCopiesOfAlbumCard
 	cp CARD_NOT_OWNED
 	jr z, .loop_input_3
-ENDC
 
 	; set wFilteredCardList as current card list
 	ld de, wFilteredCardList
