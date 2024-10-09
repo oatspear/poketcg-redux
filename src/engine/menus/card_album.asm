@@ -237,25 +237,30 @@ CreateCardSetListAndInitListCoords:
 	push af
 	cp CARD_SET_PROMOTIONAL
 	jr nz, .laboratory
-	lb de, 3, "FW3_P"
+	; lb de, 3, "FW3_P"
+	lb de, TX_HALFWIDTH, "P"
 	jr .got_prefix
 .laboratory
 	cp CARD_SET_LABORATORY
 	jr nz, .mystery
-	lb de, 3, "FW3_D"
+	; lb de, 3, "FW3_D"
+	lb de, TX_HALFWIDTH, "D"
 	jr .got_prefix
 .mystery
 	cp CARD_SET_MYSTERY
 	jr nz, .evolution
-	lb de, 3, "FW3_C"
+	; lb de, 3, "FW3_C"
+	lb de, TX_HALFWIDTH, "C"
 	jr .got_prefix
 .evolution
 	cp CARD_SET_EVOLUTION
 	jr nz, .colosseum
-	lb de, 3, "FW3_B"
+	; lb de, 3, "FW3_B"
+	lb de, TX_HALFWIDTH, "B"
 	jr .got_prefix
 .colosseum
-	lb de, 3, "FW3_A"
+	; lb de, 3, "FW3_A"
+	lb de, TX_HALFWIDTH, "A"
 
 .got_prefix
 	ld hl, wCurDeckName
@@ -317,12 +322,15 @@ PrintCardSetListEntries:
 	ld a, [hl]
 	cp CARD_NOT_OWNED
 	jr nz, .owned
+	xor a
+	ld [wCardAlbumOwnedCopies], a
 	ld hl, .EmptySlotText
 	ld de, wDefaultText
 	call CopyListFromHLToDE
 	jr .print_text
 
 .owned
+	ld [wCardAlbumOwnedCopies], a
 	ld a, 13
 	call CopyCardNameAndLevel
 .print_text
@@ -336,6 +344,8 @@ PrintCardSetListEntries:
 	call .AppendCardListIndex
 	call ProcessText
 	ld hl, wDefaultText
+	call ProcessText
+	call .AppendCardListOwnedCount
 	call ProcessText
 	pop hl
 	ld a, b
@@ -371,6 +381,30 @@ PrintCardSetListEntries:
 	textfw0 "-------------"
 	done
 
+; input:
+;   a: number of copies owned by the player
+.AppendCardListOwnedCount
+	push bc
+	push de
+	ld hl, wDefaultText
+	ld [hl], TX_HALFWIDTH
+	inc hl
+	; ld [hl], "["
+	; inc hl
+	ld [hl], " "
+	inc hl
+	ld [hl], " "
+	inc hl
+	ld a, [wCardAlbumOwnedCopies]
+	call .num_to_ram
+	; ld [hl], "]"
+	; inc hl
+	ld [hl], TX_END
+	ld hl, wDefaultText
+	pop de
+	pop bc
+	ret
+
 ; gets the index in the card list and adds it to wCurDeckName
 .AppendCardListIndex
 	push bc
@@ -381,37 +415,40 @@ PrintCardSetListEntries:
 	ld a, [hl]
 	cp DOUBLE_COLORLESS_ENERGY + 1
 	jr c, .energy_card
-	cp VENUSAUR_LV64
-	jr z, .phantom_card
-	cp MEW_LV15
-	jr z, .phantom_card
+	; cp VENUSAUR_LV64
+	; jr z, .phantom_card
+	; cp MEW_LV15
+	; jr z, .phantom_card
 
 	ld a, [wNumVisibleCardListEntries]
 	sub b
 	ld hl, wCardListVisibleOffset
 	add [hl]
 	inc a
-	call CalculateOnesAndTensDigits
-	ld hl, wOnesAndTensPlace
-	ld a, [hli]
-	ld b, a
-	ld a, [hl]
-	or a
-	jr nz, .got_index
-	ld a, SYM_0
-.got_index
+	; call CalculateOnesAndTensDigits
+	; ld hl, wOnesAndTensPlace
+	; ld a, [hli]
+	; ld b, a
+	; ld a, [hl]
+	; or a
+	; jr nz, .got_index
+	; ld a, SYM_0
+; .got_index
 	ld hl, wCurDeckName + 2 ; skip prefix
-	ld [hl], TX_SYMBOL
+	call .num_to_ram
+	ld [hl], " "
 	inc hl
-	ld [hli], a ; tens place
-	ld [hl], TX_SYMBOL
-	inc hl
-	ld a, b
-	ld [hli], a ; ones place
-	ld [hl], TX_SYMBOL
-	inc hl
-	xor a ; SYM_SPACE
-	ld [hli], a
+	; ld [hl], TX_HALFWIDTH ; TX_SYMBOL
+	; inc hl
+	; ld [hli], a ; tens place
+	; ld [hl], TX_HALFWIDTH ; TX_SYMBOL
+	; inc hl
+	; ld a, b
+	; ld [hli], a ; ones place
+	; ld [hl], TX_SYMBOL
+	; inc hl
+	xor a ; SYM_SPACE, TX_END
+	; ld [hli], a
 	ld [hl], a
 	ld hl, wCurDeckName
 	pop de
@@ -419,49 +456,74 @@ PrintCardSetListEntries:
 	ret
 
 .energy_card
-	call CalculateOnesAndTensDigits
-	ld hl, wOnesAndTensPlace
-	ld a, [hli]
+	; call CalculateOnesAndTensDigits
+	; ld hl, wOnesAndTensPlace
+	; ld a, [hli]
 	ld b, a
 	ld hl, wCurDeckName + 2
-	lb de, 3, "FW3_E"
+	; lb de, 3, "FW3_E"
+	lb de, TX_HALFWIDTH, "E"
 	ld [hl], d
 	inc hl
 	ld [hl], e
 	inc hl
-	ld [hl], TX_SYMBOL
-	inc hl
-	ld a, SYM_0
-	ld [hli], a
-	ld [hl], TX_SYMBOL
-	inc hl
+	; ld [hl], TX_SYMBOL
+	; inc hl
+	; ld a, SYM_0
+	; ld [hli], a
+	; ld [hl], TX_SYMBOL
+	; inc hl
 	ld a, b
-	ld [hli], a
-	ld [hl], TX_SYMBOL
+	call .num_to_ram
+	ld [hl], " "
 	inc hl
-	xor a ; SYM_SPACE
-	ld [hli], a
+	; ld [hli], a
+	; ld [hl], TX_SYMBOL
+	; inc hl
+	xor a ; SYM_SPACE, TX_END
+	; ld [hli], a
 	ld [hl], a
 	ld hl, wCurDeckName + 2
 	pop de
 	pop bc
 	ret
 
-.phantom_card
-; phantom cards get only "××" in their index number
-	ld hl, wCurDeckName + 2
-	ld [hl], "FW0_×"
+; .phantom_card
+; ; phantom cards get only "××" in their index number
+; 	ld hl, wCurDeckName + 2
+; 	ld [hl], "FW0_×"
+; 	inc hl
+; 	ld [hl], "FW0_×"
+; 	inc hl
+; 	ld [hl], TX_SYMBOL
+; 	inc hl
+; 	xor a ; SYM_SPACE
+; 	ld [hli], a
+; 	ld [hl], a
+; 	ld hl, wCurDeckName
+; 	pop de
+; 	pop bc
+; 	ret
+
+.num_to_ram
+	ld c, a
+	; cp 10
+	; jr c, .got_number
+	push bc
+	ld b, "0" - 1
+.first_digit_loop
+	inc b
+	sub 10
+	jr nc, .first_digit_loop
+	add 10
+	ld [hl], b ; first digit
 	inc hl
-	ld [hl], "FW0_×"
-	inc hl
-	ld [hl], TX_SYMBOL
-	inc hl
-	xor a ; SYM_SPACE
-	ld [hli], a
-	ld [hl], a
-	ld hl, wCurDeckName
-	pop de
 	pop bc
+	ld c, a
+; .got_number
+	ld a, c
+	add "0"
+	ld [hli], a ; last (or only) digit
 	ret
 
 ; handles opening card page, and inputs when inside Card Album
