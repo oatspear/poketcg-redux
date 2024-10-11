@@ -386,19 +386,36 @@ PrintCardSetListEntries:
 .AppendCardListOwnedCount
 	push bc
 	push de
-	ld hl, wDefaultText
-	ld [hl], TX_HALFWIDTH
-	inc hl
-	; ld [hl], "["
+; --------------------------------------
+	; ld hl, wDefaultText
+	; ld [hl], TX_HALFWIDTH
 	; inc hl
-	ld [hl], " "
-	inc hl
-	ld [hl], " "
-	inc hl
+	; ld [hl], " "
+	; inc hl
+	; ld [hl], " "
+	; inc hl
+	; ld a, [wCardAlbumOwnedCopies]
+	; call .num_to_ram
+; --------------------------------------
 	ld a, [wCardAlbumOwnedCopies]
-	call .num_to_ram
-	; ld [hl], "]"
-	; inc hl
+	call CalculateOnesAndTensDigits
+	ld hl, wOnesAndTensPlace
+	ld a, [hli]
+	ld b, a
+	ld a, [hl]
+	; or a
+	; jr nz, .got_owned_count
+	; ld a, SYM_0
+; .got_owned_count
+	ld hl, wDefaultText
+	ld [hl], TX_SYMBOL
+	inc hl
+	ld [hli], a ; tens place
+	ld [hl], TX_SYMBOL
+	inc hl
+	ld a, b
+	ld [hli], a ; ones place
+; --------------------------------------
 	ld [hl], TX_END
 	ld hl, wDefaultText
 	pop de
