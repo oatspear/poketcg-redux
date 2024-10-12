@@ -4585,8 +4585,7 @@ DisplayCardPage_PokemonDescription:
 	call InitTextPrintingInTextbox
 	ld hl, wLoadedCard1Description
 	call ProcessTextFromPointerToID
-	call SetOneLineSeparation
-	ret
+	jp SetOneLineSeparation
 
 ; given a card rarity constant in a, and CardRarityTextIDs in hl,
 ; print the text character associated to it at d,e
@@ -4596,8 +4595,7 @@ PrintCardPageRarityIcon:
 	ld c, a
 	ld b, $00
 	add hl, bc
-	call InitTextPrinting_ProcessTextFromPointerToID
-	ret
+	jp InitTextPrinting_ProcessTextFromPointerToID
 
 ; prints the card's set 2 icon and the full width text character of the card's rarity
 DrawCardPageSet2AndRarityIcons:
@@ -4614,9 +4612,10 @@ DrawCardPageSet2AndRarityIcons:
 	lb de, 18, 9
 	ld hl, CardRarityTextIDs
 	ld a, [wLoadedCard1Rarity]
-	cp PROMOSTAR
-	call nz, PrintCardPageRarityIcon
-	ret
+	; cp PROMOSTAR
+	; call nz, PrintCardPageRarityIcon
+	; ret
+	jp PrintCardPageRarityIcon
 
 CardPageLengthWeightTextData:
 	textitem 1, 11, LengthText
@@ -4630,7 +4629,7 @@ CardPageLvHPTextTileData:
 	db $ff
 
 CardRarityTextIDs:
-	tx PromostarRarityText ; PROMOSTAR (unused)
+	tx PromostarRarityText ; PROMOSTAR
 	tx CircleRarityText    ; CIRCLE
 	tx DiamondRarityText   ; DIAMOND
 	tx StarRarityText      ; STAR

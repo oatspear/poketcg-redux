@@ -79,7 +79,7 @@ LbsText: ; 36385 (d:6385)
 	done
 
 PromostarRarityText: ; 3638b (d:638b)
-	textfw0 " "
+	textfw3 "☆"
 	done
 
 CircleRarityText: ; 3638d (d:638d)

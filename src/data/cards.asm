@@ -336,8 +336,8 @@ VenusaurLv64Card:
 	db TYPE_PKMN_GRASS ; type
 	gfx VenusaurLv64CardGfx ; gfx
 	tx VenusaurName ; name
-	db STAR ; rarity
-	db PROMOTIONAL | GB ; sets
+	db PROMOSTAR ; rarity
+	db PROMOTIONAL | PRO ; sets
 	db VENUSAUR_LV64
 	db 120 ; hp
 	db STAGE2 ; stage
@@ -8107,8 +8107,8 @@ MewLv15Card:
 	db TYPE_PKMN_PSYCHIC ; type
 	gfx MewLv23CardGfx ; gfx
 	tx MewName ; name
-	db STAR ; rarity
-	db PROMOTIONAL | GB ; sets
+	db PROMOSTAR ; rarity
+	db PROMOTIONAL | PRO ; sets
 	db MEW_LV15
 	db 50 ; hp
 	db BASIC ; stage

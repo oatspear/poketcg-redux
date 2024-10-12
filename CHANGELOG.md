@@ -10,6 +10,9 @@
 - Cards are sold for half their cost.
 - Common cards cost 2 points, Uncommon cards cost 8 points, Rare cards cost 24 points, Promotional cards cost 50 points.
 
+### User Interface
+- Promotional cards now display a white star rarity icon.
+
 ### New Cards
 
 #### X Attack
@@ -23,6 +26,16 @@
 ### Removed Cards
 - PlusPower
 - Defender
+
+### Grass Changes
+
+#### Venusaur Lv64
+- This is now a regular promotional card, instead of a phantom card.
+
+### Psychic Changes
+
+#### Mew Lv15
+- This is now a regular promotional card, instead of a phantom card.
 
 
 ## Version 0.12.0
