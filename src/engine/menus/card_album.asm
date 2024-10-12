@@ -408,6 +408,10 @@ PrintCardSetListEntries:
 	; ld a, SYM_0
 ; .got_owned_count
 	ld hl, wDefaultText
+	; ld [hl], TX_SYMBOL
+	; inc hl
+	; ld [hl], SYM_CROSS
+	; inc hl
 	ld [hl], TX_SYMBOL
 	inc hl
 	ld [hli], a ; tens place
