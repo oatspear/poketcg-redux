@@ -898,7 +898,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer MoltresLegendaryCardName                           ; 0x03f1
 	textpointer ArticunoLegendaryCardName                          ; 0x03f2
 	textpointer DragoniteLegendaryCardName                         ; 0x03f3
-	textpointer EnergyRecyclerTradeCardName
+	textpointer MewLv15TradeCardName
 	textpointer FlyingPikachuTradeCardName                         ; 0x03f5
 	textpointer LightningAndFireDeckChoiceText                     ; 0x03f6
 	textpointer WaterAndFightingDeckChoiceText                     ; 0x03f7

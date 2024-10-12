@@ -1508,8 +1508,8 @@ ChallengeCupPrizeCards:
 	db JIGGLYPUFF
 	tx JigglypuffTradeCardName
 
-	db ENERGY_RECYCLER
-	tx EnergyRecyclerTradeCardName
+	db MEW_LV15
+	tx MewLv15TradeCardName
 
 	db FLYING_PIKACHU
 	tx FlyingPikachuTradeCardName

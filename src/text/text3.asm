@@ -1907,8 +1907,8 @@ DragoniteLegendaryCardName: ; 3f8cf (f:78cf)
 	text "<Lv>41 DRAGONITE"
 	done
 
-EnergyRecyclerTradeCardName: ; 3f8df (f:78df)
-	text "Energy Recycler"
+MewLv15TradeCardName: ; 3f8df (f:78df)
+	text "<Lv>15 MEW"
 	done
 
 FlyingPikachuTradeCardName: ; 3f8f7 (f:78f7)
