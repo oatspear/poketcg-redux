@@ -66,6 +66,8 @@ DEF NUM_CARDS_PROMOTIONAL EQU 20
 	const VENUSAUR_OWNED_PHANTOM_F ; $0
 	const MEW_OWNED_PHANTOM_F      ; $1
 
+DEF PHANTOM_CARDS_ENABLED EQU 0
+
 ; wStartMenuChoice enums
 	const_def
 	const START_MENU_CARD_POP            ; 0

@@ -2501,7 +2501,7 @@ wTotalNumCardsCollected:: ; d3cd
 	ds $1
 
 ; total number of cards to be collected
-; doesn't count the Phantom cards (VenusaurLv64 and MewLv15)
+; doesn't count the Phantom cards
 ; unless they have already been collected
 wTotalNumCardsToCollect:: ; d3ce
 	ds $1

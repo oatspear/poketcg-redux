@@ -28,11 +28,13 @@ CreateCardSetList:
 	jr nz, .loop_all_cards
 
 ; it's same set as input
+IF PHANTOM_CARDS_ENABLED
 	ld a, e
 	cp VENUSAUR_LV64
 	jp z, .SetVenusaurLv64OwnedFlag
 	cp MEW_LV15
 	jp z, .SetMewLv15OwnedFlag
+ENDC
 
 	push bc
 	push hl
@@ -119,6 +121,7 @@ CreateCardSetList:
 	jr .loop_find_double_colorless
 
 .skip_energy_cards
+IF PHANTOM_CARDS_ENABLED
 	ld a, [wOwnedPhantomCardFlags]
 	bit VENUSAUR_OWNED_PHANTOM_F, a
 	jr z, .check_mew
@@ -127,6 +130,7 @@ CreateCardSetList:
 	bit MEW_OWNED_PHANTOM_F, a
 	jr z, .find_first_owned
 	call .PlaceMewLv15InList
+ENDC
 
 .find_first_owned
 	dec l
@@ -155,6 +159,7 @@ CreateCardSetList:
 	ld [hl], a
 	ret
 
+IF PHANTOM_CARDS_ENABLED
 .SetMewLv15OwnedFlag
 	ld a, (1 << MEW_OWNED_PHANTOM_F)
 ;	fallthrough
@@ -206,6 +211,8 @@ CreateCardSetList:
 	push hl
 	ld e, MEW_LV15
 	jr .PlaceCardInList
+ENDC
+
 
 ; a = CARD_SET_* constant
 CreateCardSetListAndInitListCoords:
@@ -436,10 +443,12 @@ PrintCardSetListEntries:
 	ld a, [hl]
 	cp DOUBLE_COLORLESS_ENERGY + 1
 	jr c, .energy_card
-	; cp VENUSAUR_LV64
-	; jr z, .phantom_card
-	; cp MEW_LV15
-	; jr z, .phantom_card
+IF PHANTOM_CARDS_ENABLED
+	cp VENUSAUR_LV64
+	jr z, .phantom_card
+	cp MEW_LV15
+	jr z, .phantom_card
+ENDC
 
 	ld a, [wNumVisibleCardListEntries]
 	sub b
@@ -509,22 +518,24 @@ PrintCardSetListEntries:
 	pop bc
 	ret
 
-; .phantom_card
-; ; phantom cards get only "××" in their index number
-; 	ld hl, wCurDeckName + 2
-; 	ld [hl], "FW0_×"
-; 	inc hl
-; 	ld [hl], "FW0_×"
-; 	inc hl
-; 	ld [hl], TX_SYMBOL
-; 	inc hl
-; 	xor a ; SYM_SPACE
-; 	ld [hli], a
-; 	ld [hl], a
-; 	ld hl, wCurDeckName
-; 	pop de
-; 	pop bc
-; 	ret
+IF PHANTOM_CARDS_ENABLED
+.phantom_card
+; phantom cards get only "××" in their index number
+	ld hl, wCurDeckName + 2
+	ld [hl], "FW0_×"
+	inc hl
+	ld [hl], "FW0_×"
+	inc hl
+	ld [hl], TX_SYMBOL
+	inc hl
+	xor a ; SYM_SPACE
+	ld [hli], a
+	ld [hl], a
+	ld hl, wCurDeckName
+	pop de
+	pop bc
+	ret
+ENDC
 
 .num_to_ram
 	ld c, a
@@ -875,6 +886,7 @@ HandleCardAlbumScreen:
 	jr nz, .check_laboratory
 ; promotional
 	ldtx hl, Item5PromotionalCardText
+IF PHANTOM_CARDS_ENABLED
 	ld e, NUM_CARDS_PROMOTIONAL - 2 ; minus the phantom cards
 	ld a, [wOwnedPhantomCardFlags]
 	bit VENUSAUR_OWNED_PHANTOM_F, a
@@ -884,6 +896,9 @@ HandleCardAlbumScreen:
 	bit MEW_OWNED_PHANTOM_F, a
 	jr z, .has_card_set_count
 	inc e
+ELSE
+	ld e, NUM_CARDS_PROMOTIONAL
+ENDC
 	jr .has_card_set_count
 .check_laboratory
 	cp CARD_SET_LABORATORY
