@@ -881,13 +881,15 @@ HandleCardAlbumScreen:
 	call InitTextPrinting
 
 ; print the total number of cards that are in the Card Set
+	call .CountOwnedCardsInSet  ; e: total cards in set
 	ld a, [wSelectedCardSet]
 	cp CARD_SET_PROMOTIONAL
 	jr nz, .check_laboratory
 ; promotional
 	ldtx hl, Item5PromotionalCardText
 IF PHANTOM_CARDS_ENABLED
-	ld e, NUM_CARDS_PROMOTIONAL - 2 ; minus the phantom cards
+	dec e
+	dec e  ; minus the phantom cards
 	ld a, [wOwnedPhantomCardFlags]
 	bit VENUSAUR_OWNED_PHANTOM_F, a
 	jr z, .check_owns_mew
@@ -896,36 +898,29 @@ IF PHANTOM_CARDS_ENABLED
 	bit MEW_OWNED_PHANTOM_F, a
 	jr z, .has_card_set_count
 	inc e
-ELSE
-	ld e, NUM_CARDS_PROMOTIONAL
 ENDC
 	jr .has_card_set_count
 .check_laboratory
 	cp CARD_SET_LABORATORY
 	jr nz, .check_mystery
 	ldtx hl, Item4LaboratoryText
-	ld e, NUM_CARDS_LABORATORY
 	jr .has_card_set_count
 .check_mystery
 	cp CARD_SET_MYSTERY
 	jr nz, .check_evolution
 	ldtx hl, Item3MysteryText
-	ld e, NUM_CARDS_MYSTERY
 	jr .has_card_set_count
 .check_evolution
 	cp CARD_SET_EVOLUTION
 	jr nz, .colosseum
 	ldtx hl, Item2EvolutionText
-	ld e, NUM_CARDS_EVOLUTION
 	jr .has_card_set_count
 .colosseum
 	ldtx hl, Item1ColosseumText
-	ld e, NUM_CARDS_COLOSSEUM
 
 .has_card_set_count
 	push de
 	call ProcessTextFromID
-	call .CountOwnedCardsInSet
 	lb de, 14, 1
 	call InitTextPrinting
 
@@ -955,11 +950,17 @@ ENDC
 .CountOwnedCardsInSet
 	ld hl, wOwnedCardsCountList
 	ld b, 0
+	ld e, 0
 .loop_card_count
 	ld a, [hli]
 	cp $ff
 	jr z, .got_num_owned_cards
+	inc e
+IF ALL_CARDS_VISIBLE_IN_ALBUM
+	or a
+ELSE
 	cp CARD_NOT_OWNED
+ENDC
 	jr z, .loop_card_count
 	inc b
 	jr .loop_card_count
