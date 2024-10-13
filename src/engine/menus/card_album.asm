@@ -1192,6 +1192,7 @@ CardAlbum_BuyCard:
 	and CARD_COUNT_MASK
 	inc a
 	ld [hl], a
+	; jp PrintCardSetListEntries
 	or a  ; reset carry
 	ret
 
@@ -1256,7 +1257,8 @@ CardAlbum_SellCard:
 	call CountOwnedCopiesOfAlbumCard  ; just to set hl
 	dec a
 	ld [hl], a
-	or a
+	; jp PrintCardSetListEntries
+	or a  ; reset carry
 	ret
 
 
