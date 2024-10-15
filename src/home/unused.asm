@@ -129,7 +129,7 @@ OppAction_BeginUseAttack:
 	ld a, [wDuelTurns]
 	or a
 	jr nz, .not_first_turn
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
 	and PLAYED_SUPPORTER_THIS_TURN
 	jr nz, .failed
 

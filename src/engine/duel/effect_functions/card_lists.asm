@@ -8,6 +8,12 @@ CreateSupporterCardListFromDiscardPile:
 	jr CreateTrainerCardListFromDiscardPile_
 
 
+CheckDiscardPileHasStadiumCards:
+CreateStadiumCardListFromDiscardPile:
+	ld c, TYPE_TRAINER_STADIUM
+	jr CreateTrainerCardListFromDiscardPile_
+
+
 CheckDiscardPileHasItemCards:
 CreateItemCardListFromDiscardPile:
 	ld c, TYPE_TRAINER

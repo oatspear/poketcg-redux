@@ -131,7 +131,7 @@ AIDoTurn_LegendaryMoltres:
 	ld a, AI_TRAINER_CARD_PHASE_11
 	call AIProcessHandTrainerCards
 ; play Energy card if possible
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
 	and PLAYED_ENERGY_THIS_TURN  ; or a
 	jr nz, .skip_attach_energy
 

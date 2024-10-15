@@ -10086,14 +10086,14 @@ SwitchCard:
 	dw NONE ; description (cont)
 
 PokemonCenterCard:
-	db TYPE_TRAINER ; type
+	db TYPE_TRAINER_STADIUM ; type
 	gfx PokemonCenterCardGfx ; gfx
 	tx PokemonCenterName ; name
 	db DIAMOND ; rarity
 	db MYSTERY | NONE ; sets
 	db POKEMON_CENTER
-	dw PokemonCenterEffectCommands ; effect commands
-	tx Heal10DamageFromAllDescription ; description
+	dw StadiumCardEffectCommands ; effect commands
+	tx PokemonCenterDescription ; description
 	dw NONE ; description (cont)
 
 PokeBallCard:

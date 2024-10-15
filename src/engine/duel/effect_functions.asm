@@ -4534,7 +4534,7 @@ ClairvoyantSense_PreconditionCheck:
 	ret c
 	jp CheckPokemonPowerCanBeUsed_StoreTrigger
 
-;	ld a, [wAlreadyPlayedEnergyOrSupporter]
+;	ld a, [wOncePerTurnActions]
 ;	and USED_FIRESTARTER_THIS_TURN
 ;	jr nz, .already_used
 
@@ -4554,7 +4554,7 @@ RainbowTeam_OncePerTurnCheck:
 	ret c  ; duplicate colors
 	jp CheckPokemonPowerCanBeUsed_StoreTrigger
 
-;	ld a, [wAlreadyPlayedEnergyOrSupporter]
+;	ld a, [wOncePerTurnActions]
 ;	and USED_FIRESTARTER_THIS_TURN
 ;	jr nz, .already_used
 
@@ -4638,7 +4638,7 @@ Firestarter_OncePerTurnCheck:
 	ret c  ; no energy
 	jp CheckPokemonPowerCanBeUsed_StoreTrigger
 
-;	ld a, [wAlreadyPlayedEnergyOrSupporter]
+;	ld a, [wOncePerTurnActions]
 ;	and USED_FIRESTARTER_THIS_TURN
 ;	jr nz, .already_used
 
@@ -4688,9 +4688,9 @@ _AttachEnergyFromDiscardPileToBenchEffect:
 .attach
 ; flag Firestarter as being used (requires [hTempPlayAreaLocation_ff9d])
 	call SetUsedPokemonPowerThisTurn_RestoreTrigger
-	; ld a, [wAlreadyPlayedEnergyOrSupporter]
+	; ld a, [wOncePerTurnActions]
 	; or USED_FIRESTARTER_THIS_TURN
-	; ld [wAlreadyPlayedEnergyOrSupporter], a
+	; ld [wOncePerTurnActions], a
 
 ; pick Energy from card list
 	; call CreateEnergyCardListFromDiscardPile_OnlyFire
@@ -6444,6 +6444,39 @@ PokemonTool_AttachToolEffect:
 	ret
 
 
+; 1. A player may play only 1 Stadium card during their turn.
+; 2. If a Stadium card is already in play, any Stadium cards
+; 	 with the same name cannot be played.
+StadiumCard_PreconditionCheck:
+	ld a, [wOncePerTurnActions]
+	and PLAYED_STADIUM_THIS_TURN
+	scf
+	ret nz  ; already played
+
+	ld a, [wLoadedCard1ID]
+	ld e, a
+	ld d, 0
+	call CheckSpecificStadiumIsInPlay
+	ccf
+	ldtx hl, ThereIsAlreadyAnEqualStadiumInPlayText
+	ret
+
+
+StadiumCard_PutInPlayEffect:
+; discard previous Stadium, if any
+	call PutStadiumCardInDiscardPile  ; sets hl to duel var
+; store the Stadium and put it in play
+	ldh a, [hTempCardIndex_ff9f]
+	ld [hl], a
+	call RemoveCardFromHand  ; preserves af, hl, bc, de
+	call GetTurnDuelistVariable  ; preserves bc, de
+	ld [hl], CARD_LOCATION_STADIUM
+; discard previous opponent Stadium, if any
+	call SwapTurn
+	call PutStadiumCardInDiscardPile
+	jp SwapTurn
+
+
 ; return carry if Bench is full.
 MysteriousFossil_BenchCheck:
 	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
@@ -7660,3 +7693,13 @@ Helper_GenericShowAttachedEnergyToPokemon:
 	ldtx hl, GenericAttachedEnergyToPokemonText
 	bank1call DisplayCardDetailScreen
 	ret
+
+
+PokemonCenter_HealEffect:
+	ld de, POKEMON_CENTER
+	call CheckSpecificStadiumIsInPlay
+	ret c  ; not in play
+	ld a, [wLoadedCard1Type]
+	cp TYPE_TRAINER_SUPPORTER
+	ret nz  ; not a supporter
+	jp Heal10DamageFromAll_HealEffect

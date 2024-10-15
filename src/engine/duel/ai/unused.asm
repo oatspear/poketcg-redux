@@ -197,7 +197,7 @@ HandleAIPeek:
 
 ; handles AI logic for attaching energy cards
 HandleAIRainDanceEnergy:
-	; ld a, [wAlreadyPlayedEnergyOrSupporter]
+	; ld a, [wOncePerTurnActions]
 	; and USED_RAIN_DANCE_THIS_TURN
 	; ret nz ; return if Rain Dance was used this turn
 

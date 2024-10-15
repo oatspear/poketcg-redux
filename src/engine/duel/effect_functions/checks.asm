@@ -454,6 +454,34 @@ CheckTriggeringPokemonIsOnTheBench:
 	ret
 
 
+; input:
+;		de: ID of the Stadium to check for
+; output:
+;		carry: set if the Stadium is not found
+CheckSpecificStadiumIsInPlay:
+	call SwapTurn
+	call .CheckTurnHolder
+	call SwapTurn
+	ret nc  ; found
+	; fallthrough
+
+; carry set if not found
+.CheckTurnHolder
+	ld a, DUELVARS_STADIUM_CARD
+	call GetTurnDuelistVariable
+	cp $ff
+	jr z, .no_stadium
+	push de
+	call GetCardIDFromDeckIndex  ; preserves hl
+	ld a, e
+	pop de
+	cp e
+	ret z  ; found
+.no_stadium
+	scf
+	ret
+
+
 ; ------------------------------------------------------------------------------
 ; Damage
 ; ------------------------------------------------------------------------------
@@ -913,10 +941,10 @@ CheckIfCardHasSpecificEnergyAttached:
 ; returns carry if the turn holder did not play any energy cards
 ; during their turn
 CheckPlayedEnergyThisTurn:
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
 	and PLAYED_ENERGY_THIS_TURN
 	ret nz  ; played energy
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
 	and USED_RAIN_DANCE_THIS_TURN
 	ret nz  ; played energy with Rain Dance
 	scf

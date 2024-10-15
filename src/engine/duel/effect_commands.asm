@@ -1872,11 +1872,6 @@ SwitchEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Switch_SwitchEffect
 	db  $00
 
-PokemonCenterEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckIfPlayAreaHasAnyDamage
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Heal10DamageFromAll_HealEffect
-	db  $00
-
 PokemonFluteEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, PokemonFlute_BenchCheck
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, PokemonFlute_PlayerSelection
@@ -1990,4 +1985,11 @@ GiovanniEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckOpponentBenchIsNotEmpty
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Giovanni_PlayerSelection
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Giovanni_SwitchEffect
+	db  $00
+
+; ----
+
+StadiumCardEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, StadiumCard_PreconditionCheck
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, StadiumCard_PutInPlayEffect
 	db  $00

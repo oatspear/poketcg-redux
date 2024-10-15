@@ -112,6 +112,19 @@ OpenInPlayAreaScreen:
 	lb de, 1, 17
 	call InitTextPrinting
 	pop af
+
+	cp INPLAYAREA_PLAYER_STADIUM
+	jr nz, .opp_stadium
+	ld a, DUELVARS_STADIUM_CARD
+	jr .load_card_name
+
+.opp_stadium
+	cp INPLAYAREA_OPP_STADIUM
+	jr nz, .normal_routine
+	ld a, DUELVARS_STADIUM_CARD
+	jr .load_opp_card_name
+
+.normal_routine
 	ld hl, OpenInPlayAreaScreen_TextTable
 	ld b, 0
 	sla a
@@ -144,6 +157,7 @@ OpenInPlayAreaScreen:
 
 	ld a, l
 	add DUELVARS_ARENA_CARD
+.load_card_name
 	call GetTurnDuelistVariable
 	cp -1
 	ret z
@@ -155,6 +169,7 @@ OpenInPlayAreaScreen:
 .opponent_side
 	ld a, l
 	add DUELVARS_ARENA_CARD
+.load_opp_card_name
 	call GetNonTurnDuelistVariable
 	cp -1
 	ret z
@@ -168,8 +183,7 @@ OpenInPlayAreaScreen:
 	ld a, 18
 	call CopyCardNameAndLevel
 	ld hl, wDefaultText
-	call ProcessText
-	ret
+	jp ProcessText
 
 .print_hand_or_discard_pile
 ; if we make it here, cursor position is to Hand or Discard Pile
@@ -178,14 +192,12 @@ OpenInPlayAreaScreen:
 	ld a, [wInPlayAreaCurPosition]
 	cp INPLAYAREA_OPP_ACTIVE
 	jr nc, .opp_side_print_hand_or_discard_pile
-	call PrintTextNoDelay
-	ret
+	jp PrintTextNoDelay
 
 .opp_side_print_hand_or_discard_pile
 	call SwapTurn
 	call PrintTextNoDelay
-	call SwapTurn
-	ret
+	jp SwapTurn
 
 .show_turn_holder_play_area
 	lb de, $38, $9f
@@ -221,14 +233,16 @@ OpenInPlayAreaScreen:
 	dw OpenInPlayAreaScreen_TurnHolderPlayArea       ; 0x05: INPLAYAREA_PLAYER_ACTIVE
 	dw OpenInPlayAreaScreen_TurnHolderHand           ; 0x06: INPLAYAREA_PLAYER_HAND
 	dw OpenInPlayAreaScreen_TurnHolderDiscardPile    ; 0x07: INPLAYAREA_PLAYER_DISCARD_PILE
-	dw OpenInPlayAreaScreen_NonTurnHolderPlayArea    ; 0x08: INPLAYAREA_OPP_ACTIVE
-	dw OpenInPlayAreaScreen_NonTurnHolderHand        ; 0x09: INPLAYAREA_OPP_HAND
-	dw OpenInPlayAreaScreen_NonTurnHolderDiscardPile ; 0x0a: INPLAYAREA_OPP_DISCARD_PILE
-	dw OpenInPlayAreaScreen_NonTurnHolderPlayArea    ; 0x0b: INPLAYAREA_OPP_BENCH_1
-	dw OpenInPlayAreaScreen_NonTurnHolderPlayArea    ; 0x0c: INPLAYAREA_OPP_BENCH_2
-	dw OpenInPlayAreaScreen_NonTurnHolderPlayArea    ; 0x0d: INPLAYAREA_OPP_BENCH_3
-	dw OpenInPlayAreaScreen_NonTurnHolderPlayArea    ; 0x0e: INPLAYAREA_OPP_BENCH_4
-	dw OpenInPlayAreaScreen_NonTurnHolderPlayArea    ; 0x0f: INPLAYAREA_OPP_BENCH_5
+	dw OpenInPlayAreaScreen_TurnHolderStadium        ; 0x08: INPLAYAREA_PLAYER_STADIUM
+	dw OpenInPlayAreaScreen_NonTurnHolderPlayArea    ; 0x09: INPLAYAREA_OPP_ACTIVE
+	dw OpenInPlayAreaScreen_NonTurnHolderHand        ; 0x0a: INPLAYAREA_OPP_HAND
+	dw OpenInPlayAreaScreen_NonTurnHolderDiscardPile ; 0x0b: INPLAYAREA_OPP_DISCARD_PILE
+	dw OpenInPlayAreaScreen_NonTurnHolderPlayArea    ; 0x0c: INPLAYAREA_OPP_BENCH_1
+	dw OpenInPlayAreaScreen_NonTurnHolderPlayArea    ; 0x0d: INPLAYAREA_OPP_BENCH_2
+	dw OpenInPlayAreaScreen_NonTurnHolderPlayArea    ; 0x0e: INPLAYAREA_OPP_BENCH_3
+	dw OpenInPlayAreaScreen_NonTurnHolderPlayArea    ; 0x0f: INPLAYAREA_OPP_BENCH_4
+	dw OpenInPlayAreaScreen_NonTurnHolderPlayArea    ; 0x10: INPLAYAREA_OPP_BENCH_5
+	dw OpenInPlayAreaScreen_NonTurnHolderStadium     ; 0x11: INPLAYAREA_OPP_STADIUM
 	assert_table_length NUM_INPLAYAREA_POSITIONS
 
 OpenInPlayAreaScreen_TurnHolderPlayArea:
@@ -306,6 +320,23 @@ OpenInPlayAreaScreen_NonTurnHolderDiscardPile:
 	ldh [hWhoseTurn], a
 	ret
 
+OpenInPlayAreaScreen_TurnHolderStadium:
+	ld a, DUELVARS_STADIUM_CARD
+	call GetTurnDuelistVariable
+	cp $ff
+	ret z
+	call GetCardIDFromDeckIndex
+	call LoadCardDataToBuffer1_FromCardID
+	xor a
+	ld [wCurPlayAreaY], a
+	bank1call OpenCardPage_FromCheckPlayArea
+	ret
+
+OpenInPlayAreaScreen_NonTurnHolderStadium:
+	call SwapTurn
+	call OpenInPlayAreaScreen_TurnHolderStadium
+	jp SwapTurn
+
 OpenInPlayAreaScreen_TextTable:
 ; note that for bench slots, the entries are
 ; PLAY_AREA_BENCH_* constants in practice
@@ -317,6 +348,7 @@ OpenInPlayAreaScreen_TextTable:
 	dw NULL                   ; INPLAYAREA_PLAYER_ACTIVE
 	tx DuelistHandText_2      ; INPLAYAREA_PLAYER_HAND
 	tx DuelistDiscardPileText ; INPLAYAREA_PLAYER_DISCARD_PILE
+	dw NULL                   ; INPLAYAREA_PLAYER_STADIUM
 	dw NULL                   ; INPLAYAREA_OPP_ACTIVE
 	tx DuelistHandText_2      ; INPLAYAREA_OPP_HAND
 	tx DuelistDiscardPileText ; INPLAYAREA_OPP_DISCARD_PILE
@@ -325,6 +357,7 @@ OpenInPlayAreaScreen_TextTable:
 	tx AttackText             ; INPLAYAREA_OPP_BENCH_3
 	tx PKMNPowerText          ; INPLAYAREA_OPP_BENCH_4
 	tx DoneText               ; INPLAYAREA_OPP_BENCH_5
+	dw NULL                   ; INPLAYAREA_OPP_STADIUM
 
 MACRO in_play_area_cursor_transition
 	cursor_transition \1, \2, \3, INPLAYAREA_\4, INPLAYAREA_\5, INPLAYAREA_\6, INPLAYAREA_\7
@@ -335,42 +368,46 @@ ENDM
 ; note that the unit of the position is not a 8x8 tile.
 OpenInPlayAreaScreen_TransitionTable1:
 	table_width 7, OpenInPlayAreaScreen_TransitionTable1
-	in_play_area_cursor_transition $18, $8c, $00,             PLAYER_ACTIVE, PLAYER_PLAY_AREA, PLAYER_BENCH_2, PLAYER_BENCH_5
-	in_play_area_cursor_transition $30, $8c, $00,             PLAYER_ACTIVE, PLAYER_PLAY_AREA, PLAYER_BENCH_3, PLAYER_BENCH_1
-	in_play_area_cursor_transition $48, $8c, $00,             PLAYER_ACTIVE, PLAYER_PLAY_AREA, PLAYER_BENCH_4, PLAYER_BENCH_2
-	in_play_area_cursor_transition $60, $8c, $00,             PLAYER_ACTIVE, PLAYER_PLAY_AREA, PLAYER_BENCH_5, PLAYER_BENCH_3
-	in_play_area_cursor_transition $78, $8c, $00,             PLAYER_ACTIVE, PLAYER_PLAY_AREA, PLAYER_BENCH_1, PLAYER_BENCH_4
-	in_play_area_cursor_transition $30, $6c, $00,             OPP_ACTIVE, PLAYER_BENCH_1, PLAYER_DISCARD_PILE, PLAYER_DISCARD_PILE
+	in_play_area_cursor_transition $28, $8c, $00,             PLAYER_ACTIVE, PLAYER_PLAY_AREA, PLAYER_BENCH_2, PLAYER_STADIUM
+	in_play_area_cursor_transition $40, $8c, $00,             PLAYER_ACTIVE, PLAYER_PLAY_AREA, PLAYER_BENCH_3, PLAYER_BENCH_1
+	in_play_area_cursor_transition $58, $8c, $00,             PLAYER_ACTIVE, PLAYER_PLAY_AREA, PLAYER_BENCH_4, PLAYER_BENCH_2
+	in_play_area_cursor_transition $70, $8c, $00,             PLAYER_ACTIVE, PLAYER_PLAY_AREA, PLAYER_BENCH_5, PLAYER_BENCH_3
+	in_play_area_cursor_transition $88, $8c, $00,             PLAYER_ACTIVE, PLAYER_PLAY_AREA, PLAYER_STADIUM, PLAYER_BENCH_4
+	in_play_area_cursor_transition $30, $6c, $00,             OPP_ACTIVE, PLAYER_STADIUM, PLAYER_DISCARD_PILE, PLAYER_DISCARD_PILE
 	in_play_area_cursor_transition $78, $80, $00,             PLAYER_DISCARD_PILE, PLAYER_BENCH_1, PLAYER_ACTIVE, PLAYER_ACTIVE
 	in_play_area_cursor_transition $78, $70, $00,             OPP_ACTIVE, PLAYER_HAND, PLAYER_ACTIVE, PLAYER_ACTIVE
-	in_play_area_cursor_transition $78, $34, 1 << OAM_X_FLIP, OPP_BENCH_1, PLAYER_ACTIVE, OPP_DISCARD_PILE, OPP_DISCARD_PILE
-	in_play_area_cursor_transition $30, $20, 1 << OAM_X_FLIP, OPP_BENCH_1, OPP_DISCARD_PILE, OPP_ACTIVE, OPP_ACTIVE
-	in_play_area_cursor_transition $30, $38, 1 << OAM_X_FLIP, OPP_BENCH_1, PLAYER_ACTIVE, OPP_ACTIVE, OPP_ACTIVE
-	in_play_area_cursor_transition $90, $14, 1 << OAM_X_FLIP, OPP_PLAY_AREA, OPP_ACTIVE, OPP_BENCH_5, OPP_BENCH_2
-	in_play_area_cursor_transition $78, $14, 1 << OAM_X_FLIP, OPP_PLAY_AREA, OPP_ACTIVE, OPP_BENCH_1, OPP_BENCH_3
-	in_play_area_cursor_transition $60, $14, 1 << OAM_X_FLIP, OPP_PLAY_AREA, OPP_ACTIVE, OPP_BENCH_2, OPP_BENCH_4
-	in_play_area_cursor_transition $48, $14, 1 << OAM_X_FLIP, OPP_PLAY_AREA, OPP_ACTIVE, OPP_BENCH_3, OPP_BENCH_5
-	in_play_area_cursor_transition $30, $14, 1 << OAM_X_FLIP, OPP_PLAY_AREA, OPP_ACTIVE, OPP_BENCH_4, OPP_BENCH_1
+	in_play_area_cursor_transition $08, $8c, $00,             PLAYER_ACTIVE, PLAYER_PLAY_AREA, PLAYER_BENCH_1, PLAYER_BENCH_5
+	in_play_area_cursor_transition $78, $34, 1 << OAM_X_FLIP, OPP_STADIUM, PLAYER_ACTIVE, OPP_DISCARD_PILE, OPP_DISCARD_PILE
+	in_play_area_cursor_transition $30, $20, 1 << OAM_X_FLIP, OPP_STADIUM, OPP_DISCARD_PILE, OPP_ACTIVE, OPP_ACTIVE
+	in_play_area_cursor_transition $30, $38, 1 << OAM_X_FLIP, OPP_STADIUM, PLAYER_ACTIVE, OPP_ACTIVE, OPP_ACTIVE
+	in_play_area_cursor_transition $80, $14, 1 << OAM_X_FLIP, OPP_PLAY_AREA, OPP_ACTIVE, OPP_STADIUM, OPP_BENCH_2
+	in_play_area_cursor_transition $68, $14, 1 << OAM_X_FLIP, OPP_PLAY_AREA, OPP_ACTIVE, OPP_BENCH_1, OPP_BENCH_3
+	in_play_area_cursor_transition $50, $14, 1 << OAM_X_FLIP, OPP_PLAY_AREA, OPP_ACTIVE, OPP_BENCH_2, OPP_BENCH_4
+	in_play_area_cursor_transition $38, $14, 1 << OAM_X_FLIP, OPP_PLAY_AREA, OPP_ACTIVE, OPP_BENCH_3, OPP_BENCH_5
+	in_play_area_cursor_transition $20, $14, 1 << OAM_X_FLIP, OPP_PLAY_AREA, OPP_ACTIVE, OPP_BENCH_4, OPP_STADIUM
+	in_play_area_cursor_transition $a0, $14, 1 << OAM_X_FLIP, OPP_PLAY_AREA, OPP_ACTIVE, OPP_BENCH_5, OPP_BENCH_1
 	assert_table_length NUM_INPLAYAREA_POSITIONS
 
 OpenInPlayAreaScreen_TransitionTable2:
 	table_width 7, OpenInPlayAreaScreen_TransitionTable2
-	in_play_area_cursor_transition $18, $8c, $00,             PLAYER_ACTIVE, PLAYER_PLAY_AREA, PLAYER_BENCH_2, PLAYER_BENCH_5
-	in_play_area_cursor_transition $30, $8c, $00,             PLAYER_ACTIVE, PLAYER_PLAY_AREA, PLAYER_BENCH_3, PLAYER_BENCH_1
-	in_play_area_cursor_transition $48, $8c, $00,             PLAYER_ACTIVE, PLAYER_PLAY_AREA, PLAYER_BENCH_4, PLAYER_BENCH_2
-	in_play_area_cursor_transition $60, $8c, $00,             PLAYER_ACTIVE, PLAYER_PLAY_AREA, PLAYER_BENCH_5, PLAYER_BENCH_3
-	in_play_area_cursor_transition $78, $8c, $00,             PLAYER_ACTIVE, PLAYER_PLAY_AREA, PLAYER_BENCH_1, PLAYER_BENCH_4
-	in_play_area_cursor_transition $30, $6c, $00,             OPP_ACTIVE, PLAYER_BENCH_1, PLAYER_DISCARD_PILE, PLAYER_DISCARD_PILE
+	in_play_area_cursor_transition $28, $8c, $00,             PLAYER_ACTIVE, PLAYER_PLAY_AREA, PLAYER_BENCH_2, PLAYER_STADIUM
+	in_play_area_cursor_transition $40, $8c, $00,             PLAYER_ACTIVE, PLAYER_PLAY_AREA, PLAYER_BENCH_3, PLAYER_BENCH_1
+	in_play_area_cursor_transition $58, $8c, $00,             PLAYER_ACTIVE, PLAYER_PLAY_AREA, PLAYER_BENCH_4, PLAYER_BENCH_2
+	in_play_area_cursor_transition $70, $8c, $00,             PLAYER_ACTIVE, PLAYER_PLAY_AREA, PLAYER_BENCH_5, PLAYER_BENCH_3
+	in_play_area_cursor_transition $88, $8c, $00,             PLAYER_ACTIVE, PLAYER_PLAY_AREA, PLAYER_STADIUM, PLAYER_BENCH_4
+	in_play_area_cursor_transition $30, $6c, $00,             OPP_ACTIVE, PLAYER_STADIUM, PLAYER_DISCARD_PILE, PLAYER_DISCARD_PILE
 	in_play_area_cursor_transition $78, $80, $00,             PLAYER_DISCARD_PILE, PLAYER_BENCH_1, PLAYER_ACTIVE, PLAYER_ACTIVE
 	in_play_area_cursor_transition $78, $70, $00,             OPP_ACTIVE, PLAYER_HAND, PLAYER_ACTIVE, PLAYER_ACTIVE
-	in_play_area_cursor_transition $78, $34, 1 << OAM_X_FLIP, OPP_BENCH_1, PLAYER_ACTIVE, OPP_DISCARD_PILE, OPP_DISCARD_PILE
-	in_play_area_cursor_transition $30, $20, 1 << OAM_X_FLIP, OPP_BENCH_1, OPP_DISCARD_PILE, OPP_ACTIVE, OPP_ACTIVE
+	in_play_area_cursor_transition $08, $8c, $00,             PLAYER_ACTIVE, PLAYER_PLAY_AREA, PLAYER_BENCH_1, PLAYER_BENCH_5
+	in_play_area_cursor_transition $78, $34, 1 << OAM_X_FLIP, OPP_STADIUM, PLAYER_ACTIVE, OPP_DISCARD_PILE, OPP_DISCARD_PILE
+	in_play_area_cursor_transition $30, $20, 1 << OAM_X_FLIP, OPP_STADIUM, OPP_DISCARD_PILE, OPP_ACTIVE, OPP_ACTIVE
 	in_play_area_cursor_transition $30, $38, 1 << OAM_X_FLIP, OPP_HAND, PLAYER_ACTIVE, OPP_ACTIVE, OPP_ACTIVE
-	in_play_area_cursor_transition $90, $14, 1 << OAM_X_FLIP, OPP_PLAY_AREA, OPP_ACTIVE, OPP_BENCH_5, OPP_BENCH_2
-	in_play_area_cursor_transition $78, $14, 1 << OAM_X_FLIP, OPP_PLAY_AREA, OPP_ACTIVE, OPP_BENCH_1, OPP_BENCH_3
-	in_play_area_cursor_transition $60, $14, 1 << OAM_X_FLIP, OPP_PLAY_AREA, OPP_ACTIVE, OPP_BENCH_2, OPP_BENCH_4
-	in_play_area_cursor_transition $48, $14, 1 << OAM_X_FLIP, OPP_PLAY_AREA, OPP_ACTIVE, OPP_BENCH_3, OPP_BENCH_5
-	in_play_area_cursor_transition $30, $14, 1 << OAM_X_FLIP, OPP_PLAY_AREA, OPP_ACTIVE, OPP_BENCH_4, OPP_BENCH_1
+	in_play_area_cursor_transition $80, $14, 1 << OAM_X_FLIP, OPP_PLAY_AREA, OPP_ACTIVE, OPP_STADIUM, OPP_BENCH_2
+	in_play_area_cursor_transition $68, $14, 1 << OAM_X_FLIP, OPP_PLAY_AREA, OPP_ACTIVE, OPP_BENCH_1, OPP_BENCH_3
+	in_play_area_cursor_transition $50, $14, 1 << OAM_X_FLIP, OPP_PLAY_AREA, OPP_ACTIVE, OPP_BENCH_2, OPP_BENCH_4
+	in_play_area_cursor_transition $38, $14, 1 << OAM_X_FLIP, OPP_PLAY_AREA, OPP_ACTIVE, OPP_BENCH_3, OPP_BENCH_5
+	in_play_area_cursor_transition $20, $14, 1 << OAM_X_FLIP, OPP_PLAY_AREA, OPP_ACTIVE, OPP_BENCH_4, OPP_STADIUM
+	in_play_area_cursor_transition $a0, $14, 1 << OAM_X_FLIP, OPP_PLAY_AREA, OPP_ACTIVE, OPP_BENCH_5, OPP_BENCH_1
 	assert_table_length NUM_INPLAYAREA_POSITIONS
 
 OpenInPlayAreaScreen_HandleInput:
@@ -423,7 +460,7 @@ OpenInPlayAreaScreen_HandleInput:
 .else_if_left
 	inc hl
 	bit D_LEFT_F, a
-	jr z, .check_button
+	jp z, .check_button
 
 	; left
 	ld a, [hl]
@@ -434,14 +471,40 @@ OpenInPlayAreaScreen_HandleInput:
 	pop af
 
 	ld [wInPlayAreaCurPosition], a
+	cp INPLAYAREA_PLAYER_STADIUM
+	jr z, .player_stadium
+	cp INPLAYAREA_OPP_STADIUM
+	jr z, .opponent_stadium
 	cp INPLAYAREA_PLAYER_ACTIVE
 	jr c, .player_area
 	cp INPLAYAREA_OPP_BENCH_1
-	jr c, .next
+	jp c, .next
 	cp INPLAYAREA_PLAYER_PLAY_AREA
 	jr c, .opponent_area
 
-	jr .next
+	jp .next
+
+.player_stadium
+	ld a, DUELVARS_STADIUM_CARD
+	call GetTurnDuelistVariable
+	cp $ff
+	jp nz, .next
+; no stadium, handle overflow
+	ld a, [wInPlayAreaPreservedPosition]
+	cp INPLAYAREA_PLAYER_ACTIVE
+	jr nz, .stadium_from_bench
+.stadium_from_active
+	ld a, INPLAYAREA_PLAYER_BENCH_1
+	ld [wInPlayAreaCurPosition], a
+	jr .player_area
+.stadium_from_bench
+	ldh a, [hDPadHeld]
+	bit D_RIGHT_F, a
+	jr nz, .stadium_from_active
+; stadium from bench, pressing left
+	ld a, INPLAYAREA_PLAYER_BENCH_5
+	ld [wInPlayAreaCurPosition], a
+	; jr .player_area
 
 .player_area
 	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
@@ -449,6 +512,7 @@ OpenInPlayAreaScreen_HandleInput:
 	dec a
 	jr nz, .bench_pokemon_exists
 
+.no_player_bench
 	; no pokemon in player's bench.
 	; then move to player's play area.
 	ld a, INPLAYAREA_PLAYER_PLAY_AREA
@@ -466,15 +530,39 @@ OpenInPlayAreaScreen_HandleInput:
 	bit D_RIGHT_F, a
 	jr z, .on_left
 
-	xor a
+	ld a, INPLAYAREA_PLAYER_STADIUM
+	; xor a
 	ld [wInPlayAreaCurPosition], a
-	jr .next
+	; jr .next
+	jr .player_stadium
 
 .on_left
 	ld a, b
 	dec a
 	ld [wInPlayAreaCurPosition], a
 	jr .next
+
+.opponent_stadium
+	ld a, DUELVARS_STADIUM_CARD
+	call GetNonTurnDuelistVariable
+	cp $ff
+	jr nz, .next
+; no stadium, handle overflow
+	ld a, [wInPlayAreaPreservedPosition]
+	cp INPLAYAREA_OPP_BENCH_1
+	jr nc, .opp_stadium_from_bench
+.opp_stadium_from_active
+	ld a, INPLAYAREA_OPP_BENCH_1
+	ld [wInPlayAreaCurPosition], a
+	jr .opponent_area
+.opp_stadium_from_bench
+	ldh a, [hDPadHeld]
+	bit D_LEFT_F, a
+	jr nz, .opp_stadium_from_active
+; stadium from bench, pressing right
+	ld a, INPLAYAREA_OPP_BENCH_5
+	ld [wInPlayAreaCurPosition], a
+	; jr .opponent_area
 
 .opponent_area
 	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
@@ -497,9 +585,11 @@ OpenInPlayAreaScreen_HandleInput:
 	bit D_LEFT_F, a
 	jr z, .on_right
 
-	ld a, INPLAYAREA_OPP_BENCH_1
+	ld a, INPLAYAREA_OPP_STADIUM
+	; ld a, INPLAYAREA_OPP_BENCH_1
 	ld [wInPlayAreaCurPosition], a
-	jr .next
+	; jr .next
+	jr .opponent_stadium
 
 .on_right
 	ld a, b

@@ -673,16 +673,16 @@ PlayEnergyCard:
 	jr c, .rain_dance_active
 
 .not_water_energy
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
 	and PLAYED_ENERGY_THIS_TURN  ; or a
 	jr nz, .already_played_energy
 	call HasAlivePokemonInPlayArea
 	call OpenPlayAreaScreenForSelection ; choose card to play energy card on
 	jp c, DuelMainInterface ; exit if no card was chosen
 .play_energy_set_played
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
 	or PLAYED_ENERGY_THIS_TURN
-	ld [wAlreadyPlayedEnergyOrSupporter], a
+	ld [wOncePerTurnActions], a
 .play_energy
 	ld a, DUELVARS_ARENA_CARD_FLAGS
 	call GetTurnDuelistVariable
@@ -706,9 +706,9 @@ PlayEnergyCard:
 	call OpenPlayAreaScreenForSelection ; choose card to play energy card on
 	jp c, DuelMainInterface ; exit if no card was chosen
 ; set rain dance played this turn
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
 	or USED_RAIN_DANCE_THIS_TURN
-	ld [wAlreadyPlayedEnergyOrSupporter], a
+	ld [wOncePerTurnActions], a
 	jr .play_energy
 
 .already_played_energy
@@ -1129,7 +1129,7 @@ DuelMenu_Attack:
 	ld a, [wDuelTurns]
 	or a
 	jr nz, .not_first_turn
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
 	and PLAYED_SUPPORTER_THIS_TURN
 	jr z, .not_first_turn
 	ldtx hl, MayOnlyUseOneSupporterCardText
@@ -1975,7 +1975,7 @@ DisplayCardListDetails:
 HandleDuelSetup:
 ; init variables and shuffle cards
 	xor a
-	ld [wOpponentPlayedEnergyOrSupporter], a
+	ld [wOpponentOncePerTurnActions], a
 	call InitializeDuelVariables
 	call SwapTurn
 	call InitializeDuelVariables
@@ -4670,6 +4670,9 @@ DisplayEnergyOrTrainerCardPage:
 	ld hl, CardPageSupporterTextData
 	cp TYPE_TRAINER_SUPPORTER
 	jr z, .got_card_tag
+	ld hl, CardPageStadiumTextData
+	cp TYPE_TRAINER_STADIUM
+	jr z, .got_card_tag
 ; Item or Tool
 	ld hl, CardPageItemTextData
 	ld a, [wLoadedCard1ID]
@@ -4705,6 +4708,10 @@ CardPageToolTextData:
 
 CardPageSupporterTextData:
 	textitem 1, 5, SupporterText
+	db $ff
+
+CardPageStadiumTextData:
+	textitem 1, 5, StadiumText
 	db $ff
 
 
@@ -6158,7 +6165,6 @@ DuelDataToSave:
 	dw wRNG1,                  wRNGCounter + $1 - wRNG1
 	dw wAIDuelVars,            wAIDuelVarsEnd - wAIDuelVars
 	dw wEnergyColorOverride,   $1
-	dw wOpponentPlayedEnergyOrSupporter,   $1
 	dw wOpponentDeckIDBackup,  $1
 	dw NULL
 
@@ -6566,9 +6572,9 @@ OppAction_PlayEnergyCard:
 	call LoadCardDataToBuffer1_FromDeckIndex
 	call DrawLargePictureOfCard
 	call PrintAttachedEnergyToPokemon
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
 	or PLAYED_ENERGY_THIS_TURN
-	ld [wAlreadyPlayedEnergyOrSupporter], a
+	ld [wOncePerTurnActions], a
 	call HandleOnPlayEnergyEffects
 	jp DrawDuelMainScene
 
@@ -6642,6 +6648,8 @@ OppAction_PlayTrainerCard:
 	ld a, [wLoadedCard1Type]
 	cp TYPE_TRAINER_SUPPORTER
 	jr z, .supporter_card
+	cp TYPE_TRAINER_STADIUM
+	jr z, .stadium_card
 ; OATS end support trainer subtypes
 ; item card
 	ld a, 10
@@ -6649,10 +6657,17 @@ OppAction_PlayTrainerCard:
 	ret
 
 .supporter_card
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
 	or PLAYED_SUPPORTER_THIS_TURN
-	ld [wAlreadyPlayedEnergyOrSupporter], a
+	ld [wOncePerTurnActions], a
 	ret
+
+.stadium_card
+	ld a, [wOncePerTurnActions]
+	or PLAYED_STADIUM_THIS_TURN
+	ld [wOncePerTurnActions], a
+	ret
+
 
 ; execute the effect commands of the trainer card that is being played
 ; used only for Trainer cards, as a continuation of OppAction_PlayTrainerCard
@@ -6685,7 +6700,7 @@ OppAction_BeginUseAttack:
 	ld a, [wDuelTurns]
 	or a
 	jr nz, .not_first_turn
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
 	and PLAYED_SUPPORTER_THIS_TURN
 	jr nz, .failed
 
@@ -6982,6 +6997,7 @@ HandleOnUsePokemonPowerEffects:
 HandleOnPlayTrainerEffects:
 	farcall GarbageEater_HealEffect
 	farcall HayFever_ParalysisEffect
+	farcall PokemonCenter_HealEffect
 	ret
 
 
@@ -7690,11 +7706,8 @@ HandleBurnDamage:
 ConvertSpecialTrainerCardToPokemon:
 	ld c, a
 	ld a, [hl]
-; OATS begin support trainer subtypes
 	cp TYPE_TRAINER
-	; original: ret nz
-	ret c ; return if the card is not TRAINER type
-; OATS begin support trainer subtypes
+	ret nz  ; return if the card is not Item TRAINER type
 	push hl
 	ldh a, [hWhoseTurn]
 	ld h, a
@@ -8239,11 +8252,11 @@ InitVariablesToBeginTurn:
 	ld a, [wOpponentDeckID]
 	ld [wOpponentDeckIDBackup], a
 ; setup normal variables
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
-	ld [wOpponentPlayedEnergyOrSupporter], a
+	ld a, [wOncePerTurnActions]
+	ld [wOpponentOncePerTurnActions], a
 	xor a
 	ld [wAlreadyRetreatedThisTurn], a
-	ld [wAlreadyPlayedEnergyOrSupporter], a
+	ld [wOncePerTurnActions], a
 	; ld [wGotTailsFromConfusionCheckDuringRetreat], a
 	; ld [wGotHeadsFromAccuracyCheck], a
 	ldh a, [hWhoseTurn]
@@ -8340,11 +8353,14 @@ InitializeDuelVariables:
 	ld l, DUELVARS_ARENA_CARD_ATTACHED_TOOL
 	ld c, MAX_PLAY_AREA_POKEMON
 .init_tools
-; initialize to $ff card in arena as well as cards in bench (plus a terminator)
+; initialize to $ff card in arena tool as well as tools in bench (plus a terminator)
 	ld [hl], $ff
 	inc l
 	dec c
 	jr nz, .init_tools
+; initialize to $ff the active stadium card
+	ld l, DUELVARS_STADIUM_CARD
+	ld [hl], $ff
 	ret
 
 ; draw [wDuelInitialPrizes] cards from the turn holder's deck and place them as prizes:

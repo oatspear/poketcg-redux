@@ -1,6 +1,12 @@
 ;
 
 
+PokemonCenterEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckIfPlayAreaHasAnyDamage
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Heal10DamageFromAll_HealEffect
+	db  $00
+
+
 ; engine/duel/core.asm
 
 ; discard any PLUSPOWER attached to the turn holder's arena and/or bench Pokémon
@@ -2726,10 +2732,10 @@ RocketShellEffectCommands:
 RocketShell_AISelectEffect:
 	ld a, $ff
 	ldh [hTempList], a
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
 	and PLAYED_ENERGY_THIS_TURN
 	jr nz, TutorWaterEnergy_AISelectEffect  ; played energy
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
 	and USED_RAIN_DANCE_THIS_TURN
 	ret z  ; did not play energy
 	; jr TutorWaterEnergy_AISelectEffect
@@ -2739,10 +2745,10 @@ RocketShell_AISelectEffect:
 RocketShell_PlayerSelectEffect:
 	ld a, $ff
 	ldh [hTempList], a
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
 	and PLAYED_ENERGY_THIS_TURN
 	jr nz, TutorWaterEnergy_PlayerSelectEffect  ; played energy
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
 	and USED_RAIN_DANCE_THIS_TURN
 	ret z  ; did not play energy
 	; jr TutorWaterEnergy_PlayerSelectEffect
@@ -7451,9 +7457,9 @@ PokemonCenter_HealDiscardEnergyEffect: ; 2f618 (b:7618)
 ;
 CancelSupporterCard:
 	push af  ; retain flags
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
 	and ~PLAYED_SUPPORTER_THIS_TURN  ; clear this flag
-	ld [wAlreadyPlayedEnergyOrSupporter], a
+	ld [wOncePerTurnActions], a
 	pop af
 	ret
 

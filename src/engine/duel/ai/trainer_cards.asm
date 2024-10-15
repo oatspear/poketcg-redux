@@ -154,9 +154,12 @@ _AIProcessHandTrainerCards:
 
 AICheckCanPlayTrainerInBuffer1:
 	ld a, [wLoadedCard1Type]
+	cp TYPE_TRAINER_STADIUM
+	jr z, .can_play_card
 	cp TYPE_TRAINER_SUPPORTER
 	jr nz, .not_supporter
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+; supporter
+	ld a, [wOncePerTurnActions]
 	and PLAYED_SUPPORTER_THIS_TURN
 	jr z, .can_play_card
 	scf

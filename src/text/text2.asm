@@ -1450,3 +1450,8 @@ CardCostText:
 PlayerCurrencyValueText:
 	text "Points: <RAMNUM>"
 	done
+
+ThereIsAlreadyAnEqualStadiumInPlayText:
+	text "There is already another Stadium"
+	line "card with the same name in play."
+	done

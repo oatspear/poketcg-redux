@@ -462,9 +462,11 @@ _DrawYourOrOppPlayAreaScreen:
 	call DrawPlayArea_PrizeCards
 	lb de, 6, 2 ; coordinates of player's active card
 	call DrawYourOrOppPlayArea_ActiveCardGfx
-	lb de, 1, 9 ; coordinates of player's bench cards
-	ld c, 4 ; spacing
+	lb de, 4, 9 ; coordinates of player's bench cards
+	ld c, 3 ; spacing
 	call DrawPlayArea_BenchCards
+	lb de, 1, 9
+	call DrawPlayArea_StadiumCard
 	xor a
 	call DrawYourOrOppPlayArea_Icons
 	jr .done
@@ -475,8 +477,10 @@ _DrawYourOrOppPlayAreaScreen:
 	lb de, 6, 5 ; coordinates of opponent's active card
 	call DrawYourOrOppPlayArea_ActiveCardGfx
 	lb de, 1, 2 ; coordinates of opponent's bench cards
-	ld c, 4 ; spacing
+	ld c, 3 ; spacing
 	call DrawPlayArea_BenchCards
+	lb de, 16, 2
+	call DrawPlayArea_StadiumCard
 	ld a, $01
 	call DrawYourOrOppPlayArea_Icons
 
@@ -532,9 +536,12 @@ DrawInPlayAreaScreen:
 	call DrawPlayArea_PrizeCards
 
 ; player bench cards
-	lb de, 3, 15
+	lb de, 5, 15
 	ld c, 3
 	call DrawPlayArea_BenchCards
+; player stadium card
+	lb de, 1, 15
+	call DrawPlayArea_StadiumCard
 
 	ld hl, PlayAreaIconCoordinates.player2
 	call DrawInPlayArea_Icons
@@ -549,9 +556,12 @@ DrawInPlayAreaScreen:
 	call DrawPlayArea_PrizeCards
 
 ; opponent bench cards
-	lb de, 3, 0
+	lb de, 1, 0
 	ld c, 3
 	call DrawPlayArea_BenchCards
+; opponent stadium card
+	lb de, 17, 0
+	call DrawPlayArea_StadiumCard
 
 	call SwapTurn
 	ld hl, PlayAreaIconCoordinates.opponent2
@@ -989,6 +999,44 @@ DrawPlayArea_BenchCards:
 	add c
 	ld d, a
 	jr .loop_2
+
+
+; draws filled or empty slot depending on the turn loaded in wCheckMenuPlayAreaWhichDuelist
+; input:
+;   de: coordinates to draw stadium
+DrawPlayArea_StadiumCard:
+	ld a, [wCheckMenuPlayAreaWhichDuelist]
+	ld h, a
+	ld l, DUELVARS_STADIUM_CARD
+	ld a, [hl]
+	cp $ff
+	jr z, .empty
+
+	ld a, $e4  ; gfx tile
+	lb hl, 1, 2
+	lb bc, 2, 2
+	call FillRectangle
+	jr .palette
+
+.empty
+	ld a, $f4 ; empty bench slot tile
+	lb hl, 1, 2
+	lb bc, 2, 2
+	call FillRectangle
+
+.palette
+	ld a, [wConsole]
+	cp CONSOLE_CGB
+	ret nz  ; not CGB
+; cgb
+	ld a, $04 ; colour
+	lb bc, 2, 2
+	lb hl, 0, 0
+	call BankswitchVRAM1
+	call FillRectangle
+	call BankswitchVRAM0
+	ret
+
 
 ; draws Your/Opp Play Area icons depending on value in a
 ; the icons correspond to Deck, Discard Pile, and Hand

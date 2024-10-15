@@ -177,7 +177,7 @@ IF DEBUG_MODE
 ENDC
 
 ; play Energy card if possible
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
 	and PLAYED_ENERGY_THIS_TURN  ; or a
 	jr nz, .skip_energy_attach_1
 IF DEBUG_MODE
@@ -350,7 +350,7 @@ IF DEBUG_MODE
 	call DrawWideTextBox_WaitForInput
 ENDC
 
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
 	and PLAYED_ENERGY_THIS_TURN  ; or a
 	jr nz, .skip_energy_attach_2
 IF DEBUG_MODE

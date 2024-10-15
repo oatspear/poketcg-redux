@@ -208,6 +208,9 @@ MACRO duel_vars
 ; other - AI controlled
 \1DuelistType::                  ds $1
 
+; stores the card index of the player's active Stadium card
+\1StadiumCard::                  ds $1
+
 ; if under the effects of amnesia, which attack (0 or 1) can't be used
 \1ArenaCardDisabledAttackIndex:: ds $1
 
@@ -229,10 +232,7 @@ MACRO duel_vars
 \1ArenaCardLastTurnEffect::      ds $1
 
 ; stores miscellaneous turn flags for various effects
-\1MiscTurnFlags::                    ds $1
-
-; stores flags related to ability effects
-\1AbilityFlags::                    ds $1
+\1MiscTurnFlags::                ds $1
 
 	ds $1
 ENDM

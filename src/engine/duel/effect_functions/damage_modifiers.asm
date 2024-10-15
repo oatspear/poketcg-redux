@@ -410,7 +410,7 @@ Thunderstorm_AIEffect:
 
 
 IfPlayedSupporter20BonusDamage_DamageBoostEffect:
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
 	and PLAYED_SUPPORTER_THIS_TURN
 	ret z  ; did not play Supporter
 	ld a, 20
@@ -423,7 +423,7 @@ IfPlayedSupporter20BonusDamage_AIEffect:
 
 
 IfOpponentPlayedSupporter20BonusDamage_DamageBoostEffect:
-	ld a, [wOpponentPlayedEnergyOrSupporter]
+	ld a, [wOpponentOncePerTurnActions]
 	and PLAYED_SUPPORTER_THIS_TURN
 	ret z  ; did not play Supporter
 	ld a, 20

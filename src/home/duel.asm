@@ -391,6 +391,25 @@ PutPlayAreaToolInDiscardPile:
 	ret
 
 
+; input: none
+; output:
+;		a: deck index of the previous Stadium card
+;		hl: pointing to DUELVARS_STADIUM_CARD variable
+;   carry: set if a Stadium was discarded
+; preserves: bc, de
+PutStadiumCardInDiscardPile:
+	ld a, DUELVARS_STADIUM_CARD
+	call GetTurnDuelistVariable
+	cp $ff
+	ret z  ; no stadium
+; reset duel variable
+	ld [hl], $ff
+; move stadium to discard pile
+	call PutCardInDiscardPile  ; preserves everything
+	scf
+	ret
+
+
 ; returns carry if the given ID is a Pokémon Tool
 ; input:
 ;   de: card ID
@@ -2000,25 +2019,18 @@ PlayTrainerCard:
 ; OATS begin support trainer subtypes
 	ld a, [wLoadedCard1Type]
 	cp TYPE_TRAINER_SUPPORTER
-	jr nz, .not_supporter_card
+	jr nz, .check_stadium_card
 
 ; Supporter Trainer
 	ldtx hl, MayOnlyUseOneSupporterCardText
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
+	ld b, a
 	and PLAYED_SUPPORTER_THIS_TURN
 	jr nz, .cant_use
-; try to execute effects that can prevent the card from being played
-; we can only set Supporter played after that
-	ld a, EFFECTCMDTYPE_INITIAL_EFFECT_1
-	call TryExecuteEffectCommandFunction
-	jr c, .cant_use
-	ld a, EFFECTCMDTYPE_INITIAL_EFFECT_2
-	call TryExecuteEffectCommandFunction
-	ld a, 1
-	jr c, .done
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
-	or PLAYED_SUPPORTER_THIS_TURN
-	ld [wAlreadyPlayedEnergyOrSupporter], a
+
+	ld a, PLAYED_SUPPORTER_THIS_TURN
+	or b
+	ld [wOncePerTurnActionsBackup], a
 	jr .play_card
 
 .cant_use
@@ -2026,23 +2038,45 @@ PlayTrainerCard:
 	scf
 	ret
 
-.not_supporter_card
+.check_stadium_card
+	cp TYPE_TRAINER_STADIUM
+	jr nz, .item_card
+
+; Stadium Trainer
+	ldtx hl, MayOnlyUseOneStadiumCardText
+	ld a, [wOncePerTurnActions]
+	ld b, a
+	and PLAYED_STADIUM_THIS_TURN
+	jr nz, .cant_use
+
+	ld a, PLAYED_STADIUM_THIS_TURN
+	or b
+	ld [wOncePerTurnActionsBackup], a
+	jr .play_card
+
 ; OATS end support trainer subtypes
+.item_card
 	call CheckCantUseItemsThisTurn
 	jr c, .cant_use
 	ld a, 10
 	ld [wGarbageEaterDamageToHeal], a
+	ld a, [wOncePerTurnActions]
+	or PLAYED_ITEM_THIS_TURN
+	ld [wOncePerTurnActionsBackup], a
+
+.play_card
+; try to execute effects that can prevent the card from being played
+; we can only set play action flags after that
 	ld a, EFFECTCMDTYPE_INITIAL_EFFECT_1
 	call TryExecuteEffectCommandFunction
 	jr c, .cant_use
 	ld a, EFFECTCMDTYPE_INITIAL_EFFECT_2
 	call TryExecuteEffectCommandFunction
-	ld a, 1
+	ld a, TRUE
 	jr c, .done
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
-	or PLAYED_ITEM_THIS_TURN
-	ld [wAlreadyPlayedEnergyOrSupporter], a
-.play_card
+; set flags as definitive
+	ld a, [wOncePerTurnActionsBackup]
+	ld [wOncePerTurnActions], a
 	ld a, OPPACTION_PLAY_TRAINER
 	call SetOppAction_SerialSendDuelData
 	call DisplayUsedTrainerCardDetailScreen
@@ -2365,8 +2399,30 @@ ApplyAttachedDefender:
 ;   de: ID of a Pokémon Tool
 ; output:
 ;   carry: set if not attached
+; preserves: bc, de
 CheckToolIDAttachedToPlayArea:
 	add DUELVARS_ARENA_CARD_ATTACHED_TOOL
+	call GetTurnDuelistVariable
+	cp $ff
+	jr z, .nope
+	push de
+	call GetCardIDFromDeckIndex  ; preserves hl, bc
+	ld a, e
+	pop de
+	cp e
+	ret z
+.nope
+	scf
+	ret
+
+
+; input:
+;   de: ID of a Pokémon Stadium
+; output:
+;   carry: set if not in play
+; preserves: bc, de
+CheckStadiumIDInPlayArea:
+	ld a, DUELVARS_STADIUM_CARD
 	call GetTurnDuelistVariable
 	cp $ff
 	jr z, .nope

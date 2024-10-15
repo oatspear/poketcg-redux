@@ -1059,14 +1059,13 @@ UpdateSubstatusConditions_EndOfTurn:
 	; res SUBSTATUS3_THIS_TURN_ROOTED, [hl]
 	ld l, DUELVARS_ARENA_CARD_SUBSTATUS2
 	ld [hl], $0
-	ld l, DUELVARS_ABILITY_FLAGS
-	ld [hl], $0
+	; ld l, DUELVARS_ABILITY_FLAGS
 	; res ABILITY_FLAG_SWIFT_SWIM_F, [hl]
 	ret
 
 ; return carry if turn holder has Wartortle and its Rain Dance Pkmn Power is active
 IsRainDanceActive:
-	; ld a, [wAlreadyPlayedEnergyOrSupporter]
+	; ld a, [wOncePerTurnActions]
 	; and USED_RAIN_DANCE_THIS_TURN
 	; ret nz ; return if Rain Dance was already used this turn
 	ld a, WARTORTLE

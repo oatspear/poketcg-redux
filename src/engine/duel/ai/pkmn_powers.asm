@@ -1262,7 +1262,7 @@ HandleAIRainDanceEnergy:
 	call ArePokemonPowersDisabled
 	ret c  ; Pokémon Powers are disabled
 
-	; ld a, [wAlreadyPlayedEnergyOrSupporter]
+	; ld a, [wOncePerTurnActions]
 	; and USED_RAIN_DANCE_THIS_TURN
 	; ret nz  ; Rain Dance was used this turn
 
@@ -1295,7 +1295,7 @@ HandleAIFirestarterEnergy:
 	call ArePokemonPowersDisabled
 	ret c  ; Pokémon Powers are disabled
 
-	; ld a, [wAlreadyPlayedEnergyOrSupporter]
+	; ld a, [wOncePerTurnActions]
 	; and USED_FIRESTARTER_THIS_TURN
 	; ret nz  ; Firestarter was used this turn
 

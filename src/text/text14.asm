@@ -260,6 +260,13 @@ PokemonCenterName:
 	text "Pokémon Center"
 	done
 
+PokemonCenterDescription:
+	text "Once during each player's turn, if"
+	line "they played a Supporter card from"
+	line "their hand this turn, they heal 10"
+	line "damage from each of their Pokémon."
+	done
+
 PokeBallName:
 	text "Poké Ball"
 	done

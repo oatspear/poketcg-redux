@@ -19,6 +19,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ItemText
 	textpointer ToolText
 	textpointer SupporterText
+	textpointer StadiumText
 	textpointer MetresText                                         ; 0x000f
 	textpointer LbsText                                            ; 0x0010
 	textpointer PromostarRarityText                                ; 0x0011
@@ -65,7 +66,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer NoSelectableAttackText                             ; 0x003c
 	textpointer UnableToRetreatText                                ; 0x003d
 	textpointer MayOnlyAttachOneEnergyCardText                     ; 0x003e
-	textpointer MayOnlyUseOneSupporterCardText                     ; 0x003e
+	textpointer MayOnlyUseOneSupporterCardText
+	textpointer MayOnlyUseOneStadiumCardText
 	textpointer UseThisPokemonPowerText                            ; 0x003f
 	textpointer PokemonPowerSelectNotRequiredText                  ; 0x0040
 	textpointer DiscardDescription                                 ; 0x0041
@@ -508,6 +510,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer CardCopiesOwnedText
 	textpointer CardCostText
 	textpointer PlayerCurrencyValueText
+	textpointer ThereIsAlreadyAnEqualStadiumInPlayText
 	textpointer ThisDeckCanOnlyBeBuiltIfYouDismantleText           ; 0x026c
 	textpointer YouDoNotOwnAllCardsNeededToBuildThisDeckText       ; 0x026d
 	textpointer BuiltDeckText                                      ; 0x026e
@@ -3069,6 +3072,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer FightingEnergyDescription
 	textpointer PsychicEnergyName
 	textpointer PsychicEnergyDescription
+	textpointer DarknessEnergyName
+	textpointer DarknessEnergyDescription
 	textpointer DoubleColorlessEnergyName
 	textpointer DoubleColorlessEnergyDescription
 	textpointer ProfessorOakName                                   ; 0x0b68
@@ -3103,7 +3108,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer EnergySwitchDescription
 	textpointer SwitchName                                         ; 0x0b87
 	textpointer SwitchDescription                                  ; 0x0b88
-	textpointer PokemonCenterName                                  ; 0x0b89
+	textpointer PokemonCenterName
+	textpointer PokemonCenterDescription
 	textpointer PokeBallName
 	textpointer PokeBallDescription
 	textpointer UltraBallName
@@ -3153,7 +3159,5 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer LeftoversDescription
 	textpointer RockyHelmetName
 	textpointer RockyHelmetDescription
-	textpointer DarknessEnergyName                                 ; 0x0bae
-	textpointer DarknessEnergyDescription                          ; 0x0baf
 	textpointer AlreadyHasAToolAttachedText
 	textpointer YouMayAttachOnly1ToolPerPokemonText

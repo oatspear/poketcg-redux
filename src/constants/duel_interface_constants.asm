@@ -62,14 +62,16 @@ DEF SELECT_CHECK EQU $02
 	const INPLAYAREA_PLAYER_ACTIVE       ; $05
 	const INPLAYAREA_PLAYER_HAND         ; $06
 	const INPLAYAREA_PLAYER_DISCARD_PILE ; $07
-	const INPLAYAREA_OPP_ACTIVE          ; $08
-	const INPLAYAREA_OPP_HAND            ; $09
-	const INPLAYAREA_OPP_DISCARD_PILE    ; $0a
-	const INPLAYAREA_OPP_BENCH_1         ; $0b
-	const INPLAYAREA_OPP_BENCH_2         ; $0c
-	const INPLAYAREA_OPP_BENCH_3         ; $0d
-	const INPLAYAREA_OPP_BENCH_4         ; $0e
-	const INPLAYAREA_OPP_BENCH_5         ; $0f
+	const INPLAYAREA_PLAYER_STADIUM      ; $08
+	const INPLAYAREA_OPP_ACTIVE          ; $09
+	const INPLAYAREA_OPP_HAND            ; $0a
+	const INPLAYAREA_OPP_DISCARD_PILE    ; $0b
+	const INPLAYAREA_OPP_BENCH_1         ; $0c
+	const INPLAYAREA_OPP_BENCH_2         ; $0d
+	const INPLAYAREA_OPP_BENCH_3         ; $0e
+	const INPLAYAREA_OPP_BENCH_4         ; $0f
+	const INPLAYAREA_OPP_BENCH_5         ; $10
+	const INPLAYAREA_OPP_STADIUM         ; $11
 DEF NUM_INPLAYAREA_POSITIONS EQU const_value
-	const INPLAYAREA_PLAYER_PLAY_AREA    ; $10
-	const INPLAYAREA_OPP_PLAY_AREA       ; $11
+	const INPLAYAREA_PLAYER_PLAY_AREA    ; $12
+	const INPLAYAREA_OPP_PLAY_AREA       ; $13

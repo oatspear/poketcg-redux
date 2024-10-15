@@ -70,6 +70,10 @@ SupporterText:
 	text "Supporter"
 	done
 
+StadiumText:
+	text "Stadium"
+	done
+
 MetresText: ; 36382 (d:6382)
 	textfw3 "m"
 	done
@@ -284,10 +288,15 @@ MayOnlyAttachOneEnergyCardText: ; 366d9 (d:66d9)
 	line "per turn."
 	done
 
-MayOnlyUseOneSupporterCardText: ; 366d9 (d:66d9)
+MayOnlyUseOneSupporterCardText:
 	; text "You may only use 1 Supporter card"
 	; line "per turn."
 	text "You already used a Supporter card"
+	line "this turn."
+	done
+
+MayOnlyUseOneStadiumCardText:
+	text "You already used a Stadium card"
 	line "this turn."
 	done
 

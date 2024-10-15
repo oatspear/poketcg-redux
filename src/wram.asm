@@ -646,15 +646,11 @@ wGotHeadsFromAccuracyCheck:: ; cc0a
 
 ; OATS WRAM0 is full, so we must reuse this byte to implement SUPPORTER checks
 ; see duel_constants.asm
-wAlreadyPlayedEnergyOrSupporter:: ; cc0b
+wOncePerTurnActions:: ; cc0b
 	ds $1
 
-; set to 1 if the confusion check coin toss in AttemptRetreat is tails
-; wGotTailsFromConfusionCheckDuringRetreat:: ; cc0c
-;	ds $1
-
 ; turn flags for what the opponent did on their previous turn
-wOpponentPlayedEnergyOrSupporter:: ; cc0c
+wOpponentOncePerTurnActions:: ; cc0c
 	ds $1
 
 ; DUELIST_TYPE_* of the turn holder
@@ -684,8 +680,7 @@ wPlayerAttackingCardIndex:: ; cc11
 wPlayerAttackingCardID:: ; cc12
 	ds $1
 
-; unused
-wcc13:: ; cc13
+wOncePerTurnActionsBackup:: ; cc13
 	ds $1
 
 wNPCDuelistCopy:: ; cc14

@@ -606,7 +606,7 @@ CheckIfCardCanBePlayed:
 ; OATS end support trainer subtypes
 
 ; energy card
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
 	and PLAYED_ENERGY_THIS_TURN  ; or a
 	ret z
 	scf
@@ -648,7 +648,7 @@ CheckIfCardCanBePlayed:
 ; card type in stored in a
 	cp TYPE_TRAINER_SUPPORTER
 	jr nz, .not_supporter_card
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
 	and PLAYED_SUPPORTER_THIS_TURN
 	jr z, .can_play
 ; supporter already played
@@ -656,6 +656,12 @@ CheckIfCardCanBePlayed:
 	ret
 .not_supporter_card
 ; OATS end SUPPORTER check
+	cp TYPE_TRAINER_STADIUM
+	jr nz, .not_stadium_card
+; OATS begin check STADIUM can be played
+	jr .can_play
+; OATS end STADIUM check
+.not_stadium_card
 	call CheckCantUseItemsThisTurn
 	ret c
 .can_play
