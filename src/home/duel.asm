@@ -2422,6 +2422,18 @@ CheckToolIDAttachedToPlayArea:
 ;   carry: set if not in play
 ; preserves: bc, de
 CheckStadiumIDInPlayArea:
+	call SwapTurn
+	call CheckStadiumIDInTurnHolderPlayArea
+	call SwapTurn
+	ret nc  ; found
+	; fallthrough
+
+; input:
+;   de: ID of a Pokémon Stadium
+; output:
+;   carry: set if not in play
+; preserves: bc, de
+CheckStadiumIDInTurnHolderPlayArea:
 	ld a, DUELVARS_STADIUM_CARD
 	call GetTurnDuelistVariable
 	cp $ff
@@ -2431,7 +2443,7 @@ CheckStadiumIDInPlayArea:
 	ld a, e
 	pop de
 	cp e
-	ret z
+	ret z  ; found
 .nope
 	scf
 	ret
