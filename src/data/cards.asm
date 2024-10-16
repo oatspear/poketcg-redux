@@ -10251,7 +10251,7 @@ PokemonFluteCard:
 	dw NONE ; description (cont)
 
 CursedStoneCard:
-	db TYPE_TRAINER ; type
+	db TYPE_TRAINER_STADIUM ; type
 	gfx GamblerCardGfx ; gfx
 	tx CursedStoneName ; name
 	db CIRCLE ; rarity
