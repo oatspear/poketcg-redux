@@ -64,7 +64,7 @@ AIActionTable_FireCharge:
 	db $00
 
 .list_prize
-	db GAMBLER
+	db CURSED_STONE
 	db $00
 
 .store_list_pointers

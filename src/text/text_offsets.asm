@@ -202,7 +202,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PrinterPacketErrorText                             ; 0x00db
 	textpointer PrintingWasInterruptedText                         ; 0x00dc
 	textpointer CardPopCannotBePlayedWithTheGameBoyText            ; 0x00dd
-	textpointer CardCheckIfHeads8CardsIfTails1CardText             ; 0x00f0
 	textpointer YouMayDiscard1EnergyToHealBurnText
 	textpointer AlreadyRetreatedThisTurnText                       ; 0x00f4
 	textpointer ConfusionCheckDamageText                           ; 0x00f7
@@ -3139,8 +3138,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer MaintenanceDescription                             ; 0x0ba7
 	textpointer PokemonFluteName                                   ; 0x0ba8
 	textpointer PokemonFluteDescription                            ; 0x0ba9
-	textpointer GamblerName                                        ; 0x0baa
-	textpointer GamblerDescription                                 ; 0x0bab
+	textpointer CursedStoneName
+	textpointer CursedStoneDescription
 	textpointer RecycleName                                        ; 0x0bac
 	textpointer RecycleDescription                                 ; 0x0bad
 	textpointer SuperRodName

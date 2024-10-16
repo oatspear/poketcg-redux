@@ -68,7 +68,7 @@ UnnamedDeck:
 	; card_item PIDGEOTTO,               2
 	; card_item PIDGEY,                  4
 	; card_item IMAKUNI_CARD,            2
-	; card_item GAMBLER,                 2
+	; card_item CURSED_STONE,            2
 	; card_item PROFESSOR_OAK,           2
 	; card_item ENERGY_REMOVAL,          2
 	; card_item ENERGY_RETRIEVAL,        2
@@ -108,7 +108,7 @@ UnnamedDeck:
 	; card_item EEVEE,                   4
 	; card_item TAUROS,                  4
 	; card_item ENERGY_SEARCH,           2
-	; card_item GAMBLER,                 2
+	; card_item CURSED_STONE,            2
 	; card_item ITEM_FINDER,             2
 	; card_item IMPOSTER_PROFESSOR_OAK,  2
 	; card_item POKEMON_BREEDER,         2
@@ -927,7 +927,7 @@ LegendaryZapdosDeck:
 	card_item SWITCH,            2
 	card_item PLUSPOWER,         3
 	card_item POTION,            3
-	card_item GAMBLER,           1
+	card_item CURSED_STONE,      1
 	deck_list_end
 	tx LegendaryZapdosDeckName
 
@@ -946,7 +946,7 @@ LegendaryArticunoDeck:
 	card_item ENERGY_RETRIEVAL,  3
 	card_item SWITCH,            3
 	card_item SCOOP_UP,          4
-	card_item GAMBLER,           1
+	card_item CURSED_STONE,      1
 	deck_list_end
 	tx LegendaryArticunoDeckName
 
@@ -968,9 +968,9 @@ LegendaryDragoniteDeck:
 	card_item POKEMON_TRADER,           2
 	card_item POKEMON_BREEDER,          2
 	card_item ENERGY_RETRIEVAL,         1
-	card_item ENERGY_RECYCLER,   1
+	card_item ENERGY_RECYCLER,          1
 	card_item SWITCH,                   2
-	card_item GAMBLER,                  1
+	card_item CURSED_STONE,             1
 	deck_list_end
 	tx LegendaryDragoniteDeckName
 
@@ -1091,10 +1091,10 @@ StrangePsyshockDeck:
 	card_item PROFESSOR_OAK,   2
 	card_item POKEMON_CENTER,  2
 	card_item ENERGY_REMOVAL,  3
-	card_item GIOVANNI,    3
+	card_item GIOVANNI,        3
 	card_item SCOOP_UP,        4
 	card_item SWITCH,          4
-	card_item GAMBLER,         1
+	card_item CURSED_STONE,    1
 	deck_list_end
 	tx StrangePsyshockDeckName
 
@@ -1141,7 +1141,7 @@ FireChargeDeck:
 	card_item POTION,                   3
 	card_item FULL_HEAL,                1
 	card_item RECYCLE,                  3
-	card_item GAMBLER,                  1
+	card_item CURSED_STONE,             1
 	deck_list_end
 	tx FireChargeDeckName
 
@@ -1194,9 +1194,9 @@ PowerfulRonaldDeck:
 	card_item ENERGY_REMOVAL,          2
 	card_item SWITCH,                  1
 	card_item PLUSPOWER,               2
-	card_item GIOVANNI,            2
+	card_item GIOVANNI,                2
 	card_item FULL_HEAL,               1
-	card_item GAMBLER,                 1
+	card_item CURSED_STONE,            1
 	deck_list_end
 	tx PowerfulRonaldDeckName
 
@@ -1219,9 +1219,9 @@ InvincibleRonaldDeck:
 	card_item ENERGY_RETRIEVAL,        2
 	card_item ENERGY_REMOVAL,          2
 	card_item SCOOP_UP,                2
-	card_item GIOVANNI,            2
+	card_item GIOVANNI,                2
 	card_item PLUSPOWER,               2
-	card_item GAMBLER,                 1
+	card_item CURSED_STONE,            1
 	deck_list_end
 	tx InvincibleRonaldDeckName
 
@@ -1246,7 +1246,7 @@ LegendaryRonaldDeck:
 	card_item POKEMON_BREEDER,          2
 	card_item ENERGY_REMOVAL,           3
 	card_item SCOOP_UP,                 3
-	card_item GAMBLER,                  1
+	card_item CURSED_STONE,             1
 	deck_list_end
 	tx LegendaryRonaldDeckName
 

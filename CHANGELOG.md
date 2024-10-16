@@ -23,9 +23,19 @@
 - Pokémon Tool Trainer card.
 - The holder takes 10 less damage from attacks.
 
+#### Pokémon Center
+- Stadium Trainer card.
+- After playing a Supporter card, the player heals 10 damage from each of their Pokémon.
+
+#### Cursed Stone
+- Stadium Trainer card.
+- Each Pokémon with a Pokémon Power takes 10 damage at the end of each turn.
+
 ### Removed Cards
 - PlusPower
 - Defender
+- Gambler
+- Pokémon Center
 
 ### Grass Changes
 

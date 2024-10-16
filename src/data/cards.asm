@@ -219,7 +219,7 @@ CardPointers:
 	dw ReviveCard
 	dw MaintenanceCard
 	dw PokemonFluteCard
-	dw GamblerCard
+	dw CursedStoneCard
 	dw PokemonNurseCard
 	dw PlusPowerCard
 	dw DefenderCard
@@ -10250,15 +10250,15 @@ PokemonFluteCard:
 	tx PokemonFluteDescription ; description
 	dw NONE ; description (cont)
 
-GamblerCard:
+CursedStoneCard:
 	db TYPE_TRAINER ; type
 	gfx GamblerCardGfx ; gfx
-	tx GamblerName ; name
+	tx CursedStoneName ; name
 	db CIRCLE ; rarity
 	db LABORATORY | FOSSIL ; sets
-	db GAMBLER
-	dw GamblerEffectCommands ; effect commands
-	tx GamblerDescription ; description
+	db CURSED_STONE
+	dw StadiumCardEffectCommands ; effect commands
+	tx CursedStoneDescription ; description
 	dw NONE ; description (cont)
 
 RecycleCard:

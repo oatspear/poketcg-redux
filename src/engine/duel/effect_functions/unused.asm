@@ -1,5 +1,51 @@
 ;
 
+GamblerEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, GamblerEffect
+	db  $00
+
+CardCheckIfHeads8CardsIfTails1CardText: ; 37f24 (d:7f24)
+	text "Card check!"
+	line "If Heads, 8 cards! If Tails, 1 card!"
+	done
+
+
+GamblerEffect: ; 2f3f9 (b:73f9)
+	ldtx de, CardCheckIfHeads8CardsIfTails1CardText
+	; call TossCoin_BankB
+	ld a, 1
+	ldh [hTemp_ffa0], a
+; discard Gambler card from hand
+	ldh a, [hTempCardIndex_ff9f]
+	call RemoveCardFromHand
+	call PutCardInDiscardPile
+
+; shuffle cards into deck
+	call CreateHandCardList
+	call SortCardsInDuelTempListByID
+	ld hl, wDuelTempList
+.loop_return_deck
+	ld a, [hli]
+	cp $ff
+	jr z, .check_coin_toss
+	call RemoveCardFromHand
+	call ReturnCardToDeck
+	jr .loop_return_deck
+
+.check_coin_toss
+	call SyncShuffleDeck
+	ld c, 8
+	ldh a, [hTemp_ffa0]
+	or a
+	jr nz, .draw_cards ; coin toss was heads?
+	; if tails, number of cards to draw is 1
+	ld c, 1
+
+; correct number of cards to draw is in c
+.draw_cards
+	ld a, c
+	jp DrawNCards_NoCardDetails
+
 
 PokemonCenterEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckIfPlayAreaHasAnyDamage

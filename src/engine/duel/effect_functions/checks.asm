@@ -454,34 +454,6 @@ CheckTriggeringPokemonIsOnTheBench:
 	ret
 
 
-; input:
-;		de: ID of the Stadium to check for
-; output:
-;		carry: set if the Stadium is not found
-CheckSpecificStadiumIsInPlay:
-	call SwapTurn
-	call .CheckTurnHolder
-	call SwapTurn
-	ret nc  ; found
-	; fallthrough
-
-; carry set if not found
-.CheckTurnHolder
-	ld a, DUELVARS_STADIUM_CARD
-	call GetTurnDuelistVariable
-	cp $ff
-	jr z, .no_stadium
-	push de
-	call GetCardIDFromDeckIndex  ; preserves hl
-	ld a, e
-	pop de
-	cp e
-	ret z  ; found
-.no_stadium
-	scf
-	ret
-
-
 ; ------------------------------------------------------------------------------
 ; Damage
 ; ------------------------------------------------------------------------------

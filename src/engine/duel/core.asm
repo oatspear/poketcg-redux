@@ -7087,6 +7087,7 @@ HandleBetweenTurnsEvents:
 	call ArePokemonPowersDisabled
 	call nc, HandleEndOfTurnEffect_Affliction
 	call HandleEndOfTurnEffect_StatusConditions
+	call HandleEndOfTurnEffect_CursedStone
 
 ; handle things that do not trigger a Between Turns transition
 	call ClearStatusFromBenchedPokemon
@@ -7322,6 +7323,59 @@ HandleEndOfTurnEffect_StatusConditions:
 	ld a, DUEL_ANIM_HEAL
 	call Func_6cab
 	jp WaitForWideTextBoxInput
+
+
+HandleEndOfTurnEffect_CursedStone:
+	ld de, CURSED_STONE
+	call CheckStadiumIDInPlayArea
+	ret c  ; none found
+
+	xor a
+	ld [wIsDamageToSelf], a
+	call SwapTurn
+	call .DamageTargets
+	call SwapTurn
+	ld a, TRUE
+	ld [wIsDamageToSelf], a
+	; fallthrough
+
+.DamageTargets
+	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+	call GetTurnDuelistVariable
+	ld b, PLAY_AREA_ARENA
+	ld c, a
+	ld l, DUELVARS_ARENA_CARD
+	ld de, 10  ; damage
+.loop
+	ld a, [hli]  ; deck index
+	call LoadCardDataToBuffer2_FromDeckIndex  ; preserves hl, bc, de
+	ld a, [wLoadedCard2Type]
+	cp TYPE_PKMN + 1
+	jr nc, .next  ; not a Pokémon card
+	ld a, [wLoadedCard2Atk1Category]
+	sub POKEMON_POWER
+	cp 1
+	jr c, .found  ; Pokémon Power
+	ld a, [wLoadedCard2Atk2Category]
+	sub POKEMON_POWER
+	cp 1
+	jr nc, .next  ; not a Pokémon Power
+.found
+	push hl
+	push bc
+	push de
+	call ShowBetweenTurnsTransitionAtMostOnce
+	pop de
+	pop bc
+	pop hl
+	; b: current play area location
+	; de: amount of damage
+	call DealDamageToPlayAreaPokemon_RegularAnim  ; preserves: hl, bc, de
+.next
+	inc b
+	dec c
+	jr nz, .loop
+	ret
 
 
 ; unreferenced

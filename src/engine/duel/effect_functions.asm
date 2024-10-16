@@ -6364,43 +6364,6 @@ Potion_HealEffect:
 	jp HealPlayAreaCardHP
 
 
-GamblerEffect: ; 2f3f9 (b:73f9)
-	ldtx de, CardCheckIfHeads8CardsIfTails1CardText
-	; call TossCoin_BankB
-	ld a, 1
-	ldh [hTemp_ffa0], a
-; discard Gambler card from hand
-	ldh a, [hTempCardIndex_ff9f]
-	call RemoveCardFromHand
-	call PutCardInDiscardPile
-
-; shuffle cards into deck
-	call CreateHandCardList
-	call SortCardsInDuelTempListByID
-	ld hl, wDuelTempList
-.loop_return_deck
-	ld a, [hli]
-	cp $ff
-	jr z, .check_coin_toss
-	call RemoveCardFromHand
-	call ReturnCardToDeck
-	jr .loop_return_deck
-
-.check_coin_toss
-	call SyncShuffleDeck
-	ld c, 8
-	ldh a, [hTemp_ffa0]
-	or a
-	jr nz, .draw_cards ; coin toss was heads?
-	; if tails, number of cards to draw is 1
-	ld c, 1
-
-; correct number of cards to draw is in c
-.draw_cards
-	ld a, c
-	jp DrawNCards_NoCardDetails
-
-
 ItemFinder_PlayerSelection:
 	; call HandlePlayerSelection2HandCardsToDiscardExcludeSelf
 	call HandlePlayerSelection1HandCardToDiscardExcludeSelf
@@ -6456,7 +6419,7 @@ StadiumCard_PreconditionCheck:
 	ld a, [wLoadedCard1ID]
 	ld e, a
 	ld d, 0
-	call CheckSpecificStadiumIsInPlay
+	call CheckStadiumIDInPlayArea
 	ccf
 	ldtx hl, ThereIsAlreadyAnEqualStadiumInPlayText
 	ret
@@ -7697,7 +7660,7 @@ Helper_GenericShowAttachedEnergyToPokemon:
 
 PokemonCenter_HealEffect:
 	ld de, POKEMON_CENTER
-	call CheckSpecificStadiumIsInPlay
+	call CheckStadiumIDInPlayArea
 	ret c  ; not in play
 	ld a, [wLoadedCard1Type]
 	cp TYPE_TRAINER_SUPPORTER

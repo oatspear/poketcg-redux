@@ -4073,7 +4073,7 @@ AIDecide_Imakuni:
 	or a
 	ret
 
-AIPlay_Gambler:
+AIPlay_CursedStone:
 	ld a, [wCurrentAIFlags]
 	or AI_FLAG_MODIFIED_HAND
 	ld [wCurrentAIFlags], a
@@ -4110,10 +4110,10 @@ AIPlay_Gambler:
 	bank1call AIMakeDecision
 	ret
 
-; checks whether to play Gambler.
+; checks whether to play Cursed Stone.
 ; aside from Imakuni?, all other opponents only
 ; play this card if Player is running MewtwoLv53-only deck.
-AIDecide_Gambler:
+AIDecide_CursedStone:
 ; Imakuni? has his own routine
 	ld a, [wOpponentDeckID]
 	cp IMAKUNI_DECK_ID

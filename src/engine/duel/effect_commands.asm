@@ -1824,10 +1824,6 @@ PotionEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Potion_HealEffect
 	db  $00
 
-GamblerEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, GamblerEffect
-	db  $00
-
 ItemFinderEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckHandSizeGreaterThan1
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, ItemFinder_PlayerSelection

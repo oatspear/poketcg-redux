@@ -64,7 +64,7 @@ AIActionTable_LegendaryArticuno:
 	db $00
 
 .list_prize
-	db GAMBLER
+	db CURSED_STONE
 	db ARTICUNO_LV37
 	db $00
 

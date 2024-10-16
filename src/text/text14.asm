@@ -432,14 +432,15 @@ PokemonFluteDescription:
 	line "it onto their Bench."
 	done
 
-GamblerName: ; 648ed (19:48ed)
-	text "Gambler"
+CursedStoneName:
+	text "Cursed Stone"
 	done
 
-GamblerDescription: ; 648f6 (19:48f6)
-	text "Shuffle your hand into your deck."
-	line "Flip a coin. If heads, draw 8 cards."
-	line "If tails, draw 1 card."
+CursedStoneDescription:
+	text "At the end of each turn, each"
+	line "player puts 1 damage counter on"
+	line "each of their Pokémon that has"
+	line "a Pokémon Power."
 	done
 
 RecycleName:

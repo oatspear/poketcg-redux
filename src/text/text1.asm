@@ -936,8 +936,3 @@ CardPopCannotBePlayedWithTheGameBoyText: ; 37b5d (d:7b5d)
 	text "Card Pop! can only be played"
 	line "with a Game Boy Color."
 	done
-
-CardCheckIfHeads8CardsIfTails1CardText: ; 37f24 (d:7f24)
-	text "Card check!"
-	line "If Heads, 8 cards! If Tails, 1 card!"
-	done
