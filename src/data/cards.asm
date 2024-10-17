@@ -219,7 +219,7 @@ CardPointers:
 	dw ReviveCard
 	dw MaintenanceCard
 	dw PokemonFluteCard
-	dw CursedStoneCard
+	dw RocketHeadquartersCard
 	dw PokemonNurseCard
 	dw PlusPowerCard
 	dw DefenderCard
@@ -10250,15 +10250,15 @@ PokemonFluteCard:
 	tx PokemonFluteDescription ; description
 	dw NONE ; description (cont)
 
-CursedStoneCard:
+RocketHeadquartersCard:
 	db TYPE_TRAINER_STADIUM ; type
-	gfx GamblerCardGfx ; gfx
-	tx CursedStoneName ; name
+	gfx RocketHeadquartersCardGfx ; gfx
+	tx RocketHeadquartersName ; name
 	db CIRCLE ; rarity
 	db LABORATORY | FOSSIL ; sets
-	db CURSED_STONE
+	db ROCKET_HEADQUARTERS
 	dw StadiumCardEffectCommands ; effect commands
-	tx CursedStoneDescription ; description
+	tx RocketHeadquartersDescription ; description
 	dw NONE ; description (cont)
 
 RecycleCard:

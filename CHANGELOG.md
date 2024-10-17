@@ -27,7 +27,7 @@
 - Stadium Trainer card.
 - After playing a Supporter card, the player heals 10 damage from each of their Pokémon.
 
-#### Cursed Stone
+#### Rocket Headquarters
 - Stadium Trainer card.
 - Each Pokémon with a Pokémon Power takes 10 damage at the end of each turn.
 

@@ -329,7 +329,7 @@ RainDancerCardList:
 	card_item ENERGY_SWITCH,           1
 	card_item SWITCH,                  2
 	card_item POTION,                  2
-	card_item CURSED_STONE,            1
+	card_item ROCKET_HEADQUARTERS,            1
 	deck_list_end
 
 CutePokemonCardList:
@@ -682,7 +682,7 @@ StrangePsyshockCardList:
 	card_item GIOVANNI,        3
 	card_item SCOOP_UP,        4
 	card_item SWITCH,          4
-	card_item CURSED_STONE,    1
+	card_item ROCKET_HEADQUARTERS,    1
 	deck_list_end
 
 LovelyNidoranCardList:
@@ -730,7 +730,7 @@ ScienceCorpsCardList:
 	card_item POTION,           1
 	card_item FULL_HEAL,        1
 	card_item MAINTENANCE,      1
-	card_item CURSED_STONE,     1
+	card_item ROCKET_HEADQUARTERS,     1
 	card_item RECYCLE,          1
 	deck_list_end
 
@@ -772,7 +772,7 @@ PoisonCardList:
 	card_item POKEMON_BREEDER,         1
 	card_item POTION,                  2
 	card_item FULL_HEAL,               2
-	card_item CURSED_STONE,            1
+	card_item ROCKET_HEADQUARTERS,            1
 	deck_list_end
 
 WondersOfScienceCardList:
@@ -909,7 +909,7 @@ FireChargeCardList:
 	card_item POTION,                   3
 	card_item FULL_HEAL,                1
 	card_item RECYCLE,                  3
-	card_item CURSED_STONE,             1
+	card_item ROCKET_HEADQUARTERS,             1
 	deck_list_end
 
 CharmanderAndFriendsCardList:
@@ -1127,7 +1127,7 @@ LegendaryZapdosCardList:
 	card_item SWITCH,            2
 	card_item PLUSPOWER,         3
 	card_item POTION,            3
-	card_item CURSED_STONE,      1
+	card_item ROCKET_HEADQUARTERS,      1
 	deck_list_end
 
 LegendaryArticunoCardList:
@@ -1145,7 +1145,7 @@ LegendaryArticunoCardList:
 	card_item ENERGY_RETRIEVAL,  3
 	card_item SWITCH,            3
 	card_item SCOOP_UP,          4
-	card_item CURSED_STONE,      1
+	card_item ROCKET_HEADQUARTERS,      1
 	deck_list_end
 
 LegendaryDragoniteCardList:
@@ -1168,7 +1168,7 @@ LegendaryDragoniteCardList:
 	card_item ENERGY_RETRIEVAL,         1
 	card_item ENERGY_RECYCLER,          1
 	card_item SWITCH,                   2
-	card_item CURSED_STONE,             1
+	card_item ROCKET_HEADQUARTERS,             1
 	deck_list_end
 
 MysteriousPokemonCardList:

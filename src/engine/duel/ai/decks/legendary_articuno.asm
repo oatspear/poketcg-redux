@@ -64,7 +64,7 @@ AIActionTable_LegendaryArticuno:
 	db $00
 
 .list_prize
-	db CURSED_STONE
+	db ROCKET_HEADQUARTERS
 	db ARTICUNO_LV37
 	db $00
 

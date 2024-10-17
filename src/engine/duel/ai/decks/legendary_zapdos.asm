@@ -66,7 +66,7 @@ AIActionTable_LegendaryZapdos:
 	db $00
 
 .list_prize
-	db CURSED_STONE
+	db ROCKET_HEADQUARTERS
 	db ZAPDOS_LV68
 	db $00
 

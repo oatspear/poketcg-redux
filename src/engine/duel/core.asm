@@ -7087,7 +7087,7 @@ HandleBetweenTurnsEvents:
 	call ArePokemonPowersDisabled
 	call nc, HandleEndOfTurnEffect_Affliction
 	call HandleEndOfTurnEffect_StatusConditions
-	call HandleEndOfTurnEffect_CursedStone
+	call HandleEndOfTurnEffect_RocketHeadquarters
 
 ; handle things that do not trigger a Between Turns transition
 	call ClearStatusFromBenchedPokemon
@@ -7325,8 +7325,8 @@ HandleEndOfTurnEffect_StatusConditions:
 	jp WaitForWideTextBoxInput
 
 
-HandleEndOfTurnEffect_CursedStone:
-	ld de, CURSED_STONE
+HandleEndOfTurnEffect_RocketHeadquarters:
+	ld de, ROCKET_HEADQUARTERS
 	call CheckStadiumIDInPlayArea
 	ret c  ; none found
 

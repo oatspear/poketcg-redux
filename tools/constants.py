@@ -251,7 +251,7 @@ cards = {
 	0xd8: "REVIVE",
 	0xd9: "MAINTENANCE",
 	0xda: "POKEMON_FLUTE",
-	0xdb: "CURSED_STONE",
+	0xdb: "ROCKET_HEADQUARTERS",
 	0xdc: "POKEMON_NURSE",
 	0xdd: "PLUSPOWER",
 	0xde: "DEFENDER",

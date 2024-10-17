@@ -65,7 +65,7 @@ AIActionTable_StrangePsyshock:
 	db $00
 
 .list_prize
-	db CURSED_STONE
+	db ROCKET_HEADQUARTERS
 	db MR_MIME
 	db ALAKAZAM
 	db SWITCH

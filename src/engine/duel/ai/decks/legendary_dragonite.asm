@@ -66,7 +66,7 @@ AIActionTable_LegendaryDragonite:
 	db $00
 
 .list_prize
-	db CURSED_STONE
+	db ROCKET_HEADQUARTERS
 	db DRAGONITE_LV41
 	db KANGASKHAN
 	db $00

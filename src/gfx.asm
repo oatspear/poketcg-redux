@@ -2376,9 +2376,13 @@ PokemonFluteCardGfx::
 	INCBIN "gfx/cards/pokemonflute.2bpp"
 	INCBIN "gfx/cards/pokemonflute.pal"
 
-GamblerCardGfx::
-	INCBIN "gfx/cards/gambler.2bpp"
-	INCBIN "gfx/cards/gambler.pal"
+; GamblerCardGfx::
+; 	INCBIN "gfx/cards/gambler.2bpp"
+; 	INCBIN "gfx/cards/gambler.pal"
+
+RocketHeadquartersCardGfx::
+	INCBIN "gfx/cards/rockethq.2bpp"
+	INCBIN "gfx/cards/rockethq.pal"
 
 RecycleCardGfx::
 	INCBIN "gfx/cards/recycle.2bpp"

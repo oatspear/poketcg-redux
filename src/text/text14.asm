@@ -432,11 +432,11 @@ PokemonFluteDescription:
 	line "it onto their Bench."
 	done
 
-CursedStoneName:
-	text "Cursed Stone"
+RocketHeadquartersName:
+	text "Rocket Headquarters"
 	done
 
-CursedStoneDescription:
+RocketHeadquartersDescription:
 	text "At the end of each turn, each"
 	line "player puts 1 damage counter on"
 	line "each of their Pokémon that has"

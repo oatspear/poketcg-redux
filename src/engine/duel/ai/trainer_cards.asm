@@ -4073,7 +4073,7 @@ AIDecide_Imakuni:
 	or a
 	ret
 
-AIPlay_CursedStone:
+AIPlay_RocketHeadquarters:
 	ld a, [wCurrentAIFlags]
 	or AI_FLAG_MODIFIED_HAND
 	ld [wCurrentAIFlags], a
@@ -4110,10 +4110,10 @@ AIPlay_CursedStone:
 	bank1call AIMakeDecision
 	ret
 
-; checks whether to play Cursed Stone.
+; checks whether to play Rocket Headquarters.
 ; aside from Imakuni?, all other opponents only
 ; play this card if Player is running MewtwoLv53-only deck.
-AIDecide_CursedStone:
+AIDecide_RocketHeadquarters:
 ; Imakuni? has his own routine
 	ld a, [wOpponentDeckID]
 	cp IMAKUNI_DECK_ID
