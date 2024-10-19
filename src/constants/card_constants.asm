@@ -217,7 +217,7 @@
 	const REVIVE                      ; $d8
 	const MAINTENANCE                 ; $d9
 	const POKEMON_FLUTE               ; $da
-	const ROCKET_HEADQUARTERS                ; $db
+	const ROCKET_HEADQUARTERS         ; $db
 	const POKEMON_NURSE               ; $dc
 	const PLUSPOWER                   ; $dd
 	const DEFENDER                    ; $de
