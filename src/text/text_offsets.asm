@@ -3160,3 +3160,19 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer RockyHelmetDescription
 	textpointer AlreadyHasAToolAttachedText
 	textpointer YouMayAttachOnly1ToolPerPokemonText
+	textpointer PewterGymName
+	textpointer PewterGymDescription
+	textpointer CeruleanGymName
+	textpointer CeruleanGymDescription
+	textpointer VermilionGymName
+	textpointer VermilionGymDescription
+	textpointer CeladonGymName
+	textpointer CeladonGymDescription
+	textpointer FuchsiaGymName
+	textpointer FuchsiaGymDescription
+	textpointer SaffronGymName
+	textpointer SaffronGymDescription
+	textpointer CinnabarGymName
+	textpointer CinnabarGymDescription
+	textpointer ViridianGymName
+	textpointer ViridianGymDescription

@@ -259,6 +259,14 @@ cards = {
 	0xe0: "LUM_BERRY",
 	0xe1: "LEFTOVERS",
 	0xe2: "ROCKY_HELMET",
+	0xe3: "PEWTER_GYM",
+	0xe4: "CERULEAN_GYM",
+	0xe5: "VERMILION_GYM",
+	0xe6: "CELADON_GYM",
+	0xe7: "FUCHSIA_GYM",
+	0xe8: "SAFFRON_GYM",
+	0xe9: "CINNABAR_GYM",
+	0xea: "VIRIDIAN_GYM",
 	0xff: "$ff",
 }
 

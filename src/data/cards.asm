@@ -227,6 +227,14 @@ CardPointers:
 	dw LumBerryCard
 	dw LeftoversCard
 	dw RockyHelmetCard
+	dw PewterGymCard
+	dw CeruleanGymCard
+	dw VermilionGymCard
+	dw CeladonGymCard
+	dw FuchsiaGymCard
+	dw SaffronGymCard
+	dw CinnabarGymCard
+	dw ViridianGymCard
 	dw NULL
 	assert_table_length NUM_CARDS + 2
 
@@ -10362,4 +10370,98 @@ RockyHelmetCard:
 	db ROCKY_HELMET
 	dw PokemonToolEffectCommands ; effect commands
 	tx RockyHelmetDescription ; description
+	dw NONE ; description (cont)
+
+
+; ------------------------------------------------------------------------------
+; Stadiums
+; ------------------------------------------------------------------------------
+
+
+PewterGymCard:
+	db TYPE_TRAINER_STADIUM ; type
+	gfx PewterGymCardGfx ; gfx
+	tx PewterGymName ; name
+	db CIRCLE ; rarity
+	db LABORATORY | NONE ; sets
+	db PEWTER_GYM
+	dw StadiumCardEffectCommands ; effect commands
+	tx FixmeText ; description
+	dw NONE ; description (cont)
+
+CeruleanGymCard:
+	db TYPE_TRAINER_STADIUM ; type
+	gfx CeruleanGymCardGfx ; gfx
+	tx CeruleanGymName ; name
+	db CIRCLE ; rarity
+	db LABORATORY | NONE ; sets
+	db CERULEAN_GYM
+	dw StadiumCardEffectCommands ; effect commands
+	tx FixmeText ; description
+	dw NONE ; description (cont)
+
+VermilionGymCard:
+	db TYPE_TRAINER_STADIUM ; type
+	gfx VermilionGymCardGfx ; gfx
+	tx VermilionGymName ; name
+	db CIRCLE ; rarity
+	db LABORATORY | NONE ; sets
+	db VERMILION_GYM
+	dw StadiumCardEffectCommands ; effect commands
+	tx FixmeText ; description
+	dw NONE ; description (cont)
+
+CeladonGymCard:
+	db TYPE_TRAINER_STADIUM ; type
+	gfx CeladonGymCardGfx ; gfx
+	tx CeladonGymName ; name
+	db CIRCLE ; rarity
+	db LABORATORY | NONE ; sets
+	db CELADON_GYM
+	dw StadiumCardEffectCommands ; effect commands
+	tx FixmeText ; description
+	dw NONE ; description (cont)
+
+FuchsiaGymCard:
+	db TYPE_TRAINER_STADIUM ; type
+	gfx FuchsiaGymCardGfx ; gfx
+	tx FuchsiaGymName ; name
+	db CIRCLE ; rarity
+	db LABORATORY | NONE ; sets
+	db FUCHSIA_GYM
+	dw StadiumCardEffectCommands ; effect commands
+	tx FixmeText ; description
+	dw NONE ; description (cont)
+
+SaffronGymCard:
+	db TYPE_TRAINER_STADIUM ; type
+	gfx SaffronGymCardGfx ; gfx
+	tx SaffronGymName ; name
+	db CIRCLE ; rarity
+	db LABORATORY | NONE ; sets
+	db SAFFRON_GYM
+	dw StadiumCardEffectCommands ; effect commands
+	tx FixmeText ; description
+	dw NONE ; description (cont)
+
+CinnabarGymCard:
+	db TYPE_TRAINER_STADIUM ; type
+	gfx CinnabarGymCardGfx ; gfx
+	tx CinnabarGymName ; name
+	db CIRCLE ; rarity
+	db LABORATORY | NONE ; sets
+	db CINNABAR_GYM
+	dw StadiumCardEffectCommands ; effect commands
+	tx FixmeText ; description
+	dw NONE ; description (cont)
+
+ViridianGymCard:
+	db TYPE_TRAINER_STADIUM ; type
+	gfx ViridianGymCardGfx ; gfx
+	tx ViridianGymName ; name
+	db CIRCLE ; rarity
+	db LABORATORY | NONE ; sets
+	db VIRIDIAN_GYM
+	dw StadiumCardEffectCommands ; effect commands
+	tx FixmeText ; description
 	dw NONE ; description (cont)

@@ -2381,8 +2381,8 @@ PokemonFluteCardGfx::
 ; 	INCBIN "gfx/cards/gambler.pal"
 
 RocketHeadquartersCardGfx::
-	INCBIN "gfx/cards/rockethq.2bpp"
-	INCBIN "gfx/cards/rockethq.pal"
+	INCBIN "gfx/cards/rockethq2.2bpp"
+	INCBIN "gfx/cards/rockethq2.pal"
 
 RecycleCardGfx::
 	INCBIN "gfx/cards/recycle.2bpp"
@@ -2423,3 +2423,37 @@ LeftoversCardGfx::
 RockyHelmetCardGfx::
 	INCBIN "gfx/cards/rockyhelmet.2bpp"
 	INCBIN "gfx/cards/rockyhelmet.pal"
+
+PewterGymCardGfx::
+	INCBIN "gfx/cards/pewtergym.2bpp"
+	INCBIN "gfx/cards/pewtergym.pal"
+
+CeruleanGymCardGfx::
+	INCBIN "gfx/cards/ceruleangym.2bpp"
+	INCBIN "gfx/cards/ceruleangym.pal"
+
+VermilionGymCardGfx::
+	INCBIN "gfx/cards/vermiliongym.2bpp"
+	INCBIN "gfx/cards/vermiliongym.pal"
+
+SECTION "Card Gfx 12", ROMX
+
+CeladonGymCardGfx::
+	INCBIN "gfx/cards/celadongym.2bpp"
+	INCBIN "gfx/cards/celadongym.pal"
+
+FuchsiaGymCardGfx::
+	INCBIN "gfx/cards/fuchsiagym.2bpp"
+	INCBIN "gfx/cards/fuchsiagym.pal"
+
+SaffronGymCardGfx::
+	INCBIN "gfx/cards/saffrongym.2bpp"
+	INCBIN "gfx/cards/saffrongym.pal"
+
+CinnabarGymCardGfx::
+	INCBIN "gfx/cards/cinnabargym.2bpp"
+	INCBIN "gfx/cards/cinnabargym.pal"
+
+ViridianGymCardGfx::
+	INCBIN "gfx/cards/viridiangym.2bpp"
+	INCBIN "gfx/cards/viridiangym.pal"

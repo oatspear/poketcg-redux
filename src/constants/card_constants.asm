@@ -225,6 +225,14 @@
 	const LUM_BERRY                   ; $e0
 	const LEFTOVERS                   ; $e1
 	const ROCKY_HELMET                ; $e2
+	const PEWTER_GYM                  ; $e3
+	const CERULEAN_GYM                ; $e4
+	const VERMILION_GYM               ; $e5
+	const CELADON_GYM                 ; $e6
+	const FUCHSIA_GYM                 ; $e7
+	const SAFFRON_GYM                 ; $e8
+	const CINNABAR_GYM                ; $e9
+	const VIRIDIAN_GYM                ; $ea
 DEF NUM_CARDS EQU const_value - 1
 
 DEF ENERGY_IDS_START  EQU GRASS_ENERGY

@@ -546,3 +546,107 @@ YouMayAttachOnly1ToolPerPokemonText:
 	line "Tool to each Pokémon, and it stays"
 	line "attached."
 	done
+
+PewterGymName:
+	text "Pewter Gym"
+	done
+
+PewterGymDescription:
+	text "If the Pokémon this card is attached"
+	line "to is your Active Pokémon and is"
+	line "damaged by an opponent's attack,"
+	line "even if that Pokémon is Knocked Out,"
+	line "put 1 damage counter on the"
+	line "Attacking Pokémon."
+	done
+
+CeruleanGymName:
+	text "Cerulean Gym"
+	done
+
+CeruleanGymDescription:
+	text "If the Pokémon this card is attached"
+	line "to is your Active Pokémon and is"
+	line "damaged by an opponent's attack,"
+	line "even if that Pokémon is Knocked Out,"
+	line "put 1 damage counter on the"
+	line "Attacking Pokémon."
+	done
+
+VermilionGymName:
+	text "Vermilion Gym"
+	done
+
+VermilionGymDescription:
+	text "If the Pokémon this card is attached"
+	line "to is your Active Pokémon and is"
+	line "damaged by an opponent's attack,"
+	line "even if that Pokémon is Knocked Out,"
+	line "put 1 damage counter on the"
+	line "Attacking Pokémon."
+	done
+
+CeladonGymName:
+	text "Celadon Gym"
+	done
+
+CeladonGymDescription:
+	text "If the Pokémon this card is attached"
+	line "to is your Active Pokémon and is"
+	line "damaged by an opponent's attack,"
+	line "even if that Pokémon is Knocked Out,"
+	line "put 1 damage counter on the"
+	line "Attacking Pokémon."
+	done
+
+FuchsiaGymName:
+	text "Fuchsia Gym"
+	done
+
+FuchsiaGymDescription:
+	text "If the Pokémon this card is attached"
+	line "to is your Active Pokémon and is"
+	line "damaged by an opponent's attack,"
+	line "even if that Pokémon is Knocked Out,"
+	line "put 1 damage counter on the"
+	line "Attacking Pokémon."
+	done
+
+SaffronGymName:
+	text "Saffron Gym"
+	done
+
+SaffronGymDescription:
+	text "If the Pokémon this card is attached"
+	line "to is your Active Pokémon and is"
+	line "damaged by an opponent's attack,"
+	line "even if that Pokémon is Knocked Out,"
+	line "put 1 damage counter on the"
+	line "Attacking Pokémon."
+	done
+
+CinnabarGymName:
+	text "Cinnabar Gym"
+	done
+
+CinnabarGymDescription:
+	text "If the Pokémon this card is attached"
+	line "to is your Active Pokémon and is"
+	line "damaged by an opponent's attack,"
+	line "even if that Pokémon is Knocked Out,"
+	line "put 1 damage counter on the"
+	line "Attacking Pokémon."
+	done
+
+ViridianGymName:
+	text "Viridian Gym"
+	done
+
+ViridianGymDescription:
+	text "If the Pokémon this card is attached"
+	line "to is your Active Pokémon and is"
+	line "damaged by an opponent's attack,"
+	line "even if that Pokémon is Knocked Out,"
+	line "put 1 damage counter on the"
+	line "Attacking Pokémon."
+	done
