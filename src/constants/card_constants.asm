@@ -200,7 +200,7 @@
 	const ENERGY_REMOVAL              ; $c7
 	const ENERGY_SWITCH               ; $c8
 	const SWITCH                      ; $c9
-	const POKEMON_CENTER              ; $ca
+	const POKEMON_FLUTE               ; $ca
 	const POKE_BALL                   ; $cb
 	const ULTRA_BALL                  ; $cc
 	const SCOOP_UP                    ; $cd
@@ -216,14 +216,14 @@
 	const FULL_HEAL                   ; $d7
 	const REVIVE                      ; $d8
 	const MAINTENANCE                 ; $d9
-	const POKEMON_FLUTE               ; $da
-	const POKEMON_NURSE               ; $db
-	const PLUSPOWER                   ; $dc
-	const DEFENDER                    ; $dd
-	const SITRUS_BERRY                ; $de
-	const LUM_BERRY                   ; $df
-	const LEFTOVERS                   ; $e0
-	const ROCKY_HELMET                ; $e1
+	const POKEMON_NURSE               ; $da
+	const PLUSPOWER                   ; $db
+	const DEFENDER                    ; $dc
+	const SITRUS_BERRY                ; $dd
+	const LUM_BERRY                   ; $de
+	const LEFTOVERS                   ; $df
+	const ROCKY_HELMET                ; $e0
+	const POKEMON_CENTER              ; $e1
 	const PEWTER_GYM                  ; $e2
 	const CERULEAN_GYM                ; $e3
 	const VERMILION_GYM               ; $e4

@@ -202,7 +202,7 @@ CardPointers:
 	dw RocketGruntsCard
 	dw EnergySwitchCard
 	dw SwitchCard
-	dw PokemonCenterCard
+	dw PokemonFluteCard
 	dw PokeBallCard
 	dw UltraBallCard
 	dw ScoopUpNetCard
@@ -218,7 +218,6 @@ CardPointers:
 	dw FullHealCard
 	dw ReviveCard
 	dw MaintenanceCard
-	dw PokemonFluteCard
 	dw PokemonNurseCard
 	dw PlusPowerCard
 	dw DefenderCard
@@ -226,6 +225,7 @@ CardPointers:
 	dw LumBerryCard
 	dw LeftoversCard
 	dw RockyHelmetCard
+	dw PokemonCenterCard
 	dw PewterGymCard
 	dw CeruleanGymCard
 	dw VermilionGymCard
@@ -10093,15 +10093,15 @@ SwitchCard:
 	tx SwitchDescription ; description
 	dw NONE ; description (cont)
 
-PokemonCenterCard:
-	db TYPE_TRAINER_STADIUM ; type
-	gfx PokemonCenterCardGfx ; gfx
-	tx PokemonCenterName ; name
+PokemonFluteCard:
+	db TYPE_TRAINER ; type
+	gfx PokemonFluteCardGfx ; gfx
+	tx PokemonFluteName ; name
 	db DIAMOND ; rarity
-	db MYSTERY | NONE ; sets
-	db POKEMON_CENTER
-	dw StadiumCardEffectCommands ; effect commands
-	tx PokemonCenterDescription ; description
+	db EVOLUTION | NONE ; sets
+	db POKEMON_FLUTE
+	dw PokemonFluteEffectCommands ; effect commands
+	tx PokemonFluteDescription ; description
 	dw NONE ; description (cont)
 
 PokeBallCard:
@@ -10247,28 +10247,6 @@ MaintenanceCard:
 	tx MaintenanceDescription ; description
 	dw NONE ; description (cont)
 
-PokemonFluteCard:
-	db TYPE_TRAINER ; type
-	gfx PokemonFluteCardGfx ; gfx
-	tx PokemonFluteName ; name
-	db DIAMOND ; rarity
-	db EVOLUTION | NONE ; sets
-	db POKEMON_FLUTE
-	dw PokemonFluteEffectCommands ; effect commands
-	tx PokemonFluteDescription ; description
-	dw NONE ; description (cont)
-
-RocketHeadquartersCard:
-	db TYPE_TRAINER_STADIUM ; type
-	gfx RocketHeadquartersCardGfx ; gfx
-	tx RocketHeadquartersName ; name
-	db CIRCLE ; rarity
-	db LABORATORY | FOSSIL ; sets
-	db ROCKET_HEADQUARTERS
-	dw StadiumCardEffectCommands ; effect commands
-	tx RocketHeadquartersDescription ; description
-	dw NONE ; description (cont)
-
 RecycleCard:
 	db TYPE_TRAINER ; type
 	gfx RecycleCardGfx ; gfx
@@ -10377,6 +10355,16 @@ RockyHelmetCard:
 ; Stadiums
 ; ------------------------------------------------------------------------------
 
+PokemonCenterCard:
+	db TYPE_TRAINER_STADIUM ; type
+	gfx PokemonCenterCardGfx ; gfx
+	tx PokemonCenterName ; name
+	db DIAMOND ; rarity
+	db MYSTERY | NONE ; sets
+	db POKEMON_CENTER
+	dw StadiumCardEffectCommands ; effect commands
+	tx PokemonCenterDescription ; description
+	dw NONE ; description (cont)
 
 PewterGymCard:
 	db TYPE_TRAINER_STADIUM ; type
@@ -10464,4 +10452,15 @@ ViridianGymCard:
 	db VIRIDIAN_GYM
 	dw StadiumCardEffectCommands ; effect commands
 	tx FixmeText ; description
+	dw NONE ; description (cont)
+
+RocketHeadquartersCard:
+	db TYPE_TRAINER_STADIUM ; type
+	gfx RocketHeadquartersCardGfx ; gfx
+	tx RocketHeadquartersName ; name
+	db CIRCLE ; rarity
+	db LABORATORY | FOSSIL ; sets
+	db ROCKET_HEADQUARTERS
+	dw StadiumCardEffectCommands ; effect commands
+	tx RocketHeadquartersDescription ; description
 	dw NONE ; description (cont)
