@@ -923,6 +923,20 @@ CheckPlayedEnergyThisTurn:
 	ret
 
 
+; returns carry if the Active Pokémon has less than the number
+; of energies needed for the loaded attack, or exactly that
+; number of energies, disregarding color
+CheckPokemonHasSurplusEnergy:
+	ld e, PLAY_AREA_ARENA
+	call GetPlayAreaCardAttachedEnergies
+	call GetTotalAttackEnergyCost
+	inc a
+	ld c, a
+	ld a, [wTotalAttachedEnergies]
+	cp c
+	ret
+
+
 ; ------------------------------------------------------------------------------
 ; Card Types
 ; ------------------------------------------------------------------------------

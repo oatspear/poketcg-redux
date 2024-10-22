@@ -565,12 +565,11 @@ CeruleanGymName:
 	done
 
 CeruleanGymDescription:
-	text "If the Pokémon this card is attached"
-	line "to is your Active Pokémon and is"
-	line "damaged by an opponent's attack,"
-	line "even if that Pokémon is Knocked Out,"
-	line "put 1 damage counter on the"
-	line "Attacking Pokémon."
+	text "If a player's Active Pokémon has"
+	line "more Energies attached to it than"
+	line "its attack's cost, that Pokémon's"
+	line "attack does 10 more damage to the"
+	line "Defending Pokémon."
 	done
 
 VermilionGymName:
@@ -578,12 +577,10 @@ VermilionGymName:
 	done
 
 VermilionGymDescription:
-	text "If the Pokémon this card is attached"
-	line "to is your Active Pokémon and is"
-	line "damaged by an opponent's attack,"
-	line "even if that Pokémon is Knocked Out,"
-	line "put 1 damage counter on the"
-	line "Attacking Pokémon."
+	text "If a player's Active Pokémon moved"
+	line "into the Active Spot this turn, its"
+	line "attacks do 10 more damage to the"
+	line "Defending Pokémon."
 	done
 
 CeladonGymName:

@@ -2194,13 +2194,14 @@ ENDC
 	; ldh a, [hTempPlayAreaLocation_ff9d]  ; this is always PLAY_AREA_ARENA
 	xor a  ; PLAY_AREA_ARENA
 	call _DamageModifiers_HandleWeakness
-; 3. apply pluspower bonuses
+; 3. apply tool and stadium bonuses
 .apply_pluspower
 IF DEBUG_MODE
 	call Debug_Print_DE
 ENDC
 	ld b, PLAY_AREA_ARENA  ; CARD_LOCATION_ARENA
-	call ApplyAttachedPluspower
+	call ApplyAttachedPluspower  ; preserves: bc
+	call HandleDamageBoostingStadiums
 ; 4. cap damage at 250
 IF DEBUG_MODE
 	call Debug_Print_DE
@@ -2219,14 +2220,15 @@ ENDC
 	call SwapTurn
 	ld b, a
 	call _DamageModifiers_HandleResistance
-; 6. apply Defender reduction
+; 6. apply tool and stadium reduction
 .apply_defender
 IF DEBUG_MODE
 	call Debug_Print_DE
 ENDC
 	call SwapTurn
 	ld b, PLAY_AREA_ARENA  ; CARD_LOCATION_ARENA
-	call ApplyAttachedDefender
+	call ApplyAttachedDefender  ; preserves: bc
+	call HandleDamageReducingStadiums
 ; 7. apply damage reduction effects
 IF DEBUG_MODE
 	call Debug_Print_DE
@@ -2263,11 +2265,7 @@ Debug_Print_DE:
 ENDC
 
 
-; given a damage value at wDamage:
-; - if the turn holder's arena card is weak to its own color: double damage
-; - if the turn holder's arena card resists its own color: reduce damage by 30
 ; return resulting damage in de
-; OATS we have to tinker with this to implement BURN
 ; OATS new logic for damage calculation:
 ;  1. apply damage bonus effects
 ;  2. apply weakness bonus
@@ -2289,18 +2287,20 @@ ApplyDamageModifiers_DamageToSelf:
 	ld b, a
 	xor a  ; PLAY_AREA_ARENA
 	call _DamageModifiers_HandleWeakness
-; 3. apply pluspower bonuses
+; 3. apply tool and stadium bonuses
 	ld b, PLAY_AREA_ARENA  ; CARD_LOCATION_ARENA
-	call ApplyAttachedPluspower
+	call ApplyAttachedPluspower  ; preserves: bc
+	call HandleDamageBoostingStadiums
 ; 4. cap damage at 250
 	call CapMaximumDamage_DE  ; preserves bc
 ; 5. apply resistance
 	call GetArenaCardResistance
 	ld b, a
 	call _DamageModifiers_HandleResistance
-; 6. apply Defender reduction
+; 6. apply tool and stadium reduction
 	ld b, PLAY_AREA_ARENA  ; CARD_LOCATION_ARENA
-	call ApplyAttachedDefender
+	call ApplyAttachedDefender  ; preserves: bc
+	call HandleDamageReducingStadiums
 ; 7. apply damage reduction effects
 	; skip
 ; 8. cap damage at zero if negative
@@ -2368,6 +2368,7 @@ _DamageModifiers_HandleResistance:
 
 
 ; if de > 0, increases de by 10 if a Pluspower is found in location b
+; preserves: bc
 ApplyAttachedPluspower:
 	ld a, e
 	or d
@@ -2375,13 +2376,14 @@ ApplyAttachedPluspower:
 	push de
 	ld a, b
 	ld de, PLUSPOWER
-	call CheckToolIDAttachedToPlayArea
+	call CheckToolIDAttachedToPlayArea  ; preserves: bc, de
 	pop de
 	ret c  ; no PlusPower
 	ld hl, 10
-	jp AddToDamage_DE
+	jp AddToDamage_DE  ; preserves: bc
 
 ; reduces de by 10 if a Defender is found in location b
+; preserves: bc
 ApplyAttachedDefender:
 	ld a, e
 	or d
@@ -2389,11 +2391,11 @@ ApplyAttachedDefender:
 	push de
 	ld a, b
 	ld de, DEFENDER
-	call CheckToolIDAttachedToPlayArea
+	call CheckToolIDAttachedToPlayArea  ; preserves: bc, de
 	pop de
 	ret c  ; no Defender
 	ld hl, 10
-	jp SubtractFromDamage_DE
+	jp SubtractFromDamage_DE  ; preserves: bc
 
 
 ; input:
@@ -2415,6 +2417,38 @@ CheckToolIDAttachedToPlayArea:
 	ret z
 .nope
 	scf
+	ret
+
+
+; input:
+;   b: PLAY_AREA_* of the attacking Pokémon
+HandleDamageBoostingStadiums:
+	ld de, CERULEAN_GYM
+	call CheckStadiumIDInPlayArea  ; preserves: bc, de
+	jr c, .vermilion_gym
+	farcall CheckPokemonHasSurplusEnergy
+	ret c  ; no surplus energy
+	jr .add_to_damage
+.vermilion_gym
+	ld a, b
+	or a  ; cp PLAY_AREA_ARENA
+	ret nz  ; not active spot
+	ld de, VERMILION_GYM
+	call CheckStadiumIDInPlayArea  ; preserves: bc, de
+	ret c  ; not in play
+	farcall CheckEnteredActiveSpotThisTurn
+	ret c  ; not active this turn
+.add_to_damage
+	ld hl, 10
+	jp AddToDamage_DE  ; preserves: bc
+
+
+; input:
+;   b: PLAY_AREA_* of the defending Pokémon
+HandleDamageReducingStadiums:
+	ld de, PEWTER_GYM
+	call CheckStadiumIDInPlayArea  ; preserves: bc, de
+	ret c
 	ret
 
 
@@ -2604,11 +2638,12 @@ DealDamageToPlayAreaPokemon:
 	jr z, .arena_target
 
 .bench_target
-; 1. apply Defender reduction
+; 1. apply tool and stadium reduction
 	; ld a, [wTempPlayAreaLocation_cceb]
 	; or CARD_LOCATION_PLAY_AREA
 	ld b, a
-	call ApplyAttachedDefender
+	call ApplyAttachedDefender  ; preserves: bc
+	call HandleDamageReducingStadiums
 ; 2. apply damage reduction effects
 	ld a, [wTempPlayAreaLocation_cceb]
 	call HandleDamageReducingPowers

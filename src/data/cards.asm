@@ -10385,7 +10385,7 @@ CeruleanGymCard:
 	db LABORATORY | NONE ; sets
 	db CERULEAN_GYM
 	dw StadiumCardEffectCommands ; effect commands
-	tx FixmeText ; description
+	tx CeruleanGymDescription ; description
 	dw NONE ; description (cont)
 
 VermilionGymCard:
@@ -10396,7 +10396,7 @@ VermilionGymCard:
 	db LABORATORY | NONE ; sets
 	db VERMILION_GYM
 	dw StadiumCardEffectCommands ; effect commands
-	tx FixmeText ; description
+	tx VermilionGymDescription ; description
 	dw NONE ; description (cont)
 
 CeladonGymCard:

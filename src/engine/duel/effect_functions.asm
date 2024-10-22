@@ -4959,7 +4959,10 @@ Metronome_AISelectEffect:
 ; 	ld a, 1 ; energy cost of this attack
 ; 	jr HandlePlayerMetronomeEffect
 
-Metronome_UseAttackEffect:
+
+; output:
+;   a: total converted energy cost of the loaded attack (ignores colors)
+GetTotalAttackEnergyCost:
 	ld hl, wLoadedAttackEnergyCost
 	ld b, 0
 	ld c, (NUM_TYPES / 2) - 1
@@ -4988,6 +4991,11 @@ Metronome_UseAttackEffect:
 	and $f
 ; total energy cost of the attack
 	add b
+	ret
+
+
+Metronome_UseAttackEffect:
+	call GetTotalAttackEnergyCost
 	;	fallthrough
 
 ; handles Metronome selection, and validates

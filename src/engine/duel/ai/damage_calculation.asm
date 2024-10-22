@@ -165,12 +165,13 @@ _CalculateDamage_VersusDefendingPokemon:
 	jr z, .apply_pluspower
 	call ApplyWeaknessToDamage_DE
 
-; 3. apply pluspower bonuses
+; 3. apply tool and stadium bonuses
 .apply_pluspower
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	; add CARD_LOCATION_ARENA
 	ld b, a
-	call ApplyAttachedPluspower
+	call ApplyAttachedPluspower  ; preserves: bc
+	call HandleDamageBoostingStadiums
 ; 4. cap damage at 250
 	call CapMaximumDamage_DE
 ; 5. apply resistance
@@ -187,12 +188,13 @@ _CalculateDamage_VersusDefendingPokemon:
 	jr z, .apply_defender
 	call ReduceDamageBy20_DE  ; preserves bc
 
-; 6. apply Defender reduction
+; 6. apply tool and stadium reduction
 .apply_defender
 	; apply pluspower and defender boosts
 	call SwapTurn
 	ld b, PLAY_AREA_ARENA  ; CARD_LOCATION_ARENA
-	call ApplyAttachedDefender
+	call ApplyAttachedDefender  ; preserves: bc
+	call HandleDamageReducingStadiums
 ; 7. apply damage reduction effects
 	ld a, [wDamageFlags]
 	bit UNAFFECTED_BY_POWERS_OR_EFFECTS_F, a
@@ -393,10 +395,11 @@ CalculateDamage_FromDefendingPokemon: ; 1458c (5:458c)
 	jr z, .apply_pluspower
 	call ApplyWeaknessToDamage_DE
 
-; 3. apply pluspower bonuses
+; 3. apply tool and stadium bonuses
 .apply_pluspower
 	ld b, PLAY_AREA_ARENA  ; CARD_LOCATION_ARENA
-	call ApplyAttachedPluspower
+	call ApplyAttachedPluspower  ; preserves: bc
+	call HandleDamageBoostingStadiums
 ; 4. cap damage at 250
 	call CapMaximumDamage_DE
 ; 5. apply resistance
@@ -413,13 +416,14 @@ CalculateDamage_FromDefendingPokemon: ; 1458c (5:458c)
 	and b
 	call nz, ReduceDamageBy20_DE
 
-; 6. apply Defender reduction
+; 6. apply tool and stadium reduction
 .apply_defender
 	call SwapTurn
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	; add CARD_LOCATION_ARENA
 	ld b, a
-	call ApplyAttachedDefender
+	call ApplyAttachedDefender  ; preserves: bc
+	call HandleDamageReducingStadiums
 ; 7. apply damage reduction effects
 	ld a, [wDamageFlags]
 	bit UNAFFECTED_BY_POWERS_OR_EFFECTS_F, a
