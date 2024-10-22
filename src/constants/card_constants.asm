@@ -217,22 +217,22 @@
 	const REVIVE                      ; $d8
 	const MAINTENANCE                 ; $d9
 	const POKEMON_FLUTE               ; $da
-	const ROCKET_HEADQUARTERS         ; $db
-	const POKEMON_NURSE               ; $dc
-	const PLUSPOWER                   ; $dd
-	const DEFENDER                    ; $de
-	const SITRUS_BERRY                ; $df
-	const LUM_BERRY                   ; $e0
-	const LEFTOVERS                   ; $e1
-	const ROCKY_HELMET                ; $e2
-	const PEWTER_GYM                  ; $e3
-	const CERULEAN_GYM                ; $e4
-	const VERMILION_GYM               ; $e5
-	const CELADON_GYM                 ; $e6
-	const FUCHSIA_GYM                 ; $e7
-	const SAFFRON_GYM                 ; $e8
-	const CINNABAR_GYM                ; $e9
-	const VIRIDIAN_GYM                ; $ea
+	const POKEMON_NURSE               ; $db
+	const PLUSPOWER                   ; $dc
+	const DEFENDER                    ; $dd
+	const SITRUS_BERRY                ; $de
+	const LUM_BERRY                   ; $df
+	const LEFTOVERS                   ; $e0
+	const ROCKY_HELMET                ; $e1
+	const PEWTER_GYM                  ; $e2
+	const CERULEAN_GYM                ; $e3
+	const VERMILION_GYM               ; $e4
+	const CELADON_GYM                 ; $e5
+	const FUCHSIA_GYM                 ; $e6
+	const SAFFRON_GYM                 ; $e7
+	const CINNABAR_GYM                ; $e8
+	const VIRIDIAN_GYM                ; $e9
+	const ROCKET_HEADQUARTERS         ; $ea
 DEF NUM_CARDS EQU const_value - 1
 
 DEF ENERGY_IDS_START  EQU GRASS_ENERGY

@@ -219,7 +219,6 @@ CardPointers:
 	dw ReviveCard
 	dw MaintenanceCard
 	dw PokemonFluteCard
-	dw RocketHeadquartersCard
 	dw PokemonNurseCard
 	dw PlusPowerCard
 	dw DefenderCard
@@ -235,6 +234,7 @@ CardPointers:
 	dw SaffronGymCard
 	dw CinnabarGymCard
 	dw ViridianGymCard
+	dw RocketHeadquartersCard
 	dw NULL
 	assert_table_length NUM_CARDS + 2
 
