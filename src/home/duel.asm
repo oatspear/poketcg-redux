@@ -2388,10 +2388,10 @@ ApplyAttachedDefender:
 	ret z
 	push de
 	ld a, b
-	ld de, PLUSPOWER
+	ld de, DEFENDER
 	call CheckToolIDAttachedToPlayArea
 	pop de
-	ret c  ; no PlusPower
+	ret c  ; no Defender
 	ld hl, 10
 	jp SubtractFromDamage_DE
 
