@@ -415,7 +415,9 @@ PutStadiumCardInDiscardPile:
 ;   de: card ID
 IsPokemonToolID:
 	ld a, e
-	sub PLUSPOWER  ; first Tool ID
+	cp TOOL_IDS_END + 1  ; first Stadium ID
+	ret nc
+	sub TOOL_IDS_START  ; first Tool ID
 ; values below will set carry
 ; tools will not set carry
 	ccf
