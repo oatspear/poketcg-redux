@@ -210,6 +210,17 @@ TargetedPoisonEffect:
 	jp SwapTurn
 
 ; input e: PLAY_AREA_* of the target Pokémon
+PutPoisonCounter_PlayArea:
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	add e
+	call GetTurnDuelistVariable
+	and DOUBLE_POISONED
+	jr z, PoisonEffect_PlayArea  ; first counter
+	cp DOUBLE_POISONED
+	ret z  ; already at max
+	jr DoublePoisonEffect_PlayArea  ; second counter
+
+; input e: PLAY_AREA_* of the target Pokémon
 PoisonEffect_PlayArea:
 	lb bc, $ff, POISONED
 	jr ApplyStatusEffectToPlayAreaPokemon

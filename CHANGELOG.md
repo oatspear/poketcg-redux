@@ -45,7 +45,7 @@
 
 #### Fuchsia Gym
 - Stadium Trainer card.
-- Whenever a Pokémon card is played from the hand, put 1 damage counter on that Pokémon.
+- Whenever a Pokémon card is played from the hand, put 1 damage counter and 1 Poison counter on that Pokémon.
 
 #### Rocket Headquarters
 - Stadium Trainer card.

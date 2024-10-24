@@ -7057,7 +7057,9 @@ HandleOnPlayPokemonEffects:
 	ret c  ; not in play
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	ld e, a  ; play area location
-	jp Bank1_Put1DamageCounterOnTarget  ; preserves: hl, e, bc
+	call Bank1_Put1DamageCounterOnTarget  ; preserves: hl, e, bc
+	farcall PutPoisonCounter_PlayArea
+	ret
 
 
 HandleOnEvolvePokemonEffects:
