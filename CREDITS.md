@@ -22,6 +22,13 @@ This Pokémon TCG (GB) mod was made by Oatspear.
 - Discord user `yung_rocks`
 - Discord user `bazaro`
 - Discord user `jensybio`
+- Discord user `king_koopa_`
+- Discord user `electrodeoxys`
+- Discord user `purplesea`
+- Discord user `maruno`
+- Discord user `mgriffin`
+- Discord user `datcorvus`
+- Discord user `1mpossiblenight`
 
 ## Testing
 
