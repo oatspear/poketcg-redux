@@ -1267,8 +1267,8 @@ VengefulHornName:
 
 VengefulHornDescription:
 	text "This attack does 10 more damage"
-	line "for each of your Pokémon with"
-	line "any damage counters on it."
+	line "for each of your Benched Pokémon"
+	line "with any damage counters on it."
 	done
 
 GarbageEaterName:

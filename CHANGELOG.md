@@ -67,6 +67,17 @@
 #### Mew Lv15
 - This is now a regular promotional card, instead of a phantom card.
 
+### Darkness Changes
+
+#### Nidoking
+- **Vengeful Horn**: bonus damage only from damaged Benched Pokémon.
+
+### Colorless Changes
+
+#### Kangaskhan
+- **Parental Rush**: reduced cost from (CCC) to (CC).
+- **Parental Rush**: bonus damage only from damaged Benched Pokémon.
+
 
 ## Version 0.12.0
 

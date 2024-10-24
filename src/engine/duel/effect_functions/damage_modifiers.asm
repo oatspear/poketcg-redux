@@ -968,12 +968,14 @@ PsychicAssault_AIEffect:
   jp SetDefiniteAIDamage
 
 
-; +10 damage for each damaged Pokémon on turn holder's play area
+; +10 damage for each damaged Benched Pokémon on turn holder's play area
 VengefulHorn_DamageBoostEffect:
   ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
   call GetTurnDuelistVariable
+	dec a  ; discount arena
+	ret z  ; no Bench
   ld d, a
-  ld e, PLAY_AREA_ARENA
+  ld e, PLAY_AREA_BENCH_1
   ld c, 0
 .loop_play_area
   ; input in e

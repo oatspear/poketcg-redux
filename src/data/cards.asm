@@ -9306,7 +9306,7 @@ KangaskhanCard:
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
 	; attack 2
-	energy COLORLESS, 3 ; energies
+	energy COLORLESS, 2 ; energies
 	tx ParentalRushName ; name
 	tx VengefulHornDescription ; description
 	dw NONE ; description (cont)
