@@ -2449,7 +2449,11 @@ HandleDamageReducingStadiums:
 	ld de, PEWTER_GYM
 	call CheckStadiumIDInPlayArea  ; preserves: bc, de
 	ret c
-	ret
+	ld a, b
+	farcall IsEnergizedPokemon
+	ret nc  ; no energies
+	ld hl, 10
+	jp SubtractFromDamage_DE
 
 
 ; input:

@@ -10374,7 +10374,7 @@ PewterGymCard:
 	db LABORATORY | NONE ; sets
 	db PEWTER_GYM
 	dw StadiumCardEffectCommands ; effect commands
-	tx FixmeText ; description
+	tx PewterGymDescription ; description
 	dw NONE ; description (cont)
 
 CeruleanGymCard:

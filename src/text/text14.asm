@@ -552,12 +552,10 @@ PewterGymName:
 	done
 
 PewterGymDescription:
-	text "If the Pokémon this card is attached"
-	line "to is your Active Pokémon and is"
-	line "damaged by an opponent's attack,"
-	line "even if that Pokémon is Knocked Out,"
-	line "put 1 damage counter on the"
-	line "Attacking Pokémon."
+	text "If a player's Pokémon has any"
+	line "Energies attached to it, it takes"
+	line "10 less damage from attacks, recoil"
+	line "and Confusion."
 	done
 
 CeruleanGymName:

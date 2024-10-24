@@ -27,6 +27,10 @@
 - Stadium Trainer card.
 - After playing a Supporter card, the player heals 10 damage from each of their Pokémon.
 
+#### Pewter Gym
+- Stadium Trainer card.
+- If a Pokémon has any attached energies, it takes 10 less damage from attacks and recoil.
+
 #### Cerulean Gym
 - Stadium Trainer card.
 - If a Pokémon has surplus energy, its attacks do 10 more damage to the Defending Pokémon.
