@@ -310,8 +310,10 @@ PrintPlayersCardsText:
 ; in the form:
 ; CARD NAME/LEVEL X
 ; where X is the current count of that card
+; preserves: bc
 PrintCardSelectionList:
 	push bc
+	call PrintPlayersCardsText
 	ld hl, wCardListCoords
 	ld e, [hl]
 	inc hl
