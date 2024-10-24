@@ -7342,10 +7342,10 @@ HandleEndOfTurnEffect_RocketHeadquarters:
 .DamageTargets
 	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
 	call GetTurnDuelistVariable
-	ld b, PLAY_AREA_ARENA
 	ld c, a
+	ld d, 10  ; damage
+	ld e, PLAY_AREA_ARENA
 	ld l, DUELVARS_ARENA_CARD
-	ld de, 10  ; damage
 .loop
 	ld a, [hli]  ; deck index
 	call LoadCardDataToBuffer2_FromDeckIndex  ; preserves hl, bc, de
@@ -7368,11 +7368,11 @@ HandleEndOfTurnEffect_RocketHeadquarters:
 	pop de
 	pop bc
 	pop hl
-	; b: current play area location
-	; de: amount of damage
-	call DealDamageToPlayAreaPokemon_RegularAnim  ; preserves: hl, bc, de
+	; d: amount of damage
+	; e: current play area location
+	call Bank1_ApplyDirectDamage_RegularAnim  ; preserves: hl, de, bc
 .next
-	inc b
+	inc e
 	dec c
 	jr nz, .loop
 	ret
