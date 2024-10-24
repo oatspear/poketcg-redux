@@ -2714,7 +2714,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PowerLariatDescription
 	textpointer RetaliateName
 	textpointer RetaliateDescription
-	textpointer HornDrillName                                      ; 0x0861
+	textpointer HornDrillName
+	textpointer DiscardStadiumInPlayDescription
 	textpointer RoutName
 	textpointer RoutDescription
 	textpointer ToxicNeedleName

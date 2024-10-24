@@ -7061,13 +7061,13 @@ RhydonCard:
 	; Raging Crash: bonus damage per damaged Pokémon
 
 	; attack 1
-	energy COLORLESS, 2 ; energies
+	energy FIGHTING, 1, COLORLESS, 1 ; energies
 	tx HornDrillName ; name
-	dw NONE ; description
+	tx DiscardStadiumInPlayDescription ; description
 	dw NONE ; description (cont)
 	db 30 ; damage
 	db DAMAGE_NORMAL ; category
-	dw NONE ; effect commands
+	dw DiscardStadiumInPlayEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3

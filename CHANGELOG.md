@@ -62,6 +62,12 @@
 #### Venusaur Lv64
 - This is now a regular promotional card, instead of a phantom card.
 
+### Fighting Changes
+
+#### Rhydon
+- **Horn Drill**: increased cost from (CC) to (FC).
+- **Horn Drill**: discards a Stadium in play.
+
 ### Psychic Changes
 
 #### Slowbro

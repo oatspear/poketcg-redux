@@ -205,6 +205,15 @@ DiscardAllCardsFromHand:
 
 
 DiscardOpponentTool_DiscardEffect:
-  call SwapTurn
-  call PutArenaToolInDiscardPile
-  jp SwapTurn
+	call SwapTurn
+	call PutArenaToolInDiscardPile
+	jp SwapTurn
+
+
+DiscardStadium_DiscardEffect:
+; discard previous Stadium, if any
+	call PutStadiumCardInDiscardPile
+; discard previous opponent Stadium, if any
+	call SwapTurn
+	call PutStadiumCardInDiscardPile
+	jp SwapTurn

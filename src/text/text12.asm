@@ -173,8 +173,12 @@ RetaliateDescription:
 	line "counters on it."
 	done
 
-HornDrillName: ; 586a3 (16:46a3)
+HornDrillName:
 	text "Horn Drill"
+	done
+
+DiscardStadiumInPlayDescription:
+	text "Discard a Stadium in play."
 	done
 
 RoutName:

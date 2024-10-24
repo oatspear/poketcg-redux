@@ -1763,6 +1763,11 @@ IngrainEffectCommands:
 	db  $00
 
 
+DiscardStadiumInPlayEffectCommands:
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DiscardStadium_DiscardEffect
+	db  $00
+
+
 ; ------------------------------------------------------------------------------
 ; Energy Cards
 ; ------------------------------------------------------------------------------
