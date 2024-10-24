@@ -7525,11 +7525,11 @@ SlowbroCard:
 	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy PSYCHIC, 1, COLORLESS, 1 ; energies
+	energy PSYCHIC, 1, COLORLESS, 2 ; energies
 	tx SpiralDrainName ; name
 	tx Heal20DamageDescription ; description
 	dw NONE ; description (cont)
-	db 20 ; damage
+	db 40 ; damage
 	db DAMAGE_NORMAL ; category
 	dw Heal20DamageEffectCommands ; effect commands
 	db NONE ; flags 1
