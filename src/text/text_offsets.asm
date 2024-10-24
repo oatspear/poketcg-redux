@@ -3138,8 +3138,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer MaintenanceDescription                             ; 0x0ba7
 	textpointer PokemonFluteName                                   ; 0x0ba8
 	textpointer PokemonFluteDescription                            ; 0x0ba9
-	textpointer RocketHeadquartersName
-	textpointer RocketHeadquartersDescription
 	textpointer RecycleName                                        ; 0x0bac
 	textpointer RecycleDescription                                 ; 0x0bad
 	textpointer SuperRodName
@@ -3176,3 +3174,5 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer CinnabarGymDescription
 	textpointer ViridianGymName
 	textpointer ViridianGymDescription
+	textpointer RocketHeadquartersName
+	textpointer RocketHeadquartersDescription

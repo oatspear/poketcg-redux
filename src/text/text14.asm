@@ -432,17 +432,6 @@ PokemonFluteDescription:
 	line "it onto their Bench."
 	done
 
-RocketHeadquartersName:
-	text "Rocket Headquarters"
-	done
-
-RocketHeadquartersDescription:
-	text "At the end of each turn, each"
-	line "player puts 1 damage counter on"
-	line "each of their Pokémon that has"
-	line "a Pokémon Power."
-	done
-
 RecycleName:
 	text "Recycle"
 	done
@@ -644,4 +633,15 @@ ViridianGymDescription:
 	line "even if that Pokémon is Knocked Out,"
 	line "put 1 damage counter on the"
 	line "Attacking Pokémon."
+	done
+
+RocketHeadquartersName:
+	text "Rocket Headquarters"
+	done
+
+RocketHeadquartersDescription:
+	text "At the end of each turn, each"
+	line "player puts 1 damage counter on"
+	line "each of their Pokémon that has"
+	line "a Pokémon Power."
 	done
