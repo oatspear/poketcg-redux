@@ -588,12 +588,11 @@ FuchsiaGymName:
 	done
 
 FuchsiaGymDescription:
-	text "If the Pokémon this card is attached"
-	line "to is your Active Pokémon and is"
-	line "damaged by an opponent's attack,"
-	line "even if that Pokémon is Knocked Out,"
-	line "put 1 damage counter on the"
-	line "Attacking Pokémon."
+	text "Whenever any player plays a Pokémon"
+	line "from their hand to put on their"
+	line "Bench or to evolve 1 of their"
+	line "Pokémon, put 1 damage counter on"
+	line "that Pokémon."
 	done
 
 SaffronGymName:

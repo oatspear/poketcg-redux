@@ -39,6 +39,10 @@
 - Stadium Trainer card.
 - If a Pokémon moved into the Active Spot this turn, its attacks do 10 more damage to the Defending Pokémon.
 
+#### Fuchsia Gym
+- Stadium Trainer card.
+- Whenever a Pokémon card is played from the hand, put 1 damage counter on that Pokémon.
+
 #### Rocket Headquarters
 - Stadium Trainer card.
 - Each Pokémon with a Pokémon Power takes 10 damage at the end of each turn.

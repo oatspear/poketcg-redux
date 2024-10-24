@@ -754,6 +754,7 @@ PlayPokemonCard:
 	ldtx hl, PlacedOnTheBenchText
 	call DrawWideTextBox_WaitForInput
 	call OnPokemonPlayedInitVariablesAndPowers
+	call HandleOnPlayPokemonEffects
 	or a
 	ret
 
@@ -786,6 +787,7 @@ PlayPokemonCard:
 	call PrintPokemonEvolvedIntoPokemon
 	call OnPokemonPlayedInitVariablesAndPowers
 	call HandleOnEvolvePokemonEffects
+	call HandleOnPlayPokemonEffects
 .done
 	or a
 	ret
@@ -6590,6 +6592,7 @@ OppAction_EvolvePokemonCard:
 	call PrintPokemonEvolvedIntoPokemon
 	call OnPokemonPlayedInitVariablesAndPowers
 	call HandleOnEvolvePokemonEffects
+	call HandleOnPlayPokemonEffects
 	jp DrawDuelMainScene
 
 ; place a basic Pokemon card from hand in the bench
@@ -6605,6 +6608,7 @@ OppAction_PlayBasicPokemonCard:
 	ldtx hl, PlacedOnTheBenchText
 	call DisplayCardDetailScreen
 	call OnPokemonPlayedInitVariablesAndPowers
+	call HandleOnPlayPokemonEffects
 	jp DrawDuelMainScene
 
 ; attempt the retreat of the active Pokemon card
@@ -6990,8 +6994,7 @@ HandleOnUsePokemonPowerEffects:
 	; call DisplayCardDetailScreen
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	ld e, a  ; location
-	farcall Put1DamageCounterOnTarget
-	ret
+	jp Bank1_Put1DamageCounterOnTarget
 
 
 HandleOnPlayTrainerEffects:
@@ -7034,7 +7037,7 @@ HandleOnPlayEnergyEffects:
 	ldh a, [hTempPlayAreaLocation_ff9d]
 ; placing damage counters directly
 	ld e, a
-	farcall Put1DamageCounterOnTarget
+	call Bank1_Put1DamageCounterOnTarget
 .full_heal_energy
 	ld a, DEWGONG  ; Safeguard
 	call GetFirstPokemonWithAvailablePower
@@ -7044,6 +7047,17 @@ HandleOnPlayEnergyEffects:
 	ret nz  ; not Water energy
 	farcall Safeguard_StatusHealingEffect
 	ret
+
+
+; input:
+;   hTempPlayAreaLocation_ff9d: PLAY_AREA_* of the Pokémon
+HandleOnPlayPokemonEffects:
+	ld de, FUCHSIA_GYM
+	call CheckStadiumIDInPlayArea  ; preserves: bc, de
+	ret c  ; not in play
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	ld e, a  ; play area location
+	jp Bank1_Put1DamageCounterOnTarget  ; preserves: hl, e, bc
 
 
 HandleOnEvolvePokemonEffects:
@@ -7523,6 +7537,17 @@ ClearPokemonFlags_EndOfTurn:
 	jr .loop
 
 
+; Puts 1 damage counter on the target at location in e,
+;   without counting as attack damage (does not trigger damage reduction, etc.)
+; inputs:
+;   e: PLAY_AREA_* of the target
+; output:
+;   carry: set if the target was Knocked Out
+; preserves: hl, e, bc
+Bank1_Put1DamageCounterOnTarget:
+	ld d, 10
+	; fallthrough
+
 ; Puts damage counters on the target at location in e,
 ;   without counting as attack damage (does not trigger damage reduction, etc.)
 ; This is a mix between DealDamageToPlayAreaPokemon_RegularAnim (bank 0)
@@ -7545,15 +7570,16 @@ Bank1_ApplyDirectDamage:
 	ld a, e
 	ld [wTempPlayAreaLocation_cceb], a
 	or a ; cp PLAY_AREA_ARENA
-	jr nz, .bench
+	; jr nz, .bench
+	jr nz, .skip_no_damage_or_effect_check
 ; arena
 	ld a, [wNoDamageOrEffect]
 	or a
 	jr nz, .no_damage
 	jr .skip_no_damage_or_effect_check
-.bench
-	call IsBodyguardActive
-	jr nc, .skip_no_damage_or_effect_check
+; .bench
+; 	call IsBodyguardActive
+; 	jr nc, .skip_no_damage_or_effect_check
 .no_damage
 	ld d, 0
 .skip_no_damage_or_effect_check

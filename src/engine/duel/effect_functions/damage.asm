@@ -306,15 +306,16 @@ ApplyDirectDamage:
 	ld a, e
 	ld [wTempPlayAreaLocation_cceb], a
 	or a ; cp PLAY_AREA_ARENA
-	jr nz, .bench
+	; jr nz, .bench
+	jr nz, .skip_no_damage_or_effect_check
 ; arena
 	ld a, [wNoDamageOrEffect]
 	or a
 	jr nz, .no_damage
 	jr .skip_no_damage_or_effect_check
-.bench
-	call IsBodyguardActive
-	jr nc, .skip_no_damage_or_effect_check
+; .bench
+	; call IsBodyguardActive
+	; jr nc, .skip_no_damage_or_effect_check
 .no_damage
 	ld d, 0
 .skip_no_damage_or_effect_check

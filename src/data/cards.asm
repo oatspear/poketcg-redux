@@ -10418,7 +10418,7 @@ FuchsiaGymCard:
 	db LABORATORY | NONE ; sets
 	db FUCHSIA_GYM
 	dw StadiumCardEffectCommands ; effect commands
-	tx FixmeText ; description
+	tx FuchsiaGymDescription ; description
 	dw NONE ; description (cont)
 
 SaffronGymCard:
