@@ -336,10 +336,15 @@ DevolvePokemon:
 ; Reset status and effects after devolving card.
 ; preserves: bc, de
 ResetDevolvedCardStatus:
+	push de
+	ld de, CELADON_GYM
+	call CheckStadiumIDInPlayArea  ; preserves: bc, de
+	pop de
+	jr nc, .clear_effects  ; found stadium
 ; clear status conditions
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	call ClearStatusFromTarget  ; preserves bc, de
-; if it's Arena card, clear other effects
+.clear_effects
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	or a  ; cp PLAY_AREA_ARENA
 	call z, ClearAllArenaEffectsAndSubstatus  ; preserves hl, bc, de

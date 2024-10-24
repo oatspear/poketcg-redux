@@ -10407,7 +10407,7 @@ CeladonGymCard:
 	db LABORATORY | NONE ; sets
 	db CELADON_GYM
 	dw StadiumCardEffectCommands ; effect commands
-	tx FixmeText ; description
+	tx CeladonGymDescription ; description
 	dw NONE ; description (cont)
 
 FuchsiaGymCard:

@@ -967,10 +967,19 @@ EvolvePokemonCard:
 	ld l, a
 	ld [hl], $00
 ; OATS evolution clears status conditions for all Play Area locations
-	ld a, e
+	push de
+	ld de, CELADON_GYM
+	call CheckStadiumIDInPlayArea  ; preserves: bc, de
+	pop de
+	ld a, e  ; location
+	jr c, .heal_status  ; not in play
+	or a
+	call z, ClearAllArenaEffectsAndSubstatus  ; preserves: hl, bc, de
+	jr .set_evolution_stage
+.heal_status
 	call ClearAllStatusAndEffectsFromTarget  ; preserves de
-; set the new evolution stage of the card
-; but take into account revived Stage 1 Pokémon without a Basic
+.set_evolution_stage
+	; take into account revived Stage 1 Pokémon without a Basic
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	add DUELVARS_ARENA_CARD_STAGE
 	call GetTurnDuelistVariable

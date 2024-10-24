@@ -575,12 +575,9 @@ CeladonGymName:
 	done
 
 CeladonGymDescription:
-	text "If the Pokémon this card is attached"
-	line "to is your Active Pokémon and is"
-	line "damaged by an opponent's attack,"
-	line "even if that Pokémon is Knocked Out,"
-	line "put 1 damage counter on the"
-	line "Attacking Pokémon."
+	text "Special Conditions are not removed"
+	line "when Pokémon (both yours and your"
+	line "opponent's) evolve or devolve."
 	done
 
 FuchsiaGymName:
