@@ -4274,7 +4274,7 @@ PrintAttackOrPkmnPowerInformation:
 	push hl
 	dec hl
 	; print text ID pointed to by hl at 7,e
-	ld d, 7
+	ld d, 6
 	call InitTextPrinting_ProcessTextFromPointerToID
 	pop hl
 	inc hl
@@ -4325,7 +4325,7 @@ PrintAttackOrPkmnPowerInformation:
 	add hl, bc
 	ld c, e
 	ld b, 2 ; bc = 2, e
-	lb de, NUM_TYPES / 2, 0
+	lb de, NUM_TYPES / 2, 0  ; FIRE
 .energy_loop
 	ld a, [hl]
 	swap a
@@ -4337,8 +4337,8 @@ PrintAttackOrPkmnPowerInformation:
 	pop bc
 	ret
 .print_pokemon_power
-	; print "PKMN PWR" at 2,e
-	ld d, 2
+	; print "PKMN PWR" at 1,e
+	ld d, 1
 	ldtx hl, PKMNPWRText
 	call InitTextPrinting_ProcessTextFromID
 	pop bc
@@ -4356,6 +4356,12 @@ PrintEnergiesOfColor:
 	ld a, e
 	call JPWriteByteToBGMap0
 	inc b
+	ld a, b
+	cp 5
+	jr c, .skip_line_break
+	ld b, 2
+	inc c
+.skip_line_break
 	dec d
 	jr nz, .print_energies_loop
 	pop de
