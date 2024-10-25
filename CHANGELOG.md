@@ -71,7 +71,8 @@
 ### Psychic Changes
 
 #### Slowbro
-- **Spiral Drain**: reduced cost from (PPC) to (PCC).
+- **Spiral Drain**: reduced damage from 40 to 30.
+- **Spiral Drain**: increased healing from 20 to 30.
 
 #### Mew Lv15
 - This is now a regular promotional card, instead of a phantom card.
