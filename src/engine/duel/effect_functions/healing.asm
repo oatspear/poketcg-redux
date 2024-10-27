@@ -229,6 +229,39 @@ HealPlayAreaCardHP:
 	; ret
 
 
+; no animation
+; does not count as healing
+; input:
+;   d: damage to remove (tens, not units)
+;   e: PLAY_AREA_* of the target
+; output:
+;   d: amount of healed damage (<= input d)
+;   carry: set if no damage counters to remove
+; preserves: bc, e
+RemoveDamageCounters:
+; check its damage
+	push bc
+	call GetCardDamageAndMaxHP
+	pop bc
+	or a
+	jr nz, .damaged
+	ld d, 0
+	scf
+	ret
+
+.damaged
+	cp d
+	jr nc, .got_amount_to_heal  ; is damage higher than amount to heal?
+	ld d, a                     ; else, heal at most a damage
+.got_amount_to_heal
+	ld a, DUELVARS_ARENA_CARD_HP
+	add e
+	call GetTurnDuelistVariable
+	add d
+	ld [hl], a
+	ret
+
+
 Aromatherapy_HealEffect:
 	call SetUsedPokemonPowerThisTurn
 ; play the global healing wind animation

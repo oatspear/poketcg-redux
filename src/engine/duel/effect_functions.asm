@@ -543,6 +543,15 @@ FullHeal_ClearStatusEffect:
 INCLUDE "engine/duel/effect_functions/damage.asm"
 
 
+PsyShift_MoveDamageCountersEffect:
+	ld d, 30
+	ld e, PLAY_AREA_ARENA
+	call RemoveDamageCounters  ; preserves: bc, e
+	ret c  ; nothing to do
+	; d: amount of healed damage (<= input d)
+	jp PutDamageCounters_NoAnim_Unchecked
+
+
 TripleHit_StoreExtraDamageEffect:
 	call CheckArenaPokemonHas3OrMoreEnergiesAttached
 	ld de, 0

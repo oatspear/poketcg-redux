@@ -350,6 +350,11 @@ Heal30DamageEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Heal30DamageEffect
 	db  $00
 
+PsyShiftEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasAnyDamage
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PsyShift_MoveDamageCountersEffect
+	db  $00
+
 EnergyTransEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, EnergyTrans_CheckPlayArea
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, EnergyTrans_TransferEffect

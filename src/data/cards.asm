@@ -7525,18 +7525,18 @@ SlowbroCard:
 	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy PSYCHIC, 2, COLORLESS, 1 ; energies
-	tx SpiralDrainName ; name
-	tx Heal30DamageDescription ; description
+	energy PSYCHIC, 1, COLORLESS, 1 ; energies
+	tx PsyShiftName ; name
+	tx PsyShiftDescription ; description
 	dw NONE ; description (cont)
-	db 30 ; damage
-	db DAMAGE_NORMAL ; category
-	dw Heal30DamageEffectCommands ; effect commands
+	db 0 ; damage
+	db RESIDUAL ; category
+	dw PsyShiftEffectCommands ; effect commands
 	db NONE ; flags 1
 	db HEAL_USER ; flags 2
 	db NONE ; flags 3
 	db 3
-	db ATK_ANIM_DRAIN ; animation
+	db ATK_ANIM_GLOW_EFFECT ; animation
 
 	db 1 ; retreat cost
 	db WR_DARKNESS ; weakness

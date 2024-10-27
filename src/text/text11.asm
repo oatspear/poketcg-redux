@@ -333,10 +333,6 @@ UnableToUseItemsDescription:
 	line "cards during their next turn."
 	done
 
-SpiralDrainName:
-	text "Spiral Drain"
-	done
-
 HyperBeamName: ; 5b462 (16:7462)
 	text "Hyper Beam"
 	done

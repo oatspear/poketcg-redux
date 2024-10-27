@@ -359,6 +359,40 @@ ApplyDirectDamage:
 	ret
 
 
+; input:
+;   d: damage to deal (direct damage)
+;   e: PLAY_AREA_* of the target
+; preserves: hl, bc, de
+PutDamageCounters_NoAnim_Unchecked:
+	ld a, e
+	or a  ; cp PLAY_AREA_ARENA
+	jr nz, .skip_no_damage_or_effect_check  ; .bench
+; arena
+	ld a, [wNoDamageOrEffect]
+	or a
+	ret nz  ; no damage
+; .bench
+	; call IsBodyguardActive
+	; ccf
+	; ret nc  ; no damage
+.skip_no_damage_or_effect_check
+	xor a
+	ld [wNoDamageOrEffect], a
+	ld a, e
+	ld e, d
+	ld d, 0
+	add DUELVARS_ARENA_CARD_HP
+	call GetTurnDuelistVariable
+	or a
+	ret z  ; already KO
+	call SubtractHP  ; preserves hl, bc, de
+	ld a, [hl]
+	or a
+	ret nz  ; no KO
+	scf  ; signal KO
+	ret
+
+
 ; ------------------------------------------------------------------------------
 ; Targeted Damage - Player Selection
 ; ------------------------------------------------------------------------------

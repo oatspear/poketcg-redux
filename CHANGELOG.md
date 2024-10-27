@@ -71,8 +71,8 @@
 ### Psychic Changes
 
 #### Slowbro
-- **Spiral Drain**: reduced damage from 40 to 30.
-- **Spiral Drain**: increased healing from 20 to 30.
+- **Spiral Drain**: removed.
+- New attack: **Psy Shift** (PC): moves up to 3 damage counters from the user to the Defending Pokémon.
 
 #### Mew Lv15
 - This is now a regular promotional card, instead of a phantom card.

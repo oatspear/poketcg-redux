@@ -1546,3 +1546,13 @@ EnergyBloomDescription:
 	text "Heal 20 damage from each of your"
 	line "Pokémon that has attached Energies."
 	done
+
+PsyShiftName:
+	text "Psy Shift"
+	done
+
+PsyShiftDescription:
+	text "Move up to 3 damage counters from"
+	line "this Pokémon to the Defending"
+	line "Pokémon."
+	done

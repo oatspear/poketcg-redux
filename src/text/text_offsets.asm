@@ -2423,7 +2423,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer HydroPumpDescription                               ; 0x0933
 	textpointer HeadacheName                                       ; 0x0937
 	textpointer UnableToUseItemsDescription
-	textpointer SpiralDrainName                                    ; 0x093c
 	textpointer HyperBeamName                                      ; 0x093d
 	textpointer Discard1EnergyFromTargetDescription
 	textpointer AmnesiaName                                        ; 0x0946
@@ -2979,6 +2978,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer FragranceTrapDescriptionCont
 	textpointer MassiveBloomName
 	textpointer EnergyBloomDescription
+	textpointer PsyShiftName
+	textpointer PsyShiftDescription
 
 ; ------------------------------------------------------------------------------
 ; text13.asm
