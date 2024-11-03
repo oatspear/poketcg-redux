@@ -10429,7 +10429,7 @@ SaffronGymCard:
 	db LABORATORY | NONE ; sets
 	db SAFFRON_GYM
 	dw StadiumCardEffectCommands ; effect commands
-	tx FixmeText ; description
+	tx SaffronGymDescription ; description
 	dw NONE ; description (cont)
 
 CinnabarGymCard:
