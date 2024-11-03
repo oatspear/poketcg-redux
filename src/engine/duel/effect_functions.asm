@@ -549,7 +549,9 @@ PsyShift_MoveDamageCountersEffect:
 	call RemoveDamageCounters  ; preserves: bc, e
 	ret c  ; nothing to do
 	; d: amount of healed damage (<= input d)
-	jp PutDamageCounters_NoAnim_Unchecked
+	call SwapTurn
+	call PutDamageCounters_NoAnim_Unchecked
+	jp SwapTurn
 
 
 TripleHit_StoreExtraDamageEffect:
