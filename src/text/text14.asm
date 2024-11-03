@@ -609,12 +609,9 @@ CinnabarGymName:
 	done
 
 CinnabarGymDescription:
-	text "If the Pokémon this card is attached"
-	line "to is your Active Pokémon and is"
-	line "damaged by an opponent's attack,"
-	line "even if that Pokémon is Knocked Out,"
-	line "put 1 damage counter on the"
-	line "Attacking Pokémon."
+	text "At the end of each player's turn,"
+	line "that player discards the top card"
+	line "of their deck."
 	done
 
 ViridianGymName:

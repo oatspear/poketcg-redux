@@ -10440,7 +10440,7 @@ CinnabarGymCard:
 	db LABORATORY | NONE ; sets
 	db CINNABAR_GYM
 	dw StadiumCardEffectCommands ; effect commands
-	tx FixmeText ; description
+	tx CinnabarGymDescription ; description
 	dw NONE ; description (cont)
 
 ViridianGymCard:

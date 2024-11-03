@@ -51,6 +51,10 @@
 - Stadium Trainer card.
 - At the end of each turn, the player with more cards in their hand moves 1 damage counter from their Active Pokémon to the opponent's Active Pokémon.
 
+#### Cinnabar Gym
+- Stadium Trainer card.
+- At the end of each turn, the turn holder discard the top card of their deck.
+
 #### Rocket Headquarters
 - Stadium Trainer card.
 - Each Pokémon with a Pokémon Power takes 10 damage at the end of each turn.
