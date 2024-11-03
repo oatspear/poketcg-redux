@@ -71,9 +71,9 @@ StunSporeName:
 	done
 
 StunSporeDescription:
-	text "If this Pokémon was damaged since"
-	line "your last turn, the Defending"
-	line "Pokémon is now Paralyzed."
+	text "If this Pokémon took damage since"
+	line "the end of your last turn, the"
+	line "Defending Pokémon is now Paralyzed."
 	done
 
 WhirlwindName:
