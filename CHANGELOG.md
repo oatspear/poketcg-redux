@@ -47,6 +47,10 @@
 - Stadium Trainer card.
 - Whenever a Pokémon card is played from the hand, put 1 damage counter and 1 Poison counter on that Pokémon.
 
+#### Saffron Gym
+- Stadium Trainer card.
+- At the end of each turn, the player with more cards in their hand moves 1 damage counter from their Active Pokémon to the opponent's Active Pokémon.
+
 #### Rocket Headquarters
 - Stadium Trainer card.
 - Each Pokémon with a Pokémon Power takes 10 damage at the end of each turn.

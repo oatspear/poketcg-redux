@@ -7109,6 +7109,7 @@ HandleBetweenTurnsEvents:
 	call ArePokemonPowersDisabled
 	call nc, HandleEndOfTurnEffect_Affliction
 	call HandleEndOfTurnEffect_StatusConditions
+	call HandleEndOfTurnEffect_SaffronGym
 	call HandleEndOfTurnEffect_RocketHeadquarters
 
 ; handle things that do not trigger a Between Turns transition
@@ -7345,6 +7346,37 @@ HandleEndOfTurnEffect_StatusConditions:
 	ld a, DUEL_ANIM_HEAL
 	call Func_6cab
 	jp WaitForWideTextBoxInput
+
+
+HandleEndOfTurnEffect_SaffronGym:
+	ld de, SAFFRON_GYM
+	call CheckStadiumIDInPlayArea
+	ret c  ; none found
+
+	ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND
+	call GetTurnDuelistVariable
+	ld c, a
+	ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND
+	call GetNonTurnDuelistVariable
+	cp c
+	ret z  ; same number
+	jr c, .MoveDamageCounter ; player has more
+; opponent has more
+	call SwapTurn
+	call .MoveDamageCounter
+	jp SwapTurn
+
+.MoveDamageCounter
+	ld d, 10
+	ld e, PLAY_AREA_ARENA
+	farcall RemoveDamageCounters  ; preserves: bc, e
+	ret c  ; no damage counters to remove
+	call ShowBetweenTurnsTransitionAtMostOnce
+	ld e, PLAY_AREA_ARENA
+	call SwapTurn
+	call Bank1_Put1DamageCounterOnTarget
+	; carry: set if the target was Knocked Out
+	jp SwapTurn
 
 
 HandleEndOfTurnEffect_RocketHeadquarters:

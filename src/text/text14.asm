@@ -597,12 +597,11 @@ SaffronGymName:
 	done
 
 SaffronGymDescription:
-	text "If the Pokémon this card is attached"
-	line "to is your Active Pokémon and is"
-	line "damaged by an opponent's attack,"
-	line "even if that Pokémon is Knocked Out,"
-	line "put 1 damage counter on the"
-	line "Attacking Pokémon."
+	text "At the end of each turn, the player"
+	line "with more cards in their hand moves"
+	line "1 damage counter from their Active"
+	line "Pokémon to the opponent's Active"
+	line "Pokémon, if there are any."
 	done
 
 CinnabarGymName:
