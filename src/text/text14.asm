@@ -609,8 +609,9 @@ CinnabarGymName:
 	done
 
 CinnabarGymDescription:
-	text "At the end of each player's turn,"
-	line "that player discards the top card"
+	text "If a Pokémon's attack does damage"
+	line "to the opponent's Active Pokémon,"
+	line "the opponent discards the top card"
 	line "of their deck."
 	done
 

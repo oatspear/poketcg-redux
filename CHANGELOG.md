@@ -53,7 +53,7 @@
 
 #### Cinnabar Gym
 - Stadium Trainer card.
-- At the end of each turn, the turn holder discard the top card of their deck.
+- When an attack does damage to the Defending Pokémon, the opponent discards the top card of their deck.
 
 #### Rocket Headquarters
 - Stadium Trainer card.

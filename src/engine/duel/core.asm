@@ -6920,8 +6920,14 @@ HandleOnAttackEffects:
 	farcall VampiricAura_LeechEffect
 .grass_knot
 	call IsGrassKnotActive
-	jr nc, .done
+	jr nc, .cinnabar_gym
 	farcall GrassKnot_RootEffect
+.cinnabar_gym
+	ld de, CINNABAR_GYM
+	call CheckStadiumIDInPlayArea
+	jr c, .done  ; none found
+	ld a, 1
+	farcall DiscardFromDeckEffect
 .done
 	; jp HandleBurnDiscardEnergy
 	; fallthrough
@@ -7110,7 +7116,6 @@ HandleBetweenTurnsEvents:
 	call nc, HandleEndOfTurnEffect_Affliction
 	call HandleEndOfTurnEffect_StatusConditions
 	call HandleEndOfTurnEffect_SaffronGym
-	call HandleEndOfTurnEffect_CinnabarGym
 	call HandleEndOfTurnEffect_RocketHeadquarters
 
 ; handle things that do not trigger a Between Turns transition
@@ -7378,16 +7383,6 @@ HandleEndOfTurnEffect_SaffronGym:
 	call Bank1_Put1DamageCounterOnTarget
 	; carry: set if the target was Knocked Out
 	jp SwapTurn
-
-
-HandleEndOfTurnEffect_CinnabarGym:
-	ld de, CINNABAR_GYM
-	call CheckStadiumIDInPlayArea
-	ret c  ; none found
-	call ShowBetweenTurnsTransitionAtMostOnce
-	ld a, 1
-	farcall DiscardFromDeckEffect
-	ret
 
 
 HandleEndOfTurnEffect_RocketHeadquarters:
