@@ -226,6 +226,7 @@ CardPointers:
 	dw LeftoversCard
 	dw RockyHelmetCard
 	dw PokemonCenterCard
+	dw ViridianForestCard
 	dw PewterGymCard
 	dw CeruleanGymCard
 	dw VermilionGymCard
@@ -10364,6 +10365,17 @@ PokemonCenterCard:
 	db POKEMON_CENTER
 	dw StadiumCardEffectCommands ; effect commands
 	tx PokemonCenterDescription ; description
+	dw NONE ; description (cont)
+
+ViridianForestCard:
+	db TYPE_TRAINER_STADIUM ; type
+	gfx ViridianForestCardGfx ; gfx
+	tx ViridianForestName ; name
+	db DIAMOND ; rarity
+	db EVOLUTION | NONE ; sets
+	db VIRIDIAN_FOREST
+	dw StadiumCardEffectCommands ; effect commands
+	tx ViridianForestDescription ; description
 	dw NONE ; description (cont)
 
 PewterGymCard:

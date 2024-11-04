@@ -2457,3 +2457,7 @@ CinnabarGymCardGfx::
 ViridianGymCardGfx::
 	INCBIN "gfx/cards/viridiangym.2bpp"
 	INCBIN "gfx/cards/viridiangym.pal"
+
+ViridianForestCardGfx::
+	INCBIN "gfx/cards/viridianforest.2bpp"
+	INCBIN "gfx/cards/viridianforest.pal"

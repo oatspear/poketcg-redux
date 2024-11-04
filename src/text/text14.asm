@@ -638,3 +638,13 @@ RocketHeadquartersDescription:
 	line "each of their Pokémon that has"
 	line "a Pokémon Power."
 	done
+
+ViridianForestName:
+	text "Viridian Forest"
+	done
+
+ViridianForestDescription:
+	text "Whenever a player's Pokémon evolves,"
+	line "that player heals 20 damage from"
+	line "the evolving Pokémon."
+	done

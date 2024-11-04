@@ -3178,3 +3178,5 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ViridianGymDescription
 	textpointer RocketHeadquartersName
 	textpointer RocketHeadquartersDescription
+	textpointer ViridianForestName
+	textpointer ViridianForestDescription

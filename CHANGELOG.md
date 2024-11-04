@@ -27,6 +27,10 @@
 - Stadium Trainer card.
 - After playing a Supporter card, the player heals 10 damage from each of their Pokémon.
 
+#### Viridian Forest
+- Stadium Trainer card.
+- After evolving a Pokémon, heal 20 damage from that Pokémon.
+
 #### Pewter Gym
 - Stadium Trainer card.
 - If a Pokémon has any attached energies, it takes 10 less damage from attacks and recoil.

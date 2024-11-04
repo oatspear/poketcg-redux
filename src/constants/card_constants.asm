@@ -224,15 +224,16 @@
 	const LEFTOVERS                   ; $df
 	const ROCKY_HELMET                ; $e0
 	const POKEMON_CENTER              ; $e1
-	const PEWTER_GYM                  ; $e2
-	const CERULEAN_GYM                ; $e3
-	const VERMILION_GYM               ; $e4
-	const CELADON_GYM                 ; $e5
-	const FUCHSIA_GYM                 ; $e6
-	const SAFFRON_GYM                 ; $e7
-	const CINNABAR_GYM                ; $e8
-	const VIRIDIAN_GYM                ; $e9
-	const ROCKET_HEADQUARTERS         ; $ea
+	const VIRIDIAN_FOREST             ; $e2
+	const PEWTER_GYM                  ; $e3
+	const CERULEAN_GYM                ; $e4
+	const VERMILION_GYM               ; $e5
+	const CELADON_GYM                 ; $e6
+	const FUCHSIA_GYM                 ; $e7
+	const SAFFRON_GYM                 ; $e8
+	const CINNABAR_GYM                ; $e9
+	const VIRIDIAN_GYM                ; $ea
+	const ROCKET_HEADQUARTERS         ; $eb
 DEF NUM_CARDS EQU const_value - 1
 
 DEF ENERGY_IDS_START  EQU GRASS_ENERGY

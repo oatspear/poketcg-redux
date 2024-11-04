@@ -786,7 +786,7 @@ PlayPokemonCard:
 	call PrintPlayAreaCardList_EnableLCD
 	call PrintPokemonEvolvedIntoPokemon
 	call OnPokemonPlayedInitVariablesAndPowers
-	call HandleOnEvolvePokemonEffects
+	call HandleOnEvolvePokemonFromHandEffects
 	call HandleOnPlayPokemonEffects
 .done
 	or a
@@ -6597,7 +6597,7 @@ OppAction_EvolvePokemonCard:
 	call EvolvePokemonCardIfPossible
 	call PrintPokemonEvolvedIntoPokemon
 	call OnPokemonPlayedInitVariablesAndPowers
-	call HandleOnEvolvePokemonEffects
+	call HandleOnEvolvePokemonFromHandEffects
 	call HandleOnPlayPokemonEffects
 	jp DrawDuelMainScene
 
@@ -7074,7 +7074,19 @@ HandleOnPlayPokemonEffects:
 	ret
 
 
+HandleOnEvolvePokemonFromHandEffects:
+	; fallthrough
+
 HandleOnEvolvePokemonEffects:
+	ld de, VIRIDIAN_FOREST
+	call CheckStadiumIDInPlayArea  ; preserves: bc, de
+	jr c, .done  ; not in play
+	call DrawDuelMainScene
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	ld e, a   ; location
+	ld d, 20  ; damage
+	farcall HealPlayAreaCardHP
+
 ;	ld a, DRAGONAIR  ; Draconic Evolution
 ;	call CountPokemonIDInPlayArea
 ;	jr nc, .done  ; no Pkmn Power-capable Dragonair was found
