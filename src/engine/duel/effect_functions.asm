@@ -130,7 +130,7 @@ RareCandy_EvolveEffect:
 	ldtx hl, PokemonEvolvedIntoPokemonText
 	call DrawWideTextBox_WaitForInput
 	call OnPokemonPlayedInitVariablesAndPowers
-	bank1call HandleOnEvolvePokemonEffects
+	bank1call HandleOnEvolvePokemonFromHandEffects
 	bank1call HandleOnPlayPokemonEffects
 	pop af
 	ldh [hTempCardIndex_ff9f], a
