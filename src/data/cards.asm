@@ -10459,11 +10459,11 @@ ViridianGymCard:
 	db TYPE_TRAINER_STADIUM ; type
 	gfx ViridianGymCardGfx ; gfx
 	tx ViridianGymName ; name
-	db CIRCLE ; rarity
+	db STAR ; rarity
 	db LABORATORY | NONE ; sets
 	db VIRIDIAN_GYM
 	dw StadiumCardEffectCommands ; effect commands
-	tx FixmeText ; description
+	tx ViridianGymDescription ; description
 	dw NONE ; description (cont)
 
 RocketHeadquartersCard:

@@ -59,6 +59,10 @@
 - Stadium Trainer card.
 - When an attack does damage to the Defending Pokémon, the opponent discards the top card of their deck.
 
+#### Viridian Gym
+- Stadium Trainer card.
+- All attack costs can be paid with any type of energy.
+
 #### Rocket Headquarters
 - Stadium Trainer card.
 - Each Pokémon with a Pokémon Power takes 10 damage at the end of each turn.

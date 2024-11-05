@@ -620,12 +620,8 @@ ViridianGymName:
 	done
 
 ViridianGymDescription:
-	text "If the Pokémon this card is attached"
-	line "to is your Active Pokémon and is"
-	line "damaged by an opponent's attack,"
-	line "even if that Pokémon is Knocked Out,"
-	line "put 1 damage counter on the"
-	line "Attacking Pokémon."
+	text "All attack costs can be paid"
+	line "with Energies of any color."
 	done
 
 RocketHeadquartersName:

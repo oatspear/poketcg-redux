@@ -853,9 +853,53 @@ GetAttackCostDiscount:
 ;   hl: pointer to loaded attack struct energy cost
 ;   e: PLAY_AREA_* of the target
 ; output:
-;   updated colorless attack cost in the struct pointed by hl
+;   updated attack cost in the struct pointed by hl
 ; preserves: de
 OverwriteLoadedAttackCost:
+	push hl
+	push de
+	ld de, VIRIDIAN_GYM
+	call CheckStadiumIDInPlayArea  ; preserves: bc, de
+	pop de
+	pop hl
+	jr c, .colorless_modifiers  ; not in play
+
+; Viridian Gym
+	push hl
+	ld b, 0  ; total basic energy cost
+	ld c, NUM_TYPES / 2  ; loop counter
+.loop
+; first color
+	ld a, [hl]
+	swap a
+	and $0f
+	add b
+	ld b, a
+; second color
+	ld a, [hl]
+	and $0f
+	add b
+	ld b, a
+; erase colored cost
+	xor a
+	ld [hli], a
+	dec c
+	jr nz, .loop
+; write converted colorless cost
+IF (NUM_TYPES % 2) == 1
+	ld a, [hl]
+	swap a
+	add b
+	and $0f
+	swap a
+ELSE
+	dec hl
+	ld a, b
+ENDC
+	ld [hl], a
+	pop hl
+
+.colorless_modifiers
 ; skip to colorless energy
 	ld bc, (NUM_TYPES - 1) / 2
 	add hl, bc
