@@ -354,7 +354,7 @@ ENDC
 	and PLAYED_ENERGY_THIS_TURN  ; or a
 	jr nz, .skip_energy_attach_2
 IF DEBUG_MODE
-	ldtx hl, VineWhipName
+	ldtx hl, EnergyBallName
 	call DrawWideTextBox_WaitForInput
 ENDC
 	call AIProcessAndTryToPlayEnergy
