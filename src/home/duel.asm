@@ -2432,20 +2432,26 @@ CheckToolIDAttachedToPlayArea:
 ; input:
 ;   b: PLAY_AREA_* of the attacking Pokémon
 HandleDamageBoostingStadiums:
+	push de
 	ld de, CERULEAN_GYM
 	call CheckStadiumIDInPlayArea  ; preserves: bc, de
+	pop de
 	jr c, .vermilion_gym
+	push de
 	farcall CheckPokemonHasSurplusEnergy
+	pop de
 	ret c  ; no surplus energy
 	jr .add_to_damage
 .vermilion_gym
 	ld a, b
 	or a  ; cp PLAY_AREA_ARENA
 	ret nz  ; not active spot
+	push de
 	ld de, VERMILION_GYM
 	call CheckStadiumIDInPlayArea  ; preserves: bc, de
+	pop de
 	ret c  ; not in play
-	farcall CheckEnteredActiveSpotThisTurn
+	farcall CheckEnteredActiveSpotThisTurn  ; preserves: bc, de
 	ret c  ; not active this turn
 .add_to_damage
 	ld hl, 10
@@ -2455,11 +2461,15 @@ HandleDamageBoostingStadiums:
 ; input:
 ;   b: PLAY_AREA_* of the defending Pokémon
 HandleDamageReducingStadiums:
+	push de
 	ld de, PEWTER_GYM
 	call CheckStadiumIDInPlayArea  ; preserves: bc, de
+	pop de
 	ret c
 	ld a, b
+	push de
 	farcall IsEnergizedPokemon
+	pop de
 	ret nc  ; no energies
 	ld hl, 10
 	jp SubtractFromDamage_DE
