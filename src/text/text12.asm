@@ -283,8 +283,7 @@ HatchName:
 	done
 
 HatchDescription:
-	text "Heal 20 damage from this Pokémon and"
-	line "remove all Special Conditions on it."
+	text "Heal 20 damage from this Pokémon."
 	line "Then, search your deck for a card"
 	line "that evolves from this Pokémon and"
 	line "attach it to this Pokémon."
