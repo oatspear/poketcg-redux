@@ -9802,21 +9802,7 @@ DragoniteLv45Card:
 	tx DragonairName ; pre-evo name
 
 	; attack 1
-	energy COLORLESS, 3 ; energies
-	tx HyperBeamName ; name
-	tx Discard1EnergyFromTargetDescription ; description
-	dw NONE ; description (cont)
-	db 70 ; damage
-	db DAMAGE_NORMAL ; category
-	dw Discard1EnergyFromOpponentEffectCommands ; effect commands
-	db NONE ; flags 1
-	db NONE ; flags 2
-	db SPECIAL_AI_HANDLING ; flags 3
-	db 0
-	db ATK_ANIM_HYPER_BEAM ; animation
-
-	; attack 2
-	energy COLORLESS, 3 ; energies
+	energy COLORLESS, 2 ; energies
 	tx OutrageName ; name
 	tx Discard1EnergyDescription ; description
 	tx RageDescription ; description (cont)
@@ -9828,6 +9814,20 @@ DragoniteLv45Card:
 	db NONE ; flags 3
 	db 3
 	db ATK_ANIM_BIG_HIT ; animation
+
+	; attack 2
+	energy COLORLESS, 3 ; energies
+	tx HyperBeamName ; name
+	tx Discard1EnergyFromBothActiveDescription ; description
+	dw NONE ; description (cont)
+	db 70 ; damage
+	db DAMAGE_NORMAL ; category
+	dw Discard1EnergyFromBothActiveEffectCommands ; effect commands
+	db NONE ; flags 1
+	db DISCARD_ENERGY ; flags 2
+	db SPECIAL_AI_HANDLING ; flags 3
+	db 0
+	db ATK_ANIM_HYPER_BEAM ; animation
 
 	db 2 ; retreat cost
 	db NONE ; weakness

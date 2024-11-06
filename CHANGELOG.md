@@ -104,6 +104,9 @@
 - **Parental Rush**: reduced cost from (CCC) to (CC).
 - **Parental Rush**: bonus damage only from damaged Benched Pokémon.
 
+#### Dragonite Lv45
+- **Outrage**: reduced cost from (CCC) to (CC).
+
 
 ## Version 0.12.0
 
