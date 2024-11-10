@@ -81,14 +81,15 @@
 ### Fire Changes
 
 #### Charmeleon
-- **Firestarter**: reworked.
-- New Pokémon Power: **Firestarter**: once per turn, attach a Fire Energy from the discard pile to the Active Pokémon and put 1 damage counter on it.
+- **Firestarter**: attaches the energy to the Active Pokémon, instead of a Benched Pokémon.
+- **Firestarter**: puts 1 damage counter on the target Pokémon.
 
 ### Lightning Changes
 
 #### Raichu Lv35
-- **Lightning Haste**: reworked.
-- New Pokémon Power: **Lightning Haste**: once per turn, attach a Lightning Energy from the discard pile to 1 benched Pokémon.
+- **Lightning Haste**: attaches the energy to a Benched Pokémon, instead of the Active Pokémon.
+- **Lightning Haste**: no longer puts damage counters on the target Pokémon.
+- **Discharge**: always inflicts Paralysis.
 
 ### Fighting Changes
 

@@ -1097,10 +1097,12 @@ ScorchingColumn_DamageBurnEffect:
 
 Discharge_DamageParalysisEffect:
 	call Discharge_MultiplierEffect
-	ldh a, [hTemp_ffa0]
-	cp 2
-	jp nc, ParalysisEffect
-	ret
+	; ldh a, [hTemp_ffa0]
+	; cp 2
+	; jp nc, ParalysisEffect
+	; ret
+	; always paralyze
+	jp ParalysisEffect
 
 
 WaterPulse_DamageConfusionEffect:

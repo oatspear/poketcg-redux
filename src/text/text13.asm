@@ -17,8 +17,8 @@ DischargeDescription:
 	text "Discard 1 or more <LIGHTNING> Energy attached"
 	line "to this Pokémon to use this attack."
 	line "This attack does 20 damage for each"
-	line "Energy discarded this way."
-	line "If you discarded at least 2, the"
+	line "Energy discarded this way. The"
+	; line "If you discarded at least 2, the"
 	line "Defending Pokémon is now Paralyzed."
 	done
 
