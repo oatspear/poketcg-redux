@@ -367,11 +367,6 @@ EnergySoakEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, EnergySoak_ChangeColorEffect
 	db  $00
 
-EnergyJoltEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, CheckPokemonPowerCanBeUsed
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, EnergyJolt_ChangeColorEffect
-	db  $00
-
 EnergyBurnEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, CheckPokemonPowerCanBeUsed
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, EnergyBurn_ChangeColorEffect

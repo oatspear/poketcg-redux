@@ -86,10 +86,21 @@
 
 ### Lightning Changes
 
+#### Raichu Lv40
+- Increased HP from 70 to 80.
+- **Volt Switch**: removed.
+- New attack: **Agility** (LC): 20 damage; immune next turn if the attack scores a KO.
+
 #### Raichu Lv35
 - **Lightning Haste**: attaches the energy to a Benched Pokémon, instead of the Active Pokémon.
 - **Lightning Haste**: no longer puts damage counters on the target Pokémon.
 - **Discharge**: always inflicts Paralysis.
+
+#### Jolteon Lv29
+- **Energy Jolt**: removed.
+- **Discharge**: removed.
+- New Pokémon Power: **Volt Switch**: if 1 (L) is used to pay for Retreat, it is attached to the new Active Pokémon.
+- New attack: **Quick Attack** (CC): 10 damage; +40 damage if active this turn.
 
 ### Fighting Changes
 

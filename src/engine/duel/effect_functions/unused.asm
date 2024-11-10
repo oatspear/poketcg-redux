@@ -1,5 +1,17 @@
 ;
 
+EnergyJoltEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, CheckPokemonPowerCanBeUsed
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, EnergyJolt_ChangeColorEffect
+	db  $00
+
+EnergyJolt_ChangeColorEffect:
+	ld a, LIGHTNING
+	ld [wEnergyColorOverride], a
+	jp SetUsedPokemonPowerThisTurn
+
+
+
 GamblerEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, GamblerEffect
 	db  $00

@@ -1,3 +1,31 @@
+
+EnergyJoltName:
+	text "Energy Jolt"
+	done
+
+EnergyJoltDescription:
+	text "Once during your turn, you may use"
+	line "this Power. All Energies attached to"
+	line "your Pokémon count as <LIGHTNING> Energy."
+	done
+
+; attack 1
+energy 0 ; energies
+tx EnergyJoltName ; name
+tx EnergyJoltDescription ; description
+tx PokemonPowerDescriptionCont ; description (cont)
+db 0 ; damage
+db POKEMON_POWER ; category
+dw EnergyJoltEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_PKMN_POWER_1 ; animation
+
+
+
+
 DraconicEvolutionName:
 	text "Draconic Evolution"
 	done

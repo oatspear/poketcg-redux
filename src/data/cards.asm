@@ -5195,23 +5195,23 @@ RaichuLv40Card:
 	db STAR ; rarity
 	db COLOSSEUM | NONE ; sets
 	db RAICHU_LV40
-	db 70 ; hp
+	db 80 ; hp
 	db STAGE1 ; stage
 	tx PikachuName ; pre-evo name
 
 	; attack 1
-	energy 0 ; energies
-	tx VoltSwitchName ; name
-	tx VoltSwitchDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
-	db 0 ; damage
-	db POKEMON_POWER ; category
-	dw PassivePowerEffectCommands ; effect commands
+	energy LIGHTNING, 1, COLORLESS, 1 ; energies
+	tx AgilityName ; name
+	tx ImmuneIfKnockedOutOpponentDescription ; description
+	dw NONE ; description (cont)
+	db 20 ; damage
+	db DAMAGE_NORMAL ; category
+	dw ImmuneIfKnockedOutOpponentEffectCommands ; effect commands
 	db NONE ; flags 1
-	db NONE ; flags 2
+	db NULLIFY_OR_WEAKEN_ATTACK ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_PKMN_POWER_1 ; animation
+	db ATK_ANIM_QUICK_ATTACK ; animation
 
 	; attack 2
 	energy LIGHTNING, 2, COLORLESS, 1 ; energies
@@ -5848,21 +5848,17 @@ JolteonLv29Card:
 	; During your opponent's next turn, prevent all damage done to this Pokémon by attacks
 	; from your opponent's Basic Pokémon.
 
-	; Ability: Speed Cheer
-	; The attacks of your Pokémon-GX in play that evolve from Eevee cost Colorless less.
-	; You can't apply more than 1 Speed Cheer Ability at a time
-
 	; (LCC) Fighting Lightning  40
 	; If your opponent's Active Pokémon is a Pokémon ex/V, this attack does 40 more damage.
 
 	; attack 1
 	energy 0 ; energies
-	tx EnergyJoltName ; name
-	tx EnergyJoltDescription ; description
+	tx VoltSwitchName ; name
+	tx VoltSwitchDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKEMON_POWER ; category
-	dw EnergyJoltEffectCommands ; effect commands
+	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -5870,18 +5866,18 @@ JolteonLv29Card:
 	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy LIGHTNING, 1 ; energies
-	tx DischargeName ; name
-	tx DischargeDescription ; description
+	energy COLORLESS, 2 ; energies
+	tx QuickAttackName ; name
+	tx IfActiveThisTurn40BonusDamageDescription ; description
 	dw NONE ; description (cont)
-	db 20 ; damage
-	db DAMAGE_X ; category
-	dw DischargeEffectCommands ; effect commands
-	db INFLICT_PARALYSIS ; flags 1
-	db ATTACHED_ENERGY_BOOST | DISCARD_ENERGY ; flags 2
+	db 10 ; damage
+	db DAMAGE_PLUS ; category
+	dw QuickAttack40EffectCommands ; effect commands
+	db NONE ; flags 1
+	db NONE ; flags 2
 	db NONE ; flags 3
-	db 9
-	db ATK_ANIM_THUNDERBOLT ; animation
+	db 0
+	db ATK_ANIM_QUICK_ATTACK ; animation
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness

@@ -2509,11 +2509,6 @@ EnergySoak_ChangeColorEffect:
 	ld [wEnergyColorOverride], a
 	jp SetUsedPokemonPowerThisTurn
 
-EnergyJolt_ChangeColorEffect:
-	ld a, LIGHTNING
-	ld [wEnergyColorOverride], a
-	jp SetUsedPokemonPowerThisTurn
-
 EnergyBurn_ChangeColorEffect:
 	ld a, FIRE
 	ld [wEnergyColorOverride], a

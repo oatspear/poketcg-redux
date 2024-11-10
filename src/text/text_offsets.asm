@@ -2854,8 +2854,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer Retrieve2BasicEnergiesDescription
 	textpointer EnergySoakName
 	textpointer EnergySoakDescription
-	textpointer EnergyJoltName
-	textpointer EnergyJoltDescription
 	textpointer EnergyBurnName
 	textpointer EnergyBurnDescription
 	textpointer AquaticRescueName
