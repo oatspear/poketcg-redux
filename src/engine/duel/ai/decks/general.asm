@@ -63,7 +63,7 @@ IF DEBUG_MODE
 	call DrawWideTextBox_WaitForInput
 ENDC
 
-	farcall HandleAIFirestarterEnergy
+	farcall HandleAILightningHasteEnergy
 IF DEBUG_MODE
 	ldtx hl, ScytherName
 	call DrawWideTextBox_WaitForInput
@@ -213,7 +213,7 @@ IF DEBUG_MODE
 	call DrawWideTextBox_WaitForInput
 ENDC
 
-	farcall HandleAIFirestarterEnergy
+	farcall HandleAILightningHasteEnergy
 IF DEBUG_MODE
 	ldtx hl, WartortleName
 	call DrawWideTextBox_WaitForInput

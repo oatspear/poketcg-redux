@@ -1290,16 +1290,16 @@ HandleAIRainDanceEnergy:
 
 
 ; handles AI logic for attaching energy cards
-; with the Firestarter Pokémon Power.
-HandleAIFirestarterEnergy:
+; with the Lightning Haste Pokémon Power.
+HandleAILightningHasteEnergy:
 	call ArePokemonPowersDisabled
 	ret c  ; Pokémon Powers are disabled
 
 	; ld a, [wOncePerTurnActions]
-	; and USED_FIRESTARTER_THIS_TURN
-	; ret nz  ; Firestarter was used this turn
+	; and USED_LIGHTNING_HASTE_THIS_TURN
+	; ret nz  ; Lightning Haste was used this turn
 
-	ld a, CHARMELEON
+	ld a, RAICHU_LV35
 	call GetFirstPokemonWithAvailablePower
 	ret nc  ; no Power-capable Pokémon
 

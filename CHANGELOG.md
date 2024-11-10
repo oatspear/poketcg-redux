@@ -78,6 +78,18 @@
 #### Venusaur Lv64
 - This is now a regular promotional card, instead of a phantom card.
 
+### Fire Changes
+
+#### Charmeleon
+- **Firestarter**: reworked.
+- New Pokémon Power: **Firestarter**: once per turn, attach a Fire Energy from the discard pile to the Active Pokémon and put 1 damage counter on it.
+
+### Lightning Changes
+
+#### Raichu Lv35
+- **Lightning Haste**: reworked.
+- New Pokémon Power: **Lightning Haste**: once per turn, attach a Lightning Energy from the discard pile to 1 benched Pokémon.
+
 ### Fighting Changes
 
 #### Rhydon

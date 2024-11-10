@@ -1265,7 +1265,7 @@ wAlreadyRetreatedThisTurn:: ; ce03
 	ds $1
 
 ; used by AI to store information of Ivysaur, Charmeleon, Wartortle
-; while handling Energy Trans, Firestarter, Rain Dance logic.
+; while handling Energy Trans, Lightning Haste, Rain Dance logic.
 wAIPokemonPowerDeckIndex:: ; ce04
 	ds $1
 wAIPokemonPowerPlayAreaLocation:: ; ce05

@@ -4547,7 +4547,7 @@ ClairvoyantSense_PreconditionCheck:
 	jp CheckPokemonPowerCanBeUsed_StoreTrigger
 
 ;	ld a, [wOncePerTurnActions]
-;	and USED_FIRESTARTER_THIS_TURN
+;	and USED_LIGHTNING_HASTE_THIS_TURN
 ;	jr nz, .already_used
 
 ;.already_used
@@ -4567,7 +4567,7 @@ RainbowTeam_OncePerTurnCheck:
 	jp CheckPokemonPowerCanBeUsed_StoreTrigger
 
 ;	ld a, [wOncePerTurnActions]
-;	and USED_FIRESTARTER_THIS_TURN
+;	and USED_LIGHTNING_HASTE_THIS_TURN
 ;	jr nz, .already_used
 
 ;.already_used
@@ -4614,17 +4614,17 @@ CrushingCharge_DiscardAndAttachEnergyEffect:
 	jr _AttachEnergyFromDiscardPileToBenchEffect
 
 
-LightningHaste_OncePerTurnCheck:
+Firestarter_OncePerTurnCheck:
 	xor a  ; PLAY_AREA_ARENA
 	ld e, 20  ; HP
 	call CheckPokemonHasEnoughHP
 	ret c  ; not enough HP
-	call CreateEnergyCardListFromDiscardPile_OnlyLightning
+	call CreateEnergyCardListFromDiscardPile_OnlyFire
 	ret c  ; no energy
 	jp CheckPokemonPowerCanBeUsed_StoreTrigger
 
 
-LightningHaste_AttachEnergyEffect:
+Firestarter_AttachEnergyEffect:
 ; attach an energy to the Active Pokémon
 	xor a  ; PLAY_AREA_ARENA
 	ldh [hTempPlayAreaLocation_ffa1], a
@@ -4638,20 +4638,20 @@ LightningHaste_AttachEnergyEffect:
 ; and a `call` puts pointers on the stack above the `push hl`, so it must
 ; be an explicit jump.
 .attach
-	ld hl, CreateEnergyCardListFromDiscardPile_OnlyLightning
+	ld hl, CreateEnergyCardListFromDiscardPile_OnlyFire
 	push hl
 	jr _AttachEnergyFromDiscardPileToBenchEffect.attach
 
 
-Firestarter_OncePerTurnCheck:
+LightningHaste_OncePerTurnCheck:
 	call CheckBenchIsNotEmpty
 	ret c  ; no bench
-	call CreateEnergyCardListFromDiscardPile_OnlyFire
+	call CreateEnergyCardListFromDiscardPile_OnlyLightning
 	ret c  ; no energy
 	jp CheckPokemonPowerCanBeUsed_StoreTrigger
 
 ;	ld a, [wOncePerTurnActions]
-;	and USED_FIRESTARTER_THIS_TURN
+;	and USED_LIGHTNING_HASTE_THIS_TURN
 ;	jr nz, .already_used
 
 ;.already_used
@@ -4659,9 +4659,9 @@ Firestarter_OncePerTurnCheck:
 ;	scf
 ;	ret
 
-Firestarter_AttachEnergyEffect:
+LightningHaste_AttachEnergyEffect:
 	xor a  ; cannot select active spot
-	ld hl, CreateEnergyCardListFromDiscardPile_OnlyFire
+	ld hl, CreateEnergyCardListFromDiscardPile_OnlyLightning
 	; jr _AttachEnergyFromDiscardPileToBenchEffect
 	; fallthrough
 
@@ -4678,7 +4678,7 @@ _AttachEnergyFromDiscardPileToBenchEffect:
 	and DUELIST_TYPE_AI_OPP
 	jr z, .player
 
-; AI Pokémon selection logic is in HandleAIFirestarterEnergy
+; AI Pokémon selection logic is in HandleAILightningHasteEnergy
 	pop hl
 	ld hl, RainbowTeam_AttachEnergyEffect.retrieve
 	push hl
@@ -4698,10 +4698,10 @@ _AttachEnergyFromDiscardPileToBenchEffect:
 	; fallthrough
 
 .attach
-; flag Firestarter as being used (requires [hTempPlayAreaLocation_ff9d])
+; flag Lightning Haste as being used (requires [hTempPlayAreaLocation_ff9d])
 	call SetUsedPokemonPowerThisTurn_RestoreTrigger
 	; ld a, [wOncePerTurnActions]
-	; or USED_FIRESTARTER_THIS_TURN
+	; or USED_LIGHTNING_HASTE_THIS_TURN
 	; ld [wOncePerTurnActions], a
 
 ; pick Energy from card list
