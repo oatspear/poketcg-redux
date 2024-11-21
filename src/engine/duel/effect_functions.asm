@@ -287,7 +287,7 @@ Trade_PreconditionCheck:
 	jr DrawOrTutorAbility_PreconditionCheck
 
 ; this Power needs to back up hTempPlayAreaLocation_ff9d
-EnergyGenerator_PreconditionCheck:
+BattleFrenzy_PreconditionCheck:
 	ld e, 30
 	call CheckSomePokemonWithEnoughHP
 	ret c
@@ -4444,7 +4444,7 @@ AttachEnergyToPokemon_PlayerSelectEffect:
 	jp HandlePlayerSelectionPokemonInPlayArea
 
 
-EnergyGenerator_PlayerSelectEffect:
+BattleFrenzy_PlayerSelectEffect:
 	call Accelerate1EnergyFromDeck_PlayerSelectEffect
 	ret c
 .loop
@@ -4517,7 +4517,7 @@ QuiverDance_AttachEnergyEffect:
 	jp HealPlayAreaCardHP
 
 
-EnergyGenerator_AttachEnergyEffect:
+BattleFrenzy_AttachEnergyEffect:
 	call SetUsedPokemonPowerThisTurn_RestoreTrigger
 	call Accelerate1EnergyFromDeck_AttachEnergyEffect
 	ldh a, [hTempPlayAreaLocation_ffa1]
@@ -4640,7 +4640,7 @@ Firestarter_AttachEnergyEffect:
 	jr _AttachEnergyFromDiscardPileToBenchEffect.attach
 
 
-LightningHaste_OncePerTurnCheck:
+Dynamotor_OncePerTurnCheck:
 	call CheckBenchIsNotEmpty
 	ret c  ; no bench
 	call CreateEnergyCardListFromDiscardPile_OnlyLightning
@@ -4656,7 +4656,7 @@ LightningHaste_OncePerTurnCheck:
 ;	scf
 ;	ret
 
-LightningHaste_AttachEnergyEffect:
+Dynamotor_AttachEnergyEffect:
 	xor a  ; cannot select active spot
 	ld hl, CreateEnergyCardListFromDiscardPile_OnlyLightning
 	; jr _AttachEnergyFromDiscardPileToBenchEffect
@@ -4675,7 +4675,7 @@ _AttachEnergyFromDiscardPileToBenchEffect:
 	and DUELIST_TYPE_AI_OPP
 	jr z, .player
 
-; AI Pokémon selection logic is in HandleAILightningHasteEnergy
+; AI Pokémon selection logic is in HandleAIDynamotorEnergy
 	pop hl
 	ld hl, RainbowTeam_AttachEnergyEffect.retrieve
 	push hl

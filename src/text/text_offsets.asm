@@ -2905,16 +2905,14 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PrankDescription
 	textpointer CrushingChargeName
 	textpointer CrushingChargeDescription
-	textpointer DarkRetributionName
-	textpointer DarkRetributionDescription
 	textpointer FriendTackleName
 	textpointer Bonus20IfPlayedSupporterDescription
 	textpointer OminousEyesName
 	textpointer Put1DamageCounterOnAnyPokemonDescription
 	textpointer DesperateBlastName
 	textpointer DesperateBlastDescription
-	textpointer EnergyGeneratorName
-	textpointer EnergyGeneratorDescription
+	textpointer BattleFrenzyName
+	textpointer BattleFrenzyDescription
 	textpointer RapidChargeName
 	textpointer RapidChargeDescription
 	textpointer BulkUpName
@@ -2950,8 +2948,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer EnergyLinkName
 	textpointer BoostedVoltageName
 	textpointer BoostedVoltageDescription
-	textpointer LightningHasteName
-	textpointer LightningHasteDescription
+	textpointer DynamotorName
+	textpointer DynamotorDescription
 	textpointer VoltSwitchName
 	textpointer VoltSwitchDescription
 	textpointer SurpriseBiteName

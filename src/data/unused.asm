@@ -1,4 +1,63 @@
 
+
+EnergyGeneratorName:
+	text "Energy Generator"
+	done
+
+EnergyGeneratorDescription:
+	text "Once during your turn, you may"
+	line "search your deck for a Basic Energy"
+	line "card and attach it to 1 of your"
+	line "Pokémon. Then, shuffle your deck"
+	line "and put 2 damage counters on that"
+	line "Pokémon."
+	done
+
+; attack 1
+energy 0 ; energies
+tx EnergyGeneratorName ; name
+tx EnergyGeneratorDescription ; description
+tx PokemonPowerDescriptionCont ; description (cont)
+db 0 ; damage
+db POKEMON_POWER ; category
+dw EnergyGeneratorEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_PKMN_POWER_1 ; animation
+
+
+
+DarkRetributionName:
+	text "Dark Retribution"
+	done
+
+DarkRetributionDescription:
+	text "When your Active Pokémon is damaged"
+	line "by an opponent's attack (even if it"
+	line "is Knocked Out), if it has any"
+	line "attached <DARKNESS> Energy, put 1 damage"
+	line "counter on the Attacking Pokémon."
+	done
+
+; attack 1
+energy 0 ; energies
+tx DarkRetributionName ; name
+tx DarkRetributionDescription ; description
+tx PokemonPowerDescriptionCont ; description (cont)
+db 0 ; damage
+db POKEMON_POWER ; category
+dw PassivePowerEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_PKMN_POWER_1 ; animation
+
+
+
+
 EnergyJoltName:
 	text "Energy Jolt"
 	done

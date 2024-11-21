@@ -1151,18 +1151,6 @@ CrushingChargeDescription:
 	line "attach it to 1 of your Pokémon."
 	done
 
-DarkRetributionName:
-	text "Dark Retribution"
-	done
-
-DarkRetributionDescription:
-	text "When your Active Pokémon is damaged"
-	line "by an opponent's attack (even if it"
-	line "is Knocked Out), if it has any"
-	line "attached <DARKNESS> Energy, put 1 damage"
-	line "counter on the Attacking Pokémon."
-	done
-
 FriendTackleName:
 	text "Friend Tackle"
 	done
@@ -1194,17 +1182,17 @@ DesperateBlastDescription:
 	line "the Attacking Pokémon."
 	done
 
-EnergyGeneratorName:
-	text "Energy Generator"
+BattleFrenzyName:
+	text "Battle Frenzy"
 	done
 
-EnergyGeneratorDescription:
+BattleFrenzyDescription:
 	text "Once during your turn, you may"
-	line "search your deck for a Basic Energy"
-	line "card and attach it to 1 of your"
-	line "Pokémon. Then, shuffle your deck"
-	line "and put 2 damage counters on that"
-	line "Pokémon."
+	line "search your deck for a Basic"
+	line "Energy card and attach it to 1 of"
+	line "your Pokémon. Then, shuffle your"
+	line "deck and put 2 damage counters on"
+	line "that Pokémon."
 	done
 
 RapidChargeName:
@@ -1397,11 +1385,11 @@ BoostedVoltageDescription:
 	line "Benched Pokémon."
 	done
 
-LightningHasteName:
-	text "Lightning Haste"
+DynamotorName:
+	text "Dynamotor"
 	done
 
-LightningHasteDescription:
+DynamotorDescription:
 	text "Once during your turn, you may"
 	line "attach a <LIGHTNING> Energy from your"
 	line "Discard Pile to 1 of your"

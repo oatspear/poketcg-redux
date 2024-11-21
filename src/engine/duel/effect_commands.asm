@@ -407,9 +407,9 @@ FirestarterEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Firestarter_AttachEnergyEffect
 	db  $00
 
-LightningHasteEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, LightningHaste_OncePerTurnCheck
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, LightningHaste_AttachEnergyEffect
+DynamotorEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Dynamotor_OncePerTurnCheck
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Dynamotor_AttachEnergyEffect
 	db  $00
 
 WaterAbsorbEffectCommands:
@@ -1653,9 +1653,9 @@ SynthesisEffectCommands:
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Synthesis_PlayerSelectEffect
 	db  $00
 
-EnergyGeneratorEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, EnergyGenerator_PreconditionCheck
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, EnergyGenerator_AttachEnergyEffect
+BattleFrenzyEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, BattleFrenzy_PreconditionCheck
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, BattleFrenzy_AttachEnergyEffect
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Accelerate1EnergyFromDeck_PlayerSelectEffect
 	db  $00
 

@@ -96,6 +96,10 @@
 - **Lightning Haste**: no longer puts damage counters on the target Pokémon.
 - **Discharge**: always inflicts Paralysis.
 
+#### Electrode Lv42
+- **Energy Generator**: removed.
+- New Pokémon Power: **Dynamotor**: once per turn, attach (L) from discard pile to 1 Benched Pokémon.
+
 #### Jolteon Lv29
 - **Energy Jolt**: removed.
 - **Discharge**: removed.
@@ -118,6 +122,10 @@
 - This is now a regular promotional card, instead of a phantom card.
 
 ### Darkness Changes
+
+#### Nidorino
+- **Dark Retribution**: removed.
+- New Pokémon Power: **Battle Frenzy**: once per turn, attach 1 Basic Energy from the deck to 1 Pokémon and put 2 damage counters on it.
 
 #### Nidoking
 - **Vengeful Horn**: bonus damage only from damaged Benched Pokémon.

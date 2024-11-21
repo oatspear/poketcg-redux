@@ -484,13 +484,13 @@ HandleAIPkmnPowers:
 	jr .next_1
 .check_crushing_charge
 	cp MAROWAK_LV32
-	jr nz, .check_energy_generator
+	jr nz, .check_battle_frenzy
 	call HandleAICrushingCharge
 	jr .next_1
-.check_energy_generator
-	cp ELECTRODE_LV42
+.check_battle_frenzy
+	cp NIDORINO
 	jr nz, .check_surprise_bite
-	call HandleAIEnergyGenerator
+	call HandleAIBattleFrenzy
 	jr .next_1
 	jr .next_1
 .check_surprise_bite
@@ -739,7 +739,7 @@ HandleAICrushingCharge:
 	jp HandleAIDecideToUsePokemonPower
 
 
-HandleAIEnergyGenerator:
+HandleAIBattleFrenzy:  ; FIXME
 	ld a, CARD_LOCATION_DECK
 	call FindBasicEnergyCardsInLocation
 	ret c  ; no cards
@@ -1291,7 +1291,7 @@ HandleAIRainDanceEnergy:
 
 ; handles AI logic for attaching energy cards
 ; with the Lightning Haste Pokémon Power.
-HandleAILightningHasteEnergy:
+HandleAIDynamotorEnergy:
 	call ArePokemonPowersDisabled
 	ret c  ; Pokémon Powers are disabled
 

@@ -1072,12 +1072,12 @@ NidorinoCard:
 
 	; attack 1
 	energy 0 ; energies
-	tx DarkRetributionName ; name
-	tx DarkRetributionDescription ; description
+	tx BattleFrenzyName ; name
+	tx BattleFrenzyDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKEMON_POWER ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw BattleFrenzyEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -5303,12 +5303,12 @@ RaichuLv35Card:
 
 	; attack 1
 	energy 0 ; energies
-	tx LightningHasteName ; name
-	tx LightningHasteDescription ; description
+	tx DynamotorName ; name
+	tx DynamotorDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKEMON_POWER ; category
-	dw LightningHasteEffectCommands ; effect commands
+	dw DynamotorEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -5625,12 +5625,12 @@ ElectrodeLv42Card:
 
 	; attack 1
 	energy 0 ; energies
-	tx EnergyGeneratorName ; name
-	tx EnergyGeneratorDescription ; description
+	tx DynamotorName ; name
+	tx DynamotorDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKEMON_POWER ; category
-	dw EnergyGeneratorEffectCommands ; effect commands
+	dw DynamotorEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3

@@ -535,11 +535,11 @@ IsVampiricAuraActive:
 ;   a: PLAY_AREA_* of the Pokémon benefiting from the Power
 ; output:
 ;   carry: set if Dark Retribution is active
-IsDarkRetributionActive:
-	ld b, a
-	ld c, DARKNESS
-	ld e, NIDORINO
-	jr IsSpecialEnergyPowerActive
+; IsDarkRetributionActive:
+; 	ld b, a
+; 	ld c, DARKNESS
+; 	ld e, NIDORINO
+; 	jr IsSpecialEnergyPowerActive
 
 
 ; returns carry if the turn holder's Pokémon in the given location
@@ -1315,13 +1315,13 @@ IsCounterattackActive:
 	ld de, 50  ; damage to return
 
 .dark_retribution
-	push de
-	xor a  ; PLAY_AREA_ARENA
-	call IsDarkRetributionActive
-	pop de
-	jr nc, .rocky_helmet  ; not active
-	ld hl, 10
-	call AddToDamage_DE
+	; push de
+	; xor a  ; PLAY_AREA_ARENA
+	; call IsDarkRetributionActive
+	; pop de
+	; jr nc, .rocky_helmet  ; not active
+	; ld hl, 10
+	; call AddToDamage_DE
 
 .rocky_helmet
 	ld a, DUELVARS_ARENA_CARD_ATTACHED_TOOL

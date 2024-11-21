@@ -1,5 +1,44 @@
 ;
 
+EnergyGeneratorEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, EnergyGenerator_PreconditionCheck
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, EnergyGenerator_AttachEnergyEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Accelerate1EnergyFromDeck_PlayerSelectEffect
+	db  $00
+
+; this Power needs to back up hTempPlayAreaLocation_ff9d
+EnergyGenerator_PreconditionCheck:
+	ld e, 30
+	call CheckSomePokemonWithEnoughHP
+	ret c
+	; fallthrough to CrushingCharge_PreconditionCheck
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	ldh [hTemp_ffa0], a
+	jr DrawOrTutorAbility_PreconditionCheck
+
+
+EnergyGenerator_PlayerSelectEffect:
+	call Accelerate1EnergyFromDeck_PlayerSelectEffect
+	ret c
+.loop
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	ld e, 30
+	call CheckPokemonHasEnoughHP
+	ret nc
+	call AttachEnergyToPokemon_PlayerSelectEffect.display
+	ldh [hTempPlayAreaLocation_ffa1], a
+	jr .loop
+
+
+EnergyGenerator_AttachEnergyEffect:
+	call SetUsedPokemonPowerThisTurn_RestoreTrigger
+	call Accelerate1EnergyFromDeck_AttachEnergyEffect
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	ld e, a   ; location
+	jp Put2DamageCountersOnTarget
+
+
+
 EnergyJoltEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, CheckPokemonPowerCanBeUsed
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, EnergyJolt_ChangeColorEffect
