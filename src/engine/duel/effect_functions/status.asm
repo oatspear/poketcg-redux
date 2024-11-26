@@ -133,13 +133,9 @@ PoisonConfusionEffect:
 
 
 PollenBurst_StatusEffect:
-	ld a, DUELVARS_ARENA_CARD_FLAGS
-	call GetTurnDuelistVariable
-	bit DAMAGED_SINCE_LAST_TURN_F, a
-	ret z
 	call PoisonEffect
 	call BurnEffect
-	jp ConfusionEffect
+	jp ParalysisIfDamagedSinceLastTurnEffect
 
 
 FragranceTrap_StatusEffect:
@@ -338,11 +334,11 @@ ApplyStatusEffectToAllOpponentBenchedPokemon:
 ; ------------------------------------------------------------------------------
 
 
-HayFever_ParalysisEffect:
+Static_ParalysisEffect:
 	ld a, [wGarbageEaterDamageToHeal]  ; used an item?
 	or a
 	ret z  ; nothing to do
-	call IsHayFeverActive
+	call IsStaticActive
 	ret nc  ; nothing to do
 
 	ld e, PLAY_AREA_ARENA
@@ -351,11 +347,11 @@ HayFever_ParalysisEffect:
 
 ; play initial animation
 	bank1call DrawDuelMainScene
-	ld a, ATK_ANIM_HAY_FEVER
+	ld a, ATK_ANIM_STATIC
 	ld b, PLAY_AREA_ARENA
 	bank1call PlayAdhocAnimationOnDuelScene_NoEffectiveness
 ; play animation and paralyze card
-	ld a, ATK_ANIM_HAY_FEVER_PARALYSIS
+	ld a, ATK_ANIM_STATIC_PARALYSIS
 	bank1call PlayAdhocAnimationOnPlayAreaArena_NoEffectiveness
 	ld a, DUELVARS_ARENA_CARD_STATUS
 	call GetTurnDuelistVariable

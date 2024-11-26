@@ -1,5 +1,26 @@
 ;
 
+
+PollenBurstEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PollenBurstEffect
+	dbw EFFECTCMDTYPE_AI, KarateChop_AIEffect
+	db  $00
+
+PollenBurstEffect:
+	call KarateChop_DamageSubtractionEffect
+	jp PollenBurst_StatusEffect
+
+PollenBurst_StatusEffect:
+	ld a, DUELVARS_ARENA_CARD_FLAGS
+	call GetTurnDuelistVariable
+	bit DAMAGED_SINCE_LAST_TURN_F, a
+	ret z
+	call PoisonEffect
+	call BurnEffect
+	jp ConfusionEffect
+
+
+
 EnergyGeneratorEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, EnergyGenerator_PreconditionCheck
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, EnergyGenerator_AttachEnergyEffect

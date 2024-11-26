@@ -1352,11 +1352,11 @@ GloomCard:
 	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy GRASS, 1, COLORLESS, 1 ; energies
+	energy GRASS, 1 ; energies
 	tx FoulOdorName ; name
 	tx InflictPoisonDescription ; description
 	tx StunSporeDescription ; description (cont)
-	db 20 ; damage
+	db 10 ; damage
 	db DAMAGE_NORMAL ; category
 	dw FoulOdorEffectCommands ; effect commands
 	db INFLICT_POISON | INFLICT_PARALYSIS ; flags 1
@@ -1435,25 +1435,25 @@ VileplumeCard:
 	; The Defending Pokémon is now Poisoned and Asleep.
 
 	; attack 1
-	energy 0 ; energies
-	tx HayFeverName ; name
-	tx HayFeverDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
-	db 0 ; damage
-	db POKEMON_POWER ; category
-	dw PassivePowerEffectCommands ; effect commands
+	energy GRASS, 1 ; energies
+	tx GigaDrainName ; name
+	tx GigaDrainDescription ; description
+	tx LeechLifeDescription ; description (cont)
+	db 10 ; damage
+	db DAMAGE_X ; category
+	dw GigaDrainEffectCommands ; effect commands
 	db NONE ; flags 1
-	db NONE ; flags 2
+	db HEAL_USER | ATTACHED_ENERGY_BOOST ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_PKMN_POWER_1 ; animation
+	db ATK_ANIM_DRAIN ; animation
 
 	; attack 2
-	energy GRASS, 2, COLORLESS, 1 ; energies
+	energy GRASS, 1, COLORLESS, 1 ; energies
 	tx PollenBurstName ; name
 	tx KarateChopDescription ; description
 	tx PollenBurstDescription ; description (cont)
-	db 80 ; damage
+	db 50 ; damage
 	db DAMAGE_MINUS ; category
 	dw PollenBurstEffectCommands ; effect commands
 	db INFLICT_POISON | INFLICT_PARALYSIS ; flags 1
@@ -5251,25 +5251,25 @@ RaichuLv45Card:
 	tx PikachuName ; pre-evo name
 
 	; attack 1
-	energy COLORLESS, 2 ; energies
-	tx SwiftName ; name
-	tx UnaffectedByWeaknessResistancePowersEffectsDescription ; description
-	dw NONE ; description (cont)
-	db 30 ; damage
-	db DAMAGE_NORMAL ; category
-	dw UnaffectedByWeaknessResistancePowersOrEffectsEffectCommands ; effect commands
+	energy 0 ; energies
+	tx StaticName ; name
+	tx StaticDescription ; description
+	tx PokemonPowerDescriptionCont ; description (cont)
+	db 0 ; damage
+	db POKEMON_POWER ; category
+	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_HIT ; animation
+	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy LIGHTNING, 2, COLORLESS, 1 ; energies
+	energy LIGHTNING, 1, COLORLESS, 1 ; energies
 	tx ThunderboltName ; name
 	tx ThunderboltDescription ; description
 	dw NONE ; description (cont)
-	db 100 ; damage
+	db 70 ; damage
 	db DAMAGE_NORMAL ; category
 	dw ThunderboltEffectCommands ; effect commands
 	db NONE ; flags 1

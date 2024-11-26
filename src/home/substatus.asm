@@ -450,11 +450,11 @@ IsBodyguardActive:
 	jp GetFirstPokemonWithAvailablePower  ; preserves: hl, bc, de
 
 
-; return carry if a Pokémon Power capable Vileplume
+; return carry if a Pokémon Power capable Raichu Lv45
 ; is found in the non-turn holder's Active Spot.
 ; preserves: bc, de
-IsHayFeverActive:
-	ld a, VILEPLUME
+IsStaticActive:
+	ld a, RAICHU_LV45
 	jr IsOpponentActiveSpotAuraActive
 
 

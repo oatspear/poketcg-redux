@@ -7011,7 +7011,7 @@ HandleOnUsePokemonPowerEffects:
 
 HandleOnPlayTrainerEffects:
 	farcall GarbageEater_HealEffect
-	farcall HayFever_ParalysisEffect
+	farcall Static_ParalysisEffect
 	farcall PokemonCenter_HealEffect
 	ret
 

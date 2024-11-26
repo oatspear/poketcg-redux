@@ -217,11 +217,11 @@ ToxicWasteDescriptionCont:
 	line "this attack does 30 more damage."
 	done
 
-LeechLifeName: ; 588a7 (16:48a7)
+LeechLifeName:
 	text "Leech Life"
 	done
 
-LeechLifeDescription: ; 588b3 (16:48b3)
+LeechLifeDescription:
 	text "Heal from this Pokémon the same"
 	line "amount of damage you did to the"
 	line "Defending Pokémon."
@@ -725,8 +725,13 @@ Attach1BasicEnergyFromDiscardDescription:
 ; 	line "revert it to its original type."
 ; 	done
 
-DrainPunchName:
-	text "Drain Punch"
+GigaDrainName:
+	text "Giga Drain"
+	done
+
+GigaDrainDescription:
+	text "This attack does 10 damage for each"
+	line "energy attached to this Pokémon."
 	done
 
 ; AquaPunchName:

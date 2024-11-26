@@ -553,11 +553,11 @@ AromatherapyDescription:
 	line "of your Pokémon."
 	done
 
-HayFeverName:
-	text "Hay Fever"
+StaticName:
+	text "Static"
 	done
 
-HayFeverDescription:
+StaticDescription:
 	text "While this is your Active Pokémon,"
 	line "whenever your opponent plays an Item"
 	line "card from their hand, leave the"
@@ -569,10 +569,11 @@ PollenBurstName:
 	done
 
 PollenBurstDescription:
-	text "If this Pokémon was damaged since"
+	text "The Defending Pokémon is now"
+	line "Poisoned and Burned."
+	line "If this Pokémon was damaged since"
 	line "your last turn, the Defending"
-	line "Pokémon is now Poisoned, Burned"
-	line "and Confused."
+	line "Pokémon is now also Paralyzed."
 	done
 
 SparkName: ; 5cf47 (17:4f47)

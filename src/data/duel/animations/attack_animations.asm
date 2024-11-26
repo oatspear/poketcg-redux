@@ -151,7 +151,7 @@ PointerTable_AttackAnimation:
 	dw AttackAnimation_Sleep               ; ATK_ANIM_SLEEP
 	dw AttackAnimation_ImakuniConfusion    ; ATK_ANIM_IMAKUNI_CONFUSION
 	dw AttackAnimation_SleepingGas         ; ATK_ANIM_SLEEPING_GAS
-	dw AttackAnimation_HayFever            ; ATK_ANIM_HAY_FEVER
+	dw AttackAnimation_Static              ; ATK_ANIM_STATIC
 	dw AttackAnimation_ThunderPlayArea     ; ATK_ANIM_THUNDER_PLAY_AREA
 	dw AttackAnimation_CatPunchPlayArea    ; ATK_ANIM_CAT_PUNCH_PLAY_AREA
 	dw AttackAnimation_FiregiverPlayer     ; ATK_ANIM_FIREGIVER_PLAYER
@@ -159,7 +159,7 @@ PointerTable_AttackAnimation:
 	dw AttackAnimation_HealingWindPlayArea ; ATK_ANIM_HEALING_WIND_PLAY_AREA
 	dw AttackAnimation_Gale                ; ATK_ANIM_GALE
 	dw AttackAnimation_Expand              ; ATK_ANIM_EXPAND
-	dw AttackAnimation_HayFeverParalysis   ; ATK_ANIM_HAY_FEVER_PARALYSIS
+	dw AttackAnimation_StaticParalysis     ; ATK_ANIM_STATIC_PARALYSIS
 	dw AttackAnimation_FullHeal            ; ATK_ANIM_FULL_HEAL
 	dw AttackAnimation_5659                ; ATK_ANIM_139
 	dw AttackAnimation_ProtectNoGlow       ; ATK_ANIM_PROTECT_NO_GLOW
@@ -895,12 +895,21 @@ AttackAnimation_SleepingGas:
 	anim_opponent       DUEL_ANIM_WHITE_GAS
 	anim_end
 
-AttackAnimation_HayFever:
+; AttackAnimation_HayFever:
+; 	anim_opponent       DUEL_ANIM_GLOW
+; 	anim_player         DUEL_ANIM_POWDER
+; 	anim_end
+; 
+; AttackAnimation_HayFeverParalysis:
+; 	anim_player         DUEL_ANIM_PARALYSIS
+; 	anim_end
+
+AttackAnimation_Static:
 	anim_opponent       DUEL_ANIM_GLOW
-	anim_player         DUEL_ANIM_POWDER
+	; anim_opponent       DUEL_ANIM_THUNDER_WAVE
 	anim_end
 
-AttackAnimation_HayFeverParalysis:
+AttackAnimation_StaticParalysis:
 	anim_player         DUEL_ANIM_PARALYSIS
 	anim_end
 

@@ -92,8 +92,8 @@ Heal40DamageEffect:
 HealADamageEffect:
 	ld d, 0
 	ld e, a
-	jr ApplyAndAnimateHPRecovery
-
+	; jr ApplyAndAnimateHPRecovery
+	; fallthrough
 
 ; applies HP recovery on Pokemon after an attack
 ; with HP recovery effect, and handles its animation.
@@ -227,6 +227,12 @@ HealPlayAreaCardHP:
 ; .skip_cap
 	; ld [hl], e ; apply new HP to arena card
 	; ret
+
+
+; Heal10DamagePerAttachedEnergyEffect:
+; 	ld e, PLAY_AREA_ARENA
+; 	call GetEnergyAttachedMultiplierDamage
+; 	jp HealADamageEffect
 
 
 ; no animation

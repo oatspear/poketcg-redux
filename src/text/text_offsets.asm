@@ -2351,8 +2351,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer AssassinFlightDescription
 	textpointer FoulOdorName                                       ; 0x0878
 	textpointer AromatherapyDescription
-	textpointer HayFeverName
-	textpointer HayFeverDescription
+	textpointer StaticName
+	textpointer StaticDescription
 	textpointer PollenBurstName
 	textpointer PollenBurstDescription
 	textpointer SporeName                                          ; 0x0884
@@ -2722,8 +2722,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ToxicDescription
 	textpointer ToxicWasteName
 	textpointer ToxicWasteDescriptionCont
-	textpointer LeechLifeName                                      ; 0x086a
-	textpointer LeechLifeDescription                               ; 0x086b
+	textpointer LeechLifeName
+	textpointer LeechLifeDescription
 	textpointer SproutName
 	textpointer SproutDescription
 	textpointer AromatherapyName
@@ -2827,7 +2827,8 @@ TextOffsets:: ; 34000 (d:4000)
 	; textpointer DualTypeFightingDescription
 	; textpointer AquaPunchName
 	; textpointer AquaPunchDescription
-	textpointer DrainPunchName
+	textpointer GigaDrainName
+	textpointer GigaDrainDescription
 	textpointer PesterName
 	textpointer PesterDescription
 	textpointer SweetKissName

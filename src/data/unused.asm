@@ -1,4 +1,26 @@
 
+PollenBurstDescription:
+	text "If this Pokémon was damaged since"
+	line "your last turn, the Defending"
+	line "Pokémon is now Poisoned, Burned"
+	line "and Confused."
+	done
+
+; attack 2
+energy GRASS, 2, COLORLESS, 1 ; energies
+tx PollenBurstName ; name
+tx KarateChopDescription ; description
+tx PollenBurstDescription ; description (cont)
+db 80 ; damage
+db DAMAGE_MINUS ; category
+dw PollenBurstEffectCommands ; effect commands
+db INFLICT_POISON | INFLICT_PARALYSIS ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 1
+db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
+
+
 
 EnergyGeneratorName:
 	text "Energy Generator"
