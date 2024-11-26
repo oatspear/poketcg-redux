@@ -130,6 +130,7 @@
 #### Nidoking
 - **Land Crush**: increased cost from (DC) to (DCC).
 - **Vengeful Horn**: reduced cost from (DCC) to (DC).
+- **Vengeful Horn**: reduced base damage from 40 to 10.
 - **Vengeful Horn**: bonus damage only from damaged Benched Pokémon.
 - **Vengeful Horn**: inflicts Bad Poison.
 

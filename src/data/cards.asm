@@ -1126,7 +1126,7 @@ NidokingCard:
 	tx VengefulHornName ; name
 	tx ParentalRushDescription ; description
 	tx ToxicDescription ; description (cont)
-	db 20 ; damage
+	db 10 ; damage
 	db DAMAGE_PLUS ; category
 	dw VengefulHornEffectCommands ; effect commands
 	db NONE ; flags 1
