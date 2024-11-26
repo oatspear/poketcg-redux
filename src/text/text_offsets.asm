@@ -2591,8 +2591,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer QueenPressName
 	textpointer QueenPressDescription
 	textpointer ParentalRushName
+	textpointer ParentalRushDescription
 	textpointer VengefulHornName
-	textpointer VengefulHornDescription
 	textpointer GarbageEaterName
 	textpointer GarbageEaterDescription
 	textpointer GatherToxinsName

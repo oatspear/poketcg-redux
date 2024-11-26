@@ -1257,14 +1257,14 @@ ParentalRushName:
 	text "Parental Rush"
 	done
 
-VengefulHornName:
-	text "Vengeful Horn"
-	done
-
-VengefulHornDescription:
+ParentalRushDescription:
 	text "This attack does 10 more damage"
 	line "for each of your Benched Pokémon"
 	line "with any damage counters on it."
+	done
+
+VengefulHornName:
+	text "Vengeful Horn"
 	done
 
 GarbageEaterName:

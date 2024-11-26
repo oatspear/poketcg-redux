@@ -1123,6 +1123,20 @@ NidokingCard:
 
 	; attack 1
 	energy DARKNESS, 1, COLORLESS, 1 ; energies
+	tx VengefulHornName ; name
+	tx ParentalRushDescription ; description
+	tx ToxicDescription ; description (cont)
+	db 20 ; damage
+	db DAMAGE_PLUS ; category
+	dw VengefulHornEffectCommands ; effect commands
+	db NONE ; flags 1
+	db NONE ; flags 2
+	db NONE ; flags 3
+	db 0
+	db ATK_ANIM_MULTIPLE_SLASH ; animation
+
+	; attack 2
+	energy DARKNESS, 1, COLORLESS, 2 ; energies
 	tx LandCrushName ; name
 	tx DamageAllFriendlyBenched20Description ; description
 	tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
@@ -1134,20 +1148,6 @@ NidokingCard:
 	db NONE ; flags 3
 	db 2
 	db ATK_ANIM_HIT ; animation
-
-	; attack 2
-	energy DARKNESS, 1, COLORLESS, 2 ; energies
-	tx VengefulHornName ; name
-	tx VengefulHornDescription ; description
-	dw NONE ; description (cont)
-	db 40 ; damage
-	db DAMAGE_PLUS ; category
-	dw VengefulHornEffectCommands ; effect commands
-	db NONE ; flags 1
-	db NONE ; flags 2
-	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_MULTIPLE_SLASH ; animation
 
 	db 2 ; retreat cost
 	db WR_FIGHTING ; weakness
@@ -9305,11 +9305,11 @@ KangaskhanCard:
 	; attack 2
 	energy COLORLESS, 2 ; energies
 	tx ParentalRushName ; name
-	tx VengefulHornDescription ; description
+	tx ParentalRushDescription ; description
 	dw NONE ; description (cont)
 	db 10 ; damage
 	db DAMAGE_PLUS ; category
-	dw VengefulHornEffectCommands ; effect commands
+	dw ParentalRushEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3

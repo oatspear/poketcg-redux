@@ -128,7 +128,10 @@
 - New Pokémon Power: **Battle Frenzy**: once per turn, attach 1 Basic Energy from the deck to 1 Pokémon and put 2 damage counters on it.
 
 #### Nidoking
+- **Land Crush**: increased cost from (DC) to (DCC).
+- **Vengeful Horn**: reduced cost from (DCC) to (DC).
 - **Vengeful Horn**: bonus damage only from damaged Benched Pokémon.
+- **Vengeful Horn**: inflicts Bad Poison.
 
 ### Colorless Changes
 

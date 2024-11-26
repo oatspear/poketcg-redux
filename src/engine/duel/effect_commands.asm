@@ -305,6 +305,10 @@ PowerLariatEffectCommands:
 	db  $00
 
 VengefulHornEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, DoublePoisonEffect
+	; fallthrough to ParentalRushEffectCommands
+
+ParentalRushEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, VengefulHorn_DamageBoostEffect
 	dbw EFFECTCMDTYPE_AI, VengefulHorn_AIEffect
 	db  $00
