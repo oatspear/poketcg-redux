@@ -3607,6 +3607,7 @@ CardPageDisplayPointerTable:
 	dw DisplayCardPage_PokemonAttachedTool  ; CARDPAGE_POKEMON_TOOL
 	dw DisplayCardPage_PokemonDescription ; CARDPAGE_POKEMON_DESCRIPTION
 	dw DrawDuelMainScene
+	dw DrawDuelMainScene
 	dw DisplayCardPage_Energy ; CARDPAGE_ENERGY
 	dw DisplayCardPage_Energy ; CARDPAGE_ENERGY + 1
 	dw DrawDuelMainScene
@@ -3695,7 +3696,7 @@ CardPageSwitchPointerTable:
 	dw CardPageSwitch_PokemonAttachedTool ; CARDPAGE_POKEMON_TOOL
 	dw CardPageSwitch_PokemonOverviewOrDescription ; CARDPAGE_POKEMON_DESCRIPTION
 	dw CardPageSwitch_PokemonEnd
-	; dw CardPageSwitch_08
+	dw CardPageSwitch_08
 	dw CardPageSwitch_EnergyOrTrainerPage1 ; CARDPAGE_ENERGY
 	dw CardPageSwitch_TrainerPage2 ; CARDPAGE_ENERGY + 1
 	dw CardPageSwitch_EnergyEnd
@@ -3771,10 +3772,10 @@ CardPageSwitch_PokemonEnd:
 	ret
 
 ; return with CARDPAGE_ENERGY + 1
-; CardPageSwitch_08:
-; 	ld a, CARDPAGE_ENERGY + 1
-; 	scf
-; 	ret
+CardPageSwitch_08:
+	ld a, CARDPAGE_ENERGY + 1
+	scf
+	ret
 
 ; return with current page
 CardPageSwitch_EnergyOrTrainerPage1:
