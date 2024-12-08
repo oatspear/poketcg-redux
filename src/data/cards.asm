@@ -1435,32 +1435,32 @@ VileplumeCard:
 	; The Defending Pokémon is now Poisoned and Asleep.
 
 	; attack 1
-	energy GRASS, 1 ; energies
-	tx GigaDrainName ; name
-	tx GigaDrainDescription ; description
-	tx LeechLifeDescription ; description (cont)
-	db 10 ; damage
-	db DAMAGE_X ; category
-	dw GigaDrainEffectCommands ; effect commands
-	db NONE ; flags 1
-	db HEAL_USER | ATTACHED_ENERGY_BOOST ; flags 2
-	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_DRAIN ; animation
-
-	; attack 2
 	energy GRASS, 1, COLORLESS, 1 ; energies
 	tx PollenBurstName ; name
-	tx KarateChopDescription ; description
-	tx PollenBurstDescription ; description (cont)
-	db 50 ; damage
-	db DAMAGE_MINUS ; category
+	tx PollenBurstDescription ; description
+	dw NONE ; description (cont)
+	db 30 ; damage
+	db DAMAGE_NORMAL ; category
 	dw PollenBurstEffectCommands ; effect commands
 	db INFLICT_POISON | INFLICT_PARALYSIS ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 1
 	db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
+
+	; attack 2
+	energy GRASS, 1, COLORLESS, 2 ; energies
+	tx MegaDrainName ; name
+	tx Heal30DamageDescription ; description
+	dw NONE ; description (cont)
+	db 40 ; damage
+	db DAMAGE_NORMAL ; category
+	dw Heal30DamageEffectCommands ; effect commands
+	db NONE ; flags 1
+	db HEAL_USER ; flags 2
+	db NONE ; flags 3
+	db 0
+	db ATK_ANIM_DRAIN ; animation
 
 	db 2 ; retreat cost
 	db WR_FIRE ; weakness

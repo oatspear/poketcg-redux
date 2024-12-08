@@ -107,13 +107,6 @@ FireSpin_DamageMultiplierEffect:
 	jp SetDefiniteAIDamage
 
 
-GigaDrain_DamageMultiplierEffect:
-	ld e, PLAY_AREA_ARENA
-	call GetEnergyAttachedMultiplierDamage
-	call SetDefiniteDamage
-	jp SetDefiniteAIDamage
-
-
 ;
 DragonRage_DamageBoostEffect:
 	xor a  ; PLAY_AREA_ARENA

@@ -725,15 +725,6 @@ Attach1BasicEnergyFromDiscardDescription:
 ; 	line "revert it to its original type."
 ; 	done
 
-GigaDrainName:
-	text "Giga Drain"
-	done
-
-GigaDrainDescription:
-	text "This attack does 10 damage for each"
-	line "energy attached to this Pokémon."
-	done
-
 ; AquaPunchName:
 ; 	text "Aqua Punch"
 ; 	done

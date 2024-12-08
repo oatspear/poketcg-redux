@@ -1,5 +1,24 @@
 ;
 
+GigaDrainEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, GigaDrain_DamageMultiplierEffect
+	; dbw EFFECTCMDTYPE_AFTER_DAMAGE, Heal10DamagePerAttachedEnergyEffect
+	dbw EFFECTCMDTYPE_AI, GigaDrain_DamageMultiplierEffect
+	; fallthrough to LeechLifeEffectCommands
+
+;
+GigaDrain_DamageMultiplierEffect:
+	ld e, PLAY_AREA_ARENA
+	call GetEnergyAttachedMultiplierDamage
+	call SetDefiniteDamage
+	jp SetDefiniteAIDamage
+
+
+
+PollenBurstEffect:
+	call KarateChop_DamageSubtractionEffect
+	jp PollenBurst_StatusEffect
+
 
 PollenBurstEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PollenBurstEffect

@@ -958,11 +958,6 @@ PoisonEvolution_EvolveEffect:
 	ret
 
 
-PollenBurstEffect:
-	call KarateChop_DamageSubtractionEffect
-	jp PollenBurst_StatusEffect
-
-
 GluttonFrenzy_DiscardEffect:
 	call DiscardOpponentEnergy_DiscardEffect
 	jp Discard1RandomCardFromOpponentsHandEffect

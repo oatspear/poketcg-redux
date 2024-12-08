@@ -132,6 +132,7 @@ PoisonConfusionEffect:
 ; ------------------------------------------------------------------------------
 
 
+PollenBurstEffect:
 PollenBurst_StatusEffect:
 	call PoisonEffect
 	call BurnEffect

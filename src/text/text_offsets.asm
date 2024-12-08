@@ -2827,8 +2827,6 @@ TextOffsets:: ; 34000 (d:4000)
 	; textpointer DualTypeFightingDescription
 	; textpointer AquaPunchName
 	; textpointer AquaPunchDescription
-	textpointer GigaDrainName
-	textpointer GigaDrainDescription
 	textpointer PesterName
 	textpointer PesterDescription
 	textpointer SweetKissName

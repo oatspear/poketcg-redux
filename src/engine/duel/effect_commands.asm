@@ -140,12 +140,6 @@ FoulOdorEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, FoulOdorEffect
 	db  $00
 
-GigaDrainEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, GigaDrain_DamageMultiplierEffect
-	; dbw EFFECTCMDTYPE_AFTER_DAMAGE, Heal10DamagePerAttachedEnergyEffect
-	dbw EFFECTCMDTYPE_AI, GigaDrain_DamageMultiplierEffect
-	; fallthrough to LeechLifeEffectCommands
-
 LeechLifeEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, LeechLifeEffect
 	db  $00
@@ -497,7 +491,6 @@ ParalysisIfDamagedSinceLastTurnEffectCommands:
 
 PollenBurstEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PollenBurstEffect
-	dbw EFFECTCMDTYPE_AI, KarateChop_AIEffect
 	db  $00
 
 ; unused

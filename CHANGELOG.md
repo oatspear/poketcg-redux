@@ -85,10 +85,11 @@
 #### Vileplume
 - **Hay Fever**: removed.
 - **Pollen Burst**: reduced cost from (GGC) to (GC).
-- **Pollen Burst**: reduced base damage from 80 to 50.
+- **Pollen Burst**: reduced base damage from 80 to 30.
+- **Pollen Burst**: removed damage reduction effect.
 - **Pollen Burst**: always inflicts Poison and Burn.
 - **Pollen Burst**: inflicts Paralysis if damaged in the previous turn.
-- New attack: **Giga Drain** (G): 10 damage for each attached energy; heals the same amount of damage done.
+- New attack: **Mega Drain** (GCC): 40 damage; heal 30 damage.
 
 ### Fire Changes
 
