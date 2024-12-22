@@ -1685,6 +1685,10 @@ Attach1GrassEnergyFromDiscardEffectCommands:
 	db  $00
 
 
+PhoenixFireEffectCommands:
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, PhoenixFire_EnergyHealingEffect
+	; fallthroug
+
 Attach1FireEnergyFromDiscardEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDiscardPileHasFireEnergyCards
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Attach1FireEnergyFromDiscard_SelectEffect

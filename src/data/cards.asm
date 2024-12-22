@@ -3144,17 +3144,17 @@ MoltresLv35Card:
 
 	; attack 1
 	energy FIRE, 1 ; energies
-	tx FlareName ; name
+	tx PhoenixFireName ; name
 	tx Attach1FireEnergyFromDiscardDescription ; description
-	dw NONE ; description (cont)
-	db 10 ; damage
-	db DAMAGE_NORMAL ; category
-	dw Attach1FireEnergyFromDiscardEffectCommands ; effect commands
+	tx Heal20DamageDescription ; description (cont)
+	db 0 ; damage
+	db RESIDUAL ; category
+	dw PhoenixFireEffectCommands ; effect commands
 	db NONE ; flags 1
-	db NONE ; flags 2
+	db HEAL_USER ; flags 2
 	db SPECIAL_AI_HANDLING ; flags 3
-	db 1
-	db ATK_ANIM_SMALL_FLAME ; animation
+	db 2
+	db ATK_ANIM_GLOW_EFFECT ; animation
 
 	; attack 2
 	energy FIRE, 1 ; energies

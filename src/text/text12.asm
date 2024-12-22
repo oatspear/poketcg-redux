@@ -1414,6 +1414,10 @@ SurpriseBiteDescription:
 	line "that has no damage counters."
 	done
 
+PhoenixFireName:
+	text "Phoenix Fire"
+	done
+
 ConcentrationName:
 	text "Concentration"
 	done

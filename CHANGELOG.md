@@ -102,6 +102,10 @@
 - **Firestarter**: attaches the energy to the Active Pokémon, instead of a Benched Pokémon.
 - **Firestarter**: puts 1 damage counter on the target Pokémon.
 
+#### Moltres Lv35
+- **Flare**: removed.
+- New attack: **Phoenix Fire** (F): attach (F) from the discard pile to self; heal 20 damage.
+
 ### Lightning Changes
 
 #### Raichu Lv40

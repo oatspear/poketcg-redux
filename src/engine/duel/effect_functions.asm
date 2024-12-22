@@ -1061,6 +1061,7 @@ SheerCold_SleepDamageMultiplierEffect:
 ENDC
 
 
+PhoenixFire_EnergyHealingEffect:
 Freeze_EnergyHealingEffect:
 Concentration_EnergyHealingEffect:
 	call AccelerateFromDiscard_AttachEnergyToArenaEffect

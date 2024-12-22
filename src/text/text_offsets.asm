@@ -2953,6 +2953,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer VoltSwitchDescription
 	textpointer SurpriseBiteName
 	textpointer SurpriseBiteDescription
+	textpointer PhoenixFireName
 	textpointer ConcentrationName
 	textpointer LuckyFindName
 	textpointer WaterAbsorbName
