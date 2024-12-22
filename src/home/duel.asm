@@ -2211,6 +2211,10 @@ ENDC
 	ld b, PLAY_AREA_ARENA  ; CARD_LOCATION_ARENA
 	call ApplyAttachedPluspower  ; preserves: bc
 	call HandleDamageBoostingStadiums
+IF BURN_IS_DAMAGE_OVER_TIME == 0
+	xor a  ; PLAY_AREA_ARENA
+	call HandleBurnDamageBoost
+ENDC
 ; 4. cap damage at 250
 IF DEBUG_MODE
 	call Debug_Print_DE
@@ -2300,6 +2304,12 @@ ApplyDamageModifiers_DamageToSelf:
 	ld b, PLAY_AREA_ARENA  ; CARD_LOCATION_ARENA
 	call ApplyAttachedPluspower  ; preserves: bc
 	call HandleDamageBoostingStadiums
+IF BURN_IS_DAMAGE_OVER_TIME == 0
+	call SwapTurn
+	xor a  ; PLAY_AREA_ARENA
+	call HandleBurnDamageBoost
+	call SwapTurn
+ENDC
 ; 4. cap damage at 250
 	call CapMaximumDamage_DE  ; preserves bc
 ; 5. apply resistance
@@ -2508,6 +2518,20 @@ CheckStadiumIDInTurnHolderPlayArea:
 	ret
 
 
+IF BURN_IS_DAMAGE_OVER_TIME == 0
+; input:
+;   a: PLAY_AREA_* of the target
+; preserves: bc
+HandleBurnDamageBoost:
+	add DUELVARS_ARENA_CARD_STATUS
+	call GetNonTurnDuelistVariable
+	bit BURNED_F, a
+	ret z ; quit if not burned
+	ld hl, 10
+	jp AddToDamage_DE
+ENDC
+
+
 HandleDamageBoostingPowers:
 	; call ArePokemonPowersDisabled  ; preserves de
 	; ret c  ; Powers are disabled
@@ -2665,6 +2689,10 @@ DealDamageToPlayAreaPokemon:
 	; ld a, [wTempPlayAreaLocation_cceb]
 	; or CARD_LOCATION_PLAY_AREA
 	ld b, a
+IF BURN_IS_DAMAGE_OVER_TIME == 0
+	call HandleBurnDamageBoost  ; preserves bc
+	ld a, b
+ENDC
 	call ApplyAttachedDefender  ; preserves: bc
 	call HandleDamageReducingStadiums
 ; 2. apply damage reduction effects

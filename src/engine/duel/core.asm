@@ -383,9 +383,10 @@ PrintDuelMenuAndHandleInput:
 	ld a, DUELVARS_ARENA_CARD_STATUS
 	call GetTurnDuelistVariable
 	call CheckPrintPoisoned
+IF BURN_IS_DAMAGE_OVER_TIME
 	inc b
 	call CheckPrintBurned
-
+ENDC
 	; jr SaveDuelDataAndHandleDuelMenuInput
 	; fallthrough
 
@@ -6930,9 +6931,9 @@ HandleOnAttackEffects:
 	ld a, 1
 	farcall DiscardFromDeckEffect
 .done
+IF BURN_IS_DAMAGE_OVER_TIME
 	; jp HandleBurnDiscardEnergy
 	; fallthrough
-
 
 HandleBurnDiscardEnergy:
 ; is the Active Pokémon Burned?
@@ -6993,6 +6994,9 @@ HandleBurnDiscardEnergy:
 	ld a, DUEL_ANIM_HEAL
 	call Func_6cab
 	jp WaitForWideTextBoxInput
+ELSE
+	ret
+ENDC
 
 
 HandleOnUsePokemonPowerEffects:
@@ -7348,8 +7352,10 @@ HandleEndOfTurnEffect_StatusConditions:
 	call HandlePoisonDamage
 	ld a, [hl]
 	ret c  ; KO
+IF BURN_IS_DAMAGE_OVER_TIME
 	call HandleBurnDamage
 	ret c  ; KO
+ENDC
 	ld a, [hl]
 	and CNF_SLP_PRZ
 	cp PARALYZED
@@ -7795,6 +7801,7 @@ HandlePoisonDamage:
 	ret
 
 
+IF BURN_IS_DAMAGE_OVER_TIME
 HandleBurnDamage:
 	or a
 	bit BURNED_F, [hl]
@@ -7837,6 +7844,7 @@ HandleBurnDamage:
 	pop af
 	pop hl
 	ret
+ENDC
 
 ; given the deck index of a turn holder's card in register a,
 ; and a pointer in hl to the wLoadedCard* buffer where the card data is loaded,

@@ -2,6 +2,11 @@
 
 ## Version 0.13.0
 
+### Burn Status
+- No longer does damage at the end of a turn.
+- No longer heals by discarding an energy attached to the burned Pokémon.
+- Increases damage taken from attacks by 10.
+
 ### Quality of Life
 - Player decks no longer discount cards from the available collection. Each card copy can go into multiple decks at the same time.
 - The Challenge Hall is now always available.

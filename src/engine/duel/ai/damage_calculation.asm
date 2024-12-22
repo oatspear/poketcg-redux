@@ -172,6 +172,10 @@ _CalculateDamage_VersusDefendingPokemon:
 	ld b, a
 	call ApplyAttachedPluspower  ; preserves: bc
 	call HandleDamageBoostingStadiums
+IF BURN_IS_DAMAGE_OVER_TIME == 0
+	xor a  ; PLAY_AREA_ARENA
+	call HandleBurnDamageBoost
+ENDC
 ; 4. cap damage at 250
 	call CapMaximumDamage_DE
 ; 5. apply resistance
@@ -400,6 +404,12 @@ CalculateDamage_FromDefendingPokemon: ; 1458c (5:458c)
 	ld b, PLAY_AREA_ARENA  ; CARD_LOCATION_ARENA
 	call ApplyAttachedPluspower  ; preserves: bc
 	call HandleDamageBoostingStadiums
+IF BURN_IS_DAMAGE_OVER_TIME == 0
+	call SwapTurn
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	call HandleBurnDamageBoost
+	call SwapTurn
+ENDC
 ; 4. cap damage at 250
 	call CapMaximumDamage_DE
 ; 5. apply resistance
