@@ -3160,9 +3160,9 @@ MoltresLv35Card:
 	energy FIRE, 1 ; energies
 	tx WildfireName ; name
 	tx WildfireDescription ; description
-	dw NONE ; description (cont)
+	tx InflictBurnDescription ; description (cont)
 	db 10 ; damage
-	db DAMAGE_PLUS ; category
+	db DAMAGE_X ; category
 	dw WildfireEffectCommands ; effect commands
 	db NONE ; flags 1
 	db DISCARD_ENERGY | ATTACHED_ENERGY_BOOST ; flags 2

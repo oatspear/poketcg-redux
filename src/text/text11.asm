@@ -250,10 +250,10 @@ WildfireName:
 	done
 
 WildfireDescription:
-	text "Discard 1 or more <FIRE> Energy attached"
-	line "to this Pokémon to use this attack."
-	line "This attack does 10 more damage for"
-	line "each Energy discarded this way."
+	text "Discard all <FIRE> Energy attached to"
+	line "this Pokémon to use this attack."
+	line "This attack does 10 damage for each"
+	line "Energy discarded this way."
 	line "Discard that many cards from the"
 	line "top of your opponent's deck."
 	done

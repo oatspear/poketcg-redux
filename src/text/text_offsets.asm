@@ -233,7 +233,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer Choose1BasicEnergyCardFromDeckText                 ; 0x011c
 	textpointer ChoosePokemonToAttachEnergyCardText                ; 0x011d
 	textpointer Choose1BasicEnergyCardFromDiscardPileText
-	textpointer DiscardOppDeckAsManyFireEnergyCardsText            ; 0x0120
 	textpointer ChooseAndDiscard2EnergyCardsText                   ; 0x0121
 	textpointer ChooseDiscardEnergyCardFromOpponentText            ; 0x0123
 	textpointer ChooseAttackOpponentWillNotBeAbleToUseText         ; 0x0124

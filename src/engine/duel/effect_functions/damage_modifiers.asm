@@ -312,10 +312,10 @@ Thunderstorm_MultiplierEffect:
 	jp SetDefiniteDamage
 
 
-Wildfire_DamageBoostEffect:
+Wildfire_MultiplierEffect:
 	ldh a, [hTemp_ffa0]
 	call ATimes10
-	jp AddToDamage
+	jp SetDefiniteDamage
 
 
 Psyburn_MultiplierEffect:
@@ -375,7 +375,7 @@ Wildfire_AIEffect:
 	; ld d, 0
 	; ld e, a
 	; jp UpdateExpectedAIDamage
-	call AddToDamage
+	; call AddToDamage
 	jp SetDefiniteAIDamage
 
 

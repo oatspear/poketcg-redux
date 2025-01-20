@@ -1,5 +1,37 @@
 ;
 
+DiscardOppDeckAsManyFireEnergyCardsText:
+	text "Discard from the opponent's Deck as"
+	line "many cards as discarded <FIRE> Energy."
+	done
+
+Wildfire_PlayerSelectEffect:
+	ldtx hl, DiscardOppDeckAsManyFireEnergyCardsText
+	call DrawWideTextBox_WaitForInput
+	call CreateListOfFireEnergyAttachedToArena
+	; jr DiscardAnyNumberOfAttachedEnergy_PlayerSelectEffect
+	; fallthrough
+
+
+Wildfire_AISelectEffect:
+; AI always chooses all cards to discard
+	call CreateListOfFireEnergyAttachedToArena
+	ldh [hTemp_ffa0], a
+	jr DiscardAnyNumberOfAttachedEnergy_AISelectEffect
+
+; input:
+;   a: number of selected cards
+;   [wDuelTempList]: list of valid attached energy cards
+DiscardAnyNumberOfAttachedEnergy_AISelectEffect:
+	ld hl, wDuelTempList
+	ld de, wDuelTempList + DECK_SIZE
+	ld c, a
+	ld b, 0
+	jp CopyDataHLtoDE
+
+
+
+
 GigaDrainEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, GigaDrain_DamageMultiplierEffect
 	; dbw EFFECTCMDTYPE_AFTER_DAMAGE, Heal10DamagePerAttachedEnergyEffect
@@ -3686,10 +3718,9 @@ IceCycloneEffectCommands:
 
 
 IceCyclone_MultiplierEffect:
-	Wildfire_MultiplierEffect:
-		ldh a, [hTemp_ffa0]
-		call ATimes10
-		jp SetDefiniteDamage
+	ldh a, [hTemp_ffa0]
+	call ATimes10
+	jp SetDefiniteDamage
 
 
 IceCyclone_AIEffect:
@@ -3823,6 +3854,11 @@ DiscardOpponentEnergyIfHeads_AISelectEffect:
 	ret
 
 
+
+Wildfire_DamageBoostEffect:
+	ldh a, [hTemp_ffa0]
+	call ATimes10
+	jp AddToDamage
 
 
 Wildfire_AISelectEffect:

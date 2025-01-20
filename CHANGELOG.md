@@ -104,6 +104,9 @@
 
 #### Moltres Lv35
 - **Flare**: removed.
+- **Wildfire**: always discards all attached (F) energy.
+- **Wildfire**: base damage reduced from 10 to 0.
+- **Wildfire**: inflicts Burn.
 - New attack: **Phoenix Fire** (F): attach (F) from the discard pile to self; heal 20 damage.
 
 ### Lightning Changes

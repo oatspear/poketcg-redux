@@ -149,11 +149,6 @@ Choose1BasicEnergyCardFromDiscardPileText:
 	line "from the Discard Pile."
 	done
 
-DiscardOppDeckAsManyFireEnergyCardsText:
-	text "Discard from the opponent's Deck as"
-	line "many cards as discarded <FIRE> Energy."
-	done
-
 ChooseAndDiscard2EnergyCardsText: ; 388ca (e:48ca)
 	text "Choose and Discard"
 	line "2 Energy cards."

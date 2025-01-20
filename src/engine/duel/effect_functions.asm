@@ -947,6 +947,11 @@ VoltSwitchEffect:
 ; Compound Attacks
 ; ------------------------------------------------------------------------------
 
+Wildfire_DamageBurnEffect:
+	call BurnEffect
+	jp Wildfire_MultiplierEffect
+
+
 ; if evolution takes place, it overrides the effect queue and Poison does not
 ; apply to the Defending Pokémon, even though the animation plays
 PoisonEvolution_EvolveEffect:
@@ -2879,6 +2884,37 @@ CheckArenaPokemonHasEnergy_Psychic:
 	ret
 
 
+
+; discard all attached (F) energies
+Wildfire_DiscardEffect:
+	call CreateListOfFireEnergyAttachedToArena
+	; jr DiscardAllEnergiesFromList
+	; fallthrough
+
+
+; input:
+;   [wDuelTempList]: list of attached energy cards to discard
+; output:
+;   [hTemp_ffa0]: number of discarded energies (counting double energies)
+DiscardAllEnergiesFromList:
+; discard all cards from wDuelTempList
+	ld b, 0  ; sum of discarded energies (actual value)
+	ld hl, wDuelTempList
+.loop_discard
+	ld a, [hli]
+	cp $ff
+	jr z, .done  ; no more cards to discard
+	call PutCardInDiscardPile  ; preserves af, hl, bc
+	call GetHowMuchEnergyCardIsWorth  ; preserves hl, bc
+	add b
+	ld b, a
+	jr .loop_discard
+.done
+	ld a, b
+	ldh [hTemp_ffa0], a
+	ret
+
+
 DragonArrow_PlayerSelectEffect:
 	call CreateListOfEnergiesAttachedToArena
 	jr c, .none
@@ -2906,11 +2942,6 @@ Discharge_PlayerSelectEffect:
 	call CreateListOfLightningEnergyAttachedToArena
 	jr DiscardAnyNumberOfAttachedEnergy_PlayerSelectEffect
 
-
-Wildfire_PlayerSelectEffect:
-	ldtx hl, DiscardOppDeckAsManyFireEnergyCardsText
-	call DrawWideTextBox_WaitForInput
-	; fallthrough
 
 ScorchingColumn_PlayerSelectEffect:
 	call CreateListOfFireEnergyAttachedToArena
@@ -3002,7 +3033,6 @@ WaterPulse_AISelectEffect:
 	jr DiscardAnyNumberOfAttachedEnergy_AISelectEffect
 
 
-Wildfire_AISelectEffect:
 ScorchingColumn_AISelectEffect:
 ; AI always chooses all cards to discard
 	call CreateListOfFireEnergyAttachedToArena
@@ -3047,7 +3077,7 @@ Discharge_DiscardEnergyEffect:
 	call CreateListOfLightningEnergyAttachedToArena
 	jr DiscardAnyNumberOfAttachedEnergy_DiscardEnergyEffect
 
-Wildfire_DiscardEnergyEffect:
+ScorchingColumn_DiscardEnergyEffect:
 	call CreateListOfFireEnergyAttachedToArena
 	; jr DiscardAnyNumberOfAttachedEnergy_DiscardEnergyEffect
 	; fallthrough

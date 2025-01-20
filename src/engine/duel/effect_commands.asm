@@ -1125,11 +1125,9 @@ ThunderboltEffectCommands:
 
 WildfireEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasEnergy_Fire
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Wildfire_PlayerSelectEffect
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Wildfire_DamageBoostEffect
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, Wildfire_DiscardEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Wildfire_DamageBurnEffect
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Wildfire_DiscardDeckEffect
-	dbw EFFECTCMDTYPE_DISCARD_ENERGY, Wildfire_DiscardEnergyEffect
-	dbw EFFECTCMDTYPE_AI_SELECTION, Wildfire_AISelectEffect
 	dbw EFFECTCMDTYPE_AI, Wildfire_AIEffect
 	db  $00
 
@@ -1178,7 +1176,7 @@ ScorchingColumnEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasEnergy_Fire
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, ScorchingColumn_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ScorchingColumn_DamageBurnEffect
-	dbw EFFECTCMDTYPE_DISCARD_ENERGY, Wildfire_DiscardEnergyEffect
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, ScorchingColumn_DiscardEnergyEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, ScorchingColumn_AISelectEffect
 	dbw EFFECTCMDTYPE_AI, ScorchingColumn_AIEffect
 	db  $00
