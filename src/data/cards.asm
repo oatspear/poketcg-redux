@@ -4840,7 +4840,7 @@ ArticunoLv35Card:
 
 	; attack 1
 	energy WATER, 1 ; energies
-	tx FreezeName ; name
+	tx GatherMistsName ; name
 	tx Attach1WaterEnergyFromDiscardDescription ; description
 	tx Heal20DamageDescription ; description (cont)
 	db 0 ; damage

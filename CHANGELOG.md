@@ -109,6 +109,11 @@
 - **Wildfire**: inflicts Burn.
 - New attack: **Phoenix Fire** (F): attach (F) from the discard pile to self; heal 20 damage.
 
+### Water Changes
+
+#### Articuno Lv35
+- **Freeze**: renamed to **Gather Mists**.
+
 ### Lightning Changes
 
 #### Raichu Lv40

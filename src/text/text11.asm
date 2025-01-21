@@ -281,6 +281,10 @@ ThundercloudName:
 	text "Thundercloud"
 	done
 
+GatherMistsName:
+	text "Gather Mists"
+	done
+
 WaterGunName:
 	text "Water Gun"
 	done
