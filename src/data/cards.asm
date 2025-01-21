@@ -5918,17 +5918,17 @@ ZapdosLv40Card:
 
 	; attack 2
 	energy LIGHTNING, 1 ; energies
-	tx ThunderstormName ; name
-	tx ThunderstormDescription ; description
+	tx ThunderSpearName ; name
+	tx ThunderSpearDescription ; description
 	tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
-	db 10 ; damage
-	db DAMAGE_X ; category
-	dw ThunderstormEffectCommands ; effect commands
+	db 0 ; damage
+	db RESIDUAL ; category
+	dw ThunderSpearEffectCommands ; effect commands
 	db DAMAGE_TO_OPPONENT_BENCH ; flags 1
 	db DISCARD_ENERGY | ATTACHED_ENERGY_BOOST ; flags 2
 	db NONE ; flags 3  | SPECIAL_AI_HANDLING
 	db 10
-	db ATK_ANIM_THUNDERSTORM ; animation
+	db ATK_ANIM_MAGNETIC_STORM ; animation
 
 	db 1 ; retreat cost
 	db NONE ; weakness

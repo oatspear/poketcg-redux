@@ -1,5 +1,43 @@
 ;
 
+ThunderstormEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasEnergy_Lightning
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Thunderstorm_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Thunderstorm_MultiplierEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DamageAllOpponentBenched10Effect
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, Thunderstorm_DiscardEnergyEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, Thunderstorm_AISelectEffect
+	dbw EFFECTCMDTYPE_AI, Thunderstorm_AIEffect
+	db  $00
+
+;
+Thunderstorm_DiscardEnergyEffect:
+	call CreateListOfLightningEnergyAttachedToArena
+	jr DiscardAnyNumberOfAttachedEnergy_DiscardEnergyEffect
+
+Thunderstorm_PlayerSelectEffect:
+	call CreateListOfLightningEnergyAttachedToArena
+	jr DiscardAnyNumberOfAttachedEnergy_PlayerSelectEffect
+
+Thunderstorm_AISelectEffect:
+; AI always chooses all cards to discard
+	call CreateListOfLightningEnergyAttachedToArena
+	ldh [hTemp_ffa0], a
+	jr DiscardAnyNumberOfAttachedEnergy_AISelectEffect
+
+Thunderstorm_AIEffect:
+	call GetPlayAreaCardAttachedEnergies
+	call HandleEnergyColorOverride
+	ld a, [wAttachedEnergies + LIGHTNING]
+	call ATimes10
+	; ld d, 0
+	; ld e, a
+	; jp UpdateExpectedAIDamage
+	call SetDefiniteDamage
+	jp SetDefiniteAIDamage
+
+
+
 DiscardOppDeckAsManyFireEnergyCardsText:
 	text "Discard from the opponent's Deck as"
 	line "many cards as discarded <FIRE> Energy."

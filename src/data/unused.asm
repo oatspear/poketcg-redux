@@ -1,3 +1,33 @@
+ThunderstormName:
+	text "Thunderstorm"
+	done
+
+ThunderstormDescription:
+	text "Discard 1 or more <LIGHTNING> Energy attached"
+	line "to this Pokémon to use this attack."
+	line "This attack does 10 damage for each"
+	line "Energy discarded this way."
+	line "It also does 10 damage to each of"
+	line "of your opponent's Benched Pokémon."
+	done
+
+; attack 2
+energy LIGHTNING, 1 ; energies
+tx ThunderstormName ; name
+tx ThunderstormDescription ; description
+tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
+db 10 ; damage
+db DAMAGE_X ; category
+dw ThunderstormEffectCommands ; effect commands
+db DAMAGE_TO_OPPONENT_BENCH ; flags 1
+db DISCARD_ENERGY | ATTACHED_ENERGY_BOOST ; flags 2
+db NONE ; flags 3  | SPECIAL_AI_HANDLING
+db 10
+db ATK_ANIM_THUNDERSTORM ; animation
+
+
+
+
 ; attack 1
 energy FIRE, 1 ; energies
 tx FlareName ; name

@@ -189,6 +189,18 @@ DealDamageToTargetA_DE_DamageEffect:
 	jp SwapTurn
 
 
+ThunderSpear_DamageEffect:
+	ld a, ATK_ANIM_THUNDER_PLAY_AREA
+	ld [wLoadedAttackAnimation], a
+	ldh a, [hTemp_ffa0]
+	add a
+	ret z
+	call ATimes10
+	ld e, a
+	ld d, 0
+	jr DealDamageToTarget_DE_DamageEffect
+
+
 LickingShot_DamageEffect:
 	ld e, PLAY_AREA_ARENA
 	call GetEnergyAttachedMultiplierDamage

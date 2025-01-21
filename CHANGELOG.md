@@ -137,6 +137,10 @@
 - New Pokémon Power: **Volt Switch**: if 1 (L) is used to pay for Retreat, it is attached to the new Active Pokémon.
 - New attack: **Quick Attack** (CC): 10 damage; +40 damage if active this turn.
 
+#### Zapdos Lv40
+- **Thunderstorm**: removed.
+- New attack: **Thunder Spear** (L): discard all attached (L); 20 damage per discarded energy to 1 of the opponent's Pokémon.
+
 ### Fighting Changes
 
 #### Rhydon

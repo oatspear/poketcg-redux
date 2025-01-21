@@ -327,6 +327,8 @@ Discharge_MultiplierEffect:
 	call ATimes10
 	jp SetDefiniteDamage
 
+
+ThunderSpear_AIEffect:
 Discharge_AIEffect:
 	call GetPlayAreaCardAttachedEnergies
 	call HandleEnergyColorOverride
@@ -384,18 +386,6 @@ ScorchingColumn_AIEffect:
 	call HandleEnergyColorOverride
 	ld a, [wAttachedEnergies + FIRE]
 	add a  ; x2
-	call ATimes10
-	; ld d, 0
-	; ld e, a
-	; jp UpdateExpectedAIDamage
-	call SetDefiniteDamage
-	jp SetDefiniteAIDamage
-
-
-Thunderstorm_AIEffect:
-	call GetPlayAreaCardAttachedEnergies
-	call HandleEnergyColorOverride
-	ld a, [wAttachedEnergies + LIGHTNING]
 	call ATimes10
 	; ld d, 0
 	; ld e, a

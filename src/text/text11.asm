@@ -269,17 +269,12 @@ SheerColdDescription:
 	line "each Energy discarded this way."
 	done
 
-ThunderstormName:
-	text "Thunderstorm"
-	done
-
-ThunderstormDescription:
-	text "Discard 1 or more <LIGHTNING> Energy attached"
-	line "to this Pokémon to use this attack."
-	line "This attack does 10 damage for each"
-	line "Energy discarded this way."
-	line "It also does 10 damage to each of"
-	line "of your opponent's Benched Pokémon."
+ThunderSpearDescription:
+	text "Discard all <LIGHTNING> Energy attached to"
+	line "this Pokémon to use this attack."
+	line "This attack does 20 damage for each"
+	line "Energy discarded this way to 1 of"
+	line "your opponent's Pokémon."
 	done
 
 WaterGunName:

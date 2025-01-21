@@ -2885,6 +2885,12 @@ CheckArenaPokemonHasEnergy_Psychic:
 
 
 
+; discard all attached (L) energies
+ThunderSpear_DiscardEffect:
+	call CreateListOfLightningEnergyAttachedToArena
+	jr DiscardAllEnergiesFromList
+
+
 ; discard all attached (F) energies
 Wildfire_DiscardEffect:
 	call CreateListOfFireEnergyAttachedToArena
@@ -2937,7 +2943,6 @@ WaterPulse_PlayerSelectEffect:
 	jr DiscardAnyNumberOfAttachedEnergy_PlayerSelectEffect
 
 
-Thunderstorm_PlayerSelectEffect:
 Discharge_PlayerSelectEffect:
 	call CreateListOfLightningEnergyAttachedToArena
 	jr DiscardAnyNumberOfAttachedEnergy_PlayerSelectEffect
@@ -2992,6 +2997,11 @@ DiscardAnyNumberOfAttachedEnergy_PlayerSelectEffect:
 	ret
 
 
+; TODO improve
+ThunderSpear_AISelectEffect:
+	jp DamageTargetPokemon_AISelectEffect
+
+
 DragonArrow_AISelectEffect:
 	call DamageTargetPokemon_AISelectEffect
 ; 	add DUELVARS_ARENA_CARD_HP
@@ -3040,7 +3050,6 @@ ScorchingColumn_AISelectEffect:
 	jr DiscardAnyNumberOfAttachedEnergy_AISelectEffect
 
 
-Thunderstorm_AISelectEffect:
 Discharge_AISelectEffect:
 ; AI always chooses all cards to discard
 	call CreateListOfLightningEnergyAttachedToArena
@@ -3072,7 +3081,6 @@ WaterPulse_DiscardEnergyEffect:
 	call CreateListOfWaterEnergyAttachedToArena
 	jr DiscardAnyNumberOfAttachedEnergy_DiscardEnergyEffect
 
-Thunderstorm_DiscardEnergyEffect:
 Discharge_DiscardEnergyEffect:
 	call CreateListOfLightningEnergyAttachedToArena
 	jr DiscardAnyNumberOfAttachedEnergy_DiscardEnergyEffect

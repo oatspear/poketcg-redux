@@ -1153,14 +1153,12 @@ SheerColdEffectCommands:
 	db  $00
 ENDC
 
-ThunderstormEffectCommands:
+ThunderSpearEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasEnergy_Lightning
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Thunderstorm_PlayerSelectEffect
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Thunderstorm_MultiplierEffect
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DamageAllOpponentBenched10Effect
-	dbw EFFECTCMDTYPE_DISCARD_ENERGY, Thunderstorm_DiscardEnergyEffect
-	dbw EFFECTCMDTYPE_AI_SELECTION, Thunderstorm_AISelectEffect
-	dbw EFFECTCMDTYPE_AI, Thunderstorm_AIEffect
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, ThunderSpear_DiscardEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, ThunderSpear_DamageEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, ThunderSpear_AISelectEffect
+	dbw EFFECTCMDTYPE_AI, ThunderSpear_AIEffect
 	db  $00
 
 DischargeEffectCommands:
