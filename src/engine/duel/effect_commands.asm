@@ -1703,6 +1703,10 @@ Attach1WaterEnergyFromDiscardEffectCommands:
 	db  $00
 
 
+ThundercloudEffectCommands:
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Thundercloud_EnergyHealingEffect
+	; fallthrough to Attach1LightningEnergyFromDiscardEffectCommands
+
 Attach1LightningEnergyFromDiscardEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDiscardPileHasLightningEnergyCards
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Attach1LightningEnergyFromDiscard_SelectEffect

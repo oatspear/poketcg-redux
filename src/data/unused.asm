@@ -1,3 +1,18 @@
+; attack 1
+energy LIGHTNING, 1 ; energies
+tx PlasmaName ; name
+tx Attach1LightningEnergyFromDiscardDescription ; description
+dw NONE ; description (cont)
+db 10 ; damage
+db DAMAGE_NORMAL ; category
+dw Attach1LightningEnergyFromDiscardEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db SPECIAL_AI_HANDLING ; flags 3
+db 0
+db ATK_ANIM_THUNDER_WAVE ; animation
+
+
 ThunderstormName:
 	text "Thunderstorm"
 	done

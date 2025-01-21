@@ -277,6 +277,10 @@ ThunderSpearDescription:
 	line "your opponent's Pokémon."
 	done
 
+ThundercloudName:
+	text "Thundercloud"
+	done
+
 WaterGunName:
 	text "Water Gun"
 	done

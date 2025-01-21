@@ -87,7 +87,7 @@ HandleSpecialAIAttacks:
 	jp z, .Flare
 	; cp PONYTA
 	; jp z, .FlameCharge
-	cp ZAPDOS_LV64
+	cp ZAPDOS_LV40
 	jp z, .Energize
 	; cp JYNX
 	; jr z, .Mimic

@@ -2411,6 +2411,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer SheerColdName
 	textpointer SheerColdDescription
 	textpointer ThunderSpearDescription
+	textpointer ThundercloudName
 	textpointer WaterGunName
 	textpointer WaterGunDescription
 	textpointer WithdrawName                                       ; 0x0926
