@@ -1068,7 +1068,7 @@ ENDC
 
 PhoenixFire_EnergyHealingEffect:
 Thundercloud_EnergyHealingEffect:
-Freeze_EnergyHealingEffect:
+GatherMists_EnergyHealingEffect:
 Concentration_EnergyHealingEffect:
 	call AccelerateFromDiscard_AttachEnergyToArenaEffect
 	jp Heal20DamageEffect

@@ -4845,7 +4845,7 @@ ArticunoLv35Card:
 	tx Heal20DamageDescription ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category
-	dw FreezeEffectCommands ; effect commands
+	dw GatherMistsEffectCommands ; effect commands
 	db NONE ; flags 1
 	db HEAL_USER ; flags 2
 	db SPECIAL_AI_HANDLING ; flags 3
@@ -4881,19 +4881,6 @@ ELSE
 	db 10
 	db ATK_ANIM_BLIZZARD ; animation
 ENDC
-
-	; energy WATER, 2, COLORLESS, 2 ; energies
-	; tx BlizzardName ; name
-	; tx DamageOpponentBench10Description ; description
-	; tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
-	; db 20 ; damage
-	; db DAMAGE_NORMAL ; category
-	; dw DamageAllOpponentBenched10EffectCommands ; effect commands
-	; db DAMAGE_TO_OPPONENT_BENCH ; flags 1
-	; db NONE ; flags 2
-	; db NONE ; flags 3
-	; db 10
-	; db ATK_ANIM_BLIZZARD ; animation
 
 	db 1 ; retreat cost
 	db NONE ; weakness

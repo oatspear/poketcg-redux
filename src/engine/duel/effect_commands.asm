@@ -1692,8 +1692,8 @@ Attach1FireEnergyFromDiscardEffectCommands:
 	db  $00
 
 
-FreezeEffectCommands:
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Freeze_EnergyHealingEffect
+GatherMistsEffectCommands:
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, GatherMists_EnergyHealingEffect
 	; fallthrough to Attach1WaterEnergyFromDiscardEffectCommands
 
 Attach1WaterEnergyFromDiscardEffectCommands:
