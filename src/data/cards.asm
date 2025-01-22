@@ -4852,35 +4852,19 @@ ArticunoLv35Card:
 	db 2
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
-IF SLEEP_WITH_COIN_FLIP
 	; attack 2
 	energy WATER, 1 ; energies
-	tx SheerColdName ; name
-	tx SheerColdDescription ; description
-	tx Discard1EnergyFromTargetDescription ; description (cont)
-	db 20 ; damage
+	tx SnowstormName ; name
+	tx SnowstormDescription ; description
+	tx SnowstormDescriptionCont ; description (cont)
+	db 10 ; damage
 	db DAMAGE_X ; category
-	dw SheerColdEffectCommands ; effect commands
-	db NONE ; flags 1
-	db DISCARD_ENERGY | ATTACHED_ENERGY_BOOST ; flags 2
-	db NONE ; flags 3  | SPECIAL_AI_HANDLING
-	db 10
-	db ATK_ANIM_BLIZZARD ; animation
-ELSE
-	; attack 2
-	energy WATER, 1 ; energies
-	tx SheerColdName ; name
-	tx SheerColdDescription ; description
-	tx InflictSleepDescription ; description (cont)
-	db 20 ; damage
-	db DAMAGE_X ; category
-	dw SheerColdEffectCommands ; effect commands
-	db INFLICT_SLEEP ; flags 1
+	dw SnowstormEffectCommands ; effect commands
+	db DAMAGE_TO_OPPONENT_BENCH | INFLICT_SLEEP ; flags 1
 	db ATTACHED_ENERGY_BOOST ; flags 2
 	db NONE ; flags 3  | SPECIAL_AI_HANDLING
 	db 10
 	db ATK_ANIM_BLIZZARD ; animation
-ENDC
 
 	db 1 ; retreat cost
 	db NONE ; weakness

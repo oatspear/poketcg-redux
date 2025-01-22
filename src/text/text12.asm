@@ -1269,6 +1269,14 @@ ThunderSpearName:
 	text "Thunder Spear"
 	done
 
+ThunderSpearDescription:
+	text "Discard all <LIGHTNING> Energy attached to"
+	line "this Pokémon to use this attack."
+	line "This attack does 20 damage for each"
+	line "Energy discarded this way to 1 of"
+	line "your opponent's Pokémon."
+	done
+
 RagingThunderName:
 	text "Raging Thunder"
 	done

@@ -258,23 +258,26 @@ WildfireDescription:
 	line "top of your opponent's deck."
 	done
 
-SheerColdName:
-	text "Sheer Cold"
+SnowstormName:
+	text "Snowstorm"
 	done
 
-SheerColdDescription:
-	text "Discard 1 or more <WATER> Energy attached"
-	line "to this Pokémon to use this attack."
-	line "This attack does 20 damage for"
-	line "each Energy discarded this way."
-	done
-
-ThunderSpearDescription:
-	text "Discard all <LIGHTNING> Energy attached to"
+SnowstormDescription:
+	text "Discard all <WATER> Energy attached to"
 	line "this Pokémon to use this attack."
-	line "This attack does 20 damage for each"
-	line "Energy discarded this way to 1 of"
-	line "your opponent's Pokémon."
+	line "This attack does 10 damage for each"
+	line "Energy discarded this way to the"
+	line "Defending Pokémon and to 1 of the"
+	line "opponent's Benched Pokémon."
+	done
+
+SnowstormDescriptionCont:
+	text "Don't apply Weakness and Resistance"
+	line "to Benched Pokémon."
+	line "If either Pokémon has less Energies"
+	line "attached to it than the amount you"
+	line "discarded, that Pokémon is now"
+	line "Drowsy."
 	done
 
 ThundercloudName:

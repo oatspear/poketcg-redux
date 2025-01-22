@@ -2408,9 +2408,9 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer RageName                                           ; 0x0917
 	textpointer WildfireName
 	textpointer WildfireDescription
-	textpointer SheerColdName
-	textpointer SheerColdDescription
-	textpointer ThunderSpearDescription
+	textpointer SnowstormName
+	textpointer SnowstormDescription
+	textpointer SnowstormDescriptionCont
 	textpointer ThundercloudName
 	textpointer GatherMistsName
 	textpointer WaterGunName
@@ -2927,6 +2927,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer EnergyLiftDescription
 	textpointer StrafeName
 	textpointer ThunderSpearName
+	textpointer ThunderSpearDescription
 	textpointer RagingThunderName
 	textpointer Damage1FriendlyBenchedPokemon20Description
 	textpointer IfActiveThisTurn30BonusDamageDescription

@@ -1059,11 +1059,30 @@ PrimalSwirl_DevolveAndTrapEffect:
 	jp IncreaseRetreatCostEffect
 
 
-IF SLEEP_WITH_COIN_FLIP == 0
-SheerCold_SleepDamageMultiplierEffect:
-	call SheerCold_MultiplierEffect
-	jp SleepEffect
-ENDC
+Snowstorm_SleepDamageMultiplierEffect:
+	call Snowstorm_MultiplierEffect
+; check target Benched Pokémon
+	ldh a, [hTemp_ffa0]
+	ld c, a
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	ld e, a
+	call SwapTurn
+	call GetPlayAreaCardAttachedEnergies  ; preserves bc, de
+	call SwapTurn
+	ld a, [wTotalAttachedEnergies]
+	cp c
+	call c, SleepEffect_PlayArea
+; check Defending Pokémon
+	ldh a, [hTemp_ffa0]
+	ld c, a
+	ld e, PLAY_AREA_ARENA
+	call SwapTurn
+	call GetPlayAreaCardAttachedEnergies  ; preserves bc, de
+	call SwapTurn
+	ld a, [wTotalAttachedEnergies]
+	cp c
+	jp c, SleepEffect
+	ret
 
 
 PhoenixFire_EnergyHealingEffect:
@@ -2885,6 +2904,11 @@ CheckArenaPokemonHasEnergy_Psychic:
 	ret
 
 
+; discard all attached (W) energies
+Snowstorm_DiscardEffect:
+	call CreateListOfWaterEnergyAttachedToArena
+	jr DiscardAllEnergiesFromList
+
 
 ; discard all attached (L) energies
 ThunderSpear_DiscardEffect:
@@ -2938,7 +2962,6 @@ Psyburn_PlayerSelectEffect:
 	jr DiscardAnyNumberOfAttachedEnergy_PlayerSelectEffect
 
 
-SheerCold_PlayerSelectEffect:
 WaterPulse_PlayerSelectEffect:
 	call CreateListOfWaterEnergyAttachedToArena
 	jr DiscardAnyNumberOfAttachedEnergy_PlayerSelectEffect
@@ -2999,6 +3022,11 @@ DiscardAnyNumberOfAttachedEnergy_PlayerSelectEffect:
 
 
 ; TODO improve
+Snowstorm_AISelectEffect:
+	jp DamageTargetBenchedPokemonIfAny_AISelectEffect
+
+
+; TODO improve
 ThunderSpear_AISelectEffect:
 	jp DamageTargetPokemon_AISelectEffect
 
@@ -3029,13 +3057,6 @@ Psyburn_AISelectEffect:
 	ldh [hTemp_ffa0], a
 	jr DiscardAnyNumberOfAttachedEnergy_AISelectEffect
 
-
-SheerCold_AISelectEffect:
-IF SLEEP_WITH_COIN_FLIP
-	call DiscardOpponentEnergy_AISelectEffect
-ENDC
-	; jr WaterPulse_AISelectEffect
-	; fallthrough
 
 WaterPulse_AISelectEffect:
 ; AI always chooses all cards to discard
@@ -3077,7 +3098,6 @@ Psyburn_DiscardEnergyEffect:
 	call CreateListOfPsychicEnergyAttachedToArena
 	jr DiscardAnyNumberOfAttachedEnergy_DiscardEnergyEffect
 
-SheerCold_DiscardEnergyEffect:
 WaterPulse_DiscardEnergyEffect:
 	call CreateListOfWaterEnergyAttachedToArena
 	jr DiscardAnyNumberOfAttachedEnergy_DiscardEnergyEffect

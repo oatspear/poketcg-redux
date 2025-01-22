@@ -313,13 +313,13 @@ Thunderstorm_MultiplierEffect:
 
 
 Wildfire_MultiplierEffect:
+Snowstorm_MultiplierEffect:
 	ldh a, [hTemp_ffa0]
 	call ATimes10
 	jp SetDefiniteDamage
 
 
 Psyburn_MultiplierEffect:
-SheerCold_MultiplierEffect:
 ScorchingColumn_MultiplierEffect:
 Discharge_MultiplierEffect:
 	ldh a, [hTemp_ffa0]
@@ -355,12 +355,23 @@ Psyburn_AIEffect:
 	jp SetDefiniteAIDamage
 
 
-SheerCold_AIEffect:
 WaterPulse_AIEffect:
 	call GetPlayAreaCardAttachedEnergies
 	call HandleEnergyColorOverride
 	ld a, [wAttachedEnergies + WATER]
 	add a  ; x2
+	call ATimes10
+	; ld d, 0
+	; ld e, a
+	; jp UpdateExpectedAIDamage
+	call SetDefiniteDamage
+	jp SetDefiniteAIDamage
+
+
+Snowstorm_AIEffect:
+	call GetPlayAreaCardAttachedEnergies
+	call HandleEnergyColorOverride
+	ld a, [wAttachedEnergies + WATER]
 	call ATimes10
 	; ld d, 0
 	; ld e, a

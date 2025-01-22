@@ -1,5 +1,56 @@
 ;
 
+
+IF SLEEP_WITH_COIN_FLIP
+SheerColdEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasEnergy_Water
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, SheerCold_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SheerCold_MultiplierEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DiscardOpponentEnergy_DiscardEffect
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, SheerCold_DiscardEnergyEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, DiscardOpponentEnergy_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, SheerCold_AISelectEffect
+	dbw EFFECTCMDTYPE_AI, SheerCold_AIEffect
+	db  $00
+ELSE
+SheerColdEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasEnergy_Water
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, SheerCold_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SheerCold_SleepDamageMultiplierEffect
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, SheerCold_DiscardEnergyEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, SheerCold_AISelectEffect
+	dbw EFFECTCMDTYPE_AI, SheerCold_AIEffect
+	db  $00
+ENDC
+
+SheerCold_AISelectEffect:
+IF SLEEP_WITH_COIN_FLIP
+	call DiscardOpponentEnergy_AISelectEffect
+ENDC
+	jr WaterPulse_AISelectEffect
+
+SheerCold_DiscardEnergyEffect:
+	call CreateListOfWaterEnergyAttachedToArena
+	jr DiscardAnyNumberOfAttachedEnergy_DiscardEnergyEffect
+
+SheerCold_MultiplierEffect:
+	ldh a, [hTemp_ffa0]
+	add a  ; x2
+	call ATimes10
+	jp SetDefiniteDamage
+
+IF SLEEP_WITH_COIN_FLIP == 0
+SheerCold_SleepDamageMultiplierEffect:
+	call SheerCold_MultiplierEffect
+	jp SleepEffect
+ENDC
+
+SheerCold_PlayerSelectEffect:
+	call CreateListOfWaterEnergyAttachedToArena
+	jr DiscardAnyNumberOfAttachedEnergy_PlayerSelectEffect
+
+
+
 ThunderstormEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasEnergy_Lightning
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Thunderstorm_PlayerSelectEffect

@@ -1,3 +1,46 @@
+SheerColdName:
+	text "Sheer Cold"
+	done
+
+SheerColdDescription:
+	text "Discard 1 or more <WATER> Energy attached"
+	line "to this Pokémon to use this attack."
+	line "This attack does 20 damage for"
+	line "each Energy discarded this way."
+	done
+
+IF SLEEP_WITH_COIN_FLIP
+	; attack 2
+	energy WATER, 1 ; energies
+	tx SheerColdName ; name
+	tx SheerColdDescription ; description
+	tx Discard1EnergyFromTargetDescription ; description (cont)
+	db 20 ; damage
+	db DAMAGE_X ; category
+	dw SheerColdEffectCommands ; effect commands
+	db NONE ; flags 1
+	db DISCARD_ENERGY | ATTACHED_ENERGY_BOOST ; flags 2
+	db NONE ; flags 3  | SPECIAL_AI_HANDLING
+	db 10
+	db ATK_ANIM_BLIZZARD ; animation
+ELSE
+	; attack 2
+	energy WATER, 1 ; energies
+	tx SheerColdName ; name
+	tx SheerColdDescription ; description
+	tx InflictSleepDescription ; description (cont)
+	db 20 ; damage
+	db DAMAGE_X ; category
+	dw SheerColdEffectCommands ; effect commands
+	db INFLICT_SLEEP ; flags 1
+	db ATTACHED_ENERGY_BOOST ; flags 2
+	db NONE ; flags 3  | SPECIAL_AI_HANDLING
+	db 10
+	db ATK_ANIM_BLIZZARD ; animation
+ENDC
+
+
+
 ; attack 1
 energy LIGHTNING, 1 ; energies
 tx PlasmaName ; name

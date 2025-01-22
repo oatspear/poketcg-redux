@@ -113,6 +113,8 @@
 
 #### Articuno Lv35
 - **Freeze**: renamed to **Gather Mists**.
+- **Sheer Cold**: removed.
+- New attack: **Snowstorm** (W): discard all attached (W); 10 damage for each discarded energy to the Defending Pokémon and to 1 Benched Pokémon; inflicts Drowsiness if either target has less energies than the discarded amount.
 
 ### Lightning Changes
 
