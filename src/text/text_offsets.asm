@@ -2558,6 +2558,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer MeditateDescription
 	textpointer PsyburnName
 	textpointer PsyburnDescription
+	textpointer PsyburnDescriptionCont
 	textpointer PsychicName
 	textpointer PsychicDescription
 	textpointer NeutralizingShieldName                             ; 0x0acb

@@ -1086,12 +1086,20 @@ PsyburnName:
 	done
 
 PsyburnDescription:
-	text "Discard 1 or more <PSYCHIC> Energy attached"
-	line "to this Pokémon to use this attack."
-	line "This attack does 20 damage for each"
-	line "Energy discarded this way."
-	line "If your opponent has 4 or more cards"
-	line "in their hand, discard 1 at random."
+	text "Discard all <PSYCHIC> Energy attached to"
+	line "this Pokémon to use this attack."
+	line "Your opponent discards 1 random card"
+	line "from their hand for each Energy you"
+	line "discarded this way, until they have"
+	line "4 cards in their hand or less."
+	done
+
+PsyburnDescriptionCont:
+	text "This attack does 10 damage for each"
+	line "Energy discarded to use this attack,"
+	line "plus 10 damage for each card your"
+	line "opponent is unable to discard from"
+	line "their hand."
 	done
 
 PsychicName:

@@ -320,6 +320,46 @@ Snowstorm_MultiplierEffect:
 
 
 Psyburn_MultiplierEffect:
+	ldh a, [hTemp_ffa0]
+	ld e, a
+; check the number of cards in opponent's hand
+	ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND
+	call GetNonTurnDuelistVariable
+	sub 5
+	jr nc, .discard
+; not enough to discard
+	ld a, e
+	add a
+	cp (MAX_DAMAGE / 10) + 1
+	jr c, .capped
+	ld a, MAX_DAMAGE / 10
+	jr .capped
+
+.discard
+	inc a  ; number of cards in hand minus 4
+	ld c, a
+	sub e
+	jr nc, .only_discard
+; two's complement on a
+	cpl
+	inc a
+; add the excess to the number of energies
+	add e
+	jr .capped
+
+.only_discard
+	ld a, e
+	jr .capped
+
+.capped
+	call ATimes10
+	; ld d, 0
+	; ld e, a
+	; jp UpdateExpectedAIDamage
+	jp SetDefiniteDamage
+
+
+
 ScorchingColumn_MultiplierEffect:
 Discharge_MultiplierEffect:
 	ldh a, [hTemp_ffa0]
@@ -330,6 +370,7 @@ Discharge_MultiplierEffect:
 
 ThunderSpear_AIEffect:
 Discharge_AIEffect:
+	ld e, PLAY_AREA_ARENA
 	call GetPlayAreaCardAttachedEnergies
 	call HandleEnergyColorOverride
 	ld a, [wAttachedEnergies + LIGHTNING]
@@ -343,19 +384,20 @@ Discharge_AIEffect:
 
 
 Psyburn_AIEffect:
+	ldh a, [hTemp_ffa0]
+	push af
+	ld e, PLAY_AREA_ARENA
 	call GetPlayAreaCardAttachedEnergies
 	call HandleEnergyColorOverride
-	ld a, [wAttachedEnergies + PSYCHIC]
-	add a  ; x2
-	call ATimes10
-	; ld d, 0
-	; ld e, a
-	; jp UpdateExpectedAIDamage
-	call SetDefiniteDamage
+	ldh [hTemp_ffa0], a
+	call Psyburn_MultiplierEffect
+	pop af
+	ldh [hTemp_ffa0], a
 	jp SetDefiniteAIDamage
 
 
 WaterPulse_AIEffect:
+	ld e, PLAY_AREA_ARENA
 	call GetPlayAreaCardAttachedEnergies
 	call HandleEnergyColorOverride
 	ld a, [wAttachedEnergies + WATER]
@@ -369,6 +411,7 @@ WaterPulse_AIEffect:
 
 
 Snowstorm_AIEffect:
+	ld e, PLAY_AREA_ARENA
 	call GetPlayAreaCardAttachedEnergies
 	call HandleEnergyColorOverride
 	ld a, [wAttachedEnergies + WATER]
@@ -381,6 +424,7 @@ Snowstorm_AIEffect:
 
 
 Wildfire_AIEffect:
+	ld e, PLAY_AREA_ARENA
 	call GetPlayAreaCardAttachedEnergies
 	call HandleEnergyColorOverride
 	ld a, [wAttachedEnergies + FIRE]
@@ -393,6 +437,7 @@ Wildfire_AIEffect:
 
 
 ScorchingColumn_AIEffect:
+	ld e, PLAY_AREA_ARENA
 	call GetPlayAreaCardAttachedEnergies
 	call HandleEnergyColorOverride
 	ld a, [wAttachedEnergies + FIRE]

@@ -2904,6 +2904,12 @@ CheckArenaPokemonHasEnergy_Psychic:
 	ret
 
 
+; discard all attached (P) energies
+Psyburn_DiscardEnergyEffect:
+	call CreateListOfPsychicEnergyAttachedToArena
+	jr DiscardAllEnergiesFromList
+
+
 ; discard all attached (W) energies
 Snowstorm_DiscardEffect:
 	call CreateListOfWaterEnergyAttachedToArena
@@ -2955,11 +2961,6 @@ DragonArrow_PlayerSelectEffect:
 	xor a
 	ldh [hTemp_ffa0], a
 	ret
-
-
-Psyburn_PlayerSelectEffect:
-	call CreateListOfPsychicEnergyAttachedToArena
-	jr DiscardAnyNumberOfAttachedEnergy_PlayerSelectEffect
 
 
 WaterPulse_PlayerSelectEffect:
@@ -3051,13 +3052,6 @@ DragonArrow_AISelectEffect:
 	jr DiscardAnyNumberOfAttachedEnergy_AISelectEffect
 
 
-Psyburn_AISelectEffect:
-; AI always chooses all cards to discard
-	call CreateListOfPsychicEnergyAttachedToArena
-	ldh [hTemp_ffa0], a
-	jr DiscardAnyNumberOfAttachedEnergy_AISelectEffect
-
-
 WaterPulse_AISelectEffect:
 ; AI always chooses all cards to discard
 	call CreateListOfWaterEnergyAttachedToArena
@@ -3092,10 +3086,6 @@ DiscardAnyNumberOfAttachedEnergy_AISelectEffect:
 
 DragonArrow_DiscardEnergyEffect:
 	call CreateListOfEnergiesAttachedToArena
-	jr DiscardAnyNumberOfAttachedEnergy_DiscardEnergyEffect
-
-Psyburn_DiscardEnergyEffect:
-	call CreateListOfPsychicEnergyAttachedToArena
 	jr DiscardAnyNumberOfAttachedEnergy_DiscardEnergyEffect
 
 WaterPulse_DiscardEnergyEffect:

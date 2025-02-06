@@ -1178,11 +1178,9 @@ WaterPulseEffectCommands:
 
 PsyburnEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasEnergy_Psychic
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Psyburn_PlayerSelectEffect
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Psyburn_MultiplierEffect
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Discard1RandomCardFromOpponentsHandIf4OrMoreEffect
 	dbw EFFECTCMDTYPE_DISCARD_ENERGY, Psyburn_DiscardEnergyEffect
-	dbw EFFECTCMDTYPE_AI_SELECTION, Psyburn_AISelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Psyburn_MultiplierEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Psyburn_DiscardFromHandEffect
 	dbw EFFECTCMDTYPE_AI, Psyburn_AIEffect
 	db  $00
 

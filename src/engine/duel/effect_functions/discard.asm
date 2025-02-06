@@ -97,6 +97,19 @@ ShowDiscardedDeckCardDetails:
 ; Discard From Hand
 ; ------------------------------------------------------------------------------
 
+Psyburn_DiscardFromHandEffect:
+  ldh a, [hTemp_ffa0]
+  or a
+  ret z
+; TODO must discount appropriate number of cards here
+.loop
+  push af
+  call Discard1RandomCardFromOpponentsHandEffect
+  pop af
+  dec a
+  jr nz, .loop
+  ret
+
 
 Discard1RandomCardFromOpponentsHandIf4OrMoreEffect:
   ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND

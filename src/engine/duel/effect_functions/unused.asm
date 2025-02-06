@@ -1,5 +1,49 @@
 ;
 
+PsyburnEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasEnergy_Psychic
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Psyburn_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Psyburn_MultiplierEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Discard1RandomCardFromOpponentsHandIf4OrMoreEffect
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, Psyburn_DiscardEnergyEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, Psyburn_AISelectEffect
+	dbw EFFECTCMDTYPE_AI, Psyburn_AIEffect
+	db  $00
+
+Psyburn_AISelectEffect:
+; AI always chooses all cards to discard
+	call CreateListOfPsychicEnergyAttachedToArena
+	ldh [hTemp_ffa0], a
+	jr DiscardAnyNumberOfAttachedEnergy_AISelectEffect
+
+Psyburn_DiscardEnergyEffect:
+	call CreateListOfPsychicEnergyAttachedToArena
+	jr DiscardAnyNumberOfAttachedEnergy_DiscardEnergyEffect
+
+Psyburn_MultiplierEffect:
+	ldh a, [hTemp_ffa0]
+	add a  ; x2
+	call ATimes10
+	jp SetDefiniteDamage
+
+Psyburn_PlayerSelectEffect:
+	call CreateListOfPsychicEnergyAttachedToArena
+	jr DiscardAnyNumberOfAttachedEnergy_PlayerSelectEffect
+
+Psyburn_AIEffect:
+	call GetPlayAreaCardAttachedEnergies
+	call HandleEnergyColorOverride
+	ld a, [wAttachedEnergies + PSYCHIC]
+	add a  ; x2
+	call ATimes10
+	; ld d, 0
+	; ld e, a
+	; jp UpdateExpectedAIDamage
+	call SetDefiniteDamage
+	jp SetDefiniteAIDamage
+
+
+
 
 IF SLEEP_WITH_COIN_FLIP
 SheerColdEffectCommands:

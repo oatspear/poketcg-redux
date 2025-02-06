@@ -7955,8 +7955,8 @@ MewtwoLv53Card:
 	energy PSYCHIC, 1 ; energies
 	tx PsyburnName ; name
 	tx PsyburnDescription ; description
-	dw NONE ; description (cont)
-	db 20 ; damage
+	tx PsyburnDescriptionCont ; description (cont)
+	db 10 ; damage
 	db DAMAGE_X ; category
 	dw PsyburnEffectCommands ; effect commands
 	db NONE ; flags 1
