@@ -1683,13 +1683,3 @@ IngrainDescriptionCont:
 	text "Heal 10 damage from this Pokémon"
 	line "for each Energy retrieved this way."
 	done
-
-LickingShotName:
-	text "Licking Shot"
-	done
-
-LickingShotDescription:
-	text "This attack does 10 damage to 1 of"
-	line "your opponent's Pokémon for each"
-	line "Energy attached to this Pokémon."
-	done

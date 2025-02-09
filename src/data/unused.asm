@@ -1,3 +1,20 @@
+; attack 2
+energy FIGHTING, 2 ; energies
+tx ChopDownName ; name
+tx ChopDownDescription ; description
+dw NONE ; description (cont)
+db 30 ; damage
+db DAMAGE_PLUS ; category
+dw ChopDownEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_HIT ; animation
+
+
+
+
 SheerColdName:
 	text "Sheer Cold"
 	done

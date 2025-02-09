@@ -1126,6 +1126,16 @@ StrongArmLariatDescription:
 	line "this Pokémon can't attack."
 	done
 
+CrowdPummelName:
+	text "Crowd Pummel"
+	done
+
+CrowdPummelDescription:
+	text "If there is a Stadium in play, this"
+	line "attack also does damage to the new"
+	line "Defending Pokémon."
+	done
+
 PrankName:
 	text "Prank"
 	done
@@ -1540,4 +1550,14 @@ PsyShiftDescription:
 	text "Move up to 3 damage counters from"
 	line "this Pokémon to the Defending"
 	line "Pokémon."
+	done
+
+LickingShotName:
+	text "Licking Shot"
+	done
+
+LickingShotDescription:
+	text "This attack does 10 damage to 1 of"
+	line "your opponent's Pokémon for each"
+	line "Energy attached to this Pokémon."
 	done

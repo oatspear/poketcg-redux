@@ -454,6 +454,20 @@ CheckTriggeringPokemonIsOnTheBench:
 	ret
 
 
+; returns carry if there is no Stadium in play
+CheckSomeStadiumInPlay:
+	ld a, DUELVARS_STADIUM_CARD
+	call GetTurnDuelistVariable
+	cp $ff
+	ccf
+	ret nc
+	ld a, DUELVARS_STADIUM_CARD
+	call GetNonTurnDuelistVariable
+	cp $ff
+	ccf
+	ret
+
+
 ; ------------------------------------------------------------------------------
 ; Damage
 ; ------------------------------------------------------------------------------

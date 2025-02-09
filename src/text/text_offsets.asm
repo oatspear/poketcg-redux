@@ -2672,8 +2672,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer UTurnName
 	textpointer IngrainName
 	textpointer IngrainDescriptionCont
-	textpointer LickingShotName
-	textpointer LickingShotDescription
 
 ; ------------------------------------------------------------------------------
 ; text12.asm
@@ -2901,6 +2899,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer DoAdditionalDamageText
 	textpointer StrongArmLariatName
 	textpointer StrongArmLariatDescription
+	textpointer CrowdPummelName
+	textpointer CrowdPummelDescription
 	textpointer PrankName
 	textpointer PrankDescription
 	textpointer CrushingChargeName
@@ -2978,6 +2978,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer EnergyBloomDescription
 	textpointer PsyShiftName
 	textpointer PsyShiftDescription
+	textpointer LickingShotName
+	textpointer LickingShotDescription
 
 ; ------------------------------------------------------------------------------
 ; text13.asm

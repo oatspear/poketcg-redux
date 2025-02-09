@@ -152,6 +152,14 @@
 
 ### Fighting Changes
 
+#### Machoke
+- **Chop Down**: removed.
+- New attack: **Strong-Arm Lariat** (FC): 30 damage; can optionally do double damage and become unable to attack next turn.
+
+#### Machamp
+- **Strong-Arm Lariat**: removed.
+- New attack: **Crowd Pummel** (FFC): 40 damage; the opponent switches their Active Pokémon; if there is a Stadium in play, does damage also to the new Defending Pokémon.
+
 #### Rhydon
 - **Horn Drill**: increased cost from (CC) to (FC).
 - **Horn Drill**: discards a Stadium in play.

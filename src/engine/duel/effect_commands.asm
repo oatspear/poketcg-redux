@@ -281,6 +281,7 @@ SwallowUpEffectCommands:
 	dbw EFFECTCMDTYPE_AI, SwallowUp_AIEffect
 	db  $00
 
+; unused
 ChopDownEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ChopDown_DamageBoostEffect
 	dbw EFFECTCMDTYPE_AI, ChopDown_AIEffect
@@ -1444,6 +1445,13 @@ RamEffectCommands:
 
 WhirlwindEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Whirlwind_SwitchEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Whirlwind_SelectEffect
+	dbw EFFECTCMDTYPE_AI_SWITCH_DEFENDING_PKMN, Whirlwind_SelectEffect
+	db  $00
+
+CrowdPummelEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CrowdPummel_StoreDamageEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, CrowdPummel_SwitchDamageEffect
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Whirlwind_SelectEffect
 	dbw EFFECTCMDTYPE_AI_SWITCH_DEFENDING_PKMN, Whirlwind_SelectEffect
 	db  $00

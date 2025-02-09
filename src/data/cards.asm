@@ -6411,13 +6411,13 @@ MachokeCard:
 	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy FIGHTING, 2 ; energies
-	tx ChopDownName ; name
-	tx ChopDownDescription ; description
+	energy FIGHTING, 1, COLORLESS, 1 ; energies
+	tx StrongArmLariatName ; name
+	tx StrongArmLariatDescription ; description
 	dw NONE ; description (cont)
 	db 30 ; damage
 	db DAMAGE_PLUS ; category
-	dw ChopDownEffectCommands ; effect commands
+	dw OptionalDoubleDamageEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -6463,14 +6463,14 @@ MachampCard:
 
 	; attack 2
 	energy FIGHTING, 2, COLORLESS, 1 ; energies
-	tx StrongArmLariatName ; name
-	tx StrongArmLariatDescription ; description
-	dw NONE ; description (cont)
-	db 60 ; damage
-	db DAMAGE_PLUS ; category
-	dw OptionalDoubleDamageEffectCommands ; effect commands
-	db NONE ; flags 1
-	db NONE ; flags 2
+	tx CrowdPummelName ; name
+	tx OpponentSwitchesPokemonDescription ; description
+	tx CrowdPummelDescription ; description (cont)
+	db 40 ; damage
+	db DAMAGE_NORMAL ; category
+	dw CrowdPummelEffectCommands ; effect commands
+	db DAMAGE_TO_OPPONENT_BENCH ; flags 1
+	db SWITCH_OPPONENT_POKEMON ; flags 2
 	db NONE ; flags 3
 	db 0
 	db ATK_ANIM_HIT ; animation

@@ -1,5 +1,52 @@
 ;
 
+; Move the selected deck card to the top of the deck.
+SelectedCard_DredgeEffect:
+SelectedCard_MoveToTopOfDeckEffect:
+	ldh a, [hTemp_ffa0]
+	cp $ff
+	ret z ; skip if no card was chosen
+	; fallthrough
+
+; move selected card to the top of the deck.
+; input:
+;   a: deck index of card to move
+DredgeEffect:
+MoveDeckCardToTopOfDeckEffect:
+	call SearchCardInDeckAndSetToJustDrawn  ; preserves af, hl, bc, de
+	call AddCardToHand  ; preserves af, hl bc, de
+	call RemoveCardFromHand  ; preserves af, hl bc, de
+	jp ReturnCardToDeck  ; preserves a, hl, de, bc
+
+
+
+; Draws list of Energy Cards in Discard Pile for Player to select from.
+; Output deck index or $ff in hTemp_ffa0 and a.
+; Return carry if there are no cards to choose.
+HandleSelectBasicEnergyFromDiscardPile_NoCancel:
+	push hl
+	call CreateEnergyCardListFromDiscardPile_OnlyBasic
+	pop hl
+	jr nc, .select_card
+; return terminating byte
+	ld a, $ff
+	ldh [hTemp_ffa0], a
+	scf
+	ret
+
+.select_card
+	call DrawWideTextBox_WaitForInput
+.loop
+	call Helper_ChooseAnEnergyCardFromList
+	jr c, .loop
+
+	ldh a, [hTempCardIndex_ff98]
+	ldh [hTemp_ffa0], a
+	or a
+	ret
+
+
+
 PsyburnEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasEnergy_Psychic
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Psyburn_PlayerSelectEffect
