@@ -157,7 +157,9 @@
 - New attack: **Strong-Arm Lariat** (FC): 30 damage; can optionally do double damage and become unable to attack next turn.
 
 #### Machamp
+- **Strike Back**: removed.
 - **Strong-Arm Lariat**: removed.
+- New attack: **Furious Fists** (FC): 10 damage; +10 damage for each damage counter on this Pokémon; 20 counter damage until next turn.
 - New attack: **Crowd Pummel** (FFC): 40 damage; the opponent switches their Active Pokémon; if there is a Stadium in play, does damage also to the new Defending Pokémon.
 
 #### Rhydon

@@ -761,6 +761,12 @@ RageEffectCommands:
 	dbw EFFECTCMDTYPE_AI, Rage_AIEffect
 	db  $00
 
+FuriousFistsEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Rage_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Counter20DamageEffect
+	dbw EFFECTCMDTYPE_AI, Rage_AIEffect
+	db  $00
+
 DoubleDamageIfUserIsDamagedEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, DoubleDamageIfUserIsDamaged_DamageBoostEffect
 	dbw EFFECTCMDTYPE_AI, DoubleDamageIfUserIsDamaged_AIEffect

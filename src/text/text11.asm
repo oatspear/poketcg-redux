@@ -779,12 +779,8 @@ StrikeBack10Description:
 	line "on the Attacking Pokémon."
 	done
 
-StrikeBack20Description:
-	text "If this is your Active Pokémon and"
-	line "it is damaged by an opponent's"
-	line "attack (even if this Pokémon is"
-	line "Knocked Out), put 2 damage counters"
-	line "on the Attacking Pokémon."
+FuriousFistsName:
+	text "Furious Fists"
 	done
 
 RockThrowName: ; 5eede (17:6ede)

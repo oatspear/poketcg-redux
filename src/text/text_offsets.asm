@@ -2500,7 +2500,7 @@ TextOffsets:: ; 34000 (d:4000)
 	; textpointer SpikedArmorDescription
 	textpointer StrikeBackName
 	textpointer StrikeBack10Description
-	textpointer StrikeBack20Description
+	textpointer FuriousFistsName
 	textpointer RockThrowName                                      ; 0x0a3a
 	textpointer RockSlideName                                      ; 0x0a3d
 	textpointer ExplosionName

@@ -1291,11 +1291,11 @@ IsCounterattackActive:
 
 ; Strike Back Pokémon
 	ld a, [wTempNonTurnDuelistCardID]
-	cp MACHAMP
-	; ld hl, 20  ; damage to return
-	; call z, AddToDamage_DE
-	ld de, 20  ; damage to return
-	jr z, .dark_retribution
+	; cp MACHAMP
+	; ; ld hl, 20  ; damage to return
+	; ; call z, AddToDamage_DE
+	; ld de, 20  ; damage to return
+	; jr z, .dark_retribution
 
 	cp MEWTWO_LV60
 	; ld hl, 10  ; damage to return

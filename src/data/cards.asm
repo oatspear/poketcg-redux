@@ -6448,18 +6448,18 @@ MachampCard:
 	tx MachokeName ; pre-evo name
 
 	; attack 1
-	energy 0 ; energies
-	tx StrikeBackName ; name
-	tx StrikeBack20Description ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
-	db 0 ; damage
-	db POKEMON_POWER ; category
-	dw PassivePowerEffectCommands ; effect commands
+	energy FIGHTING, 1, COLORLESS, 1 ; energies
+	tx FuriousFistsName ; name
+	tx RageDescription ; description
+	tx Counter20DamageDescription ; description (cont)
+	db 10 ; damage
+	db DAMAGE_PLUS ; category
+	dw FuriousFistsEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
-	db NONE ; flags 3
+	db BOOST_IF_TAKEN_DAMAGE ; flags 3
 	db 0
-	db ATK_ANIM_GLOW_EFFECT ; animation
+	db ATK_ANIM_PUNCH ; animation
 
 	; attack 2
 	energy FIGHTING, 2, COLORLESS, 1 ; energies
