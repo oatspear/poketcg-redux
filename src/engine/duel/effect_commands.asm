@@ -250,7 +250,7 @@ ToxicNeedleEffectCommands:
 	db  $00
 
 RageFistEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, RageFist_DamageBoostEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, RageFist_DamageMultiplierEffect
 	dbw EFFECTCMDTYPE_AI, RageFist_AIEffect
 	db  $00
 
@@ -956,6 +956,7 @@ StrangeBehaviorEffectCommands:
 	dbw EFFECTCMDTYPE_INTERACTIVE_STEP, StrangeBehavior_SwapEffect
 	db  $00
 
+; unused unreferenced
 GetMadEffectCommands:
 	; dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHas20HpOrMore
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, GetMad_PlayerSelectEffect

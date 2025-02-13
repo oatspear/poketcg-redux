@@ -2887,7 +2887,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer MountainSwingName
 	textpointer MountainSwingDescription
 	textpointer UnaffectedByResistanceDescription
-	textpointer IncreaseDamageTakenBy40Description
+	textpointer IncreaseDamageTakenBy30Description
 	textpointer RevengeName
 	textpointer MendName
 	textpointer FightingFuryName

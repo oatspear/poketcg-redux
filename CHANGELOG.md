@@ -152,6 +152,12 @@
 
 ### Fighting Changes
 
+#### Primeape
+- **Get Mad**: removed.
+- **Rage Fist**: base damage reduced from 20 to 0.
+- **Rage Fist**: cost reduced from (FC) to (F).
+- New attack: **Close Combat** (FC): 50 damage; takes +30 damage from attacks until next turn.
+
 #### Machoke
 - **Chop Down**: removed.
 - New attack: **Strong-Arm Lariat** (FC): 30 damage; can optionally do double damage and become unable to attack next turn.

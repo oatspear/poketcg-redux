@@ -594,15 +594,15 @@ DoubleDamageIfMorePrizes_AIEffect:
 
 
 ; +10 damage for each Prize the opponent has taken
-RageFist_DamageBoostEffect:
+RageFist_DamageMultiplierEffect:
 	call SwapTurn
 	call CountPrizesTaken
 	call SwapTurn
 	call ATimes10
-	jp AddToDamage
+	jp SetDefiniteDamage
 
 RageFist_AIEffect:
-	call RageFist_DamageBoostEffect
+	call RageFist_DamageMultiplierEffect
 	jp SetDefiniteAIDamage
 
 

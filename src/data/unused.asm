@@ -1,3 +1,18 @@
+; attack 1
+energy FIGHTING, 1 ; energies
+tx GetMadName ; name
+tx GetMadDescription ; description
+dw NONE ; description (cont)
+db 10 ; damage
+db DAMAGE_PLUS ; category
+dw GetMadEffectCommands ; effect commands
+db LOW_RECOIL ; flags 1
+db NONE ; flags 2
+db BOOST_IF_TAKEN_DAMAGE ; flags 3
+db 0
+db ATK_ANIM_HIT ; animation
+
+
 StrikeBack20Description:
 	text "If this is your Active Pokémon and"
 	line "it is damaged by an opponent's"

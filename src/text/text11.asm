@@ -1587,9 +1587,8 @@ RageFistName:
 	done
 
 RageFistDescription:
-	text "This attack does 10 more damage"
-	line "for each Prize card your opponent"
-	line "has taken."
+	text "This attack does 10 damage for each"
+	line "Prize card your opponent has taken."
 	done
 
 RelentlessFlamesName:
