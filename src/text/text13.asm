@@ -22,19 +22,6 @@ DischargeDescription:
 	line "Defending Pokémon is now Paralyzed."
 	done
 
-ScorchingColumnName:
-	text "Scorching Column"
-	done
-
-ScorchingColumnDescription:
-	text "Discard 1 or more <FIRE> Energy attached"
-	line "to this Pokémon to use this attack."
-	line "This attack does 20 damage for each"
-	line "Energy discarded this way."
-	line "If you discarded at least 2, the"
-	line "Defending Pokémon is now Burned."
-	done
-
 WaterPulseName:
 	text "Water Pulse"
 	done
@@ -269,6 +256,19 @@ FixmeText:
 ; ------------------------------------------------------------------------------
 ; Unused Text
 ; ------------------------------------------------------------------------------
+
+; ScorchingColumnName:
+; 	text "Scorching Column"
+; 	done
+
+; ScorchingColumnDescription:
+; 	text "Discard 1 or more <FIRE> Energy attached"
+; 	line "to this Pokémon to use this attack."
+; 	line "This attack does 20 damage for each"
+; 	line "Energy discarded this way."
+; 	line "If you discarded at least 2, the"
+; 	line "Defending Pokémon is now Burned."
+; 	done
 
 ; SpiralDrainName:
 ; 	text "Spiral Drain"

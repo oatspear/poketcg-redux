@@ -1108,14 +1108,6 @@ ToxicWaste_DamagePoisonEffect:
 ; 	jp DamageTargetPokemon_AISelectEffect  ; uses [hTempPlayAreaLocation_ffa1]
 
 
-ScorchingColumn_DamageBurnEffect:
-	call ScorchingColumn_MultiplierEffect
-	ldh a, [hTemp_ffa0]
-	cp 2
-	jp nc, BurnEffect
-	ret
-
-
 Discharge_DamageParalysisEffect:
 	call Discharge_MultiplierEffect
 	; ldh a, [hTemp_ffa0]
@@ -2970,11 +2962,6 @@ WaterPulse_PlayerSelectEffect:
 
 Discharge_PlayerSelectEffect:
 	call CreateListOfLightningEnergyAttachedToArena
-	jr DiscardAnyNumberOfAttachedEnergy_PlayerSelectEffect
-
-
-ScorchingColumn_PlayerSelectEffect:
-	call CreateListOfFireEnergyAttachedToArena
 	; jr DiscardAnyNumberOfAttachedEnergy_PlayerSelectEffect
 	; fallthrough
 
@@ -3059,13 +3046,6 @@ WaterPulse_AISelectEffect:
 	jr DiscardAnyNumberOfAttachedEnergy_AISelectEffect
 
 
-ScorchingColumn_AISelectEffect:
-; AI always chooses all cards to discard
-	call CreateListOfFireEnergyAttachedToArena
-	ldh [hTemp_ffa0], a
-	jr DiscardAnyNumberOfAttachedEnergy_AISelectEffect
-
-
 Discharge_AISelectEffect:
 ; AI always chooses all cards to discard
 	call CreateListOfLightningEnergyAttachedToArena
@@ -3094,10 +3074,6 @@ WaterPulse_DiscardEnergyEffect:
 
 Discharge_DiscardEnergyEffect:
 	call CreateListOfLightningEnergyAttachedToArena
-	jr DiscardAnyNumberOfAttachedEnergy_DiscardEnergyEffect
-
-ScorchingColumn_DiscardEnergyEffect:
-	call CreateListOfFireEnergyAttachedToArena
 	; jr DiscardAnyNumberOfAttachedEnergy_DiscardEnergyEffect
 	; fallthrough
 

@@ -2374,6 +2374,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer SelfdestructName                                   ; 0x08c0
 	; textpointer Selfdestruct40Description
 	textpointer Selfdestruct50Description
+	textpointer CleanHitName
+	textpointer Bonus10VersusEvolvedPokemonDescription
 	textpointer PoisonWhipName                                     ; 0x08c7
 	textpointer SwordsDanceName                                    ; 0x08ca
 	textpointer NextTurnDoubleDamageDescription
@@ -2519,7 +2521,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer StretchKickName
 	textpointer Deal20ToBenchDescription                           ; 0x0a58
 	textpointer HighJumpKickName                                   ; 0x0a59
-	textpointer SkyUppercutName
+	textpointer PowerUpPunchName
 	textpointer CloseCombatName
 	textpointer SpikesName
 	textpointer RamName                                            ; 0x0a67
@@ -2988,8 +2990,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer UnaffectedByWeaknessResistancePowersEffectsDescription
 	textpointer DischargeName
 	textpointer DischargeDescription
-	textpointer ScorchingColumnName
-	textpointer ScorchingColumnDescription
 	textpointer WaterPulseName
 	textpointer WaterPulseDescription
 	textpointer EvolutionaryThunderName
@@ -3035,6 +3035,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer FixmeText
 
 	; unused
+	; textpointer ScorchingColumnName
+	; textpointer ScorchingColumnDescription
 	; textpointer SwimFreelyName
 	; textpointer SwimFreelyDescription
 	; textpointer ProphecyName

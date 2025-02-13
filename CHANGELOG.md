@@ -102,6 +102,10 @@
 - **Firestarter**: attaches the energy to the Active Pokémon, instead of a Benched Pokémon.
 - **Firestarter**: puts 1 damage counter on the target Pokémon.
 
+#### Flareon Lv28
+- **Scorching Column**: removed.
+- New attack: **Quick Attack** (CC): 10 damage; +40 damage if active this turn.
+
 #### Moltres Lv35
 - **Flare**: removed.
 - **Wildfire**: always discards all attached (F) energy.
@@ -171,6 +175,12 @@
 #### Rhydon
 - **Horn Drill**: increased cost from (CC) to (FC).
 - **Horn Drill**: discards a Stadium in play.
+
+#### Hitmonchan
+- **Close Combat**: removed.
+- **Sky Uppercut**: removed.
+- New attack: **Power-Up Punch** (F): 10 damage; double damage next turn.
+- New attack: **Clean Hit** (FC): 20 damage; +10 damage versus evolved Pokémon.
 
 ### Psychic Changes
 

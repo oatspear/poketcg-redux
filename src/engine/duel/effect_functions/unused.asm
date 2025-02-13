@@ -1,5 +1,51 @@
 ;
 
+ScorchingColumnEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasEnergy_Fire
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, ScorchingColumn_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ScorchingColumn_DamageBurnEffect
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, ScorchingColumn_DiscardEnergyEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, ScorchingColumn_AISelectEffect
+	dbw EFFECTCMDTYPE_AI, ScorchingColumn_AIEffect
+	db  $00
+
+ScorchingColumn_PlayerSelectEffect:
+	call CreateListOfFireEnergyAttachedToArena
+	jr DiscardAnyNumberOfAttachedEnergy_PlayerSelectEffect
+
+ScorchingColumn_AIEffect:
+	ld e, PLAY_AREA_ARENA
+	call GetPlayAreaCardAttachedEnergies
+	call HandleEnergyColorOverride
+	ld a, [wAttachedEnergies + FIRE]
+	add a  ; x2
+	call ATimes10
+	; ld d, 0
+	; ld e, a
+	; jp UpdateExpectedAIDamage
+	call SetDefiniteDamage
+	jp SetDefiniteAIDamage
+
+ScorchingColumn_AISelectEffect:
+; AI always chooses all cards to discard
+	call CreateListOfFireEnergyAttachedToArena
+	ldh [hTemp_ffa0], a
+	jr DiscardAnyNumberOfAttachedEnergy_AISelectEffect
+
+ScorchingColumn_DiscardEnergyEffect:
+	call CreateListOfFireEnergyAttachedToArena
+	jr DiscardAnyNumberOfAttachedEnergy_DiscardEnergyEffect
+
+ScorchingColumn_DamageBurnEffect:
+	call ScorchingColumn_MultiplierEffect
+	ldh a, [hTemp_ffa0]
+	cp 2
+	jp nc, BurnEffect
+	ret
+
+
+
+
 ; Move the selected deck card to the top of the deck.
 SelectedCard_DredgeEffect:
 SelectedCard_MoveToTopOfDeckEffect:

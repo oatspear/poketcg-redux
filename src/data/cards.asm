@@ -3106,18 +3106,18 @@ FlareonLv28Card:
 	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy FIRE, 1 ; energies
-	tx ScorchingColumnName ; name
-	tx ScorchingColumnDescription ; description
+	energy COLORLESS, 2 ; energies
+	tx QuickAttackName ; name
+	tx IfActiveThisTurn40BonusDamageDescription ; description
 	dw NONE ; description (cont)
-	db 20 ; damage
-	db DAMAGE_X ; category
-	dw ScorchingColumnEffectCommands ; effect commands
-	db INFLICT_POISON ; flags 1
-	db ATTACHED_ENERGY_BOOST | DISCARD_ENERGY ; flags 2
+	db 10 ; damage
+	db DAMAGE_PLUS ; category
+	dw QuickAttack40EffectCommands ; effect commands
+	db NONE ; flags 1
+	db NONE ; flags 2
 	db NONE ; flags 3
-	db 9
-	db ATK_ANIM_BIG_FLAME ; animation
+	db 0
+	db ATK_ANIM_QUICK_ATTACK ; animation
 
 	db 1 ; retreat cost
 	db WR_WATER ; weakness
@@ -6923,31 +6923,31 @@ HitmonchanCard:
 
 	; attack 1
 	energy FIGHTING, 1 ; energies
-	tx CloseCombatName ; name
-	tx IncreaseDamageTakenBy30Description ; description
+	tx PowerUpPunchName ; name
+	tx NextTurnDoubleDamageDescription ; description
 	dw NONE ; description (cont)
-	db 40 ; damage
+	db 10 ; damage
 	db DAMAGE_NORMAL ; category
-	dw CloseCombatEffectCommands ; effect commands
+	dw SwordsDanceEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
-	db NONE ; flags 3
+	db SPECIAL_AI_HANDLING ; flags 3
 	db 0
 	db ATK_ANIM_PUNCH ; animation
 
 	; attack 2
-	energy FIGHTING, 2, COLORLESS, 1 ; energies
-	tx SkyUppercutName ; name
-	tx UnaffectedByResistanceDescription ; description
+	energy FIGHTING, 1, COLORLESS, 1 ; energies
+	tx CleanHitName ; name
+	tx Bonus10VersusEvolvedPokemonDescription ; description
 	dw NONE ; description (cont)
-	db 40 ; damage
-	db DAMAGE_NORMAL ; category
-	dw UnaffectedByResistanceEffectCommands ; effect commands
+	db 20 ; damage
+	db DAMAGE_PLUS ; category
+	dw Bonus10VersusEvolvedPokemonEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_PUNCH ; animation
+	db ATK_ANIM_HIT ; animation
 
 	db 1 ; retreat cost
 	db WR_PSYCHIC ; weakness

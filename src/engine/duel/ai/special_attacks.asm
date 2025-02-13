@@ -17,6 +17,8 @@ HandleSpecialAIAttacks:
 	jp z, .Staryu
 	cp SCYTHER
 	jp z, .SwordsDanceAndFocusEnergy
+	cp HITMONCHAN
+	jp z, .SwordsDanceAndFocusEnergy
 	cp MAGNETON_LV35
 	jp z, .JunkMagnet
 	; cp MEW_LV15
@@ -184,7 +186,7 @@ HandleSpecialAIAttacks:
 ; - player is under No Damage substatus;
 ; - second attack is unusable;
 ; - second attack deals no damage;
-; if any are true, returns score of $80 + 5.
+; if any are true, returns score of $80 + 3.
 .SwordsDanceAndFocusEnergy:
 	ld a, [wAICannotDamage]
 	or a
@@ -197,9 +199,10 @@ HandleSpecialAIAttacks:
 	call EstimateDamage_VersusDefendingCard
 	ld a, [wDamage]
 	or a
-	jp nz, .zero_score
+	; jp nz, .zero_score
+	ret nz
 .swords_dance_focus_energy_success
-	ld a, $85
+	ld a, $83
 	ret
 
 

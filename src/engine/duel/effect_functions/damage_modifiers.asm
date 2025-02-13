@@ -436,20 +436,6 @@ Wildfire_AIEffect:
 	jp SetDefiniteAIDamage
 
 
-ScorchingColumn_AIEffect:
-	ld e, PLAY_AREA_ARENA
-	call GetPlayAreaCardAttachedEnergies
-	call HandleEnergyColorOverride
-	ld a, [wAttachedEnergies + FIRE]
-	add a  ; x2
-	call ATimes10
-	; ld d, 0
-	; ld e, a
-	; jp UpdateExpectedAIDamage
-	call SetDefiniteDamage
-	jp SetDefiniteAIDamage
-
-
 ; ------------------------------------------------------------------------------
 ; Based on Trainer Cards
 ; ------------------------------------------------------------------------------
@@ -856,6 +842,20 @@ Constrict_AIEffect:
 	add 10
 	call AddToDamage
 	jp SetDefiniteAIDamage
+
+
+; +10 vs evolved Pokémon
+Bonus10VersusEvolvedPokemon_DamageBoostEffect:
+	ld a, DUELVARS_ARENA_CARD_STAGE
+	call GetNonTurnDuelistVariable
+	and a
+	ret z  ; BASIC Pokémon
+	ld a, 10
+	jp AddToDamage
+
+Bonus10VersusEvolvedPokemon_AIEffect:
+  call Bonus10VersusEvolvedPokemon_DamageBoostEffect
+  jp SetDefiniteAIDamage
 
 
 ; ------------------------------------------------------------------------------

@@ -99,8 +99,14 @@ Selfdestruct50Description:
 	line "itself."
 	done
 
-BindName:
-	text "Bind"
+CleanHitName:
+	text "Clean Hit"
+	done
+
+Bonus10VersusEvolvedPokemonDescription:
+	text "If the Defending Pokémon is an"
+	line "Evolved Pokémon, this attack does"
+	line "10 more damage."
 	done
 
 PoisonWhipName:
@@ -875,8 +881,8 @@ HighJumpKickName: ; 5f6d0 (17:76d0)
 	text "High Jump Kick"
 	done
 
-SkyUppercutName:
-	text "Sky Uppercut"
+PowerUpPunchName:
+	text "Power-Up Punch"
 	done
 
 CloseCombatName:

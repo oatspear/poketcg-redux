@@ -896,6 +896,11 @@ IfAttachedEnergy10BonusDamageEffectCommands:
 	dbw EFFECTCMDTYPE_AI, IfAttachedEnergy10BonusDamage_AIEffect
 	db  $00
 
+Bonus10VersusEvolvedPokemonEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Bonus10VersusEvolvedPokemon_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AI, Bonus10VersusEvolvedPokemon_AIEffect
+	db  $00
+
 InflictSleepEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SleepEffect
 	db  $00
@@ -1164,15 +1169,6 @@ DischargeEffectCommands:
 	dbw EFFECTCMDTYPE_DISCARD_ENERGY, Discharge_DiscardEnergyEffect
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Discharge_DamageParalysisEffect
 	dbw EFFECTCMDTYPE_AI, Discharge_AIEffect
-	db  $00
-
-ScorchingColumnEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasEnergy_Fire
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, ScorchingColumn_PlayerSelectEffect
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ScorchingColumn_DamageBurnEffect
-	dbw EFFECTCMDTYPE_DISCARD_ENERGY, ScorchingColumn_DiscardEnergyEffect
-	dbw EFFECTCMDTYPE_AI_SELECTION, ScorchingColumn_AISelectEffect
-	dbw EFFECTCMDTYPE_AI, ScorchingColumn_AIEffect
 	db  $00
 
 WaterPulseEffectCommands:

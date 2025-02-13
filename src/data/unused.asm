@@ -1,3 +1,33 @@
+; attack 2
+energy FIRE, 1 ; energies
+tx ScorchingColumnName ; name
+tx ScorchingColumnDescription ; description
+dw NONE ; description (cont)
+db 20 ; damage
+db DAMAGE_X ; category
+dw ScorchingColumnEffectCommands ; effect commands
+db INFLICT_POISON ; flags 1
+db ATTACHED_ENERGY_BOOST | DISCARD_ENERGY ; flags 2
+db NONE ; flags 3
+db 9
+db ATK_ANIM_BIG_FLAME ; animation
+
+
+; attack 2
+energy FIGHTING, 2, COLORLESS, 1 ; energies
+tx SkyUppercutName ; name
+tx UnaffectedByResistanceDescription ; description
+dw NONE ; description (cont)
+db 40 ; damage
+db DAMAGE_NORMAL ; category
+dw UnaffectedByResistanceEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_PUNCH ; animation
+
+
 ; attack 1
 energy FIGHTING, 1 ; energies
 tx GetMadName ; name
