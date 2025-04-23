@@ -7066,11 +7066,13 @@ HandleOnPlayEnergyEffects:
 	ld a, MAGNETON_LV28  ; Electromagnetic Wall
 	call GetFirstPokemonWithAvailablePower
 	call SwapTurn
-	jr nc, .full_heal_energy  ; no Pkmn Power-capable Pokémon was found
+	jr nc, .done  ; no Pkmn Power-capable Pokémon was found
 	ldh a, [hTempPlayAreaLocation_ff9d]
 ; placing damage counters directly
 	ld e, a
 	jp Bank1_Put1DamageCounterOnTarget
+.done
+	ret
 
 
 ; input:
