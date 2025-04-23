@@ -194,14 +194,16 @@ CursedFlamesDescription:
 	line "of your opponent's deck."
 	done
 
+DoubleKickName:
+	text "Double Kick"
+	done
+
 DoubleHitName:
 	text "Double Hit"
 	done
 
 DoubleHitDescription:
-	text "If this Pokémon has 2 or more"
-	line "Energies attached to it, this"
-	line "attack does damage to the"
+	text "This attack does damage to the"
 	line "Defending Pokémon twice."
 	done
 
@@ -211,10 +213,7 @@ TripleHitName:
 
 TripleHitDescription:
 	text "This attack does damage to the"
-	line "Defending Pokémon twice if this"
-	line "Pokémon has 2 Energies attached to"
-	line "it, or thrice if it has 3 or more"
-	line "Energies attached to it."
+	line "Defending Pokémon 3 times."
 	done
 
 ShiftName:
@@ -249,6 +248,19 @@ EnergyBallDescription:
 	line "<GRASS> Energy attached to this Pokémon."
 	done
 
+SeepingToxinsName:
+	text "Seeping Toxins"
+	done
+
+SeepingToxinsDescription:
+	text "When your opponent's Active Pokémon"
+	line "takes damage from Poison, put 1 more"
+	line "damage counter on it."
+	line "If this is your Active Pokémon, also"
+	line "put 1 damage counter on each of your"
+	line "opponent's Poisoned Benched Pokémon."
+	done
+
 FixmeText:
 	text "FIXME"
 	done
@@ -256,6 +268,45 @@ FixmeText:
 ; ------------------------------------------------------------------------------
 ; Unused Text
 ; ------------------------------------------------------------------------------
+
+; SurpriseBiteDescription:
+; 	text "Once during your turn, you may"
+; 	line "put 1 damage counter on 1 of"
+; 	line "your opponent's Benched Pokémon"
+; 	line "that has no damage counters."
+; 	done
+
+; VampiricAuraName:
+; 	text "Vampiric Aura"
+; 	done
+; 
+; VampiricAuraDescription:
+; 	text "If your Active Pokémon has any"
+; 	line "attached <DARKNESS> Energy, its attacks"
+; 	line "that do damage to the Defending"
+; 	line "Pokémon also heal 10 damage from it"
+; 	line "(20 damage, if the Defending"
+; 	line "Pokémon is Poisoned)."
+; 	done
+
+; SwordsDanceName:
+; 	text "Swords Dance"
+; 	done
+
+; DoubleHitDescription:
+; 	text "If this Pokémon has 2 or more"
+; 	line "Energies attached to it, this"
+; 	line "attack does damage to the"
+; 	line "Defending Pokémon twice."
+; 	done
+
+; TripleHitDescription:
+; 	text "This attack does damage to the"
+; 	line "Defending Pokémon twice if this"
+; 	line "Pokémon has 2 Energies attached to"
+; 	line "it, or thrice if it has 3 or more"
+; 	line "Energies attached to it."
+; 	done
 
 ; ScorchingColumnName:
 ; 	text "Scorching Column"
@@ -378,15 +429,6 @@ FixmeText:
 ; 	line "Energies in your hand instead."
 ; 	done
 
-IF SLEEP_WITH_COIN_FLIP
-; DreamEaterDescription:
-; 	text "At the end of your turns, put 1"
-; 	line "damage counter on each of your"
-; 	line "opponent's Pokémon that is Asleep."
-; 	line "Heal 10 damage from this Pokémon"
-; 	line "for each Pokémon damaged this way."
-; 	done
-ELSE
 ; DreamEaterDescription:
 ; 	text "At the end of your turns, put 1"
 ; 	line "damage counter on each of your"
@@ -394,7 +436,6 @@ ELSE
 ; 	line "Heal 10 damage from this Pokémon"
 ; 	line "for each Pokémon damaged this way."
 ; 	done
-ENDC
 
 ; ProphecyName:
 ; 	text "Prophecy"

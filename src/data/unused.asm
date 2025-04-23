@@ -1,3 +1,142 @@
+OverwhelmName:
+	text "Overwhelm"
+	done
+
+OverwhelmDescription:
+	text "If the opponent has 4 or more cards"
+	line "in their hand, they discard a random"
+	line "card from their hand and the"
+	line "Defending Pokémon is now Paralyzed."
+	done
+
+; attack 2
+energy DARKNESS, 2, COLORLESS, 1 ; energies
+tx OverwhelmName ; name
+tx OverwhelmDescription ; description
+dw NONE ; description (cont)
+db 40 ; damage
+db DAMAGE_NORMAL ; category
+dw OverwhelmEffectCommands ; effect commands
+db INFLICT_PARALYSIS ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_HIT_EFFECT ; animation
+
+
+NeutralizingGasDescription:
+	text "While this Pokémon is in the Active"
+	line "Spot, ignore all Pokémon Powers"
+	line "other than Neutralizing Gases."
+	done
+
+
+NightAmbushName:
+	text "Night Ambush"
+	done
+
+NightAmbushDescription:
+	text "This attack does 30 damage to 1"
+	line "of your opponent's Pokémon."
+	line "That Pokémon is now Poisoned."
+	; line "You may switch this Pokémon with"
+	; line "one of your Benched Pokémon."
+	done
+
+; attack 2
+energy DARKNESS, 1, COLORLESS, 1 ; energies
+tx NightAmbushName ; name
+tx NightAmbushDescription ; description
+tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
+db 0 ; damage
+db RESIDUAL ; category
+dw NightAmbushEffectCommands ; effect commands
+db INFLICT_POISON | DAMAGE_TO_OPPONENT_BENCH ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 2
+db ATK_ANIM_AGILITY_NO_HIT ; animation
+
+
+energy 0 ; energies
+tx VampiricAuraName ; name
+tx VampiricAuraDescription ; description
+tx PokemonPowerDescriptionCont ; description (cont)
+db 0 ; damage
+db POKEMON_POWER ; category
+dw PassivePowerEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_PKMN_POWER_1 ; animation
+
+
+FoulOdorName:
+	text "Foul Odor"
+	done
+
+; attack 2
+energy GRASS, 1 ; energies
+tx FoulOdorName ; name
+tx InflictPoisonDescription ; description
+tx StunSporeDescription ; description (cont)
+db 10 ; damage
+db DAMAGE_NORMAL ; category
+dw FoulOdorEffectCommands ; effect commands
+db INFLICT_POISON | INFLICT_PARALYSIS ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_FOUL_ODOR ; animation
+
+
+
+; attack 1
+energy 0 ; energies
+tx NoxiousScalesName ; name
+tx NoxiousScalesDescription ; description
+tx PokemonPowerDescriptionCont ; description (cont)
+db 0 ; damage
+db POKEMON_POWER ; category
+dw PassivePowerEffectCommands ; effect commands
+db INFLICT_POISON | INFLICT_CONFUSION ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 1
+db ATK_ANIM_POWDER_HIT ; animation
+
+
+; attack 2
+energy COLORLESS, 2 ; energies
+tx UTurnName ; name
+tx SwitchThisPokemonDescription ; description
+dw NONE ; description (cont)
+db 30 ; damage
+db DAMAGE_NORMAL ; category
+dw SwitchUserEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_QUICK_ATTACK ; animation
+
+
+; attack 1
+energy FIGHTING, 1 ; energies
+tx PowerUpPunchName ; name
+tx NextTurnDoubleDamageDescription ; description
+dw NONE ; description (cont)
+db 10 ; damage
+db DAMAGE_NORMAL ; category
+dw SwordsDanceEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db SPECIAL_AI_HANDLING ; flags 3
+db 0
+db ATK_ANIM_PUNCH ; animation
+
+
 ; attack 2
 energy FIRE, 1 ; energies
 tx ScorchingColumnName ; name
@@ -187,6 +326,32 @@ db ATK_ANIM_SMALL_FLAME ; animation
 
 
 
+PollenBurstName:
+	text "Pollen Burst"
+	done
+
+PollenBurstDescription:
+	text "The Defending Pokémon is now"
+	line "Poisoned and Burned."
+	line "If this Pokémon was damaged since"
+	line "your last turn, the Defending"
+	line "Pokémon is now also Paralyzed."
+	done
+
+; attack 1
+energy GRASS, 1 ; energies
+tx PollenBurstName ; name
+tx PollenBurstDescription ; description
+dw NONE ; description (cont)
+db 10 ; damage
+db DAMAGE_NORMAL ; category
+dw PollenBurstEffectCommands ; effect commands
+db INFLICT_POISON | INFLICT_PARALYSIS ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 1
+db ATK_ANIM_POWDER_HIT ; animation
+
 ; attack 1
 energy GRASS, 1, COLORLESS, 1 ; energies
 tx PollenBurstName ; name
@@ -199,7 +364,7 @@ db INFLICT_POISON | INFLICT_PARALYSIS ; flags 1
 db NONE ; flags 2
 db NONE ; flags 3
 db 1
-db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
+db ATK_ANIM_POWDER_HIT ; animation
 
 
 
@@ -245,7 +410,7 @@ db INFLICT_POISON | INFLICT_PARALYSIS ; flags 1
 db NONE ; flags 2
 db NONE ; flags 3
 db 1
-db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
+db ATK_ANIM_POWDER_HIT ; animation
 
 
 
@@ -379,7 +544,7 @@ db NONE ; flags 1
 db FLAG_2_BIT_6 ; flags 2
 db NONE ; flags 3
 db 2
-db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
+db ATK_ANIM_POWDER_HIT ; animation
 
 
 PetalDanceName:
@@ -443,7 +608,7 @@ db INFLICT_POISON | INFLICT_PARALYSIS | INFLICT_SLEEP ; flags 1
 db NONE ; flags 2
 db NONE ; flags 3
 db 0
-db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
+db ATK_ANIM_POWDER_HIT ; animation
 
 
 
@@ -572,7 +737,7 @@ db INFLICT_SLEEP ; flags 1
 db NONE ; flags 2
 db NONE ; flags 3
 db 1
-db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
+db ATK_ANIM_POWDER_HIT ; animation
 
 
 
@@ -625,7 +790,7 @@ db INFLICT_POISON | INFLICT_CONFUSION ; flags 1
 db NONE ; flags 2
 db NONE ; flags 3
 db 0
-db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
+db ATK_ANIM_POWDER_HIT ; animation
 
 
 

@@ -162,48 +162,58 @@ UnableDueToParalysisText: ; 364a1 (d:64a1)
 	text "Unable to due to Paralysis."
 	done
 
-Received10DamageDueToPoisonText: ; 364be (d:64be)
+ReceivedDamageDueToPoisonText:
 	text "<RAMTEXT> received"
-	line "10 damage due to Poison."
+	line "damage due to Poison."
 	done
 
-Received20DamageDueToPoisonText: ; 364e3 (d:64e3)
-	text "<RAMTEXT> received"
-	line "20 damage due to Double Poison."
-	done
+; Received20DamageDueToPoisonText: ; 364e3 (d:64e3)
+; 	text "<RAMTEXT> received"
+; 	line "20 damage due to Double Poison."
+; 	done
 
 Received20DamageDueToBurnText:
 	text "<RAMTEXT> received"
 	line "20 damage due to Burn."
 	done
 
-IF SLEEP_WITH_COIN_FLIP
-IsStillAsleepText:
-	text "<RAMTEXT> is"
-	line "still Asleep."
+AccuracyCheckText:
+	text "Accuracy check!"
+	line "If Tails, Attack is unsuccessful."
 	done
-ELSE
-IsStillAsleepText:
-	text "<RAMTEXT> is"
-	line "still Drowsy."
-	done
-ENDC
 
-IF SLEEP_WITH_COIN_FLIP
-IsCuredOfSleepText:
-	text "<RAMTEXT> is"
-	line "cured of Sleep."
+AttackUnsuccessfulText:
+	text "Attack unsuccessful."
 	done
-ELSE
+
+IsLostInConfusionText:
+	text "<RAMTEXT> is"
+	line "lost in Confusion."
+	done
+
+IsFullyParalyzedText:
+	text "<RAMTEXT> is"
+	line "fully Paralyzed."
+	done
+
+IsFastAsleepText:
+	text "<RAMTEXT> is"
+	line "fast Asleep."
+	done
+
 IsCuredOfSleepText:
 	text "<RAMTEXT> is"
 	line "cured of Drowsiness."
 	done
-ENDC
 
-IsCuredOfParalysisText: ; 36539 (d:6539)
+IsCuredOfParalysisText:
 	text "<RAMTEXT> is"
 	line "cured of Paralysis."
+	done
+
+IsCuredOfConfusionText:
+	text "<RAMTEXT> is"
+	line "cured of Confusion."
 	done
 
 IsCuredOfBurnText:
@@ -847,17 +857,10 @@ OnlyOncePerTurnText: ; 378a7 (d:78a7)
 	text "Only once per turn."
 	done
 
-IF SLEEP_WITH_COIN_FLIP
-CannotUseDueToStatusText:
-	text "Cannot use due to Sleep, Paralysis,"
-	line "or Confusion."
-	done
-ELSE
 CannotUseDueToStatusText:
 	text "Cannot use due to Drowsiness,"
 	line "Paralysis or Confusion."
 	done
-ENDC
 
 CannotBeUsedInTurnWhichWasPlayedText: ; 378ef (d:78ef)
 	text "Cannot be used in the turn in"
@@ -885,15 +888,9 @@ ThereAreNoPokemonOnBenchText: ; 379ce (d:79ce)
 	text "There are no Pokémon on the Bench."
 	done
 
-IF SLEEP_WITH_COIN_FLIP
-OpponentIsNotAsleepText:
-	text "Opponent is not Asleep."
-	done
-ELSE
 OpponentIsNotAsleepText:
 	text "Opponent is not Drowsy."
 	done
-ENDC
 
 UnableToUsePkmnPowerText:
 	text "Unable to use Pokémon Powers."

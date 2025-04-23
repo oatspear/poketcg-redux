@@ -2,15 +2,9 @@ SporeName: ; 58ee2 (16:4ee2)
 	text "Spore"
 	done
 
-IF SLEEP_WITH_COIN_FLIP
-InflictSleepDescription:
-	text "The Defending Pokémon is now Asleep."
-	done
-ELSE
 InflictSleepDescription:
 	text "The Defending Pokémon is now Drowsy."
 	done
-ENDC
 
 Attach2EnergyFromDiscardToAnyPkmnDescription:
 	text "Choose up to 2 Basic Energy cards"
@@ -50,23 +44,19 @@ SwallowUpDescriptionCont:
 	line "from this Pokémon."
 	done
 
-ToxicGasName:
-	text "Toxic Gas"
+NeutralizingGasName:
+	text "Neutralizing Gas"
 	done
 
-ToxicGasDescription:
-	text "While this Pokémon is in the Active"
-	line "Spot, ignore all Pokémon Powers"
-	line "other than Toxic Gases."
+NeutralizingGasDescription:
+	text "As long as this Pokémon is in the"
+	line "Active Spot, your opponent’s Pokémon"
+	line "in play have no Pokémon Powers,"
+	line "except for Neutralizing Gas."
 	done
 
 TeleportBlastName:
 	text "Teleport Blast"
-	done
-
-SwitchThisPokemonDescription:
-	text "Switch this Pokémon with one of"
-	line "your Benched Pokémon."
 	done
 
 DamagePerEnergyAttachedToBothActiveDescription:
@@ -113,8 +103,8 @@ PoisonWhipName:
 	text "Poison Whip"
 	done
 
-SwordsDanceName:
-	text "Swords Dance"
+FuryCutterName:
+	text "Fury Cutter"
 	done
 
 NextTurnDoubleDamageDescription:
@@ -131,15 +121,9 @@ GuillotineName:
 	text "Guillotine"
 	done
 
-Guillotine30Description:
-	text "If the Defending Pokémon has"
-	line "30 HP or less remaining,"
-	line "it is Knocked Out."
-	done
-
-Guillotine50Description:
-	text "If the Defending Pokémon has"
-	line "50 HP or less remaining,"
+GuillotineDescription:
+	text "If the Defending Pokémon has less"
+	line "HP remaining than this Pokémon,"
 	line "it is Knocked Out."
 	done
 
@@ -313,9 +297,9 @@ RainDanceName:
 
 RainDanceDescription:
 	text "As often as you like during your"
-	line "turn, your may attach a <WATER> Energy"
-	line "card from your hand to 1 of"
-	line "your Pokémon."
+	line "turn, your may attach a Basic"
+	line "<WATER> Energy card from your hand"
+	line "to 1 of your Benched Pokémon."
 	done
 ;	text "You may attach 1 extra <WATER> Energy"
 ;	line "to 1 of your Pokémon each turn."
@@ -369,17 +353,6 @@ CowardiceName: ; 5b885 (16:7885)
 	text "Cowardice"
 	done
 
-IF SLEEP_WITH_COIN_FLIP
-CowardiceDescription:
-	text "At any time during your turn"
-	line "(before your attack), you may return"
-	line "this Pokémon to your hand. (Discard"
-	line "all cards attached to it.) This"
-	line "power can't be used the turn you put"
-	line "this Pokémon into play or if it is"
-	line "Asleep, Confused, or Paralyzed."
-	done
-ELSE
 CowardiceDescription:
 	text "At any time during your turn"
 	line "(before your attack), you may return"
@@ -389,7 +362,6 @@ CowardiceDescription:
 	line "this Pokémon into play or if it is"
 	line "Drowsy, Confused, or Paralyzed."
 	done
-ENDC
 
 JellyfishStingName: ; 5ba02 (16:7a02)
 	text "Jellyfish Sting"
@@ -421,19 +393,11 @@ RestName:
 	text "Rest"
 	done
 
-IF SLEEP_WITH_COIN_FLIP
-RestDescription:
-	text "Remove all Special Conditions and"
-	line "damage counters from this Pokémon."
-	line "This Pokémon is now Asleep."
-	done
-ELSE
 RestDescription:
 	text "Remove all Special Conditions and"
 	line "damage counters from this Pokémon."
 	line "This Pokémon is now Drowsy."
 	done
-ENDC
 
 RendName:
 	text "Rend"
@@ -554,8 +518,8 @@ AssassinFlightDescription:
 	line "of your opponent's Benched Pokémon."
 	done
 
-FoulOdorName:
-	text "Foul Odor"
+PollenSprayName:
+	text "Pollen Spray"
 	done
 
 AromatherapyDescription:
@@ -565,27 +529,15 @@ AromatherapyDescription:
 	line "of your Pokémon."
 	done
 
-StaticName:
-	text "Static"
+HayFeverName:
+	text "Hay Fever"
 	done
 
-StaticDescription:
+HayFeverDescription:
 	text "While this is your Active Pokémon,"
-	line "whenever your opponent plays an Item"
-	line "card from their hand, leave the"
-	line "opponent's Active Pokémon Paralyzed."
-	done
-
-PollenBurstName:
-	text "Pollen Burst"
-	done
-
-PollenBurstDescription:
-	text "The Defending Pokémon is now"
-	line "Poisoned and Burned."
-	line "If this Pokémon was damaged since"
-	line "your last turn, the Defending"
-	line "Pokémon is now also Paralyzed."
+	line "whenever your opponent plays a"
+	line "Trainer card, leave the opponent's"
+	line "Active Pokémon Paralyzed and Burned."
 	done
 
 SparkName: ; 5cf47 (17:4f47)
@@ -914,8 +866,8 @@ Tutor1PokemonDescription:
 	line "Then, shuffle your deck."
 	done
 
-SharpSickleName:
-	text "Sharp Sickle"
+ReapingClawName:
+	text "Reaping Claw"
 	done
 
 PrehistoricPowerName:
@@ -999,37 +951,21 @@ HyperHypnosisName:
 	text "Hyper Hypnosis"
 	done
 
-IF SLEEP_WITH_COIN_FLIP
-HyperHypnosisDescription:
-	text "Once during your turn, you may"
-	line "discard an Energy attached to this"
-	line "Pokémon. If you do, the opponent's"
-	line "Active Pokémon is now Asleep."
-	done
-ELSE
 HyperHypnosisDescription:
 	text "Once during your turn, you may"
 	line "discard an Energy attached to this"
 	line "Pokémon. If you do, the opponent's"
 	line "Active Pokémon is now Drowsy."
 	done
-ENDC
 
 DreamEaterName:
 	text "Dream Eater"
 	done
 
-IF SLEEP_WITH_COIN_FLIP
-DreamEaterDescription:
-	text "If the Defending Pokémon is not"
-	line "Asleep, this attack cannot be used."
-	done
-ELSE
 DreamEaterDescription:
 	text "If the Defending Pokémon is not"
 	line "Drowsy, this attack cannot be used."
 	done
-ENDC
 
 MischiefName:
 	text "Mischief"
@@ -1166,14 +1102,18 @@ FlyDescription:
 	line "attached to it to your hand."
 	done
 
-HurricaneName:
-	text "Hurricane"
+CycloneName:
+	text "Cyclone"
 	done
 
-HurricaneDescription:
-	text "You may return 1 of your opponent's"
-	line "Pokémon and all cards attached to it"
-	line "to your opponent's hand."
+CycloneDescription:
+	text "Your opponent puts their Active"
+	line "Pokémon and all cards attached to"
+	line "it into their hand."
+	done
+
+HurricaneName:
+	text "Hurricane"
 	done
 
 TwisterName:
@@ -1240,11 +1180,16 @@ SwarmName:
 	done
 
 SwarmDescription:
-	text "Search your deck for 1 Basic"
-	line "Pokémon and put it onto your Bench."
+	text "If you have 4 or more Pokémon"
+	line "on your Bench, this attack"
+	line "does 10 more damage."
+	done
+
+SwarmDescriptionCont:
+	text "Before doing damage, you may search"
+	line "your deck for 1 Basic Pokémon and"
+	line "put it onto your Bench."
 	line "Then, shuffle your deck."
-	line "If your Bench was already full,"
-	line "this attack does 10 more damage."
 	done
 
 StressPheromonesName:
@@ -1303,20 +1248,9 @@ DeadlyPoisonName:
 	done
 
 VenoshockDescription:
-	text "If the Defending Pokémon was already"
-	line "already Poisoned, this attack does"
-	line "20 more damage."
-	done
-
-OverwhelmName:
-	text "Overwhelm"
-	done
-
-OverwhelmDescription:
-	text "If the opponent has 4 or more cards"
-	line "in their hand, they discard a random"
-	line "card from their hand and the"
-	line "Defending Pokémon is now Paralyzed."
+	text "If the Defending Pokémon was"
+	line "already Poisoned, this attack"
+	line "does 30 more damage."
 	done
 
 AfflictionName:
@@ -1487,19 +1421,6 @@ PlungeDescription:
 	line "your Active Pokémon."
 	done
 
-VampiricAuraName:
-	text "Vampiric Aura"
-	done
-
-VampiricAuraDescription:
-	text "If your Active Pokémon has any"
-	line "attached <DARKNESS> Energy, its attacks"
-	line "that do damage to the Defending"
-	line "Pokémon also heal 10 damage from it"
-	line "(20 damage, if the Defending"
-	line "Pokémon is Poisoned)."
-	done
-
 ReactivePoisonName:
 	text "Reactive Poison"
 	done
@@ -1606,8 +1527,8 @@ PutDamageCountersOnPokemonText:
 	line "<RAMTEXT>."
 	done
 
-PsychicLeapName:
-	text "Psychic Leap"
+OverheadThrowName:
+	text "Overhead Throw"
 	done
 
 MysteriousTailName:
@@ -1683,4 +1604,19 @@ IngrainName:
 IngrainDescriptionCont:
 	text "Heal 10 damage from this Pokémon"
 	line "for each Energy retrieved this way."
+	done
+
+SupersonicName:
+	text "Supersonic"
+	done
+
+CounterName:
+	text "Counter"
+	done
+
+CounterDescription:
+	text "If this Pokémon was damaged by"
+	line "an attack during your opponent's"
+	line "last turn, this attack does that"
+	line "much more damage."
 	done

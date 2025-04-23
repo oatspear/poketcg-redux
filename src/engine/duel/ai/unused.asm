@@ -197,12 +197,8 @@ HandleAIPeek:
 
 ; handles AI logic for attaching energy cards
 HandleAIRainDanceEnergy:
-	; ld a, [wOncePerTurnActions]
-	; and USED_RAIN_DANCE_THIS_TURN
-	; ret nz ; return if Rain Dance was used this turn
-
 	ld a, WARTORTLE
-	call CountPokemonIDInPlayArea
+	call GetFirstPokemonWithAvailablePower
 	ret nc ; return if no Wartortle
 
 	call ArePokemonPowersDisabled
@@ -210,7 +206,8 @@ HandleAIRainDanceEnergy:
 
 ; play all the energy cards that is needed.
 .loop
-	farcall AIProcessAndTryToPlayEnergy
+	; farcall AIProcessAndTryToPlayEnergy
+	farcall AIProcessAndTryToPlayEnergy_SkipArena
 	jr c, .loop
 	ret
 

@@ -67,7 +67,14 @@ RetrievePlayAreaAIScoreFromBackup:
 
 ; have AI decide whether to play energy card from hand
 ; and determine which card is best to attach it.
-AIProcessAndTryToPlayEnergy: ; 164e8 (5:64e8)
+AIProcessAndTryToPlayEnergy_SkipArena:
+	ld a, AI_ENERGY_FLAG_SKIP_ARENA_CARD
+	ld [wAIEnergyAttachLogicFlags], a
+	jr AIProcessAndTryToPlayEnergy.has_logic_flags
+
+; have AI decide whether to play energy card from hand
+; and determine which card is best to attach it.
+AIProcessAndTryToPlayEnergy:
 	xor a
 	ld [wAIEnergyAttachLogicFlags], a
 
@@ -196,7 +203,7 @@ AIProcessEnergyCards: ; 164fc (5:64fc)
 .has_20_hp
 	ld a, DUELVARS_ARENA_CARD_STATUS
 	call GetTurnDuelistVariable
-	and DOUBLE_POISONED
+	and MAX_POISON
 	jr z, .check_defending_can_ko
 .poison_will_ko
 	ld a, 10

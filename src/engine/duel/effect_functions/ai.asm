@@ -55,30 +55,19 @@ Solarbeam_AIEffect:
 	jp SetDefiniteAIDamage
 
 
+; FIXME double damage boosting effects
 DoubleHit_AIEffect:
-	call CheckArenaPokemonHas2OrMoreEnergiesAttached
-	ret c
 	ld a, [wDamage]
 	add a
 	call AddToDamage
 	jp SetDefiniteAIDamage
 
-
+; FIXME triple damage boosting effects
 TripleHit_AIEffect:
-	call CheckArenaPokemonHas3OrMoreEnergiesAttached
-	cp 2
-	ret c  ; once
-; twice
-	dec a
-	ld c, a
 	ld a, [wDamage]
 	ld d, a
 	add d
-	dec c
-	jr z, .update
-; thrice
 	add d
-.update
 	call AddToDamage
 	jp SetDefiniteAIDamage
 

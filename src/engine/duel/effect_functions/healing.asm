@@ -7,7 +7,7 @@
 VampiricAura_LeechEffect:
 	ld a, DUELVARS_ARENA_CARD_STATUS
 	call GetNonTurnDuelistVariable
-	and POISONED | DOUBLE_POISONED
+	and MAX_POISON
 	jr z, Leech10DamageEffect
 	jr Leech20DamageEffect
 

@@ -220,46 +220,6 @@ UseAttackOrPokemonPower:
 
 
 
-;
-AttackUnsuccessfulText: ; 38197 (e:4197)
-	text "Attack unsuccessful."
-	done
-
-; return carry if the turn holder's attack was unsuccessful due to reduced accuracy effect
-HandleReducedAccuracySubstatus:
-	call CheckReducedAccuracySubstatus
-	ret nc
-	call TossCoin
-	ld [wGotHeadsFromAccuracyCheck], a
-	ccf
-	ret nc
-	ldtx hl, AttackUnsuccessfulText
-	call DrawWideTextBox_WaitForInput
-	scf
-	ret
-
-
-
-; return carry if the turn holder's arena card is under the effects of reduced accuracy
-CheckReducedAccuracySubstatus:
-	ld a, DUELVARS_ARENA_CARD_SUBSTATUS2
-	call GetTurnDuelistVariable
-	or a
-	ret z
-	ldtx de, AccuracyCheckText
-	cp SUBSTATUS2_ACCURACY
-	jr z, .card_is_affected
-	or a
-	ret
-.card_is_affected
-	ld a, [wGotHeadsFromAccuracyCheck]
-	or a
-	ret nz
-	scf
-	ret
-
-
-
 
 
 ;

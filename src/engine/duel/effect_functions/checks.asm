@@ -648,16 +648,13 @@ CheckSomePokemonWithEnoughHP:
 
 
 ; output:
-;   carry: set if the Defending Pokémon has more than 30 HP remaining
-CheckDefendingPokemonHas30HpOrLess:
-	ld a, 30
+;   carry: set if the Defending Pokémon has more than 50 HP remaining
+CheckDefendingPokemonHasLessHp:
+	ld a, DUELVARS_ARENA_CARD_HP
+	call GetTurnDuelistVariable
+	sub 10
 	jr CheckDefendingPokemonHasLowHp
 
-; output:
-;   carry: set if the Defending Pokémon has more than 50 HP remaining
-CheckDefendingPokemonHas50HpOrLess:
-	ld a, 50
-	jr CheckDefendingPokemonHasLowHp
 
 ; output:
 ;   carry: set if the Defending Pokémon has more than 70 HP remaining
@@ -930,9 +927,6 @@ CheckPlayedEnergyThisTurn:
 	ld a, [wOncePerTurnActions]
 	and PLAYED_ENERGY_THIS_TURN
 	ret nz  ; played energy
-	ld a, [wOncePerTurnActions]
-	and USED_RAIN_DANCE_THIS_TURN
-	ret nz  ; played energy with Rain Dance
 	scf
 	ret
 

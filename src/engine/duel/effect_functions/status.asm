@@ -17,16 +17,45 @@ ParalysisIfDamagedSinceLastTurnEffect:
 	jr ParalysisEffect
 
 
-PoisonEffect: ; 2c007 (b:4007)
+IF POISON_STACKS
+PoisonEffect:
+Put1PoisonCounterEffect:
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetNonTurnDuelistVariable
+	and MAX_POISON
+	cp MAX_POISON
+	jr nc, .apply
+	inc a
+.apply
+	ld b, $ff
+	ld c, a
+	jr ApplyStatusEffect
+
+DoublePoisonEffect:
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetNonTurnDuelistVariable
+	and MAX_POISON
+	cp MAX_POISON
+	jr nc, .apply
+	inc a
+	cp MAX_POISON
+	jr nc, .apply
+	inc a
+.apply
+	ld b, $ff
+	ld c, a
+	jr ApplyStatusEffect
+
+ELSE
+PoisonEffect:
 	lb bc, $ff, POISONED
 	jr ApplyStatusEffect
 
-; Defending Pokémon becomes double poisoned (takes 20 damage per turn rather than 10)
 DoublePoisonEffect:
 	lb bc, $ff, DOUBLE_POISONED
 	jr ApplyStatusEffect
+ENDC
 
-; Defending Pokémon becomes burned
 BurnEffect:
 	lb bc, $ff, BURNED
 	jr ApplyStatusEffect
@@ -35,11 +64,11 @@ ParalysisEffect:
 	lb bc, PSN_DBLPSN_BRN, PARALYZED
 	jr ApplyStatusEffect
 
-ConfusionEffect: ; 2c024 (b:4024)
+ConfusionEffect:
 	lb bc, PSN_DBLPSN_BRN, CONFUSED
 	jr ApplyStatusEffect
 
-SleepEffect: ; 2c030 (b:4030)
+SleepEffect:
 	lb bc, PSN_DBLPSN_BRN, ASLEEP
 	jr ApplyStatusEffect
 
@@ -102,7 +131,7 @@ CanBeAffectedByStatus:
 ; Snorlax's Thick Skinned prevents it from being statused...
 	cp SNORLAX
 	jr nz, .safeguard
-; ...unless already so, or if affected by Toxic Gas
+; ...unless already so, or if affected by Neutralizing Gas
 	ld a, e
 	call CheckCannotUseDueToStatus_Anywhere  ; preserves bc, de
 	ret nc  ; Pokémon Power is active
@@ -132,6 +161,11 @@ PoisonConfusionEffect:
 ; ------------------------------------------------------------------------------
 
 
+PoisonSleep_StatusEffect:
+	call PoisonEffect
+	jp SleepEffect
+
+
 PollenBurstEffect:
 PollenBurst_StatusEffect:
 	call PoisonEffect
@@ -151,8 +185,13 @@ FragranceTrap_StatusEffect:
 
 
 SilverWhirlwind_StatusEffect:
-	call CheckArenaPokemonHas3OrMoreEnergiesAttached
-	ret c
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	ld e, a
+	cp $ff
+	jr z, .arena
+	call PoisonEffect_PlayArea  ; preserves de
+	call ConfusionEffect_PlayArea
+.arena
 	xor a
 	ld [wEffectFunctionsFeedbackIndex], a
 	call PoisonEffect
@@ -165,13 +204,6 @@ SilverWhirlwind_StatusEffect:
 AcidicDrain_PoisonBurnEffect:
 	call PoisonEffect
 	jp BurnEffect
-
-
-; Defending Pokémon becomes Poisoned.
-; Defending Pokémon becomes Paralyzed if the user took damage.
-FoulOdorEffect:
-	call PoisonEffect
-	jp ParalysisIfDamagedSinceLastTurnEffect
 
 
 SelfConfusionEffect:
@@ -206,6 +238,30 @@ TargetedPoisonEffect:
 	call PoisonEffect_PlayArea
 	jp SwapTurn
 
+
+IF POISON_STACKS
+; input e: PLAY_AREA_* of the target Pokémon
+DoublePoisonEffect_PlayArea:
+	call PoisonEffect_PlayArea
+	; jr PoisonEffect_PlayArea
+	; fallthrough
+
+; input e: PLAY_AREA_* of the target Pokémon
+PoisonEffect_PlayArea:
+PutPoisonCounter_PlayArea:
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	add e
+	call GetTurnDuelistVariable
+	and MAX_POISON
+	cp MAX_POISON
+	ret nc  ; already at max
+	inc a
+	ld b, $ff
+	ld c, a
+	jr ApplyStatusEffectToPlayAreaPokemon
+
+
+ELSE
 ; input e: PLAY_AREA_* of the target Pokémon
 PutPoisonCounter_PlayArea:
 	ld a, DUELVARS_ARENA_CARD_STATUS
@@ -226,6 +282,8 @@ PoisonEffect_PlayArea:
 DoublePoisonEffect_PlayArea:
 	lb bc, $ff, DOUBLE_POISONED
 	jr ApplyStatusEffectToPlayAreaPokemon
+ENDC
+
 
 ; input e: PLAY_AREA_* of the target Pokémon
 BurnEffect_PlayArea:
@@ -335,11 +393,11 @@ ApplyStatusEffectToAllOpponentBenchedPokemon:
 ; ------------------------------------------------------------------------------
 
 
-Static_ParalysisEffect:
-	ld a, [wGarbageEaterDamageToHeal]  ; used an item?
-	or a
-	ret z  ; nothing to do
-	call IsStaticActive
+HayFever_ParalysisEffect:
+	; ld a, [wGarbageEaterDamageToHeal]  ; used an item?
+	; or a
+	; ret z  ; nothing to do
+	call IsHayFeverActive
 	ret nc  ; nothing to do
 
 	ld e, PLAY_AREA_ARENA
@@ -348,16 +406,20 @@ Static_ParalysisEffect:
 
 ; play initial animation
 	bank1call DrawDuelMainScene
-	ld a, ATK_ANIM_STATIC
+	ld a, ATK_ANIM_HAY_FEVER
 	ld b, PLAY_AREA_ARENA
 	bank1call PlayAdhocAnimationOnDuelScene_NoEffectiveness
 ; play animation and paralyze card
-	ld a, ATK_ANIM_STATIC_PARALYSIS
+	ld a, ATK_ANIM_HAY_FEVER_PARALYSIS
 	bank1call PlayAdhocAnimationOnPlayAreaArena_NoEffectiveness
 	ld a, DUELVARS_ARENA_CARD_STATUS
 	call GetTurnDuelistVariable
+; if the status depends on card type...
+	; ld a, [wLastPlayedCardType]
+	; cp TYPE_TRAINER_SUPPORTER
 	and PSN_DBLPSN_BRN
 	or PARALYZED
+	or BURNED
 	ld [hl], a
 	bank1call DrawDuelHUDs
 	ret
@@ -474,7 +536,7 @@ CountPoisonedPokemonInPlayArea:
 	call GetTurnDuelistVariable
 .loop_play_area
 	ld a, [hli]  ; get status and move to next
-	and DOUBLE_POISONED
+	and MAX_POISON
 	jr z, .next
 	inc c
 .next

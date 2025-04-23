@@ -232,6 +232,8 @@ HandleNoDamageOrEffectSubstatus:
 	ld a, [wTempNonTurnDuelistCardID]
 	cp MEW_LV8
 	jr z, .neutralizing_shield
+	; cp VENOMOTH
+	; jr z, .shield_dust
 	or a
 	ret
 
@@ -254,12 +256,53 @@ HandleNoDamageOrEffectSubstatus:
 	; ld a, [wLoadedCard2Stage]
 	ld a, DUELVARS_ARENA_CARD_STAGE
 	call GetNonTurnDuelistVariable
-	or a
+	or a  ; cp BASIC
 	ret z
 
 	ld e, NO_DAMAGE_OR_EFFECT_NSHIELD
 	ldtx hl, NoDamageOrEffectDueToNShieldText
 	jr .no_damage_or_effect
+
+; .shield_dust
+; 	ld a, [wIsDamageToSelf]
+; 	or a
+; 	ret nz
+;
+; ; prevent damage if attacked by a Pokémon with 2 or more status
+; 	ld a, DUELVARS_ARENA_CARD_STATUS
+; 	call GetNonTurnDuelistVariable
+; 	and PSN_DBLPSN_BRN
+; 	ret z
+; 	and POISONED | BURNED
+; 	cp POISONED | BURNED
+; 	jr z, .shield_dust_active
+; 	ld a, [hl]
+; 	and CNF_SLP_PRZ
+; 	ret z
+;
+; .shield_dust_active
+; 	ld e, NO_DAMAGE_OR_EFFECT_SHIELD_DUST
+; 	ldtx hl, NoDamageOrEffectDueToNShieldText
+; 	jr .no_damage_or_effect
+
+
+; return carry if the turn holder's arena card is under the effects of reduced accuracy
+CheckReducedAccuracySubstatus:
+	ld a, DUELVARS_ARENA_CARD_SUBSTATUS2
+	call GetTurnDuelistVariable
+	or a
+	ret z
+	ldtx de, AccuracyCheckText
+	cp SUBSTATUS2_ACCURACY
+	jr z, .card_is_affected
+	or a
+	ret
+.card_is_affected
+	ld a, [wGotHeadsFromAccuracyCheck]
+	or a
+	ret nz
+	scf
+	ret
 
 
 ; return carry and return the appropriate text id in hl if the target has an
@@ -293,18 +336,18 @@ CheckNoDamageOrEffect:
 NoDamageOrEffectTextIDTable:
 	tx NoDamageText                          ; NO_DAMAGE_OR_EFFECT_UNUSED
 	tx NoDamageOrEffectDueToAgilityText      ; NO_DAMAGE_OR_EFFECT_AGILITY
-	tx NoDamageOrEffectDueToTransparencyText ; NO_DAMAGE_OR_EFFECT_TRANSPARENCY
+	tx NoDamageOrEffectDueToShieldDustText   ; NO_DAMAGE_OR_EFFECT_SHIELD_DUST
 	tx NoDamageOrEffectDueToNShieldText      ; NO_DAMAGE_OR_EFFECT_NSHIELD
 
 
 ; returns carry if turn holder's card in location a is paralyzed, asleep, confused,
-; and/or toxic gas in play, meaning that attack and/or pkmn power cannot be used
+; and/or neutralizing gas in play, meaning that attack and/or pkmn power cannot be used
 ; preserves: bc, de
 CheckCannotUseDueToStatus_Anywhere:
 	jr CheckCannotUseDueToStatus.status_check
 
 ; returns carry if turn holder's arena card is paralyzed, asleep, confused,
-; and/or toxic gas in play, meaning that attack and/or pkmn power cannot be used
+; and/or neutralizing gas in play, meaning that attack and/or pkmn power cannot be used
 ; preserves: bc, de
 CheckCannotUseDueToStatus:
 	xor a  ; PLAY_AREA_ARENA
@@ -349,31 +392,32 @@ CheckPokemonPowerReadyState:
 	ret
 
 
-; Check whether Toxic Gas (Weezing) or other Pokémon Power cancelling
+; Check whether Neutralizing Gas (Weezing) or other Pokémon Power cancelling
 ; effects are currently active.
 ; preserves: bc, de
 ; outputs:
 ;   a: 1 if Pokémon Powers cannot be used | 0
 ;   carry: set if Pokémon Powers cannot be used
-ArePokemonPowersDisabled:
-	call IsOpponentToxicGasActive
-	; jr IsToxicGasActive
+Old_ArePokemonPowersDisabled:
+	call IsOpponentNeutralizingGasActive
+	; jr IsNeutralizingGasActive
 	; fallthrough
 
-; Check whether Toxic Gas (Weezing) is found on the turn holder's Active Spot,
+; Check whether Neutralizing Gas (Weezing) is found on the turn holder's Active Spot,
 ; and whether it is Pokémon Power capable.
 ; Returns carry if the Pokémon card is found
 ; output:
 ;   a: 0 if not found; 1 if found
 ;   carry: set iff found and capable of using the Power
 ; preserves: hl, bc, de
-IsToxicGasActive:
+IsNeutralizingGasActive:
 	ld a, WEEZING
 	jr IsActiveSpotPokemonPowerActive
 
-IsOpponentToxicGasActive:
+ArePokemonPowersDisabled:
+IsOpponentNeutralizingGasActive:
 	call SwapTurn
-	call IsToxicGasActive
+	call IsNeutralizingGasActive
 	jp SwapTurn
 
 
@@ -450,11 +494,11 @@ IsBodyguardActive:
 	jp GetFirstPokemonWithAvailablePower  ; preserves: hl, bc, de
 
 
-; return carry if a Pokémon Power capable Raichu Lv45
+; return carry if a Pokémon Power capable Vileplume
 ; is found in the non-turn holder's Active Spot.
 ; preserves: bc, de
-IsStaticActive:
-	ld a, RAICHU_LV45
+IsHayFeverActive:
+	ld a, VILEPLUME
 	jr IsOpponentActiveSpotAuraActive
 
 
@@ -468,7 +512,7 @@ IsPrehistoricPowerActive:
 
 ; return carry if a Pokémon Power capable Pokémon
 ; is found in the non-turn holder's Active Spot,
-; and the turn holder does not have Toxic Gas
+; and the turn holder does not have Neutralizing Gas
 ; input:
 ;   a: Pokémon ID of the aura to check
 ; preserves: bc, de
@@ -477,8 +521,8 @@ IsOpponentActiveSpotAuraActive:
 	call IsActiveSpotPokemonPowerActive
 	call SwapTurn
 	ret nc  ; the opponent does not have the Pokémon Power
-; check for Toxic Gas on the turn holder's side
-	call IsToxicGasActive
+; check for Neutralizing Gas on the turn holder's side
+	call IsNeutralizingGasActive
 	ccf
 	ret
 
@@ -781,7 +825,7 @@ GetFirstPokemonWithAvailablePower:
 GetAttackCostPenalty:
 	push hl
 	ld c, 0
-IF SLEEP_WITH_COIN_FLIP == 0
+IF CC_IS_COIN_FLIP == 0
 ; check for status
 	ld a, e
 	add DUELVARS_ARENA_CARD_STATUS
@@ -966,8 +1010,15 @@ GetRetreatCostPenalty:
 .bench
 	add DUELVARS_ARENA_CARD_STATUS
 	call GetTurnDuelistVariable
+IF CC_IS_COIN_FLIP
+; Crowd Control status
+	and CNF_SLP_PRZ
+	jr z, .no_crowd_control
+	inc c
+.no_crowd_control
+	ld a, [hl]
+ELSE
 ; Drowsiness status
-IF SLEEP_WITH_COIN_FLIP == 0
 	and CNF_SLP_PRZ
 	cp ASLEEP
 	jr nz, .not_drowsy
@@ -1006,8 +1057,15 @@ GetRetreatCostDiscount:
 	ret
 
 
-; return carry if the turn holder's arena Pokemon is affected by Acid and can't retreat
-CheckCantRetreatDueToAcid:
+; return carry if the turn holder's arena Pokemon can't retreat
+CheckCantRetreatDueToStatusOrEffect:
+IF CC_IS_COIN_FLIP
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetTurnDuelistVariable
+	and CNF_SLP_PRZ
+	cp FLINCHED
+	jr z, .cant_retreat
+ENDC
 	ld a, DUELVARS_ARENA_CARD_SUBSTATUS2
 	call GetTurnDuelistVariable
 	or a
@@ -1109,15 +1167,11 @@ UpdateSubstatusConditions_EndOfTurn:
 
 ; return carry if turn holder has Wartortle and its Rain Dance Pkmn Power is active
 IsRainDanceActive:
-	; ld a, [wOncePerTurnActions]
-	; and USED_RAIN_DANCE_THIS_TURN
-	; ret nz ; return if Rain Dance was already used this turn
-	ld a, WARTORTLE
-	call CountPokemonIDInPlayArea
-	ret nc ; return if no Pkmn Power-capable Wartortle found in turn holder's play area
 	call ArePokemonPowersDisabled
 	ccf
-	ret
+	ret nc ; return if no Pkmn Power-capable Wartortle found in turn holder's play area
+	ld a, WARTORTLE
+	jp GetFirstPokemonWithAvailablePower
 
 
 ; if the defending (non-turn) card's HP is 0 and the attacking (turn) card's HP
@@ -1312,7 +1366,20 @@ IsCounterattackActive:
 	call GetTurnDuelistVariable
 	or a
 	jr nz, .dark_retribution  ; not Knocked Out
-	ld de, 50  ; damage to return
+	ld de, 40  ; damage to return
+
+	; ld de, 30  ; damage to return
+	; push de
+	; ld e, PLAY_AREA_ARENA
+	; call GetPlayAreaCardAttachedEnergies  ; preserves: hl, bc, de
+	; call HandleEnergyColorOverride  ; preserves: de
+	; pop de
+	; ld a, [wTotalAttachedEnergies]
+	; or a
+	; jr z, .dark_retribution
+	; ld h, 0
+	; ld l, a
+	; call AddToDamage_DE
 
 .dark_retribution
 	; push de

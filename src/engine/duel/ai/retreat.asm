@@ -5,8 +5,14 @@ AIDecideWhetherToRetreat:
 	ld [wAIPlayEnergyCardForRetreat], a
 
 ; affected by unable to retreat substatus?
-	call CheckCantRetreatDueToAcid
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetTurnDuelistVariable
+	and CNF_SLP_PRZ
+	cp FLINCHED
+	jr z, .unable_to_retreat
+	call CheckCantRetreatDueToStatusOrEffect
 	jr nc, .able_to_retreat
+.unable_to_retreat
 	xor a
 	ld [wAIScore], a
 	ld [wAIRetreatScore], a
@@ -30,11 +36,15 @@ AIDecideWhetherToRetreat:
 	call GetTurnDuelistVariable
 	or a
 	jr z, .check_ko_1 ; no status
-	and DOUBLE_POISONED
+IF BURN_IS_DAMAGE_OVER_TIME
+	and PSN_DBLPSN_BRN
+ELSE
+	and MAX_POISON
+ENDC
 	jr z, .check_other_status ; no poison
 	ld a, 2
 	call AddToAIScore
-; OATS any status condition allows for retreating
+
 .check_other_status
 	ld a, [hl]
 	and CNF_SLP_PRZ
@@ -830,14 +840,11 @@ AITryToRetreat:
 ; the necessary energy for retreat cost
 
 ; check status
-; OATS status conditions no longer prevent retreat
-;	ld a, DUELVARS_ARENA_CARD_STATUS
-;	call GetTurnDuelistVariable
-;	and CNF_SLP_PRZ
-;	cp ASLEEP
-;	jp z, .check_id
-;	cp PARALYZED
-;	jp z, .check_id
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetTurnDuelistVariable
+	and CNF_SLP_PRZ
+	cp FLINCHED
+	jp z, .check_id
 
 ; if an energy card hasn't been played yet,
 ; checks if the Pokémon needs just one more energy to retreat
@@ -877,20 +884,17 @@ AITryToRetreat:
 	cp MYSTERIOUS_FOSSIL
 	jp z, .mysterious_fossil
 
-; if card is Asleep or Paralyzed, set carry and exit
+; if card is Flinched, set carry and exit
 ; else, load the status in hTemp_ffa0
 	pop af
 	ldh [hTempPlayAreaLocation_ffa1], a
 	ld a, DUELVARS_ARENA_CARD_STATUS
 	call GetTurnDuelistVariable
 	ld b, a
-; OATS status conditions no longer prevent retreat
-;	and CNF_SLP_PRZ
-;	cp ASLEEP
-;	jp z, .set_carry
-;	cp PARALYZED
-;	jp z, .set_carry
-;	ld a, b
+	and CNF_SLP_PRZ
+	cp FLINCHED
+	jp z, .set_carry
+	ld a, b
 	ldh [hTemp_ffa0], a
 	ld a, $ff
 	ldh [hTempRetreatCostCards], a

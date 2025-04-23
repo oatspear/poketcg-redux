@@ -136,11 +136,21 @@ UltravisionEffectCommands:
 	dbw EFFECTCMDTYPE_AI_SELECTION, Ultravision_AISelectEffect
 	db  $00
 
-FoulOdorEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, FoulOdorEffect
+PoisonSleepEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PoisonSleep_StatusEffect
 	db  $00
 
+GigaDrainEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, GigaDrain_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AI, GigaDrain_AIEffect
+	; fallthrough to LeechLifeEffectCommands
+
 LeechLifeEffectCommands:
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, LeechLifeEffect
+	db  $00
+
+PoisonDrainEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PoisonEffect
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, LeechLifeEffect
 	db  $00
 
@@ -281,18 +291,8 @@ SwallowUpEffectCommands:
 	dbw EFFECTCMDTYPE_AI, SwallowUp_AIEffect
 	db  $00
 
-; unused
-ChopDownEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ChopDown_DamageBoostEffect
-	dbw EFFECTCMDTYPE_AI, ChopDown_AIEffect
-	db  $00
-
-Guillotine30EffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDefendingPokemonHas30HpOrLess
-	; fallthrough
-
-Guillotine50EffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDefendingPokemonHas50HpOrLess
+GuillotineEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDefendingPokemonHasLessHp
 	; fallthrough
 
 Guillotine70EffectCommands:
@@ -532,6 +532,14 @@ AdaptiveEvolutionEffectCommands:
 	db  $00
 
 SilverWhirlwindEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckBenchIsNotEmpty ; CheckArenaPokemonHasAnyEnergiesAttached
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, EnergySlide_TransferEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, EnergySlide_PlayerSelection
+	; dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, EnergySlide_PlayerSelection
+	; dbw EFFECTCMDTYPE_DISCARD_ENERGY, EnergySlide_TransferEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, EnergySlide_AISelectEffect
+	db  $00
+
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Whirlwind_SelectEffect
 	dbw EFFECTCMDTYPE_AI_SWITCH_DEFENDING_PKMN, Whirlwind_SelectEffect
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, SilverWhirlwind_SwitchEffect
@@ -767,6 +775,11 @@ FuriousFistsEffectCommands:
 	dbw EFFECTCMDTYPE_AI, Rage_AIEffect
 	db  $00
 
+CounterEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Counter_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AI, Counter_AIEffect
+	db  $00
+
 DoubleDamageIfUserIsDamagedEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, DoubleDamageIfUserIsDamaged_DamageBoostEffect
 	dbw EFFECTCMDTYPE_AI, DoubleDamageIfUserIsDamaged_AIEffect
@@ -815,12 +828,6 @@ ShadowClawEffectCommands:
 	dbw EFFECTCMDTYPE_DISCARD_ENERGY, SelectedCards_Discard1FromHand
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, ShadowClawEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, ShadowClaw_AISelectEffect
-	db  $00
-
-SurpriseBiteEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, CheckPokemonPowerCanBeUsed_StoreTrigger
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Curse_DamageEffect
-	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, SurpriseBite_PlayerSelectEffect
 	db  $00
 
 MischiefEffectCommands:
@@ -1115,6 +1122,7 @@ DeadlyPoisonEffectCommands:
 	dbw EFFECTCMDTYPE_AI, DeadlyPoison_AIEffect
 	db  $00
 
+; unused
 OverwhelmEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, OverwhelmEffect
 	db  $00
@@ -1379,8 +1387,12 @@ FlyEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Fly_ReturnToHandEffect
 	db  $00
 
+CycloneEffectCommands:
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Cyclone_ReturnToHandEffect
+	db  $00
+
 HurricaneEffectCommands:
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Hurricane_ReturnToHandEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, HurricaneEffect
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Hurricane_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, Hurricane_AISelectEffect
 	db  $00
@@ -1407,9 +1419,8 @@ DoTheWaveEffectCommands:
 	db  $00
 
 SwarmEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Swarm_DamageBoostEffect
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Swarm_PutInPlayAreaEffect
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Swarm_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SwarmEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, Swarm_AISelectEffect
 	dbw EFFECTCMDTYPE_AI, Swarm_AIEffect
 	db  $00
@@ -1565,10 +1576,6 @@ Deal20ToAnyPokemonEffectCommands:
 ; 	dbw EFFECTCMDTYPE_DISCARD_ENERGY, DiscardEnergy_DiscardEffect
 ; 	dbw EFFECTCMDTYPE_AI_SELECTION, DiscardEnergy_DamageTargetPokemon_AISelectEffect
 	; fallthrough
-
-NightAmbushEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, TargetedPoisonEffect
-	; fallthrough to Deal30ToAnyPokemonEffectCommands
 
 Deal30ToAnyPokemonEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Deal30DamageToTarget_DamageEffect

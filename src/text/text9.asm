@@ -1153,35 +1153,18 @@ ChallengeMachineGrassIconText: ; 57390 (15:7390)
 	textfw3 "【", "<GRASS>", "】"
 	done
 
-IF SLEEP_WITH_COIN_FLIP
-PokemonPowerDescriptionCont:
-	text "This power can't be used if this"
-	line "Pokémon is Asleep, Confused, or"
-	line "Paralyzed."
-	done
-ELSE
 PokemonPowerDescriptionCont:
 	text "This power can't be used if this"
 	line "Pokémon is Drowsy, Confused, or"
 	line "Paralyzed."
 	done
-ENDC
 
-IF SLEEP_WITH_COIN_FLIP
-UniquePokemonPowerDescriptionCont:
-	text "This power can't be used if this"
-	line "Pokémon is Asleep, Confused, or"
-	line "Paralyzed. You can only use one"
-	line "Power with this name each turn."
-	done
-ELSE
 UniquePokemonPowerDescriptionCont:
 	text "This power can't be used if this"
 	line "Pokémon is Drowsy, Confused, or"
-	line "Paralyzed. You can only use one"
-	line "Power with this name each turn."
+	line "Paralyzed. Only one Power with"
+	line "this name can be used at any time."
 	done
-ENDC
 
 ThereAreNoTrainerCardsInDeckText:
 	text "There are no Trainer cards in"

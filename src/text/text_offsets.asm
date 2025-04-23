@@ -42,12 +42,17 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer DeckPrinterText                                    ; 0x0021
 	textpointer NoPokemonOnTheBenchText                            ; 0x0023
 	textpointer UnableDueToParalysisText                           ; 0x0025
-	textpointer Received10DamageDueToPoisonText                    ; 0x0026
-	textpointer Received20DamageDueToPoisonText                    ; 0x0027
+	textpointer ReceivedDamageDueToPoisonText
+	; textpointer Received20DamageDueToPoisonText
 	textpointer Received20DamageDueToBurnText
-	textpointer IsStillAsleepText                                  ; 0x0028
-	textpointer IsCuredOfSleepText                                 ; 0x0029
-	textpointer IsCuredOfParalysisText                             ; 0x002a
+	textpointer AccuracyCheckText
+	textpointer AttackUnsuccessfulText
+	textpointer IsLostInConfusionText
+	textpointer IsFullyParalyzedText
+	textpointer IsFastAsleepText
+	textpointer IsCuredOfSleepText
+	textpointer IsCuredOfParalysisText
+	textpointer IsCuredOfConfusionText
 	textpointer IsCuredOfBurnText
 	textpointer IsCuredOfStatusText
 	textpointer BetweenTurnsText                                   ; 0x002b
@@ -204,8 +209,9 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer CardPopCannotBePlayedWithTheGameBoyText            ; 0x00dd
 	textpointer YouMayDiscard1EnergyToHealBurnText
 	textpointer AlreadyRetreatedThisTurnText                       ; 0x00f4
-	textpointer ConfusionCheckDamageText                           ; 0x00f7
-	textpointer PokemonsSleepCheckText                             ; 0x00f9
+	textpointer PokemonsConfusionCheckText
+	textpointer PokemonsSleepCheckText
+	textpointer PokemonsParalysisCheckText
 	textpointer UnableToRetreatDueToTrapText
 	textpointer UnableToUseItemCardThisTurnText
 	textpointer UnableToAttackDueToEffectText
@@ -214,7 +220,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ReceivesDamageDueToStrikeBackText                 ; 0x0105
 	textpointer NoDamageOrEffectDueToAgilityText
 	textpointer NoDamageOrEffectDueToNShieldText                   ; 0x010b
-	textpointer NoDamageOrEffectDueToTransparencyText              ; 0x010c
+	textpointer NoDamageOrEffectDueToShieldDustText
 	textpointer PutInPlayWithTransformText
 	textpointer SelectPkmnOnBenchToSwitchWithActiveText            ; 0x010e
 	textpointer SelectPokemonToPlaceInTheArenaText                 ; 0x010f
@@ -2348,12 +2354,10 @@ TextOffsets:: ; 34000 (d:4000)
 
 	textpointer AssassinFlightName
 	textpointer AssassinFlightDescription
-	textpointer FoulOdorName                                       ; 0x0878
+	textpointer PollenSprayName
 	textpointer AromatherapyDescription
-	textpointer StaticName
-	textpointer StaticDescription
-	textpointer PollenBurstName
-	textpointer PollenBurstDescription
+	textpointer HayFeverName
+	textpointer HayFeverDescription
 	textpointer SporeName                                          ; 0x0884
 	textpointer InflictSleepDescription
 	textpointer Attach2EnergyFromDiscardToAnyPkmnDescription
@@ -2363,10 +2367,9 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer SwallowUpName
 	textpointer SwallowUpDescription
 	textpointer SwallowUpDescriptionCont
-	textpointer ToxicGasName                                       ; 0x08aa
-	textpointer ToxicGasDescription                                ; 0x08ab
+	textpointer NeutralizingGasName
+	textpointer NeutralizingGasDescription
 	textpointer TeleportBlastName                                  ; 0x08b3
-	textpointer SwitchThisPokemonDescription
 	textpointer DamagePerEnergyAttachedToBothActiveDescription
 	textpointer FoulGasName                                        ; 0x08ba
 	textpointer SmogName
@@ -2377,12 +2380,11 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer CleanHitName
 	textpointer Bonus10VersusEvolvedPokemonDescription
 	textpointer PoisonWhipName                                     ; 0x08c7
-	textpointer SwordsDanceName                                    ; 0x08ca
+	textpointer FuryCutterName
 	textpointer NextTurnDoubleDamageDescription
 	textpointer BugBiteName
 	textpointer GuillotineName
-	textpointer Guillotine30Description
-	textpointer Guillotine50Description
+	textpointer GuillotineDescription
 	textpointer Guillotine70Description
 	textpointer EmberName                                          ; 0x08d4
 	textpointer Discard1EnergyDescription
@@ -2528,7 +2530,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer RamDescription
 	textpointer FindAFriendName
 	textpointer Tutor1PokemonDescription
-	textpointer SharpSickleName                                    ; 0x0a71
+	textpointer ReapingClawName
 	textpointer PrehistoricPowerName
 	textpointer PrehistoricPowerDescription
 	textpointer PrimalClawName
@@ -2573,8 +2575,9 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer Deal40ToAnyPokemonDescription
 	textpointer FlyName
 	textpointer FlyDescription
+	textpointer CycloneName
+	textpointer CycloneDescription
 	textpointer HurricaneName
-	textpointer HurricaneDescription
 	textpointer TwisterName                                        ; 0x0ae4
 	textpointer SynthesisName
 	textpointer SynthesisDescription
@@ -2589,6 +2592,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer EnergySlideDescription
 	textpointer SwarmName
 	textpointer SwarmDescription
+	textpointer SwarmDescriptionCont
 	textpointer StressPheromonesName
 	textpointer StressPheromonesDescription
 	textpointer QueenPressName
@@ -2601,8 +2605,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer GatherToxinsName
 	textpointer DeadlyPoisonName
 	textpointer VenoshockDescription
-	textpointer OverwhelmName
-	textpointer OverwhelmDescription
 	textpointer AfflictionName
 	textpointer AfflictionDescription
 	textpointer SharpshooterName
@@ -2636,8 +2638,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ReturnToDeckDescription
 	textpointer PlungeName
 	textpointer PlungeDescription
-	textpointer VampiricAuraName
-	textpointer VampiricAuraDescription
 	textpointer ReactivePoisonName
 	textpointer ReactivePoisonDescription
 	textpointer DragonArrowName
@@ -2659,7 +2659,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer RageFistDescription
 	textpointer RelentlessFlamesName
 	textpointer PutDamageCountersOnPokemonText
-	textpointer PsychicLeapName                                    ; unused
+	textpointer OverheadThrowName
 	textpointer MysteriousTailName
 	textpointer MysteriousTailDescription
 	textpointer HexName
@@ -2674,6 +2674,9 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer UTurnName
 	textpointer IngrainName
 	textpointer IngrainDescriptionCont
+	textpointer SupersonicName
+	textpointer CounterName
+	textpointer CounterDescription
 
 ; ------------------------------------------------------------------------------
 ; text12.asm
@@ -2682,6 +2685,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer LeechSeedName                                      ; 0x080b
 	textpointer Heal10DamageDescription                            ; 0x080c
 	textpointer InflictPoisonDescription
+	textpointer GigaDrainName
+	textpointer X10DamageForEachEnergyDescription
 	textpointer MegaDrainName                                      ; 0x0818
 	textpointer Heal20DamageDescription
 	textpointer Heal30DamageDescription
@@ -2732,7 +2737,8 @@ TextOffsets:: ; 34000 (d:4000)
 	; textpointer HealingNectarName                                ; unreferenced
 	; textpointer HealingNectarDescription                         ; unreferenced
 	textpointer SilverWhirlwindName
-	textpointer SilverWhirlwindDescriptionCont
+	textpointer SilverWhirlwindDescription
+	textpointer MoveAllEnergiesToBenchedPokemonDescription
 	textpointer HatchName
 	textpointer HatchDescription
 	textpointer PoisonEvolutionName
@@ -2749,6 +2755,7 @@ TextOffsets:: ; 34000 (d:4000)
 	; textpointer PeckDescription
 	textpointer DevastatingWindName
 	textpointer DevastatingWindDescription
+	textpointer YouMayDiscardStadiumDescription
 	textpointer DrillPeckName                                      ; 0x0af4
 	textpointer MetronomeName
 	textpointer MoonblastName
@@ -2843,10 +2850,9 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer TeleportDescription
 	textpointer FamilyPowerName
 	textpointer FamilyPowerDescription
-	textpointer NightAmbushName
-	textpointer NightAmbushDescription
 	textpointer ElementalMasteryName
 	textpointer ElementalMasteryDescription
+	textpointer PoisonDrainName
 	textpointer RainSplashName
 	textpointer IfAttachedEnergy10BonusDamageDescription
 	textpointer MuddyWaterName
@@ -2899,6 +2905,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer AvalancheName
 	textpointer AvalancheDescription
 	textpointer DoAdditionalDamageText
+	textpointer DiscardStadiumInPlayText
 	textpointer StrongArmLariatName
 	textpointer StrongArmLariatDescription
 	textpointer CrowdPummelName
@@ -2956,7 +2963,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer VoltSwitchName
 	textpointer VoltSwitchDescription
 	textpointer SurpriseBiteName
-	textpointer SurpriseBiteDescription
 	textpointer PhoenixFireName
 	textpointer ConcentrationName
 	textpointer LuckyFindName
@@ -3022,6 +3028,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PutHowManyDamageCountersMenuText
 	textpointer CursedFlamesName
 	textpointer CursedFlamesDescription
+	textpointer DoubleKickName
 	textpointer DoubleHitName
 	textpointer DoubleHitDescription
 	textpointer TripleHitName
@@ -3032,9 +3039,17 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer GrassKnotDescription
 	textpointer EnergyBallName
 	textpointer EnergyBallDescription
+	textpointer SeepingToxinsName
+	textpointer SeepingToxinsDescription
 	textpointer FixmeText
 
 	; unused
+	; textpointer NightAmbushName
+	; textpointer NightAmbushDescription
+	; textpointer SurpriseBiteDescription
+	; textpointer VampiricAuraName
+	; textpointer VampiricAuraDescription
+	; textpointer SwordsDanceName
 	; textpointer ScorchingColumnName
 	; textpointer ScorchingColumnDescription
 	; textpointer SwimFreelyName

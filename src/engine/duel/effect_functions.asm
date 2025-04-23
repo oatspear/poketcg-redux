@@ -555,36 +555,18 @@ PsyShift_MoveDamageCountersEffect:
 
 
 TripleHit_StoreExtraDamageEffect:
-	call CheckArenaPokemonHas3OrMoreEnergiesAttached
-	ld de, 0
-	or a
-	jr z, .store  ; zero energies
-	ld c, a
-	dec c
-	jr z, .store  ; one energy
 	ld a, [wLoadedAttackDamage]
-	ld d, a
-	dec c
-	jr z, .store  ; two energies
-	ld e, a  ; three or more energies
-.store
-	ld a, d
 	ldh [hTempList], a
-	ld a, e
 	ldh [hTempList + 1], a
 	ret
 
 
 DoubleHit_StoreExtraDamageEffect:
-	call CheckArenaPokemonHas2OrMoreEnergiesAttached
 	ld a, [wLoadedAttackDamage]
-	jr nc, .store
-	xor a  ; also reset carry
-.store
 	ldh [hTemp_ffa0], a
 	ret
 
-;
+
 TripleHitEffect:
 	call DoubleHitEffect
 	ldh a, [hTempList + 1]
@@ -947,6 +929,17 @@ VoltSwitchEffect:
 ; Compound Attacks
 ; ------------------------------------------------------------------------------
 
+SwarmEffect:
+	call Swarm_PutInPlayAreaEffect
+	jp Swarm_DamageBoostEffect
+
+HurricaneEffect:
+	ldh a, [hTemp_ffa0]
+	or a
+	call nz, DiscardStadium_DiscardEffect
+	jp DevastatingWindEffect
+
+
 Wildfire_DamageBurnEffect:
 	call BurnEffect
 	jp Wildfire_MultiplierEffect
@@ -1199,6 +1192,7 @@ DeadlyPoisonEffect:
 	jp PoisonEffect
 
 
+; unused
 OverwhelmEffect:
 	ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND
 	call GetNonTurnDuelistVariable
@@ -1631,10 +1625,19 @@ GetAttackName: ; 2c3fc (b:43fc)
 
 ; returns carry if Defending Pokemon
 ; doesn't have an attack.
-CheckIfDefendingPokemonHasAnyAttack: ; 2c40e (b:440e)
+CheckIfDefendingPokemonHasAnyAttack:
 	call SwapTurn
 	ld a, DUELVARS_ARENA_CARD
 	call GetTurnDuelistVariable
+	call CheckIfPokemonHasAnyAttack
+	jp SwapTurn
+
+
+; input:
+;   a: deck index
+; output:
+;   carry: set if there is no attack
+CheckIfPokemonHasAnyAttack:
 	call LoadCardDataToBuffer2_FromDeckIndex
 	ld a, [wLoadedCard2Atk1Category]
 	cp POKEMON_POWER
@@ -1643,11 +1646,9 @@ CheckIfDefendingPokemonHasAnyAttack: ; 2c40e (b:440e)
 	ld a, [hli]
 	or [hl]
 	jr nz, .has_attack
-	call SwapTurn
 	scf
 	ret
 .has_attack
-	call SwapTurn
 	or a
 	ret
 
@@ -4540,15 +4541,6 @@ ClairvoyantSense_PreconditionCheck:
 	ret c
 	jp CheckPokemonPowerCanBeUsed_StoreTrigger
 
-;	ld a, [wOncePerTurnActions]
-;	and USED_LIGHTNING_HASTE_THIS_TURN
-;	jr nz, .already_used
-
-;.already_used
-;	ldtx hl, OnlyOncePerTurnText
-;	scf
-;	ret
-
 
 RainbowTeam_OncePerTurnCheck:
 	call CheckBenchIsNotEmpty
@@ -4559,15 +4551,6 @@ RainbowTeam_OncePerTurnCheck:
 	ldtx hl, MultiplePokemonOfTheSameColorText
 	ret c  ; duplicate colors
 	jp CheckPokemonPowerCanBeUsed_StoreTrigger
-
-;	ld a, [wOncePerTurnActions]
-;	and USED_LIGHTNING_HASTE_THIS_TURN
-;	jr nz, .already_used
-
-;.already_used
-;	ldtx hl, OnlyOncePerTurnText
-;	scf
-;	ret
 
 
 RainbowTeam_AttachEnergyEffect:
@@ -4644,15 +4627,6 @@ Dynamotor_OncePerTurnCheck:
 	ret c  ; no energy
 	jp CheckPokemonPowerCanBeUsed_StoreTrigger
 
-;	ld a, [wOncePerTurnActions]
-;	and USED_LIGHTNING_HASTE_THIS_TURN
-;	jr nz, .already_used
-
-;.already_used
-;	ldtx hl, OnlyOncePerTurnText
-;	scf
-;	ret
-
 Dynamotor_AttachEnergyEffect:
 	xor a  ; cannot select active spot
 	ld hl, CreateEnergyCardListFromDiscardPile_OnlyLightning
@@ -4694,10 +4668,6 @@ _AttachEnergyFromDiscardPileToBenchEffect:
 .attach
 ; flag Lightning Haste as being used (requires [hTempPlayAreaLocation_ff9d])
 	call SetUsedPokemonPowerThisTurn_RestoreTrigger
-	; ld a, [wOncePerTurnActions]
-	; or USED_LIGHTNING_HASTE_THIS_TURN
-	; ld [wOncePerTurnActions], a
-
 ; pick Energy from card list
 	; call CreateEnergyCardListFromDiscardPile_OnlyFire
 	pop hl
@@ -4734,23 +4704,12 @@ WaterAbsorb_AttachEnergyEffect:
 	jr _AttachEnergyFromDiscardPileToBenchEffect.attach
 
 
-Hurricane_PlayerSelectEffect:
-	ldtx hl, ChoosePokemonToReturnToTheHandText
-	call DrawWideTextBox_WaitForInput
-	call SwapTurn
-	call HandlePlayerSelectionPokemonInPlayArea_AllowCancel
+Cyclone_ReturnToHandEffect:
+	xor a  ; PLAY_AREA_ARENA
 	ldh [hTempPlayAreaLocation_ffa1], a
-	jp SwapTurn
+	; fallthrough
 
-
-Hurricane_AISelectEffect:
-	call SwapTurn
-	call GetBenchPokemonWithHighestHP
-	ldh [hTempPlayAreaLocation_ffa1], a
-	jp SwapTurn
-
-
-Hurricane_ReturnToHandEffect:
+ReturnOpponentPokemonToHandEffect:
 	ldh a, [hTempPlayAreaLocation_ffa1]
 	cp $ff
 	ret z  ; none selected
@@ -5588,6 +5547,21 @@ RocketGrunts_DiscardEffect:
 INCLUDE "engine/duel/effect_functions/ui_card_selection.asm"
 
 
+Hurricane_PlayerSelectEffect:
+DiscardStadium_YesNoEffect:
+	call CheckSomeStadiumInPlay
+	jr c, .no
+	ldtx hl, DiscardStadiumInPlayText
+	call YesOrNoMenuWithText
+	ld a, 1
+	jr nc, .store
+.no
+	xor a  ; no, reset carry
+.store
+	ldh [hTemp_ffa0], a
+	ret
+
+
 ; search Pokémon cards in Deck
 ; return carry if there are none and the player refused to look into the deck
 _LookForPokemonInDeck:
@@ -6230,6 +6204,15 @@ ReturnCardToBottomOfDeck:
 ; ------------------------------------------------------------------------------
 
 INCLUDE "engine/duel/effect_functions/ai.asm"
+
+
+Hurricane_AISelectEffect:
+	ld a, DUELVARS_STADIUM_CARD
+	call GetNonTurnDuelistVariable
+	inc a
+; if it was $ff, it is now zero
+	ldh [hTemp_ffa0], a
+	ret
 
 
 ; ------------------------------------------------------------------------------

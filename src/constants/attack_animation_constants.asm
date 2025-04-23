@@ -56,10 +56,10 @@
 	const ATK_ANIM_POISON_STING           ; $33
 	const ATK_ANIM_52                     ; $34
 	const ATK_ANIM_FOUL_GAS               ; $35
-	const ATK_ANIM_FOUL_ODOR              ; $36
-	const ATK_ANIM_POWDER_EFFECT_CHANCE   ; $37
-	const ATK_ANIM_POWDER_HIT_POISON      ; $38
-	const ATK_ANIM_POISON_POWDER          ; $39
+	const ATK_ANIM_54                     ; $36
+	const ATK_ANIM_POWDER_HIT             ; $37
+	const ATK_ANIM_56                     ; $38
+	const ATK_ANIM_POWDER_EFFECT          ; $39
 	const ATK_ANIM_58                     ; $3a
 	const ATK_ANIM_59                     ; $3b
 	const ATK_ANIM_60                     ; $3c
@@ -131,7 +131,7 @@
 	const ATK_ANIM_SLEEP                  ; $7e
 	const ATK_ANIM_IMAKUNI_CONFUSION      ; $7f
 	const ATK_ANIM_SLEEPING_GAS           ; $80
-	const ATK_ANIM_STATIC                 ; $81
+	const ATK_ANIM_HAY_FEVER              ; $81
 	const ATK_ANIM_THUNDER_PLAY_AREA      ; $82
 	const ATK_ANIM_CAT_PUNCH_PLAY_AREA    ; $83
 	const ATK_ANIM_FIREGIVER_PLAYER       ; $84
@@ -139,9 +139,9 @@
 	const ATK_ANIM_HEALING_WIND_PLAY_AREA ; $86
 	const ATK_ANIM_GALE                   ; $87
 	const ATK_ANIM_EXPAND                 ; $88
-	const ATK_ANIM_STATIC_PARALYSIS       ; $89
+	const ATK_ANIM_HAY_FEVER_PARALYSIS    ; $89
 	const ATK_ANIM_FULL_HEAL              ; $8a
-	const ATK_ANIM_139                    ; $8b
+	const ATK_ANIM_CYCLONE                ; $8b
 	const ATK_ANIM_PROTECT_NO_GLOW        ; $8c
 	const ATK_ANIM_GUST_OF_WIND           ; $8d
 	const ATK_ANIM_HEAL_BOTH_SIDES        ; $8e

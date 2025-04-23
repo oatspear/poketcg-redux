@@ -141,7 +141,11 @@ _CalculateDamage_VersusDefendingPokemon:
 	jr nc, .vulnerable
 	; invulnerable to damage
 	ld de, $0
+IF STATUS_GRANTS_WEAKNESS
+	jp .done
+ELSE
 	jr .done
+ENDC
 .vulnerable
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	or a
@@ -162,7 +166,14 @@ _CalculateDamage_VersusDefendingPokemon:
 	call TranslateColorToWR
 	ld [wAttackerColorAsWR], a
 	and b
+IF STATUS_GRANTS_WEAKNESS
+	jr nz, .weak
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetNonTurnDuelistVariable  ; preserves de
+	and CNF_SLP_PRZ
+ENDC
 	jr z, .apply_pluspower
+.weak
 	call ApplyWeaknessToDamage_DE
 
 ; 3. apply tool and stadium bonuses
@@ -172,7 +183,7 @@ _CalculateDamage_VersusDefendingPokemon:
 	ld b, a
 	call ApplyAttachedPluspower  ; preserves: bc
 	call HandleDamageBoostingStadiums
-IF BURN_IS_DAMAGE_OVER_TIME == 0
+IF BURN_BOOSTS_DAMAGE_TAKEN
 	xor a  ; PLAY_AREA_ARENA
 	call HandleBurnDamageBoost
 ENDC
@@ -396,7 +407,14 @@ CalculateDamage_FromDefendingPokemon: ; 1458c (5:458c)
 	call TranslateColorToWR
 	ld [wAttackerColorAsWR], a
 	and b
+IF STATUS_GRANTS_WEAKNESS
+	jr nz, .weak
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetNonTurnDuelistVariable  ; preserves de
+	and CNF_SLP_PRZ
+ENDC
 	jr z, .apply_pluspower
+.weak
 	call ApplyWeaknessToDamage_DE
 
 ; 3. apply tool and stadium bonuses
@@ -404,7 +422,7 @@ CalculateDamage_FromDefendingPokemon: ; 1458c (5:458c)
 	ld b, PLAY_AREA_ARENA  ; CARD_LOCATION_ARENA
 	call ApplyAttachedPluspower  ; preserves: bc
 	call HandleDamageBoostingStadiums
-IF BURN_IS_DAMAGE_OVER_TIME == 0
+IF BURN_BOOSTS_DAMAGE_TAKEN
 	call SwapTurn
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	call HandleBurnDamageBoost
@@ -464,12 +482,12 @@ ENDC
 	call GetTurnDuelistVariable
 	and DOUBLE_POISONED
 	jr z, .done
-	; ld c, 40
-	ld hl, 20
+	; ld c, DBLPSN_DAMAGE * 2
+	ld hl, DBLPSN_DAMAGE
 	and DOUBLE_POISONED & (POISONED ^ $ff)
 	jr nz, .add_poison
-	; ld c, 20
-	ld hl, 10
+	; ld c, PSN_DAMAGE * 2
+	ld hl, PSN_DAMAGE
 .add_poison
 	call AddToDamage_DE
 	call CapMaximumDamage_DE

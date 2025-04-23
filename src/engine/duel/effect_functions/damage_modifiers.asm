@@ -153,6 +153,16 @@ SpeedImpact_AIEffect:
 	jp SetDefiniteAIDamage
 
 
+GigaDrain_DamageBoostEffect:
+	ld e, PLAY_AREA_ARENA
+	call GetEnergyAttachedMultiplierDamage
+	jp AddToDamage
+
+GigaDrain_AIEffect:
+	call GigaDrain_DamageBoostEffect
+	jp SetDefiniteAIDamage
+
+
 Psychic_DamageBoostEffect:
 	call SwapTurn
 	ld e, PLAY_AREA_ARENA
@@ -613,24 +623,18 @@ Vengeance_AIEffect:
 	jp SetDefiniteAIDamage
 
 
-; +30 damage if 10 or more Items in both discard piles
+; +10 damage for every 10 cards in both discard piles
 ToxicWaste_DamageBoostEffect:
-	call CreateItemCardListFromDiscardPile
-	call CountCardsInDuelTempList
-	cp 10
-	jr nc, .enough
+	ld a, DUELVARS_NUMBER_OF_CARDS_IN_DISCARD_PILE
+	call GetTurnDuelistVariable
 	ld c, a
-	push bc
-	call SwapTurn
-	call CreateItemCardListFromDiscardPile
-	call CountCardsInDuelTempList
-	call SwapTurn
-	pop bc
+	ld a, DUELVARS_NUMBER_OF_CARDS_IN_DISCARD_PILE
+	call GetNonTurnDuelistVariable
 	add c
-	cp 10
-	ret c  ; not enough cards
-.enough
-  ld a, 30
+	call ADividedBy10
+	or a
+	ret z  ; not enough cards
+	call ATimes10
 	jp AddToDamage
 
 ToxicWaste_AIEffect:
@@ -656,13 +660,16 @@ DoTheWave_AIEffect:
 
 
 Swarm_DamageBoostEffect:
-	call CheckBenchIsNotFull
-	ret nc
+	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+	call GetTurnDuelistVariable
+	cp 4
+	ret c
+.bonus
 	ld a, 10
 	jp AddToDamage
 
 Swarm_AIEffect:
-  call Swarm_DamageBoostEffect
+  call Swarm_DamageBoostEffect.bonus
   jp SetDefiniteAIDamage
 
 
@@ -864,30 +871,30 @@ Bonus10VersusEvolvedPokemon_AIEffect:
 
 ; bonus damage for each status condition on the Defending Pokémon
 ReactivePoison_DamageBoostEffect:
-  ld a, DUELVARS_ARENA_CARD_STATUS
-  call GetNonTurnDuelistVariable
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetNonTurnDuelistVariable
 	or a
 	ret z  ; no status
 	ld bc, $00
 ; confusion, sleep, paralysis
-  and CNF_SLP_PRZ
-  jr z, .poison
-  ld b, 20
+	and CNF_SLP_PRZ
+	jr z, .poison
+	ld b, 20
 .poison
 	ld a, [hl]
-  and DOUBLE_POISONED
-  jr z, .burn
-  ld c, 20
+	and MAX_POISON
+	jr z, .burn
+	ld c, 20
 .burn
 	ld a, [hl]
-  and BURNED
+	and BURNED
 	ld a, 0
-  jr z, .tally
-  ld a, 20
+	jr z, .tally
+	ld a, 20
 .tally
 	add b
 	add c
-  jp AddToDamage
+	jp AddToDamage
 
 ReactivePoison_AIEffect:
   call ReactivePoison_DamageBoostEffect
@@ -906,18 +913,18 @@ Pester_AIEffect:
   jp SetDefiniteAIDamage
 
 
-; +20 damage if the Defending Pokémon is Poisoned
+; +30 damage if the Defending Pokémon is Poisoned
 DeadlyPoison_DamageBoostEffect:
-  ld a, DUELVARS_ARENA_CARD_STATUS
-  call GetNonTurnDuelistVariable
-  and DOUBLE_POISONED
-  ret z  ; not Poisoned
-  ld a, 20
-  jp AddToDamage
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetNonTurnDuelistVariable
+	and MAX_POISON
+	ret z  ; not Poisoned
+	ld a, 30
+	jp AddToDamage
 
 DeadlyPoison_AIEffect:
-  call DeadlyPoison_DamageBoostEffect
-  jp SetDefiniteAIDamage
+	call DeadlyPoison_DamageBoostEffect
+	jp SetDefiniteAIDamage
 
 
 ; ------------------------------------------------------------------------------
@@ -925,33 +932,13 @@ DeadlyPoison_AIEffect:
 ; ------------------------------------------------------------------------------
 
 SwallowUp_DamageBoostEffect:
-	ld a, DUELVARS_ARENA_CARD_HP
-	call GetTurnDuelistVariable
-	ld e, a
-	ld a, DUELVARS_ARENA_CARD_HP
-	call GetNonTurnDuelistVariable
-	cp e
+	call CheckDefendingPokemonHasLessHp
 	ld a, 50
-	jp c, AddToDamage
+	jp nc, AddToDamage
 	ret
 
 SwallowUp_AIEffect:
 	call SwallowUp_DamageBoostEffect
-	jp SetDefiniteAIDamage
-
-
-ChopDown_DamageBoostEffect:
-	ld a, DUELVARS_ARENA_CARD_HP
-	call GetNonTurnDuelistVariable
-	ld e, a
-	ld a, DUELVARS_ARENA_CARD_HP
-	call GetTurnDuelistVariable
-	cp e
-	jp c, DoubleDamage_DamageBoostEffect
-	ret
-
-ChopDown_AIEffect:
-	call ChopDown_DamageBoostEffect
 	jp SetDefiniteAIDamage
 
 
@@ -976,6 +963,18 @@ DoubleDamageIfUserIsDamaged_DamageBoostEffect:
 DoubleDamageIfUserIsDamaged_AIEffect:
   call DoubleDamageIfUserIsDamaged_DamageBoostEffect
   jp SetDefiniteAIDamage
+
+
+Counter_DamageBoostEffect:
+	ld a, DUELVARS_ARENA_CARD_LAST_TURN_DAMAGE
+	call GetTurnDuelistVariable
+	; or a
+	; ret z
+	jp AddToDamage
+
+Counter_AIEffect:
+	call Counter_DamageBoostEffect
+	jp SetDefiniteAIDamage
 
 
 ; add damage taken to damage output

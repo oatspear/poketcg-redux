@@ -133,7 +133,7 @@ Text040f: ; 40a15 (10:4a15)
 	line "I have some information for you"
 	line "about Rick's deck - he's "
 	line "the Master of the Science Club."
-	line "His deck uses Toxic Gas to"
+	line "His deck uses Neutralizing Gas to"
 	line "prevent your Pokémon from using "
 	line "Pokémon Power! Avoid using a deck "
 	line "that relies on Pokémon Power to "

@@ -7,14 +7,19 @@ AlreadyRetreatedThisTurnText:
 	text "Already retreated this turn."
 	done
 
-ConfusionCheckDamageText: ; 3807c (e:407c)
-	text "Confusion check,"
-	line "If Tails, damage to yourself!"
+PokemonsConfusionCheckText:
+	text "Confusion check!"
+	line "If Tails, the attack fails."
 	done
 
 PokemonsSleepCheckText:
 	text "Sleep check!"
-	line "If Heads, wake up and attack."
+	line "If Tails, the attack fails."
+	done
+
+PokemonsParalysisCheckText:
+	text "Paralysis check!"
+	line "If Tails, the attack fails."
 	done
 
 UnableToRetreatDueToTrapText:
@@ -56,9 +61,9 @@ NoDamageOrEffectDueToNShieldText: ; 38494 (e:4494)
 	line "due to the effects of N Shield."
 	done
 
-NoDamageOrEffectDueToTransparencyText: ; 384d8 (e:44d8)
-	text "No damage or effect on next Attack"
-	line "due to the effects of Transparency"
+NoDamageOrEffectDueToShieldDustText:
+	text "No damage or effects due to"
+	line "Shield Dust."
 	done
 
 PutInPlayWithTransformText:
@@ -619,17 +624,10 @@ ThereWasNoEffectFromBurnText:
 	line "from Burn."
 	done
 
-IF SLEEP_WITH_COIN_FLIP
-ThereWasNoEffectFromSleepText:
-	text "There was no effect"
-	line "from Sleep."
-	done
-ELSE
 ThereWasNoEffectFromSleepText:
 	text "There was no effect"
 	line "from Drowsiness."
 	done
-ENDC
 
 ThereWasNoEffectFromParalysisText: ; 39c10 (e:5c10)
 	text "There was no effect"

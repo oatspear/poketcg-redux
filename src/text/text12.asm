@@ -11,6 +11,16 @@ InflictPoisonDescription: ; 5765d (15:765d)
 	line "Poisoned."
 	done
 
+GigaDrainName:
+	text "Giga Drain"
+	done
+
+X10DamageForEachEnergyDescription:
+	text "This attack does 10 damage"
+	line "for each Energy attached to"
+	line "this Pokémon."
+	done
+
 MegaDrainName: ; 577f9 (15:77f9)
 	text "Mega Drain"
 	done
@@ -262,21 +272,19 @@ SilverWhirlwindName:
 	text "Silver Whirlwind"
 	done
 
-IF SLEEP_WITH_COIN_FLIP
-SilverWhirlwindDescriptionCont:
-	text "If this Pokémon has 3 or more"
-	line "Energies attached to it, the"
-	line "new Defending Pokémon is now"
-	line "Asleep, Poisoned and Burned."
+MoveAllEnergiesToBenchedPokemonDescription:
+	text "Move all Energies attached to"
+	line "this Pokémon to 1 of your Benched"
+	line "Pokémon."
 	done
-ELSE
-SilverWhirlwindDescriptionCont:
-	text "If this Pokémon has 3 or more"
-	line "Energies attached to it, the"
-	line "new Defending Pokémon is now"
-	line "Drowsy, Poisoned and Burned."
+
+SilverWhirlwindDescription:
+	text "Your opponent switches their"
+	line "Active Pokémon with one of their"
+	line "Benched Pokémon."
+	line "Both Defending Pokémon are now"
+	line "Poisoned and Confused."
 	done
-ENDC
 
 HatchName:
 	text "Hatch"
@@ -348,6 +356,10 @@ DevastatingWindName:
 DevastatingWindDescription:
 	text "Your opponent shuffles their hand"
 	line "into their deck and draws 4 cards."
+	done
+
+YouMayDiscardStadiumDescription:
+	text "You may discard a Stadium in play."
 	done
 
 DrillPeckName: ; 61b72 (18:5b72)
@@ -490,15 +502,6 @@ ThickSkinnedName:
 	text "Thick Skinned"
 	done
 
-IF SLEEP_WITH_COIN_FLIP
-ThickSkinnedDescription:
-	text "This Pokémon can't become affected"
-	line "with any Special Conditions."
-	line "This power can't be used if this"
-	line "Pokémon is already Asleep, Confused,"
-	line "or Paralyzed."
-	done
-ELSE
 ThickSkinnedDescription:
 	text "This Pokémon can't become affected"
 	line "with any Special Conditions."
@@ -506,7 +509,6 @@ ThickSkinnedDescription:
 	line "Pokémon is already Drowsy, Confused,"
 	line "or Paralyzed."
 	done
-ENDC
 
 HeavySlamName:
 	text "Heavy Slam"
@@ -820,18 +822,6 @@ FamilyPowerDescription:
 	line "or Nidoqueen on your Bench."
 	done
 
-NightAmbushName:
-	text "Night Ambush"
-	done
-
-NightAmbushDescription:
-	text "This attack does 30 damage to 1"
-	line "of your opponent's Pokémon."
-	line "That Pokémon is now Poisoned."
-	; line "You may switch this Pokémon with"
-	; line "one of your Benched Pokémon."
-	done
-
 ElementalMasteryName:
 	text "Elemental Mastery"
 	done
@@ -841,6 +831,10 @@ ElementalMasteryDescription:
 	line "colors of Energy attached to it, its"
 	line "attacks do 10 more damage to the"
 	line "opponent's Active Pokémon."
+	done
+
+PoisonDrainName:
+	text "Poison Drain"
 	done
 
 RainSplashName:
@@ -1116,6 +1110,10 @@ DoAdditionalDamageText:
 	text "Do additional damage?"
 	done
 
+DiscardStadiumInPlayText:
+	text "Discard Stadium in play?"
+	done
+
 StrongArmLariatName:
 	text "Strong-Arm Lariat"
 	done
@@ -1184,7 +1182,7 @@ DesperateBlastDescription:
 	text "If this is your Active Pokémon and"
 	line "it is Knocked Out by damage from"
 	line "an attack from your opponent's"
-	line "Pokémon, put 5 damage counters on"
+	line "Pokémon, put 4 damage counters on"
 	line "the Attacking Pokémon."
 	done
 
@@ -1423,13 +1421,6 @@ VoltSwitchDescription:
 
 SurpriseBiteName:
 	text "Surprise Bite"
-	done
-
-SurpriseBiteDescription:
-	text "Once during your turn, you may"
-	line "put 1 damage counter on 1 of"
-	line "your opponent's Benched Pokémon"
-	line "that has no damage counters."
 	done
 
 PhoenixFireName:

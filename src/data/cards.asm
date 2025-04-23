@@ -573,14 +573,14 @@ ButterfreeCard:
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
 	; attack 2
-	energy GRASS, 1 ; energies
+	energy GRASS, 1, COLORLESS, 1 ; energies
 	tx SilverWhirlwindName ; name
-	tx OpponentSwitchesPokemonDescription ; description
-	tx SilverWhirlwindDescriptionCont ; description (cont)
-	db 20 ; damage
+	tx MoveAllEnergiesToBenchedPokemonDescription ; description
+	tx SilverWhirlwindDescription ; description (cont)
+	db 40 ; damage
 	db DAMAGE_NORMAL ; category
 	dw SilverWhirlwindEffectCommands ; effect commands
-	db INFLICT_POISON | INFLICT_SLEEP ; flags 1
+	db INFLICT_POISON | INFLICT_CONFUSION ; flags 1
 	db SWITCH_OPPONENT_POKEMON ; flags 2
 	db NONE ; flags 3
 	db 0
@@ -765,6 +765,20 @@ EkansCard:
 	dw NONE ; pre-evo name
 
 	; attack 1
+	energy COLORLESS, 1 ; energies
+	tx PoisonFangName ; name
+	tx InflictPoisonDescription ; description
+	dw NONE ; description (cont)
+	db 10 ; damage
+	db DAMAGE_NORMAL ; category
+	dw InflictPoisonEffectCommands ; effect commands
+	db INFLICT_POISON ; flags 1
+	db NONE ; flags 2
+	db NONE ; flags 3
+	db 0
+	db ATK_ANIM_POISON_FANG ; animation
+
+	; attack 2
 	energy DARKNESS, 1 ; energies
 	tx FinishingBiteName ; name
 	tx FinishingBiteDescription ; description
@@ -777,20 +791,6 @@ EkansCard:
 	db NONE ; flags 3
 	db 0
 	db ATK_ANIM_HIT ; animation
-
-	; attack 2
-	energy DARKNESS, 1, COLORLESS, 1 ; energies
-	tx PoisonFangName ; name
-	tx InflictPoisonDescription ; description
-	dw NONE ; description (cont)
-	db 20 ; damage
-	db DAMAGE_NORMAL ; category
-	dw InflictPoisonEffectCommands ; effect commands
-	db INFLICT_POISON ; flags 1
-	db NONE ; flags 2
-	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_POISON_FANG ; animation
 
 	db 0 ; retreat cost
 	db WR_FIGHTING ; weakness
@@ -811,12 +811,26 @@ ArbokCard:
 	db DIAMOND ; rarity
 	db LABORATORY | FOSSIL ; sets
 	db ARBOK
-	db 70 ; hp
+	db 80 ; hp
 	db STAGE1 ; stage
 	tx EkansName ; pre-evo name
 
 	; attack 1
-	energy DARKNESS, 1 ; energies
+	energy DARKNESS, 1, COLORLESS, 1 ; energies
+	tx DeadlyPoisonName ; name
+	tx InflictPoisonDescription ; description
+	tx VenoshockDescription ; description (cont)
+	db 20 ; damage
+	db DAMAGE_PLUS ; category
+	dw DeadlyPoisonEffectCommands ; effect commands
+	db INFLICT_POISON ; flags 1
+	db NONE ; flags 2
+	db NONE ; flags 3
+	db 0
+	db ATK_ANIM_POISON_FANG ; animation
+
+	; attack 2
+	energy DARKNESS, 1, COLORLESS, 1 ; energies
 	tx TerrorStrikeName ; name
 	tx DamagePerPokemonPowerDescription ; description
 	dw NONE ; description (cont)
@@ -828,20 +842,6 @@ ArbokCard:
 	db NONE ; flags 3
 	db 0
 	db ATK_ANIM_DARK_MIND ; animation
-
-	; attack 2
-	energy DARKNESS, 1, COLORLESS, 1 ; energies
-	tx DeadlyPoisonName ; name
-	tx InflictPoisonDescription ; description
-	tx VenoshockDescription ; description (cont)
-	db 30 ; damage
-	db DAMAGE_PLUS ; category
-	dw DeadlyPoisonEffectCommands ; effect commands
-	db INFLICT_POISON ; flags 1
-	db NONE ; flags 2
-	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_POISON_FANG ; animation
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness
@@ -1172,25 +1172,29 @@ ZubatCard:
 	db BASIC ; stage
 	dw NONE ; pre-evo name
 
+	; (D) Astonish 10
+	; Choose a random card from your opponent's hand.
+	; Your opponent reveals that cards and shuffles it into their deck.
+
 	; attack 1
-	energy 0 ; energies
-	tx SurpriseBiteName ; name
-	tx SurpriseBiteDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	energy COLORLESS, 1 ; energies
+	tx SupersonicName ; name
+	tx InflictConfusionDescription ; description
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
-	dw SurpriseBiteEffectCommands ; effect commands
-	db NONE ; flags 1
+	db RESIDUAL ; category
+	dw InflictConfusionEffectCommands ; effect commands
+	db INFLICT_CONFUSION ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_PKMN_POWER_1 ; animation
+	db ATK_ANIM_SUPERSONIC ; animation
 
 	; attack 2
-	energy DARKNESS, 1 ; energies
+	energy DARKNESS, 1, COLORLESS, 1 ; energies
 	tx SwarmName ; name
 	tx SwarmDescription ; description
-	dw NONE ; description (cont)
+	tx SwarmDescriptionCont ; description (cont)
 	db 10 ; damage
 	db DAMAGE_PLUS ; category
 	dw SwarmEffectCommands ; effect commands
@@ -1225,12 +1229,12 @@ GolbatCard:
 
 	; attack 1
 	energy 0 ; energies
-	tx VampiricAuraName ; name
-	tx VampiricAuraDescription ; description
+	tx SurpriseBiteName ; name
+	tx CurseDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKEMON_POWER ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw CurseEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -1239,17 +1243,17 @@ GolbatCard:
 
 	; attack 2
 	energy DARKNESS, 1, COLORLESS, 1 ; energies
-	tx NightAmbushName ; name
-	tx NightAmbushDescription ; description
-	tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
-	db 0 ; damage
-	db RESIDUAL ; category
-	dw NightAmbushEffectCommands ; effect commands
-	db INFLICT_POISON | DAMAGE_TO_OPPONENT_BENCH ; flags 1
-	db NONE ; flags 2
+	tx PoisonDrainName ; name
+	tx LeechLifeDescription ; description
+	tx InflictPoisonDescription ; description (cont)
+	db 20 ; damage
+	db DAMAGE_NORMAL ; category
+	dw PoisonDrainEffectCommands ; effect commands
+	db INFLICT_POISON ; flags 1
+	db HEAL_USER ; flags 2
 	db NONE ; flags 3
 	db 2
-	db ATK_ANIM_AGILITY_NO_HIT ; animation
+	db ATK_ANIM_DRAIN ; animation
 
 	db 1 ; retreat cost
 	db WR_LIGHTNING ; weakness
@@ -1304,7 +1308,7 @@ OddishCard:
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
+	db ATK_ANIM_POWDER_HIT ; animation
 
 	db 0 ; retreat cost
 	db WR_FIRE ; weakness
@@ -1353,19 +1357,19 @@ GloomCard:
 
 	; attack 2
 	energy GRASS, 1 ; energies
-	tx FoulOdorName ; name
+	tx PollenSprayName ; name
 	tx InflictPoisonDescription ; description
-	tx StunSporeDescription ; description (cont)
-	db 10 ; damage
-	db DAMAGE_NORMAL ; category
-	dw FoulOdorEffectCommands ; effect commands
-	db INFLICT_POISON | INFLICT_PARALYSIS ; flags 1
+	tx InflictSleepDescription ; description (cont)
+	db 0 ; damage
+	db RESIDUAL ; category
+	dw PoisonSleepEffectCommands ; effect commands
+	db INFLICT_POISON | INFLICT_SLEEP ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_FOUL_ODOR ; animation
+	db ATK_ANIM_POWDER_EFFECT ; animation
 
-	db 1 ; retreat cost
+	db 0 ; retreat cost
 	db WR_FIRE ; weakness
 	db NONE ; resistance
 	tx WeedName ; category
@@ -1415,10 +1419,6 @@ VileplumeCard:
 	; it's Knocked Out), flip a coin. If heads, your opponent's Active Pokémon is now
 	; Confused. This power works even while Erika's Vileplume is Asleep, Confused, or Paralyzed.
 
-	; Poison Scent (G)
-	; Flip a coin. If heads, the Defending Pokémon is now Poisoned and Confused.
-	; If tails, the Defending Pokémon is now Poisoned and Asleep.
-
 	; Disturbing Pollen (GCC) 50
 	; Flip a coin. If heads, your opponent can't play any Trainer cards from his
 	; or her hand during your opponent's next turn.
@@ -1431,40 +1431,37 @@ VileplumeCard:
 	; Massive Bloom (GC) 80-
 	; This attack does 10 less damage for each damage counter on this Pokémon.
 
-	; Pollen Spray (GCCC) 40
-	; The Defending Pokémon is now Poisoned and Asleep.
-
 	; attack 1
-	energy GRASS, 1, COLORLESS, 1 ; energies
-	tx PollenBurstName ; name
-	tx PollenBurstDescription ; description
-	dw NONE ; description (cont)
-	db 30 ; damage
-	db DAMAGE_NORMAL ; category
-	dw PollenBurstEffectCommands ; effect commands
-	db INFLICT_POISON | INFLICT_PARALYSIS ; flags 1
+	energy 0 ; energies
+	tx HayFeverName ; name
+	tx HayFeverDescription ; description
+	tx PokemonPowerDescriptionCont ; description (cont)
+	db 0 ; damage
+	db POKEMON_POWER ; category
+	dw PassivePowerEffectCommands ; effect commands
+	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
-	db 1
-	db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
+	db 0
+	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy GRASS, 1, COLORLESS, 2 ; energies
-	tx MegaDrainName ; name
-	tx Heal30DamageDescription ; description
-	dw NONE ; description (cont)
-	db 40 ; damage
-	db DAMAGE_NORMAL ; category
-	dw Heal30DamageEffectCommands ; effect commands
+	energy GRASS, 1 ; energies
+	tx GigaDrainName ; name
+	tx X10DamageForEachEnergyDescription ; description
+	tx LeechLifeDescription ; description (cont)
+	db 10 ; damage
+	db DAMAGE_X ; category
+	dw GigaDrainEffectCommands ; effect commands
 	db NONE ; flags 1
-	db HEAL_USER ; flags 2
+	db ATTACHED_ENERGY_BOOST | HEAL_USER ; flags 2
 	db NONE ; flags 3
 	db 0
 	db ATK_ANIM_DRAIN ; animation
 
 	db 2 ; retreat cost
 	db WR_FIRE ; weakness
-	db NONE ; resistance
+	db WR_DARKNESS ; resistance
 	tx FlowerName ; category
 	db 45 ; Pokedex number
 	db 0
@@ -1500,10 +1497,10 @@ ParasCard:
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
 	; attack 2
-	energy GRASS, 1 ; energies
+	energy GRASS, 1, COLORLESS, 1 ; energies
 	tx SwarmName ; name
 	tx SwarmDescription ; description
-	dw NONE ; description (cont)
+	tx SwarmDescriptionCont ; description (cont)
 	db 10 ; damage
 	db DAMAGE_PLUS ; category
 	dw SwarmEffectCommands ; effect commands
@@ -1664,11 +1661,11 @@ VenomothCard:
 	db 0 ; damage
 	db POKEMON_POWER ; category
 	dw PassivePowerEffectCommands ; effect commands
-	db INFLICT_POISON | INFLICT_CONFUSION ; flags 1
+	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 1
-	db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
+	db ATK_ANIM_POWDER_HIT ; animation
 
 	; attack 2
 	energy GRASS, 1 ; energies
@@ -1853,7 +1850,7 @@ VictreebelCard:
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
+	db ATK_ANIM_POWDER_HIT ; animation
 
 	; attack 2
 	energy GRASS, 1, COLORLESS, 2 ; energies
@@ -1939,12 +1936,26 @@ MukCard:
 	db STAR ; rarity
 	db LABORATORY | FOSSIL ; sets
 	db MUK
-	db 80 ; hp
+	db 90 ; hp
 	db STAGE1 ; stage
 	tx GrimerName ; pre-evo name
 
 	; attack 1
-	energy DARKNESS, 1, COLORLESS, 1 ; energies
+	energy 0 ; energies
+	tx SeepingToxinsName ; name
+	tx SeepingToxinsDescription ; description
+	tx PokemonPowerDescriptionCont ; description (cont)
+	db 0 ; damage
+	db POKEMON_POWER ; category
+	dw PassivePowerEffectCommands ; effect commands
+	db NONE ; flags 1
+	db NONE ; flags 2
+	db NONE ; flags 3
+	db 1
+	db ATK_ANIM_PKMN_POWER_1 ; animation
+
+	; attack 2
+	energy DARKNESS, 2, COLORLESS, 1 ; energies
 	tx ToxicWasteName ; name
 	tx ToxicDescription ; description
 	tx ToxicWasteDescriptionCont ; description (cont)
@@ -1957,21 +1968,7 @@ MukCard:
 	db 2
 	db ATK_ANIM_GOO ; animation
 
-	; attack 2
-	energy DARKNESS, 2, COLORLESS, 1 ; energies
-	tx OverwhelmName ; name
-	tx OverwhelmDescription ; description
-	dw NONE ; description (cont)
-	db 40 ; damage
-	db DAMAGE_NORMAL ; category
-	dw OverwhelmEffectCommands ; effect commands
-	db INFLICT_PARALYSIS ; flags 1
-	db NONE ; flags 2
-	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_HIT_EFFECT ; animation
-
-	db 1 ; retreat cost
+	db 2 ; retreat cost
 	db WR_FIGHTING ; weakness
 	db NONE ; resistance
 	tx SludgeName ; category
@@ -2060,7 +2057,7 @@ ExeggutorCard:
 	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy COLORLESS, 1 ; energies
+	energy COLORLESS, 2 ; energies
 	tx EnergyBurstName ; name
 	tx DamagePerEnergyAttachedToBothActiveDescription ; description
 	dw NONE ; description (cont)
@@ -2156,14 +2153,14 @@ WeezingCard:
 	db DIAMOND ; rarity
 	db LABORATORY | FOSSIL ; sets
 	db WEEZING
-	db 80 ; hp
+	db 90 ; hp
 	db STAGE1 ; stage
 	tx KoffingName ; pre-evo name
 
 	; attack 1
 	energy 0 ; energies
-	tx ToxicGasName ; name
-	tx ToxicGasDescription ; description
+	tx NeutralizingGasName ; name
+	tx NeutralizingGasDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKEMON_POWER ; category
@@ -2264,10 +2261,24 @@ ScytherCard:
 
 	; attack 1
 	energy GRASS, 1 ; energies
-	tx SwordsDanceName ; name
-	tx NextTurnDoubleDamageDescription ; description
+	tx AgilityName ; name
+	tx ImmuneIfKnockedOutOpponentDescription ; description
 	dw NONE ; description (cont)
 	db 10 ; damage
+	db DAMAGE_NORMAL ; category
+	dw ImmuneIfKnockedOutOpponentEffectCommands ; effect commands
+	db NONE ; flags 1
+	db NULLIFY_OR_WEAKEN_ATTACK ; flags 2
+	db NONE ; flags 3
+	db 0
+	db ATK_ANIM_QUICK_ATTACK ; animation
+
+	; attack 2
+	energy GRASS, 1, COLORLESS, 1 ; energies
+	tx FuryCutterName ; name
+	tx NextTurnDoubleDamageDescription ; description
+	dw NONE ; description (cont)
+	db 20 ; damage
 	db DAMAGE_NORMAL ; category
 	dw SwordsDanceEffectCommands ; effect commands
 	db NONE ; flags 1
@@ -2275,20 +2286,6 @@ ScytherCard:
 	db SPECIAL_AI_HANDLING ; flags 3
 	db 0
 	db ATK_ANIM_SLASH ; animation
-
-	; attack 2
-	energy COLORLESS, 2 ; energies
-	tx UTurnName ; name
-	tx SwitchThisPokemonDescription ; description
-	dw NONE ; description (cont)
-	db 30 ; damage
-	db DAMAGE_NORMAL ; category
-	dw SwitchUserEffectCommands ; effect commands
-	db NONE ; flags 1
-	db NONE ; flags 2
-	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_QUICK_ATTACK ; animation
 
 	db 1 ; retreat cost
 	db WR_FIRE ; weakness
@@ -2309,18 +2306,18 @@ PinsirCard:
 	db STAR ; rarity
 	db COLOSSEUM | JUNGLE ; sets
 	db PINSIR
-	db 70 ; hp
+	db 60 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
 
 	; attack 1
-	energy GRASS, 1 ; energies
-	tx RendName ; name
-	tx Bonus20IfOpponentIsDamagedDescription ; description
-	dw NONE ; description (cont)
-	db 10 ; damage
-	db DAMAGE_PLUS ; category
-	dw RendEffectCommands ; effect commands
+	energy GRASS, 1, COLORLESS, 1 ; energies
+	tx OverheadThrowName ; name
+	tx Damage1FriendlyBenchedPokemon20Description ; description
+	tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
+	db 40 ; damage
+	db DAMAGE_NORMAL ; category
+	dw Damage1FriendlyBenchedPokemon20EffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -2328,13 +2325,13 @@ PinsirCard:
 	db ATK_ANIM_HIT ; animation
 
 	; attack 2
-	energy COLORLESS, 2 ; energies
+	energy COLORLESS, 3 ; energies
 	tx GuillotineName ; name
-	tx Guillotine30Description ; description
+	tx GuillotineDescription ; description
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category
-	dw Guillotine30EffectCommands ; effect commands
+	dw GuillotineEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db SPECIAL_AI_HANDLING ; flags 3
@@ -3360,7 +3357,7 @@ BlastoiseCard:
 	tx WartortleName ; pre-evo name
 
 	; attack 1
-	energy WATER, 1 ; energies
+	energy WATER, 2 ; energies
 	tx HydroPumpName ; name
 	tx HydroPumpDescription ; description
 	dw NONE ; description (cont)
@@ -4024,13 +4021,13 @@ KinglerCard:
 	tx KrabbyName ; pre-evo name
 
 	; attack 1
-	energy COLORLESS, 2 ; energies
+	energy COLORLESS, 3 ; energies
 	tx GuillotineName ; name
-	tx Guillotine50Description ; description
+	tx GuillotineDescription ; description
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category
-	dw Guillotine50EffectCommands ; effect commands
+	dw GuillotineEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db SPECIAL_AI_HANDLING ; flags 3
@@ -4130,7 +4127,7 @@ SeadraCard:
 	tx ScaldName ; name
 	tx InflictBurnDescription ; description
 	dw NONE ; description (cont)
-	db 10 ; damage
+	db 20 ; damage
 	db DAMAGE_NORMAL ; category
 	dw InflictBurnEffectCommands ; effect commands
 	db INFLICT_POISON ; flags 1
@@ -4344,7 +4341,7 @@ StarmieCard:
 	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy COLORLESS, 1 ; energies
+	energy COLORLESS, 2 ; energies
 	tx EnergyBurstName ; name
 	tx DamagePerEnergyAttachedToBothActiveDescription ; description
 	dw NONE ; description (cont)
@@ -4395,7 +4392,7 @@ MagikarpCard:
 	db ATK_ANIM_BIG_HIT ; animation
 
 	; attack 2
-	energy WATER, 1, COLORLESS, 1 ; energies
+	energy WATER, 1 ; energies
 	tx AscensionName ; name
 	tx AscensionDescription ; description
 	dw NONE ; description (cont)
@@ -5222,18 +5219,18 @@ RaichuLv45Card:
 	tx PikachuName ; pre-evo name
 
 	; attack 1
-	energy 0 ; energies
-	tx StaticName ; name
-	tx StaticDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
-	db 0 ; damage
-	db POKEMON_POWER ; category
-	dw PassivePowerEffectCommands ; effect commands
+	energy LIGHTNING, 1, COLORLESS, 1 ; energies
+	tx AgilityName ; name
+	tx ImmuneIfKnockedOutOpponentDescription ; description
+	dw NONE ; description (cont)
+	db 20 ; damage
+	db DAMAGE_NORMAL ; category
+	dw ImmuneIfKnockedOutOpponentEffectCommands ; effect commands
 	db NONE ; flags 1
-	db NONE ; flags 2
+	db NULLIFY_OR_WEAKEN_ATTACK ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_PKMN_POWER_1 ; animation
+	db ATK_ANIM_QUICK_ATTACK ; animation
 
 	; attack 2
 	energy LIGHTNING, 1, COLORLESS, 1 ; energies
@@ -6886,16 +6883,16 @@ HitmonleeCard:
 
 	; attack 2
 	energy FIGHTING, 1, COLORLESS, 1 ; energies
-	tx HighJumpKickName ; name
-	tx Recoil20Description ; description
+	tx DoubleKickName ; name
+	tx DoubleHitDescription ; description
 	dw NONE ; description (cont)
-	db 40 ; damage
+	db 10 ; damage
 	db DAMAGE_NORMAL ; category
-	dw Recoil20EffectCommands ; effect commands
-	db LOW_RECOIL ; flags 1
+	dw DoubleHitEffectCommands ; effect commands
+	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
-	db 0
+	db 10
 	db ATK_ANIM_HIT ; animation
 
 	db 1 ; retreat cost
@@ -6923,15 +6920,15 @@ HitmonchanCard:
 
 	; attack 1
 	energy FIGHTING, 1 ; energies
-	tx PowerUpPunchName ; name
-	tx NextTurnDoubleDamageDescription ; description
+	tx CounterName ; name
+	tx CounterDescription ; description
 	dw NONE ; description (cont)
 	db 10 ; damage
-	db DAMAGE_NORMAL ; category
-	dw SwordsDanceEffectCommands ; effect commands
+	db DAMAGE_PLUS ; category
+	dw CounterEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
-	db SPECIAL_AI_HANDLING ; flags 3
+	db BOOST_IF_TAKEN_DAMAGE ; flags 3
 	db 0
 	db ATK_ANIM_PUNCH ; animation
 
@@ -7152,7 +7149,7 @@ KabutopsCard:
 
 	; attack 1
 	energy COLORLESS, 2 ; energies
-	tx SharpSickleName ; name
+	tx ReapingClawName ; name
 	tx Guillotine70Description ; description
 	dw NONE ; description (cont)
 	db 0 ; damage
@@ -8288,41 +8285,41 @@ Pidgeot2Card:
 	gfx Pidgeot2CardGfx ; gfx
 	tx PidgeotName ; name
 	db STAR ; rarity
-	db EVOLUTION | JUNGLE ; sets
+	db EVOLUTION ; sets
 	db PIDGEOT_LV40
-	db 110 ; hp
+	db 100 ; hp
 	db STAGE2 ; stage
 	tx PidgeottoName ; pre-evo name
 
 	; attack 1
-	energy COLORLESS, 1 ; energies
-	tx WhirlwindName ; name
-	tx OpponentSwitchesPokemonDescription ; description
+	energy COLORLESS, 2 ; energies
+	tx CycloneName ; name
+	tx CycloneDescription ; description
 	dw NONE ; description (cont)
-	db 20 ; damage
-	db DAMAGE_NORMAL ; category
-	dw WhirlwindEffectCommands ; effect commands
+	db 0 ; damage
+	db RESIDUAL ; category
+	dw CycloneEffectCommands ; effect commands
 	db NONE ; flags 1
 	db SWITCH_OPPONENT_POKEMON ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_WHIRLWIND ; animation
+	db ATK_ANIM_CYCLONE ; animation
 
 	; attack 2
 	energy COLORLESS, 3 ; energies
 	tx HurricaneName ; name
-	tx HurricaneDescription ; description
-	dw NONE ; description (cont)
+	tx YouMayDiscardStadiumDescription ; description
+	tx DevastatingWindDescription ; description (cont)
 	db 40 ; damage
 	db DAMAGE_NORMAL ; category
 	dw HurricaneEffectCommands ; effect commands
 	db NONE ; flags 1
-	db FLAG_2_BIT_7 ; flags 2
+	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
 	db ATK_ANIM_GALE ; animation
 
-	db 2 ; retreat cost
+	db 1 ; retreat cost
 	db WR_LIGHTNING ; weakness
 	db WR_FIGHTING ; resistance
 	tx BirdName ; category
@@ -9044,7 +9041,7 @@ DoduoCard:
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
 	; attack 2
-	energy COLORLESS, 1 ; energies
+	energy COLORLESS, 2 ; energies
 	tx DoubleHitName ; name
 	tx DoubleHitDescription ; description
 	dw NONE ; description (cont)
@@ -9076,7 +9073,7 @@ DodrioCard:
 	db DIAMOND ; rarity
 	db LABORATORY | JUNGLE ; sets
 	db DODRIO
-	db 70 ; hp
+	db 80 ; hp
 	db STAGE1 ; stage
 	tx DoduoName ; pre-evo name
 
@@ -9095,7 +9092,7 @@ DodrioCard:
 	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy COLORLESS, 1 ; energies
+	energy COLORLESS, 3 ; energies
 	tx TripleHitName ; name
 	tx TripleHitDescription ; description
 	dw NONE ; description (cont)
@@ -9178,15 +9175,28 @@ ChanseyCard:
 	db STAR ; rarity
 	db COLOSSEUM | NONE ; sets
 	db CHANSEY
-	db 70 ; hp
+	db 60 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
+
+	; Ability: Triage / First Aid
+	; when you retreat your Active Pokémon, heal 10 damage from it (stacks)
+
+	; Ability: Healing Support
+	; when you play Supporter, heal 10 (and status) from Active (stacks)
+
+	; Ability: Therapeutic Energy
+	; once per turn, when attaching energy from the hand, heal 10 damage and status (stacks)
+
+	; Ability: Therapeutic Energy
+	; once per turn, attach 1 basic energy from hand to 1 damaged Pokémon,
+	; heal 10 and status from it
 
 	; attack 1
 	energy 0 ; energies
 	tx HealingEnergyName ; name
 	tx HealingEnergyDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	tx UniquePokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKEMON_POWER ; category
 	dw PassivePowerEffectCommands ; effect commands

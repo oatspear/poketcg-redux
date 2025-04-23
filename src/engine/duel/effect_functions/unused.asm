@@ -1,5 +1,355 @@
 ;
 
+
+; handles the sleep check for the Turn Duelist
+; heals sleep status if coin is heads, else
+; it plays sleeping animation
+; return carry if the turn holder's attack was unsuccessful
+HandleSleepCheck:
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetTurnDuelistVariable
+	; call CheckSleepStatus
+	; ret nc
+
+	and CNF_SLP_PRZ
+	cp ASLEEP
+	jr z, .asleep
+	or a  ; ensure no carry
+	ret
+
+.asleep
+	push hl
+	ldtx de, PokemonsSleepCheckText
+
+	call TossCoin
+	ld a, DUEL_ANIM_SLEEP
+	ldtx hl, IsStillAsleepText
+	jr nc, .tails
+
+; coin toss was heads, cure sleep status
+	pop hl
+	push hl
+	ld a, PSN_DBLPSN_BRN
+	and [hl]
+	ld [hl], a
+	ld a, DUEL_ANIM_HEAL
+	ldtx hl, IsCuredOfSleepText
+
+.tails
+	push af
+	push hl
+	call Func_6c7e
+	ld a, DUELVARS_ARENA_CARD
+	call LoadCardNameAndLevelFromVarToRam2
+	pop hl
+	; call PrintNonTurnDuelistCardIDText
+	call DrawWideTextBox_PrintText
+	pop af
+	call Func_6cab
+	pop hl
+	call WaitForWideTextBoxInput
+
+; return carry if tails
+	ld a, [wCoinTossNumHeads]
+	or a
+	ret nz
+	scf
+	ret
+
+
+
+ToxicWasteEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ToxicWaste_DamagePoisonEffect
+	dbw EFFECTCMDTYPE_AI, ToxicWaste_AIEffect
+	db  $00
+
+; +30 damage if 10 or more Items in both discard piles
+ToxicWaste_DamageBoostEffect:
+	call CreateItemCardListFromDiscardPile
+	call CountCardsInDuelTempList
+	cp 10
+	jr nc, .enough
+	ld c, a
+	push bc
+	call SwapTurn
+	call CreateItemCardListFromDiscardPile
+	call CountCardsInDuelTempList
+	call SwapTurn
+	pop bc
+	add c
+	cp 10
+	ret c  ; not enough cards
+.enough
+  ld a, 30
+	jp AddToDamage
+
+
+SwarmEffectCommands:
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Swarm_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Swarm_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Swarm_PutInPlayAreaEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, Swarm_AISelectEffect
+	dbw EFFECTCMDTYPE_AI, Swarm_AIEffect
+	db  $00
+
+
+SurpriseBiteEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, CheckPokemonPowerCanBeUsed_StoreTrigger
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Curse_DamageEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, SurpriseBite_PlayerSelectEffect
+	db  $00
+
+SurpriseBite_PlayerSelectEffect:
+	ldtx hl, ChoosePokemonInTheBenchToGiveDamageText
+	call DrawWideTextBox_WaitForInput
+	call SwapTurn
+	ld a, CARDTEST_FULL_HP_POKEMON
+	call HandlePlayerSelectionMatchingPokemonInBench_AllowCancel
+	ldh [hTempPlayAreaLocation_ffa1], a
+	jp SwapTurn
+
+
+NightAmbushEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, TargetedPoisonEffect
+	; fallthrough to Deal30ToAnyPokemonEffectCommands
+
+
+
+
+; engine/core.asm
+
+; play the energy card with deck index at hTempCardIndex_ff98
+; c contains the type of energy card being played
+PlayEnergyCard:
+	ld a, [wOncePerTurnActions]
+	and PLAYED_ENERGY_THIS_TURN
+	jr nz, .already_played_energy
+
+.normal_energy_attachment
+	call HasAlivePokemonInPlayArea
+	call OpenPlayAreaScreenForSelection ; choose card to play energy card on
+	jp c, DuelMainInterface ; exit if no card was chosen
+.play_energy_set_played
+	ld a, [wOncePerTurnActions]
+	or PLAYED_ENERGY_THIS_TURN
+	ld [wOncePerTurnActions], a
+.play_energy
+	ld a, DUELVARS_ARENA_CARD_FLAGS
+	call GetTurnDuelistVariable
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	ldh [hTempPlayAreaLocation_ffa1], a
+	ld e, a
+	add l
+	set ATTACHED_ENERGY_FROM_HAND_THIS_TURN_F, [hl]
+	ldh a, [hTempCardIndex_ff98]
+	ldh [hTemp_ffa0], a
+	call PutHandCardInPlayArea
+	call PrintPlayAreaCardList_EnableLCD
+	ld a, OPPACTION_PLAY_ENERGY
+	call SetOppAction_SerialSendDuelData
+	call PrintAttachedEnergyToPokemon
+	call HandleOnPlayEnergyEffects
+	jp DuelMainInterface
+
+.rain_dance_active
+	call HasAlivePokemonInBench
+	; call HasAlivePokemonInPlayArea
+	call OpenPlayAreaScreenForSelection ; choose card to play energy card on
+	jp c, DuelMainInterface ; exit if no card was chosen
+; set rain dance played this turn
+	ld a, [wOncePerTurnActions]
+	or PLAYED_ENERGY_THIS_TURN
+	ld [wOncePerTurnActions], a
+	jr .play_energy
+
+.already_played_energy
+; try abilities that allow extra energy attachment before giving up
+	ld a, c
+	cp TYPE_ENERGY_WATER
+	jr nz, .cannot_attach_energy
+	call IsRainDanceActive
+	jr c, .rain_dance_active
+.cannot_attach_energy
+	ldtx hl, MayOnlyAttachOneEnergyCardText
+	call DrawWideTextBox_WaitForInput
+;	fallthrough to ReloadCardListScreen
+
+
+
+FoulOdorEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, FoulOdorEffect
+	db  $00
+
+; Defending Pokémon becomes Poisoned.
+; Defending Pokémon becomes Paralyzed if the user took damage.
+FoulOdorEffect:
+	call PoisonEffect
+	jp ParalysisIfDamagedSinceLastTurnEffect
+
+
+HurricaneEffectCommands:
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Hurricane_ReturnToHandEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Hurricane_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, Hurricane_AISelectEffect
+	db  $00
+
+
+Hurricane_PlayerSelectEffect:
+	ldtx hl, ChoosePokemonToReturnToTheHandText
+	call DrawWideTextBox_WaitForInput
+	call SwapTurn
+	call HandlePlayerSelectionPokemonInPlayArea_AllowCancel
+	ldh [hTempPlayAreaLocation_ffa1], a
+	jp SwapTurn
+
+
+Hurricane_AISelectEffect:
+	call SwapTurn
+	call GetBenchPokemonWithHighestHP
+	ldh [hTempPlayAreaLocation_ffa1], a
+	jp SwapTurn
+
+
+
+SilverWhirlwindEffectCommands:
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Whirlwind_SelectEffect
+	dbw EFFECTCMDTYPE_AI_SWITCH_DEFENDING_PKMN, Whirlwind_SelectEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, SilverWhirlwind_SwitchEffect
+	db  $00
+
+SilverWhirlwind_SwitchEffect:
+	call Whirlwind_SwitchEffect
+; refresh screen to show new Pokémon
+	xor a  ; REFRESH_DUEL_SCREEN
+	ld [wDuelDisplayedScreen], a
+	bank1call DrawDuelMainScene
+	jp SilverWhirlwind_StatusEffect
+
+;
+SilverWhirlwind_StatusEffect:
+	call CheckArenaPokemonHas3OrMoreEnergiesAttached
+	ret c
+	xor a
+	ld [wEffectFunctionsFeedbackIndex], a
+	call PoisonEffect
+	call BurnEffect
+	call SleepEffect
+	jp ApplyStatusAndPlayAnimationAdhoc
+
+
+
+DoubleHitEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, DoubleHit_StoreExtraDamageEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DoubleHitEffect
+	dbw EFFECTCMDTYPE_AI, DoubleHit_AIEffect
+	db  $00
+
+TripleHitEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, TripleHit_StoreExtraDamageEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, TripleHitEffect
+	dbw EFFECTCMDTYPE_AI, TripleHit_AIEffect
+	db  $00
+
+;
+DoubleHit_AIEffect:
+	call CheckArenaPokemonHas2OrMoreEnergiesAttached
+	ret c
+	ld a, [wDamage]
+	add a
+	call AddToDamage
+	jp SetDefiniteAIDamage
+
+TripleHit_AIEffect:
+	call CheckArenaPokemonHas3OrMoreEnergiesAttached
+	cp 2
+	ret c  ; once
+; twice
+	dec a
+	ld c, a
+	ld a, [wDamage]
+	ld d, a
+	add d
+	dec c
+	jr z, .update
+; thrice
+	add d
+.update
+	call AddToDamage
+	jp SetDefiniteAIDamage
+
+TripleHit_StoreExtraDamageEffect:
+	call CheckArenaPokemonHas3OrMoreEnergiesAttached
+	ld de, 0
+	or a
+	jr z, .store  ; zero energies
+	ld c, a
+	dec c
+	jr z, .store  ; one energy
+	ld a, [wLoadedAttackDamage]
+	ld d, a
+	dec c
+	jr z, .store  ; two energies
+	ld e, a  ; three or more energies
+.store
+	ld a, d
+	ldh [hTempList], a
+	ld a, e
+	ldh [hTempList + 1], a
+	ret
+
+DoubleHit_StoreExtraDamageEffect:
+	call CheckArenaPokemonHas2OrMoreEnergiesAttached
+	ld a, [wLoadedAttackDamage]
+	jr nc, .store
+	xor a  ; also reset carry
+.store
+	ldh [hTemp_ffa0], a
+	ret
+
+
+
+ChopDownEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ChopDown_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AI, ChopDown_AIEffect
+	db  $00
+
+ChopDown_DamageBoostEffect:
+	ld a, DUELVARS_ARENA_CARD_HP
+	call GetNonTurnDuelistVariable
+	ld e, a
+	ld a, DUELVARS_ARENA_CARD_HP
+	call GetTurnDuelistVariable
+	cp e
+	jp c, DoubleDamage_DamageBoostEffect
+	ret
+
+ChopDown_AIEffect:
+	call ChopDown_DamageBoostEffect
+	jp SetDefiniteAIDamage
+
+
+Guillotine30EffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDefendingPokemonHas30HpOrLess
+	; fallthrough
+Guillotine50EffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDefendingPokemonHas50HpOrLess
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, KnockOutDefendingPokemonEffect
+	db  $00
+
+
+; output:
+;   carry: set if the Defending Pokémon has more than 30 HP remaining
+CheckDefendingPokemonHas30HpOrLess:
+	ld a, 30
+	jr CheckDefendingPokemonHasLowHp
+
+; output:
+;   carry: set if the Defending Pokémon has more than 50 HP remaining
+CheckDefendingPokemonHas50HpOrLess:
+	ld a, 50
+	jr CheckDefendingPokemonHasLowHp
+
+
 ScorchingColumnEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckArenaPokemonHasEnergy_Fire
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, ScorchingColumn_PlayerSelectEffect
@@ -3130,9 +3480,6 @@ RocketShell_AISelectEffect:
 	ld a, [wOncePerTurnActions]
 	and PLAYED_ENERGY_THIS_TURN
 	jr nz, TutorWaterEnergy_AISelectEffect  ; played energy
-	ld a, [wOncePerTurnActions]
-	and USED_RAIN_DANCE_THIS_TURN
-	ret z  ; did not play energy
 	; jr TutorWaterEnergy_AISelectEffect
 	; fallthrough
 
@@ -3143,9 +3490,6 @@ RocketShell_PlayerSelectEffect:
 	ld a, [wOncePerTurnActions]
 	and PLAYED_ENERGY_THIS_TURN
 	jr nz, TutorWaterEnergy_PlayerSelectEffect  ; played energy
-	ld a, [wOncePerTurnActions]
-	and USED_RAIN_DANCE_THIS_TURN
-	ret z  ; did not play energy
 	; jr TutorWaterEnergy_PlayerSelectEffect
 	; fallthrough
 
@@ -5090,7 +5434,7 @@ SolarPower_CheckUse: ; 2ce53 (b:4e53)
 
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	call CheckCannotUseDueToStatus_Anywhere
-	ret c ; can't use PKMN due to status or Toxic Gas
+	ret c ; can't use PKMN due to status or Neutralizing Gas
 
 ; return carry if none of the Arena cards have status conditions
 	ld a, DUELVARS_ARENA_CARD_STATUS
@@ -6456,7 +6800,7 @@ Curse_CheckDamageAndBench: ; 2d7fc (b:57fc)
 	ret c
 
 ; return carry if Pkmn Power cannot be used due
-; to Toxic Gas or status.
+; to Neutralizing Gas or status.
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	call CheckCannotUseDueToStatus_Anywhere
 	ret
@@ -6680,7 +7024,7 @@ SongOfRest_CheckUse:
 
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	call CheckCannotUseDueToStatus_Anywhere
-	ret c  ; can't use PKMN due to status or Toxic Gas
+	ret c  ; can't use PKMN due to status or Neutralizing Gas
 
 ; return carry if no Pokémon has damage counters
 	; call CheckIfPlayAreaHasAnyDamage_ExcludeTempLocation

@@ -385,11 +385,6 @@ HandleAIPkmnPowers:
 	call GetTurnDuelistVariable
 	ld b, a
 	ld c, PLAY_AREA_ARENA
-; OATS check status of benched Pokemon too
-	; ld a, DUELVARS_ARENA_CARD_STATUS
-	; call GetTurnDuelistVariable
-	; and CNF_SLP_PRZ
-	; jr nz, .next_2
 
 .loop_play_area
 ; OATS check status of benched Pokemon too
@@ -1042,11 +1037,6 @@ HandleAICowardice:
 
 	ld b, a
 	ld c, PLAY_AREA_ARENA
-; OATS check status of benched Pokemon too
-	; ld a, DUELVARS_ARENA_CARD_STATUS
-	; call GetTurnDuelistVariable
-	; and CNF_SLP_PRZ
-	; jr nz, .next
 .loop
 ; OATS check status of benched Pokemon too
 	ld a, DUELVARS_ARENA_CARD_STATUS
@@ -1262,10 +1252,6 @@ HandleAIRainDanceEnergy:
 	call ArePokemonPowersDisabled
 	ret c  ; Pokémon Powers are disabled
 
-	; ld a, [wOncePerTurnActions]
-	; and USED_RAIN_DANCE_THIS_TURN
-	; ret nz  ; Rain Dance was used this turn
-
 	ld a, WARTORTLE
 	call GetFirstPokemonWithAvailablePower
 	ret nc  ; no Power-capable Pokémon
@@ -1294,10 +1280,6 @@ HandleAIRainDanceEnergy:
 HandleAIDynamotorEnergy:
 	call ArePokemonPowersDisabled
 	ret c  ; Pokémon Powers are disabled
-
-	; ld a, [wOncePerTurnActions]
-	; and USED_LIGHTNING_HASTE_THIS_TURN
-	; ret nz  ; Lightning Haste was used this turn
 
 	ld a, RAICHU_LV35
 	call GetFirstPokemonWithAvailablePower

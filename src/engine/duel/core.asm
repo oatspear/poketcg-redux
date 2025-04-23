@@ -646,6 +646,7 @@ OpenPlayerHandScreen:
 	ldh a, [hTempCardIndex_ff98]
 	call LoadCardDataToBuffer1_FromDeckIndex
 	ld a, [wLoadedCard1Type]
+	ld [wLastPlayedCardType], a
 	ld c, a
 	bit TYPE_TRAINER_F, c
 	jr nz, .trainer_card
@@ -667,16 +668,11 @@ OpenPlayerHandScreen:
 ; play the energy card with deck index at hTempCardIndex_ff98
 ; c contains the type of energy card being played
 PlayEnergyCard:
-	ld a, c
-	cp TYPE_ENERGY_WATER
-	jr nz, .not_water_energy
-	call IsRainDanceActive
-	jr c, .rain_dance_active
-
-.not_water_energy
 	ld a, [wOncePerTurnActions]
-	and PLAYED_ENERGY_THIS_TURN  ; or a
+	and PLAYED_ENERGY_THIS_TURN
 	jr nz, .already_played_energy
+
+.normal_energy_attachment
 	call HasAlivePokemonInPlayArea
 	call OpenPlayAreaScreenForSelection ; choose card to play energy card on
 	jp c, DuelMainInterface ; exit if no card was chosen
@@ -703,16 +699,24 @@ PlayEnergyCard:
 	jp DuelMainInterface
 
 .rain_dance_active
-	call HasAlivePokemonInPlayArea
+	call HasAlivePokemonInBench
+	; call HasAlivePokemonInPlayArea
 	call OpenPlayAreaScreenForSelection ; choose card to play energy card on
 	jp c, DuelMainInterface ; exit if no card was chosen
 ; set rain dance played this turn
 	ld a, [wOncePerTurnActions]
-	or USED_RAIN_DANCE_THIS_TURN
+	or PLAYED_ENERGY_THIS_TURN
 	ld [wOncePerTurnActions], a
 	jr .play_energy
 
 .already_played_energy
+; try abilities that allow extra energy attachment before giving up
+	ld a, c
+	cp TYPE_ENERGY_WATER
+	jr nz, .cannot_attach_energy
+	call IsRainDanceActive
+	jr c, .rain_dance_active
+.cannot_attach_energy
 	ldtx hl, MayOnlyAttachOneEnergyCardText
 	call DrawWideTextBox_WaitForInput
 ;	fallthrough
@@ -882,11 +886,8 @@ CheckAbleToRetreat:
 	ldtx hl, AlreadyRetreatedThisTurnText
 	jr nz, .done
 
-	call CheckCantRetreatDueToAcid
+	call CheckCantRetreatDueToStatusOrEffect
 	ret c
-; OATS status conditions no longer prevent retreat
-	; call CheckIfActiveCardParalyzedOrAsleep
-	; ret c
 	call HasAlivePokemonInBench
 	jr c, .unable_to_retreat
 	ld a, DUELVARS_ARENA_CARD
@@ -1141,8 +1142,7 @@ DuelMenu_Attack:
 .not_first_turn
 	call HandleCantAttackSubstatus
 	jr c, .alert_cant_attack_and_cancel_menu
-; OATS only Paralysis prevents attacking outright
-	call CheckIfActiveCardParalyzed  ; CheckIfActiveCardParalyzedOrAsleep
+	call CheckIfActiveCardIsUnableToAttack
 	jr nc, .can_attack
 .alert_cant_attack_and_cancel_menu
 	call DrawWideTextBox_WaitForInput
@@ -1201,8 +1201,8 @@ DuelMenu_Attack:
 	call CopyAttackDataAndDamage_FromDeckIndex
 	call HandleAmnesiaSubstatus
 	jr c, .cannot_use_due_to_amnesia
-IF SLEEP_WITH_COIN_FLIP
-	call HandleSleepCheck
+IF CC_IS_COIN_FLIP
+	call HandleStatusCheck
 	jr c, .skip_attack
 ENDC
 	call UseAttackOrPokemonPower
@@ -1568,12 +1568,23 @@ CheckIfEnoughEnergiesOfType:
 	or a
 	ret
 
+
 ; return carry and the corresponding text in hl if the turn holder's
-; arena Pokemon card is paralyzed.
-CheckIfActiveCardParalyzed:
+; arena Pokemon card is unable to act.
+CheckIfActiveCardIsUnableToAttack:
 	ld a, DUELVARS_ARENA_CARD_STATUS
 	call GetTurnDuelistVariable
 	and CNF_SLP_PRZ
+IF CC_IS_COIN_FLIP
+	cp FLINCHED
+	jr z, .flinched
+	or a
+	ret
+.flinched
+	ldtx hl, UnableDueToParalysisText
+	scf
+	ret
+ELSE
 	cp PARALYZED
 	jr z, .paralyzed
 	or a
@@ -1582,99 +1593,77 @@ CheckIfActiveCardParalyzed:
 	ldtx hl, UnableDueToParalysisText
 	scf
 	ret
+ENDC
 
 
-; unreferenced
-; return carry and the corresponding text in hl if the turn holder's
-; arena Pokemon card is asleep.
-; CheckIfActiveCardAsleep:
-; 	ld a, DUELVARS_ARENA_CARD_STATUS
-; 	call GetTurnDuelistVariable
-; 	and CNF_SLP_PRZ
-; 	cp ASLEEP
-; 	jr z, .asleep
-; 	or a
-; 	ret
-; .asleep
-; 	ldtx hl, UnableDueToSleepText
-; 	scf
-; 	ret
-;
-; UnableDueToSleepText:
-; 	text "Unable to due to Sleep."
-; 	done
-
-
-IF SLEEP_WITH_COIN_FLIP
-; handles the sleep check for the Turn Duelist
-; heals sleep status if coin is heads, else
-; it plays sleeping animation
+IF CC_IS_COIN_FLIP
+; handles the status check for the Turn Duelist
+; if heads, the attack goes through
+; if tails, the attack fails and status is removed
 ; return carry if the turn holder's attack was unsuccessful
-HandleSleepCheck:
+HandleStatusCheck:
 	ld a, DUELVARS_ARENA_CARD_STATUS
 	call GetTurnDuelistVariable
-	; call CheckSleepStatus
-	; ret nc
 
 	and CNF_SLP_PRZ
+	ret z  ; no status, no carry
+	cp CONFUSED
+	jr z, .confused
 	cp ASLEEP
 	jr z, .asleep
+	cp PARALYZED
+	jr z, .paralyzed
 	or a  ; ensure no carry
 	ret
 
+.paralyzed
+	ldtx de, PokemonsParalysisCheckText
+	call TossCoin  ; preserves: hl
+	jr c, .heads
+	ld a, DUEL_ANIM_PARALYSIS
+	ldtx hl, IsFullyParalyzedText
+	jr .tails
+
 .asleep
-	push hl
 	ldtx de, PokemonsSleepCheckText
-
-	call TossCoin
+	call TossCoin  ; preserves: hl
+	jr c, .heads
 	ld a, DUEL_ANIM_SLEEP
-	ldtx hl, IsStillAsleepText
-	jr nc, .tails
+	ldtx hl, IsFastAsleepText
+	jr .tails
 
-; coin toss was heads, cure sleep status
-	pop hl
-	push hl
-	ld a, PSN_DBLPSN_BRN
-	and [hl]
-	ld [hl], a
-	ld a, DUEL_ANIM_HEAL
-	ldtx hl, IsCuredOfSleepText
+.confused
+	ldtx de, PokemonsConfusionCheckText
+	call TossCoin  ; preserves: hl
+	jr c, .heads
+	ld a, DUEL_ANIM_CONFUSION
+	ldtx hl, IsLostInConfusionText
+	; jr .tails
 
 .tails
 	push af
 	push hl
-	call Func_6c7e
+	call DrawDuelMainSceneForTurnHolder
 	ld a, DUELVARS_ARENA_CARD
 	call LoadCardNameAndLevelFromVarToRam2
 	pop hl
-	; call PrintNonTurnDuelistCardIDText
 	call DrawWideTextBox_PrintText
 	pop af
-	call Func_6cab
-	pop hl
+	call DrawDuelAnimationOnDuelMainScene
 	call WaitForWideTextBoxInput
-
 ; return carry if tails
 	ld a, [wCoinTossNumHeads]
 	or a
-	ret nz
 	scf
+	ret
+
+.heads  ; return no carry
+	call DrawDuelMainSceneForTurnHolder
+	ld a, [wCoinTossNumHeads]
+	or a
 	ret
 ENDC
 
-
-; return carry if the turn holder's arena card is asleep
-;CheckSleepStatus:
-;	ld a, [hl]
-;	and CNF_SLP_PRZ
-;	cp ASLEEP
-;	ret nz
-
-;	ld a, [wTempTurnDuelistCardID]
-;	call LoadCardNameAndLevelFromCardIDToRam2
-;	ldtx de, PokemonsSleepCheckText
-;	scf
-;	ret
 
 ; display the animation of the turn duelist drawing one card at the beginning of the turn
 ; if there isn't any card left in the deck, let the player know with a text message
@@ -6580,6 +6569,8 @@ OppAction_PlayEnergyCard:
 	call PutHandCardInPlayArea
 	ldh a, [hTemp_ffa0]
 	call LoadCardDataToBuffer1_FromDeckIndex
+	ld a, [wLoadedCard1Type]
+	ld [wLastPlayedCardType], a
 	call DrawLargePictureOfCard
 	call PrintAttachedEnergyToPokemon
 	ld a, [wOncePerTurnActions]
@@ -6595,6 +6586,8 @@ OppAction_EvolvePokemonCard:
 	ldh a, [hTemp_ffa0]
 	ldh [hTempCardIndex_ff98], a
 	call LoadCardDataToBuffer1_FromDeckIndex
+	ld a, [wLoadedCard1Type]
+	ld [wLastPlayedCardType], a
 	call DrawLargePictureOfCard
 	call EvolvePokemonCardIfPossible
 	call PrintPokemonEvolvedIntoPokemon
@@ -6611,10 +6604,12 @@ OppAction_PlayBasicPokemonCard:
 	ldh [hTempPlayAreaLocation_ff9d], a
 	add DUELVARS_ARENA_CARD_STAGE
 	call GetTurnDuelistVariable
-	ld [hl], 0
+	ld [hl], BASIC
 	ldh a, [hTemp_ffa0]
 	ldtx hl, PlacedOnTheBenchText
 	call DisplayCardDetailScreen
+	ld a, [wLoadedCard1Type]
+	ld [wLastPlayedCardType], a
 	call OnPokemonPlayedInitVariablesAndPowers
 	call HandleOnPlayPokemonEffects
 	jp DrawDuelMainScene
@@ -6658,6 +6653,7 @@ OppAction_PlayTrainerCard:
 	ld [wSkipDuelistIsThinkingDelay], a
 ; OATS begin support trainer subtypes
 	ld a, [wLoadedCard1Type]
+	ld [wLastPlayedCardType], a
 	cp TYPE_TRAINER_SUPPORTER
 	jr z, .supporter_card
 	cp TYPE_TRAINER_STADIUM
@@ -6717,30 +6713,26 @@ OppAction_BeginUseAttack:
 	jr nz, .failed
 
 .not_first_turn
+IF CC_IS_COIN_FLIP
 	ld a, DUELVARS_ARENA_CARD_STATUS
 	call GetTurnDuelistVariable
 	and CNF_SLP_PRZ
-	cp CONFUSED
-	jr z, .has_status
-IF SLEEP_WITH_COIN_FLIP
-; OATS sleep also requires a coin flip
-	cp ASLEEP
-	jr z, .has_status
+	jr nz, .has_status
 ENDC
 	jp ExchangeRNG
 
-; we make it here is attacker is affected by
-; confusion or sleep
 .has_status
 	call DrawDuelMainScene
 	call PrintPokemonsAttackText
 	call WaitForWideTextBoxInput
 	call ExchangeRNG
-IF SLEEP_WITH_COIN_FLIP
-	call HandleSleepCheck
+IF CC_IS_COIN_FLIP
+	call HandleStatusCheck
+	jr c, .failed
 ELSE
 	xor a
 ENDC
+	call HandleReducedAccuracySubstatus
 	ret nc ; return if attack is successful (won the coin toss)
 .failed
 	call ClearNonTurnTemporaryDuelvars
@@ -6754,8 +6746,10 @@ ENDC
 OppAction_UseAttack:
 	ld a, EFFECTCMDTYPE_DISCARD_ENERGY
 	call TryExecuteEffectCommandFunction
+IF OLD_CONFUSION_BEHAVIOUR
 	call CheckSelfConfusionDamage
 	jr c, .confusion_damage
+ENDC
 	call DisplayOpponentUsedAttackScreen
 	call PrintPokemonsAttackText
 	call WaitForWideTextBoxInput
@@ -6763,12 +6757,14 @@ OppAction_UseAttack:
 	ld a, $01
 	ld [wSkipDuelistIsThinkingDelay], a
 	ret
+IF OLD_CONFUSION_BEHAVIOUR
 .confusion_damage
 	call HandleConfusionDamageToSelf
 	; end the turn if dealing damage to self due to confusion
 	ld a, 1
 	ld [wOpponentTurnEnded], a
 	ret
+ENDC
 
 OppAction_PlayAttackAnimationDealAttackDamage:
 	call PlayAttackAnimation_DealAttackDamage
@@ -6852,12 +6848,19 @@ OppAction_UseMetronomeAttack:
 	call DrawDuelMainScene
 	ld a, DUELVARS_ARENA_CARD_STATUS
 	call GetTurnDuelistVariable
+IF CC_IS_COIN_FLIP
+	and CNF_SLP_PRZ
+	jr nz, .asm_6b56
+ELSE
+IF OLD_CONFUSION_BEHAVIOUR
 	and CNF_SLP_PRZ
 	cp CONFUSED
 	jr z, .asm_6b56
+ENDC
 	call PrintPokemonsAttackText
 	call .asm_6b56
 	jp WaitForWideTextBoxInput
+ENDC
 .asm_6b56
 	call SerialRecv8Bytes
 	push bc
@@ -6931,7 +6934,7 @@ HandleOnAttackEffects:
 	ld a, 1
 	farcall DiscardFromDeckEffect
 .done
-IF BURN_IS_DAMAGE_OVER_TIME
+IF BURN_DISCARDS_ENERGY
 	; jp HandleBurnDiscardEnergy
 	; fallthrough
 
@@ -6980,7 +6983,7 @@ HandleBurnDiscardEnergy:
 ; heal Burned status
 	ld a, DUELVARS_ARENA_CARD_STATUS
 	call GetTurnDuelistVariable
-	and DOUBLE_POISONED | CNF_SLP_PRZ
+	and $ff ^ BURNED
 	ld [hl], a
 ; play healing animation
 	ld a, DUELVARS_ARENA_CARD
@@ -6988,11 +6991,11 @@ HandleBurnDiscardEnergy:
 	call GetCardIDFromDeckIndex
 	ld a, e
 	ld [wTempNonTurnDuelistCardID], a
-	call Func_6c7e
+	call DrawDuelMainSceneForTurnHolder
 	ldtx hl, IsCuredOfBurnText
 	call PrintNonTurnDuelistCardIDText
 	ld a, DUEL_ANIM_HEAL
-	call Func_6cab
+	call DrawDuelAnimationOnDuelMainScene
 	jp WaitForWideTextBoxInput
 ELSE
 	ret
@@ -7016,7 +7019,7 @@ HandleOnUsePokemonPowerEffects:
 
 HandleOnPlayTrainerEffects:
 	farcall GarbageEater_HealEffect
-	farcall Static_ParalysisEffect
+	farcall HayFever_ParalysisEffect
 	farcall PokemonCenter_HealEffect
 	ret
 
@@ -7026,7 +7029,9 @@ HandleOnPlayTrainerEffects:
 ;   [wLoadedCard1*]: card data of the attached Energy
 HandleOnPlayEnergyEffects:
 	call ArePokemonPowersDisabled
-	ret c
+	jr c, .negative_effects
+; positive effects
+;	ret c
 ; 	ld a, [wLoadedCard1Type]
 ; 	cp TYPE_ENERGY_WATER
 ; 	jr nz, .not_water_energy
@@ -7040,11 +7045,22 @@ HandleOnPlayEnergyEffects:
 ; OATS introduce Potion Energy effect
 	ld a, CHANSEY  ; Healing Energy
 	call GetFirstPokemonWithAvailablePower
-	jr nc, .electromagnetic_wall  ; no Pkmn Power-capable Pokémon was found
+	jr nc, .full_heal_energy  ; no Pkmn Power-capable Pokémon was found
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	ld e, a   ; location
 	ld d, 10  ; damage
 	farcall HealPlayAreaCardHP
+.full_heal_energy
+	ld a, DEWGONG  ; Safeguard
+	call GetFirstPokemonWithAvailablePower
+	jr nc, .negative_effects  ; no Pkmn Power-capable Pokémon was found
+	ld a, [wLoadedCard1Type]
+	cp TYPE_ENERGY_WATER
+	ret nz  ; not Water energy
+	farcall Safeguard_StatusHealingEffect
+.negative_effects
+	call IsNeutralizingGasActive
+	ret c
 .electromagnetic_wall
 	call SwapTurn
 	ld a, MAGNETON_LV28  ; Electromagnetic Wall
@@ -7054,16 +7070,7 @@ HandleOnPlayEnergyEffects:
 	ldh a, [hTempPlayAreaLocation_ff9d]
 ; placing damage counters directly
 	ld e, a
-	call Bank1_Put1DamageCounterOnTarget
-.full_heal_energy
-	ld a, DEWGONG  ; Safeguard
-	call GetFirstPokemonWithAvailablePower
-	ret nc  ; no Pkmn Power-capable Pokémon was found
-	ld a, [wLoadedCard1Type]
-	cp TYPE_ENERGY_WATER
-	ret nz  ; not Water energy
-	farcall Safeguard_StatusHealingEffect
-	ret
+	jp Bank1_Put1DamageCounterOnTarget
 
 
 ; input:
@@ -7075,7 +7082,7 @@ HandleOnPlayPokemonEffects:
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	ld e, a  ; play area location
 	call Bank1_Put1DamageCounterOnTarget  ; preserves: hl, e, bc
-	farcall PutPoisonCounter_PlayArea
+	farcall PoisonEffect_PlayArea
 	ret
 
 
@@ -7121,6 +7128,10 @@ HandleBetweenTurnsEvents:
 	xor a
 	ld [wAlreadyDisplayedBetweenTurnsScreen], a
 
+IF CC_IS_COIN_FLIP
+	call HandleEndOfTurn_HealCrowdControlStatus
+ENDC
+
 	call HandleSitrusBerry
 	call HandleLumBerry
 	call HandleLeftovers
@@ -7132,6 +7143,8 @@ HandleBetweenTurnsEvents:
 	call ArePokemonPowersDisabled
 	call nc, HandleEndOfTurnEffect_Affliction
 	call HandleEndOfTurnEffect_StatusConditions
+	call HandleEndOfTurnEffect_BenchStatusConditions
+	call HandleEndOfTurnEffect_SeepingToxins
 	call HandleEndOfTurnEffect_SaffronGym
 	call HandleEndOfTurnEffect_RocketHeadquarters
 
@@ -7172,6 +7185,48 @@ ShowBetweenTurnsTransitionAtMostOnce:
 	call DrawDuelBoxMessage
 	ldtx hl, BetweenTurnsText
 	jp DrawWideTextBox_WaitForInput
+
+
+IF CC_IS_COIN_FLIP
+HandleEndOfTurn_HealCrowdControlStatus:
+	ld a, [wOncePerTurnActions]
+	and USED_ATTACK_THIS_TURN
+	ret nz  ; used an attack, status stays
+; check status conditions
+	ld a, DUELVARS_ARENA_CARD
+	call GetTurnDuelistVariable
+	call GetCardIDFromDeckIndex
+	ld a, e
+	ld [wTempNonTurnDuelistCardID], a
+	ld l, DUELVARS_ARENA_CARD_STATUS
+	ld a, [hl]
+	and CNF_SLP_PRZ
+	ret z  ; no status
+; has status condition
+	cp PARALYZED
+	ldtx de, IsCuredOfParalysisText
+	jr z, .heal
+	cp ASLEEP
+	ldtx de, IsCuredOfSleepText
+	jr z, .heal
+	cp CONFUSED
+	ldtx de, IsCuredOfConfusionText
+	ret nz
+.heal
+	push de
+	ld a, PSN_DBLPSN_BRN
+	and [hl]
+	ld [hl], a
+	call ShowBetweenTurnsTransitionAtMostOnce
+	call DrawDuelMainSceneForTurnHolder
+	ld a, DUELVARS_ARENA_CARD
+	call LoadCardNameAndLevelFromVarToRam2
+	pop hl  ; push de
+	call DrawWideTextBox_PrintText	
+	ld a, DUEL_ANIM_HEAL
+	call DrawDuelAnimationOnDuelMainScene
+	jp WaitForWideTextBoxInput
+ENDC
 
 
 ;
@@ -7338,6 +7393,37 @@ HandleEndOfTurnEffect_Affliction:
 	jp SwapTurn
 
 
+HandleEndOfTurnEffect_SeepingToxins:
+	ld a, MUK
+	call IsOpponentActiveSpotAuraActive  ; preserves: bc, de
+	ret nc  ; none found
+; Seeping Toxins
+	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+	call GetTurnDuelistVariable
+	ld c, a  ; loop counter
+	ld d, 10  ; damage
+	ld e, PLAY_AREA_ARENA  ; target
+	ld l, DUELVARS_ARENA_CARD_STATUS
+	jr .next  ; skip arena
+.loop_play_area
+	ld a, [hli]
+	and MAX_POISON
+	jr z, .next
+	push hl
+	push bc
+	push de
+	call ShowBetweenTurnsTransitionAtMostOnce
+	pop de
+	pop bc
+	pop hl
+	call Bank1_ApplyDirectDamage_RegularAnim  ; preserves: hl, de, bc
+.next
+	inc e
+	dec c
+	jr nz, .loop_play_area
+	jp SwapTurn
+
+
 HandleEndOfTurnEffect_StatusConditions:
 	ld a, DUELVARS_ARENA_CARD
 	call GetTurnDuelistVariable
@@ -7356,6 +7442,7 @@ IF BURN_IS_DAMAGE_OVER_TIME
 	call HandleBurnDamage
 	ret c  ; KO
 ENDC
+IF CC_IS_COIN_FLIP
 	ld a, [hl]
 	and CNF_SLP_PRZ
 	cp PARALYZED
@@ -7365,12 +7452,74 @@ ENDC
 	and [hl]
 	ld [hl], a
 	call ShowBetweenTurnsTransitionAtMostOnce
-	call Func_6c7e
+	call DrawDuelMainSceneForTurnHolder
 	ldtx hl, IsCuredOfParalysisText
 	call PrintNonTurnDuelistCardIDText
 	ld a, DUEL_ANIM_HEAL
-	call Func_6cab
+	call DrawDuelAnimationOnDuelMainScene
 	jp WaitForWideTextBoxInput
+ELSE
+	or a
+	ret
+ENDC
+
+
+HandleEndOfTurnEffect_BenchStatusConditions:
+	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+	call GetTurnDuelistVariable
+	ld c, a  ; loop counter
+	ld d, 10  ; damage
+	ld e, PLAY_AREA_ARENA  ; target
+	ld l, DUELVARS_ARENA_CARD_STATUS
+	jr .next
+.loop_play_area
+
+IF POISON_STICKS_ON_BENCH == 0
+	ld a, [hl]
+	and MAX_POISON
+	jr z, .not_poisoned
+IF POISON_STACKS
+	call ATimes10
+	ld d, a  ; damage
+ELSE
+	ld d, PSN_DAMAGE
+	cp POISONED
+	jr z, .got_poison_damage
+	ld d, DBLPSN_DAMAGE
+.got_poison_damage
+ENDC
+	push hl
+	push bc
+	push de
+	call ShowBetweenTurnsTransitionAtMostOnce
+	pop de
+	pop bc
+	pop hl
+	call Bank1_ApplyDirectDamage_RegularAnim  ; preserves: hl, de, bc
+ENDC
+
+.not_poisoned
+IF BURN_STICKS_ON_BENCH == 0
+	ld a, [hl]
+	and BURNED
+	jr z, .next
+	ld d, BURN_DAMAGE
+	push hl
+	push bc
+	push de
+	call ShowBetweenTurnsTransitionAtMostOnce
+	pop de
+	pop bc
+	pop hl
+	call Bank1_ApplyDirectDamage_RegularAnim  ; preserves: hl, de, bc
+ENDC
+
+.next
+	inc e
+	inc l
+	dec c
+	jr nz, .loop_play_area
+	ret
 
 
 HandleEndOfTurnEffect_SaffronGym:
@@ -7567,22 +7716,17 @@ ClearStatusFromBenchedPokemon:
 	ld l, DUELVARS_ARENA_CARD_STATUS
 	jr .next  ; skip arena Pokémon
 .loop
+IF POISON_STICKS_ON_BENCH | BURN_STICKS_ON_BENCH
 ; preserve Poison and Burn on the Bench
 	ld a, [hl]
 	and CNF_SLP_PRZ
-IF SLEEP_WITH_COIN_FLIP == 0
-	cp ASLEEP
-	jr z, .clear
-ENDC
-IF CLEAR_CONFUSION_ON_SWITCH == 0
-	cp CONFUSED
-	jr z, .clear
-ENDC
-	cp PARALYZED
-	jr nz, .next
+	jr z, .next
 .clear
 	ld a, PSN_DBLPSN_BRN
 	and [hl]
+ELSE
+	xor a
+ENDC
 	ld [hl], a
 .next
 	inc hl
@@ -7681,10 +7825,10 @@ Bank1_ApplyDirectDamage:
 	ret
 
 
-Func_6c7e:
+DrawDuelMainSceneForTurnHolder:
 	ld a, [wDuelDisplayedScreen]
 	cp DUEL_MAIN_SCENE
-	jr z, .asm_6c98
+	jr z, .draw_huds
 	ld hl, wWhoseTurn
 	ldh a, [hWhoseTurn]
 	cp [hl]
@@ -7693,7 +7837,7 @@ Func_6c7e:
 	call DrawDuelMainScene
 	jp SwapTurn
 
-.asm_6c98
+.draw_huds
 	ld hl, wWhoseTurn
 	ldh a, [hWhoseTurn]
 	cp [hl]
@@ -7702,9 +7846,10 @@ Func_6c7e:
 	call DrawDuelHUDs
 	jp SwapTurn
 
+
 ; input:
 ;	a = animation ID
-Func_6cab:
+DrawDuelAnimationOnDuelMainScene:
 	push af
 	ld a, [wDuelType]
 	or a
@@ -7735,7 +7880,7 @@ Func_6cab:
 	call DoFrame
 	call CheckAnyAnimationPlaying
 	jr c, .loop_anim
-	jr Func_6c7e.asm_6c98
+	jr DrawDuelMainSceneForTurnHolder.draw_huds
 
 
 ; prints the name of the card at wTempNonTurnDuelistCardID in a text box
@@ -7761,25 +7906,36 @@ HandlePoisonDamage:
 	push hl
 	bit DOUBLE_POISONED_F, [hl]
 	ld a, PSN_DAMAGE
-	ldtx hl, Received10DamageDueToPoisonText
+	; ldtx hl, Received10DamageDueToPoisonText
 	jr z, .not_double_poisoned
 	ld a, DBLPSN_DAMAGE
-	ldtx hl, Received20DamageDueToPoisonText
+	; ldtx hl, Received20DamageDueToPoisonText
 
 .not_double_poisoned
+	ld l, a
+	call SwapTurn
+	ld a, MUK
+	call CountPokemonIDInPlayArea  ; preserves: hl, bc, de
+	call SwapTurn
+	jr nc, .got_poison_boost  ; none found
+	call ATimes10
+	add l
+
+.got_poison_boost
 	push af
 	ld [wDuelAnimDamage], a
 	xor a
 	ld [wDuelAnimDamage + 1], a
 
-	push hl
-	call Func_6c7e
-	pop hl
+	; push hl
+	call DrawDuelMainSceneForTurnHolder
+	; pop hl
+	ldtx hl, ReceivedDamageDueToPoisonText
 	call PrintNonTurnDuelistCardIDText
 
 ; play animation
 	ld a, DUEL_ANIM_POISON
-	call Func_6cab
+	call DrawDuelAnimationOnDuelMainScene
 	pop af
 
 ; deal poison damage
@@ -7790,7 +7946,7 @@ HandlePoisonDamage:
 	call SubtractHP
 	push hl
 	ld a, $8c
-	call Func_6cab
+	call DrawDuelAnimationOnDuelMainScene
 	pop hl
 
 	call PrintKnockedOutIfHLZero
@@ -7819,13 +7975,13 @@ HandleBurnDamage:
 	ld [wDuelAnimDamage + 1], a
 
 	push hl
-	call Func_6c7e
+	call DrawDuelMainSceneForTurnHolder
 	pop hl
 	call PrintNonTurnDuelistCardIDText
 
 ; play animation
 	ld a, DUEL_ANIM_SMALL_FLAME
-	call Func_6cab
+	call DrawDuelAnimationOnDuelMainScene
 
 ; deal burn damage
 	ld e, BURN_DAMAGE
@@ -7835,7 +7991,7 @@ HandleBurnDamage:
 	call SubtractHP
 	push hl
 	ld a, $8c
-	call Func_6cab
+	call DrawDuelAnimationOnDuelMainScene
 	pop hl
 
 	call PrintKnockedOutIfHLZero
@@ -8259,7 +8415,7 @@ PrintThereWasNoEffectFromStatusText:
 	ldtx hl, ThereWasNoEffectFromPoisonConfusionText
 	cp POISONED | CONFUSED
 	ret z
-	and DOUBLE_POISONED
+	and MAX_POISON
 	jr nz, .poison
 	ld a, c
 	ldtx hl, ThereWasNoEffectFromBurnText
@@ -8405,7 +8561,7 @@ InitVariablesToBeginTurn:
 	ld [wAlreadyRetreatedThisTurn], a
 	ld [wOncePerTurnActions], a
 	; ld [wGotTailsFromConfusionCheckDuringRetreat], a
-	; ld [wGotHeadsFromAccuracyCheck], a
+	ld [wGotHeadsFromAccuracyCheck], a
 	ldh a, [hWhoseTurn]
 	ld [wWhoseTurn], a
 	or a
@@ -9021,6 +9177,286 @@ Func_7415:
 	ld [wce7e], a
 	ret
 
+
+ClearNonTurnTemporaryDuelvars_ResetCarry:
+	call ClearNonTurnTemporaryDuelvars
+	or a
+	ret
+
+
+; use Pokemon Power
+UsePokemonPower:
+	call Func_7415
+	ld a, EFFECTCMDTYPE_INITIAL_EFFECT_2
+	call TryExecuteEffectCommandFunction
+	jp c, DisplayUsePokemonPowerScreen_WaitForInput
+	ld a, EFFECTCMDTYPE_REQUIRE_SELECTION
+	call TryExecuteEffectCommandFunction
+	ret c
+	ld a, OPPACTION_USE_PKMN_POWER
+	call SetOppAction_SerialSendDuelData
+	call ExchangeRNG
+	ld a, OPPACTION_EXECUTE_PKMN_POWER_EFFECT
+	call SetOppAction_SerialSendDuelData
+	ld a, EFFECTCMDTYPE_BEFORE_DAMAGE
+	call TryExecuteEffectCommandFunction
+	call HandleOnUsePokemonPowerEffects
+	ld a, OPPACTION_DUEL_MAIN_SCENE
+	jp SetOppAction_SerialSendDuelData
+
+
+; Use an attack (from DuelMenu_Attack) or a Pokemon Power (from DuelMenu_PkmnPower)
+; Returns carry if the effect failed (e.g. smokescreen or prerequisites not met).
+UseAttackOrPokemonPower:
+	ld a, [wSelectedAttack]
+	ld [wPlayerAttackingAttackIndex], a
+	ldh a, [hTempCardIndex_ff9f]
+	ld [wPlayerAttackingCardIndex], a
+	ld a, [wTempCardID_ccc2]
+	ld [wPlayerAttackingCardID], a
+	ld a, [wLoadedAttackCategory]
+	cp POKEMON_POWER
+	jp z, UsePokemonPower
+
+	call Func_16f6
+	ld a, EFFECTCMDTYPE_INITIAL_EFFECT_1
+	call TryExecuteEffectCommandFunction
+	jp c, DrawWideTextBox_WaitForInput_ReturnCarry
+	call CheckReducedAccuracySubstatus
+	jr c, .sand_attack_smokescreen
+	ld a, EFFECTCMDTYPE_INITIAL_EFFECT_2
+	call TryExecuteEffectCommandFunction
+	ret c
+	call SendAttackDataToLinkOpponent
+	jr .next
+.sand_attack_smokescreen
+	call SendAttackDataToLinkOpponent
+	call HandleReducedAccuracySubstatus
+	jp c, ClearNonTurnTemporaryDuelvars_ResetCarry
+	ld a, EFFECTCMDTYPE_INITIAL_EFFECT_2
+	call TryExecuteEffectCommandFunction
+	ret c
+.next
+	ld a, OPPACTION_USE_ATTACK
+	call SetOppAction_SerialSendDuelData
+	ld a, EFFECTCMDTYPE_DISCARD_ENERGY
+	call TryExecuteEffectCommandFunction
+IF OLD_CONFUSION_BEHAVIOUR
+	call CheckSelfConfusionDamage
+	jp c, HandleConfusionDamageToSelf
+ENDC
+	call DrawDuelMainScene_PrintPokemonsAttackText
+	call WaitForWideTextBoxInput
+	call ExchangeRNG
+	ld a, EFFECTCMDTYPE_REQUIRE_SELECTION
+	call TryExecuteEffectCommandFunction
+	ld a, OPPACTION_ATTACK_ANIM_AND_DAMAGE
+	call SetOppAction_SerialSendDuelData
+;	fallthrough
+
+PlayAttackAnimation_DealAttackDamage:
+	call Func_7415
+	ld a, [wLoadedAttackCategory]
+	and RESIDUAL
+	jr nz, .deal_damage
+	call SwapTurn
+	call HandleNoDamageOrEffectSubstatus
+	call SwapTurn
+.deal_damage
+	xor a
+	ldh [hTempPlayAreaLocation_ff9d], a
+	ld a, EFFECTCMDTYPE_BEFORE_DAMAGE
+	call TryExecuteEffectCommandFunction
+	call ApplyDamageModifiers_DamageToTarget
+	call LastChanceToNegateFinalDamage
+	ld hl, wDealtDamage
+	ld [hl], e
+	inc hl
+	ld [hl], d
+
+	ld a, DUELVARS_ARENA_CARD_FLAGS
+	call GetNonTurnDuelistVariable
+	ld a, e
+	or a
+	jr z, .damage_flag
+	set DAMAGED_SINCE_LAST_TURN_F, [hl]
+.damage_flag
+
+	ld l, DUELVARS_ARENA_CARD_HP
+
+; register overkill damage
+	ld b, a  ; Defending Pokémon's HP
+	xor a
+	ld a, e  ; damage is limited to one byte
+	sub b
+	jr nc, .got_excess_damage  ; damage >= HP
+	xor a  ; no KO
+.got_excess_damage
+	ld [wOverkillDamage], a
+
+	ld b, PLAY_AREA_ARENA
+	ld a, [wDamageEffectiveness]
+	ld c, a
+	ld a, [wOncePerTurnActions]
+	or USED_ATTACK_THIS_TURN
+	ld [wOncePerTurnActions], a
+	push de
+	push hl
+	call PlayAttackAnimation
+	call PlayInflictStatusAnimation
+	call WaitAttackAnimation
+	pop hl
+	pop de
+	call SubtractHP
+IF CLEAR_STATUS_ON_DAMAGE
+	ld a, e
+	or d
+	call nz, ClearStatusOnDamage
+ENDC
+	ld a, [wDuelDisplayedScreen]
+	cp DUEL_MAIN_SCENE
+	jr nz, .skip_draw_huds
+	push hl
+	call DrawDuelHUDs
+	pop hl
+.skip_draw_huds
+	call PrintKnockedOutIfHLZero
+	jr nc, .after_damage
+; Knocked Out Defending Pokémon
+	ld a, DUELVARS_MISC_TURN_FLAGS
+	call GetTurnDuelistVariable
+	set TURN_FLAG_KO_OPPONENT_POKEMON_F, [hl]
+.after_damage
+	ld a, [wTempNonTurnDuelistCardID]
+	push af
+	ld a, EFFECTCMDTYPE_AFTER_DAMAGE
+	call TryExecuteEffectCommandFunction
+	call HandleOnAttackEffects
+	pop af
+	ld [wTempNonTurnDuelistCardID], a
+	call HandleStrikeBack_AfterDirectAttack
+	call Func_6df1
+	call Func_1bb4
+	call Func_7195
+	call HandleDestinyBond_ClearKnockedOutPokemon_TakePrizes_CheckGameOutcome
+	jr c, .done  ; duel finished
+
+; reset some variables to prepare for the next phase
+	xor a
+	ld [wEffectFunctionsFeedbackIndex], a
+; effects that happen after selecting a new Active Pokémon
+	ld a, [wTempNonTurnDuelistCardID]
+	push af
+	ld a, EFFECTCMDTYPE_AFTER_NEW_ACTIVE_POKEMON
+	call TryExecuteEffectCommandFunction
+	pop af
+	ld [wTempNonTurnDuelistCardID], a
+	; call HandleStrikeBack_AfterDirectAttack
+	call Func_6df1
+	call Func_1bb4
+	call Func_7195
+	call HandleDestinyBond_ClearKnockedOutPokemon_TakePrizes_CheckGameOutcome
+
+.done
+	or a
+	ret
+
+
+; return carry if the turn holder's attack was unsuccessful due to reduced accuracy effect
+HandleReducedAccuracySubstatus:
+	call CheckReducedAccuracySubstatus
+	ret nc
+	call TossCoin
+	ld [wGotHeadsFromAccuracyCheck], a
+	ccf
+	ret nc
+	ldtx hl, AttackUnsuccessfulText
+	call DrawWideTextBox_WaitForInput
+	scf
+	ret
+
+
+IF OLD_CONFUSION_BEHAVIOUR
+; return carry and 1 into wGotTailsFromConfusionCheck if damage will be dealt to oneself due to confusion
+CheckSelfConfusionDamage:
+	xor a
+	ld [wGotTailsFromConfusionCheck], a
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetTurnDuelistVariable
+	and CNF_SLP_PRZ
+	cp CONFUSED
+	jr z, .confused
+	or a
+	ret
+.confused
+	ldtx de, PokemonsConfusionCheckText
+	call TossCoin
+	jr c, .no_confusion_damage
+	ld a, 1
+	ld [wGotTailsFromConfusionCheck], a
+	scf
+	ret
+.no_confusion_damage
+	or a
+	ret
+ENDC
+
+
+IF OLD_CONFUSION_BEHAVIOUR
+; called when attacker deals damage to itself due to confusion
+; display the corresponding animation and deal damage to self
+HandleConfusionDamageToSelf:
+	call DrawDuelMainScene
+	ld a, 1
+	ld [wIsDamageToSelf], a
+	ldtx hl, DamageToSelfDueToConfusionText
+	call DrawWideTextBox_PrintText
+	ld a, ATK_ANIM_CONFUSION_HIT
+	ld [wLoadedAttackAnimation], a
+	ld a, CONFUSION_DAMAGE
+	call DealConfusionDamageToSelf
+	call Func_1bb4
+	call HandleDestinyBond_ClearKnockedOutPokemon_TakePrizes_CheckGameOutcome
+	call ClearNonTurnTemporaryDuelvars
+	or a
+	ret
+ENDC
+
+
+LastChanceToNegateFinalDamage:
+	ld a, [wLoadedAttackCategory]
+	bit RESIDUAL_F, a
+	ret nz
+	ld a, [wNoDamageOrEffect]
+	or a
+	ret nz
+	ld a, e
+	or d
+	jr nz, .attack_opponent
+	ld a, DUELVARS_ARENA_CARD_SUBSTATUS2
+	call GetNonTurnDuelistVariable
+	or a
+	jr nz, .attack_opponent
+	ld a, [wEffectFunctionsFeedbackIndex]
+	or a
+	ret z
+.attack_opponent
+	push de
+	call SwapTurn
+	xor a
+	ld [wTempPlayAreaLocation_cceb], a
+	; call HandleTransparency
+	call SwapTurn
+	pop de
+	ret nc  ; always returns here without Transparency
+	call DrawDuelMainScene
+	ld a, DUELVARS_ARENA_CARD_SUBSTATUS2
+	call GetNonTurnDuelistVariable
+	ld [hl], $0
+	ld de, 0
+	ret
+
+
 ; input:
 ;   a: ATK_ANIM_* to play
 ;   b: PLAY_AREA_* of the target
@@ -9204,6 +9640,11 @@ PlayAttackAnimation_DealAttackDamageSimple:
 	pop de
 	pop hl
 	call SubtractHP
+IF CLEAR_STATUS_ON_DAMAGE
+	ld a, e
+	or d
+	call nz, ClearStatusOnDamage
+ENDC
 	ld a, [wDuelDisplayedScreen]
 	cp DUEL_MAIN_SCENE
 	ret nz

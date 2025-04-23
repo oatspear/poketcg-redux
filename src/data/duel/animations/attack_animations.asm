@@ -76,10 +76,10 @@ PointerTable_AttackAnimation:
 	dw AttackAnimation_PoisonSting         ; ATK_ANIM_POISON_STING
 	dw AttackAnimation_WhiteGas            ; ATK_ANIM_52
 	dw AttackAnimation_WhiteGas            ; ATK_ANIM_FOUL_GAS
-	dw AttackAnimation_WhiteGas            ; ATK_ANIM_FOUL_ODOR
-	dw AttackAnimation_Powder              ; ATK_ANIM_POWDER_EFFECT_CHANCE
-	dw AttackAnimation_Powder              ; ATK_ANIM_POWDER_HIT_POISON
-	dw AttackAnimation_544e                ; ATK_ANIM_POISON_POWDER
+	dw AttackAnimation_WhiteGas            ; ATK_ANIM_54
+	dw AttackAnimation_Powder              ; ATK_ANIM_POWDER_HIT
+	dw AttackAnimation_Powder              ; ATK_ANIM_56
+	dw AttackAnimation_PowderNoHit         ; ATK_ANIM_POWDER_EFFECT
 	dw AttackAnimation_Powder              ; ATK_ANIM_58
 	dw AttackAnimation_Powder              ; ATK_ANIM_59
 	dw AttackAnimation_Powder              ; ATK_ANIM_60
@@ -151,7 +151,7 @@ PointerTable_AttackAnimation:
 	dw AttackAnimation_Sleep               ; ATK_ANIM_SLEEP
 	dw AttackAnimation_ImakuniConfusion    ; ATK_ANIM_IMAKUNI_CONFUSION
 	dw AttackAnimation_SleepingGas         ; ATK_ANIM_SLEEPING_GAS
-	dw AttackAnimation_Static              ; ATK_ANIM_STATIC
+	dw AttackAnimation_HayFever            ; ATK_ANIM_HAY_FEVER
 	dw AttackAnimation_ThunderPlayArea     ; ATK_ANIM_THUNDER_PLAY_AREA
 	dw AttackAnimation_CatPunchPlayArea    ; ATK_ANIM_CAT_PUNCH_PLAY_AREA
 	dw AttackAnimation_FiregiverPlayer     ; ATK_ANIM_FIREGIVER_PLAYER
@@ -159,9 +159,9 @@ PointerTable_AttackAnimation:
 	dw AttackAnimation_HealingWindPlayArea ; ATK_ANIM_HEALING_WIND_PLAY_AREA
 	dw AttackAnimation_Gale                ; ATK_ANIM_GALE
 	dw AttackAnimation_Expand              ; ATK_ANIM_EXPAND
-	dw AttackAnimation_StaticParalysis     ; ATK_ANIM_STATIC_PARALYSIS
+	dw AttackAnimation_HayFeverParalysis   ; ATK_ANIM_HAY_FEVER_PARALYSIS
 	dw AttackAnimation_FullHeal            ; ATK_ANIM_FULL_HEAL
-	dw AttackAnimation_5659                ; ATK_ANIM_139
+	dw AttackAnimation_Cyclone             ; ATK_ANIM_CYCLONE
 	dw AttackAnimation_ProtectNoGlow       ; ATK_ANIM_PROTECT_NO_GLOW
 	dw AttackAnimation_GustOfWind          ; ATK_ANIM_GUST_OF_WIND
 	dw AttackAnimation_HealBothSides       ; ATK_ANIM_HEAL_BOTH_SIDES
@@ -493,7 +493,7 @@ AttackAnimation_Powder:
 	anim_opponent       DUEL_ANIM_SHOW_DAMAGE
 	anim_end
 
-AttackAnimation_544e:
+AttackAnimation_PowderNoHit:
 	anim_player         DUEL_ANIM_GLOW
 	anim_opponent       DUEL_ANIM_POWDER
 	anim_end
@@ -623,6 +623,11 @@ AttackAnimation_AgilityProtect:
 	anim_normal         DUEL_ANIM_SHAKE1
 	anim_opponent       DUEL_ANIM_SHOW_DAMAGE
 	anim_player         DUEL_ANIM_PROTECT
+	anim_end
+
+AttackAnimation_Cyclone:
+	anim_player         DUEL_ANIM_GLOW
+	anim_opponent       DUEL_ANIM_WHIRLWIND
 	anim_end
 
 AttackAnimation_Whirlwind:
@@ -895,21 +900,12 @@ AttackAnimation_SleepingGas:
 	anim_opponent       DUEL_ANIM_WHITE_GAS
 	anim_end
 
-; AttackAnimation_HayFever:
-; 	anim_opponent       DUEL_ANIM_GLOW
-; 	anim_player         DUEL_ANIM_POWDER
-; 	anim_end
-; 
-; AttackAnimation_HayFeverParalysis:
-; 	anim_player         DUEL_ANIM_PARALYSIS
-; 	anim_end
-
-AttackAnimation_Static:
+AttackAnimation_HayFever:
 	anim_opponent       DUEL_ANIM_GLOW
-	; anim_opponent       DUEL_ANIM_THUNDER_WAVE
+	anim_player         DUEL_ANIM_POWDER
 	anim_end
 
-AttackAnimation_StaticParalysis:
+AttackAnimation_HayFeverParalysis:
 	anim_player         DUEL_ANIM_PARALYSIS
 	anim_end
 

@@ -2076,7 +2076,7 @@ AIDecide_ProfessorOak:
 	call ArePokemonPowersDisabled
 	jr c, .check_hand
 
-; no Toxic Gas in Play Area
+; no Neutralizing Gas in Play Area
 	ld a, WARTORTLE
 	call CountPokemonIDInPlayArea
 	jr nc, .check_hand
@@ -3495,14 +3495,11 @@ AIDecide_ScoopUp:
 	jr c, .no_carry
 
 .cannot_ko
-; OATS status conditions no longer prevent retreat
-	; ld a, DUELVARS_ARENA_CARD_STATUS
-	; call GetTurnDuelistVariable
-	; and CNF_SLP_PRZ
-	; cp PARALYZED
-	; jr z, .cannot_retreat
-	; cp ASLEEP
-	; jr z, .cannot_retreat
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetTurnDuelistVariable
+	and CNF_SLP_PRZ
+	cp FLINCHED
+	jr z, .cannot_retreat
 
 ; doesn't have a status that prevents retreat.
 ; so check if it has enough energy to retreat.

@@ -468,16 +468,6 @@ DamageFriendlyBenchedPokemonIfAny_PlayerSelectEffect:
 	jp SwapTurn
 
 
-SurpriseBite_PlayerSelectEffect:
-	ldtx hl, ChoosePokemonInTheBenchToGiveDamageText
-	call DrawWideTextBox_WaitForInput
-	call SwapTurn
-	ld a, CARDTEST_FULL_HP_POKEMON
-	call HandlePlayerSelectionMatchingPokemonInBench_AllowCancel
-	ldh [hTempPlayAreaLocation_ffa1], a
-	jp SwapTurn
-
-
 ;
 GetMad_PlayerSelectEffect:
 ; store the current HP of the user
@@ -616,7 +606,7 @@ DamageFriendlyBenchedPokemon_AISelectEffect:
 ; ------------------------------------------------------------------------------
 
 SpikesDamageEffect:
-	call ArePokemonPowersDisabled
+	call IsNeutralizingGasActive  ; ArePokemonPowersDisabled
 	ret c  ; Powers are disabled
 	call SwapTurn
 	ld a, SANDSLASH
