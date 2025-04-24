@@ -7922,9 +7922,9 @@ HandlePoisonDamage:
 	call SwapTurn
 	jr nc, .got_poison_boost  ; none found
 	call ATimes10
-	add l
 
 .got_poison_boost
+	add l
 	push af
 	ld [wDuelAnimDamage], a
 	xor a
