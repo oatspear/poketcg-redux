@@ -5576,6 +5576,7 @@ CheckPrintCnfSlpPrz:
 	push hl
 	push de
 	and CNF_SLP_PRZ
+	swap a
 	ld e, a
 	ld d, $00
 	ld hl, .status_symbols
