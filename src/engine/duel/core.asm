@@ -9663,6 +9663,7 @@ ENDC
 ; input:
 ; - [wLoadedAttackAnimation]: animation to play
 ; - de: damage dealt by the attack (to display the animation with the number)
+; - b: PLAY_AREA_* of the target
 ; - c: a wDamageEffectiveness constant (to print WEAK or RESIST if necessary)
 ; preserves: hl, bc, de
 PlayAttackAnimation:

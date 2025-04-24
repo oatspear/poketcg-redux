@@ -258,18 +258,18 @@ AnimationCoordinates:
 
 ; animations in the Player's Play Area, for each Play Area Pokemon
 	anim_coords 88,  72, $00
-	anim_coords 24,  96, $00
-	anim_coords 56,  96, $00
-	anim_coords 88,  96, $00
+	anim_coords 48,  96, $00
+	anim_coords 72,  96, $00
+	anim_coords 96,  96, $00
 	anim_coords 120, 96, $00
-	anim_coords 152, 96, $00
+	anim_coords 144, 96, $00
 
 ; animations in the Opponent's Play Area, for each Play Area Pokemon
 	anim_coords 88,  80, $00
-	anim_coords 152, 40, $00
 	anim_coords 120, 40, $00
-	anim_coords 88,  40, $00
-	anim_coords 56,  40, $00
+	anim_coords 96,  40, $00
+	anim_coords 72,  40, $00
+	anim_coords 48,  40, $00
 	anim_coords 24,  40, $00
 
 ; appends to end of wDuelAnimBuffer
