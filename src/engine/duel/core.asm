@@ -1233,9 +1233,11 @@ OpenAttackPage:
 	call SetOBP1OrSGB3ToCardPalette
 	call SetBGP6OrSGB3ToCardPalette
 	call FlushAllPalettesOrSendPal23Packet
-	lb de, $38, $30 ; X Position and Y Position of top-left corner
+	; lb de, $38, $30 ; X Position and Y Position of top-left corner
+	lb de, $28, $30 ; X Position and Y Position of top-left corner
 	call PlaceCardImageOAM
-	lb de, 6, 4
+	; lb de, 6, 4
+	lb de, 4, 4
 	call ApplyBGP6OrSGB3ToCardImage
 	ldh a, [hCurMenuItem]
 	ld [wSelectedDuelSubMenuItem], a
@@ -3405,9 +3407,11 @@ OpenCardPage:
 	call SetOBP1OrSGB3ToCardPalette
 	call SetBGP6OrSGB3ToCardPalette
 	call FlushAllPalettesOrSendPal23Packet
-	lb de, $38, $30 ; X Position and Y Position of top-left corner
+	; lb de, $38, $30 ; X Position and Y Position of top-left corner
+	lb de, $28, $30 ; X Position and Y Position of top-left corner
 	call PlaceCardImageOAM
-	lb de, 6, 4
+	; lb de, 6, 4
+	lb de, 4, 4
 	call ApplyBGP6OrSGB3ToCardImage
 	; display the initial card page for the card at wLoadedCard1
 	xor a
@@ -4165,9 +4169,9 @@ DisplayCardPage_PokemonOverview:
 	call InitTextPrinting_ProcessTextFromPointerToID
 .basic
 	; print card level and maximum HP
-	lb bc, 12, 2
-	ld a, [wLoadedCard1Level]
-	call WriteTwoDigitNumberInTxSymbolFormat
+	; lb bc, 12, 2
+	; ld a, [wLoadedCard1Level]
+	; call WriteTwoDigitNumberInTxSymbolFormat
 	lb bc, 16, 2
 	ld a, [wLoadedCard1HP]
 	call WriteTwoByteNumberInTxSymbolFormat
@@ -4189,29 +4193,30 @@ DisplayCardPage_PokemonOverview:
 	; print (Y coord at [wCurPlayAreaY]) card name, level, type, energies, HP, location...
 	call PrintPlayAreaCardInformationAndLocation
 	; print attached tool, if any
-	lb de, 7, 10
-	lb bc, 5, 10
+	lb de, 6, 11
+	lb bc, 3, 11
 	call PrintPokemonAttachedTool
 
 ; common for both card page types
 .print_numbers_and_energies
 	; print the name, damage, and energy cost of each attack and/or Pokemon power that exists
 	; first attack originally at 5,10 and second at 5,12
-	lb bc, 5, 11
+	lb bc, 5, 13
 
 .attacks
 	ld e, c
 	ld hl, wLoadedCard1Atk1Name
 	call PrintAttackOrPkmnPowerInformation
 	inc c
-	inc c ; 12
+	inc c
 	ld e, c
 	ld hl, wLoadedCard1Atk2Name
 	call PrintAttackOrPkmnPowerInformation
 	; print the retreat cost (some amount of colorless energies), originally at 8,14
-	inc c
-	inc c ; 14
-	inc c ; 15
+	; inc c
+	; inc c ; 14
+	; inc c ; 15
+	ld c, 9
 	ld b, 14  ; 8
 	ld a, [wLoadedCard1RetreatCost]
 	ld e, a
@@ -4244,10 +4249,14 @@ DisplayCardPage_PokemonOverview:
 	ld e, a
 .got_wr
 	ld a, d
-	ld b, 2  ; 8
+	; ld b, 2  ; 8
+	ld b, 14
+	ld c, 5
 	call PrintCardPageWeaknessesOrResistances
 	; inc c ; 16
-	ld b, 8
+	; ld b, 8
+	ld b, 14
+	ld c, 7
 	ld a, e
 	call PrintCardPageWeaknessesOrResistances
 	ret
@@ -4388,7 +4397,8 @@ PrintCardPageWeaknessesOrResistances:
 ; CARDPAGE_POKEMON_OVERVIEW when wCardPageType is CARDPAGETYPE_PLAY_AREA.
 PrintPokemonCardPageGenericInformation:
 	call DrawCardPageSurroundingBox
-	lb de, 5, 1
+	; lb de, 5, 1
+	lb de, 6, 1
 	ld hl, wLoadedCard1Name
 	call InitTextPrinting_ProcessTextFromPointerToID
 	ld a, [wCardPageType]
@@ -4400,7 +4410,8 @@ PrintPokemonCardPageGenericInformation:
 .from_loaded_card
 	ld a, [wLoadedCard1Type]
 .got_color
-	lb bc, 18, 1
+	; lb bc, 18, 1
+	lb bc, 4, 1
 	inc a
 	call JPWriteByteToBGMap0
 	jp DrawCardPageSet2AndRarityIcons
@@ -4437,13 +4448,17 @@ DrawCardPageSurroundingBox:
 	call DrawRegularTextBox
 	pop hl
 	res 7, [hl]
-	lb de, 6, 4
+	; lb de, 6, 4
+	lb de, 4, 4
 	jp ApplyBGP6OrSGB3ToCardImage
 
 CardPageRetreatWRNumberTextData:
-	textitem 1, 15, WeaknessText
-	textitem 6, 15, ResistanceText
-	textitem 12, 15, RetreatCostText
+	; textitem 1, 15, WeaknessText
+	; textitem 6, 15, ResistanceText
+	; textitem 12, 15, RetreatCostText
+	textitem 13, 4, WeaknessText
+	textitem 13, 6, ResistanceText
+	textitem 13, 8, RetreatCostText
 	db $ff
 
 ; CardPageLvHPTextTileData:
@@ -4605,10 +4620,13 @@ DrawCardPageSet2AndRarityIcons:
 	ld a, $fc
 	lb hl, 1, 2
 	lb bc, 2, 2
-	lb de, 15, 8
+	; lb de, 15, 8
+	lb de, 1, 7
 	call FillRectangle
 .icon_done
-	lb de, 18, 9
+	; lb de, 18, 9
+	; lb de, 2, 5
+	lb de, 18, 1
 	ld hl, CardRarityTextIDs
 	ld a, [wLoadedCard1Rarity]
 	; cp PROMOSTAR
@@ -4682,7 +4700,8 @@ DisplayEnergyOrTrainerCardPage:
 	call PlaceTextItems
 .not_trainer_card
 	; colorize the card image
-	lb de, 6, 4
+	; lb de, 6, 4
+	lb de, 4, 4
 	call ApplyBGP6OrSGB3ToCardImage
 	; display the card type header
 	ld a, $e0
@@ -5423,7 +5442,7 @@ PrintPlayAreaCardHeader:
 	call LoadCardDataToBuffer1_FromDeckIndex
 	ld a, [wCurPlayAreaY]
 	ld e, a
-	ld d, 4
+	ld d, 6  ; 4
 	call InitTextPrinting
 	; copy the name to wDefaultText (max. 10 characters)
 	; then call ProcessText with hl = wDefaultText
@@ -5441,19 +5460,19 @@ PrintPlayAreaCardHeader:
 	; print the Pokemon's color and the level
 	ld a, [wCurPlayAreaY]
 	ld c, a
-	ld b, 18
+	ld b, 4  ; 18
 	ld a, [wCurPlayAreaSlot]
 	call GetPlayAreaCardColor
 	inc a
 	call JPWriteByteToBGMap0
 	ld b, 14
 	ld a, SYM_Lv
-	call WriteByteToBGMap0
+	; call WriteByteToBGMap0
 	ld a, [wCurPlayAreaY]
 	ld c, a
 	ld b, 15
 	ld a, [wLoadedCard1Level]
-	call WriteTwoDigitNumberInTxSymbolFormat
+	; call WriteTwoDigitNumberInTxSymbolFormat
 
 	; print the 2x2 face down card image depending on the Pokemon's evolution stage
 	ld a, [wCurPlayAreaSlot]
