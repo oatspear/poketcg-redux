@@ -3407,11 +3407,18 @@ OpenCardPage:
 	call SetOBP1OrSGB3ToCardPalette
 	call SetBGP6OrSGB3ToCardPalette
 	call FlushAllPalettesOrSendPal23Packet
-	; lb de, $38, $30 ; X Position and Y Position of top-left corner
+	ld a, [wLoadedCard1Type]
+	cp TYPE_ENERGY
+	jr nc, .not_a_pokemon
 	lb de, $28, $30 ; X Position and Y Position of top-left corner
 	call PlaceCardImageOAM
-	; lb de, 6, 4
 	lb de, 4, 4
+	jr .done_gfx
+.not_a_pokemon
+	lb de, $38, $30 ; X Position and Y Position of top-left corner
+	call PlaceCardImageOAM
+	lb de, 6, 4
+.done_gfx
 	call ApplyBGP6OrSGB3ToCardImage
 	; display the initial card page for the card at wLoadedCard1
 	xor a
@@ -4448,8 +4455,11 @@ DrawCardPageSurroundingBox:
 	call DrawRegularTextBox
 	pop hl
 	res 7, [hl]
-	; lb de, 6, 4
-	lb de, 4, 4
+	ld a, [wLoadedCard1Type]
+	cp TYPE_ENERGY
+	lb de, 6, 4
+	jp nc, ApplyBGP6OrSGB3ToCardImage
+	ld d, 4
 	jp ApplyBGP6OrSGB3ToCardImage
 
 CardPageRetreatWRNumberTextData:
@@ -4700,8 +4710,7 @@ DisplayEnergyOrTrainerCardPage:
 	call PlaceTextItems
 .not_trainer_card
 	; colorize the card image
-	; lb de, 6, 4
-	lb de, 4, 4
+	lb de, 6, 4
 	call ApplyBGP6OrSGB3ToCardImage
 	; display the card type header
 	ld a, $e0
