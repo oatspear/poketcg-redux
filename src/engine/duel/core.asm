@@ -1219,6 +1219,62 @@ ENDC
 	call DrawDuelMainScene
 	jp .try_open_attack_menu
 
+AttackMenuParameters:
+	db 1, 13 ; cursor x, cursor y
+	db 2 ; y displacement between items
+	db 2 ; number of items
+	db SYM_CURSOR_R ; cursor tile number
+	db SYM_SPACE ; tile behind cursor
+	dw NULL ; function pointer if non-0
+
+; OATS new attack page UI
+IF NEW_CARD_PAGE_LAYOUT
+
+; draw the attack page of the card at wLoadedCard1 and of the attack selected in the Attack
+; menu by hCurMenuItem, and listen for input in order to switch the page or to exit.
+OpenAttackPage:
+	ld a, CARDPAGE_POKEMON_OVERVIEW
+	ld [wCardPageNumber], a
+	xor a
+	ld [wCurPlayAreaSlot], a
+	; call EmptyScreen
+	; call Func_3b31
+	ldh a, [hCurMenuItem]
+	ld [wSelectedDuelSubMenuItem], a
+	add a
+	ld e, a
+	ld d, $00
+	ld hl, wDuelTempList + 1
+	add hl, de
+	ld a, [hl]
+	or a
+	ld a, ATTACKPAGE_ATTACK2_1
+	jr nz, .open_page
+	xor a ; ATTACKPAGE_ATTACK1_1
+
+.open_page
+	; ld [wAttackPageNumber], a
+	; ld a, [wAttackPageNumber]
+	ld hl, AttackPageDisplayPointerTable
+	call JumpToFunctionInTable
+	call EnableLCD
+
+.loop
+	call DoFrame
+	; return to Attack menu if A or B pressed
+	ldh a, [hKeysPressed]
+	and A_BUTTON | B_BUTTON
+	jr z, .loop
+	ret
+
+AttackPageDisplayPointerTable:
+	dw DisplayCardPage_PokemonAttack1 ; ATTACKPAGE_ATTACK1_1
+	dw DisplayCardPage_PokemonAttack1 ; ATTACKPAGE_ATTACK1_2
+	dw DisplayCardPage_PokemonAttack2 ; ATTACKPAGE_ATTACK2_1
+	dw DisplayCardPage_PokemonAttack2 ; ATTACKPAGE_ATTACK2_2
+
+ELSE
+
 ; draw the attack page of the card at wLoadedCard1 and of the attack selected in the Attack
 ; menu by hCurMenuItem, and listen for input in order to switch the page or to exit.
 OpenAttackPage:
@@ -1233,11 +1289,11 @@ OpenAttackPage:
 	call SetOBP1OrSGB3ToCardPalette
 	call SetBGP6OrSGB3ToCardPalette
 	call FlushAllPalettesOrSendPal23Packet
-	; lb de, $38, $30 ; X Position and Y Position of top-left corner
-	lb de, $28, $30 ; X Position and Y Position of top-left corner
+	lb de, $38, $30 ; X Position and Y Position of top-left corner
+	; lb de, $28, $30 ; X Position and Y Position of top-left corner
 	call PlaceCardImageOAM
-	; lb de, 6, 4
-	lb de, 4, 4
+	lb de, 6, 4
+	; lb de, 4, 4
 	call ApplyBGP6OrSGB3ToCardImage
 	ldh a, [hCurMenuItem]
 	ld [wSelectedDuelSubMenuItem], a
@@ -1274,19 +1330,12 @@ OpenAttackPage:
 	jr z, .loop
 	ret
 
-AttackMenuParameters:
-	db 1, 13 ; cursor x, cursor y
-	db 2 ; y displacement between items
-	db 2 ; number of items
-	db SYM_CURSOR_R ; cursor tile number
-	db SYM_SPACE ; tile behind cursor
-	dw NULL ; function pointer if non-0
-
 ; display the card page with id at wAttackPageNumber of wLoadedCard1
 DisplayAttackPage:
 	ld a, [wAttackPageNumber]
 	ld hl, AttackPageDisplayPointerTable
 	jp JumpToFunctionInTable
+
 
 AttackPageDisplayPointerTable:
 	dw DisplayAttackPage_Attack1Page1 ; ATTACKPAGE_ATTACK1_1
@@ -1350,6 +1399,8 @@ PrintContinuedDescriptionSymbol:
 	; ld a, SYM_ATK_DESCR
 	ld a, SYM_CURSOR_D
 	jp WriteByteToBGMap0
+
+ENDC
 
 
 ; given the card at hTempCardIndex_ff98, for each non-empty, non-Pokemon Power attack slot,
@@ -2768,19 +2819,7 @@ DrawDuelHUD:
 	inc hl
 	ld c, [hl] ; wHUDEnergyAndHPBarsY
 	inc c ; [wHUDEnergyAndHPBarsY] + 1
-	call BCCoordToBGMap0Address
-	push de
-	ld hl, wDefaultText
-	ld b, HP_BAR_LENGTH / 2 ; first row of the HP bar
-	call SafeCopyDataHLtoDE
-	pop de
-	ld hl, BG_MAP_WIDTH
-	add hl, de
-	ld e, l
-	ld d, h
-	ld hl, wDefaultText + HP_BAR_LENGTH / 2
-	ld b, HP_BAR_LENGTH / 2 ; second row of the HP bar
-	call SafeCopyDataHLtoDE
+	call PrintHPBar
 
 	; print number of attached Pluspower and Defender with respective icon, if any
 	ld hl, wHUDEnergyAndHPBarsX
@@ -2803,6 +2842,27 @@ DrawDuelHUD:
 ;	inc c
 	ld a, SYM_DEFENDER
 	jp WriteByteToBGMap0
+
+
+; input:
+;   b: x coordinate
+;   c: y coordinate
+;   wDefaultText: result of DrawHPBar
+PrintHPBar:
+	call BCCoordToBGMap0Address
+	push de
+	ld hl, wDefaultText
+	ld b, HP_BAR_LENGTH / 2 ; first row of the HP bar
+	call SafeCopyDataHLtoDE
+	pop de
+	ld hl, BG_MAP_WIDTH
+	add hl, de
+	ld e, l
+	ld d, h
+	ld hl, wDefaultText + HP_BAR_LENGTH / 2
+	ld b, HP_BAR_LENGTH / 2 ; second row of the HP bar
+	jp SafeCopyDataHLtoDE
+
 
 ; draws an horizontal line that separates the arena side of each duelist
 ; also colorizes the line on CGB
@@ -3407,14 +3467,16 @@ OpenCardPage:
 	call SetOBP1OrSGB3ToCardPalette
 	call SetBGP6OrSGB3ToCardPalette
 	call FlushAllPalettesOrSendPal23Packet
+IF NEW_CARD_PAGE_LAYOUT
 	ld a, [wLoadedCard1Type]
 	cp TYPE_ENERGY
 	jr nc, .not_a_pokemon
-	lb de, $28, $30 ; X Position and Y Position of top-left corner
+	lb de, $10, $28 ; X Position and Y Position of top-left corner
 	call PlaceCardImageOAM
-	lb de, 4, 4
+	lb de, 1, 3
 	jr .done_gfx
 .not_a_pokemon
+ENDC
 	lb de, $38, $30 ; X Position and Y Position of top-left corner
 	call PlaceCardImageOAM
 	lb de, 6, 4
@@ -3593,10 +3655,32 @@ LoadSelectedCardGfx:
 	call LoadCardDataToBuffer1_FromCardID
 	ld de, v0Tiles1 + $20 tiles
 	call LoadLoaded1CardGfx
-	ld de, $c0c ; useless
 	call SetBGP6OrSGB3ToCardPalette
-	call FlushAllPalettesOrSendPal23Packet
-	ret
+	jp FlushAllPalettesOrSendPal23Packet
+
+
+IF NEW_CARD_PAGE_LAYOUT
+
+CardPageDisplayPointerTable:
+	dw DrawDuelMainScene
+	dw DisplayCardPage_PokemonOverview    ; CARDPAGE_POKEMON_OVERVIEW
+	dw DisplayCardPage_PokemonAttack1  ; CARDPAGE_POKEMON_ATTACK1_1
+	dw DisplayCardPage_PokemonAttack1  ; CARDPAGE_POKEMON_ATTACK1_2
+	dw DisplayCardPage_PokemonAttack2  ; CARDPAGE_POKEMON_ATTACK2_1
+	dw DisplayCardPage_PokemonAttack2  ; CARDPAGE_POKEMON_ATTACK2_2
+	dw DisplayCardPage_PokemonAttachedTool  ; CARDPAGE_POKEMON_TOOL
+	dw DisplayCardPage_PokemonDescription ; CARDPAGE_POKEMON_DESCRIPTION
+	dw DrawDuelMainScene
+	dw DrawDuelMainScene
+	dw DisplayCardPage_Energy ; CARDPAGE_ENERGY
+	dw DisplayCardPage_Energy ; CARDPAGE_ENERGY + 1
+	dw DrawDuelMainScene
+	dw DrawDuelMainScene
+	dw DisplayCardPage_TrainerPage1 ; CARDPAGE_TRAINER_1
+	dw DisplayCardPage_TrainerPage2 ; CARDPAGE_TRAINER_2
+	dw DrawDuelMainScene
+
+ELSE
 
 CardPageDisplayPointerTable:
 	dw DrawDuelMainScene
@@ -3616,6 +3700,8 @@ CardPageDisplayPointerTable:
 	dw DisplayCardPage_TrainerPage1 ; CARDPAGE_TRAINER_1
 	dw DisplayCardPage_TrainerPage2 ; CARDPAGE_TRAINER_2
 	dw DrawDuelMainScene
+
+ENDC
 
 ; given the current card page at [wCardPageNumber], go to the next valid card page or load
 ; the first valid card page of the current card at wLoadedCard1 if [wCardPageNumber] == 0
@@ -3714,7 +3800,11 @@ CardPageSwitch_00:
 
 ; return with current page
 CardPageSwitch_PokemonOverviewOrDescription:
-	ld a, $1
+IF NEW_CARD_PAGE_LAYOUT
+	lb de, $10, $28 ; X Position and Y Position of top-left corner
+	call PlaceCardImageOAM
+ENDC
+	ld a, CARDPAGE_POKEMON_OVERVIEW
 	or a
 	ret ; nz
 
@@ -4153,62 +4243,145 @@ JPWriteByteToBGMap0:
 	jp WriteByteToBGMap0
 
 DisplayCardPage_PokemonOverview:
+IF NEW_CARD_PAGE_LAYOUT
+	call LoadDuelCheckPokemonScreenTiles
+ENDC
 	ld a, [wCardPageType]
 	or a ; CARDPAGETYPE_NOT_PLAY_AREA
 	jr nz, .play_area_card_page
 
 ; CARDPAGETYPE_NOT_PLAY_AREA
-	; print surrounding box, card name at 5,1, type, set 2, and rarity
+	; print surrounding box, card name, type, set 2, and rarity
 	call PrintPokemonCardPageGenericInformation
 	; print fixed text and draw the card symbol associated to its TYPE_*
 	ld hl, CardPageRetreatWRNumberTextData
 	call PlaceTextItems
-	ld hl, CardPageLvHPTextTileData
+	ld hl, CardPageHPTextTileData
 	call WriteDataBlocksToBGMap0
+IF NEW_CARD_PAGE_LAYOUT
+	ld a, [wLoadedCard1Stage]
+	lb de, 1, 1  ; 17, 1
+	call PrintFaceDownCardStageTile
+	; lb de, 19, 2
+ELSE
 	lb de, 3, 2
 	call DrawCardSymbol
+ENDC
 	; print pre-evolution's name (if any)
 	ld a, [wLoadedCard1Stage]
 	or a
 	jr z, .basic
 	ld hl, wLoadedCard1PreEvoName
+IF NEW_CARD_PAGE_LAYOUT
+	lb de, 10, 2
+	call InitTextPrinting_ProcessTextFromPointerToID
+	lb de, 3, 2
+	ldtx hl, EvolvesFromText
+	call InitTextPrinting_ProcessTextFromID
+ELSE
 	lb de, 1, 3
 	call InitTextPrinting_ProcessTextFromPointerToID
+ENDC
 .basic
 	; print card level and maximum HP
 	; lb bc, 12, 2
 	; ld a, [wLoadedCard1Level]
 	; call WriteTwoDigitNumberInTxSymbolFormat
+IF NEW_CARD_PAGE_LAYOUT
+	lb bc, 14, 1
+ELSE
 	lb bc, 16, 2
+ENDC
 	ld a, [wLoadedCard1HP]
 	call WriteTwoByteNumberInTxSymbolFormat
 	jr .print_numbers_and_energies
 
 ; CARDPAGETYPE_PLAY_AREA
 .play_area_card_page
+IF NEW_CARD_PAGE_LAYOUT
+	; print surrounding box, card name, type, set 2, and rarity
+	call PrintPokemonCardPageGenericInformation
+ELSE
 	; draw the surrounding box, and print fixed text
 	call DrawCardPageSurroundingBox
 	call LoadDuelCheckPokemonScreenTiles
+ENDC
+IF NEW_CARD_PAGE_LAYOUT
+	; print the 2x2 face down card image depending on the Pokemon's evolution stage
+	lb de, 1, 1  ; 17, 1
+	call PrintPlayAreaFaceDownCardStageTile
+ENDC
 	ld hl, CardPageRetreatWRNumberTextData
 	call PlaceTextItems
-	; ld hl, CardPageNoTextTileData
-	; call WriteDataBlocksToBGMap0
 	ld a, 1
 	ld [wCurPlayAreaY], a
+IF NEW_CARD_PAGE_LAYOUT
+	; print play area location
+	; ld a, 7
+	; ld [wCurPlayAreaY], a
+	; ld b, 9
+	; call PrintPlayAreaCardLocation_B
+	lb de, 4, 2
+	ld a, [wCurPlayAreaSlot]
+	call PrintPlayAreaCardLocation_Text
+
+
+	; print the symbols of the attached energies
+	lb bc, 9, 5
+	ld a, SYM_E
+	call WriteByteToBGMap0
+	ld a, [wCurPlayAreaSlot]
+	ld e, a
+	lb bc, 11, 5
+	call PrintPlayAreaCardAttachedEnergies
+	; print the HP bar
+	lb bc, 9, 6
+	ld a, SYM_HP
+	call WriteByteToBGMap0
+	ld a, [wLoadedCard1HP]
+	ld d, a ; max HP
+	ld a, [wCurPlayAreaSlot]
+	add DUELVARS_ARENA_CARD_HP
+	call GetTurnDuelistVariable
+	ld e, a ; cur HP
+	call DrawHPBar
+	lb bc, 11, 6
+	call PrintHPBar
+
+	; print status conditions, if any
+	lb bc, 14, 1
+	;ld a, [wCurPlayAreaSlot]
+	;add DUELVARS_ARENA_CARD_STATUS
+	;call GetTurnDuelistVariable
+	ld a, CONFUSED | POISONED | DOUBLE_POISONED | BURNED
+	call CheckPrintCnfSlpPrz
+	inc b
+	call CheckPrintPoisoned
+	inc c
+	call CheckPrintDoublePoisoned
+	dec c
+	inc b
+	call CheckPrintBurned
+ELSE
 	; print set 2 icon and rarity symbol at fixed positions
 	call DrawCardPageSet2AndRarityIcons
 	; print (Y coord at [wCurPlayAreaY]) card name, level, type, energies, HP, location...
 	call PrintPlayAreaCardInformationAndLocation
+ENDC
 	; print attached tool, if any
-	lb de, 6, 11
-	lb bc, 3, 11
+	lb de, 6, 10
+	lb bc, 4, 10
 	call PrintPokemonAttachedTool
+	; overwrite loaded card's retreat cost
+	ld a, [wCurPlayAreaSlot]
+	ldh [hTempPlayAreaLocation_ff9d], a
+	call GetPlayAreaCardRetreatCost
 
 ; common for both card page types
 .print_numbers_and_energies
 	; print the name, damage, and energy cost of each attack and/or Pokemon power that exists
 	; first attack originally at 5,10 and second at 5,12
-	lb bc, 5, 13
+	lb bc, 5, 11
 
 .attacks
 	ld e, c
@@ -4219,12 +4392,14 @@ DisplayCardPage_PokemonOverview:
 	ld e, c
 	ld hl, wLoadedCard1Atk2Name
 	call PrintAttackOrPkmnPowerInformation
-	; print the retreat cost (some amount of colorless energies), originally at 8,14
-	; inc c
-	; inc c ; 14
-	; inc c ; 15
-	ld c, 9
-	ld b, 14  ; 8
+.retreat_cost
+; print the retreat cost (some amount of colorless energies), originally at 8,14
+	inc c
+	inc c ; 15
+	inc c ; 16
+	; ld c, 9
+	; ld b, 14  ; 8
+	ld b, 8
 	ld a, [wLoadedCard1RetreatCost]
 	ld e, a
 	inc e
@@ -4237,7 +4412,6 @@ DisplayCardPage_PokemonOverview:
 	jr .retreat_cost_loop
 .retreat_cost_done
 	; print the colors (energies) of the weakness(es) and resistance(s)
-	; inc c ; 15
 	ld a, [wCardPageType]
 	or a
 	jr z, .wr_from_loaded_card
@@ -4257,16 +4431,25 @@ DisplayCardPage_PokemonOverview:
 .got_wr
 	ld a, d
 	; ld b, 2  ; 8
+IF NEW_CARD_PAGE_LAYOUT
+	ld b, 6
+	ld c, 15
+ELSE
 	ld b, 14
 	ld c, 5
+ENDC
 	call PrintCardPageWeaknessesOrResistances
-	; inc c ; 16
 	; ld b, 8
+IF NEW_CARD_PAGE_LAYOUT
+	ld b, 16
+	ld c, 15
+ELSE
 	ld b, 14
 	ld c, 7
+ENDC
 	ld a, e
-	call PrintCardPageWeaknessesOrResistances
-	ret
+	jp PrintCardPageWeaknessesOrResistances
+
 
 ; displays the name, damage, and energy cost of an attack or Pokemon power.
 ; used in the Attack menu and in the card page of a Pokemon.
@@ -4404,8 +4587,12 @@ PrintCardPageWeaknessesOrResistances:
 ; CARDPAGE_POKEMON_OVERVIEW when wCardPageType is CARDPAGETYPE_PLAY_AREA.
 PrintPokemonCardPageGenericInformation:
 	call DrawCardPageSurroundingBox
-	; lb de, 5, 1
-	lb de, 6, 1
+IF NEW_CARD_PAGE_LAYOUT
+	lb de, 3, 1
+ELSE
+	lb de, 5, 1
+	; lb de, 6, 1
+ENDC
 	ld hl, wLoadedCard1Name
 	call InitTextPrinting_ProcessTextFromPointerToID
 	ld a, [wCardPageType]
@@ -4417,8 +4604,12 @@ PrintPokemonCardPageGenericInformation:
 .from_loaded_card
 	ld a, [wLoadedCard1Type]
 .got_color
-	; lb bc, 18, 1
-	lb bc, 4, 1
+IF NEW_CARD_PAGE_LAYOUT
+	lb bc, 18, 1  ; 1, 1
+ELSE
+	lb bc, 18, 1
+	; lb bc, 4, 1
+ENDC
 	inc a
 	call JPWriteByteToBGMap0
 	jp DrawCardPageSet2AndRarityIcons
@@ -4455,30 +4646,86 @@ DrawCardPageSurroundingBox:
 	call DrawRegularTextBox
 	pop hl
 	res 7, [hl]
+IF NEW_CARD_PAGE_LAYOUT
 	ld a, [wLoadedCard1Type]
 	cp TYPE_ENERGY
+ENDC
 	lb de, 6, 4
+IF NEW_CARD_PAGE_LAYOUT
 	jp nc, ApplyBGP6OrSGB3ToCardImage
-	ld d, 4
+	lb de, 1, 3
+ENDC
 	jp ApplyBGP6OrSGB3ToCardImage
 
+
 CardPageRetreatWRNumberTextData:
-	; textitem 1, 15, WeaknessText
-	; textitem 6, 15, ResistanceText
-	; textitem 12, 15, RetreatCostText
-	textitem 13, 4, WeaknessText
-	textitem 13, 6, ResistanceText
-	textitem 13, 8, RetreatCostText
+IF NEW_CARD_PAGE_LAYOUT
+	textitem 1, 15, WeaknessText
+	textitem 10, 15, ResistanceText
+	textitem 1, 16, RetreatCostText
+ELSE
+	textitem 1, 15, WeaknessText
+	textitem 6, 15, ResistanceText
+	textitem 12, 15, RetreatCostText
+ENDC
 	db $ff
 
-; CardPageLvHPTextTileData:
-	; db 11,  2, SYM_Lv, 0
-	; db 15,  2, SYM_HP, 0
-;	continues to CardPageNoTextTileData
 
-; CardPageNoTextTileData:
-	; db 15, 16, SYM_No, 0
-	; db $ff
+IF NEW_CARD_PAGE_LAYOUT
+
+DisplayCardPage_PokemonAttack1:
+	ld hl, wLoadedCard1Atk1Name
+	ld de, wLoadedCard1Atk1Description
+	jr DisplayPokemonAttackCardPage
+
+DisplayCardPage_PokemonAttack2:
+	ld hl, wLoadedCard1Atk2Name
+	ld de, wLoadedCard1Atk2Description
+;	fallthrough
+
+; input:
+   ; hl = address of the attack's name (text id)
+   ; de = address of the attack's description (first text id followed by second)
+DisplayPokemonAttackCardPage:
+	push de
+	push hl
+	call ZeroObjectPositionsAndToggleOAMCopy
+; print surrounding box
+	ld hl, wTextBoxFrameType
+	set 7, [hl]  ; colorize textbox border also on SGB (with SGB1)
+	push hl
+	lb de, 0, 0
+	lb bc, 20, 18
+	call DrawRegularTextBox
+	pop hl
+	res 7, [hl]
+; print name, damage, and energy cost of attack or Pokemon power starting at line 2
+	ld e, 1
+	pop hl
+	call PrintAttackOrPkmnPowerInformation
+	pop hl
+	ld a, [hli]
+	or [hl]
+	ret z
+	dec hl
+	push hl
+	lb de, 1, 3
+	call PrintAttackOrCardDescription
+; continued description
+	pop hl
+	inc hl
+	inc hl
+	ld a, [hli]
+	or [hl]
+	ret z
+	dec hl
+	ld a, [wCurTextLine]
+	add 4
+	ld d, 1
+	ld e, a
+	jp PrintAttackOrCardDescription
+
+ELSE
 
 DisplayCardPage_PokemonAttack1Page1:
 	ld hl, wLoadedCard1Atk1Name
@@ -4529,6 +4776,8 @@ PrintAttackOrNonPokemonCardDescription:
 	lb de, 1, 11
 	jp PrintAttackOrCardDescription
 
+ENDC
+
 
 DisplayCardPage_PokemonAttachedTool:
 ; print surrounding box, card name at 5,1, type, set 2, and rarity
@@ -4550,24 +4799,64 @@ DisplayCardPage_PokemonAttachedTool:
 DisplayCardPage_PokemonDescription:
 	; print surrounding box, card name at 5,1, type, set 2, and rarity
 	call PrintPokemonCardPageGenericInformation
+IF NEW_CARD_PAGE_LAYOUT
+	call LoadDuelCheckPokemonScreenTiles
+ELSE
 	call LoadDuelCardSymbolTiles2
+ENDC
 	; print "LENGTH", "WEIGHT", "Lv", and "HP" where it corresponds in the page
 	ld hl, CardPageLengthWeightTextData
 	call PlaceTextItems
 	ld hl, CardPageLvHPTextTileData
 	call WriteDataBlocksToBGMap0
+IF NEW_CARD_PAGE_LAYOUT
+	ld a, [wLoadedCard1Stage]
+	lb de, 1, 1  ; 17, 1
+	call PrintFaceDownCardStageTile
+	; lb de, 19, 2
+ELSE
 	; draw the card symbol associated to its TYPE_* at 3,2
 	lb de, 3, 2
 	call DrawCardSymbol
+ENDC
+	; print pre-evolution's name (if any)
+	ld a, [wLoadedCard1Stage]
+	or a
+	jr z, .basic
+	ld hl, wLoadedCard1PreEvoName
+IF NEW_CARD_PAGE_LAYOUT
+	lb de, 10, 2
+	call InitTextPrinting_ProcessTextFromPointerToID
+	lb de, 3, 2
+	ldtx hl, EvolvesFromText
+	call InitTextPrinting_ProcessTextFromID
+ELSE
+	lb de, 1, 3
+	call InitTextPrinting_ProcessTextFromPointerToID
+ENDC
+.basic
+
 	; print Pokedex number in the bottom right corner, originally (16,16)
-	lb bc, 16, 11
+IF NEW_CARD_PAGE_LAYOUT
+	lb bc, 16, 4
+ELSE
+	lb bc, 16, 12
+ENDC
 	ld a, [wLoadedCard1PokedexNumber]
 	call WriteTwoByteNumberInTxSymbolFormat
 	; print the Level and HP numbers at 12,2 and 16,2 respectively
-	lb bc, 12, 2
+IF NEW_CARD_PAGE_LAYOUT
+	lb bc, 11, 4
+ELSE
+	lb bc, 17, 11  ; 12, 2
+ENDC
 	ld a, [wLoadedCard1Level]
 	call WriteTwoDigitNumberInTxSymbolFormat
+IF NEW_CARD_PAGE_LAYOUT
+	lb bc, 14, 1
+ELSE
 	lb bc, 16, 2
+ENDC
 	ld a, [wLoadedCard1HP]
 	call WriteTwoByteNumberInTxSymbolFormat
 	; print the Pokemon's category at 1,10 (just above the length and weight texts)
@@ -4579,13 +4868,21 @@ DisplayCardPage_PokemonDescription:
 	ldtx hl, PokemonText
 	call ProcessTextFromID
 	; print the length and weight values at 5,11 and 5,12 respectively
+IF NEW_CARD_PAGE_LAYOUT
+	lb bc, 14, 6
+ELSE
 	lb bc, 5, 11
+ENDC
 	ld hl, wLoadedCard1Length
 	ld a, [hli]
 	ld l, [hl]
 	ld h, a
 	call PrintPokemonCardLength
+IF NEW_CARD_PAGE_LAYOUT
+	lb bc, 14, 7
+ELSE
 	lb bc, 5, 12
+ENDC
 	ld hl, wLoadedCard1Weight
 	ld a, [hli]
 	ld h, [hl]
@@ -4600,7 +4897,11 @@ DisplayCardPage_PokemonDescription:
 	ld h, [hl]
 	ld l, a
 	call CountLinesOfTextFromID
+IF NEW_CARD_PAGE_LAYOUT
+	lb de, 1, 11
+ELSE
 	lb de, 1, 13
+ENDC
 	cp 4
 	jr nc, .print_description
 	inc e ; move a line down, as the description is short enough to fit in three lines
@@ -4610,6 +4911,33 @@ DisplayCardPage_PokemonDescription:
 	ld hl, wLoadedCard1Description
 	call ProcessTextFromPointerToID
 	jp SetOneLineSeparation
+
+
+; prints the card's set 2 icon and the full width text character of the card's rarity
+DrawCardPageSet2AndRarityIcons:
+	ld a, [wLoadedCard1Set]
+	call LoadCardSet2Tiles
+	jr c, .icon_done
+	; draw the 2x2 set 2 icon of this card
+	ld a, $fc
+	lb hl, 1, 2
+	lb bc, 2, 2
+IF NEW_CARD_PAGE_LAYOUT
+	lb de, 17, 8
+ELSE
+	lb de, 15, 8
+ENDC
+	call FillRectangle
+.icon_done
+IF NEW_CARD_PAGE_LAYOUT
+	lb de, 18, 16
+ELSE
+	lb de, 18, 9
+ENDC
+	ld hl, CardRarityTextIDs
+	ld a, [wLoadedCard1Rarity]
+	; jr PrintCardPageRarityIcon
+	; fallthrough
 
 ; given a card rarity constant in a, and CardRarityTextIDs in hl,
 ; print the text character associated to it at d,e
@@ -4621,38 +4949,32 @@ PrintCardPageRarityIcon:
 	add hl, bc
 	jp InitTextPrinting_ProcessTextFromPointerToID
 
-; prints the card's set 2 icon and the full width text character of the card's rarity
-DrawCardPageSet2AndRarityIcons:
-	ld a, [wLoadedCard1Set]
-	call LoadCardSet2Tiles
-	jr c, .icon_done
-	; draw the 2x2 set 2 icon of this card
-	ld a, $fc
-	lb hl, 1, 2
-	lb bc, 2, 2
-	; lb de, 15, 8
-	lb de, 1, 7
-	call FillRectangle
-.icon_done
-	; lb de, 18, 9
-	; lb de, 2, 5
-	lb de, 18, 1
-	ld hl, CardRarityTextIDs
-	ld a, [wLoadedCard1Rarity]
-	; cp PROMOSTAR
-	; call nz, PrintCardPageRarityIcon
-	; ret
-	jp PrintCardPageRarityIcon
 
 CardPageLengthWeightTextData:
+IF NEW_CARD_PAGE_LAYOUT
+	textitem 10, 6, LengthText
+	textitem 10, 7, WeightText
+	textitem 15, 4, NumberText
+ELSE
 	textitem 1, 11, LengthText
 	textitem 1, 12, WeightText
-	textitem 15, 11, NumberText
+	textitem 15, 12, NumberText
+ENDC
 	db $ff
 
 CardPageLvHPTextTileData:
-	db 11, 2, SYM_Lv, 0
+IF NEW_CARD_PAGE_LAYOUT
+	db 10, 4, SYM_Lv, 0
+ELSE
+	; db 11, 2, SYM_Lv, 0
+	db 15, 11, SYM_Lv, 0
+ENDC
+CardPageHPTextTileData:
+IF NEW_CARD_PAGE_LAYOUT
+	db 13, 1, SYM_HP, 0
+ELSE
 	db 15, 2, SYM_HP, 0
+ENDC
 	db $ff
 
 CardRarityTextIDs:
@@ -4721,7 +5043,16 @@ DisplayEnergyOrTrainerCardPage:
 	; print the set 2 icon and rarity symbol of the card
 	call DrawCardPageSet2AndRarityIcons
 	pop hl
+IF NEW_CARD_PAGE_LAYOUT
+	ld a, [hli]
+	or [hl]
+	ret z
+	dec hl
+	lb de, 1, 11
+	jp PrintAttackOrCardDescription
+ELSE
 	jp PrintAttackOrNonPokemonCardDescription
+ENDC
 
 
 CardPageItemTextData:
@@ -5323,6 +5654,17 @@ PrintPlayAreaCardList:
 	jr nz, .shift_back_loop
 	ret
 
+
+; input:
+;    a: PLAY_AREA_*
+;   de: x,y coordinates
+PrintPlayAreaCardLocation_Text:
+	ldtx hl, ActivePokemonText
+	or a
+	jp z, InitTextPrinting_ProcessTextFromID
+	ldtx hl, BenchedPokemonText
+	jp InitTextPrinting_ProcessTextFromID
+
 ; print a turn holder's play area Pokemon card's name, level, face down stage card,
 ; color symbol, status symbol (if any), pluspower/defender symbols (if any),
 ; attached energies (if any), HP bar, and the play area location (ACT/BPx indicator)
@@ -5341,6 +5683,13 @@ PrintPlayAreaCardInformationAndLocation:
 
 ;  print a turn holder's play area Pokemon card's location (ACT/BPx indicator)
 PrintPlayAreaCardLocation:
+	ld b, 1
+	; fallthrough
+
+;  print a turn holder's play area Pokemon card's location (ACT/BPx indicator)
+; input:
+;   b: x coordinate
+PrintPlayAreaCardLocation_B:
 	; print the ACT/BPx indicator
 	ld a, [wCurPlayAreaSlot]
 	add a
@@ -5357,7 +5706,7 @@ PrintPlayAreaCardLocation:
 	ld d, $0a
 .write_tiles
 	ld a, [wCurPlayAreaY]
-	ld b, 1
+	; ld b, 1
 	ld c, a
 	ld a, [hli]
 	add d
@@ -5474,8 +5823,8 @@ PrintPlayAreaCardHeader:
 	call GetPlayAreaCardColor
 	inc a
 	call JPWriteByteToBGMap0
-	ld b, 14
-	ld a, SYM_Lv
+	; ld b, 14
+	; ld a, SYM_Lv
 	; call WriteByteToBGMap0
 	ld a, [wCurPlayAreaY]
 	ld c, a
@@ -5484,35 +5833,10 @@ PrintPlayAreaCardHeader:
 	; call WriteTwoDigitNumberInTxSymbolFormat
 
 	; print the 2x2 face down card image depending on the Pokemon's evolution stage
-	ld a, [wCurPlayAreaSlot]
-	add DUELVARS_ARENA_CARD_STAGE
-	call GetTurnDuelistVariable
-	add a
-	ld e, a
-	ld d, $00
-	ld hl, FaceDownCardTileNumbers
-	add hl, de
-	ld a, [hli] ; starting tile to fill the 2x2 rectangle with
-	push hl
-	push af
-	lb hl, 1, 2
-	lb bc, 2, 2
 	ld a, [wCurPlayAreaY]
 	ld e, a
 	ld d, 2
-	pop af
-	call FillRectangle
-	pop hl
-	ld a, [wConsole]
-	cp CONSOLE_CGB
-	jr nz, .not_cgb
-	; in cgb, we have to take care of coloring it too
-	ld a, [hl]
-	lb hl, 0, 0
-	lb bc, 2, 2
-	call BankswitchVRAM1
-	call FillRectangle
-	call BankswitchVRAM0
+	call PrintPlayAreaFaceDownCardStageTile
 
 .not_cgb
 	; print the status condition symbol if any (only for the arena Pokemon card)
@@ -5559,6 +5883,52 @@ PrintPlayAreaCardHeader:
 ; 	ld b, 18  ; previously 17
 	ld a, SYM_DEFENDER
 	jp WriteByteToBGMap0
+
+
+; print the 2x2 face down card image depending on the Pokemon's evolution stage
+; input:
+;   wCurPlayAreaSlot
+;   de: x,y coordinates
+PrintPlayAreaFaceDownCardStageTile:
+	ld a, [wCurPlayAreaSlot]
+	add DUELVARS_ARENA_CARD_STAGE
+	call GetTurnDuelistVariable
+	; fallthrough
+
+; print the 2x2 face down card image depending on the Pokemon's evolution stage
+; input:
+;   a: evolution stage (BASIC, STAGE_1, STAGE_2)
+;   de: x,y coordinates
+PrintFaceDownCardStageTile:
+	add a
+	push de
+	ld e, a
+	ld d, $00
+	ld hl, FaceDownCardTileNumbers
+	add hl, de
+	pop de
+	ld a, [hli] ; starting tile to fill the 2x2 rectangle with
+	push hl
+	; push af
+	lb hl, 1, 2
+	lb bc, 2, 2
+	; ld a, [wCurPlayAreaY]
+	; ld e, a
+	; ld d, 2
+	; pop af
+	call FillRectangle
+	pop hl
+	ld a, [wConsole]
+	cp CONSOLE_CGB
+	ret nz
+	; in cgb, we have to take care of coloring it too
+	ld a, [hl]
+	lb hl, 0, 0
+	lb bc, 2, 2
+	call BankswitchVRAM1
+	call FillRectangle
+	call BankswitchVRAM0
+	ret
 
 FaceDownCardTileNumbers:
 ; starting tile number, cgb palette (grey, yellow/red, green/blue, pink/orange)
@@ -5655,7 +6025,7 @@ PrintPlayAreaCardAttachedEnergies:
 	dec c
 	jr nz, .next_color
 	ld a, [wTotalAttachedEnergies]
-	cp 9
+	cp 8
 	jr c, .place_tiles
 	ld a, SYM_PLUS
 	ld [wDefaultText + 7], a

@@ -1448,3 +1448,15 @@ ThereIsAlreadyAnEqualStadiumInPlayText:
 	text "There is already another Stadium"
 	line "card with the same name in play."
 	done
+
+EvolvesFromText:
+	text " Evolves from"
+	done
+
+ActivePokemonText:
+	text "Active Pokémon"
+	done
+
+BenchedPokemonText:
+	text "Benched Pokémon"
+	done

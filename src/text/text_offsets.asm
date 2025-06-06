@@ -515,6 +515,9 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer CardCostText
 	textpointer PlayerCurrencyValueText
 	textpointer ThereIsAlreadyAnEqualStadiumInPlayText
+	textpointer EvolvesFromText
+	textpointer ActivePokemonText
+	textpointer BenchedPokemonText
 	textpointer ThisDeckCanOnlyBeBuiltIfYouDismantleText           ; 0x026c
 	textpointer YouDoNotOwnAllCardsNeededToBuildThisDeckText       ; 0x026d
 	textpointer BuiltDeckText                                      ; 0x026e
