@@ -32,6 +32,7 @@
 - The **Card Album** PC menu can now be used to buy or sell cards.
 - Cards are sold for half their cost.
 - Common cards cost 2 points, Uncommon cards cost 8 points, Rare cards cost 24 points, Promotional cards cost 50 points.
+- Implemented a new card page layout.
 
 ### User Interface
 
