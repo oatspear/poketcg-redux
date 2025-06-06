@@ -10636,3 +10636,106 @@ CopyDataToBGMap0:
 	call SafeCopyDataHLtoDE
 	pop bc
 	ret
+
+; ------------------------------------------------------------------------------
+; To do later
+; ------------------------------------------------------------------------------
+
+DEF TODO_PALETTES EQU 0
+
+IF TODO_PALETTES
+
+; input:
+;    [wLoadedCard1] = all of the card's data (card_data_struct)
+SetBGP7ToCardBackgroundPalette:
+    ld a, [wConsole]
+    cp CONSOLE_CGB
+    ret nz
+    ld a, [wLoadedCard1Type]
+    cp TYPE_ENERGY
+    jr nc, .trainer_or_energy_card
+; pokemon card
+    ld c, a
+    ld a, [wCardPageType]
+    or a ; cp CARDPAGETYPE_NOT_PLAY_AREA
+    ld a, c
+    jr z, .convert_color_constant_to_palette
+    ld a, [wCurPlayAreaSlot]
+    call GetPlayAreaCardColor
+    jr .convert_color_constant_to_palette
+.trainer_or_energy_card
+    cp TYPE_TRAINER
+    ld hl, CGBCardTypePalettes.trainer_palette
+    jr nc, .copy_palette ; all Trainer cards share the same palette
+.energy_card
+    sub TYPE_ENERGY ; convert Energy type constant to generic/Pokémon type constant
+.convert_color_constant_to_palette
+    add a ; *2
+    add a ; *4
+    add a ; *8 (CGB_PAL_SIZE)
+    ld e, a
+    ld d, $00
+    ld hl, CGBCardTypePalettes
+    add hl, de
+.copy_palette
+    ld de, wBackgroundPalettesCGB + 7 palettes ; copy to CGB Background palette 7
+    ld b, CGB_PAL_SIZE
+    jp CopyNBytesFromHLToDE
+
+SetScreenColorToBGP7:
+    ld a, [wConsole]
+    cp CONSOLE_CGB
+    ret nz
+    call BankswitchVRAM1
+    ld a, $7 ; CGB Background Palette 7 (specific to card type)
+    lb bc, 20, 18
+    lb de, 0, 0
+    ld h, d
+    ld l, d
+    call FillRectangle
+    jp BankswitchVRAM0
+
+CGBCardTypePalettes:
+; Fire
+    rgb 31, 17, 12 ; [f88860] (pale red/orange)
+    rgb 27,  7,  4 ; [f01020] (red)
+    rgb 23,  1,  0 ; [a00010] (dark red)
+    rgb  0,  0,  0 ; [000000] (black)
+; Grass
+    rgb 10, 31, 13 ; [50f868] (bright green)
+    rgb  6, 20,  8 ; [30a040] (green)
+    rgb  0, 14,  6 ; [007030] (dark green)
+    rgb  0,  0,  0 ; [000000] (black)
+; Lightning
+    rgb 31, 30, 12 ; [f8f060] (pale yellow)
+    rgb 31, 28,  3 ; [f8e018] (gold)
+    rgb 30, 20,  0 ; [f0a000] (darker gold)
+    rgb  0,  0,  0 ; [000000] (black)
+; Water
+    rgb  9, 28, 31 ; [48e0f8] (bright sky blue)
+    rgb  0, 18, 28 ; [0090e0] (cerulean)
+    rgb  2, 10, 17 ; [105088] (dark blue)
+    rgb  0,  0,  0 ; [000000] (black)
+; Fighting
+    rgb 30, 20, 10 ; [F0a050] (orange)
+    rgb 25,  9,  4 ; [C84820] (dark orange)
+    rgb 14,  3,  1 ; [701808] (dark brown)
+    rgb  0,  0,  0 ; [000000] (black)
+; Psychic
+    rgb 27, 21, 29 ; [d8a8e8] (lavender)
+    rgb 22, 12, 27 ; [b060d8] (purple)
+    rgb 12,  6, 15 ; [603078] (dark purple)
+    rgb  0,  0,  0 ; [000000] (black)
+; Colorless
+    rgb 30, 30, 29 ; [f0f0e8] (off-white)
+    rgb 20, 20, 19 ; [a0a098] (gray)
+    rgb 12, 12, 11 ; [606058] (dark gray)
+    rgb  0,  0,  0 ; [000000] (black)
+.trainer_palette
+    rgb 26, 26, 26 ; [d0d0d0] (light gray)
+    rgb 19, 19, 19 ; [989898] (gray)
+    rgb 12, 12, 12 ; [606060] (dark gray)
+    rgb  0,  0,  0 ; [000000] (black)
+
+ENDC
+
