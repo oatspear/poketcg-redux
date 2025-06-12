@@ -1750,9 +1750,9 @@ Func_16f6:
 	ld [wEffectFunctionsFeedbackIndex], a
 	ld [wEffectFailed], a
 	ld [wIsDamageToSelf], a
-	ld [wccef], a
 	ld [wMetronomeEnergyCost], a
 	ld [wNoEffectFromWhichStatus], a
+	; ld [wccef], a
 	bank1call ClearNonTurnTemporaryDuelvars_CopyStatus
 	ret
 

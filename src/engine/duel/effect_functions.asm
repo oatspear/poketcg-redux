@@ -4894,8 +4894,8 @@ ForceSwitchDefendingPokemon:
 	xor a
 	ld [wccc5], a
 	ld [wDuelDisplayedScreen], a
-	inc a
-	ld [wccef], a
+	; inc a
+	; ld [wccef], a
 	ret
 
 

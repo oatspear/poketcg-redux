@@ -832,8 +832,7 @@ wEffectFailed:: ; cced
 wPreEvolutionPokemonCard:: ; ccee
 	ds $1
 
-; flag to determine whether DUELVARS_ARENA_CARD_LAST_TURN_DAMAGE
-; gets zeroed or gets updated with wDealtDamage
+; unused
 wccef:: ; ccef
 	ds $1
 
