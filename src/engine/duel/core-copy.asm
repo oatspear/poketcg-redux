@@ -383,8 +383,10 @@ PrintDuelMenuAndHandleInput:
 	ld a, DUELVARS_ARENA_CARD_STATUS
 	call GetTurnDuelistVariable
 	call CheckPrintPoisoned
+IF BURN_IS_DAMAGE_OVER_TIME
 	inc b
 	call CheckPrintBurned
+ENDC
 	; jr SaveDuelDataAndHandleDuelMenuInput
 	; fallthrough
 
@@ -2707,10 +2709,8 @@ DrawDuelHUDs:
 	call CheckPrintCnfSlpPrz
 	inc c
 	call CheckPrintPoisoned
-IF DOUBLE_POISON_EXISTS
 	inc c
 	call CheckPrintDoublePoisoned ; if double poisoned, print a second poison icon
-ENDC
 	inc c
 	call CheckPrintBurned
 	call SwapTurn
@@ -2724,10 +2724,8 @@ ENDC
 	call CheckPrintCnfSlpPrz
 	dec c
 	call CheckPrintPoisoned
-IF DOUBLE_POISON_EXISTS
 	dec c
 	call CheckPrintDoublePoisoned ; if double poisoned, print a second poison icon
-ENDC
 	dec c
 	call CheckPrintBurned
 	jp SwapTurn
@@ -4355,15 +4353,13 @@ IF NEW_CARD_PAGE_LAYOUT
 	;ld a, [wCurPlayAreaSlot]
 	;add DUELVARS_ARENA_CARD_STATUS
 	;call GetTurnDuelistVariable
-	ld a, CONFUSED | POISONED | BURNED
+	ld a, CONFUSED | POISONED | DOUBLE_POISONED | BURNED
 	call CheckPrintCnfSlpPrz
 	inc b
 	call CheckPrintPoisoned
-IF DOUBLE_POISON_EXISTS
 	inc c
 	call CheckPrintDoublePoisoned
 	dec c
-ENDC
 	inc b
 	call CheckPrintBurned
 ELSE
@@ -5860,10 +5856,8 @@ PrintPlayAreaCardHeader:
 	inc b
 	call CheckPrintPoisoned
 	inc b
-IF DOUBLE_POISON_EXISTS
 	call CheckPrintDoublePoisoned
 	dec c
-ENDC
 	call CheckPrintBurned
 	; inc c
 
@@ -5966,14 +5960,12 @@ CheckPrintPoisoned:
 	pop af
 	ret
 
-IF DOUBLE_POISON_EXISTS
 ; given a card's status in a, print the Poison symbol at bc if it's double poisoned
 CheckPrintDoublePoisoned:
 	push af
 	and DOUBLE_POISONED & (POISONED ^ $ff)
 	jr nz, CheckPrintPoisoned.poison ; double poisoned (print SYM_POISONED)
 	jr CheckPrintPoisoned.print ; not double poisoned (print SYM_SPACE)
-ENDC
 
 ; given a card's status in a, print the Confusion, Sleep, or Paralysis symbol at bc
 ; for each of those status that is active
@@ -5981,18 +5973,12 @@ CheckPrintCnfSlpPrz:
 	push af
 	push hl
 	push de
-IF CC_IS_COIN_FLIP
-	bit FLINCHED_F, a
-	ld hl, .symbol_flinched
-	jr nz, .print
-ENDC
 	and CNF_SLP_PRZ
 	swap a
 	ld e, a
 	ld d, $00
 	ld hl, .status_symbols
 	add hl, de
-.print
 	ld a, [hl]
 	call WriteByteToBGMap0
 	pop de
@@ -6003,12 +5989,6 @@ ENDC
 .status_symbols
 	;  NO_STATUS, CONFUSED,     ASLEEP,     PARALYZED
 	db SYM_SPACE, SYM_CONFUSED, SYM_ASLEEP, SYM_PARALYZED
-
-IF CC_IS_COIN_FLIP
-.symbol_flinched
-	;  FLINCHED
-	db SYM_ATK_DESCR
-ENDC
 
 ; print the symbols of the attached energies of a turn holder's play area card
 ; input:
@@ -7828,7 +7808,7 @@ HandleEndOfTurnEffect_SeepingToxins:
 	jr .next  ; skip arena
 .loop_play_area
 	ld a, [hli]
-	and POISONED
+	and MAX_POISON
 	jr z, .next
 	push hl
 	push bc
@@ -7859,8 +7839,10 @@ HandleEndOfTurnEffect_StatusConditions:
 	call HandlePoisonDamage
 	ld a, [hl]
 	ret c  ; KO
+IF BURN_IS_DAMAGE_OVER_TIME
 	call HandleBurnDamage
 	ret c  ; KO
+ENDC
 IF CC_IS_COIN_FLIP
 	ld a, [hl]
 	and CNF_SLP_PRZ
@@ -7884,42 +7866,29 @@ ENDC
 
 
 HandleEndOfTurnEffect_BenchStatusConditions:
-; calculate how much Poison damage to deal
-	call SwapTurn
-	ld a, MUK
-	call IsActiveSpotPokemonPowerActive  ; preserves: hl, bc, de
-	call SwapTurn
-	ld a, PSN_DAMAGE
-	jr nc, .no_poison_boost
-	add PSN_DAMAGE
-.no_poison_boost
-	ld [wMultiPurposeByte], a
-
-; calculate how much Burn damage to deal
-	call SwapTurn
-	ld a, MUK
-	call IsActiveSpotPokemonPowerActive  ; preserves: hl, bc, de
-	call SwapTurn
-	ld a, BURN_DAMAGE
-	jr nc, .no_burn_boost
-	add BURN_DAMAGE
-.no_burn_boost
-	ld [wMultiPurposeByte2], a
-
-; loop over each benched Pokémon
 	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
 	call GetTurnDuelistVariable
 	ld c, a  ; loop counter
+	ld d, 10  ; damage
 	ld e, PLAY_AREA_ARENA  ; target
 	ld l, DUELVARS_ARENA_CARD_STATUS
 	jr .next
-
 .loop_play_area
+
+IF POISON_STICKS_ON_BENCH == 0
 	ld a, [hl]
-	and POISONED
+	and MAX_POISON
 	jr z, .not_poisoned
-	ld a, [wMultiPurposeByte]
-	ld d, a
+IF POISON_STACKS
+	call ATimes10
+	ld d, a  ; damage
+ELSE
+	ld d, PSN_DAMAGE
+	cp POISONED
+	jr z, .got_poison_damage
+	ld d, DBLPSN_DAMAGE
+.got_poison_damage
+ENDC
 	push hl
 	push bc
 	push de
@@ -7928,13 +7897,14 @@ HandleEndOfTurnEffect_BenchStatusConditions:
 	pop bc
 	pop hl
 	call Bank1_ApplyDirectDamage_RegularAnim  ; preserves: hl, de, bc
+ENDC
 
 .not_poisoned
+IF BURN_STICKS_ON_BENCH == 0
 	ld a, [hl]
 	and BURNED
 	jr z, .next
-	ld a, [wMultiPurposeByte2]
-	ld d, a
+	ld d, BURN_DAMAGE
 	push hl
 	push bc
 	push de
@@ -7943,6 +7913,7 @@ HandleEndOfTurnEffect_BenchStatusConditions:
 	pop bc
 	pop hl
 	call Bank1_ApplyDirectDamage_RegularAnim  ; preserves: hl, de, bc
+ENDC
 
 .next
 	inc e
@@ -8146,7 +8117,17 @@ ClearStatusFromBenchedPokemon:
 	ld l, DUELVARS_ARENA_CARD_STATUS
 	jr .next  ; skip arena Pokémon
 .loop
+IF POISON_STICKS_ON_BENCH | BURN_STICKS_ON_BENCH
+; preserve Poison and Burn on the Bench
+	ld a, [hl]
+	and CNF_SLP_PRZ
+	jr z, .next
+.clear
+	ld a, PSN_BRN
+	and [hl]
+ELSE
 	xor a
+ENDC
 	ld [hl], a
 .next
 	inc hl
@@ -8321,13 +8302,27 @@ HandlePoisonDamage:
 
 	push hl
 	call ShowBetweenTurnsTransitionAtMostOnce
-.poison_boost
+	pop hl
+; load damage and text according to normal/double poison
+	push hl
+	bit DOUBLE_POISONED_F, [hl]
+	ld a, PSN_DAMAGE
+	; ldtx hl, Received10DamageDueToPoisonText
+	jr z, .not_double_poisoned
+	ld a, DBLPSN_DAMAGE
+	; ldtx hl, Received20DamageDueToPoisonText
+
+.not_double_poisoned
+	ld l, a
 	call SwapTurn
 	ld a, MUK
 	call CountPokemonIDInPlayArea  ; preserves: hl, bc, de
 	call SwapTurn
-	call c, ATimes10  ; some found, preserves hl, bc, de
-	add PSN_DAMAGE
+	jr nc, .got_poison_boost  ; none found
+	call ATimes10
+
+.got_poison_boost
+	add l
 	push af
 	ld [wDuelAnimDamage], a
 	xor a
@@ -8363,6 +8358,7 @@ HandlePoisonDamage:
 	ret
 
 
+IF BURN_IS_DAMAGE_OVER_TIME
 HandleBurnDamage:
 	or a
 	bit BURNED_F, [hl]
@@ -8370,31 +8366,26 @@ HandleBurnDamage:
 
 	push hl
 	call ShowBetweenTurnsTransitionAtMostOnce
-.burn_boost
-	call SwapTurn
-	ld a, MUK
-	call CountPokemonIDInPlayArea  ; preserves: hl, bc, de
-	call SwapTurn
-	call c, ATimes10  ; some found
-	add BURN_DAMAGE
-	push af
+	pop hl
+; load damage and text for burn
+	push hl
+	ldtx hl, Received20DamageDueToBurnText
+	ld a, BURN_DAMAGE
 	ld [wDuelAnimDamage], a
 	xor a
 	ld [wDuelAnimDamage + 1], a
 
-	; push hl
+	push hl
 	call DrawDuelMainSceneForTurnHolder
-	; pop hl
-	ldtx hl, ReceivedDamageDueToBurnText
+	pop hl
 	call PrintNonTurnDuelistCardIDText
 
 ; play animation
 	ld a, DUEL_ANIM_SMALL_FLAME
 	call DrawDuelAnimationOnDuelMainScene
-	pop af
 
 ; deal burn damage
-	ld e, a
+	ld e, BURN_DAMAGE
 	ld d, $00
 	ld a, DUELVARS_ARENA_CARD_HP
 	call GetTurnDuelistVariable
@@ -8410,7 +8401,7 @@ HandleBurnDamage:
 	pop af
 	pop hl
 	ret
-
+ENDC
 
 ; given the deck index of a turn holder's card in register a,
 ; and a pointer in hl to the wLoadedCard* buffer where the card data is loaded,
@@ -8825,7 +8816,7 @@ PrintThereWasNoEffectFromStatusText:
 	ldtx hl, ThereWasNoEffectFromPoisonConfusionText
 	cp POISONED | CONFUSED
 	ret z
-	and POISONED
+	and MAX_POISON
 	jr nz, .poison
 	ld a, c
 	ldtx hl, ThereWasNoEffectFromBurnText
@@ -9996,10 +9987,8 @@ PlayInflictStatusAnimation:
 	cp POISONED
 	jr z, .got_anim
 	ld e, ATK_ANIM_POISON
-IF DOUBLE_POISON_EXISTS
 	cp DOUBLE_POISONED
 	jr z, .got_anim
-ENDC
 	ld e, ATK_ANIM_BURN
 	cp BURNED
 	jr z, .got_anim

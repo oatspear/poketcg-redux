@@ -221,24 +221,6 @@ ENDC
 	call HandleAttackerDamageReductionEffects
 ; 8. cap damage at zero if negative
 	call CapMinimumDamage_DE
-
-; OATS poison only does damage on the target's turn
-;	ld a, DUELVARS_ARENA_CARD_STATUS
-;	call GetTurnDuelistVariable
-;	and DOUBLE_POISONED
-;	jr z, .not_poisoned
-;	ld c, 20
-;	and DOUBLE_POISONED & (POISONED ^ $ff)
-;	jr nz, .add_poison
-;	ld c, 10
-;.add_poison
-;	ld a, c
-;	add e
-;	ld e, a
-;	ld a, $00
-;	adc d
-;	ld d, a
-;.not_poisoned
 	call SwapTurn
 
 ; is this enough damage to KO the Defending Pokémon?
@@ -480,8 +462,13 @@ ENDC
 ; OATS Poison only deals damage on the target's turn
 	ld a, DUELVARS_ARENA_CARD_STATUS
 	call GetTurnDuelistVariable
+IF DOUBLE_POISON_EXISTS
 	and DOUBLE_POISONED
+ELSE
+	and POISONED
+ENDC
 	jr z, .done
+IF DOUBLE_POISON_EXISTS
 	; ld c, DBLPSN_DAMAGE * 2
 	ld hl, DBLPSN_DAMAGE
 	and DOUBLE_POISONED & (POISONED ^ $ff)
@@ -489,6 +476,9 @@ ENDC
 	; ld c, PSN_DAMAGE * 2
 	ld hl, PSN_DAMAGE
 .add_poison
+ELSE
+	ld hl, PSN_DAMAGE
+ENDC
 	call AddToDamage_DE
 	call CapMaximumDamage_DE
 

@@ -37,7 +37,7 @@ AIDecideWhetherToRetreat:
 	or a
 	jr z, .check_ko_1 ; no status
 IF BURN_IS_DAMAGE_OVER_TIME
-	and PSN_DBLPSN_BRN
+	and PSN_BRN
 ELSE
 	and MAX_POISON
 ENDC

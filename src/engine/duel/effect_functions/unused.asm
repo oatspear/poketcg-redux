@@ -1,6 +1,95 @@
 ;
 
 
+IF POISON_STACKS
+PoisonEffect:
+Put1PoisonCounterEffect:
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetNonTurnDuelistVariable
+	and MAX_POISON
+	cp MAX_POISON
+	jr nc, .apply
+	inc a
+.apply
+	ld b, $ff
+	ld c, a
+	jr ApplyStatusEffect
+
+DoublePoisonEffect:
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetNonTurnDuelistVariable
+	and MAX_POISON
+	cp MAX_POISON
+	jr nc, .apply
+	inc a
+	cp MAX_POISON
+	jr nc, .apply
+	inc a
+.apply
+	ld b, $ff
+	ld c, a
+	jr ApplyStatusEffect
+
+ELSE
+PoisonEffect:
+	lb bc, $ff, POISONED
+	jr ApplyStatusEffect
+
+DoublePoisonEffect:
+	lb bc, $ff, DOUBLE_POISONED
+	jr ApplyStatusEffect
+ENDC
+
+
+
+IF POISON_STACKS
+; input e: PLAY_AREA_* of the target Pokémon
+DoublePoisonEffect_PlayArea:
+	call PoisonEffect_PlayArea
+	; jr PoisonEffect_PlayArea
+	; fallthrough
+
+; input e: PLAY_AREA_* of the target Pokémon
+PoisonEffect_PlayArea:
+PutPoisonCounter_PlayArea:
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	add e
+	call GetTurnDuelistVariable
+	and MAX_POISON
+	cp MAX_POISON
+	ret nc  ; already at max
+	inc a
+	ld b, $ff
+	ld c, a
+	jr ApplyStatusEffectToPlayAreaPokemon
+
+
+ELSE
+; input e: PLAY_AREA_* of the target Pokémon
+PutPoisonCounter_PlayArea:
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	add e
+	call GetTurnDuelistVariable
+	and DOUBLE_POISONED
+	jr z, PoisonEffect_PlayArea  ; first counter
+	cp DOUBLE_POISONED
+	ret z  ; already at max
+	jr DoublePoisonEffect_PlayArea  ; second counter
+
+; input e: PLAY_AREA_* of the target Pokémon
+PoisonEffect_PlayArea:
+	lb bc, $ff, POISONED
+	jr ApplyStatusEffectToPlayAreaPokemon
+
+IF DOUBLE_POISON_EXISTS
+; input e: PLAY_AREA_* of the target Pokémon
+DoublePoisonEffect_PlayArea:
+	lb bc, $ff, DOUBLE_POISONED
+	jr ApplyStatusEffectToPlayAreaPokemon
+ENDC
+ENDC
+
+
 ; handles the sleep check for the Turn Duelist
 ; heals sleep status if coin is heads, else
 ; it plays sleeping animation
@@ -29,7 +118,7 @@ HandleSleepCheck:
 ; coin toss was heads, cure sleep status
 	pop hl
 	push hl
-	ld a, PSN_DBLPSN_BRN
+	ld a, PSN_BRN
 	and [hl]
 	ld [hl], a
 	ld a, DUEL_ANIM_HEAL

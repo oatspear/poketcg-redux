@@ -251,7 +251,11 @@ ToxicWasteEffectCommands:
 	db  $00
 
 ToxicEffectCommands:
+IF DOUBLE_POISON_EXISTS
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, DoublePoisonEffect
+ELSE
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PoisonEffect
+ENDC
 	; dbw EFFECTCMDTYPE_AI, Toxic_AIEffect
 	db  $00
 
@@ -306,7 +310,11 @@ PowerLariatEffectCommands:
 	db  $00
 
 VengefulHornEffectCommands:
+IF DOUBLE_POISON_EXISTS
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, DoublePoisonEffect
+ELSE
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PoisonEffect
+ENDC
 	; fallthrough to ParentalRushEffectCommands
 
 ParentalRushEffectCommands:

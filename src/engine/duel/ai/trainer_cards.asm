@@ -1782,9 +1782,9 @@ AIDecide_RareCandy:
 ; store this score to wce06
 	ld a, [hl]
 	ld [wce06], a
-; store this PLay Area location to wce07
+; store this PLay Area location to wAITrainerCardStorageByte
 	ld a, e
-	ld [wce07], a
+	ld [wAITrainerCardStorageByte], a
 
 .not_higher
 	inc e
@@ -1795,13 +1795,13 @@ AIDecide_RareCandy:
 ; that has been decided in wce1a,
 ; return the Play Area location of card
 ; to evolve in a and return carry
-	ld a, [wce07]
+	ld a, [wAITrainerCardStorageByte]
 	ld e, a
 	ld hl, wce0f
 	add hl, de
 	ld a, [hl]
 	ld [wce1a], a
-	ld a, [wce07]
+	ld a, [wAITrainerCardStorageByte]
 	scf
 	ret
 
@@ -1858,7 +1858,7 @@ AIDecide_RareCandy:
 	xor a
 	ld [wce06], a
 	ld a, $ff
-	ld [wce07], a
+	ld [wAITrainerCardStorageByte], a
 
 	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
 	call GetTurnDuelistVariable
@@ -1887,16 +1887,16 @@ AIDecide_RareCandy:
 ; store the score in wce06
 	ld a, b
 	ld [wce06], a
-; store this PLay Area location to wce07
+; store this PLay Area location to wAITrainerCardStorageByte
 	ld a, e
-	ld [wce07], a
+	ld [wAITrainerCardStorageByte], a
 
 .next_score
 	inc e
 	dec c
 	jr nz, .loop_score_2
 
-	ld a, [wce07]
+	ld a, [wAITrainerCardStorageByte]
 	cp $ff
 	jr z, .done
 
@@ -1910,7 +1910,7 @@ AIDecide_RareCandy:
 	add hl, de
 	ld a, [hl]
 	ld [wce1a], a
-	ld a, [wce07]
+	ld a, [wAITrainerCardStorageByte]
 	scf
 	ret
 

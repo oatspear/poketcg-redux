@@ -1285,7 +1285,8 @@ wAISetupBasicPokemonCount:: ; ce06
 wMultiPurposeByte:: ; ce06
 	ds $1
 
-wce07:: ; ce07
+wAITrainerCardStorageByte:: ; ce07
+wMultiPurposeByte2:: ; ce07
 	ds $1
 
 wAITempVars:: ; ce08

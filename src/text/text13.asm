@@ -255,9 +255,9 @@ SeepingToxinsName:
 SeepingToxinsDescription:
 	text "When your opponent's Active Pokémon"
 	line "takes damage from Poison, put 1 more"
-	line "damage counter on it."
-	line "If this is your Active Pokémon, also"
-	line "put 1 damage counter on each of your"
+	line "damage counter on it. While this is"
+	line "your Active Pokémon, also put 1 more"
+	line "damage counter on each of your"
 	line "opponent's Poisoned Benched Pokémon."
 	done
 

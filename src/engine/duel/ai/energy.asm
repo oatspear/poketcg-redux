@@ -203,7 +203,11 @@ AIProcessEnergyCards: ; 164fc (5:64fc)
 .has_20_hp
 	ld a, DUELVARS_ARENA_CARD_STATUS
 	call GetTurnDuelistVariable
+IF DOUBLE_POISON_EXISTS
 	and MAX_POISON
+ELSE
+	and POISONED
+ENDC
 	jr z, .check_defending_can_ko
 .poison_will_ko
 	ld a, 10

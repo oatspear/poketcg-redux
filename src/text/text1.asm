@@ -172,9 +172,9 @@ ReceivedDamageDueToPoisonText:
 ; 	line "20 damage due to Double Poison."
 ; 	done
 
-Received20DamageDueToBurnText:
+ReceivedDamageDueToBurnText:
 	text "<RAMTEXT> received"
-	line "20 damage due to Burn."
+	line "damage due to Burn."
 	done
 
 AccuracyCheckText:

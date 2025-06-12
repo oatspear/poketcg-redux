@@ -44,7 +44,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer UnableDueToParalysisText                           ; 0x0025
 	textpointer ReceivedDamageDueToPoisonText
 	; textpointer Received20DamageDueToPoisonText
-	textpointer Received20DamageDueToBurnText
+	textpointer ReceivedDamageDueToBurnText
 	textpointer AccuracyCheckText
 	textpointer AttackUnsuccessfulText
 	textpointer IsLostInConfusionText

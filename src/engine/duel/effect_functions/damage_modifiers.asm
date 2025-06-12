@@ -882,7 +882,11 @@ ReactivePoison_DamageBoostEffect:
 	ld b, 20
 .poison
 	ld a, [hl]
+IF DOUBLE_POISON_EXISTS
 	and MAX_POISON
+ELSE
+	and POISONED
+ENDC
 	jr z, .burn
 	ld c, 20
 .burn
@@ -917,7 +921,11 @@ Pester_AIEffect:
 DeadlyPoison_DamageBoostEffect:
 	ld a, DUELVARS_ARENA_CARD_STATUS
 	call GetNonTurnDuelistVariable
+IF DOUBLE_POISON_EXISTS
 	and MAX_POISON
+ELSE
+	and POISONED
+ENDC
 	ret z  ; not Poisoned
 	ld a, 30
 	jp AddToDamage

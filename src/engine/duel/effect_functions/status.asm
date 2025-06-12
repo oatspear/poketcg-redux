@@ -17,40 +17,11 @@ ParalysisIfDamagedSinceLastTurnEffect:
 	jr ParalysisEffect
 
 
-IF POISON_STACKS
-PoisonEffect:
-Put1PoisonCounterEffect:
-	ld a, DUELVARS_ARENA_CARD_STATUS
-	call GetNonTurnDuelistVariable
-	and MAX_POISON
-	cp MAX_POISON
-	jr nc, .apply
-	inc a
-.apply
-	ld b, $ff
-	ld c, a
-	jr ApplyStatusEffect
-
-DoublePoisonEffect:
-	ld a, DUELVARS_ARENA_CARD_STATUS
-	call GetNonTurnDuelistVariable
-	and MAX_POISON
-	cp MAX_POISON
-	jr nc, .apply
-	inc a
-	cp MAX_POISON
-	jr nc, .apply
-	inc a
-.apply
-	ld b, $ff
-	ld c, a
-	jr ApplyStatusEffect
-
-ELSE
 PoisonEffect:
 	lb bc, $ff, POISONED
 	jr ApplyStatusEffect
 
+IF DOUBLE_POISON_EXISTS
 DoublePoisonEffect:
 	lb bc, $ff, DOUBLE_POISONED
 	jr ApplyStatusEffect
@@ -61,15 +32,15 @@ BurnEffect:
 	jr ApplyStatusEffect
 
 ParalysisEffect:
-	lb bc, PSN_DBLPSN_BRN, PARALYZED
+	lb bc, PSN_BRN, PARALYZED
 	jr ApplyStatusEffect
 
 ConfusionEffect:
-	lb bc, PSN_DBLPSN_BRN, CONFUSED
+	lb bc, PSN_BRN, CONFUSED
 	jr ApplyStatusEffect
 
 SleepEffect:
-	lb bc, PSN_DBLPSN_BRN, ASLEEP
+	lb bc, PSN_BRN, ASLEEP
 	jr ApplyStatusEffect
 
 
@@ -239,45 +210,12 @@ TargetedPoisonEffect:
 	jp SwapTurn
 
 
-IF POISON_STACKS
-; input e: PLAY_AREA_* of the target Pokémon
-DoublePoisonEffect_PlayArea:
-	call PoisonEffect_PlayArea
-	; jr PoisonEffect_PlayArea
-	; fallthrough
-
-; input e: PLAY_AREA_* of the target Pokémon
-PoisonEffect_PlayArea:
-PutPoisonCounter_PlayArea:
-	ld a, DUELVARS_ARENA_CARD_STATUS
-	add e
-	call GetTurnDuelistVariable
-	and MAX_POISON
-	cp MAX_POISON
-	ret nc  ; already at max
-	inc a
-	ld b, $ff
-	ld c, a
-	jr ApplyStatusEffectToPlayAreaPokemon
-
-
-ELSE
-; input e: PLAY_AREA_* of the target Pokémon
-PutPoisonCounter_PlayArea:
-	ld a, DUELVARS_ARENA_CARD_STATUS
-	add e
-	call GetTurnDuelistVariable
-	and DOUBLE_POISONED
-	jr z, PoisonEffect_PlayArea  ; first counter
-	cp DOUBLE_POISONED
-	ret z  ; already at max
-	jr DoublePoisonEffect_PlayArea  ; second counter
-
 ; input e: PLAY_AREA_* of the target Pokémon
 PoisonEffect_PlayArea:
 	lb bc, $ff, POISONED
 	jr ApplyStatusEffectToPlayAreaPokemon
 
+IF DOUBLE_POISON_EXISTS
 ; input e: PLAY_AREA_* of the target Pokémon
 DoublePoisonEffect_PlayArea:
 	lb bc, $ff, DOUBLE_POISONED
@@ -292,17 +230,17 @@ BurnEffect_PlayArea:
 
 ; input e: PLAY_AREA_* of the target Pokémon
 ParalysisEffect_PlayArea:
-	lb bc, PSN_DBLPSN_BRN, PARALYZED
+	lb bc, PSN_BRN, PARALYZED
 	jr ApplyStatusEffectToPlayAreaPokemon
 
 ; input e: PLAY_AREA_* of the target Pokémon
 ConfusionEffect_PlayArea:
-	lb bc, PSN_DBLPSN_BRN, CONFUSED
+	lb bc, PSN_BRN, CONFUSED
 	jr ApplyStatusEffectToPlayAreaPokemon
 
 ; input e: PLAY_AREA_* of the target Pokémon
 SleepEffect_PlayArea:
-	lb bc, PSN_DBLPSN_BRN, ASLEEP
+	lb bc, PSN_BRN, ASLEEP
 	jr ApplyStatusEffectToPlayAreaPokemon
 
 
@@ -417,7 +355,7 @@ HayFever_ParalysisEffect:
 ; if the status depends on card type...
 	; ld a, [wLastPlayedCardType]
 	; cp TYPE_TRAINER_SUPPORTER
-	and PSN_DBLPSN_BRN
+	and PSN_BRN
 	or PARALYZED
 	or BURNED
 	ld [hl], a
@@ -453,7 +391,11 @@ NoxiousScalesEffect:
 	call CheckArenaPokemonHas3OrMoreEnergiesAttached
 	jr c, .just_poison
 
+IF DOUBLE_POISON_EXISTS
 	call DoublePoisonEffect
+ELSE
+	call PoisonEffect
+ENDC
 	call ConfusionEffect
 	jr ApplyStatusAndPlayAnimationAdhoc
 
@@ -536,7 +478,11 @@ CountPoisonedPokemonInPlayArea:
 	call GetTurnDuelistVariable
 .loop_play_area
 	ld a, [hli]  ; get status and move to next
+IF DOUBLE_POISON_EXISTS
 	and MAX_POISON
+ELSE
+	and POISONED
+ENDC
 	jr z, .next
 	inc c
 .next

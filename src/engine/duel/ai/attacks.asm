@@ -604,7 +604,11 @@ GetAIScoreOfAttack:
 	call CheckLoadedAttackFlag
 	jr nc, .check_sleep
 	ld a, [wTempAI]
+IF DOUBLE_POISON_EXISTS
 	and MAX_POISON
+ELSE
+	and POISONED
+ENDC
 	jr z, .add_poison_score
 	and $40 ; only double poisoned?
 	jr z, .check_sleep

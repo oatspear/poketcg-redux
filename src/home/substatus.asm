@@ -271,7 +271,7 @@ HandleNoDamageOrEffectSubstatus:
 ; ; prevent damage if attacked by a Pokémon with 2 or more status
 ; 	ld a, DUELVARS_ARENA_CARD_STATUS
 ; 	call GetNonTurnDuelistVariable
-; 	and PSN_DBLPSN_BRN
+; 	and PSN_BRN
 ; 	ret z
 ; 	and POISONED | BURNED
 ; 	cp POISONED | BURNED

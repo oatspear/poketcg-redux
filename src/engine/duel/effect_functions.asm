@@ -983,9 +983,12 @@ ToxicNeedleEffect:
 	ld a, DUELVARS_ARENA_CARD_STATUS
 	call GetNonTurnDuelistVariable
 	or a
-	jp nz, DoublePoisonEffect  ; just poison
-	call ParalysisEffect
+	call z, ParalysisEffect
+IF DOUBLE_POISON_EXISTS
 	jp DoublePoisonEffect
+ELSE
+	jp PoisonEffect
+ENDC
 
 
 GatherToxinsEffect:
@@ -1093,7 +1096,11 @@ WickedTentacle_PoisonTransferEffect:
 
 ToxicWaste_DamagePoisonEffect:
 	call ToxicWaste_DamageBoostEffect
+IF DOUBLE_POISON_EXISTS
 	jp DoublePoisonEffect
+ELSE
+	jp PoisonEffect
+ENDC
 
 
 ; DiscardEnergy_DamageTargetPokemon_AISelectEffect:
@@ -5501,7 +5508,7 @@ ImakuniEffect: ; 2f216 (b:7216)
 	bank1call PlayAdhocAnimationOnPlayAreaArena_NoEffectiveness
 	ld a, DUELVARS_ARENA_CARD_STATUS
 	call GetTurnDuelistVariable
-	and PSN_DBLPSN_BRN
+	and PSN_BRN
 	or CONFUSED
 	ld [hl], a
 	bank1call DrawDuelHUDs

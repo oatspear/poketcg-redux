@@ -1103,7 +1103,7 @@ ClearStatusOnSwitch:
 	ld h, a
 	ld l, DUELVARS_ARENA_CARD_STATUS
 	ld a, [hl]
-	and PSN_DBLPSN_BRN
+	and PSN_BRN
 	ld [hl], a
 	pop hl
 	jr ClearAllArenaEffectsAndSubstatus
@@ -1124,7 +1124,7 @@ ClearStatusOnDamage:
 
 .clear
 	ld a, [hl]
-	and PSN_DBLPSN_BRN
+	and PSN_BRN
 	ld [hl], a
 	pop hl
 	ret
