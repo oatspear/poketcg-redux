@@ -416,9 +416,9 @@ ApplyStatusAndPlayAnimationAdhoc:
 	ld h, a
 	bank1call PlayInflictStatusAnimation
 	bank1call WaitAttackAnimation
-	bank1call Func_6df1
+	bank1call ApplyStatusConditionsFromFeedbackArray
 	bank1call DrawDuelHUDs
-	call PrintNoEffectTextOrUnsuccessfulText
+	bank1call PrintNoEffectTextOrUnsuccessfulText
 	call c, WaitForWideTextBoxInput
 	ret
 

@@ -8456,7 +8456,7 @@ ConvertSpecialTrainerCardToPokemon:
 
 ; this function applies status conditions to the defending Pokemon,
 ; returned by the effect functions in wEffectFunctionsFeedback
-Func_6df1:
+ApplyStatusConditionsFromFeedbackArray:
 	xor a
 	ld [wPlayerArenaCardLastTurnStatus], a
 	ld [wOpponentArenaCardLastTurnStatus], a
@@ -9151,7 +9151,7 @@ ClearNonTurnTemporaryDuelvars_CopyStatus:
 ; update non-turn holder's DUELVARS_ARENA_CARD_LAST_TURN_DAMAGE
 ; if wccef == 0: set to [wDealtDamage]
 ; if wceef != 0: set to 0
-Func_7195:
+UpdateDamageTakenLastTurn:
 	ld a, DUELVARS_ARENA_CARD_LAST_TURN_DAMAGE
 	call GetNonTurnDuelistVariable
 	ld a, [wccef]
@@ -9736,9 +9736,9 @@ ENDC
 	pop af
 	ld [wTempNonTurnDuelistCardID], a
 	call HandleStrikeBack_AfterDirectAttack
-	call Func_6df1
+	call ApplyStatusConditionsFromFeedbackArray
 	call Func_1bb4
-	call Func_7195
+	call UpdateDamageTakenLastTurn
 	call HandleDestinyBond_ClearKnockedOutPokemon_TakePrizes_CheckGameOutcome
 	jr c, .done  ; duel finished
 
@@ -9753,9 +9753,9 @@ ENDC
 	pop af
 	ld [wTempNonTurnDuelistCardID], a
 	; call HandleStrikeBack_AfterDirectAttack
-	call Func_6df1
+	call ApplyStatusConditionsFromFeedbackArray
 	call Func_1bb4
-	call Func_7195
+	call UpdateDamageTakenLastTurn
 	call HandleDestinyBond_ClearKnockedOutPokemon_TakePrizes_CheckGameOutcome
 
 .done

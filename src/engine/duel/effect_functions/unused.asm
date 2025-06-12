@@ -4676,7 +4676,7 @@ Quickfreeze_Paralysis50PercentEffect:
 	bank1call PlayAttackAnimation
 	bank1call PlayInflictStatusAnimation
 	bank1call WaitAttackAnimation
-	bank1call Func_6df1
+	bank1call ApplyStatusConditionsFromFeedbackArray
 	bank1call DrawDuelHUDs
 	call PrintNoEffectTextOrUnsuccessfulText
 	call c, WaitForWideTextBoxInput
@@ -4992,7 +4992,7 @@ Quickfreeze_Paralysis50PercentEffect: ; 2d2f3 (b:52f3)
 	bank1call PlayAttackAnimation
 	bank1call PlayInflictStatusAnimation
 	bank1call WaitAttackAnimation
-	bank1call Func_6df1
+	bank1call ApplyStatusConditionsFromFeedbackArray
 	bank1call DrawDuelHUDs
 	call PrintNoEffectTextOrUnsuccessfulText
 	call c, WaitForWideTextBoxInput

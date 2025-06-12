@@ -8465,7 +8465,7 @@ ConvertSpecialTrainerCardToPokemon:
 
 ; this function applies status conditions to the defending Pokemon,
 ; returned by the effect functions in wEffectFunctionsFeedback
-Func_6df1:
+ApplyStatusConditionsFromFeedbackArray:
 	xor a
 	ld [wPlayerArenaCardLastTurnStatus], a
 	ld [wOpponentArenaCardLastTurnStatus], a
@@ -9158,22 +9158,13 @@ ClearNonTurnTemporaryDuelvars_CopyStatus:
 	ret
 
 ; update non-turn holder's DUELVARS_ARENA_CARD_LAST_TURN_DAMAGE
-; if wccef == 0: set to [wDealtDamage]
-; if wceef != 0: set to 0
-Func_7195:
+; preserves: bc, de
+UpdateDamageTakenLastTurn:
 	ld a, DUELVARS_ARENA_CARD_LAST_TURN_DAMAGE
 	call GetNonTurnDuelistVariable
-	ld a, [wccef]
-	or a
-	jr nz, .zero
 	ld a, [wDealtDamage]
 	ld [hli], a
 	ld a, [wDealtDamage + 1]
-	ld [hl], a
-	ret
-.zero
-	xor a
-	ld [hli], a
 	ld [hl], a
 	ret
 
@@ -9717,11 +9708,13 @@ PlayAttackAnimation_DealAttackDamage:
 	call WaitAttackAnimation
 	pop hl
 	pop de
-	call SubtractHP
+	call SubtractHP  ; preserves: hl, bc, de
+	call UpdateDamageTakenLastTurn  ; preserves: bc, de
+	ld l, DUELVARS_ARENA_CARD_HP
 IF CLEAR_STATUS_ON_DAMAGE
 	ld a, e
 	or d
-	call nz, ClearStatusOnDamage
+	call nz, ClearStatusOnDamage  ; preserves: hl, bc, de
 ENDC
 	ld a, [wDuelDisplayedScreen]
 	cp DUEL_MAIN_SCENE
@@ -9745,9 +9738,8 @@ ENDC
 	pop af
 	ld [wTempNonTurnDuelistCardID], a
 	call HandleStrikeBack_AfterDirectAttack
-	call Func_6df1
+	call ApplyStatusConditionsFromFeedbackArray
 	call Func_1bb4
-	call Func_7195
 	call HandleDestinyBond_ClearKnockedOutPokemon_TakePrizes_CheckGameOutcome
 	jr c, .done  ; duel finished
 
@@ -9762,9 +9754,9 @@ ENDC
 	pop af
 	ld [wTempNonTurnDuelistCardID], a
 	; call HandleStrikeBack_AfterDirectAttack
-	call Func_6df1
+	call UpdateDamageTakenLastTurn  ; preserves: bc, de
+	call ApplyStatusConditionsFromFeedbackArray
 	call Func_1bb4
-	call Func_7195
 	call HandleDestinyBond_ClearKnockedOutPokemon_TakePrizes_CheckGameOutcome
 
 .done
@@ -9864,6 +9856,40 @@ LastChanceToNegateFinalDamage:
 	call GetNonTurnDuelistVariable
 	ld [hl], $0
 	ld de, 0
+	ret
+
+
+Func_1bb4:
+	call Func_3b31
+	call DrawDuelMainScene
+	call DrawDuelHUDs
+	xor a
+	ldh [hTempPlayAreaLocation_ff9d], a
+	call PrintNoEffectTextOrUnsuccessfulText
+	call WaitForWideTextBoxInput
+	jp ExchangeRNG
+
+
+; prints one of the ThereWasNoEffectFrom*Text if wEffectFailed contains EFFECT_FAILED_NO_EFFECT,
+; and prints WasUnsuccessfulText if wEffectFailed contains EFFECT_FAILED_UNSUCCESSFUL
+PrintNoEffectTextOrUnsuccessfulText:
+	ld a, [wEffectFailed]
+	or a
+	ret z
+	cp $1
+	jr z, .no_effect_from_status
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	add DUELVARS_ARENA_CARD
+	call LoadCardNameAndLevelFromVarToRam2
+	call LoadAttackNameToRam2b
+	ldtx hl, WasUnsuccessfulText
+	call DrawWideTextBox_PrintText
+	scf
+	ret
+.no_effect_from_status
+	call PrintThereWasNoEffectFromStatusText
+	call DrawWideTextBox_PrintText
+	scf
 	ret
 
 

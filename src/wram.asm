@@ -828,6 +828,7 @@ wccec:: ; ccec
 wEffectFailed:: ; cced
 	ds $1
 
+; reusable
 wPreEvolutionPokemonCard:: ; ccee
 	ds $1
 

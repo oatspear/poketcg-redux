@@ -2353,6 +2353,7 @@ HandleDamageReducingPowers:
 ; hl: address to subtract HP from
 ; de: how much HP to subtract (damage to deal)
 ; returns carry if the HP does not become 0 as a result
+; preserves: hl, bc, de
 SubtractHP:
 	push hl
 	push de
@@ -2641,40 +2642,6 @@ LoadCard2NameToRamText:
 	ld h, [hl]
 	ld l, a
 	jp LoadTxRam2
-
-
-Func_1bb4:
-	call Func_3b31
-	bank1call DrawDuelMainScene
-	call DrawDuelHUDs
-	xor a
-	ldh [hTempPlayAreaLocation_ff9d], a
-	call PrintNoEffectTextOrUnsuccessfulText
-	call WaitForWideTextBoxInput
-	jp ExchangeRNG
-
-
-; prints one of the ThereWasNoEffectFrom*Text if wEffectFailed contains EFFECT_FAILED_NO_EFFECT,
-; and prints WasUnsuccessfulText if wEffectFailed contains EFFECT_FAILED_UNSUCCESSFUL
-PrintNoEffectTextOrUnsuccessfulText:
-	ld a, [wEffectFailed]
-	or a
-	ret z
-	cp $1
-	jr z, .no_effect_from_status
-	ldh a, [hTempPlayAreaLocation_ff9d]
-	add DUELVARS_ARENA_CARD
-	call LoadCardNameAndLevelFromVarToRam2
-	call LoadAttackNameToRam2b
-	ldtx hl, WasUnsuccessfulText
-	call DrawWideTextBox_PrintText
-	scf
-	ret
-.no_effect_from_status
-	call PrintThereWasNoEffectFromStatusText
-	call DrawWideTextBox_PrintText
-	scf
-	ret
 
 
 ; Returns and overwrites the retreat cost of the turn holder's arena
