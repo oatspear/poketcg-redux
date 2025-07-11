@@ -164,17 +164,16 @@ UnableDueToParalysisText: ; 364a1 (d:64a1)
 
 ReceivedDamageDueToPoisonText:
 	text "<RAMTEXT> received"
-	line "damage due to Poison."
+	line "<RAMNUM> damage due to Poison."
 	done
-
-; Received20DamageDueToPoisonText: ; 364e3 (d:64e3)
-; 	text "<RAMTEXT> received"
-; 	line "20 damage due to Double Poison."
-; 	done
 
 ReceivedDamageDueToBurnText:
 	text "<RAMTEXT> received"
-	line "damage due to Burn."
+	line "<RAMNUM> damage due to Burn."
+	done
+
+PokemonFlinchedText:
+	text "<RAMTEXT> flinched!"
 	done
 
 AccuracyCheckText:

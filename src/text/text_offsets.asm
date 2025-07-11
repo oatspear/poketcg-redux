@@ -43,8 +43,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer NoPokemonOnTheBenchText                            ; 0x0023
 	textpointer UnableDueToParalysisText                           ; 0x0025
 	textpointer ReceivedDamageDueToPoisonText
-	; textpointer Received20DamageDueToPoisonText
 	textpointer ReceivedDamageDueToBurnText
+	textpointer PokemonFlinchedText
 	textpointer AccuracyCheckText
 	textpointer AttackUnsuccessfulText
 	textpointer IsLostInConfusionText
@@ -328,13 +328,12 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ThereWasNoFireEnergyText                           ; 0x017b
 	textpointer YouCanSelectMoreCardsQuitText                      ; 0x017c
 	textpointer ThereWasNoEffectText                               ; 0x017d
-	textpointer ThereWasNoEffectFromToxicText                      ; 0x017e
 	textpointer ThereWasNoEffectFromPoisonText                     ; 0x017f
 	textpointer ThereWasNoEffectFromBurnText
 	textpointer ThereWasNoEffectFromSleepText                      ; 0x0180
 	textpointer ThereWasNoEffectFromParalysisText                  ; 0x0181
 	textpointer ThereWasNoEffectFromConfusionText                  ; 0x0182
-	textpointer ThereWasNoEffectFromPoisonConfusionText            ; 0x0183
+	textpointer ThereWasNoEffectFromFlinchText
 	textpointer SortedCardsInDuelistsDeckText
 	textpointer Text0185                                           ; 0x0185
 	textpointer PrizesCardsText                                    ; 0x0186

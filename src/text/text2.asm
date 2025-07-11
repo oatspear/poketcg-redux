@@ -52,18 +52,18 @@ ReceivesDamageDueToStrikeBackText:
 	done
 
 NoDamageOrEffectDueToAgilityText:
-	text "No damage or effect on next Attack"
-	line "due to the effects of Agility."
+	text "Immune to damage or effects of"
+	line "attacks due to Agility."
 	done
 
-NoDamageOrEffectDueToNShieldText: ; 38494 (e:4494)
-	text "No damage or effect on next Attack"
-	line "due to the effects of N Shield."
+NoDamageOrEffectDueToNShieldText:
+	text "Immune to damage or effects of"
+	line "attacks due to N. Shield."
 	done
 
 NoDamageOrEffectDueToShieldDustText:
-	text "No damage or effects due to"
-	line "Shield Dust."
+	text "Immune to damage or effects of"
+	line "attacks due to Shield Dust."
 	done
 
 PutInPlayWithTransformText:
@@ -609,11 +609,6 @@ ThereWasNoEffectText: ; 39b97 (e:5b97)
 	text "There was no effect!"
 	done
 
-ThereWasNoEffectFromToxicText: ; 39bad (e:5bad)
-	text "There was no effect"
-	line "from Toxic"
-	done
-
 ThereWasNoEffectFromPoisonText: ; 39bcd (e:5bcd)
 	text "There was no effect"
 	line "from Poison."
@@ -639,9 +634,9 @@ ThereWasNoEffectFromConfusionText: ; 39c35 (e:5c35)
 	line "from Confusion."
 	done
 
-ThereWasNoEffectFromPoisonConfusionText: ; 39c5a (e:5c5a)
-	text "There was no effet"
-	line "from Poison, Confusion."
+ThereWasNoEffectFromFlinchText:
+	text "There was no effect"
+	line "from Flinch."
 	done
 
 SortedCardsInDuelistsDeckText:
