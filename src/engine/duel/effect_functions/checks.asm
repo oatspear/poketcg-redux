@@ -798,6 +798,19 @@ CheckDefendingPokemonAffectedByEffects:
 	jp SwapTurn
 
 
+; output:
+;   carry: set if immune to attack effects
+; preserves: hl, bc, de
+CheckNotImmuneToAttackEffects:
+	ld a, [wLoadedAttackCategory]
+	cp POKEMON_POWER
+	ret z
+	ld a, [wNoDamageOrEffect]
+	cp 1
+	ccf  ; carry if non-zero
+	ret
+
+
 ; ------------------------------------------------------------------------------
 ; Energy
 ; ------------------------------------------------------------------------------
