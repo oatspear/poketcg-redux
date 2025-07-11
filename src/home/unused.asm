@@ -209,7 +209,8 @@ UseAttackOrPokemonPower:
 	call TryExecuteEffectCommandFunction
 	call CheckSelfConfusionDamage
 	jp c, HandleConfusionDamageToSelf
-	call DrawDuelMainScene_PrintPokemonsAttackText
+	call DrawDuelMainScene
+	call PrintPokemonsAttackText
 	call WaitForWideTextBoxInput
 	call ExchangeRNG
 	ld a, EFFECTCMDTYPE_REQUIRE_SELECTION
