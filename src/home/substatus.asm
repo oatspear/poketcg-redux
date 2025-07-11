@@ -307,7 +307,7 @@ CheckReducedAccuracySubstatus:
 
 ; return carry and return the appropriate text id in hl if the target has an
 ; special status or power that prevents any damage or effect done to it this turn
-; input: a = NO_DAMAGE_OR_EFFECT_*
+; input: wNoDamageOrEffect = NO_DAMAGE_OR_EFFECT_*
 CheckNoDamageOrEffect:
 	ld a, [wNoDamageOrEffect]
 	or a
@@ -340,18 +340,17 @@ NoDamageOrEffectTextIDTable:
 	tx NoDamageOrEffectDueToNShieldText      ; NO_DAMAGE_OR_EFFECT_NSHIELD
 
 
-; returns carry if turn holder's card in location a is paralyzed, asleep, confused,
-; and/or neutralizing gas in play, meaning that attack and/or pkmn power cannot be used
-; preserves: bc, de
-CheckCannotUseDueToStatus_Anywhere:
-	jr CheckCannotUseDueToStatus.status_check
-
 ; returns carry if turn holder's arena card is paralyzed, asleep, confused,
 ; and/or neutralizing gas in play, meaning that attack and/or pkmn power cannot be used
 ; preserves: bc, de
 CheckCannotUseDueToStatus:
 	xor a  ; PLAY_AREA_ARENA
-.status_check
+	; fallthrough
+
+; returns carry if turn holder's card in location a is paralyzed, asleep, confused,
+; and/or neutralizing gas in play, meaning that attack and/or pkmn power cannot be used
+; preserves: bc, de
+CheckCannotUseDueToStatus_Anywhere:
 	push bc
 	ld b, a
 	call CheckPokemonPowerReadyState
@@ -1012,11 +1011,11 @@ GetRetreatCostPenalty:
 	call GetTurnDuelistVariable
 IF CC_IS_COIN_FLIP
 ; Crowd Control status
-	and CNF_SLP_PRZ
-	jr z, .no_crowd_control
-	inc c
-.no_crowd_control
-	ld a, [hl]
+; 	and CNF_SLP_PRZ
+; 	jr z, .no_crowd_control
+; 	inc c
+; .no_crowd_control
+; 	ld a, [hl]
 ELSE
 ; Drowsiness status
 	and CNF_SLP_PRZ
@@ -1080,6 +1079,46 @@ ENDC
 	ldtx hl, UnableToRetreatDueToTrapText
 	scf
 	ret
+
+
+; assumes:
+;   - call SwapTurn if needed
+; input:
+;   e: PLAY_AREA_* of the target Pokémon
+; outputs:
+;   carry: set if able to apply status
+; preserves: bc, de
+CanBeAffectedByStatus:
+	ld a, DUELVARS_ARENA_CARD
+	add e
+	call GetTurnDuelistVariable
+	cp $ff
+	ret z  ; empty slot
+
+	push de
+	call GetCardIDFromDeckIndex
+	ld a, e
+	pop de
+	cp MYSTERIOUS_FOSSIL
+	ret z  ; cannot induce status
+; Snorlax's Thick Skinned prevents it from being statused...
+	cp SNORLAX
+	jr nz, .safeguard
+; ...unless already so, or if affected by Neutralizing Gas
+	ld a, e
+	call CheckCannotUseDueToStatus_Anywhere  ; preserves bc, de
+	ret nc  ; Pokémon Power is active
+
+.safeguard
+	ld a, e
+	push bc
+	push de
+	call IsSafeguardActive
+	pop de
+	pop bc
+	ccf
+	ret  ; nc if safeguarded
+
 
 ; return carry if the turn holder is affected by Headache and trainer cards can't be used
 CheckCantUseItemsThisTurn:
@@ -1312,11 +1351,11 @@ ApplyCounterattackDamage:
 	call GetTurnDuelistVariable
 	pop de
 	push af
-	push hl
+	; push hl
 	call SubtractHP
 	ldtx hl, ReceivesDamageDueToStrikeBackText
 	call DrawWideTextBox_WaitForInput
-	pop hl
+	; pop hl
 	pop af
 	or a
 	ret z
