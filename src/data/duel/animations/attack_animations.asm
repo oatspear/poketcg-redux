@@ -149,7 +149,7 @@ PointerTable_AttackAnimation:
 	dw AttackAnimation_Confusion           ; ATK_ANIM_CONFUSION
 	dw AttackAnimation_Paralysis           ; ATK_ANIM_PARALYSIS
 	dw AttackAnimation_Sleep               ; ATK_ANIM_SLEEP
-	dw AttackAnimation_ImakuniConfusion    ; ATK_ANIM_IMAKUNI_CONFUSION
+	dw AttackAnimation_SelfConfusion       ; ATK_ANIM_SELF_CONFUSION
 	dw AttackAnimation_SleepingGas         ; ATK_ANIM_SLEEPING_GAS
 	dw AttackAnimation_HayFever            ; ATK_ANIM_HAY_FEVER
 	dw AttackAnimation_ThunderPlayArea     ; ATK_ANIM_THUNDER_PLAY_AREA
@@ -159,7 +159,7 @@ PointerTable_AttackAnimation:
 	dw AttackAnimation_HealingWindPlayArea ; ATK_ANIM_HEALING_WIND_PLAY_AREA
 	dw AttackAnimation_Gale                ; ATK_ANIM_GALE
 	dw AttackAnimation_Expand              ; ATK_ANIM_EXPAND
-	dw AttackAnimation_HayFeverParalysis   ; ATK_ANIM_HAY_FEVER_PARALYSIS
+	dw AttackAnimation_SelfParalysis       ; ATK_ANIM_SELF_PARALYSIS
 	dw AttackAnimation_FullHeal            ; ATK_ANIM_FULL_HEAL
 	dw AttackAnimation_Cyclone             ; ATK_ANIM_CYCLONE
 	dw AttackAnimation_ProtectNoGlow       ; ATK_ANIM_PROTECT_NO_GLOW
@@ -891,7 +891,7 @@ AttackAnimation_Sleep:
 	anim_opponent       DUEL_ANIM_SLEEP
 	anim_end
 
-AttackAnimation_ImakuniConfusion:
+AttackAnimation_SelfConfusion:
 	anim_player         DUEL_ANIM_CONFUSION
 	anim_end
 
@@ -905,7 +905,7 @@ AttackAnimation_HayFever:
 	anim_player         DUEL_ANIM_POWDER
 	anim_end
 
-AttackAnimation_HayFeverParalysis:
+AttackAnimation_SelfParalysis:
 	anim_player         DUEL_ANIM_PARALYSIS
 	anim_end
 

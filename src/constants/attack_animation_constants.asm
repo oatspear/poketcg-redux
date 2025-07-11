@@ -129,7 +129,7 @@
 	const ATK_ANIM_CONFUSION              ; $7c
 	const ATK_ANIM_PARALYSIS              ; $7d
 	const ATK_ANIM_SLEEP                  ; $7e
-	const ATK_ANIM_IMAKUNI_CONFUSION      ; $7f
+	const ATK_ANIM_SELF_CONFUSION         ; $7f
 	const ATK_ANIM_SLEEPING_GAS           ; $80
 	const ATK_ANIM_HAY_FEVER              ; $81
 	const ATK_ANIM_THUNDER_PLAY_AREA      ; $82
@@ -139,7 +139,7 @@
 	const ATK_ANIM_HEALING_WIND_PLAY_AREA ; $86
 	const ATK_ANIM_GALE                   ; $87
 	const ATK_ANIM_EXPAND                 ; $88
-	const ATK_ANIM_HAY_FEVER_PARALYSIS    ; $89
+	const ATK_ANIM_SELF_PARALYSIS         ; $89
 	const ATK_ANIM_FULL_HEAL              ; $8a
 	const ATK_ANIM_CYCLONE                ; $8b
 	const ATK_ANIM_PROTECT_NO_GLOW        ; $8c
