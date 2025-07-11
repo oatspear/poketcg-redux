@@ -7207,7 +7207,7 @@ OppAction_UsePokemonPower:
 
 ; execute the EFFECTCMDTYPE_BEFORE_DAMAGE command of the used Pokemon Power
 OppAction_ExecutePokemonPowerEffect:
-	call Func_7415
+	call ResetAttackAnimationIsPlaying
 	ld a, EFFECTCMDTYPE_BEFORE_DAMAGE
 	call TryExecuteEffectCommandFunction
 	call HandleOnUsePokemonPowerEffects
@@ -8071,7 +8071,7 @@ HandleEndOfTurnEffect_RocketHeadquarters:
 ;
 ;; play heal animation
 ;	push de
-;	call Func_7415
+;	call ResetAttackAnimationIsPlaying
 ;	ld a, ATK_ANIM_HEALING_WIND_PLAY_AREA
 ;	ld [wLoadedAttackAnimation], a
 ;	ldh a, [hTempPlayAreaLocation_ff9d]
@@ -8211,7 +8211,7 @@ Bank1_ApplyDirectDamage:
 	add DUELVARS_ARENA_CARD_HP
 	ld l, a
 	push af
-	call Func_7415
+	call ResetAttackAnimationIsPlaying
 	call PlayAttackAnimation_DealAttackDamageSimple
 	pop af
 	or a
@@ -9573,9 +9573,9 @@ SelectComputerOpponentData:
 	textitem  3, 14, SelectComputerOpponentText
 	db $ff
 
-Func_7415:
+ResetAttackAnimationIsPlaying:
 	xor a
-	ld [wce7e], a
+	ld [wAttackAnimationIsPlaying], a
 	ret
 
 
@@ -9587,7 +9587,7 @@ ClearNonTurnTemporaryDuelvars_ResetCarry:
 
 ; use Pokemon Power
 UsePokemonPower:
-	call Func_7415
+	call ResetAttackAnimationIsPlaying
 	ld a, EFFECTCMDTYPE_INITIAL_EFFECT_2
 	call TryExecuteEffectCommandFunction
 	jp c, DisplayUsePokemonPowerScreen_WaitForInput
@@ -9646,7 +9646,8 @@ IF OLD_CONFUSION_BEHAVIOUR
 	call CheckSelfConfusionDamage
 	jp c, HandleConfusionDamageToSelf
 ENDC
-	call DrawDuelMainScene_PrintPokemonsAttackText
+	call DrawDuelMainScene
+	call PrintPokemonsAttackText
 	call WaitForWideTextBoxInput
 	call ExchangeRNG
 	ld a, EFFECTCMDTYPE_REQUIRE_SELECTION
@@ -9656,7 +9657,7 @@ ENDC
 ;	fallthrough
 
 PlayAttackAnimation_DealAttackDamage:
-	call Func_7415
+	call ResetAttackAnimationIsPlaying
 	ld a, [wLoadedAttackCategory]
 	and RESIDUAL
 	jr nz, .deal_damage
@@ -9708,10 +9709,13 @@ PlayAttackAnimation_DealAttackDamage:
 	call WaitAttackAnimation
 	pop hl
 	pop de
-	call SubtractHP
+	call SubtractHP  ; preserves: hl, bc, de
+	call UpdateDamageTakenLastTurn  ; preserves: bc, de
+	ld l, DUELVARS_ARENA_CARD_HP  ; restore hl
 IF CLEAR_STATUS_ON_DAMAGE
 	ld a, e
 	or d
+	ld a, PLAY_AREA_ARENA
 	call nz, ClearStatusOnDamage
 ENDC
 	ld a, [wDuelDisplayedScreen]
@@ -9737,7 +9741,7 @@ ENDC
 	ld [wTempNonTurnDuelistCardID], a
 	call HandleStrikeBack_AfterDirectAttack
 	call ApplyStatusConditionsFromFeedbackArray
-	call Func_1bb4
+	call DrawDuelMainSceneAndPrintFailureText
 	call UpdateDamageTakenLastTurn
 	call HandleDestinyBond_ClearKnockedOutPokemon_TakePrizes_CheckGameOutcome
 	jr c, .done  ; duel finished
@@ -9754,7 +9758,7 @@ ENDC
 	ld [wTempNonTurnDuelistCardID], a
 	; call HandleStrikeBack_AfterDirectAttack
 	call ApplyStatusConditionsFromFeedbackArray
-	call Func_1bb4
+	call DrawDuelMainSceneAndPrintFailureText
 	call UpdateDamageTakenLastTurn
 	call HandleDestinyBond_ClearKnockedOutPokemon_TakePrizes_CheckGameOutcome
 
@@ -9816,7 +9820,7 @@ HandleConfusionDamageToSelf:
 	ld [wLoadedAttackAnimation], a
 	ld a, CONFUSION_DAMAGE
 	call DealConfusionDamageToSelf
-	call Func_1bb4
+	call DrawDuelMainSceneAndPrintFailureText
 	call HandleDestinyBond_ClearKnockedOutPokemon_TakePrizes_CheckGameOutcome
 	call ClearNonTurnTemporaryDuelvars
 	or a
@@ -9893,9 +9897,9 @@ PlayAdhocAnimationOnPlayAreaLocation_NoEffectiveness:
 ; preserves: de (maybe hl, bc)
 PlayAdhocAnimationOnPlayAreaLocation:
 	ld [wLoadedAttackAnimation], a
-	; call Func_7415
+	; call ResetAttackAnimationIsPlaying
 	xor a
-	ld [wce7e], a
+	ld [wAttackAnimationIsPlaying], a
 	jr PlayAdhocAnimationOnDuelScene.got_animation
 
 
@@ -9998,7 +10002,7 @@ PlayInflictStatusAnimation:
 	ldh a, [hWhoseTurn]
 	cp d
 	jr nz, .got_anim
-	ld e, ATK_ANIM_IMAKUNI_CONFUSION
+	ld e, ATK_ANIM_SELF_CONFUSION
 .got_anim
 	ld a, e
 	ld [wLoadedAttackAnimation], a
@@ -10044,6 +10048,8 @@ PlayAttackAnimation_DealAttackDamageSimple:
 IF CLEAR_STATUS_ON_DAMAGE
 	ld a, e
 	or d
+	ld a, l
+	sub DUELVARS_ARENA_CARD_HP  ; get PLAY_AREA_*
 	call nz, ClearStatusOnDamage
 ENDC
 	ld a, [wDuelDisplayedScreen]
@@ -10073,19 +10079,19 @@ PlayAttackAnimation:
 	ld a, [wWhoseTurn]
 	ldh [hWhoseTurn], a
 	ld a, c
-	ld [wce81], a
+	ld [wDamageAnimEffectiveness], a
 	ldh a, [hWhoseTurn]
 	cp h
 	jr z, .asm_74aa
 	set 7, b
 .asm_74aa
 	ld a, b
-	ld [wce82], a
+	ld [wDamageAnimPlayAreaLocation], a
 	ld a, [wWhoseTurn]
-	ld [wce83], a
+	ld [wDamageAnimPlayAreaSide], a
 	ld a, [wTempNonTurnDuelistCardID]
-	ld [wce84], a
-	ld hl, wce7f
+	ld [wDamageAnimCardID], a
+	ld hl, wDamageAnimAmount
 	ld [hl], e
 	inc hl
 	ld [hl], d

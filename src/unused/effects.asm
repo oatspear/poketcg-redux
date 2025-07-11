@@ -1,5 +1,197 @@
 ;
 
+OverwhelmEffect:
+	ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND
+	call GetNonTurnDuelistVariable
+	cp 4
+	ret c  ; less than 4 cards
+	call Discard1RandomCardFromOpponentsHandEffect
+	jp ParalysisEffect
+
+
+
+; input:
+;   b: mask of status conditions to preserve on the target
+;   c: status condition to inflict to the target
+ApplyStatusAndPlayAnimationAdhoc:
+	push bc
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	ld b, a
+	ld c, $00
+	ldh a, [hWhoseTurn]
+	ld h, a
+	bank1call PlayInflictStatusAnimation
+	pop bc
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	bank1call ApplyStatusConditionToPlayAreaPokemon
+	bank1call DrawDuelHUDs
+	bank1call PrintNoEffectTextOrUnsuccessfulText
+	call c, WaitForWideTextBoxInput
+	ret
+
+
+
+NoxiousScalesEffect:
+	ldh a, [hWhoseTurn]
+	ld hl, wWhoseTurn
+	cp [hl]
+	ret nz  ; it is the opponent's turn
+; check for Venomoth in the Active Spot
+	ld a, DUELVARS_ARENA_CARD
+	call GetTurnDuelistVariable
+	call GetCardIDFromDeckIndex
+	ld a, e
+	cp VENOMOTH
+	ret nz  ; not Venomoth
+; check whether Pokémon Powers can be used
+	call CheckCannotUseDueToStatus
+	ret c  ; unable to use Power
+; check whether the opponent's Active Pokémon is still alive
+	ld a, DUELVARS_ARENA_CARD_HP
+	call GetNonTurnDuelistVariable
+	or a
+	ret z  ; already Knocked Out
+; reset status queue
+	xor a
+	ld [wEffectFunctionsFeedbackIndex], a
+	ldh [hTempPlayAreaLocation_ff9d], a
+; check whether additional status should be applied
+	call CheckArenaPokemonHas3OrMoreEnergiesAttached
+	jr c, .just_poison
+
+IF DOUBLE_POISON_EXISTS
+	call DoublePoisonEffect
+ELSE
+	call PoisonEffect
+ENDC
+	call ConfusionEffect
+	jr ApplyStatusAndPlayAnimationAdhoc
+
+.just_poison
+	call PoisonEffect
+	jr ApplyStatusAndPlayAnimationAdhoc
+
+
+SilverWhirlwind_StatusEffect:
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	ld e, a
+	cp $ff
+	jr z, .arena
+	call PoisonEffect_PlayArea  ; preserves de
+	call ConfusionEffect_PlayArea
+.arena
+	xor a
+	ld [wEffectFunctionsFeedbackIndex], a
+	call PoisonEffect
+	call BurnEffect
+	call SleepEffect
+	jp ApplyStatusAndPlayAnimationAdhoc
+
+
+FragranceTrap_StatusEffect:
+	xor a
+	ld [wEffectFunctionsFeedbackIndex], a
+	call PoisonEffect
+	call CheckArenaPokemonHas3OrMoreEnergiesAttached
+	jp c, ApplyStatusAndPlayAnimationAdhoc
+	call BurnEffect
+	call ConfusionEffect
+	jp ApplyStatusAndPlayAnimationAdhoc
+
+
+; if evolution takes place, it overrides the effect queue and Poison does not
+; apply to the Defending Pokémon, even though the animation plays
+PoisonEvolution_EvolveEffect:
+	ld a, [wEffectFunctionsFeedbackIndex]
+	push af
+	call EvolutionFromDeck_EvolveEffect
+	pop af
+	ld [wEffectFunctionsFeedbackIndex], a
+	ret
+
+
+
+ParalysisIfSelectedCardEffect:
+	ldh a, [hTemp_ffa0]
+	cp $ff
+	ret z  ; nothing to do
+	jr ParalysisEffect
+
+
+ParalysisIfDamagedSinceLastTurnEffect:
+	ld a, DUELVARS_ARENA_CARD_FLAGS
+	call GetTurnDuelistVariable
+	bit DAMAGED_SINCE_LAST_TURN_F, a
+	ret z
+	jr ParalysisEffect
+
+
+PoisonEffect:
+	lb bc, $ff, POISONED
+	jr ApplyStatusEffect
+
+IF DOUBLE_POISON_EXISTS
+DoublePoisonEffect:
+	lb bc, $ff, DOUBLE_POISONED
+	jr ApplyStatusEffect
+ENDC
+
+BurnEffect:
+	lb bc, $ff, BURNED
+	jr ApplyStatusEffect
+
+ParalysisEffect:
+	lb bc, PSN_BRN, PARALYZED
+	jr ApplyStatusEffect
+
+ConfusionEffect:
+	lb bc, PSN_BRN, CONFUSED
+	jr ApplyStatusEffect
+
+SleepEffect:
+	lb bc, PSN_BRN, ASLEEP
+	jr ApplyStatusEffect
+
+
+ApplyStatusEffect:
+	call HandleNoDamageOrEffect
+.skip_no_damage_or_effect
+	call SwapTurn
+	ld e, PLAY_AREA_ARENA
+	call CanBeAffectedByStatus  ; preserves bc, de
+	call SwapTurn
+	jr c, .can_induce_status
+.cant_induce_status
+	ld a, c
+	ld [wNoEffectFromWhichStatus], a
+	call SetNoEffectFromStatus
+	or a
+	ret
+.can_induce_status
+	ld hl, wEffectFunctionsFeedbackIndex
+	push hl
+	ld e, [hl]
+	ld d, $0
+	ld hl, wEffectFunctionsFeedback
+	add hl, de
+	call SwapTurn
+	ldh a, [hWhoseTurn]
+	ld [hli], a
+	call SwapTurn
+	ld [hl], b ; mask of status conditions not to discard on the target
+	inc hl
+	ld [hl], c ; status condition to inflict to the target
+	pop hl
+	; advance wEffectFunctionsFeedbackIndex
+	inc [hl]
+	inc [hl]
+	inc [hl]
+	scf
+	ret
+
+
+
+
 
 IF POISON_STACKS
 PoisonEffect:
@@ -5549,7 +5741,7 @@ SolarPower_CheckUse: ; 2ce53 (b:4e53)
 SolarPower_RemoveStatusEffect: ; 2ce82 (b:4e82)
 	ld a, ATK_ANIM_HEAL_BOTH_SIDES
 	ld [wLoadedAttackAnimation], a
-	bank1call Func_7415
+	bank1call ResetAttackAnimationIsPlaying
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	ld b, a
 	ld c, $00
