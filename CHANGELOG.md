@@ -4,25 +4,25 @@
 
 ### Paralysis, Drowsiness and Confusion Status
 
-- All three conditions are now a coin flip before the afflicted Pokémon attacks.
+- All three Crowd Control conditions are now a coin flip before the afflicted Pokémon attacks.
 - On heads, the attack goes through. On tails, the attack fails.
-- These status conditions increase retreat cost by 1.
 - These status conditions make all incoming attacks do Weakness damage.
-- These status conditions are cleansed upon taking attack damage.
+- These status conditions are cleansed at the end of a turn upon taking attack damage.
 - These status conditions are cleansed if the player ends the turn without attacking.
+- Reapplying the same status condition on a Pokémon already affected with it replaces the status with **Flinched**.
 
-### Poison Status
+### Flinched
 
-- Poison works with a counter system that goes up to 3 Poison counters.
-- The affected Pokémon receives 1 damage counter for each Poison counter on it at the end of the owner's turns.
-- The affected Pokémon takes Poison damage even if Benched, but Poison is removed afterwards.
+- New status condition that works similarly to Paralysis in the original game: a Flinched Pokémon is unable to attack or retreat for a turn.
+- Flinch is cleansed at the end of the owner's turn, since the Pokémon is either Benched or unable to attack.
+- If a Flinched Pokémon takes attack damage from an opponent, that attack does Weakness damage, just like with lower Crowd Control status.
 
-### Burn Status
+### Poison and Burn Status
 
-- No longer heals by discarding an energy attached to the burned Pokémon.
-- Reduced damage from 2 damage counters to 1 damage counter.
-- Increases damage taken from attacks by 10.
-- The affected Pokémon takes Burn damage even if Benched, but Burn is removed afterwards.
+- These damage over time conditions work in the same way.
+- The affected Pokémon receives 1 damage counter for each DoT status on it at the end of the owner's turns.
+- The affected Pokémon takes DoT damage even if Benched, but those conditions are removed afterwards.
+- Reapplying the same status condition on a Pokémon already affected with it puts 1 damage counter instantly on that Pokémon.
 
 ### Quality of Life
 

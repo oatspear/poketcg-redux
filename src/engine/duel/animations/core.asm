@@ -18,7 +18,7 @@ Func_1c8bc:
 	xor a
 	ld [wDuelAnimBufferCurPos], a
 	ld [wDuelAnimBufferSize], a
-	ld [wd4b3], a
+	ld [wDuelAnimSetScreen], a
 	call DefaultScreenAnimationUpdate
 	call Func_3ca0
 	pop bc
@@ -303,7 +303,7 @@ LoadDuelAnimationToBuffer:
 	ld [hli], a
 	ld a, [wDuelAnimDamage + 1]
 	ld [hli], a
-	ld a, [wd4b3]
+	ld a, [wDuelAnimEffectiveness]
 	ld [hli], a
 	ld a, [wDuelAnimReturnBank]
 	ld [hl], a
@@ -346,7 +346,7 @@ PlayBufferedDuelAnimations:
 	ld a, [hli]
 	ld [wDuelAnimDamage + 1], a
 	ld a, [hli]
-	ld [wd4b3], a
+	ld [wDuelAnimEffectiveness], a
 	ld a, [hl]
 	ld [wDuelAnimReturnBank], a
 
@@ -487,7 +487,6 @@ Func_1cb5e:
 	jp nc, Func_1ce03
 	cp $8c
 	jp nz, InitScreenAnimation
-	jr .asm_1cb6a ; redundant
 .asm_1cb6a
 	ld a, [wDuelAnimDamage + 1]
 	cp $03
@@ -506,7 +505,7 @@ Func_1cb5e:
 	farcall LoadPaletteData
 	call Func_1cba6
 
-	ld hl, wd4b3
+	ld hl, wDuelAnimSetScreen
 	bit 0, [hl]
 	call nz, Func_1cc3e
 
@@ -519,7 +518,7 @@ Func_1cb5e:
 	call nz, Func_1cc66
 
 	xor a
-	ld [wd4b3], a
+	ld [wDuelAnimSetScreen], a
 	ret
 
 Func_1cba6:

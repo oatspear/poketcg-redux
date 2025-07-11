@@ -369,7 +369,7 @@ PrepareForPrinterCommunications:
 	ld [wPrinterContrastLevel], a
 	call DisableSRAM
 	ldh a, [hBankSRAM]
-	ld [wce8f], a
+	ld [wTempPrinterSRAM], a
 	ld a, BANK("SRAM1")
 	call BankswitchSRAM
 	call EnableSRAM
@@ -393,7 +393,7 @@ ClearPrinterGfxBuffer:
 ResetPrinterCommunicationSettings:
 	push af
 	call SwitchToCGBDoubleSpeed
-	ld a, [wce8f]
+	ld a, [wTempPrinterSRAM]
 	call BankswitchSRAM
 	call DisableSRAM
 	lb de, $30, $bf

@@ -220,12 +220,6 @@ CreatePlayableStage2PokemonCardListFromHand: ; 2f73e (b:773e)
 ; ------------------------------------------------------------------------------
 
 
-SetNoEffectFromStatus: ; 2c09c (b:409c)
-	ld a, EFFECT_FAILED_NO_EFFECT
-	ld [wEffectFailed], a
-	ret
-
-
 Func_2c0a8: ; 2c0a8 (b:40a8)
 	ldh a, [hTemp_ffa0]
 	push af
@@ -489,7 +483,7 @@ Func_2c12e: ; 2c12e (b:412e)
 
 ; returns carry if Defending has No Damage or Effect
 ; if so, print its appropriate text.
-HandleNoDamageOrEffect: ; 2c216 (b:4216)
+HandleNoDamageOrEffect:
 	call CheckNoDamageOrEffect
 	ret nc
 	ld a, l
@@ -929,6 +923,42 @@ VoltSwitchEffect:
 ; Compound Attacks
 ; ------------------------------------------------------------------------------
 
+SmogEffect:
+	call PoisonEffect
+	jp DamageAllOpponentBenched10Effect
+
+
+PoisonDrainEffect:
+	call PoisonEffect
+	jp LeechLifeEffect
+
+
+Wildfire_MillBurnEffect:
+	call Wildfire_DiscardDeckEffect
+	jp BurnEffect
+
+
+ParalysisRecoil20Effect:
+	call ParalysisEffect
+	jp Recoil20Effect
+
+
+FungalGrowthEffect:
+	call AttachEnergyFromHand_AttachEnergyEffect
+	jp SleepEffect
+
+
+SoothingMelody_SleepHealEffect:
+	call Heal10DamageFromAll_HealEffect
+	jp SleepEffect
+
+
+AcidicDrain_StatusHealEffect:
+	call PoisonEffect
+	call BurnEffect
+	jp Heal10DamageEffect
+
+
 SwarmEffect:
 	call Swarm_PutInPlayAreaEffect
 	jp Swarm_DamageBoostEffect
@@ -940,32 +970,15 @@ HurricaneEffect:
 	jp DevastatingWindEffect
 
 
-Wildfire_DamageBurnEffect:
-	call BurnEffect
-	jp Wildfire_MultiplierEffect
-
-
-; if evolution takes place, it overrides the effect queue and Poison does not
-; apply to the Defending Pokémon, even though the animation plays
-PoisonEvolution_EvolveEffect:
-	ld a, [wEffectFunctionsFeedbackIndex]
-	push af
+; applies poison and evolves
+PoisonEvolutionEffect:
 	call EvolutionFromDeck_EvolveEffect
-	pop af
-	ld [wEffectFunctionsFeedbackIndex], a
-	ret
+	jp PoisonEffect
 
 
 GluttonFrenzy_DiscardEffect:
 	call DiscardOpponentEnergy_DiscardEffect
 	jp Discard1RandomCardFromOpponentsHandEffect
-
-
-; Poison, Confusion, bonus damage based on Retreat Cost
-JellyfishStingEffect:
-	call Constrict_DamageBoostEffect
-	call PoisonEffect
-	jp ConfusionEffect
 
 
 Ingrain_RetrieveAndHealEffect:
@@ -992,13 +1005,12 @@ ENDC
 
 
 GatherToxinsEffect:
-	call Attach1DarknessEnergyFromDiscard_SelectEffect
+	call AccelerateFromDiscard_AttachEnergyToArenaEffect
 	jp PoisonEffect
 
 
 FireSpinEffect:
 	call FireSpin_DamageMultiplierEffect
-	call BurnEffect
 	jp IncreaseRetreatCostEffect
 
 
@@ -1055,30 +1067,9 @@ PrimalSwirl_DevolveAndTrapEffect:
 	jp IncreaseRetreatCostEffect
 
 
-Snowstorm_SleepDamageMultiplierEffect:
-	call Snowstorm_MultiplierEffect
-; check target Benched Pokémon
-	ldh a, [hTemp_ffa0]
-	ld c, a
-	ldh a, [hTempPlayAreaLocation_ffa1]
-	ld e, a
-	call SwapTurn
-	call GetPlayAreaCardAttachedEnergies  ; preserves bc, de
-	call SwapTurn
-	ld a, [wTotalAttachedEnergies]
-	cp c
-	call c, SleepEffect_PlayArea
-; check Defending Pokémon
-	ldh a, [hTemp_ffa0]
-	ld c, a
-	ld e, PLAY_AREA_ARENA
-	call SwapTurn
-	call GetPlayAreaCardAttachedEnergies  ; preserves bc, de
-	call SwapTurn
-	ld a, [wTotalAttachedEnergies]
-	cp c
-	jp c, SleepEffect
-	ret
+Snowstorm_DamageStatusEffect:
+	call Snowstorm_DamageEffect
+	jp Snowstorm_SleepEffect
 
 
 PhoenixFire_EnergyHealingEffect:
@@ -1089,37 +1080,12 @@ Concentration_EnergyHealingEffect:
 	jp Heal20DamageEffect
 
 
-WickedTentacle_PoisonTransferEffect:
-	call MoveOpponentEnergyToBench_TransferEffect
-	jp PoisonEffect
-
-
-ToxicWaste_DamagePoisonEffect:
-	call ToxicWaste_DamageBoostEffect
-IF DOUBLE_POISON_EXISTS
-	jp DoublePoisonEffect
-ELSE
-	jp PoisonEffect
-ENDC
-
-
 ; DiscardEnergy_DamageTargetPokemon_AISelectEffect:
 ; 	call DiscardEnergy_AISelectEffect      ; uses [hTemp_ffa0]
 ; 	jp DamageTargetPokemon_AISelectEffect  ; uses [hTempPlayAreaLocation_ffa1]
 
 
-Discharge_DamageParalysisEffect:
-	call Discharge_MultiplierEffect
-	; ldh a, [hTemp_ffa0]
-	; cp 2
-	; jp nc, ParalysisEffect
-	; ret
-	; always paralyze
-	jp ParalysisEffect
-
-
-WaterPulse_DamageConfusionEffect:
-	call Discharge_MultiplierEffect
+WaterPulse_ConfusionEffect:
 	ldh a, [hTemp_ffa0]
 	cp 2
 	jp nc, ConfusionEffect
@@ -1130,11 +1096,6 @@ PluckEffect:
 	call DiscardOpponentTool_DiscardEffect
 	jp c, DoubleDamage_DamageBoostEffect
 	ret
-
-
-RampageEffect:
-	call Rage_DamageBoostEffect
-	jp SelfConfusionEffect
 
 
 ; Attaches the selected energy from the discard pile to the user and heals 10 damage.
@@ -1172,15 +1133,6 @@ CheckOpponentHandEffect:
 	ret
 
 
-PoisonPaybackEffect:
-	ld e, PLAY_AREA_ARENA
-	call GetCardDamageAndMaxHP
-	or a
-	ret z  ; not damaged
-	call DoubleDamage_DamageBoostEffect
-	jp PoisonEffect
-
-
 ShadowClawEffect:
 	ldh a, [hTemp_ffa0]
 	cp $ff
@@ -1192,21 +1144,6 @@ ShadowClawEffect:
 ; 	cp $ff
 ; 	ret z  ; none selected, do nothing
 ; 	call DiscardEnergy_DiscardEffect
-
-
-DeadlyPoisonEffect:
-	call DeadlyPoison_DamageBoostEffect
-	jp PoisonEffect
-
-
-; unused
-OverwhelmEffect:
-	ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND
-	call GetNonTurnDuelistVariable
-	cp 4
-	ret c  ; less than 4 cards
-	call Discard1RandomCardFromOpponentsHandEffect
-	jp ParalysisEffect
 
 
 ; ------------------------------------------------------------------------------
@@ -4892,7 +4829,6 @@ ForceSwitchDefendingPokemon:
 	call SwapTurn
 
 	xor a
-	ld [wccc5], a
 	ld [wDuelDisplayedScreen], a
 	; inc a
 	; ld [wccef], a
@@ -5497,14 +5433,14 @@ ImakuniEffect: ; 2f216 (b:7216)
 
 .failed
 ; play confusion animation and print failure text
-	ld a, ATK_ANIM_IMAKUNI_CONFUSION
+	ld a, ATK_ANIM_SELF_CONFUSION
 	bank1call PlayAdhocAnimationOnPlayAreaArena_NoEffectiveness
 	ldtx hl, ThereWasNoEffectText
 	jp DrawWideTextBox_WaitForInput
 
 .success
 ; play confusion animation and confuse card
-	ld a, ATK_ANIM_IMAKUNI_CONFUSION
+	ld a, ATK_ANIM_SELF_CONFUSION
 	bank1call PlayAdhocAnimationOnPlayAreaArena_NoEffectiveness
 	ld a, DUELVARS_ARENA_CARD_STATUS
 	call GetTurnDuelistVariable

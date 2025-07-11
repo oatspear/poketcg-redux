@@ -598,8 +598,8 @@ wcbff:: ; cbff
 wcc00:: ; cc00
 	ds $1
 
-; unused
-wcc01:: ; cc01
+; used to store a pointer to a text message parameter
+wDynamicTextPointer:: ; cc01
 	ds $2
 
 ; used to print a Pokemon card's length in feet and inches
@@ -762,9 +762,8 @@ wTempTurnDuelistCardID:: ; ccc3
 wTempNonTurnDuelistCardID:: ; ccc4
 	ds $1
 
-; potentially unused
-; the status condition of the defending Pokemon is loaded here after an attack
-wccc5:: ; ccc5
+; recoil damage accumulated by the current attack
+wRecoilDamage:: ; ccc5
 	ds $1
 
 ; *_ATTACK constants for selected attack
@@ -793,13 +792,9 @@ wAIAttackLogicFlags::
 wAllStagesIndices:: ; ccca
 	ds $3
 
-wEffectFunctionsFeedbackIndex:: ; cccd
-	ds $1
-
-; some array used in effect functions with wEffectFunctionsFeedbackIndex
-; as the index, used to return feedback. unknown length.
-wEffectFunctionsFeedback:: ; ccce
-	ds $18
+; unused free space
+wcccd:: ; cccd
+	ds $19
 
 ; this is 1 (non-0) if dealing damage to self due to confusion
 ; or a self-destruct type attack
@@ -960,6 +955,7 @@ wListItemNameMaxLength:: ; cd1c
 wListFunctionPointer:: ; cd1d
 	ds $2
 
+; unused?
 	ds $78
 
 ; in a card list, the Y position where the <sel_item>/<num_items> indicator is placed
@@ -1560,22 +1556,24 @@ wTempPokemonID_ce7c:: ; ce7c
 ; unused, unless we extend IDs to two bytes
 	ds $1
 
-wce7e:: ; ce7e
+wAttackAnimationIsPlaying:: ; ce7e
 	ds $1
 
-wce7f:: ; ce7f
+wDamageAnimAmount:: ; ce7f
 	ds $2
 
-wce81:: ; ce81
+wDamageAnimEffectiveness:: ; ce81
 	ds $1
 
-wce82:: ; ce82
+wDamageAnimPlayAreaLocation:: ; ce82
 	ds $1
 
-wce83:: ; ce83
+; unused
+wDamageAnimPlayAreaSide:: ; ce83
 	ds $1
 
-wce84:: ; ce84
+; unused
+wDamageAnimCardID:: ; ce84
 	ds $1
 
 ; buffer to store data that will be sent/received through IR
@@ -1585,7 +1583,7 @@ wIRDataBuffer:: ; ce85
 wVBlankFunctionTrampolineBackup:: ; ce8d
 	ds $2
 
-wce8f:: ; ce8f
+wTempPrinterSRAM:: ; ce8f
 	ds $1
 
 wPrinterHorizontalOffset:: ; ce90
@@ -2631,7 +2629,8 @@ wDuelAnimLocationParam:: ; d4b0
 wDuelAnimDamage:: ; d4b1
 	ds $2
 
-wd4b3:: ; d4b3
+wDuelAnimSetScreen:: ; d4b3
+wDuelAnimEffectiveness:: ; d4b3
 	ds $1
 
 ; stores the character symbols of some
