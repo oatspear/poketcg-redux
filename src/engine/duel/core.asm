@@ -4470,7 +4470,7 @@ IF NEW_CARD_PAGE_LAYOUT
 	;ld a, [wCurPlayAreaSlot]
 	;add DUELVARS_ARENA_CARD_STATUS
 	;call GetTurnDuelistVariable
-	ld a, CONFUSED | POISONED | BURNED
+	ld a, CONFUSED | POISONED | BURNED  ; FIXME: this is a hack to test the new card page layout
 	call CheckPrintCnfSlpPrz
 	inc b
 	call CheckPrintPoisoned
@@ -10023,7 +10023,9 @@ PlayInflictStatusAnimation:
 	ld b, a  ; PLAY_AREA_ARENA
 	ld c, $00
 	push hl
+	push de
 	farcall PlayAttackAnimationCommands
+	pop de
 	pop hl
 	pop bc
 	; jr WaitAttackAnimation
