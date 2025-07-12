@@ -1331,7 +1331,7 @@ OpenAttackPage:
 	ld [wCardPageNumber], a
 	xor a
 	ld [wCurPlayAreaSlot], a
-	; call EmptyScreen
+	ld [wDuelDisplayedScreen], a  ; call EmptyScreen
 	; call Func_3b31
 	ldh a, [hCurMenuItem]
 	ld [wSelectedDuelSubMenuItem], a
@@ -1342,9 +1342,9 @@ OpenAttackPage:
 	add hl, de
 	ld a, [hl]
 	or a
-	ld a, ATTACKPAGE_ATTACK2_1
+	ld a, ATTACKPAGE_ATTACK2
 	jr nz, .open_page
-	xor a ; ATTACKPAGE_ATTACK1_1
+	xor a ; ATTACKPAGE_ATTACK1
 
 .open_page
 	; ld [wAttackPageNumber], a
@@ -1362,10 +1362,8 @@ OpenAttackPage:
 	ret
 
 AttackPageDisplayPointerTable:
-	dw DisplayCardPage_PokemonAttack1 ; ATTACKPAGE_ATTACK1_1
-	dw DisplayCardPage_PokemonAttack1 ; ATTACKPAGE_ATTACK1_2
-	dw DisplayCardPage_PokemonAttack2 ; ATTACKPAGE_ATTACK2_1
-	dw DisplayCardPage_PokemonAttack2 ; ATTACKPAGE_ATTACK2_2
+	dw DisplayCardPage_PokemonAttack1 ; ATTACKPAGE_ATTACK1
+	dw DisplayCardPage_PokemonAttack2 ; ATTACKPAGE_ATTACK2
 
 ELSE
 
@@ -3762,10 +3760,8 @@ IF NEW_CARD_PAGE_LAYOUT
 CardPageDisplayPointerTable:
 	dw DrawDuelMainScene
 	dw DisplayCardPage_PokemonOverview    ; CARDPAGE_POKEMON_OVERVIEW
-	dw DisplayCardPage_PokemonAttack1  ; CARDPAGE_POKEMON_ATTACK1_1
-	dw DisplayCardPage_PokemonAttack1  ; CARDPAGE_POKEMON_ATTACK1_2
-	dw DisplayCardPage_PokemonAttack2  ; CARDPAGE_POKEMON_ATTACK2_1
-	dw DisplayCardPage_PokemonAttack2  ; CARDPAGE_POKEMON_ATTACK2_2
+	dw DisplayCardPage_PokemonAttack1  ; CARDPAGE_POKEMON_ATTACK1
+	dw DisplayCardPage_PokemonAttack2  ; CARDPAGE_POKEMON_ATTACK2
 	dw DisplayCardPage_PokemonAttachedTool  ; CARDPAGE_POKEMON_TOOL
 	dw DisplayCardPage_PokemonDescription ; CARDPAGE_POKEMON_DESCRIPTION
 	dw DrawDuelMainScene
@@ -3871,6 +3867,27 @@ SwitchCardPage:
 	ld hl, CardPageSwitchPointerTable
 	jp JumpToFunctionInTable
 
+IF NEW_CARD_PAGE_LAYOUT
+
+CardPageSwitchPointerTable:
+	dw CardPageSwitch_00
+	dw CardPageSwitch_PokemonOverviewOrDescription ; CARDPAGE_POKEMON_OVERVIEW
+	dw CardPageSwitch_PokemonAttack1Page1 ; CARDPAGE_POKEMON_ATTACK1
+	dw CardPageSwitch_PokemonAttack2Page1 ; CARDPAGE_POKEMON_ATTACK2
+	dw CardPageSwitch_PokemonAttachedTool ; CARDPAGE_POKEMON_TOOL
+	dw CardPageSwitch_PokemonOverviewOrDescription ; CARDPAGE_POKEMON_DESCRIPTION
+	dw CardPageSwitch_PokemonEnd
+	dw CardPageSwitch_08
+	dw CardPageSwitch_EnergyOrTrainerPage1 ; CARDPAGE_ENERGY
+	dw CardPageSwitch_TrainerPage2 ; CARDPAGE_ENERGY + 1
+	dw CardPageSwitch_EnergyEnd
+	dw CardPageSwitch_0c
+	dw CardPageSwitch_EnergyOrTrainerPage1 ; CARDPAGE_TRAINER_1
+	dw CardPageSwitch_TrainerPage2 ; CARDPAGE_TRAINER_2
+	dw CardPageSwitch_TrainerEnd
+
+ELSE
+
 CardPageSwitchPointerTable:
 	dw CardPageSwitch_00
 	dw CardPageSwitch_PokemonOverviewOrDescription ; CARDPAGE_POKEMON_OVERVIEW
@@ -3889,6 +3906,8 @@ CardPageSwitchPointerTable:
 	dw CardPageSwitch_EnergyOrTrainerPage1 ; CARDPAGE_TRAINER_1
 	dw CardPageSwitch_TrainerPage2 ; CARDPAGE_TRAINER_2
 	dw CardPageSwitch_TrainerEnd
+
+ENDC
 
 ; return with CARDPAGE_POKEMON_DESCRIPTION
 CardPageSwitch_00:
