@@ -893,7 +893,7 @@ LoadCardDataToBuffer1_FromDeckIndex:
 	call LoadCardDataToBuffer1_FromCardID
 	pop af
 	ld hl, wLoadedCard1
-	bank1call ConvertSpecialTrainerCardToPokemon
+	call ConvertSpecialTrainerCardToPokemon
 	ld a, e
 	pop bc
 	pop de
@@ -910,12 +910,65 @@ LoadCardDataToBuffer2_FromDeckIndex:
 	call LoadCardDataToBuffer2_FromCardID
 	pop af
 	ld hl, wLoadedCard2
-	bank1call ConvertSpecialTrainerCardToPokemon
+	call ConvertSpecialTrainerCardToPokemon
 	ld a, e
 	pop bc
 	pop de
 	pop hl
 	ret
+
+
+; given the deck index of a turn holder's card in register a,
+; and a pointer in hl to the wLoadedCard* buffer where the card data is loaded,
+; check if the card is Mysterious Fossil, and, if so, convert it
+; to a Pokemon card in the wLoadedCard* buffer, using .trainer_to_pkmn_data.
+ConvertSpecialTrainerCardToPokemon:
+	ld c, a
+	ld a, [hl]
+	cp TYPE_TRAINER
+	ret nz  ; return if the card is not Item TRAINER type
+	push hl
+	ldh a, [hWhoseTurn]
+	ld h, a
+	ld l, c
+	ld a, [hl]
+	and CARD_LOCATION_PLAY_AREA
+	pop hl
+	ret z ; return if the card is not in the arena or bench
+	ld a, e
+	cp MYSTERIOUS_FOSSIL
+	ret nz
+	ld a, d
+	cp $00 ; MYSTERIOUS_FOSSIL >> 8
+	ret nz
+.start_ram_data_overwrite
+	push de
+	ld [hl], TYPE_PKMN_COLORLESS
+	ld bc, CARD_DATA_HP
+	add hl, bc
+	ld de, .trainer_to_pkmn_data
+	ld c, CARD_DATA_UNKNOWN2 - CARD_DATA_HP
+.loop
+	ld a, [de]
+	inc de
+	ld [hli], a
+	dec c
+	jr nz, .loop
+	pop de
+	ret
+
+.trainer_to_pkmn_data
+	db 20                 ; CARD_DATA_HP
+	ds $07                ; CARD_DATA_ATTACK1_NAME - (CARD_DATA_HP + 1)
+	tx DiscardName        ; CARD_DATA_ATTACK1_NAME
+	tx DiscardDescription ; CARD_DATA_ATTACK1_DESCRIPTION
+	ds $03                ; CARD_DATA_ATTACK1_DESCRIPTION (cont), CARD_DATA_ATTACK1_DAMAGE
+	db POKEMON_POWER      ; CARD_DATA_ATTACK1_CATEGORY
+	dw TrainerCardAsPokemonEffectCommands ; CARD_DATA_ATTACK1_EFFECT_COMMANDS
+	ds $18                ; CARD_DATA_RETREAT_COST - (CARD_DATA_ATTACK1_EFFECT_COMMANDS + 2)
+	db UNABLE_RETREAT     ; CARD_DATA_RETREAT_COST
+	ds $0d                ; PKMN_CARD_DATA_LENGTH - (CARD_DATA_RETREAT_COST + 1)
+
 
 ; evolve a turn holder's Pokemon card in the play area slot determined by hTempPlayAreaLocation_ff9d
 ; into another turn holder's Pokemon card identifier by its deck index (0-59) in hTempCardIndex_ff98.
@@ -2803,15 +2856,6 @@ LoadCard1NameToRamText:
 	ld l, a
 	jp LoadTxRam2
 
-
-LoadCard2AndNameToRamText_FromDeckIndex:
-	push de
-	ld e, a
-	ld d, 0
-	call LoadCardDataToBuffer2_FromCardID
-	pop de
-	; jr LoadCard2NameToRamText
-	; fallthrough
 
 LoadCard2NameToRamText:
 	ld hl, wLoadedCard2Name
