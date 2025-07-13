@@ -1174,14 +1174,12 @@ ClearStatusOnDamage:
 	ld l, a
 	ld a, [hl]
 	and CNF_SLP_PRZ
-	jr nz, .clear
-	pop hl
-	ret
-
-.clear
+	jr z, .done
+; clear
 	ld a, [hl]
 	and PSN_BRN
 	ld [hl], a
+.done
 	pop hl
 	ret
 ENDC
