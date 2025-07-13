@@ -1063,12 +1063,14 @@ IF CC_IS_COIN_FLIP
 	call GetTurnDuelistVariable
 	and CNF_SLP_PRZ
 	cp FLINCHED
+	ldtx hl, UnableDueToParalysisText
 	jr z, .cant_retreat
 ENDC
 	ld a, DUELVARS_ARENA_CARD_SUBSTATUS2
 	call GetTurnDuelistVariable
 	or a
 	ret z
+	ldtx hl, UnableToRetreatDueToTrapText
 	cp SUBSTATUS2_UNABLE_RETREAT
 	jr z, .cant_retreat
 	cp SUBSTATUS2_PRIMAL_TENTACLE
@@ -1076,7 +1078,6 @@ ENDC
 	or a
 	ret
 .cant_retreat
-	ldtx hl, UnableToRetreatDueToTrapText
 	scf
 	ret
 

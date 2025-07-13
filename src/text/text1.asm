@@ -158,8 +158,12 @@ NoPokemonOnTheBenchText: ; 3646e (d:646e)
 	text "No Pokémon on the Bench."
 	done
 
-UnableDueToParalysisText: ; 364a1 (d:64a1)
+UnableDueToParalysisText:
+IF CC_IS_COIN_FLIP
+	text "Unable to due to Flinch."
+ELSE
 	text "Unable to due to Paralysis."
+ENDC
 	done
 
 ReceivedDamageDueToPoisonText:
