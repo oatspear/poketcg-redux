@@ -8595,10 +8595,12 @@ IF CC_UPGRADES_TO_FLINCH
 	call LoadCardDataToBuffer2_FromDeckIndex  ; preserves: hl, bc, de
 	call LoadCard2NameToRamText  ; preserves: bc, de
 	ldtx hl, PokemonFlinchedText
+	ld c, FLINCHED
+	push bc
 	push de
 	call DrawWideTextBox_WaitForInput
 	pop de
-	ld c, FLINCHED
+	pop bc
 ENDC
 	; fallthrough
 
