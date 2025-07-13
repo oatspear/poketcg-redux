@@ -219,6 +219,11 @@ IsCuredOfConfusionText:
 	line "cured of Confusion."
 	done
 
+IsNoLongerFlinchingText:
+	text "<RAMTEXT> is"
+	line "no longer Flinching."
+	done
+
 IsCuredOfBurnText:
 	text "<RAMTEXT> is"
 	line "cured of Burn."

@@ -7730,6 +7730,8 @@ HandleEndOfTurn_HealCrowdControlStatus:
 	jr z, .heal
 	cp CONFUSED
 	ldtx de, IsCuredOfConfusionText
+	cp FLINCHED
+	ldtx de, IsNoLongerFlinchingText
 	ret nz
 .heal
 	push de

@@ -53,6 +53,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer IsCuredOfSleepText
 	textpointer IsCuredOfParalysisText
 	textpointer IsCuredOfConfusionText
+	textpointer IsNoLongerFlinchingText
 	textpointer IsCuredOfBurnText
 	textpointer IsCuredOfStatusText
 	textpointer BetweenTurnsText                                   ; 0x002b
