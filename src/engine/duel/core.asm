@@ -8540,7 +8540,7 @@ InflictDamageOverTimeStatus:
 	push af
 	push bc
 	push de
-	call DrawDuelHUDs
+	call DrawDuelMainSceneForTurnHolder
 	pop de
 	pop bc
 	pop af
@@ -8607,7 +8607,7 @@ ENDC
 	push af
 	push bc
 	push de
-	call DrawDuelHUDs
+	call DrawDuelMainSceneForTurnHolder
 	pop de
 	pop bc
 	pop af
