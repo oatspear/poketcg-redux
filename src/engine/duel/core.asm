@@ -7640,7 +7640,7 @@ HandleOnRetreatEffects:
 
 
 ; apply and/or refresh status conditions and other events that trigger between turns
-HandleBetweenTurnsEvents:
+HandleBetweenTurnsEvents:  ; FIXME
 	xor a
 	ld [wAlreadyDisplayedBetweenTurnsScreen], a
 
@@ -7948,7 +7948,7 @@ HandleEndOfTurnEffect_SeepingToxins:
 HandleEndOfTurnEffect_StatusConditions:
 	ld a, DUELVARS_ARENA_CARD
 	call GetTurnDuelistVariable
-	call GetCardIDFromDeckIndex
+	call GetCardIDFromDeckIndex  ; preserves bc, af and hl
 	ld a, e
 	ld [wTempNonTurnDuelistCardID], a
 	ld l, DUELVARS_ARENA_CARD_STATUS
@@ -7962,6 +7962,9 @@ HandleEndOfTurnEffect_StatusConditions:
 	call HandleBurnDamage
 	ret c  ; KO
 IF CC_IS_COIN_FLIP
+	; or a
+	ret
+ELSE
 	ld a, [hl]
 	and CNF_SLP_PRZ
 	cp PARALYZED
@@ -7977,9 +7980,6 @@ IF CC_IS_COIN_FLIP
 	ld a, DUEL_ANIM_HEAL
 	call DrawDuelAnimationOnDuelMainScene
 	jp WaitForWideTextBoxInput
-ELSE
-	or a
-	ret
 ENDC
 
 
