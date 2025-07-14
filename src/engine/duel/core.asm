@@ -1302,7 +1302,8 @@ ENDC
 	call UseAttackOrPokemonPower
 	jp c, DuelMainInterface
 .skip_attack
-	ret
+	ldtx hl, DuelistTurnEndsText
+	jp DrawWideTextBox_WaitForInput
 
 .cannot_use_due_to_amnesia
 	call DrawWideTextBox_WaitForInput
@@ -7292,7 +7293,8 @@ OppAction_PlayAttackAnimationDealAttackDamage:
 	call PlayAttackAnimation_DealAttackDamage
 	ld a, 1
 	ld [wOpponentTurnEnded], a
-	ret
+	ldtx hl, DuelistTurnEndsText
+	jp DrawWideTextBox_WaitForInput
 
 ; force the player to switch the active Pokemon with a benched Pokemon
 OppAction_ForceSwitchActive:

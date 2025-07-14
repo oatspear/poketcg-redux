@@ -473,6 +473,10 @@ DuelistTurnText: ; 36a9a (d:6a9a)
 	text "<RAMNAME>'s Turn."
 	done
 
+DuelistTurnEndsText:
+	text "<RAMNAME>'s turn ends."
+	done
+
 AttachedEnergyToPokemonText: ; 36aa5 (d:6aa5)
 	text "Attached <RAMTEXT>"
 	line "to <RAMTEXT>."

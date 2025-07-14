@@ -106,6 +106,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer WillUseThePokemonPowerText                         ; 0x005c
 	textpointer FinishedTurnWithoutAttackingText                   ; 0x005d
 	textpointer DuelistTurnText                                    ; 0x005e
+	textpointer DuelistTurnEndsText
 	textpointer AttachedEnergyToPokemonText                        ; 0x005f
 	textpointer GenericAttachedEnergyToPokemonText
 	textpointer PokemonEvolvedIntoPokemonText                      ; 0x0060
