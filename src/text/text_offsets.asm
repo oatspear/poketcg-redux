@@ -336,6 +336,11 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ThereWasNoEffectFromParalysisText                  ; 0x0181
 	textpointer ThereWasNoEffectFromConfusionText                  ; 0x0182
 	textpointer ThereWasNoEffectFromFlinchText
+	textpointer IsNowPoisonedText
+	textpointer IsNowBurnedText
+	textpointer IsNowAsleepText
+	textpointer IsNowParalyzedText
+	textpointer IsNowConfusedText
 	textpointer SortedCardsInDuelistsDeckText
 	textpointer Text0185                                           ; 0x0185
 	textpointer PrizesCardsText                                    ; 0x0186

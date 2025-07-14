@@ -639,6 +639,31 @@ ThereWasNoEffectFromFlinchText:
 	line "from Flinch."
 	done
 
+IsNowPoisonedText:
+	text "<RAMTEXT> is now"
+	line "Poisoned."
+	done
+
+IsNowBurnedText:
+	text "<RAMTEXT> is now"
+	line "Burned."
+	done
+
+IsNowAsleepText:
+	text "<RAMTEXT> is now"
+	line "Drowsy."
+	done
+
+IsNowParalyzedText:
+	text "<RAMTEXT> is now"
+	line "Paralyzed."
+	done
+
+IsNowConfusedText:
+	text "<RAMTEXT> is now"
+	line "Confused."
+	done
+
 SortedCardsInDuelistsDeckText:
 	text "Reordered the cards"
 	line "in <RAMNAME>'s Deck."

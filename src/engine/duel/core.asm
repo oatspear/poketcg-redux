@@ -8490,6 +8490,12 @@ InflictDamageOverTimeStatus:
 	ret
 
 .affected
+; print text
+	; call GetInflictedStatusText  ; preserves: bc, de
+	; ld a, l
+	; or h
+	; call nz, DrawWideTextBox_PrintText
+; play animation
 	ld a, e
 	call PlayInflictStatusAnimation  ; preserves: hl, bc, de
 	ld a, DUELVARS_ARENA_CARD_STATUS
@@ -8553,6 +8559,33 @@ InflictDamageOverTimeStatus:
 	ret
 
 
+; input:
+;   c: status condition to check (POISONED, BURNED, PARALYZED, CONFUSED, ASLEEP)
+; output:
+;   hl: text to print for the inflicted status
+; preserves: bc, de
+; GetInflictedStatusText:
+; 	ldtx hl, IsNowPoisonedText
+; 	bit POISONED_F, c
+; 	ret nz
+; 	ldtx hl, IsNowBurnedText
+; 	bit BURNED_F, c
+; 	ret nz
+; 	ld a, c
+; 	and CNF_SLP_PRZ
+; 	cp PARALYZED
+; 	ldtx hl, IsNowParalyzedText
+; 	ret z
+; 	cp CONFUSED
+; 	ldtx hl, IsNowConfusedText
+; 	ret z
+; 	cp ASLEEP
+; 	ldtx hl, IsNowAsleepText
+; 	ret z
+; 	ld hl, $00
+; 	ret
+
+
 GetStatusDamageText:
 	ldtx hl, ReceivedDamageDueToPoisonText
 	bit POISONED_F, c
@@ -8577,6 +8610,12 @@ InflictCrowdControlStatus:
 	ret
 
 .affected
+; print text
+	; call GetInflictedStatusText  ; preserves: bc, de
+	; ld a, l
+	; or h
+	; call nz, DrawWideTextBox_PrintText
+; play animation
 	ld a, e
 	call PlayInflictStatusAnimation  ; preserves: hl, bc, de
 
