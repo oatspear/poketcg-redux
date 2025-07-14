@@ -177,7 +177,7 @@ MainDuelLoop:
 	jr nz, .duel_finished
 	call UpdateSubstatusConditions_EndOfTurn
 	call HandleBetweenTurnsEvents
-	call Func_3b31
+	call FinishQueuedAnimations
 	call ExchangeRNG
 	ld a, [wDuelFinished]
 	or a
@@ -258,7 +258,7 @@ MainDuelLoop:
 	jr z, .tied_duel
 	call PlayDefaultSong
 	call WaitForWideTextBoxInput
-	call Func_3b31
+	call FinishQueuedAnimations
 	call ResetSerial
 ; OATS: helper to detect end of duel
 	xor a
@@ -270,7 +270,7 @@ MainDuelLoop:
 
 .tied_duel
 	call WaitForWideTextBoxInput
-	call Func_3b31
+	call FinishQueuedAnimations
 	ld a, [wDuelTheme]
 	call PlaySong
 	ldtx hl, StartSuddenDeathMatchText
@@ -845,13 +845,13 @@ CheckEvolutionCardCanBePlayed:
 
 ; triggered by selecting the "Check" item in the duel menu
 DuelMenu_Check:
-	call Func_3b31
+	call FinishQueuedAnimations
 	call OpenDuelCheckMenu
 	jp DuelMainInterface
 
 ; triggered by pressing SELECT in the duel menu
 DuelMenuShortcut_BothActivePokemon:
-	call Func_3b31
+	call FinishQueuedAnimations
 	call Func_4597
 	jp DuelMainInterface
 
@@ -1238,7 +1238,7 @@ OpenAttackPage:
 	xor a
 	ld [wCurPlayAreaSlot], a
 	; call EmptyScreen
-	; call Func_3b31
+	; call FinishQueuedAnimations
 	ldh a, [hCurMenuItem]
 	ld [wSelectedDuelSubMenuItem], a
 	add a
@@ -1283,7 +1283,7 @@ OpenAttackPage:
 	xor a
 	ld [wCurPlayAreaSlot], a
 	call EmptyScreen
-	call Func_3b31
+	call FinishQueuedAnimations
 	ld de, v0Tiles1 + $20 tiles
 	call LoadLoaded1CardGfx
 	call SetOBP1OrSGB3ToCardPalette
@@ -1812,7 +1812,7 @@ PlayTurnDuelistDrawAnimation:
 	jr c, .loop_anim
 
 .done_anim
-	call Func_3b31
+	call FinishQueuedAnimations
 	ret
 
 ; prints, for each duelist, the number of cards in the hand along with the
@@ -2491,7 +2491,7 @@ PlayShuffleAndDrawCardsAnimation:
 	call CheckAnyAnimationPlaying
 	jr c, .loop_shuffle_anim
 .done_shuffle
-	call Func_3b31
+	call FinishQueuedAnimations
 
 .print_deck_info
 	xor a
@@ -2539,7 +2539,7 @@ PlayShuffleAndDrawCardsAnimation:
 	jr nz, .wait_loop
 
 .done
-	call Func_3b31
+	call FinishQueuedAnimations
 	pop bc
 	ret
 
@@ -2591,7 +2591,7 @@ AnimateShuffleDeck:
 	jr c, .loop_anim
 
 .done_anim
-	call Func_3b31
+	call FinishQueuedAnimations
 	ld a, $01
 	ret
 
@@ -3459,7 +3459,7 @@ OpenCardPage:
 	ld [wCardPageType], a
 	call ZeroObjectPositionsAndToggleOAMCopy
 	call EmptyScreen
-	call Func_3b31
+	call FinishQueuedAnimations
 	; load the graphics and display the card image of wLoadedCard1
 	call LoadDuelCardSymbolTiles
 	ld de, v0Tiles1 + $20 tiles
@@ -3550,7 +3550,7 @@ DrawWholeScreenTextBox:
 
 
 TakePrizesUpToTheNumberOfKnockedOutPokemon:
-	call Func_3b31
+	call FinishQueuedAnimations
 	ld a, [wNumberPrizeCardsToTake]
 	ld l, a
 	ld h, $00
@@ -6827,7 +6827,7 @@ Func_6862:
 	jr .return_carry
 
 Func_68c6:
-	call Func_3b31
+	call FinishQueuedAnimations
 	ld hl, sp+$00
 	ld a, l
 	ld [wcbf7], a
@@ -8686,7 +8686,7 @@ ReplaceKnockedOutPokemon:
 
 ; replace the arena Pokemon with the one at location [hTempPlayAreaLocation_ff9d]
 .replace_pokemon
-	call Func_3b31
+	call FinishQueuedAnimations
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	ld d, a
 	ld e, PLAY_AREA_ARENA
@@ -9368,13 +9368,13 @@ _TossCoin:
 	call Func_72ff
 
 .asm_72e2
-	call Func_3b31
+	call FinishQueuedAnimations
 	ld a, [wCoinTossNumTossed]
 	ld hl, wCoinTossTotalNum
 	cp [hl]
 	jp c, .print_coin_tally
 	call ExchangeRNG
-	call Func_3b31
+	call FinishQueuedAnimations
 	call Func_3b21
 
 ; set flag if at least 1 tails
@@ -9452,7 +9452,7 @@ Func_7344:
 	pop af
 	ret
 .asm_734d
-	call Func_3b31
+	call FinishQueuedAnimations
 	jp DuelTransmissionError
 
 BuildVersion:

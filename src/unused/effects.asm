@@ -6748,7 +6748,7 @@ Peek_SelectEffect: ; 2e2b4 (b:62b4)
 	jr nz, .ai_opp
 
 ; player
-	call Func_3b31
+	call FinishQueuedAnimations
 	call HandlePeekSelection
 	ldh [hAIPkmnPowerEffectParam], a
 	call SerialSend8Bytes
@@ -6783,7 +6783,7 @@ Peek_SelectEffect: ; 2e2b4 (b:62b4)
 .prize_or_deck
 ; AI chose either a prize card or Player's top deck card,
 ; so show Play Area and draw cursor appropriately.
-	call Func_3b31
+	call FinishQueuedAnimations
 	call SwapTurn
 	ldh a, [hAIPkmnPowerEffectParam]
 	xor $80
