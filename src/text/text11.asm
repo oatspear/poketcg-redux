@@ -74,10 +74,8 @@ SmogName:
 	done
 
 SmogDescription:
-	text "The Defending Pokémon is now"
-	line "Poisoned. This attack does"
-	line "10 damage to each of your"
-	line "opponent's Benched Pokémon."
+	text "Each of your opponent's Pokémon"
+	line "is now Poisoned."
 	done
 
 SelfdestructName:

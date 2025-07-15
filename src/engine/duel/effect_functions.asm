@@ -923,11 +923,6 @@ VoltSwitchEffect:
 ; Compound Attacks
 ; ------------------------------------------------------------------------------
 
-SmogEffect:
-	call PoisonEffect
-	jp DamageAllOpponentBenched10Effect
-
-
 PoisonDrainEffect:
 	call PoisonEffect
 	jp LeechLifeEffect

@@ -1106,7 +1106,7 @@ DamageAllFriendlyBenched20EffectCommands:
 	db  $00
 
 SmogEffectCommands:
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, SmogEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, PoisonAllOpponentPokemonEffect
 	db  $00
 
 DeadlyPoisonEffectCommands:

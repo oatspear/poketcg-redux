@@ -2175,7 +2175,7 @@ WeezingCard:
 	energy DARKNESS, 2 ; energies
 	tx SmogName ; name
 	tx SmogDescription ; description
-	tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 10 ; damage
 	db DAMAGE_NORMAL ; category
 	dw SmogEffectCommands ; effect commands

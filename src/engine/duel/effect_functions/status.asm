@@ -233,6 +233,13 @@ InflictCrowdControlStatusEffect_PlayArea:
 ; ------------------------------------------------------------------------------
 
 
+PoisonAllOpponentPokemonEffect:
+	call PoisonEffect
+	ld a, ATK_ANIM_BENCH_HIT
+	ld c, POISONED
+	jr InflictDamageOverTimeStatusEffect_AllBenchedPokemon
+
+
 ; assumes:
 ;   - SwapTurn if needed to change to the correct play area
 ; input:

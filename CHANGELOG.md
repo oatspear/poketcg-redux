@@ -353,6 +353,7 @@
 - Increased HP from 80 to 90.
 - **Toxic Gas**: renamed to **Neutralizing Gas**.
 - **Neutralizing Gas**: only cancels the opponent's Pokémon Powers.
+- **Smog***: no longer deals damage to the Bench; instead, it Poisons all of the opponent's Pokémon.
 
 #### Muk
 
