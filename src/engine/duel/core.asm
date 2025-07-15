@@ -1334,6 +1334,9 @@ OpenAttackPage:
 	ld [wCurPlayAreaSlot], a
 	ld [wDuelDisplayedScreen], a  ; call EmptyScreen
 	; call FinishQueuedAnimations
+; this call is because the attack pages assume tiles are already loaded
+; for example when switching pages from the Pokémon overview page
+	call LoadDuelCheckPokemonScreenTiles
 	ldh a, [hCurMenuItem]
 	ld [wSelectedDuelSubMenuItem], a
 	add a
@@ -4422,6 +4425,7 @@ IF NEW_CARD_PAGE_LAYOUT
 ELSE
 	; draw the surrounding box, and print fixed text
 	call DrawCardPageSurroundingBox
+	call ColorizeCardImage
 	call LoadDuelCheckPokemonScreenTiles
 ENDC
 IF NEW_CARD_PAGE_LAYOUT
@@ -4707,6 +4711,12 @@ PrintCardPageWeaknessesOrResistances:
 ; CARDPAGE_POKEMON_OVERVIEW when wCardPageType is CARDPAGETYPE_PLAY_AREA.
 PrintPokemonCardPageGenericInformation:
 	call DrawCardPageSurroundingBox
+	call ColorizeCardImage
+	call DrawCardPageSet2AndRarityIcons
+	; jr PrintPokemonCardHeader_NameColor
+	; fallthrough
+
+PrintPokemonCardHeader_NameColor:
 IF NEW_CARD_PAGE_LAYOUT
 	lb de, 3, 1
 ELSE
@@ -4731,8 +4741,7 @@ ELSE
 	; lb bc, 4, 1
 ENDC
 	inc a
-	call JPWriteByteToBGMap0
-	jp DrawCardPageSet2AndRarityIcons
+	jp WriteByteToBGMap0
 
 
 ; input:
@@ -4754,7 +4763,7 @@ PrintPokemonAttachedTool:
 	jp WriteByteToBGMap0
 
 
-; draws the 20x18 surrounding box and also colorizes the card image
+; draws the 20x18 surrounding box
 DrawCardPageSurroundingBox:
 	ld hl, wTextBoxFrameType
 	; ld a, $5
@@ -4766,6 +4775,11 @@ DrawCardPageSurroundingBox:
 	call DrawRegularTextBox
 	pop hl
 	res 7, [hl]
+	ret
+
+
+; colorizes the card image at the respective sprite coordinates
+ColorizeCardImage:
 IF NEW_CARD_PAGE_LAYOUT
 	ld a, [wLoadedCard1Type]
 	cp TYPE_ENERGY
@@ -4803,24 +4817,31 @@ DisplayCardPage_PokemonAttack2:
 	ld de, wLoadedCard1Atk2Description
 ;	fallthrough
 
+; assumes:
+;   - call LoadDuelCheckPokemonScreenTiles
 ; input:
-   ; hl = address of the attack's name (text id)
-   ; de = address of the attack's description (first text id followed by second)
+;   hl: address of the attack's name (text id)
+;   de: address of the attack's description (first text id followed by second)
 DisplayPokemonAttackCardPage:
 	push de
 	push hl
 	call ZeroObjectPositionsAndToggleOAMCopy
-; print surrounding box
-	ld hl, wTextBoxFrameType
-	set 7, [hl]  ; colorize textbox border also on SGB (with SGB1)
-	push hl
-	lb de, 0, 0
-	lb bc, 20, 18
-	call DrawRegularTextBox
-	pop hl
-	res 7, [hl]
+	call DrawCardPageSurroundingBox
+; print name and color of the Pokémon
+	call PrintPokemonCardHeader_NameColor
+; print the 2x2 face down card image depending on the Pokemon's evolution stage
+	lb de, 1, 1  ; 17, 1
+	ld a, [wCardPageType]
+	or a
+	ld a, [wLoadedCard1Stage]
+	jr z, .print_stage_tile
+	ld a, [wCurPlayAreaSlot]
+	add DUELVARS_ARENA_CARD_STAGE
+	call GetTurnDuelistVariable
+.print_stage_tile
+	call PrintFaceDownCardStageTile
 ; print name, damage, and energy cost of attack or Pokemon power starting at line 2
-	ld e, 1
+	ld e, 3
 	pop hl
 	call PrintAttackOrPkmnPowerInformation
 	pop hl
@@ -4829,7 +4850,7 @@ DisplayPokemonAttackCardPage:
 	ret z
 	dec hl
 	push hl
-	lb de, 1, 3
+	lb de, 1, 5
 	call PrintAttackOrCardDescription
 ; continued description
 	pop hl
@@ -4840,7 +4861,7 @@ DisplayPokemonAttackCardPage:
 	ret z
 	dec hl
 	ld a, [wCurTextLine]
-	add 4
+	add 6
 	ld d, 1
 	ld e, a
 	jp PrintAttackOrCardDescription
