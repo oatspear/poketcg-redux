@@ -18,10 +18,10 @@ SHA1 := sha1sum
 endif
 
 RGBDS ?=
-RGBASM  ?= $(RGBDS)rgbasm
-RGBFIX  ?= $(RGBDS)rgbfix
-RGBGFX  ?= $(RGBDS)rgbgfx
-RGBLINK ?= $(RGBDS)rgblink
+RGBASM  ?= $(RGBDS)rgbasm0.7
+RGBFIX  ?= $(RGBDS)rgbfix0.7
+RGBGFX  ?= $(RGBDS)rgbgfx0.7
+RGBLINK ?= $(RGBDS)rgblink0.7
 
 
 ### Build targets
