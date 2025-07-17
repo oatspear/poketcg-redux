@@ -923,6 +923,19 @@ VoltSwitchEffect:
 ; Compound Attacks
 ; ------------------------------------------------------------------------------
 
+SilverWhirlwind_AISelectEffect:
+	call MoveAllAttachedEnergies_AISelectEffect
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	ldh [hTemp_ffa0], a
+	ret
+
+SilverWhirlwind_SelectEffect:
+	call MoveAllAttachedEnergies_PlayerSelection
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	ldh [hTemp_ffa0], a
+	jp Whirlwind_SelectEffect
+
+
 PoisonDrainEffect:
 	call PoisonEffect
 	jp LeechLifeEffect
@@ -4856,6 +4869,21 @@ RapidSpin_SwitchEffect:
 	jp SwitchUser_SwitchEffect  ; ffa0
 
 
+SilverWhirlwind_TransferEffect:
+	call IsBenchPokemonSelected
+	ret z
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	push af
+	ldh a, [hTemp_ffa0]
+	ldh [hTempPlayAreaLocation_ffa1], a  ; target PLAY_AREA_*
+	xor a  ; PLAY_AREA_ARENA
+	ldh [hTempPlayAreaLocation_ff9d], a  ; source PLAY_AREA_*
+	call MoveAllAttachedEnergiesToAnotherPokemonEffect
+	pop af
+	ldh [hTempPlayAreaLocation_ffa1], a
+	ret
+
+
 SilverWhirlwind_SwitchEffect:
 	call Whirlwind_SwitchEffect
 ; refresh screen to show new Pokémon
@@ -5683,6 +5711,44 @@ EnergySwitch_PlayerSelection:
 	ret
 
 
+MoveAllAttachedEnergies_AISelectEffect:
+	ld a, PLAY_AREA_BENCH_1
+	ldh [hTempPlayAreaLocation_ffa1], a
+	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+	call GetTurnDuelistVariable
+	dec a
+	ret z  ; nothing to do
+	ld d, a
+	ld e, PLAY_AREA_BENCH_1
+
+.loop_play_area
+	call GetPlayAreaCardAttachedEnergies
+	ld a, [wTotalAttachedEnergies]
+	or a
+	jr nz, .skip
+; found Pokémon without any attached energies
+	ld a, e
+	ldh [hTempPlayAreaLocation_ffa1], a
+; choose an energy to move
+	jp DiscardBasicEnergy_AISelectEffect
+.skip
+	inc e
+	dec d
+	ret z  ; nothing to do
+	jr .loop_play_area
+
+
+MoveAllAttachedEnergies_PlayerSelection:
+	ld a, $ff
+	ldh [hTempPlayAreaLocation_ffa1], a
+	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+	call GetTurnDuelistVariable
+	cp 2
+	ccf
+	ret nc  ; nothing to do if there are no Benched Pokémon
+	jr EnergySlide_PlayerSelection.choose_bench
+
+
 ; output:
 ;   [hTemp_ffa0]: deck index of energy card to move | $ff
 ;   [hTempPlayAreaLocation_ffa1]: PLAY_AREA_* of benched Pokémon
@@ -5703,6 +5769,7 @@ EnergySlide_PlayerSelection:
 
 ; selected energy index is in a and [hTempCardIndex_ff98]
 	ldh [hTemp_ffa0], a
+.choose_bench
 	call EmptyScreen
 	ldtx hl, ChoosePokemonToAttachEnergyCardText
 	call DrawWideTextBox_WaitForInput

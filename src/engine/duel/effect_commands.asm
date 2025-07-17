@@ -531,15 +531,10 @@ AdaptiveEvolutionEffectCommands:
 
 SilverWhirlwindEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckBenchIsNotEmpty ; CheckArenaPokemonHasAnyEnergiesAttached
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, EnergySlide_TransferEffect
-	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, EnergySlide_PlayerSelection
-	; dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, EnergySlide_PlayerSelection
-	; dbw EFFECTCMDTYPE_DISCARD_ENERGY, EnergySlide_TransferEffect
-	dbw EFFECTCMDTYPE_AI_SELECTION, EnergySlide_AISelectEffect
-	db  $00
-
-	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Whirlwind_SelectEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, SilverWhirlwind_SelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, SilverWhirlwind_AISelectEffect
 	dbw EFFECTCMDTYPE_AI_SWITCH_DEFENDING_PKMN, Whirlwind_SelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SilverWhirlwind_TransferEffect
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, SilverWhirlwind_SwitchEffect
 	db  $00
 
