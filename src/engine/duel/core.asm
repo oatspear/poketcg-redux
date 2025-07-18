@@ -3571,9 +3571,9 @@ IF NEW_CARD_PAGE_LAYOUT
 	ld a, [wLoadedCard1Type]
 	cp TYPE_ENERGY
 	jr nc, .not_a_pokemon
-	lb de, $10, $28 ; X Position and Y Position of top-left corner
+	lb de, $10, $30 ; X Position and Y Position of top-left corner
 	call PlaceCardImageOAM
-	lb de, 1, 3
+	lb de, 1, 4
 	jr .done_gfx
 .not_a_pokemon
 ENDC
@@ -3922,7 +3922,7 @@ CardPageSwitch_00:
 ; return with current page
 CardPageSwitch_PokemonOverviewOrDescription:
 IF NEW_CARD_PAGE_LAYOUT
-	lb de, $10, $28 ; X Position and Y Position of top-left corner
+	lb de, $10, $30 ; X Position and Y Position of top-left corner
 	call PlaceCardImageOAM
 ENDC
 	ld a, CARDPAGE_POKEMON_OVERVIEW
@@ -4472,10 +4472,9 @@ IF NEW_CARD_PAGE_LAYOUT
 
 	; print status conditions, if any
 	lb bc, 14, 1
-	;ld a, [wCurPlayAreaSlot]
-	;add DUELVARS_ARENA_CARD_STATUS
-	;call GetTurnDuelistVariable
-	ld a, CONFUSED | POISONED | BURNED  ; FIXME: this is a hack to test the new card page layout
+	ld a, [wCurPlayAreaSlot]
+	add DUELVARS_ARENA_CARD_STATUS
+	call GetTurnDuelistVariable
 	call CheckPrintCnfSlpPrz
 	inc b
 	call CheckPrintPoisoned
@@ -4787,7 +4786,7 @@ ENDC
 	lb de, 6, 4
 IF NEW_CARD_PAGE_LAYOUT
 	jp nc, ApplyBGP6OrSGB3ToCardImage
-	lb de, 1, 3
+	lb de, 1, 4
 ENDC
 	jp ApplyBGP6OrSGB3ToCardImage
 
@@ -4841,7 +4840,7 @@ DisplayPokemonAttackCardPage:
 .print_stage_tile
 	call PrintFaceDownCardStageTile
 ; print name, damage, and energy cost of attack or Pokemon power starting at line 2
-	ld e, 3
+	ld e, 4
 	pop hl
 	call PrintAttackOrPkmnPowerInformation
 	pop hl
@@ -4850,7 +4849,7 @@ DisplayPokemonAttackCardPage:
 	ret z
 	dec hl
 	push hl
-	lb de, 1, 5
+	lb de, 1, 6
 	call PrintAttackOrCardDescription
 ; continued description
 	pop hl
@@ -4861,7 +4860,7 @@ DisplayPokemonAttackCardPage:
 	ret z
 	dec hl
 	ld a, [wCurTextLine]
-	add 6
+	add 7
 	ld d, 1
 	ld e, a
 	jp PrintAttackOrCardDescription
@@ -5043,7 +5042,7 @@ IF NEW_CARD_PAGE_LAYOUT
 ELSE
 	lb de, 1, 13
 ENDC
-	cp 4
+	cp 5
 	jr nc, .print_description
 	inc e ; move a line down, as the description is short enough to fit in three lines
 .print_description
