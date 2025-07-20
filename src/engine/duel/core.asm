@@ -5063,7 +5063,7 @@ DrawCardPageSet2AndRarityIcons:
 	lb hl, 1, 2
 	lb bc, 2, 2
 IF NEW_CARD_PAGE_LAYOUT
-	lb de, 17, 8
+	lb de, 17, 9
 ELSE
 	lb de, 15, 8
 ENDC
