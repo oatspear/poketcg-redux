@@ -62,6 +62,10 @@ AcidicDrainEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, AcidicDrain_StatusHealEffect
 	db  $00
 
+AcidicDrain30EffectCommands:
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, AcidicDrain30_StatusHealEffect
+	db  $00
+
 PoisonPaybackEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, DoubleDamageIfUserIsDamaged_DamageBoostEffect
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, PoisonEffect
@@ -86,12 +90,6 @@ Tutor1PokemonEffectCommands:
 	dbw EFFECTCMDTYPE_AI_SELECTION, ChoosePokemonFromDeck_AISelectEffect
 	db  $00
 
-AbilityLureEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, LureAbility_PreconditionCheck
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, LureAbility_SwitchDefendingPokemon
-	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Lure_SelectSwitchPokemon
-	db  $00
-
 ; unused
 PoisonLureEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, PoisonLure_SwitchEffect
@@ -106,10 +104,9 @@ LureEffectCommands:
 	db  $00
 
 FragranceTrapEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, FragranceTrap_PreconditionCheck
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, FragranceTrap_PlayerSelectEffect
-	dbw EFFECTCMDTYPE_AI_SELECTION, Lure_GetOpponentBenchPokemonWithLowestHP
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, FragranceTrap_SwitchEffect
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, FragranceTrap_StatusEffect
 	db  $00
 
 PrimalSwirlEffectCommands:

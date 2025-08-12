@@ -269,6 +269,20 @@ FixmeText:
 ; Unused Text
 ; ------------------------------------------------------------------------------
 
+; FragranceTrapDescription:
+; 	text "Before doing damage, switch in"
+; 	line "1 of your opponent's Benched"
+; 	line "Pokémon to the Active Spot."
+; 	done
+
+; FragranceTrapDescriptionCont:
+; 	text "The new Defending Pokémon is now"
+; 	line "Poisoned. If this Pokémon has 3 or"
+; 	line "more Energies attached to it, the"
+; 	line "new Defending Pokémon is now also"
+; 	line "Confused and Burned."
+; 	done
+
 ; SurpriseBiteDescription:
 ; 	text "Once during your turn, you may"
 ; 	line "put 1 damage counter on 1 of"

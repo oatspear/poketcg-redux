@@ -967,6 +967,12 @@ AcidicDrain_StatusHealEffect:
 	jp Heal10DamageEffect
 
 
+AcidicDrain30_StatusHealEffect:
+	call PoisonEffect
+	call BurnEffect
+	jp Heal30DamageEffect
+
+
 SwarmEffect:
 	call Swarm_PutInPlayAreaEffect
 	jp Swarm_DamageBoostEffect
@@ -2097,25 +2103,27 @@ BenchSelectionMenuParameters: ; 2c6e8 (b:46e8)
 	dw NULL ; function pointer if non-0
 
 
+; return carry if there are no Pokemon cards in the non-turn holder's bench
+; return carry if there are no energies attached to the user
+FragranceTrap_PreconditionCheck:
+	call CheckPlayAreaPokemonHasAnyEnergiesAttached
+	ret c
+	call CheckOpponentBenchIsNotEmpty
+	ret c
+	jp CheckPokemonPowerCanBeUsed_StoreTrigger
+
+
+; return carry if there are no Pokemon cards in the non-turn holder's bench
 RepelAbility_PreconditionCheck:
 	call CheckTriggeringPokemonIsActive
 	ret c
-	; jr LureAbility_PreconditionCheck
-	; fallthrough
-
-; return carry if there are no Pokemon cards in the non-turn holder's bench
-LureAbility_PreconditionCheck:
-	; call Lure_AssertPokemonInBench
 	call CheckOpponentBenchIsNotEmpty
 	ret c
 	jp CheckPokemonPowerCanBeUsed_StoreTrigger
 
 
 FragranceTrap_PlayerSelectEffect:
-	xor a  ; PLAY_AREA_ARENA
-	ldh [hTempPlayAreaLocation_ffa1], a
-	call CheckOpponentBenchIsNotEmpty
-	ret c
+	call DiscardEnergyAbility_PlayerSelectEffect
 	; jr Lure_SelectSwitchPokemon
 	; fallthrough
 
@@ -2135,6 +2143,18 @@ Lure_GetOpponentBenchPokemonWithLowestHP:
 	call GetOpponentBenchPokemonWithLowestHP
 	ldh [hTempPlayAreaLocation_ffa1], a
 	ret
+
+
+FragranceTrap_SwitchEffect:
+	call SetUsedPokemonPowerThisTurn_RestoreTrigger
+; discard energy
+	ldh a, [hEnergyTransEnergyCard]
+	cp $ff
+	ret z
+	call PutCardInDiscardPile
+; switch the opponent's Pokémon
+	; jr Lure_SwitchDefendingPokemon
+	; fallthrough
 
 ; Defending Pokemon is swapped out for the one with the PLAY_AREA_* at hTemp_ffa0
 ; unless Mew's Neutralizing Shield or Haunter's Transparency prevents it.
@@ -2158,19 +2178,6 @@ Lure_SwitchAndTrapDefendingPokemon:
 	call Lure_SwitchDefendingPokemon
 	jp UnableToRetreatEffect
 
-
-LureAbility_SwitchDefendingPokemon:
-	ldh a, [hTemp_ffa0]
-	ldh [hTempPlayAreaLocation_ff9d], a
-	call SetUsedPokemonPowerThisTurn
-	jp Lure_SwitchDefendingPokemon
-
-
-FragranceTrap_SwitchEffect:
-	ld a, ATK_ANIM_LURE
-	ldh [hTemp_ffa0], a
-	; jr DragOff_SwitchEffect
-	; fallthrough
 
 DragOff_SwitchEffect:
 	ldh a, [hTempPlayAreaLocation_ffa1]

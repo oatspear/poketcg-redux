@@ -1155,8 +1155,8 @@ ChallengeMachineGrassIconText: ; 57390 (15:7390)
 
 PokemonPowerDescriptionCont:
 	text "This power can't be used if this"
-	line "Pokémon is Drowsy, Confused, or"
-	line "Paralyzed."
+	line "Pokémon is Flinching, Drowsy,"
+	line "Confused, or Paralyzed."
 	done
 
 UniquePokemonPowerDescriptionCont:

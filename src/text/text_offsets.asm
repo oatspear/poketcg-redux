@@ -2990,7 +2990,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer AcidicDrainName
 	textpointer FragranceTrapName
 	textpointer FragranceTrapDescription
-	textpointer FragranceTrapDescriptionCont
 	textpointer MassiveBloomName
 	textpointer EnergyBloomDescription
 	textpointer PsyShiftName

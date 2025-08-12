@@ -137,6 +137,12 @@
 - **Swarm**: gets bonus damage with 4 or more Benched Pokémon, instead of 5.
 - **Swarm**: searches the deck for a Basic Pokémon before doing damage.
 
+#### Victreebel
+- **Frangrance Trap**: removed.
+- **Swallow Up**: removed.
+- New Pokémon Power: **Fragrance Trap**: Once per turn, discard an attached energy to switch in 1 of the opponent's Benched Pokémon.
+- New attack: **Acidic Drain** (GGC): 30 damage; heal 30; inflict Poison and Burn.
+
 #### Exeggutor
 
 - **Energy Burst**: cost increased from (C) to (CC).

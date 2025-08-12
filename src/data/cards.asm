@@ -1839,32 +1839,32 @@ VictreebelCard:
 	; The Defending Pokémon can't retreat during your opponent's next turn.
 
 	; attack 1
-	energy GRASS, 1 ; energies
+	energy 0 ; energies
 	tx FragranceTrapName ; name
 	tx FragranceTrapDescription ; description
-	tx FragranceTrapDescriptionCont ; description (cont)
-	db 10 ; damage
-	db DAMAGE_NORMAL ; category
+	tx PokemonPowerDescriptionCont ; description (cont)
+	db 0 ; damage
+	db POKEMON_POWER ; category
 	dw FragranceTrapEffectCommands ; effect commands
-	db INFLICT_POISON | INFLICT_CONFUSION ; flags 1
+	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
-	db ATK_ANIM_POWDER_HIT ; animation
+	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy GRASS, 1, COLORLESS, 2 ; energies
-	tx SwallowUpName ; name
-	tx SwallowUpDescription ; description
-	tx SwallowUpDescriptionCont ; description (cont)
+	energy GRASS, 2, COLORLESS, 1 ; energies
+	tx AcidicDrainName ; name
+	tx InflictPoisonBurnDescription ; description
+	tx Heal30DamageDescription ; description (cont)
 	db 30 ; damage
-	db DAMAGE_PLUS ; category
-	dw SwallowUpEffectCommands ; effect commands
-	db NONE ; flags 1
+	db DAMAGE_NORMAL ; category
+	dw AcidicDrain30EffectCommands ; effect commands
+	db INFLICT_POISON ; flags 1
 	db HEAL_USER ; flags 2
 	db NONE ; flags 3
-	db 4
-	db ATK_ANIM_DRAIN ; animation
+	db 0
+	db ATK_ANIM_GOO ; animation
 
 	db 2 ; retreat cost
 	db WR_FIRE ; weakness
