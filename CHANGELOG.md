@@ -137,11 +137,15 @@
 - **Swarm**: gets bonus damage with 4 or more Benched Pokémon, instead of 5.
 - **Swarm**: searches the deck for a Basic Pokémon before doing damage.
 
+#### Weepinbell
+- **Acidic Drain**: removed.
+- New attack: **Acid** (GC): 20 damage; inflict Burn; if already Burned, discard 1 energy from the Defending Pokémon.
+
 #### Victreebel
 - **Frangrance Trap**: removed.
 - **Swallow Up**: removed.
 - New Pokémon Power: **Fragrance Trap**: Once per turn, discard an attached energy to switch in 1 of the opponent's Benched Pokémon.
-- New attack: **Acidic Drain** (GGC): 30 damage; heal 30; inflict Poison and Burn.
+- New attack: **Acidic Drain** (GGC): 30 damage; heal the same amount as the damage dealt; inflict Poison and Burn.
 
 #### Exeggutor
 

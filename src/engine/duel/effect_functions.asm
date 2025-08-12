@@ -923,6 +923,11 @@ VoltSwitchEffect:
 ; Compound Attacks
 ; ------------------------------------------------------------------------------
 
+AcidEffect:
+	call DiscardOpponentEnergy_DiscardEffect
+	jp BurnEffect
+
+
 SilverWhirlwind_AISelectEffect:
 	call MoveAllAttachedEnergies_AISelectEffect
 	ldh a, [hTempPlayAreaLocation_ffa1]
@@ -964,13 +969,7 @@ SoothingMelody_SleepHealEffect:
 AcidicDrain_StatusHealEffect:
 	call PoisonEffect
 	call BurnEffect
-	jp Heal10DamageEffect
-
-
-AcidicDrain30_StatusHealEffect:
-	call PoisonEffect
-	call BurnEffect
-	jp Heal30DamageEffect
+	jp LeechLifeEffect
 
 
 SwarmEffect:

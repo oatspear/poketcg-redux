@@ -62,10 +62,6 @@ AcidicDrainEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, AcidicDrain_StatusHealEffect
 	db  $00
 
-AcidicDrain30EffectCommands:
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, AcidicDrain30_StatusHealEffect
-	db  $00
-
 PoisonPaybackEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, DoubleDamageIfUserIsDamaged_DamageBoostEffect
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, PoisonEffect
@@ -631,6 +627,12 @@ Discard1EnergyFromOpponentEffectCommands:
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, DiscardOpponentEnergy_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, DiscardOpponentEnergy_AISelectEffect
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DiscardOpponentEnergy_DiscardEffect
+	db  $00
+
+AcidEffectCommands:
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, DiscardOpponentEnergy_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, DiscardOpponentEnergy_AISelectEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, AcidEffect
 	db  $00
 
 EvolutionaryFlameEffectCommands:

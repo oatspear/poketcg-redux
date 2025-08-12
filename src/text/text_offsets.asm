@@ -2996,6 +2996,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PsyShiftDescription
 	textpointer LickingShotName
 	textpointer LickingShotDescription
+	textpointer AcidName
+	textpointer AcidDescription
 
 ; ------------------------------------------------------------------------------
 ; text13.asm

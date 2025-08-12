@@ -1771,12 +1771,12 @@ WeepinbellCard:
 
 	; attack 2
 	energy GRASS, 1, COLORLESS, 1 ; energies
-	tx AcidicDrainName ; name
-	tx InflictPoisonBurnDescription ; description
-	tx Heal10DamageDescription ; description (cont)
+	tx AcidName ; name
+	tx InflictBurnDescription ; description
+	tx AcidDescription ; description (cont)
 	db 20 ; damage
 	db DAMAGE_NORMAL ; category
-	dw AcidicDrainEffectCommands ; effect commands
+	dw AcidEffectCommands ; effect commands
 	db INFLICT_POISON ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -1856,10 +1856,10 @@ VictreebelCard:
 	energy GRASS, 2, COLORLESS, 1 ; energies
 	tx AcidicDrainName ; name
 	tx InflictPoisonBurnDescription ; description
-	tx Heal30DamageDescription ; description (cont)
+	tx LeechLifeDescription ; description (cont)
 	db 30 ; damage
 	db DAMAGE_NORMAL ; category
-	dw AcidicDrain30EffectCommands ; effect commands
+	dw AcidicDrainEffectCommands ; effect commands
 	db INFLICT_POISON ; flags 1
 	db HEAL_USER ; flags 2
 	db NONE ; flags 3

@@ -1546,3 +1546,13 @@ LickingShotDescription:
 	line "your opponent's Pokémon for each"
 	line "Energy attached to this Pokémon."
 	done
+
+AcidName:
+	text "Acid"
+	done
+
+AcidDescription:
+	text "If the Defending Pokémon was already"
+	line "Burned, discard 1 Energy attached"
+	line "to it."
+	done
