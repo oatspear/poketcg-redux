@@ -807,7 +807,7 @@ TerrorStrike_DamageBoostEffect:
   jr z, .done
   call LoadCardDataToBuffer2_FromDeckIndex
 	ld a, [wLoadedCard2Atk1Category]
-	cp POKEMON_POWER
+	cp POKE_POWER
   jr nz, .loop_play_area
   inc c
   jr .loop_play_area

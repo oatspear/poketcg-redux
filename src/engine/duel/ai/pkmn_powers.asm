@@ -408,7 +408,7 @@ HandleAIPkmnPowers:
 	ld e, FIRST_ATTACK_OR_PKMN_POWER
 	call CopyAttackDataAndDamage_FromDeckIndex
 	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
+	cp POKE_POWER
 	jr z, .execute_effect
 	pop bc
 	jp .next_3

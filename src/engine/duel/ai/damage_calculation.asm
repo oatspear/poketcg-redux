@@ -12,8 +12,8 @@ EstimateDamage_VersusDefendingCard:
 	ld d, a
 	call CopyAttackDataAndDamage_FromDeckIndex
 	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
-	jr nz, .is_attack
+	and ABILITY
+	jr z, .is_attack
 
 ; is a Pokémon Power
 ; set wDamage, wDamageFlags, wAIMinDamage and wAIMaxDamage to zero
@@ -251,8 +251,8 @@ EstimateDamage_FromDefendingPokemon: ; 1450b (5:450b)
 	call CopyAttackDataAndDamage_FromDeckIndex
 	call SwapTurn
 	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
-	jr nz, .is_attack
+	and ABILITY
+	jr z, .is_attack
 
 ; is a Pokémon Power
 ; set wDamage, wDamageFlags, wAIMinDamage and wAIMaxDamage to zero

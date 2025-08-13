@@ -199,8 +199,8 @@ GetAIScoreOfAttack:
 	ld a, [wSelectedAttack]
 	call EstimateDamage_VersusDefendingCard
 	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
-	jr z, .unusable
+	and ABILITY
+	jr nz, .unusable
 	and RESIDUAL
 	jr nz, .check_if_can_ko
 	ld a, ATTACK_FLAG1_ADDRESS | DAMAGE_TO_OPPONENT_BENCH_F

@@ -1597,8 +1597,8 @@ CheckIfDefendingPokemonHasAnyAttack:
 CheckIfPokemonHasAnyAttack:
 	call LoadCardDataToBuffer2_FromDeckIndex
 	ld a, [wLoadedCard2Atk1Category]
-	cp POKEMON_POWER
-	jr nz, .has_attack
+	and ABILITY
+	jr z, .has_attack
 	ld hl, wLoadedCard2Atk2Name
 	ld a, [hli]
 	or [hl]
@@ -1772,9 +1772,9 @@ AIPickAttackForAmnesia: ; 2c532 (b:4532)
 ; otherwise if first attack isn't a Pkmn Power, choose it instead.
 	ld e, FIRST_ATTACK_OR_PKMN_POWER
 	ld a, [wLoadedCard2Atk1Category]
-	cp POKEMON_POWER
-	jr nz, .chosen
-; if it is a Pkmn Power, choose second attack.
+	and ABILITY
+	jr z, .chosen
+; if it is an ability, choose second attack.
 	ld e, SECOND_ATTACK
 .chosen
 	ld a, e
@@ -2675,8 +2675,8 @@ Amnesia_CheckAttacks: ; 2d149 (b:5149)
 	call GetTurnDuelistVariable
 	call LoadCardDataToBuffer2_FromDeckIndex
 	ld a, [wLoadedCard2Atk1Category]
-	cp POKEMON_POWER
-	jr nz, .has_attack
+	and ABILITY
+	jr z, .has_attack
 	ld hl, wLoadedCard2Atk2Name
 	ld a, [hli]
 	or [hl]

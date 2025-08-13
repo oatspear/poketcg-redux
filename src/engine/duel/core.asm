@@ -1561,8 +1561,8 @@ PrintAndLoadAttacksToDuelTempList:
 	ld a, c
 	ret
 
-; given de = wLoadedCard*Atk*Name, return carry if the attack is a
-; Pkmn Power or if the attack slot is empty.
+; given de = wLoadedCard*Atk*Name, return carry if the attack is an
+; ability or if the attack slot is empty.
 CheckAttackSlotEmptyOrPokemonPower:
 	push hl
 	push de
@@ -1577,8 +1577,8 @@ CheckAttackSlotEmptyOrPokemonPower:
 	add hl, de
 	ld a, [hl]
 	and $ff ^ RESIDUAL
-	cp POKEMON_POWER
-	jr z, .return_no_atk_found
+	and ABILITY
+	jr nz, .return_no_atk_found
 	or a
 .return
 	pop bc
@@ -1639,8 +1639,8 @@ _CheckIfEnoughEnergiesToAttack:
 	ld hl, CARD_DATA_ATTACK1_CATEGORY - CARD_DATA_ATTACK1_ENERGY_COST
 	add hl, de
 	ld a, [hl]
-	cp POKEMON_POWER
-	jr z, .not_usable_or_not_enough_energies
+	and ABILITY
+	jr nz, .not_usable_or_not_enough_energies
 
 ; usable attack
 	push de
@@ -4623,8 +4623,10 @@ PrintAttackOrPkmnPowerInformation:
 	ld a, [hl]
 	and $ff ^ RESIDUAL
 	jr z, .print_energy_cost
-	cp POKEMON_POWER
+	cp POKE_POWER
 	jr z, .print_pokemon_power
+	cp POKE_BODY
+	jr z, .print_poke_body
 	; register a is DAMAGE_PLUS, DAMAGE_MINUS, or DAMAGE_X
 	; print the damage modifier (+, -, x) at 18,(e+1) (after the damage value)
 	add SYM_PLUS - DAMAGE_PLUS
@@ -4653,6 +4655,13 @@ PrintAttackOrPkmnPowerInformation:
 	; print "PKMN PWR" at 1,e
 	ld d, 1
 	ldtx hl, PKMNPWRText
+	call InitTextPrinting_ProcessTextFromID
+	pop bc
+	ret
+.print_poke_body
+	; print "POKéBODY" at 1,e
+	ld d, 1
+	ldtx hl, PokeBodyText
 	call InitTextPrinting_ProcessTextFromID
 	pop bc
 	ret
@@ -6309,7 +6318,7 @@ Func_64b0:
 
 Func_64fc:
 	ld a, [wLoadedCard1Atk1Category]
-	cp POKEMON_POWER
+	cp POKE_POWER
 	ret nz
 	ld a, [wCurPlayAreaY]
 	inc a
@@ -8134,11 +8143,11 @@ HandleEndOfTurnEffect_RocketHeadquarters:
 	cp TYPE_PKMN + 1
 	jr nc, .next  ; not a Pokémon card
 	ld a, [wLoadedCard2Atk1Category]
-	sub POKEMON_POWER
+	sub POKE_POWER
 	cp 1
 	jr c, .found  ; Pokémon Power
 	ld a, [wLoadedCard2Atk2Category]
-	sub POKEMON_POWER
+	sub POKE_POWER
 	cp 1
 	jr nc, .next  ; not a Pokémon Power
 .found
@@ -9693,8 +9702,10 @@ UseAttackOrPokemonPower:
 	ld a, [wTempCardID_ccc2]
 	ld [wPlayerAttackingCardID], a
 	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
+	cp POKE_POWER
 	jp z, UsePokemonPower
+	and ABILITY
+	ret nz  ; unusable
 
 	call Func_16f6
 	ld a, EFFECTCMDTYPE_INITIAL_EFFECT_1

@@ -389,10 +389,10 @@ CheckEnergyNeededForAttack:
 	or [hl]
 	jr z, .no_attack
 	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
-	jr nz, .is_attack
+	and ABILITY
+	jr z, .is_attack
 .no_attack
-	lb bc, 0, 0
+	ld bc, 0
 	ld e, c
 	scf
 	ret
@@ -895,10 +895,10 @@ CheckEnergyNeededForAttackAfterDiscard:
 	or [hl]
 	jr z, .no_attack
 	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
-	jr nz, .is_attack
+	and ABILITY
+	jr z, .is_attack
 .no_attack
-	lb bc, 0, 0
+	ld bc, 0
 	ld e, c
 	scf
 	ret
@@ -2219,8 +2219,8 @@ CheckIfNoSurplusEnergyForAttack:
 	or [hl]
 	jr z, .not_attack
 	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
-	jr nz, .is_attack
+	and ABILITY
+	jr z, .is_attack
 .not_attack
 	scf
 	ret

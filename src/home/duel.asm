@@ -963,7 +963,7 @@ ConvertSpecialTrainerCardToPokemon:
 	tx DiscardName        ; CARD_DATA_ATTACK1_NAME
 	tx DiscardDescription ; CARD_DATA_ATTACK1_DESCRIPTION
 	ds $03                ; CARD_DATA_ATTACK1_DESCRIPTION (cont), CARD_DATA_ATTACK1_DAMAGE
-	db POKEMON_POWER      ; CARD_DATA_ATTACK1_CATEGORY
+	db POKE_POWER         ; CARD_DATA_ATTACK1_CATEGORY
 	dw TrainerCardAsPokemonEffectCommands ; CARD_DATA_ATTACK1_EFFECT_COMMANDS
 	ds $18                ; CARD_DATA_RETREAT_COST - (CARD_DATA_ATTACK1_EFFECT_COMMANDS + 2)
 	db UNABLE_RETREAT     ; CARD_DATA_RETREAT_COST
@@ -1769,8 +1769,8 @@ OnPokemonPlayedInitVariablesAndPowers:
 	ld a, e
 	ld [wTempTurnDuelistCardID], a
 	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
-	ret nz
+	and ABILITY
+	ret z
 ; this Pokémon has a Pokémon Power
 	bank1call DisplayUsePokemonPowerScreen
 	ldh a, [hTempCardIndex_ff98]
@@ -2690,9 +2690,9 @@ DealDamageToPlayAreaPokemon:
 
 ; Pokémon Powers do not have damage modifiers
 	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
+	and ABILITY
 	ld a, [wTempPlayAreaLocation_cceb]
-	jr z, .got_damage
+	jr nz, .got_damage
 
 ; handle damage modifiers depending on play area location
 	; ld a, [wTempPlayAreaLocation_cceb]

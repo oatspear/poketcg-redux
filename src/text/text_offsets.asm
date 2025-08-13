@@ -12,6 +12,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer WeaknessText                                       ; 0x0008
 	textpointer ResistanceText                                     ; 0x0009
 	textpointer PKMNPWRText                                        ; 0x000a
+	textpointer PokeBodyText
 	textpointer NumberText                                         ; 0x000b
 	textpointer LengthText                                         ; 0x000c
 	textpointer WeightText                                         ; 0x000d

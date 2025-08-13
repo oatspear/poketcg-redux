@@ -814,8 +814,8 @@ CheckDefendingPokemonAffectedByEffects:
 ; preserves: hl, bc, de
 CheckNotImmuneToAttackEffects:
 	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
-	ret z
+	and ABILITY
+	ret nz
 	ld a, [wNoDamageOrEffect]
 	cp 1
 	ccf  ; carry if non-zero

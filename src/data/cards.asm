@@ -307,7 +307,7 @@ IvysaurCard:
 	tx EnergyTransDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw EnergyTransEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -461,7 +461,7 @@ CaterpieCard:
 	tx AdaptiveEvolutionDescription ; description
 	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw AdaptiveEvolutionEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -511,9 +511,9 @@ MetapodCard:
 	energy 0 ; energies
 	tx ExoskeletonName ; name
 	tx Exoskeleton20Description ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -616,7 +616,7 @@ WeedleCard:
 	tx AdaptiveEvolutionDescription ; description
 	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw AdaptiveEvolutionEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -666,9 +666,9 @@ KakunaCard:
 	energy 0 ; energies
 	tx ExoskeletonName ; name
 	tx Exoskeleton20Description ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -923,7 +923,7 @@ NidorinaCard:
 	tx StressPheromonesDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw StressPheromonesEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -1076,7 +1076,7 @@ NidorinoCard:
 	tx BattleFrenzyDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw BattleFrenzyEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -1233,7 +1233,7 @@ GolbatCard:
 	tx CurseDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw CurseEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -1347,7 +1347,7 @@ GloomCard:
 	tx AromatherapyDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw AromatherapyEffectCommands ; effect commands
 	db NONE ; flags 1
 	db HEAL_USER ; flags 2
@@ -1435,9 +1435,9 @@ VileplumeCard:
 	energy 0 ; energies
 	tx HayFeverName ; name
 	tx HayFeverDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -1657,9 +1657,9 @@ VenomothCard:
 	energy 0 ; energies
 	tx NoxiousScalesName ; name
 	tx NoxiousScalesDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -1759,9 +1759,9 @@ WeepinbellCard:
 	energy 0 ; energies
 	tx GrassKnotName ; name
 	tx GrassKnotDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -1844,7 +1844,7 @@ VictreebelCard:
 	tx FragranceTrapDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw FragranceTrapEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -1893,9 +1893,9 @@ GrimerCard:
 	energy 0 ; energies
 	tx GarbageEaterName ; name
 	tx GarbageEaterDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db HEAL_USER ; flags 2
@@ -1944,9 +1944,9 @@ MukCard:
 	energy 0 ; energies
 	tx SeepingToxinsName ; name
 	tx SeepingToxinsDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -2048,7 +2048,7 @@ ExeggutorCard:
 	tx SynthesisDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw SynthesisEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -2161,9 +2161,9 @@ WeezingCard:
 	energy 0 ; energies
 	tx NeutralizingGasName ; name
 	tx NeutralizingGasDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -2418,7 +2418,7 @@ CharmeleonCard:
 	tx FirestarterDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw FirestarterEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -2633,9 +2633,9 @@ NinetalesLv35Card:
 	energy 0 ; energies
 	tx CursedFlamesName ; name
 	tx CursedFlamesDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -2788,7 +2788,7 @@ ArcanineLv45Card:
 	tx IntimidatingRoarDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw IntimidatingRoarEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -2888,9 +2888,9 @@ RapidashCard:
 	energy 0 ; energies
 	tx HeatBoostName ; name
 	tx SwiftSwimDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -3043,7 +3043,7 @@ FlareonLv22Card:
 	tx EvolutionaryFlameDescription ; description
 	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw EvolutionaryFlameEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -3094,7 +3094,7 @@ FlareonLv28Card:
 	tx EnergyBurnDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw EnergyBurnEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -3195,7 +3195,7 @@ MoltresLv37Card:
 	; tx FiregiverDescription ; description
 	; dw NONE ; description (cont)
 	; db 0 ; damage
-	; db POKEMON_POWER ; category
+	; db POKE_POWER ; category
 	; dw MoltresFiregiverEffectCommands ; effect commands
 	; db NONE ; flags 1
 	; db NONE ; flags 2
@@ -3311,7 +3311,7 @@ WartortleCard:
 	tx RainDanceDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -3462,9 +3462,9 @@ GolduckCard:
 	energy 0 ; energies
 	tx SwiftSwimName ; name
 	tx SwiftSwimDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -3566,7 +3566,7 @@ PoliwhirlCard:
 	tx WaterAbsorbDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw WaterAbsorbEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -3617,7 +3617,7 @@ PoliwrathCard:
 	tx PlungeDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw PlungeEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -3717,9 +3717,9 @@ TentacruelCard:
 	energy 0 ; energies
 	tx DarkPrisonName ; name
 	tx DarkPrisonDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -3819,9 +3819,9 @@ DewgongCard:
 	energy 0 ; energies
 	tx SafeguardName ; name
 	tx SafeguardDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -3870,9 +3870,9 @@ ShellderCard:
 	energy 0 ; energies
 	tx ExoskeletonName ; name
 	tx Exoskeleton10Description ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -3922,9 +3922,9 @@ CloysterCard:
 	energy 0 ; energies
 	tx ExoskeletonName ; name
 	tx Exoskeleton20Description ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -4179,7 +4179,7 @@ GoldeenCard:
 	tx EnergyStreamDescription ; description
 	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw EnergyStreamEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -4332,7 +4332,7 @@ StarmieCard:
 	tx AbilityEnergyRetrievalDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw AbilityEnergyRetrievalEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -4590,9 +4590,9 @@ VaporeonLv29Card:
 	energy 0 ; energies
 	tx EvolutionaryWaveName ; name
 	tx EvolutionaryWaveDescription ; description
-	dw NONE ; description (cont)
+	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw EvolutionaryWaveEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -4643,7 +4643,7 @@ VaporeonLv42Card:
 	tx EnergySoakDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw EnergySoakEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -4698,7 +4698,7 @@ OmanyteCard:
 	tx PrimalGuidanceDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw PrimalGuidanceEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -4788,9 +4788,9 @@ OmastarCard:
 	energy 0 ; energies
 	tx PrehistoricPowerName ; name
 	tx PrehistoricPowerDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -4891,7 +4891,7 @@ ArticunoLv37Card:
 	; tx QuickfreezeDescription ; description
 	; dw NONE ; description (cont)
 	; db 0 ; damage
-	; db POKEMON_POWER ; category
+	; db POKE_POWER ; category
 	; dw ArticunoQuickfreezeEffectCommands ; effect commands
 	; db NONE ; flags 1
 	; db NONE ; flags 2
@@ -5071,7 +5071,7 @@ FlyingPikachuCard:
 	tx EnergyLiftDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw EnergyLiftEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -5122,7 +5122,7 @@ SurfingPikachuLv13Card:
 	tx WaveRiderDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw WaveRiderEffectCommands ; effect commands
 	db DRAW_CARD ; flags 1
 	db NONE ; flags 2
@@ -5275,7 +5275,7 @@ RaichuLv35Card:
 	tx DynamotorDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw DynamotorEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -5378,9 +5378,9 @@ MagnetonLv28Card:
 	energy 0 ; energies
 	tx ElectromagneticWallName ; name
 	tx ElectromagneticWallDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -5544,9 +5544,9 @@ ElectrodeLv35Card:
 	energy 0 ; energies
 	tx DesperateBlastName ; name
 	tx DesperateBlastDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -5597,7 +5597,7 @@ ElectrodeLv42Card:
 	tx DynamotorDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw DynamotorEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -5750,7 +5750,7 @@ JolteonLv24Card:
 	tx EvolutionaryThunderDescription ; description
 	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw EvolutionaryThunderEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -5825,7 +5825,7 @@ JolteonLv29Card:
 	tx VoltSwitchDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -5977,7 +5977,7 @@ ZapdosLv68Card:
 	; tx PealOfThunderDescription ; description
 	; dw NONE ; description (cont)
 	; db 0 ; damage
-	; db POKEMON_POWER ; category
+	; db POKE_POWER ; category
 	; dw NONE ; effect commands
 	; db NONE ; flags 1
 	; db NONE ; flags 2
@@ -6091,9 +6091,9 @@ SandslashCard:
 	energy 0 ; energies
 	tx SpikesName ; name
 	tx SpikesDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -6397,9 +6397,9 @@ MachokeCard:
 	energy 0 ; energies
 	tx FightingFuryName ; name
 	tx FightingFuryDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -6550,9 +6550,9 @@ GravelerCard:
 	energy 0 ; energies
 	tx StoneSkinName ; name
 	tx StoneSkinDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -6769,9 +6769,9 @@ MarowakLv26Card:
 	energy 0 ; energies
 	tx BattleArmorName ; name
 	tx Exoskeleton20Description ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -6822,7 +6822,7 @@ MarowakLv32Card:
 	tx CrushingChargeDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw CrushingChargeEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -7098,7 +7098,7 @@ KabutoCard:
 	tx PrimalGuidanceDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw PrimalGuidanceEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -7224,9 +7224,9 @@ AerodactylCard:
 	energy 0 ; energies
 	tx PrimalClawName ; name
 	tx PrimalClawDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -7328,7 +7328,7 @@ KadabraCard:
 	tx ClairvoyantSenseDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw ClairvoyantSenseEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -7481,7 +7481,7 @@ SlowbroCard:
 	tx StrangeBehaviorDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw StrangeBehaviorEffectCommands ; effect commands
 	db NONE ; flags 1
 	db FLAG_2_BIT_6 ; flags 2
@@ -7583,7 +7583,7 @@ HaunterLv17Card:
 	tx CurseDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw CurseEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -7632,9 +7632,9 @@ HaunterLv22Card:
 	energy 0 ; energies
 	tx AfflictionName ; name
 	tx AfflictionDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -7787,7 +7787,7 @@ HypnoCard:
 	tx HyperHypnosisDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw HyperHypnosisEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -7836,9 +7836,9 @@ MrMimeCard:
 	energy 0 ; energies
 	tx BenchBarrierName ; name
 	tx BenchBarrierDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -7989,9 +7989,9 @@ MewtwoLv60Card:
 	energy 0 ; energies
 	tx StrikeBackName ; name
 	tx StrikeBack10Description ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -8040,9 +8040,9 @@ MewLv8Card:
 	energy 0 ; energies
 	tx NeutralizingShieldName ; name
 	tx NeutralizingShieldDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -8093,7 +8093,7 @@ MewLv15Card:
 	tx MysteriousTailDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw MysteriousTailEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -8195,7 +8195,7 @@ PidgeottoCard:
 	tx CourierDescription ; description
 	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw CourierEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -8399,7 +8399,7 @@ RaticateCard:
 	tx QuickSearchDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw QuickSearchEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -8603,7 +8603,7 @@ ClefableCard:
 	tx MischiefDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw MischiefEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -8788,7 +8788,7 @@ WigglytuffLv36Card:
 	tx HelpingHandDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw HelpingHandEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -8930,7 +8930,7 @@ PersianCard:
 	tx TradeDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw TradeEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -8981,7 +8981,7 @@ FarfetchdCard:
 	tx CowardiceDescription ; description
 	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw CowardiceEffectCommands ; effect commands
 	db NONE ; flags 1
 	db FLAG_2_BIT_6 ; flags 2
@@ -9032,7 +9032,7 @@ DoduoCard:
 	tx FleetFootedDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw FleetFootedEffectCommands ; effect commands
 	db DRAW_CARD ; flags 1
 	db NONE ; flags 2
@@ -9081,9 +9081,9 @@ DodrioCard:
 	energy 0 ; energies
 	tx RetreatAidName ; name
 	tx RetreatAidDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -9196,9 +9196,9 @@ ChanseyCard:
 	energy 0 ; energies
 	tx HealingEnergyName ; name
 	tx HealingEnergyDescription ; description
-	tx UniquePokemonPowerDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db HEAL_USER ; flags 2
@@ -9377,7 +9377,7 @@ DittoCard:
 	tx TransformDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw TransformEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -9428,7 +9428,7 @@ EeveeCard:
 	tx RainbowTeamDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw RainbowTeamEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -9479,7 +9479,7 @@ PorygonCard:
 	tx ShiftDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_POWER ; category
 	dw ShiftEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -9530,7 +9530,7 @@ SnorlaxCard:
 	tx ThickSkinnedDescription ; description
 	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
@@ -9655,9 +9655,9 @@ DragonairCard:
 	energy 0 ; energies
 	tx ElementalMasteryName ; name
 	tx ElementalMasteryDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKEMON_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2

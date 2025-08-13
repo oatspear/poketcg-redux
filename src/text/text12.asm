@@ -505,9 +505,6 @@ ThickSkinnedName:
 ThickSkinnedDescription:
 	text "This Pokémon can't become affected"
 	line "with any Special Conditions."
-	line "This power can't be used if this"
-	line "Pokémon is already Drowsy, Confused,"
-	line "or Paralyzed."
 	done
 
 HeavySlamName:

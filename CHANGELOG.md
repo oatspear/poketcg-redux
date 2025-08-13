@@ -24,6 +24,9 @@
 - The affected Pokémon takes DoT damage even if Benched, but those conditions are removed afterwards.
 - Reapplying the same status condition on a Pokémon already affected with it puts 1 damage counter instantly on that Pokémon.
 
+### Pokémon Powers
+- Classified some Pokémon Powers as Poké-Bodies, which are always passive abilities that cannot be turned off with status conditions.
+
 ### Quality of Life
 
 - Player decks no longer discount cards from the available collection. Each card copy can go into multiple decks at the same time.

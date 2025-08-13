@@ -482,8 +482,8 @@ Func_15b54:
 
 ; player
 	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
-	ret z
+	and ABILITY
+	ret nz
 	jr .set_flag
 
 .opponent

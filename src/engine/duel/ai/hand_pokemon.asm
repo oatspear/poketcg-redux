@@ -564,7 +564,7 @@ AIDecidePlayLegendaryBirds:
 	call CopyAttackDataAndDamage_FromDeckIndex
 	call SwapTurn
 	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
+	cp POKE_BODY
 	jr z, .check_weezing_and_snorlax
 
 	; return if no space on the bench

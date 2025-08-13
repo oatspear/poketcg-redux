@@ -1198,8 +1198,8 @@ AIDecide_GustOfWind:
 	ld a, [wLoadedAttackCategory]
 
 	; skip if attack is a Power or has 0 damage
-	cp POKEMON_POWER
-	jr z, .no_damage
+	and ABILITY
+	jr nz, .no_damage
 	ld a, [wDamage]
 	or a
 	ret z

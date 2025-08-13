@@ -51,8 +51,8 @@ HandleDefenderDamageReductionEffects:
 
 HandleDefenderDamageReduction_PokemonPowers:
 	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
-	ret z
+	and ABILITY
+	ret nz
 	ld a, [wTempNonTurnDuelistCardID]
 	cp MAROWAK_LV26
 	jp z, ReduceDamageBy20_DE ; Battle Armor
@@ -108,8 +108,8 @@ HandleDefenderDamageReduction_Substatus:
 ; TODO FIXME this function can be refactored and eliminated
 HandleDamageReductionOrNoDamageFromPkmnPowerEffects:
 	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
-	ret z
+	and ABILITY
+	ret nz
 .attack
 	call ArePokemonPowersDisabled
 	ret c
@@ -215,8 +215,8 @@ HandleNoDamageOrEffectSubstatus:
 	xor a
 	ld [wNoDamageOrEffect], a
 	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
-	ret z
+	and ABILITY
+	ret nz
 .attack
 	ld a, DUELVARS_ARENA_CARD_SUBSTATUS1
 	call GetTurnDuelistVariable
@@ -1293,8 +1293,8 @@ HandleStrikeBack_AgainstDamagingAttack:
 
 ; do not counter damage from Pokémon Powers
 	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
-	ret z
+	and ABILITY
+	ret nz
 
 ; do not counter damage while on the bench
 	ld a, [wTempPlayAreaLocation_cceb]  ; defending Pokemon's PLAY_AREA_*

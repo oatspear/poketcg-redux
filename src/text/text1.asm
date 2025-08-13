@@ -42,9 +42,9 @@ PKMNPWRText: ; 36356 (d:6356)
 	text "PKMN PWR"
 	done
 
-; Text000b: ; 36360 (d:6360)
-; 	textfw0 "ポケモンカ—ド"
-; 	done
+PokeBodyText:
+	text "POKéBODY"
+	done
 
 LengthText: ; 36368 (d:6368)
 	text "Length"
