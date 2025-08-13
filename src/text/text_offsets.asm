@@ -199,7 +199,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer CannotUseBecauseItWillBeKnockedOutText             ; 0x00d0
 	textpointer CanOnlyBeUsedOnTheBenchText                        ; 0x00d1
 	textpointer ThereAreNoPokemonOnBenchText                       ; 0x00d2
-	textpointer OpponentIsNotAsleepText                            ; 0x00d3
+	textpointer OpponentIsNotAsleepText
+	textpointer OpponentIsNotBurnedText
 	textpointer UnableToUsePkmnPowerText
 	textpointer BackUpIsBrokenText                                 ; 0x00d6
 	textpointer PrinterIsNotConnectedText                          ; 0x00d7

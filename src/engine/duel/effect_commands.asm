@@ -630,8 +630,8 @@ Discard1EnergyFromOpponentEffectCommands:
 	db  $00
 
 AcidEffectCommands:
-	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, DiscardOpponentEnergy_PlayerSelectEffect
-	dbw EFFECTCMDTYPE_AI_SELECTION, DiscardOpponentEnergy_AISelectEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Acid_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, Acid_AISelectEffect
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, AcidEffect
 	db  $00
 

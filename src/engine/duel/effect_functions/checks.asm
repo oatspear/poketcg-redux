@@ -752,6 +752,17 @@ CheckDefendingPokemonIsAsleep:
 	ret
 
 
+; return carry if the Defending Pokémon is not burned
+CheckDefendingPokemonIsBurned:
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetNonTurnDuelistVariable
+	and BURNED
+	ret nz ; return if burned
+	ldtx hl, OpponentIsNotBurnedText
+	scf
+	ret
+
+
 ; Loop over turn holder's Pokemon and return whether any have status conditions.
 ; Returns:
 ;    a: first status condition found or zero if none found

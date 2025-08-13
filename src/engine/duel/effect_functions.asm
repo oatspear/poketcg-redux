@@ -3836,6 +3836,21 @@ DiscardOpponentEnergy_DiscardEffect:
 	jp SwapTurn
 
 
+Acid_PlayerSelectEffect:
+	call CheckDefendingPokemonIsBurned
+	jp nc, DiscardOpponentEnergy_PlayerSelectEffect
+	ld a, $ff
+	ldh [hEnergyTransEnergyCard], a
+	ret  ; not burned
+
+
+Acid_AISelectEffect:
+	call CheckDefendingPokemonIsBurned
+	jp nc, DiscardOpponentEnergy_AISelectEffect
+	ld a, $ff
+	ldh [hEnergyTransEnergyCard], a
+	ret  ; not burned
+
 ; ------------------------------------------------------------------------------
 
 

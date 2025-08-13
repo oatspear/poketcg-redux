@@ -904,6 +904,10 @@ OpponentIsNotAsleepText:
 	text "Opponent is not Drowsy."
 	done
 
+OpponentIsNotBurnedText:
+	text "Opponent is not Burned."
+	done
+
 UnableToUsePkmnPowerText:
 	text "Unable to use Pokémon Powers."
 	done
