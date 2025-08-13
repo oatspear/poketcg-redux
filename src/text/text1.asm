@@ -39,7 +39,7 @@ NumberText:
 	done
 
 PKMNPWRText: ; 36356 (d:6356)
-	text "PKMN PWR"
+	text "POKé PWR"
 	done
 
 PokeBodyText:
