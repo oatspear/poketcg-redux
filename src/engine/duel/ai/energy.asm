@@ -151,14 +151,12 @@ AIProcessEnergyCards: ; 164fc (5:64fc)
 	ld a, 1
 	call AddToAIScore
 
-; if there's no Weezing in any Play Area
-; and there's Ivysaur in own Play Area,
-; add to AI score
+; if there's a capable Ivysaur in play, add to AI score
 .check_ivysaur
 	call ArePokemonPowersDisabled
 	jr c, .check_if_active
 	ld a, IVYSAUR
-	call CountPokemonIDInPlayArea
+	call GetFirstPokemonWithAvailablePower
 	jr nc, .check_if_active
 	ld a, 1
 	call AddToAIScore

@@ -35,7 +35,7 @@ GetPlayAreaCardColor:
 	bit IS_PERMANENT_COLOR_F, a
 	jr nz, .permanent_color
 	ld a, e
-	call CheckCannotUseDueToStatus_Anywhere
+	call CheckCannotUseDueToStatus_PlayArea
 	jr c, .regular_color ; jump if can't use Shift
 .permanent_color
 	ld a, e
@@ -143,10 +143,10 @@ HandleEnergyColorOverride:
 
 ; dual color energies
 ; 	ld a, OMANYTE
-; 	call GetFirstPokemonWithAvailablePower  ; preserves hl, bc, de
+; 	call GetFirstPokemonMatchingID  ; preserves hl, bc, de
 ; 	jr c, .fossil_energy
 ; 	ld a, KABUTO
-; 	call GetFirstPokemonWithAvailablePower  ; preserves hl, bc, de
+; 	call GetFirstPokemonMatchingID  ; preserves hl, bc, de
 ; 	ret nc  ; not found
 ; 
 ; .fossil_energy

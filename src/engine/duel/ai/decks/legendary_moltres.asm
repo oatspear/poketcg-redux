@@ -110,7 +110,7 @@ AIDoTurn_LegendaryMoltres:
 	cp DECK_SIZE - 9
 	jr nc, .skip_moltres ; skip if cards in deck <= 9
 	call ArePokemonPowersDisabled
-	jr c, .skip_moltres ; skip if Weezing in play
+	jr c, .skip_moltres ; skip if Poké-Powers are disabled
 	ld a, MOLTRES_LV37
 	call LookForCardIDInHandList_Bank5
 	jr nc, .skip_moltres ; skip if no MoltresLv37 in hand

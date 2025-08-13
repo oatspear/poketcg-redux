@@ -19,11 +19,11 @@ HandleAIEnergyTrans:
 	ret z ; return if no Bench cards
 
 	ld a, IVYSAUR
-	call CountPokemonIDInPlayArea
+	call GetFirstPokemonWithAvailablePower
 	ret nc ; return if no Ivysaur found in own Play Area
 
 	call ArePokemonPowersDisabled
-	ret c ; return if Weezing found in any Play Area
+	ret c ; return if Poké-Powers cannot be used
 
 	ld a, [wAIEnergyTransRoutine]
 	cp AI_ENERGY_TRANS_RETREAT
@@ -375,7 +375,7 @@ AIEnergyTransTransferEnergyToBench:
 HandleAIPkmnPowers:
 	call ArePokemonPowersDisabled
 	ccf
-	ret nc ; return no carry if Weezing is in play
+	ret nc ; return no carry if Poké-Powers are disabled
 
 	farcall AIChooseRandomlyNotToDoAction
 	ccf
@@ -1025,7 +1025,7 @@ HandleAITrade:
 ; handles AI logic for Cowardice
 HandleAICowardice:
 	call ArePokemonPowersDisabled
-	ret c  ; return if there's Weezing in play
+	ret c  ; return if Poké-Powers are disabled
 
 	farcall AIChooseRandomlyNotToDoAction
 	ret c  ; randomly return

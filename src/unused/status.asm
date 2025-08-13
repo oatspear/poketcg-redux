@@ -201,7 +201,7 @@ CanBeAffectedByStatus:
 	jr nz, .safeguard
 ; ...unless already so, or if affected by Neutralizing Gas
 	ld a, e
-	call CheckCannotUseDueToStatus_Anywhere  ; preserves bc, de
+	call CheckCannotUseDueToStatus_PlayArea  ; preserves bc, de
 	ret nc  ; Pokémon Power is active
 
 .safeguard

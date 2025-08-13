@@ -380,8 +380,7 @@ ENDC
 ; check for SANDSLASH with Spikes
 ; discourage switching if there is one
 	call AICheckPlayerSandslash
-	jr c, .check_evolve  ; Powers are disabled
-	jr z, .check_evolve  ; no Sandslash in the opponent's Play Area
+	jr nc, .check_evolve  ; no ability-capable Sandslash
 	ld a, 2
 	call SubFromAIScore
 
@@ -497,18 +496,12 @@ Func_15b54:
 	ret
 
 
-; return carry if Pokémon Powers are disabled
-; return nz if there are Pokémon Power-capable Sandslash
-; preserves: bc, de
+; return carry if there are ability-capable Sandslash
+; preserves: hl, bc, de
 AICheckPlayerSandslash:
-	call ArePokemonPowersDisabled  ; preserves bc, de
-	ret c
 	call SwapTurn
-	ld a, SANDSLASH
-	call CountPokemonIDInPlayArea  ; preserves hl, bc, de
-	call SwapTurn
-	or a
-	ret
+	call IsSpikesActive
+	jp SwapTurn
 
 
 ; calculates AI score for bench Pokémon
@@ -721,9 +714,8 @@ AIDecideBenchPokemonToSwitchTo:
 	cp 20
 	jr nc, .add_hp_score  ; has at least 20 HP
 	call AICheckPlayerSandslash
-	jr c, .add_hp_score  ; Powers are disabled
-	jr z, .add_hp_score  ; no Sandslash in the opponent's Play Area
-	; zero score if the Pokémon is going to be KO'd by Spikes
+	jr nc, .add_hp_score  ; no ability-capable Sandslash
+; zero score if the Pokémon is going to be KO'd by Spikes
 	xor a
 	ld [wAIScore], a
 	jr .store_score

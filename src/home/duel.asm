@@ -1771,24 +1771,32 @@ OnPokemonPlayedInitVariablesAndPowers:
 	ld a, [wLoadedAttackCategory]
 	and ABILITY
 	ret z
-; this Pokémon has a Pokémon Power
+; this Pokémon has an ability
 	bank1call DisplayUsePokemonPowerScreen
 	ldh a, [hTempCardIndex_ff98]
 	call LoadCardDataToBuffer1_FromDeckIndex
 	call LoadCard1NameToRamText
-	ldtx hl, HavePokemonPowerText
+	ld a, [wLoadedAttackCategory]
+	cp POKE_POWER
+	jr z, .try_use_pokemon_power
+	ldtx hl, HavePokeBodyText
+	jr .done
+
+.try_use_pokemon_power
+	ldtx hl, HavePokePowerText
 	call DrawWideTextBox_WaitForInput
-	call ExchangeRNG
-; check for Neutralizing Gas
+; check for Poké-Powers enabled
 	call ArePokemonPowersDisabled
 	jr nc, .use_pokemon_power
 .unable_to_use
 	; bank1call DisplayUsePokemonPowerScreen
-	ldtx hl, UnableToUsePkmnPowerDueToDisableEffectText
+	ldtx hl, UnableToUsePokePowerDueToDisableEffectText
+.done
 	call DrawWideTextBox_WaitForInput
 	jp ExchangeRNG
 
 .use_pokemon_power
+	call ExchangeRNG
 	ld hl, wLoadedAttackEffectCommands
 	ld a, [hli]
 	ld h, [hl]
@@ -2517,7 +2525,7 @@ ENDC
 
 
 HandleDamageBoostingPowers:
-	; call ArePokemonPowersDisabled  ; preserves de
+	; call ArePokeBodiesDisabled  ; preserves de
 	; ret c  ; Powers are disabled
 	push de
 	call IsFightingFuryActive
@@ -2537,7 +2545,7 @@ HandleDamageBoostingPowers:
 ; input:
 ;   a: PLAY_AREA_* of the target Pokémon
 HandleDamageReducingPowers:
-	; call ArePokemonPowersDisabled  ; preserves de
+	; call ArePokeBodiesDisabled  ; preserves de
 	; ret c  ; Powers are disabled
 	push de
 	call IsStoneSkinActive
@@ -2713,7 +2721,7 @@ ENDC
 ; 2. apply damage reduction effects
 	ld a, [wTempPlayAreaLocation_cceb]
 	call HandleDamageReducingPowers
-	call HandleDamageReductionOrNoDamageFromPkmnPowerEffects.attack
+	call HandleDamageReductionOrNoDamageFromPokeBodyEffects.attack
 ; 3. cap damage at zero if negative
 	call CapMinimumDamage_DE
 	ld a, [wTempPlayAreaLocation_cceb]

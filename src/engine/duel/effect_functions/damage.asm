@@ -505,14 +505,10 @@ DamageFriendlyBenchedPokemon_AISelectEffect:
 ; ------------------------------------------------------------------------------
 
 SpikesDamageEffect:
-	call IsNeutralizingGasActive  ; ArePokemonPowersDisabled
-	ret c  ; Powers are disabled
 	call SwapTurn
-	ld a, SANDSLASH
-	call CountPokemonIDInPlayArea
+	call IsSpikesActive
 	call SwapTurn
-	or a
-	ret z  ; no Sandslash in the opponent's Play Area
+	ret nc  ; Spikes is not active
 
 	; ld a, [wDuelDisplayedScreen]
 	; cp DUEL_MAIN_SCENE

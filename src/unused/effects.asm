@@ -1239,7 +1239,7 @@ Heal_OncePerTurnCheck:
 	ret c ; no damage counters to heal
 
 	ldh a, [hTemp_ffa0]
-	call CheckCannotUseDueToStatus_Anywhere
+	call CheckCannotUseDueToStatus_PlayArea
 	ret
 
 .already_used
@@ -5259,7 +5259,7 @@ FlareEssence_OncePerTurnCheck:
 	; call GetTurnDuelistVariable
 	; and USED_PKMN_POWER_THIS_TURN
 	; jr nz, .already_used
-	call CheckCannotUseDueToStatus_Anywhere
+	call CheckCannotUseDueToStatus_PlayArea
 	ret c
 	ld a, DUELVARS_ARENA_CARD_STAGE
 	call GetTurnDuelistVariable
@@ -5324,7 +5324,7 @@ DamageSwap_CheckDamage: ; 2db8e (b:5b8e)
 	call CheckIfPlayAreaHasAnyDamage
 	ret c
 	ldh a, [hTempPlayAreaLocation_ff9d]
-	jp CheckCannotUseDueToStatus_Anywhere
+	jp CheckCannotUseDueToStatus_PlayArea
 
 ;
 ProcedureForDamageSwapText: ; 38e90 (e:4e90)
@@ -5714,7 +5714,7 @@ SolarPower_CheckUse: ; 2ce53 (b:4e53)
 	jr nz, .already_used
 
 	ldh a, [hTempPlayAreaLocation_ff9d]
-	call CheckCannotUseDueToStatus_Anywhere
+	call CheckCannotUseDueToStatus_PlayArea
 	ret c ; can't use PKMN due to status or Neutralizing Gas
 
 ; return carry if none of the Arena cards have status conditions
@@ -6637,7 +6637,7 @@ StepIn_BenchCheck: ; 2eaca (b:6aca)
 	jr nz, .set_carry
 
 	ldh a, [hTempPlayAreaLocation_ff9d]
-	call CheckCannotUseDueToStatus_Anywhere
+	call CheckCannotUseDueToStatus_PlayArea
 	ret
 
 .set_carry
@@ -6727,7 +6727,7 @@ Peek_OncePerTurnCheck: ; 2e29c (b:629c)
 	and USED_PKMN_POWER_THIS_TURN
 	jr nz, .already_used
 	ldh a, [hTempPlayAreaLocation_ff9d]
-	jp CheckCannotUseDueToStatus_Anywhere
+	jp CheckCannotUseDueToStatus_PlayArea
 .already_used
 	ldtx hl, OnlyOncePerTurnText
 	scf
@@ -7083,7 +7083,7 @@ Curse_CheckDamageAndBench: ; 2d7fc (b:57fc)
 ; return carry if Pkmn Power cannot be used due
 ; to Neutralizing Gas or status.
 	ldh a, [hTempPlayAreaLocation_ff9d]
-	call CheckCannotUseDueToStatus_Anywhere
+	call CheckCannotUseDueToStatus_PlayArea
 	ret
 
 .set_carry
@@ -7304,7 +7304,7 @@ SongOfRest_CheckUse:
 	jr nz, .already_used
 
 	ldh a, [hTempPlayAreaLocation_ff9d]
-	call CheckCannotUseDueToStatus_Anywhere
+	call CheckCannotUseDueToStatus_PlayArea
 	ret c  ; can't use PKMN due to status or Neutralizing Gas
 
 ; return carry if no Pokémon has damage counters

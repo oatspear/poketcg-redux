@@ -741,7 +741,7 @@ GarbageEater_HealEffect:
 	ret z  ; nothing to do
 
 	ld a, GRIMER
-	call ListPowerCapablePokemonIDInPlayArea
+	call ListPokemonIDInPlayArea
 	ret nc  ; none found
 
 	ld hl, hTempList
@@ -2291,7 +2291,7 @@ Teleport_ReturnToDeckEffect:
 EnergyTrans_CheckPlayArea: ; 2cb44 (b:4b44)
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	ldh [hTemp_ffa0], a
-	call CheckCannotUseDueToStatus_Anywhere
+	call CheckCannotUseDueToStatus_PlayArea
 	ret c ; cannot use Pkmn Power
 
 ; search in Play Area for at least 1 Grass Energy type
@@ -2746,7 +2746,7 @@ ApplyAmnesiaToAttack:
 Cowardice_Check:
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	ldh [hTemp_ffa0], a
-	call CheckCannotUseDueToStatus_Anywhere
+	call CheckCannotUseDueToStatus_PlayArea
 	ret c ; return if cannot use
 
 	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
@@ -5471,7 +5471,7 @@ ImakuniEffect: ; 2f216 (b:7216)
 ; cannot confuse Snorlax if its Pkmn Power is active
 	cp SNORLAX
 	jr nz, .success
-	call CheckCannotUseDueToStatus
+	call CheckCannotUsePokeBody
 	jr c, .success
 	; fallthrough if Thick Skinned is active
 

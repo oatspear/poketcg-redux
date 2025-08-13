@@ -265,7 +265,7 @@ TryDevolveSelectedPokemonEffect:
 	call HandleNoDamageOrEffectSubstatus
 	jr c, .check_no_damage_effect
 .skip_substatus_check
-	call HandleDamageReductionOrNoDamageFromPkmnPowerEffects
+	call HandleDamageReductionOrNoDamageFromPokeBodyEffects
 .check_no_damage_effect
 	call CheckNoDamageOrEffect
 	jp c, DrawWideTextBox_WaitForInput

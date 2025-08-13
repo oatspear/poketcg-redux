@@ -6934,7 +6934,7 @@ Func_6850:
 	jp SetCursorParametersForTextBox
 
 Func_6862:
-	ld [wcbff], a
+	ld [wDuelMainSceneSelectHotkeyAction], a
 	ldh a, [hKeysPressed]
 	bit START_F, a
 	jr nz, .start_pressed
@@ -6970,7 +6970,7 @@ Func_6862:
 	scf
 	ret
 .select_pressed
-	ld a, [wcbff]
+	ld a, [wDuelMainSceneSelectHotkeyAction]
 	or a
 	jr nz, .asm_68ad
 	call OpenInPlayAreaScreen_FromSelectButton
@@ -7550,9 +7550,9 @@ ENDC
 HandleOnUsePokemonPowerEffects:
 	call SwapTurn
 	ld a, AERODACTYL  ; Primal Claw
-	call GetFirstPokemonWithAvailablePower
+	call GetFirstPokemonMatchingID
 	call SwapTurn
-	ret nc  ; no Pkmn Power-capable Aerodactyl was found
+	ret nc  ; no ability-capable Aerodactyl was found
 	; hl is text to display
 	; a is the card's deck index
 	; ldtx hl, AerodactylPrimalClawText
@@ -7573,7 +7573,7 @@ HandleOnPlayTrainerEffects:
 ;   [hTempPlayAreaLocation_ff9d]: PLAY_AREA_*
 ;   [wLoadedCard1*]: card data of the attached Energy
 HandleOnPlayEnergyEffects:
-	call ArePokemonPowersDisabled
+	call ArePokeBodiesDisabled
 	jr c, .negative_effects
 ; positive effects
 ;	ret c
@@ -7581,24 +7581,24 @@ HandleOnPlayEnergyEffects:
 ; 	cp TYPE_ENERGY_WATER
 ; 	jr nz, .not_water_energy
 ; 	ld a, POLIWHIRL  ; Swift Swim
-; 	call GetFirstPokemonWithAvailablePower
-; 	jr nc, .not_water_energy  ; no Pkmn Power-capable Pokémon was found
+; 	call GetFirstPokemonMatchingID
+; 	jr nc, .not_water_energy  ; no ability-capable Pokémon was found
 ; 	ld a, DUELVARS_ABILITY_FLAGS
 ; 	call GetTurnDuelistVariable
 ; 	set ABILITY_FLAG_SWIFT_SWIM_F, [hl]
 ; .not_water_energy
 ; OATS introduce Potion Energy effect
 	ld a, CHANSEY  ; Healing Energy
-	call GetFirstPokemonWithAvailablePower
-	jr nc, .full_heal_energy  ; no Pkmn Power-capable Pokémon was found
+	call GetFirstPokemonMatchingID
+	jr nc, .full_heal_energy  ; no ability-capable Pokémon was found
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	ld e, a   ; location
 	ld d, 10  ; damage
 	farcall HealPlayAreaCardHP
 .full_heal_energy
 	ld a, DEWGONG  ; Safeguard
-	call GetFirstPokemonWithAvailablePower
-	jr nc, .negative_effects  ; no Pkmn Power-capable Pokémon was found
+	call GetFirstPokemonMatchingID
+	jr nc, .negative_effects  ; no ability-capable Pokémon was found
 	ld a, [wLoadedCard1Type]
 	cp TYPE_ENERGY_WATER
 	ret nz  ; not Water energy
@@ -7609,9 +7609,9 @@ HandleOnPlayEnergyEffects:
 .electromagnetic_wall
 	call SwapTurn
 	ld a, MAGNETON_LV28  ; Electromagnetic Wall
-	call GetFirstPokemonWithAvailablePower
+	call GetFirstPokemonMatchingID
 	call SwapTurn
-	jr nc, .done  ; no Pkmn Power-capable Pokémon was found
+	jr nc, .done  ; no ability-capable Pokémon was found
 	ldh a, [hTempPlayAreaLocation_ff9d]
 ; placing damage counters directly
 	ld e, a
@@ -7647,8 +7647,8 @@ HandleOnEvolvePokemonEffects:
 	farcall HealPlayAreaCardHP
 
 ;	ld a, DRAGONAIR  ; Draconic Evolution
-;	call CountPokemonIDInPlayArea
-;	jr nc, .done  ; no Pkmn Power-capable Dragonair was found
+;	call GetFirstPokemonMatchingID
+;	jr nc, .done  ; no ability-capable Dragonair was found
 ;	ldh a, [hTempPlayAreaLocation_ff9d]
 ;	ldh [hTempPlayAreaLocation_ffa1], a
 ;	call DrawDuelMainScene
@@ -7663,7 +7663,7 @@ HandleOnEvolvePokemonEffects:
 ;   [hTempRetreatCostCards]: $ff-terminated list of discarded deck indices
 HandleOnRetreatEffects:
 	ld a, JOLTEON_LV29  ; Volt Switch
-	call GetFirstPokemonWithAvailablePower
+	call GetFirstPokemonMatchingID
 	jr nc, .done  ; no Power-capable Pokémon was found
 	farcall VoltSwitchEffect
 .done
@@ -7687,7 +7687,7 @@ ENDC
 	call HandleLumBerry
 	call SwapTurn
 
-	call ArePokemonPowersDisabled
+	call ArePokeBodiesDisabled
 	call nc, HandleEndOfTurnEffect_Affliction
 	call HandleEndOfTurnEffect_StatusConditions
 	call HandleEndOfTurnEffect_BenchStatusConditions
@@ -7917,7 +7917,7 @@ AnimateLumBerryEffect:
 
 HandleEndOfTurnEffect_Affliction:
 	ld a, HAUNTER_LV22
-	call CountPokemonIDInPlayArea
+	call GetFirstPokemonMatchingID
 	ret nc  ; none found
 
 	call SwapTurn
@@ -8019,7 +8019,7 @@ HandleEndOfTurnEffect_BenchStatusConditions:
 ; calculate how much Poison damage to deal
 	call SwapTurn
 	ld a, MUK
-	call IsActiveSpotPokemonPowerActive  ; preserves: hl, bc, de
+	call IsActiveSpotAbilityActive  ; preserves: hl, bc, de
 	call SwapTurn
 	ld a, PSN_DAMAGE
 	jr nc, .no_poison_boost
@@ -8030,7 +8030,7 @@ HandleEndOfTurnEffect_BenchStatusConditions:
 ; calculate how much Burn damage to deal
 	call SwapTurn
 	ld a, MUK
-	call IsActiveSpotPokemonPowerActive  ; preserves: hl, bc, de
+	call IsActiveSpotAbilityActive  ; preserves: hl, bc, de
 	call SwapTurn
 	ld a, BURN_DAMAGE
 	jr nc, .no_burn_boost
@@ -8171,8 +8171,8 @@ HandleEndOfTurnEffect_RocketHeadquarters:
 ; unreferenced
 ;PreprocessHealingNectar:
 ;	ld a, GLOOM  ; Healing Nectar
-;	call CountPokemonIDInPlayArea
-;	ret nc  ; no Pkmn Power-capable Gloom was found
+;	call GetFirstPokemonMatchingID
+;	ret nc  ; no ability-capable Gloom was found
 ;
 ;	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
 ;	call GetTurnDuelistVariable
@@ -8205,8 +8205,8 @@ HandleEndOfTurnEffect_RocketHeadquarters:
 ; if it has a Grass Energy attached.
 ;HandleHealingNectar:
 ;	ld a, GLOOM  ; Healing Nectar
-;	call CountPokemonIDInPlayArea
-;	ret nc  ; no Pkmn Power-capable Gloom was found
+;	call GetFirstPokemonMatchingID
+;	ret nc  ; no ability-capable Gloom was found
 ;
 ;	ld hl, hTempList
 ;	ld e, PLAY_AREA_BENCH_1

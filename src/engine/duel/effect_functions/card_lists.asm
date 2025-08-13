@@ -651,14 +651,12 @@ Helper_CreateEnergyCardListFromHand:
 
 ; Return in a the amount of times that the Pokemon card with a given ID
 ; is found in the turn holder's play area.
-; If the Pokemon is asleep, confused, or paralyzed (Pkmn Power-incapable),
-; it does not count.
 ; Also fills hTempList with the PLAY_AREA_* offsets of each occurrence.
 ; Set carry if the Pokemon card is at least found once.
 ; This is almost a duplicate of CountPokemonIDInPlayArea.
-; preserves: bc, de, hl
+; preserves: hl, bc, de
 ; input: a: Pokemon card ID to search
-ListPowerCapablePokemonIDInPlayArea:
+ListPokemonIDInPlayArea:
 	push hl
 	push de
 	push bc
@@ -682,12 +680,6 @@ ListPowerCapablePokemonIDInPlayArea:
 	call GetCardIDFromDeckIndex
 	ld a, [wTempPokemonID_ce7c]
 	cp e
-	jr nz, .skip
-; check if the Pokémon is affected with a status condition
-	ld a, DUELVARS_ARENA_CARD_STATUS - 1
-	add b  ; b starts at 1, we want a 0-based index
-	call GetTurnDuelistVariable
-	and CNF_SLP_PRZ
 	jr nz, .skip
 ; increment counter and add to the list
 	inc c

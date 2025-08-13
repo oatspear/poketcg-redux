@@ -438,9 +438,9 @@ NoxiousScalesEffect:
 	ld a, e
 	cp VENOMOTH
 	ret nz  ; not Venomoth
-; check whether Pokémon Powers can be used
-	call CheckCannotUseDueToStatus
-	ret c  ; unable to use Power
+; check whether Poké-Bodies can be used
+	call CheckCannotUsePokeBody
+	ret c  ; unable to use ability
 ; check whether the opponent's Active Pokémon is still alive
 	ld a, DUELVARS_ARENA_CARD_HP
 	call GetNonTurnDuelistVariable

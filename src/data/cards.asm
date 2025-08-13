@@ -5823,9 +5823,9 @@ JolteonLv29Card:
 	energy 0 ; energies
 	tx VoltSwitchName ; name
 	tx VoltSwitchDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	dw NONE ; description (cont)
 	db 0 ; damage
-	db POKE_POWER ; category
+	db POKE_BODY ; category
 	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2

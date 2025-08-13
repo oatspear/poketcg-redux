@@ -643,13 +643,18 @@ WasKnockedOutText: ; 36eaa (d:6eaa)
 	line "Knocked Out!"
 	done
 
-HavePokemonPowerText: ; 36ebe (d:6ebe)
+HavePokePowerText:
 	text "<RAMTEXT> has"
-	line "a Pokémon Power."
+	line "a Poké-Power."
 	done
 
-UnableToUsePkmnPowerDueToDisableEffectText:
-	text "Unable to use Pokémon Power due to"
+HavePokeBodyText:
+	text "<RAMTEXT> has"
+	line "a Poké-Body."
+	done
+
+UnableToUsePokePowerDueToDisableEffectText:
+	text "Unable to use Poké-Power due to"
 	line "a disabling effect."
 	done
 

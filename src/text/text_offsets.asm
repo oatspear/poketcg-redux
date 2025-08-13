@@ -143,8 +143,9 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer TookAllThePrizesText                               ; 0x007f
 	textpointer ThereAreNoPokemonInPlayAreaText                    ; 0x0080
 	textpointer WasKnockedOutText                                  ; 0x0081
-	textpointer HavePokemonPowerText                               ; 0x0082
-	textpointer UnableToUsePkmnPowerDueToDisableEffectText
+	textpointer HavePokePowerText
+	textpointer HavePokeBodyText
+	textpointer UnableToUsePokePowerDueToDisableEffectText
 	textpointer PlayCheck1Text                                     ; 0x0084
 	textpointer PlayCheck2Text                                     ; 0x0085
 	textpointer SelectCheckText                                    ; 0x0086

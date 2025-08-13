@@ -112,7 +112,7 @@ AIDoTurn_LegendaryRonald:
 	cp DECK_SIZE - 9
 	jr nc, .skip_moltres_1 ; skip if cards in deck <= 9
 	call ArePokemonPowersDisabled
-	jr c, .skip_moltres_1 ; skip if Weezing in play
+	jr c, .skip_moltres_1 ; skip if Poké-Powers are disabled
 	ld a, MOLTRES_LV37
 	call LookForCardIDInHandList_Bank5
 	jr nc, .skip_moltres_1 ; skip if no MoltresLv37 in hand
@@ -166,7 +166,7 @@ AIDoTurn_LegendaryRonald:
 	cp DECK_SIZE - 9
 	jr nc, .skip_moltres_2 ; skip if cards in deck <= 9
 	call ArePokemonPowersDisabled
-	jr c, .skip_moltres_2 ; skip if Weezing in play
+	jr c, .skip_moltres_2 ; skip if Poké-Powers are disabled
 	ld a, MOLTRES_LV37
 	call LookForCardIDInHandList_Bank5
 	jr nc, .skip_moltres_2 ; skip if no MoltresLv37 in hand

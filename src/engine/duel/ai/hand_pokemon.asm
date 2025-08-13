@@ -481,14 +481,13 @@ AIDecideSpecialEvolutions:
 	jr nz, .loop
 	ld a, 70
 	cp c
-	jr c, .check_weezing
+	jr c, .check_can_use_powers
 .lower_score
 	ld a, 10
-	call SubFromAIScore
-	ret
+	jp SubFromAIScore
 
-; if there's no Weezing, raise score
-.check_weezing
+; if Powers can be used, raise score
+.check_can_use_powers
 	call ArePokemonPowersDisabled
 	jr c, .lower_score
 	ld a, 10
@@ -508,7 +507,7 @@ AIDecideSpecialEvolutions:
 	ld a, [wTotalAttachedEnergies]
 	cp 3
 	jr c, .lower_score
-	jr .check_weezing
+	jr .check_can_use_powers
 
 ; determine AI score for the legendary cards
 ; Moltres, Zapdos and Articuno

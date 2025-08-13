@@ -588,14 +588,14 @@ wPlacingInitialBenchPokemon:: ; cbfd
 	ds $1
 
 ; unused
-wcbfe:: ; cbfe
+wPracticeDuelAction:: ; cbfe
 	ds $1
 
-wcbff:: ; cbff
+wDuelMainSceneSelectHotkeyAction:: ; cbff
 	ds $1
 
 ; unused
-wcc00:: ; cc00
+wPracticeDuelTurn:: ; cc00
 	ds $1
 
 ; used to store a pointer to a text message parameter
@@ -998,11 +998,14 @@ wCoinTossNumTails:: ; cd9f
 wCoinTossNumTossed:: ; cd9f
 	ds $1
 
-wOverkillDamage:: ;cd9a
+wOverkillDamage:: ; cd9a
 	ds $1
 
+wPlayAreaFilterFunctionPointer:: ; cd9b
+	ds $2
+
 ; unused free space
-	ds $4
+	ds $2
 
 wAIDuelVars::
 ; saves the prizes that the AI already used Peek on
@@ -1549,7 +1552,7 @@ wNumberOfCardsToOrder:: ; ce75
 wce76:: ; ce76
 	ds MAX_PLAY_AREA_POKEMON
 
-; used in CountPokemonIDInPlayArea
+; used in CountPokemonIDInPlayAreaMatchingFilter
 wTempPokemonID_ce7c:: ; ce7c
 	ds $1
 

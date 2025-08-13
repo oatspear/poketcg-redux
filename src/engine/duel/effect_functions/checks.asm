@@ -591,7 +591,7 @@ StrangeBehavior_PreconditionCheck:
 StrangeBehavior_CheckDamage:
 ; can Pkmn Power be used?
 	ldh a, [hTempPlayAreaLocation_ff9d]
-	call CheckCannotUseDueToStatus_Anywhere
+	call CheckCannotUseDueToStatus_PlayArea
 	ret c
 ; does Play Area have any damage counters?
 	ldh a, [hTempPlayAreaLocation_ff9d]
@@ -710,7 +710,7 @@ CheckPokemonPowerCanBeUsed:
 	jr nz, .already_used
 
 	ldh a, [hTempPlayAreaLocation_ff9d]
-	jp CheckCannotUseDueToStatus_Anywhere
+	jp CheckCannotUseDueToStatus_PlayArea
 
 .already_used
 	ldtx hl, OnlyOncePerTurnText

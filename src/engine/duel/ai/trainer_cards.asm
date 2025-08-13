@@ -2078,7 +2078,7 @@ AIDecide_ProfessorOak:
 
 ; no Neutralizing Gas in Play Area
 	ld a, WARTORTLE
-	call CountPokemonIDInPlayArea
+	call GetFirstPokemonWithAvailablePower
 	jr nc, .check_hand
 
 ; at least one Wartortle in AI Play Area
@@ -2363,7 +2363,7 @@ AIDecide_EnergyRetrieval:
 	; call ArePokemonPowersDisabled
 	; jr c, .start
 	; ld a, WARTORTLE
-	; call CountPokemonIDInPlayArea
+	; call GetFirstPokemonWithAvailablePower
 	; jp nc, .no_carry
 
 .start
