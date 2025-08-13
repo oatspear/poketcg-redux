@@ -51,7 +51,7 @@ NeutralizingGasName:
 NeutralizingGasDescription:
 	text "As long as this Pokémon is in the"
 	line "Active Spot, your opponent's Pokémon"
-	line "in play have no Pokémon Powers,"
+	line "in play have no Poké-Bodies,"
 	line "except for Neutralizing Gas."
 	done
 
