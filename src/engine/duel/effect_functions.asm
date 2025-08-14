@@ -7007,201 +7007,67 @@ CreatePokemonCardListFromHand: ; 2f8b6 (b:78b6)
 	ret
 
 
-Pokedex_PlayerSelection:
-; cap the number of cards to reorder up to
-; number of cards left in the deck (maximum of 5)
-; fill wDuelTempList with cards that are going to be sorted
-	ld b, 5
-	call CreateDeckCardListTopNCards
-	inc a
-	ld [wNumberOfCardsToOrder], a
-; initialize safety variables
-	ld a, $ff
-	ldh [hTempList + 5], a  ; terminator for the sorting list
-	ldh [hTempList + 6], a  ; placeholder for chosen Pokémon
-
-; check if there are any Pokémon
-	ld a, CARDTEST_POKEMON
-	call SearchDuelTempListForMatchingCard
-	jr c, .no_pokemon
-
+Pokedex_PlayerSelectEffect:
 ; print text box
-	ldtx hl, ChooseAnyPokemonFromDeckText
+	ldtx hl, ChooseAnyPokemonFromPrizesText
 	call DrawWideTextBox_WaitForInput
-
-; let the Player choose a Pokémon to add to the hand
-	call HandlePlayerSelectionPokemonFromDeckList
-	ldh [hTempList], a
-	cp $ff
-	jr z, .got_pkmn
-
-; store chosen Pokémon
-	ldh [hTempList + 6], a
-; remove selected card from the ordering list
-	call RemoveCardFromDuelTempList
-	ld a, $ff
-	ldh [hTempList], a  ; terminator for the sorting list
-	ldh [hTempList + 1], a  ; terminator for the sorting list
-	ld a, [wNumberOfCardsToOrder]
-	dec a
-	ld [wNumberOfCardsToOrder], a
-; check if there was only the selected Pokémon
-	dec a
-	or a
-	ret z
-; check if there are still multiple cards to reorder
-	cp 2
-	jr nc, .got_pkmn
-; there is only one more card, no need to reorder
-	ld a, [wDuelTempList]
-	ldh [hTempList], a
-	; [hTempList + 1] already has terminator
-	or a  ; remove carry flag
+; choose card from prizes
+	call HandlePlayerSelectionPokemonFromPrizes
+	ldh [hTemp_ffa0], a
 	ret
 
-.got_pkmn
-	call EmptyScreen
-
-.no_pokemon
-; print text box
-	ldtx hl, RearrangeTheCardsAtTopOfDeckText
-	call DrawWideTextBox_WaitForInput
-
-
-.clear_list
-	call InitializeListForReordering
-
-; display card list to order
-	bank1call InitAndDrawCardListScreenLayout
-	ldtx hl, ChooseTheOrderOfTheCardsText
-	ldtx de, DuelistDeckText
-	bank1call SetCardListHeaderText
-	bank1call Func_5735
-
-.read_input
-	bank1call DisplayCardList
-	jr c, .undo ; if B is pressed, undo last order selection
-
-; a card was selected, check if it's already been selected
-	ldh a, [hCurMenuItem]
-	ld e, a
-	ld d, $00
-	ld hl, wDuelTempList + 10
-	add hl, de
-	ld a, [hl]
-	or a
-	jr nz, .read_input ; already has an ordering number
-
-; hasn't been ordered yet, apply to it current ordering number
-; and increase it by 1.
-	ldh a, [hCurSelectionItem]
-	ld [hl], a
-	inc a
-	ldh [hCurSelectionItem], a
-
-; refresh screen
-	push af
-	bank1call Func_5744
-	pop af
-
-; check if we're done ordering
-	ldh a, [hCurSelectionItem]
-	ld hl, wNumberOfCardsToOrder
-	cp [hl]
-	jr c, .read_input ; if still more cards to select, loop back up
-
-; we're done selecting cards
-	call EraseCursor
-	ldtx hl, IsThisOKText
-	call YesOrNoMenuWithText_LeftAligned
-	jr c, .clear_list ; "No" was selected, start over
-	; selection was confirmed
-
-; now wDuelTempList + 10 will be overwritten with the
-; card indices in order of selection.
-	ld hl, wDuelTempList + 10
-	ld de, wDuelTempList
-	ld c, 0
-.loop_write_indices
-	ld a, [hli]
+Pokedex_AddToHandEffect:
+	ld a, [hTemp_ffa0]
 	cp $ff
-	jr z, .done_write_indices
-	push hl
-	push bc
+	jr z, ShufflePrizeCards  ; none selected
+; search for the selected card in the prize list
 	ld c, a
-	ld b, $00
-	ld hl, hTempCardIndex_ff9f
-	add hl, bc
-	ld a, [de]
-	ld [hl], a
-	pop bc
-	pop hl
-	inc de
-	inc c
-	jr .loop_write_indices
-
-.done_write_indices
-	ld b, $00
-	ld hl, hTempList
-	add hl, bc
-	ld [hl], $ff ; terminating byte
-	or a
-	ret
-
-.undo
-; undo last selection and get previous order number
-	ld hl, hCurSelectionItem
-	ld a, [hl]
-	cp 1
-	jr z, .read_input ; already at first input, nothing to undo
-	dec a
-	ld [hl], a
-	ld c, a
-	ld hl, wDuelTempList + 10
-.asm_2f99e
+	ld a, DUELVARS_PRIZE_CARDS
+	call GetTurnDuelistVariable
+.loop ; assume that it ends
 	ld a, [hli]
 	cp c
-	jr nz, .asm_2f99e
+	jr nz, .loop
+; put the selected card in the turn holder's hand
+	call AddCardToHand  ; preserves: af, hl, bc, de
+; place this card as a prize
+	ldh a, [hTempCardIndex_ff9f]
+	call RemoveCardFromHand  ; preserves: af, hl, bc, de
 	dec hl
-	ld [hl], $00 ; overwrite order number with 0
-	bank1call Func_5744
-	jr .read_input
-
-
-Pokedex_AddToHandAndOrderDeckCardsEffect:
-	ldh a, [hTempList + 6]
-	cp $ff
-	jr z, Pokedex_OrderDeckCardsEffect  ; none chosen
-
-; add Pokémon card to hand and show it on screen
-	call AddCardToHand
-	ldtx hl, WasPlacedInTheHandText
-	bank1call DisplayCardDetailScreen
+	ld [hl], a
+	ld l, a  ; DUELVARS_CARD_LOCATIONS
+	ld a, CARD_LOCATION_PRIZE
+	ld [hl], a
+	; jr ShufflePrizeCards
 	; fallthrough
 
-Pokedex_OrderDeckCardsEffect:
-; place cards in order to the hand.
-	ld hl, hTempList
-	ld c, 0
-.loop_place_hand
-	ld a, [hli]
-	cp $ff
-	jr z, .place_top_deck
-	call SearchCardInDeckAndSetToJustDrawn
-	inc c
-	jr .loop_place_hand
 
-.place_top_deck
-; go to last card in list and iterate in decreasing order
-; placing each card in top of deck.
-	dec hl
-	dec hl
-.loop_place_deck
-	ld a, [hld]
-	call ReturnCardToDeck
-	dec c
-	jr nz, .loop_place_deck
+ShufflePrizeCards:
+	call CreatePrizeCardList  ; a: card count
+	cp 2
+	ret c  ; no need
+	ld b, 0
+	ld c, a
+	ld hl, wDuelTempList
+	call ShuffleCards  ; preserves: hl, bc, de
+; move shuffled list over to prize locations
+	ld a, DUELVARS_PRIZE_CARDS
+	call GetTurnDuelistVariable
+	ld d, h
+	ld e, l
+	ld hl, wDuelTempList
+	push bc
+	call CopyDataHLtoDE
+	pop bc
+	ld e, DUELVARS_PRIZES  ; d is already set to duel vars
+	ld hl, .prize_bits
+	add hl, bc
+	ld a, [hl]
+	ld [de], a
 	ret
+
+.prize_bits
+	db 0, %1, %11, %111, %1111, %11111, %111111
 
 
 DrawUntil5CardsInHandEffect:

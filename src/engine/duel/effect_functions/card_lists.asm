@@ -706,6 +706,49 @@ ListPokemonIDInPlayArea:
 
 
 ; ------------------------------------------------------------------------------
+; Prize Lists
+; ------------------------------------------------------------------------------
+
+
+CreatePrizeCardList:
+	ld de, wDuelTempList
+	ld a, DUELVARS_PRIZES
+	call GetTurnDuelistVariable
+	or a
+	jr z, .done
+
+	ld b, a
+	ld c, 0
+	ld a, DUELVARS_PRIZE_CARDS
+	call GetTurnDuelistVariable
+.loop
+	rr b
+	jr nc, .next
+; this position has a prize card
+	ld a, [hl]
+	ld [de], a
+	inc de
+	inc c
+.next
+	inc hl
+	inc b
+	dec b
+	jr nz, .loop
+
+.done
+	ld a, $ff ; terminating byte
+	ld [de], a
+	ld a, [wDuelTempList]
+	cp $ff
+	ld a, c
+	scf
+	ret z ; return carry if empty
+; not empty
+	or a
+	ret
+
+
+; ------------------------------------------------------------------------------
 ; List Filters
 ; ------------------------------------------------------------------------------
 

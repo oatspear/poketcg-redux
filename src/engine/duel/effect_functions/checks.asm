@@ -61,36 +61,6 @@ CheckDeckSizeGreaterThan1:
 ; 	ret
 
 
-; input:
-;   wDataTableIndex: function index in CardTypeTest_FunctionTable
-; output:
-;   carry: set if there are no valid cards in deck
-;   a: deck index of the first valid card | $ff
-CheckThereIsCardTypeInDeck:
-	ld a, DUELVARS_CARD_LOCATIONS
-	call GetTurnDuelistVariable
-.loop_deck
-	ld a, [hl]
-	cp CARD_LOCATION_DECK
-	jr nz, .next_card
-	ld a, l
-	call DynamicCardTypeTest
-	jr nc, .next_card  ; not a card of the desired type
-; there are valid cards
-	ld a, l
-	ccf
-	ret
-.next_card
-	inc l
-	ld a, l
-	cp DECK_SIZE
-	jr c, .loop_deck
-; none in deck
-	ld a, $ff
-	scf
-	ret
-
-
 ; ------------------------------------------------------------------------------
 ; Prize Cards
 ; ------------------------------------------------------------------------------
@@ -972,6 +942,30 @@ CheckPokemonHasSurplusEnergy:
 ; ------------------------------------------------------------------------------
 ; Card Types
 ; ------------------------------------------------------------------------------
+
+
+; input:
+;   wDuelTempList: populated list of cards to search
+;   wDataTableIndex: function index in CardTypeTest_FunctionTable
+; output:
+;   carry: set if there are no valid cards in prizes
+;   a: deck index of the first valid card | $ff
+CheckThereIsCardTypeInCardList:
+	ld hl, wDuelTempList
+.loop_card_list
+	ld a, [hli]
+	cp $ff
+	jr z, .no_cards
+	call DynamicCardTypeTest
+	jr nc, .loop_card_list  ; not a card of the desired type
+; there are valid cards
+	dec hl
+	ld a, [hl]
+	ccf
+	ret
+.no_cards
+	scf
+	ret
 
 
 ; input:

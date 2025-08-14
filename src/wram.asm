@@ -1545,6 +1545,7 @@ wce72:: ; ce72
 wMetronomeSelectedAttack:: ; ce73
 	ds $2
 
+; unused
 ; stores the amount of cards that are being ordered.
 wNumberOfCardsToOrder:: ; ce75
 	ds $1

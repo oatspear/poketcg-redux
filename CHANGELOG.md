@@ -413,6 +413,13 @@
 
 - **Outrage**: reduced cost from (CCC) to (CC).
 
+### Trainer Changes
+
+#### Pokédex
+- Completely remade the effect.
+- Looks at the Prize cards and lets the player switch the Pokédex with a Pokémon card. Then, shuffles the prizes.
+
+
 ## Version 0.12.0
 
 ### New Cards

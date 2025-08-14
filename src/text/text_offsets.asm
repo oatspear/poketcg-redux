@@ -59,7 +59,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer IsCuredOfStatusText
 	textpointer BetweenTurnsText                                   ; 0x002b
 	textpointer NoEnergyCardsText                                  ; 0x002d
-	textpointer IsThisOKText                                       ; 0x002e
 	textpointer YesOrNoText                                        ; 0x002f
 	textpointer DiscardName                                        ; 0x0030
 	textpointer IncompleteText                                     ; 0x0031
@@ -260,7 +259,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer Choose2EnergyCardsFromDiscardPileToAttachText      ; 0x0132
 	textpointer Choose2EnergyCardsFromDiscardPileForHandText       ; 0x0133
 	textpointer ChooseAnEnergyCardText                             ; 0x0134
-	textpointer ChooseTheOrderOfTheCardsText                       ; 0x0136
 	textpointer ProcedureForRecycleText
 	textpointer ProcedureForStrangeBehaviorText                    ; 0x0139
 	textpointer ChooseOppAttackToBeUsedWithMetronomeText           ; 0x013a
@@ -304,7 +302,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ChooseAncientEvolutionPokemonCardFromDeckText
 	textpointer AncientPokemonCardText
 	textpointer ChoosePokemonCardText                              ; 0x0161
-	textpointer RearrangeTheCardsAtTopOfDeckText
 	textpointer PleaseCheckTheOpponentsHandText                    ; 0x0163
 	textpointer EvolutionCardText                                  ; 0x0164
 	textpointer CardWasChosenText                                  ; 0x0165
@@ -345,7 +342,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer IsNowParalyzedText
 	textpointer IsNowConfusedText
 	textpointer SortedCardsInDuelistsDeckText
-	textpointer Text0185                                           ; 0x0185
+	textpointer DuelistPrizesText
 	textpointer PrizesCardsText                                    ; 0x0186
 	textpointer ChooseTheNumberOfPrizesText                        ; 0x0187
 	textpointer PleaseWaitDecidingNumberOfPrizesText               ; 0x0188
@@ -3149,8 +3146,9 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ScoopUpNetDescription
 	textpointer ComputerSearchName                                 ; 0x0b8f
 	textpointer ComputerSearchDescription                          ; 0x0b90
-	textpointer PokedexName                                        ; 0x0b91
-	textpointer PokedexDescription                                 ; 0x0b92
+	textpointer PokedexName
+	textpointer PokedexDescription
+	textpointer ChooseAnyPokemonFromPrizesText
 	textpointer ItemFinderName                                     ; 0x0b97
 	textpointer ItemFinderDescription                              ; 0x0b98
 	textpointer GiovanniName

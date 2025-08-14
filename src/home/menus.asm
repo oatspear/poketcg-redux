@@ -502,16 +502,8 @@ YesOrNoMenu:
 	lb de, 7, 16 ; x, y
 	call PrintYesOrNoItems
 	lb de, 6, 16 ; x, y
-	jr HandleYesOrNoMenu
-
-; prints the YES / NO menu items at coordinates x,y = 3,16 and handles input
-; input: wDefaultYesOrNo. returns carry if "no" selected
-YesOrNoMenuWithText_LeftAligned:
-	call DrawNarrowTextBox_PrintTextNoDelay
-	lb de, 3, 16 ; x, y
-	call PrintYesOrNoItems
-	lb de, 2, 16 ; x, y
-;	fallthrough
+	; jr HandleYesOrNoMenu
+	;	fallthrough
 
 HandleYesOrNoMenu:
 	ld a, d

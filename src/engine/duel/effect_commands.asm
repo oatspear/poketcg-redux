@@ -1908,9 +1908,8 @@ PokemonTraderEffectCommands:
 	db  $00
 
 PokedexEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDeckIsNotEmpty
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Pokedex_AddToHandAndOrderDeckCardsEffect
-	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Pokedex_PlayerSelection
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Pokedex_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Pokedex_AddToHandEffect
 	db  $00
 
 BillEffectCommands:

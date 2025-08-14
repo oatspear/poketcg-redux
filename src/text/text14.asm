@@ -326,11 +326,16 @@ PokedexName:
 	done
 
 PokedexDescription:
-	text "Look at the top 5 cards of your"
-	line "deck. You may reveal a Pokémon card"
-	line "you find there and put it into your"
-	line "hand. Put the other cards back on"
-	line "the top of your deck in any order."
+	text "Look at your Prize cards. You may"
+	line "reveal a Pokémon you find there, put"
+	line "it into your hand, and put this card"
+	line "in its place. (If you don't reveal a"
+	line "Pokémon card, discard this card.)"
+	line "Then, shuffle your Prize cards."
+	done
+
+ChooseAnyPokemonFromPrizesText:
+	text "Choose any Pokémon from your Prizes."
 	done
 
 ItemFinderName:

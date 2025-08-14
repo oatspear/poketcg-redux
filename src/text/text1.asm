@@ -242,10 +242,6 @@ NoEnergyCardsText: ; 36576 (d:6576)
 	text "No Energy cards."
 	done
 
-IsThisOKText: ; 36588 (d:6588)
-	text "Is this OK?"
-	done
-
 YesOrNoText: ; 36595 (d:6595)
 	text "Yes     No"
 	done

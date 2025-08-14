@@ -242,11 +242,6 @@ ChooseAnEnergyCardText: ; 38d5a (e:4d5a)
 	line "card."
 	done
 
-ChooseTheOrderOfTheCardsText: ; 38e70 (e:4e70)
-	text "Choose the order"
-	line "of the cards."
-	done
-
 ProcedureForRecycleText:
 	text "Options for Recycle:"
 	line ""
@@ -471,11 +466,6 @@ ChoosePokemonCardText: ; 397f1 (e:57f1)
 	line "a Pokémon card."
 	done
 
-RearrangeTheCardsAtTopOfDeckText:
-	text "Rearrange the cards at"
-	line "the top of the Deck."
-	done
-
 PleaseCheckTheOpponentsHandText: ; 39838 (e:5838)
 	text "Please check the opponent's"
 	line "Hand."
@@ -669,8 +659,8 @@ SortedCardsInDuelistsDeckText:
 	line "in <RAMNAME>'s Deck."
 	done
 
-Text0185: ; 39ca8 (e:5ca8)
-	text "Battle Center"
+DuelistPrizesText:
+	text "<RAMNAME>'s Prizes"
 	done
 
 PrizesCardsText: ; 39cb7 (e:5cb7)

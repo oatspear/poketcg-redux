@@ -1,5 +1,285 @@
 ;
 
+
+Pokedex_PlayerSelection:
+; cap the number of cards to reorder up to
+; number of cards left in the deck (maximum of 5)
+; fill wDuelTempList with cards that are going to be sorted
+	ld b, 5
+	call CreateDeckCardListTopNCards
+	inc a
+	ld [wNumberOfCardsToOrder], a
+; initialize safety variables
+	ld a, $ff
+	ldh [hTempList + 5], a  ; terminator for the sorting list
+	ldh [hTempList + 6], a  ; placeholder for chosen Pokémon
+
+; check if there are any Pokémon
+	ld a, CARDTEST_POKEMON
+	call SearchDuelTempListForMatchingCard
+	jr c, .no_pokemon
+
+; print text box
+	ldtx hl, ChooseAnyPokemonFromDeckText
+	call DrawWideTextBox_WaitForInput
+
+; let the Player choose a Pokémon to add to the hand
+	call HandlePlayerSelectionPokemonFromDeckList
+	ldh [hTempList], a
+	cp $ff
+	jr z, .got_pkmn
+
+; store chosen Pokémon
+	ldh [hTempList + 6], a
+; remove selected card from the ordering list
+	call RemoveCardFromDuelTempList
+	ld a, $ff
+	ldh [hTempList], a  ; terminator for the sorting list
+	ldh [hTempList + 1], a  ; terminator for the sorting list
+	ld a, [wNumberOfCardsToOrder]
+	dec a
+	ld [wNumberOfCardsToOrder], a
+; check if there was only the selected Pokémon
+	dec a
+	or a
+	ret z
+; check if there are still multiple cards to reorder
+	cp 2
+	jr nc, .got_pkmn
+; there is only one more card, no need to reorder
+	ld a, [wDuelTempList]
+	ldh [hTempList], a
+	; [hTempList + 1] already has terminator
+	or a  ; remove carry flag
+	ret
+
+.got_pkmn
+	call EmptyScreen
+
+.no_pokemon
+; print text box
+	ldtx hl, RearrangeTheCardsAtTopOfDeckText
+	call DrawWideTextBox_WaitForInput
+
+
+.clear_list
+	call InitializeListForReordering
+
+; display card list to order
+	bank1call InitAndDrawCardListScreenLayout
+	ldtx hl, ChooseTheOrderOfTheCardsText
+	ldtx de, DuelistDeckText
+	bank1call SetCardListHeaderText
+	bank1call Func_5735
+
+.read_input
+	bank1call DisplayCardList
+	jr c, .undo ; if B is pressed, undo last order selection
+
+; a card was selected, check if it's already been selected
+	ldh a, [hCurMenuItem]
+	ld e, a
+	ld d, $00
+	ld hl, wDuelTempList + 10
+	add hl, de
+	ld a, [hl]
+	or a
+	jr nz, .read_input ; already has an ordering number
+
+; hasn't been ordered yet, apply to it current ordering number
+; and increase it by 1.
+	ldh a, [hCurSelectionItem]
+	ld [hl], a
+	inc a
+	ldh [hCurSelectionItem], a
+
+; refresh screen
+	push af
+	bank1call Func_5744
+	pop af
+
+; check if we're done ordering
+	ldh a, [hCurSelectionItem]
+	ld hl, wNumberOfCardsToOrder
+	cp [hl]
+	jr c, .read_input ; if still more cards to select, loop back up
+
+; we're done selecting cards
+	call EraseCursor
+	ldtx hl, IsThisOKText
+	call YesOrNoMenuWithText_LeftAligned
+	jr c, .clear_list ; "No" was selected, start over
+	; selection was confirmed
+
+; now wDuelTempList + 10 will be overwritten with the
+; card indices in order of selection.
+	ld hl, wDuelTempList + 10
+	ld de, wDuelTempList
+	ld c, 0
+.loop_write_indices
+	ld a, [hli]
+	cp $ff
+	jr z, .done_write_indices
+	push hl
+	push bc
+	ld c, a
+	ld b, $00
+	ld hl, hTempCardIndex_ff9f
+	add hl, bc
+	ld a, [de]
+	ld [hl], a
+	pop bc
+	pop hl
+	inc de
+	inc c
+	jr .loop_write_indices
+
+.done_write_indices
+	ld b, $00
+	ld hl, hTempList
+	add hl, bc
+	ld [hl], $ff ; terminating byte
+	or a
+	ret
+
+.undo
+; undo last selection and get previous order number
+	ld hl, hCurSelectionItem
+	ld a, [hl]
+	cp 1
+	jr z, .read_input ; already at first input, nothing to undo
+	dec a
+	ld [hl], a
+	ld c, a
+	ld hl, wDuelTempList + 10
+.asm_2f99e
+	ld a, [hli]
+	cp c
+	jr nz, .asm_2f99e
+	dec hl
+	ld [hl], $00 ; overwrite order number with 0
+	bank1call Func_5744
+	jr .read_input
+
+
+
+Pokedex_AddToHandAndOrderDeckCardsEffect:
+	ldh a, [hTempList + 6]
+	cp $ff
+	jr z, Pokedex_OrderDeckCardsEffect  ; none chosen
+
+; add Pokémon card to hand and show it on screen
+	call AddCardToHand
+	ldtx hl, WasPlacedInTheHandText
+	bank1call DisplayCardDetailScreen
+	; fallthrough
+
+Pokedex_OrderDeckCardsEffect:
+; place cards in order to the hand.
+	ld hl, hTempList
+	ld c, 0
+.loop_place_hand
+	ld a, [hli]
+	cp $ff
+	jr z, .place_top_deck
+	call SearchCardInDeckAndSetToJustDrawn
+	inc c
+	jr .loop_place_hand
+
+.place_top_deck
+; go to last card in list and iterate in decreasing order
+; placing each card in top of deck.
+	dec hl
+	dec hl
+.loop_place_deck
+	ld a, [hld]
+	call ReturnCardToDeck
+	dec c
+	jr nz, .loop_place_deck
+	ret
+
+
+InitializeListForReordering:
+; wDuelTempList + 10 will be filled with numbers
+; from 1 to N (whatever the maximum order card is),
+; so that the first item in that list corresponds to the first card
+; the second item corresponds to the second card, etc.
+; and the number in the list corresponds to the ordering number.
+	call CountCardsInDuelTempList
+	ld b, a
+	ld a, 1
+; fill order list with zeroes
+	ldh [hCurSelectionItem], a
+	ld hl, wDuelTempList + 10
+	xor a
+.loop_init
+	ld [hli], a
+	dec b
+	jr nz, .loop_init
+	ld [hl], $ff ; terminating byte
+	ret
+
+
+; home bank
+; prints the YES / NO menu items at coordinates x,y = 3,16 and handles input
+; input: wDefaultYesOrNo. returns carry if "no" selected
+YesOrNoMenuWithText_LeftAligned:
+	call DrawNarrowTextBox_PrintTextNoDelay
+	lb de, 3, 16 ; x, y
+	call PrintYesOrNoItems
+	lb de, 2, 16 ; x, y
+	jr HandleYesOrNoMenu
+
+
+IsThisOKText: ; 36588 (d:6588)
+	text "Is this OK?"
+	done
+
+ChooseTheOrderOfTheCardsText: ; 38e70 (e:4e70)
+	text "Choose the order"
+	line "of the cards."
+	done
+
+RearrangeTheCardsAtTopOfDeckText:
+	text "Rearrange the cards at"
+	line "the top of the Deck."
+	done
+
+
+
+
+; input:
+;   wDataTableIndex: function index in CardTypeTest_FunctionTable
+; output:
+;   carry: set if there are no valid cards in deck
+;   a: deck index of the first valid card | $ff
+CheckThereIsCardTypeInDeck:
+	ld a, DUELVARS_CARD_LOCATIONS
+	call GetTurnDuelistVariable
+.loop_deck
+	ld a, [hl]
+	cp CARD_LOCATION_DECK
+	jr nz, .next_card
+	ld a, l
+	call DynamicCardTypeTest
+	jr nc, .next_card  ; not a card of the desired type
+; there are valid cards
+	ld a, l
+	ccf
+	ret
+.next_card
+	inc l
+	ld a, l
+	cp DECK_SIZE
+	jr c, .loop_deck
+; none in deck
+	ld a, $ff
+	scf
+	ret
+
+
+
+
 OverwhelmEffect:
 	ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND
 	call GetNonTurnDuelistVariable

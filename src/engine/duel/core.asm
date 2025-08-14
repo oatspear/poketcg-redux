@@ -3487,16 +3487,6 @@ CardListFunction:
 	or a
 	ret
 
-Func_5735:
-	ld hl, wPrintSortNumberInCardListPtr
-	ld de, PrintSortNumberInCardList
-	ld [hl], e
-	inc hl
-	ld [hl], d
-	ld a, 1
-	ld [wSortCardListByID], a
-	ret
-
 Func_5744:
 	ld hl, wPrintSortNumberInCardListPtr
 	jp CallIndirect

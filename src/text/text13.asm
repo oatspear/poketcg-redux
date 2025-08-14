@@ -269,6 +269,14 @@ FixmeText:
 ; Unused Text
 ; ------------------------------------------------------------------------------
 
+; PokedexDescription:
+; 	text "Look at the top 5 cards of your"
+; 	line "deck. You may reveal a Pokémon card"
+; 	line "you find there and put it into your"
+; 	line "hand. Put the other cards back on"
+; 	line "the top of your deck in any order."
+; 	done
+
 ; FragranceTrapDescription:
 ; 	text "Before doing damage, switch in"
 ; 	line "1 of your opponent's Benched"
