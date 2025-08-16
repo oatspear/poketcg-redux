@@ -480,7 +480,6 @@ HandlePlayerSelectionPokemonFromPrizeList:
 	; jr HandlePlayerSelectionFromDeckList
 	; fallthrough
 
-
 ; input:
 ;   wDuelTempList: list of prize cards to search
 ;   a: table index of a function to use as a test for the desired card type

@@ -1,6 +1,46 @@
 ;
 
 
+CreatePrizeCardList:
+	ld c, 0
+	ld de, wDuelTempList
+	ld a, DUELVARS_PRIZES
+	call GetTurnDuelistVariable
+	or a
+	jr z, .done
+
+	ld b, a
+	ld a, DUELVARS_PRIZE_CARDS
+	call GetTurnDuelistVariable
+.loop
+	rr b
+	jr nc, .next
+; this position has a prize card
+	ld a, [hl]
+	ld [de], a
+	inc de
+	inc c
+.next
+	inc hl
+	inc b
+	dec b
+	jr nz, .loop
+
+.done
+	ld a, $ff ; terminating byte
+	ld [de], a
+	ld a, [wDuelTempList]
+	cp $ff
+	ld a, c
+	scf
+	ret z ; return carry if empty
+; not empty
+	or a
+	ret
+
+
+
+
 Pokedex_PlayerSelection:
 ; cap the number of cards to reorder up to
 ; number of cards left in the deck (maximum of 5)
