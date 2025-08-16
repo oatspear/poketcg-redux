@@ -237,7 +237,9 @@ PoisonAllOpponentPokemonEffect:
 	call PoisonEffect
 	ld a, ATK_ANIM_BENCH_HIT
 	ld c, POISONED
-	jr InflictDamageOverTimeStatusEffect_AllBenchedPokemon
+	call SwapTurn
+	call InflictDamageOverTimeStatusEffect_AllBenchedPokemon
+	jp SwapTurn
 
 
 ; assumes:
