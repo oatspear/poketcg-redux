@@ -281,12 +281,6 @@ PsychicNovaEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, PsychicNova_DrawbackEffect
 	db  $00
 
-SwallowUpEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SwallowUp_DamageBoostEffect
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, SwallowUp_HealEffect
-	dbw EFFECTCMDTYPE_AI, SwallowUp_AIEffect
-	db  $00
-
 GuillotineEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDefendingPokemonHasLessHp
 	; fallthrough

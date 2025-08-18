@@ -1,5 +1,29 @@
 ;
 
+SwallowUp_DamageBoostEffect:
+	call CheckDefendingPokemonHasLessHp
+	ld a, 50
+	jp nc, AddToDamage
+	ret
+
+SwallowUp_AIEffect:
+	call SwallowUp_DamageBoostEffect
+	jp SetDefiniteAIDamage
+
+
+SwallowUp_HealEffect:
+	ld a, DUELVARS_ARENA_CARD_HP
+	call GetNonTurnDuelistVariable
+	or a
+	ret nz  ; not Knocked Out
+	; jr Heal40DamageEffect
+	; fallthrough
+
+Heal40DamageEffect:
+	ld de, 40
+	jr ApplyAndAnimateHPRecovery
+
+
 
 CreatePrizeCardList:
 	ld c, 0

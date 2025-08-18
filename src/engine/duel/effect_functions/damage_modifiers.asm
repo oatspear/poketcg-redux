@@ -939,17 +939,6 @@ DeadlyPoison_AIEffect:
 ; Based on Damage Counters
 ; ------------------------------------------------------------------------------
 
-SwallowUp_DamageBoostEffect:
-	call CheckDefendingPokemonHasLessHp
-	ld a, 50
-	jp nc, AddToDamage
-	ret
-
-SwallowUp_AIEffect:
-	call SwallowUp_DamageBoostEffect
-	jp SetDefiniteAIDamage
-
-
 KarateChop_DamageSubtractionEffect:
 	ld e, PLAY_AREA_ARENA
 	call GetCardDamageAndMaxHP

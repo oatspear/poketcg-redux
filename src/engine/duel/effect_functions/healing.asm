@@ -70,19 +70,6 @@ Heal30DamageEffect:
 	jr ApplyAndAnimateHPRecovery
 
 
-SwallowUp_HealEffect:
-	ld a, DUELVARS_ARENA_CARD_HP
-	call GetNonTurnDuelistVariable
-	or a
-	ret nz  ; not Knocked Out
-	; jr Heal40DamageEffect
-	; fallthrough
-
-Heal40DamageEffect:
-	ld de, 40
-	jr ApplyAndAnimateHPRecovery
-
-
 ; to be used in effects that happen BEFORE_DAMAGE
 ; Heal30DamageEffect_PreserveAttackAnimation:
 ; 	ld a, [wLoadedAttackAnimation]
