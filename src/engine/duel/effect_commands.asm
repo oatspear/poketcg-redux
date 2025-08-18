@@ -63,9 +63,9 @@ AcidicDrainEffectCommands:
 	db  $00
 
 PoisonPaybackEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, DoubleDamageIfUserIsDamaged_DamageBoostEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, DoubleDamageIfDamaged_DamageBoostEffect
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, PoisonEffect
-	dbw EFFECTCMDTYPE_AI, DoubleDamageIfUserIsDamaged_AIEffect
+	dbw EFFECTCMDTYPE_AI, DoubleDamageIfDamaged_AIEffect
 	db  $00
 
 StressPheromonesEffectCommands:
@@ -770,9 +770,9 @@ CounterEffectCommands:
 	dbw EFFECTCMDTYPE_AI, Counter_AIEffect
 	db  $00
 
-DoubleDamageIfUserIsDamagedEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, DoubleDamageIfUserIsDamaged_DamageBoostEffect
-	dbw EFFECTCMDTYPE_AI, DoubleDamageIfUserIsDamaged_AIEffect
+DoubleDamageIfDamagedEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, DoubleDamageIfDamaged_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AI, DoubleDamageIfDamaged_AIEffect
 	db  $00
 
 QuickSearchEffectCommands:

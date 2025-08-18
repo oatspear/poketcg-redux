@@ -950,15 +950,15 @@ KarateChop_AIEffect:
 
 
 ; double damage if user is damaged
-DoubleDamageIfUserIsDamaged_DamageBoostEffect:
+DoubleDamageIfDamaged_DamageBoostEffect:
 	ld e, PLAY_AREA_ARENA
 	call GetCardDamageAndMaxHP
   or a
   ret z  ; not damaged
 	jp DoubleDamage_DamageBoostEffect
 
-DoubleDamageIfUserIsDamaged_AIEffect:
-  call DoubleDamageIfUserIsDamaged_DamageBoostEffect
+DoubleDamageIfDamaged_AIEffect:
+  call DoubleDamageIfDamaged_DamageBoostEffect
   jp SetDefiniteAIDamage
 
 
