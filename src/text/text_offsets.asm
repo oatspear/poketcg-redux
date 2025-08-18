@@ -2395,7 +2395,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer GuillotineName
 	textpointer GuillotineDescription
 	textpointer Guillotine70Description
-	textpointer EmberName                                          ; 0x08d4
 	textpointer Discard1EnergyDescription
 	textpointer FlamethrowerName                                   ; 0x08d9
 	textpointer EnergyLoopName
@@ -2408,6 +2407,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer FireBlastName
 	textpointer FireFangName                                       ; 0x08ec
 	textpointer FlareName
+	textpointer FlareDescription
 	textpointer FlameCloakName
 	textpointer QuickAttackName                                    ; 0x08f7
 	textpointer IfActiveThisTurn10BonusDamageDescription

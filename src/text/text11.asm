@@ -131,10 +131,6 @@ Guillotine70Description:
 	line "it is Knocked Out."
 	done
 
-EmberName:
-	text "Ember"
-	done
-
 Discard1EnergyDescription:
 	text "Discard 1 Energy card attached"
 	line "to this Pokémon."
@@ -186,6 +182,12 @@ FireFangName:
 
 FlareName:
 	text "Flare"
+	done
+
+FlareDescription:
+	text "If this Pokémon has any damage"
+	line "counters on it, the Defending"
+	line "Pokémon is now Burned."
 	done
 
 FlameCloakName:

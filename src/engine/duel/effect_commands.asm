@@ -74,6 +74,10 @@ StressPheromonesEffectCommands:
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, StressPheromones_PlayerSelectEffect
 	db  $00
 
+InflictBurnIfDamagedEffectCommands:
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, BurnIfDamagedEffect
+	db  $00
+
 PrimalGuidanceEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, PrimalGuidance_PreconditionCheck
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, PrimalGuidance_PlayerSelectEffect

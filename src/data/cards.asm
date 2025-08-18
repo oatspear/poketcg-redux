@@ -2377,14 +2377,14 @@ CharmanderCard:
 
 	; attack 2
 	energy FIRE, 1, COLORLESS, 1 ; energies
-	tx EmberName ; name
-	tx Discard1EnergyDescription ; description
+	tx FlareName ; name
+	tx FlareDescription ; description
 	dw NONE ; description (cont)
-	db 30 ; damage
+	db 20 ; damage
 	db DAMAGE_NORMAL ; category
-	dw Discard1EnergyEffectCommands ; effect commands
-	db NONE ; flags 1
-	db DISCARD_ENERGY ; flags 2
+	dw InflictBurnIfDamagedEffectCommands ; effect commands
+	db INFLICT_POISON ; flags 1
+	db NONE ; flags 2
 	db NONE ; flags 3
 	db 3
 	db ATK_ANIM_SMALL_FLAME ; animation
@@ -2408,7 +2408,7 @@ CharmeleonCard:
 	db DIAMOND ; rarity
 	db COLOSSEUM | NONE ; sets
 	db CHARMELEON
-	db 70 ; hp
+	db 80 ; hp
 	db STAGE1 ; stage
 	tx CharmanderName ; pre-evo name
 
@@ -2459,7 +2459,7 @@ CharizardCard:
 	db STAR ; rarity
 	db EVOLUTION | NONE ; sets
 	db CHARIZARD
-	db 100 ; hp
+	db 110 ; hp
 	db STAGE2 ; stage
 	tx CharmeleonName ; pre-evo name
 
@@ -2482,7 +2482,7 @@ CharizardCard:
 	tx FireBlastName ; name
 	tx Discard2EnergiesDescription ; description
 	dw NONE ; description (cont)
-	db 120 ; damage
+	db 110 ; damage
 	db DAMAGE_NORMAL ; category
 	dw Discard2EnergiesEffectCommands ; effect commands
 	db NONE ; flags 1

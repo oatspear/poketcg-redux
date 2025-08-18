@@ -171,10 +171,21 @@
 
 ### Fire Changes
 
+#### Charmander
+
+- **Ember**: removed.
+- New attack: **Flare** (RC): 20 damage; inflict Burn if damaged.
+
 #### Charmeleon
 
+- Increased HP from 70 to 80.
 - **Firestarter**: removed.
 - New attack: **Flame Cloak** (C): 10 damage; attach (R) from discard pile to self.
+
+#### Charizard
+
+- Increased HP from 100 to 110.
+- **Fire Blast**: reduced damage from 120 to 110.
 
 #### Rapidash
 - Increased HP from 70 to 80.

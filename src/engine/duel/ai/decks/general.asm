@@ -158,7 +158,7 @@ ENDC
 	ld a, AI_TRAINER_CARD_PHASE_10
 	call AIProcessHandTrainerCards
 IF DEBUG_MODE
-	ldtx hl, EmberName
+	ldtx hl, FlareName
 	call DrawWideTextBox_WaitForInput
 ENDC
 

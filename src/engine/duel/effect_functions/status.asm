@@ -299,6 +299,14 @@ InflictCrowdControlStatusEffect_AllBenchedPokemon:
 ; ------------------------------------------------------------------------------
 
 
+BurnIfDamagedEffect:
+	ld e, PLAY_AREA_ARENA
+	call GetCardDamageAndMaxHP
+	or a
+	ret z  ; nothing to do
+	jp BurnEffect
+
+
 ParalysisIfSelectedCardEffect:
 	ldh a, [hTemp_ffa0]
 	cp $ff
