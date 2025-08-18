@@ -144,17 +144,6 @@ FlamethrowerName:
 	text "Flamethrower"
 	done
 
-FirestarterName:
-	text "Firestarter"
-	done
-
-FirestarterDescription:
-	text "Once during your turn, you may"
-	line "put 1 damage counter on your Active"
-	line "Pokémon and attach a <FIRE> Energy from"
-	line "your discard pile to it."
-	done
-
 EnergyLoopName:
 	text "Energy Loop"
 	done
@@ -197,6 +186,10 @@ FireFangName:
 
 FlareName:
 	text "Flare"
+	done
+
+FlameCloakName:
+	text "Flame Cloak"
 	done
 
 QuickAttackName:
@@ -1475,14 +1468,21 @@ SwiftSwimName:
 	text "Swift Swim"
 	done
 
-HeatBoostName:
-	text "Heat Boost"
-	done
-
 SwiftSwimDescription:
 	text "If this Pokémon moved into the"
 	line "Active Spot this turn, its attacks"
 	line "cost <COLORLESS> less."
+	done
+
+HeatBoostName:
+	text "Heat Boost"
+	done
+
+HeatBoostDescription:
+	text "Once during your turn, you may"
+	line "put 1 damage counter on your Active"
+	line "Pokémon and attach a <FIRE> Energy from"
+	line "your discard pile to it."
 	done
 
 DevastateName:

@@ -4564,7 +4564,7 @@ CrushingCharge_DiscardAndAttachEnergyEffect:
 	jr _AttachEnergyFromDiscardPileToBenchEffect
 
 
-Firestarter_OncePerTurnCheck:
+HeatBoost_OncePerTurnCheck:
 	xor a  ; PLAY_AREA_ARENA
 	ld e, 20  ; HP
 	call CheckPokemonHasEnoughHP
@@ -4574,7 +4574,7 @@ Firestarter_OncePerTurnCheck:
 	jp CheckPokemonPowerCanBeUsed_StoreTrigger
 
 
-Firestarter_AttachEnergyEffect:
+HeatBoost_AttachEnergyEffect:
 ; attach an energy to the Active Pokémon
 	xor a  ; PLAY_AREA_ARENA
 	ldh [hTempPlayAreaLocation_ffa1], a

@@ -404,9 +404,9 @@ CrushingChargeEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, CrushingCharge_DiscardAndAttachEnergyEffect
 	db  $00
 
-FirestarterEffectCommands:
-	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, Firestarter_OncePerTurnCheck
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Firestarter_AttachEnergyEffect
+HeatBoostEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, HeatBoost_OncePerTurnCheck
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, HeatBoost_AttachEnergyEffect
 	db  $00
 
 DynamotorEffectCommands:

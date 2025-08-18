@@ -2398,8 +2398,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer EmberName                                          ; 0x08d4
 	textpointer Discard1EnergyDescription
 	textpointer FlamethrowerName                                   ; 0x08d9
-	textpointer FirestarterName
-	textpointer FirestarterDescription
 	textpointer EnergyLoopName
 	textpointer Bounce1EnergyDescription
 	textpointer FireSpinName
@@ -2410,6 +2408,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer FireBlastName
 	textpointer FireFangName                                       ; 0x08ec
 	textpointer FlareName
+	textpointer FlameCloakName
 	textpointer QuickAttackName                                    ; 0x08f7
 	textpointer IfActiveThisTurn10BonusDamageDescription
 	textpointer FlamesOfRageName                                   ; 0x08f9
@@ -2656,9 +2655,10 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer Exoskeleton10Description
 	textpointer WaveSplashName
 	textpointer WaveSplashDescription
-	textpointer HeatBoostName
 	textpointer SwiftSwimName
 	textpointer SwiftSwimDescription
+	textpointer HeatBoostName
+	textpointer HeatBoostDescription
 	textpointer DevastateName
 	textpointer DiscardTop4CardsFromDeckDescription
 	textpointer FossilBindName

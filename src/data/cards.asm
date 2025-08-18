@@ -2363,7 +2363,7 @@ CharmanderCard:
 
 	; attack 1
 	energy COLORLESS, 1 ; energies
-	tx FlareName ; name
+	tx FlameCloakName ; name
 	tx Attach1FireEnergyFromDiscardDescription ; description
 	dw NONE ; description (cont)
 	db 10 ; damage
@@ -2413,18 +2413,18 @@ CharmeleonCard:
 	tx CharmanderName ; pre-evo name
 
 	; attack 1
-	energy 0 ; energies
-	tx FirestarterName ; name
-	tx FirestarterDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
-	db 0 ; damage
-	db POKE_POWER ; category
-	dw FirestarterEffectCommands ; effect commands
+	energy COLORLESS, 1 ; energies
+	tx FlameCloakName ; name
+	tx Attach1FireEnergyFromDiscardDescription ; description
+	dw NONE ; description (cont)
+	db 10 ; damage
+	db DAMAGE_NORMAL ; category
+	dw Attach1FireEnergyFromDiscardEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
-	db NONE ; flags 3    ; SPECIAL_AI_HANDLING
-	db 0
-	db ATK_ANIM_PKMN_POWER_1 ; animation
+	db SPECIAL_AI_HANDLING ; flags 3
+	db 1
+	db ATK_ANIM_SMALL_FLAME ; animation
 
 	; attack 2
 	energy FIRE, 1, COLORLESS, 1 ; energies
@@ -2880,21 +2880,21 @@ RapidashCard:
 	db DIAMOND ; rarity
 	db EVOLUTION | JUNGLE ; sets
 	db RAPIDASH
-	db 70 ; hp
+	db 80 ; hp
 	db STAGE1 ; stage
 	tx PonytaName ; pre-evo name
 
 	; attack 1
 	energy 0 ; energies
 	tx HeatBoostName ; name
-	tx SwiftSwimDescription ; description
-	dw NONE ; description (cont)
+	tx HeatBoostDescription ; description
+	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
-	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	db POKE_POWER ; category
+	dw HeatBoostEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
-	db NONE ; flags 3
+	db NONE ; flags 3    ; SPECIAL_AI_HANDLING
 	db 0
 	db ATK_ANIM_PKMN_POWER_1 ; animation
 

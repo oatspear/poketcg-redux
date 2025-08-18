@@ -83,10 +83,10 @@ HandleSpecialAIAttacks:
 	jr z, .Sprout
 	cp ARTICUNO_LV35
 	jp z, .Freeze
-	cp CHARMANDER
-	jp z, .Flare
+	cp CHARMELEON
+	jp z, .FlameCloak
 	cp MOLTRES_LV35
-	jp z, .Flare
+	jp z, .FlameCloak
 	; cp PONYTA
 	; jp z, .FlameCharge
 	cp ZAPDOS_LV40
@@ -268,7 +268,7 @@ HandleSpecialAIAttacks:
 	ld e, FIGHTING_ENERGY
 	jr .accelerate_self_from_discard_got_energy
 
-.Flare:
+.FlameCloak:
 	ld e, FIRE_ENERGY
 .accelerate_self_from_discard_got_energy
 	ld a, CARD_LOCATION_DISCARD_PILE

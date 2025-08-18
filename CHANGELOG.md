@@ -173,8 +173,13 @@
 
 #### Charmeleon
 
-- **Firestarter**: attaches the energy to the Active Pokémon, instead of a Benched Pokémon.
-- **Firestarter**: puts 1 damage counter on the target Pokémon.
+- **Firestarter**: removed.
+- New attack: **Flame Cloak** (C): 10 damage; attach (R) from discard pile to self.
+
+#### Rapidash
+- Increased HP from 70 to 80.
+- **Heat Boost**: reworked.
+- New Pokémon Power: **Heat Boost**: once per turn, attach (R) from the discard pile to the Active Pokémon and put 1 damage counter on it.
 
 #### Flareon Lv28
 
@@ -184,10 +189,10 @@
 #### Moltres Lv35
 
 - **Flare**: removed.
-- **Wildfire**: always discards all attached (F) energy.
+- **Wildfire**: always discards all attached (R) energy.
 - **Wildfire**: base damage reduced from 10 to 0.
 - **Wildfire**: inflicts Burn.
-- New attack: **Phoenix Fire** (F): attach (F) from the discard pile to self; heal 20 damage.
+- New attack: **Phoenix Fire** (R): attach (R) from the discard pile to self; heal 20 damage.
 
 ### Water Changes
 
