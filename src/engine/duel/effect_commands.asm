@@ -1875,11 +1875,9 @@ PokemonFluteEffectCommands:
 	db  $00
 
 PokemonBreederEffectCommands:
-	; dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, PokemonBreeder_PreconditionCheck
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckDeckIsNotEmpty
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, EvolutionFromDeck_EvolveEffect
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, PokemonBreeder_PlayerSelectEffect
-	; dbw EFFECTCMDTYPE_AI_SELECTION, PokemonBreeder_AISelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, EvolutionFromDeck_EvolveEffect
 	db  $00
 
 RareCandyEffectCommands:
