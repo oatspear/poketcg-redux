@@ -185,7 +185,9 @@
 #### Charizard
 
 - Increased HP from 100 to 110.
+- **Relentless Flames**: removed.
 - **Fire Blast**: reduced damage from 120 to 110.
+- New attack: **Heat Wave** (R)(C): 10 damage; inflict Burn on all of the opponent's Pokémon.
 
 #### Rapidash
 - Increased HP from 70 to 80.

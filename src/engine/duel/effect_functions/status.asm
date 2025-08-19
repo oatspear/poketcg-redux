@@ -242,6 +242,15 @@ PoisonAllOpponentPokemonEffect:
 	jp SwapTurn
 
 
+BurnAllOpponentPokemonEffect:
+	call BurnEffect
+	ld a, ATK_ANIM_BENCH_HIT
+	ld c, BURNED
+	call SwapTurn
+	call InflictDamageOverTimeStatusEffect_AllBenchedPokemon
+	jp SwapTurn
+
+
 ; assumes:
 ;   - SwapTurn if needed to change to the correct play area
 ; input:

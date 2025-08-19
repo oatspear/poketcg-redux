@@ -2465,13 +2465,13 @@ CharizardCard:
 
 	; attack 1
 	energy FIRE, 1, COLORLESS, 1 ; energies
-	tx RelentlessFlamesName ; name
-	tx DoubleDamageIfMorePrizesDescription ; description
+	tx HeatWaveName ; name
+	tx HeatWaveDescription ; description
 	dw NONE ; description (cont)
-	db 30 ; damage
-	db DAMAGE_PLUS ; category
-	dw DoubleDamageIfMorePrizesEffectCommands ; effect commands
-	db NONE ; flags 1
+	db 10 ; damage
+	db DAMAGE_NORMAL ; category
+	dw HeatWaveEffectCommands ; effect commands
+	db INFLICT_POISON ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0

@@ -2686,6 +2686,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer SupersonicName
 	textpointer CounterName
 	textpointer CounterDescription
+	textpointer HeatWaveName
+	textpointer HeatWaveDescription
 
 ; ------------------------------------------------------------------------------
 ; text12.asm

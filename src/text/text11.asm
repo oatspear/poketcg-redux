@@ -1620,3 +1620,12 @@ CounterDescription:
 	line "last turn, this attack does that"
 	line "much more damage."
 	done
+
+HeatWaveName:
+	text "Heat Wave"
+	done
+
+HeatWaveDescription:
+	text "Each of your opponent's Pokémon"
+	line "is now Burned."
+	done

@@ -1101,6 +1101,10 @@ SmogEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, PoisonAllOpponentPokemonEffect
 	db  $00
 
+HeatWaveEffectCommands:
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, BurnAllOpponentPokemonEffect
+	db  $00
+
 DeadlyPoisonEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, DeadlyPoison_DamageBoostEffect
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, PoisonEffect
