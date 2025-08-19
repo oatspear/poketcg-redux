@@ -194,13 +194,13 @@ DEF ATTACK_FLAG3_ADDRESS EQU $2 << 3
 
 ; CARD_DATA_ATTACK*_FLAG1 constants
 DEF INFLICT_POISON_F           EQU 0
-DEF INFLICT_SLEEP_F            EQU 1
-DEF INFLICT_PARALYSIS_F        EQU 2
-DEF INFLICT_CONFUSION_F        EQU 3
-DEF LOW_RECOIL_F               EQU 4
-DEF DAMAGE_TO_OPPONENT_BENCH_F EQU 5
+DEF INFLICT_BURN_F             EQU 1
+DEF INFLICT_SLEEP_F            EQU 2
+DEF INFLICT_PARALYSIS_F        EQU 3
+DEF INFLICT_CONFUSION_F        EQU 4
+DEF LOW_RECOIL_F               EQU 5
 DEF HIGH_RECOIL_F              EQU 6
-DEF DRAW_CARD_F                EQU 7
+DEF DAMAGE_TO_OPPONENT_BENCH_F EQU 7
 
 ; CARD_DATA_ATTACK*_FLAG2 constants
 ; bits 5, 6 and 7 cover a wide variety of effects
@@ -215,19 +215,21 @@ DEF FLAG_2_BIT_7_F             EQU 7
 
 ; CARD_DATA_ATTACK*_FLAG3 constants
 ; bit 1 covers a wide variety of effects
-; bits 3-7 are unused
+; bits 3-6 are unused
 DEF BOOST_IF_TAKEN_DAMAGE_F    EQU 0
-DEF SPECIAL_AI_HANDLING_F      EQU 1
+DEF DRAW_CARD_F                EQU 1
+DEF SPECIAL_AI_HANDLING_F      EQU 7
 
 ; CARD_DATA_ATTACK*_FLAG1_F constants
 DEF INFLICT_POISON           EQU $1 << INFLICT_POISON_F
+DEF INFLICT_BURN             EQU $1 << INFLICT_BURN_F
 DEF INFLICT_SLEEP            EQU $1 << INFLICT_SLEEP_F
 DEF INFLICT_PARALYSIS        EQU $1 << INFLICT_PARALYSIS_F
 DEF INFLICT_CONFUSION        EQU $1 << INFLICT_CONFUSION_F
 DEF LOW_RECOIL               EQU $1 << LOW_RECOIL_F
 DEF DAMAGE_TO_OPPONENT_BENCH EQU $1 << DAMAGE_TO_OPPONENT_BENCH_F
 DEF HIGH_RECOIL              EQU $1 << HIGH_RECOIL_F
-DEF DRAW_CARD                EQU $1 << DRAW_CARD_F
+
 
 ; CARD_DATA_ATTACK*_FLAG2_F constants
 ; bits 5, 6 and 7 cover a wide variety of effects
@@ -242,8 +244,9 @@ DEF FLAG_2_BIT_7             EQU $1 << FLAG_2_BIT_7_F
 
 ; CARD_DATA_ATTACK*_FLAG3_F constants
 ; bit 1 covers a wide variety of effects
-; bits 3-7 are unused
+; bits 3-6 are unused
 DEF BOOST_IF_TAKEN_DAMAGE    EQU $1 << BOOST_IF_TAKEN_DAMAGE_F
+DEF DRAW_CARD                EQU $1 << DRAW_CARD_F
 DEF SPECIAL_AI_HANDLING      EQU $1 << SPECIAL_AI_HANDLING_F
 
 ; special CARD_DATA_RETREAT_COST values

@@ -535,7 +535,7 @@ GetAIScoreOfAttack:
 
 ; encourage attack if it has an effect to draw a card.
 .check_draw_flag
-	ld a, ATTACK_FLAG1_ADDRESS | DRAW_CARD_F
+	ld a, ATTACK_FLAG3_ADDRESS | DRAW_CARD_F
 	call CheckLoadedAttackFlag
 	jr nc, .check_heal_flag
 	ld a, 1

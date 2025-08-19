@@ -145,7 +145,7 @@ dw NONE ; description (cont)
 db 20 ; damage
 db DAMAGE_X ; category
 dw ScorchingColumnEffectCommands ; effect commands
-db INFLICT_POISON ; flags 1
+db INFLICT_BURN ; flags 1
 db ATTACHED_ENERGY_BOOST | DISCARD_ENERGY ; flags 2
 db NONE ; flags 3
 db 9
@@ -995,9 +995,9 @@ energy COLORLESS, 1 ; energies
 	db 0 ; damage
 	db RESIDUAL ; category
 	dw MimicEffectCommands ; effect commands
-	db DRAW_CARD ; flags 1
+	db NONE ; flags 1
 	db NONE ; flags 2
-	db SPECIAL_AI_HANDLING ; flags 3
+	db DRAW_CARD | SPECIAL_AI_HANDLING ; flags 3
 	db 0
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
@@ -1225,9 +1225,9 @@ dw NONE ; description (cont)
 db 0 ; damage
 db RESIDUAL ; category
 dw CoreRegenerationEffectCommands ; effect commands
-db DRAW_CARD ; flags 1
+db NONE ; flags 1
 db HEAL_USER ; flags 2
-db NONE ; flags 3
+db DRAW_CARD ; flags 3
 db 1
 db ATK_ANIM_GLOW_EFFECT ; animation
 
@@ -1408,9 +1408,9 @@ dw NONE ; description (cont)
 db 0 ; damage
 db RESIDUAL ; category
 dw WaterReserveEffectCommands ; effect commands
-db DRAW_CARD ; flags 1
+db NONE ; flags 1
 db NONE ; flags 2
-db NONE ; flags 3
+db DRAW_CARD ; flags 3
 db 0
 db ATK_ANIM_GLOW_EFFECT ; animation
 
@@ -2240,9 +2240,9 @@ PikachuAltLv16Card:
 	db 0 ; damage
 	db RESIDUAL ; category
 	dw Draw2CardsEffectCommands ; effect commands
-	db DRAW_CARD ; flags 1
+	db NONE ; flags 1
 	db NONE ; flags 2
-	db SPECIAL_AI_HANDLING ; flags 3
+	db DRAW_CARD | SPECIAL_AI_HANDLING ; flags 3
 	db 0
 	db ATK_ANIM_GLOW_EFFECT ; animation
 

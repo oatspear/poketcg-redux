@@ -1027,9 +1027,9 @@ NidoranMCard:
 	db 0 ; damage
 	db RESIDUAL ; category
 	dw Draw2CardsEffectCommands ; effect commands
-	db DRAW_CARD ; flags 1
+	db NONE ; flags 1
 	db NONE ; flags 2
-	db SPECIAL_AI_HANDLING ; flags 3
+	db DRAW_CARD | SPECIAL_AI_HANDLING ; flags 3
 	db 0
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
@@ -1290,9 +1290,9 @@ OddishCard:
 	db 0 ; damage
 	db RESIDUAL ; category
 	dw Draw2CardsEffectCommands ; effect commands
-	db DRAW_CARD ; flags 1
+	db NONE ; flags 1
 	db NONE ; flags 2
-	db SPECIAL_AI_HANDLING ; flags 3
+	db DRAW_CARD | SPECIAL_AI_HANDLING ; flags 3
 	db 0
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
@@ -1592,9 +1592,9 @@ VenonatCard:
 	db 0 ; damage
 	db RESIDUAL ; category
 	dw UltravisionEffectCommands ; effect commands
-	db DRAW_CARD ; flags 1
+	db NONE ; flags 1
 	db NONE ; flags 2
-	db NONE ; SPECIAL_AI_HANDLING ; flags 3
+	db DRAW_CARD ; SPECIAL_AI_HANDLING ; flags 3
 	db 0
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
@@ -1777,7 +1777,7 @@ WeepinbellCard:
 	db 20 ; damage
 	db DAMAGE_NORMAL ; category
 	dw AcidEffectCommands ; effect commands
-	db INFLICT_POISON ; flags 1
+	db INFLICT_BURN ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
@@ -1860,7 +1860,7 @@ VictreebelCard:
 	db 30 ; damage
 	db DAMAGE_NORMAL ; category
 	dw AcidicDrainEffectCommands ; effect commands
-	db INFLICT_POISON ; flags 1
+	db INFLICT_POISON | INFLICT_BURN ; flags 1
 	db HEAL_USER ; flags 2
 	db NONE ; flags 3
 	db 0
@@ -2383,7 +2383,7 @@ CharmanderCard:
 	db 20 ; damage
 	db DAMAGE_NORMAL ; category
 	dw InflictBurnIfDamagedEffectCommands ; effect commands
-	db INFLICT_POISON ; flags 1
+	db INFLICT_BURN ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 3
@@ -2522,7 +2522,7 @@ VulpixCard:
 	db 0 ; damage
 	db RESIDUAL ; category
 	dw InflictBurnEffectCommands ; effect commands
-	db INFLICT_POISON ; flags 1
+	db INFLICT_BURN ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
@@ -2651,7 +2651,7 @@ NinetalesLv35Card:
 	db 30 ; damage
 	db DAMAGE_NORMAL ; category
 	dw FireFangEffectCommands ; effect commands
-	db INFLICT_POISON ; flags 1
+	db INFLICT_BURN ; flags 1
 	db DISCARD_ENERGY ; flags 2
 	db NONE ; flags 3
 	db 3
@@ -2688,9 +2688,9 @@ GrowlitheCard:
 	db 0 ; damage
 	db RESIDUAL ; category
 	dw UltravisionEffectCommands ; effect commands
-	db DRAW_CARD ; flags 1
+	db NONE ; flags 1
 	db NONE ; flags 2
-	db NONE ; flags 3
+	db DRAW_CARD ; flags 3
 	db 0
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
@@ -3161,7 +3161,7 @@ MoltresLv35Card:
 	db 10 ; damage
 	db DAMAGE_X ; category
 	dw WildfireEffectCommands ; effect commands
-	db NONE ; flags 1
+	db INFLICT_BURN ; flags 1
 	db DISCARD_ENERGY | ATTACHED_ENERGY_BOOST ; flags 2
 	db NONE ; flags 3
 	db 0
@@ -3262,9 +3262,9 @@ SquirtleCard:
 	db 0 ; damage
 	db RESIDUAL ; category
 	dw WaterReserveEffectCommands ; effect commands
-	db DRAW_CARD ; flags 1
+	db NONE ; flags 1
 	db NONE ; flags 2
-	db NONE ; flags 3
+	db DRAW_CARD ; flags 3
 	db 0
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
@@ -3772,9 +3772,9 @@ SeelCard:
 	db 0 ; damage
 	db RESIDUAL ; category
 	dw UltravisionEffectCommands ; effect commands
-	db DRAW_CARD ; flags 1
+	db NONE ; flags 1
 	db NONE ; flags 2
-	db NONE ; flags 3
+	db DRAW_CARD ; flags 3
 	db 0
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
@@ -4130,7 +4130,7 @@ SeadraCard:
 	db 20 ; damage
 	db DAMAGE_NORMAL ; category
 	dw InflictBurnEffectCommands ; effect commands
-	db INFLICT_POISON ; flags 1
+	db INFLICT_BURN ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 0
@@ -4283,9 +4283,9 @@ StaryuCard:
 	db 0 ; damage
 	db RESIDUAL ; category
 	dw Draw2CardsEffectCommands ; effect commands
-	db DRAW_CARD ; flags 1
+	db NONE ; flags 1
 	db NONE ; flags 2
-	db SPECIAL_AI_HANDLING ; flags 3
+	db DRAW_CARD | SPECIAL_AI_HANDLING ; flags 3
 	db 0
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
@@ -4958,9 +4958,9 @@ PikachuLv12Card:
 	db 0 ; damage
 	db RESIDUAL ; category
 	dw RapidChargeEffectCommands ; effect commands
-	db DRAW_CARD ; flags 1
+	db NONE ; flags 1
 	db NONE ; flags 2
-	db NONE ; flags 3
+	db DRAW_CARD ; flags 3
 	db 0
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
@@ -5087,9 +5087,9 @@ FlyingPikachuCard:
 	db 10 ; damage
 	db DAMAGE_NORMAL ; category
 	dw DrawUntil5CardsInHandEffectCommands ; effect commands
-	db DRAW_CARD ; flags 1
+	db NONE ; flags 1
 	db NONE ; flags 2
-	db SPECIAL_AI_HANDLING ; flags 3
+	db DRAW_CARD | SPECIAL_AI_HANDLING ; flags 3
 	db 0
 	db ATK_ANIM_BOYFRIENDS ; animation
 
@@ -5124,9 +5124,9 @@ SurfingPikachuLv13Card:
 	db 0 ; damage
 	db POKE_POWER ; category
 	dw WaveRiderEffectCommands ; effect commands
-	db DRAW_CARD ; flags 1
+	db NONE ; flags 1
 	db NONE ; flags 2
-	db NONE ; flags 3
+	db DRAW_CARD ; flags 3
 	db 0
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
@@ -5331,9 +5331,9 @@ MagnemiteLv15Card:
 	db 0 ; damage
 	db RESIDUAL ; category
 	dw SearchingMagnetEffectCommands ; effect commands
-	db DRAW_CARD ; flags 1
+	db NONE ; flags 1
 	db NONE ; flags 2
-	db NONE ; flags 3
+	db DRAW_CARD ; flags 3
 	db 0
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
@@ -6044,9 +6044,9 @@ SandshrewCard:
 	db 0 ; damage
 	db RESIDUAL ; category
 	dw UltravisionEffectCommands ; effect commands
-	db DRAW_CARD ; flags 1
+	db NONE ; flags 1
 	db NONE ; flags 2
-	db NONE ; flags 3
+	db DRAW_CARD ; flags 3
 	db 0
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
@@ -6350,9 +6350,9 @@ MachopCard:
 	db 0 ; damage
 	db RESIDUAL ; category
 	dw BulkUpEffectCommands ; effect commands
-	db DRAW_CARD ; flags 1
+	db NONE ; flags 1
 	db NONE ; flags 2
-	db NONE ; flags 3 | SPECIAL_AI_HANDLING
+	db DRAW_CARD ; flags 3 | SPECIAL_AI_HANDLING
 	db 0
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
@@ -7891,9 +7891,9 @@ JynxCard:
 	db 10 ; damage
 	db DAMAGE_NORMAL ; category
 	dw DrawUntil5CardsInHandEffectCommands ; effect commands
-	db DRAW_CARD ; flags 1
+	db NONE ; flags 1
 	db NONE ; flags 2
-	db SPECIAL_AI_HANDLING ; flags 3
+	db DRAW_CARD | SPECIAL_AI_HANDLING ; flags 3
 	db 0
 	db ATK_ANIM_BOYFRIENDS ; animation
 
@@ -8146,9 +8146,9 @@ PidgeyCard:
 	db 0 ; damage
 	db RESIDUAL ; category
 	dw Draw2CardsEffectCommands ; effect commands
-	db DRAW_CARD ; flags 1
+	db NONE ; flags 1
 	db NONE ; flags 2
-	db SPECIAL_AI_HANDLING ; flags 3
+	db DRAW_CARD | SPECIAL_AI_HANDLING ; flags 3
 	db 0
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
@@ -8350,9 +8350,9 @@ RattataCard:
 	db 0 ; damage
 	db RESIDUAL ; category
 	dw SearchingMagnetEffectCommands ; effect commands
-	db DRAW_CARD ; flags 1
+	db NONE ; flags 1
 	db NONE ; flags 2
-	db NONE ; flags 3
+	db DRAW_CARD ; flags 3
 	db 0
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
@@ -8666,9 +8666,9 @@ JigglypuffCard:
 	db 0 ; damage
 	db RESIDUAL ; category
 	dw FriendshipSongEffectCommands ; effect commands
-	db DRAW_CARD ; flags 1
+	db NONE ; flags 1
 	db HEAL_USER ; flags 2
-	db NONE ; flags 3
+	db DRAW_CARD ; flags 3
 	db 1
 	db ATK_ANIM_LURE ; animation
 
@@ -8867,9 +8867,9 @@ MeowthLv15Card:
 	db 10 ; damage
 	db DAMAGE_NORMAL ; category
 	dw Draw1CardEffectCommands ; effect commands
-	db DRAW_CARD ; flags 1
+	db NONE ; flags 1
 	db NONE ; flags 2
-	db NONE ; flags 3
+	db DRAW_CARD ; flags 3
 	db 0
 	db ATK_ANIM_HIT ; animation
 
@@ -9034,9 +9034,9 @@ DoduoCard:
 	db 0 ; damage
 	db POKE_POWER ; category
 	dw FleetFootedEffectCommands ; effect commands
-	db DRAW_CARD ; flags 1
+	db NONE ; flags 1
 	db NONE ; flags 2
-	db NONE ; flags 3
+	db DRAW_CARD ; flags 3
 	db 0
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
