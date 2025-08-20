@@ -351,11 +351,11 @@ YourOrOppPlayAreaArrowPositions:
 YourOrOppPlayAreaArrowPositions_PlayerPokemon:
 ; x and y coordinates to draw byte
 	db  5,  5
-	db  0, 10
-	db  4, 10
-	db  8, 10
+	db  3, 10
+	db  6, 10
+	db  9, 10
 	db 12, 10
-	db 16, 10
+	db 15, 10
 	db $ff
 
 YourOrOppPlayAreaArrowPositions_PlayerHand:
@@ -369,10 +369,10 @@ YourOrOppPlayAreaArrowPositions_PlayerDiscardPile:
 YourOrOppPlayAreaArrowPositions_OpponentPokemon:
 	db  5, 7
 	db  0, 3
-	db  4, 3
-	db  8, 3
+	db  3, 3
+	db  6, 3
+	db  9, 3
 	db 12, 3
-	db 16, 3
 	db $ff
 
 YourOrOppPlayAreaArrowPositions_OpponentHand:
