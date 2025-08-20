@@ -1309,10 +1309,10 @@ PluckName:
 
 PluckDescription:
 	text "Before doing damage, discard any"
-	line "Trainer cards attached to the"
-	line "Defending Pokémon. If a card was"
-	line "discarded this way, double this"
-	line "attack's damage."
+	line "Tool cards attached to the Defending"
+	line "Pokémon. If a card was discarded"
+	line "this way, double this attack's"
+	line "damage."
 	done
 
 FleetFootedName:
