@@ -5884,12 +5884,12 @@ PrintPlayAreaCardInformation:
 	ld a, [wCurPlayAreaY]
 	inc a
 	ld c, a
-	ld b, 7
+	ld b, 6
 	call PrintPlayAreaCardAttachedEnergies
 	ld a, [wCurPlayAreaY]
 	inc a
 	ld c, a
-	ld b, 5
+	ld b, 4
 	ld a, SYM_E
 	call WriteByteToBGMap0
 	; print the HP bar
@@ -5909,10 +5909,10 @@ PrintPlayAreaCardInformation:
 	inc a
 	inc a
 	ld c, a
-	ld b, 7
+	ld b, 6
 	call BCCoordToBGMap0Address
 	ld hl, wDefaultText
-	ld b, 12
+	ld b, MAX_HP / 10
 	call SafeCopyDataHLtoDE
 	ret
 .zero_hp
