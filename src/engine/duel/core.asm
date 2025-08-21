@@ -565,7 +565,7 @@ OpenActivePokemonScreen:
 
 ; triggered by selecting the "Pkmn Power" item in the duel menu
 DuelMenu_PkmnPower:
-	call Func_6431
+	call DisplayPlayAreaScreenToUsePkmnPower
 	jp c, DuelMainInterface
 	call UseAttackOrPokemonPower
 	jp DuelMainInterface
@@ -5821,6 +5821,8 @@ PrintPlayAreaCardInformationAndLocation:
 ;	fallthrough
 
 ;  print a turn holder's play area Pokemon card's location (ACT/BPx indicator)
+; input:
+;   [wCurPlayAreaY]: y coordinate
 PrintPlayAreaCardLocation:
 	ld b, 1
 	; fallthrough
@@ -5828,6 +5830,7 @@ PrintPlayAreaCardLocation:
 ;  print a turn holder's play area Pokemon card's location (ACT/BPx indicator)
 ; input:
 ;   b: x coordinate
+;   [wCurPlayAreaY]: y coordinate
 PrintPlayAreaCardLocation_B:
 	; print the ACT/BPx indicator
 	ld a, [wCurPlayAreaSlot]
@@ -5845,7 +5848,6 @@ PrintPlayAreaCardLocation_B:
 	ld d, $0a
 .write_tiles
 	ld a, [wCurPlayAreaY]
-	; ld b, 1
 	ld c, a
 	ld a, [hli]
 	add d
@@ -5857,8 +5859,7 @@ PrintPlayAreaCardLocation_B:
 	inc c
 	ld a, [hli]
 	add d
-	call WriteByteToBGMap0
-	ret
+	jp WriteByteToBGMap0
 
 PlayAreaLocationTileNumbers:
 	db $e0, $e1, $e2, $00 ; ACT
@@ -5876,9 +5877,9 @@ PlayAreaLocationTileNumbers:
    ; wCurPlayAreaY: Y coordinate of where to print the card's information
 ; total space occupied is a rectangle of 20x3 tiles
 PrintPlayAreaCardInformation:
-	; print name, level, color, stage, status, pluspower/defender
+; print name, level, color, stage, status, pluspower/defender
 	call PrintPlayAreaCardHeader
-	; print the symbols of the attached energies
+; print the symbols of the attached energies
 	ld a, [wCurPlayAreaSlot]
 	ld e, a
 	ld a, [wCurPlayAreaY]
@@ -5892,10 +5893,11 @@ PrintPlayAreaCardInformation:
 	ld b, 4
 	ld a, SYM_E
 	call WriteByteToBGMap0
-	; print the HP bar
-	inc c
-	ld a, SYM_HP
-	call WriteByteToBGMap0
+; print the HP bar
+	; ld b, 4
+	; inc c
+	; ld a, SYM_HP
+	; call WriteByteToBGMap0
 	ld a, [wCurPlayAreaSlot]
 	add DUELVARS_ARENA_CARD_HP
 	call GetTurnDuelistVariable
@@ -5909,19 +5911,19 @@ PrintPlayAreaCardInformation:
 	inc a
 	inc a
 	ld c, a
-	ld b, 6
+	ld b, 4 ; 6
 	call BCCoordToBGMap0Address
 	ld hl, wDefaultText
 	ld b, MAX_HP / 10
 	call SafeCopyDataHLtoDE
 	ret
 .zero_hp
-	; if fainted, print "Knock Out" in place of the HP bar
+; if fainted, print "Knock Out" in place of the HP bar
 	ld a, [wCurPlayAreaY]
 	inc a
 	inc a
 	ld e, a
-	ld d, 7
+	ld d, 6 ; 7
 	ldtx hl, KnockOutText
 	jp InitTextPrinting_ProcessTextFromID
 
@@ -6203,11 +6205,11 @@ Func_6423:
 	jr nz, .asm_6428
 	ret
 
-Func_6431:
+DisplayPlayAreaScreenToUsePkmnPower:
 	xor a
 	ld [wSelectedDuelSubMenuItem], a
 
-Func_6435:
+.asm_6435
 	call Func_64b0
 	ld hl, PlayAreaScreenMenuParameters_ActivePokemonIncluded
 	ld a, [wSelectedDuelSubMenuItem]
@@ -6246,11 +6248,11 @@ Func_6435:
 	jr nc, .asm_648c
 	ldtx hl, PokemonPowerSelectNotRequiredText
 	call DrawWideTextBox_WaitForInput
-	jp Func_6435
+	jp .asm_6435
 .asm_648c
 	ldtx hl, UseThisPokemonPowerText
 	call YesOrNoMenuWithText
-	jp c, Func_6435
+	jp c, .asm_6435
 	ldh a, [hTempCardIndex_ff98]
 	ldh [hTemp_ffa0], a
 	or a
@@ -6265,7 +6267,7 @@ Func_6435:
 	call GetCardIDFromDeckIndex
 	call LoadCardDataToBuffer1_FromCardID
 	call OpenCardPage_FromCheckPlayArea
-	jp Func_6435
+	jp .asm_6435
 
 Func_64b0:
 	call ZeroObjectPositionsAndToggleOAMCopy
