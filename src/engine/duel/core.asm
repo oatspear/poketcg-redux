@@ -5894,10 +5894,11 @@ PrintPlayAreaCardInformation:
 	ld a, SYM_E
 	call WriteByteToBGMap0
 ; print the HP bar
-	; ld b, 4
-	; inc c
-	; ld a, SYM_HP
-	; call WriteByteToBGMap0
+IF MAX_HP < 150
+	inc c
+	ld a, SYM_HP
+	call WriteByteToBGMap0
+ENDC
 	ld a, [wCurPlayAreaSlot]
 	add DUELVARS_ARENA_CARD_HP
 	call GetTurnDuelistVariable
@@ -5911,7 +5912,11 @@ PrintPlayAreaCardInformation:
 	inc a
 	inc a
 	ld c, a
-	ld b, 4 ; 6
+IF MAX_HP < 150
+	ld b, 6
+ELSE
+	ld b, 4
+ENDC
 	call BCCoordToBGMap0Address
 	ld hl, wDefaultText
 	ld b, MAX_HP / 10
@@ -5923,7 +5928,7 @@ PrintPlayAreaCardInformation:
 	inc a
 	inc a
 	ld e, a
-	ld d, 6 ; 7
+	ld d, 6
 	ldtx hl, KnockOutText
 	jp InitTextPrinting_ProcessTextFromID
 
