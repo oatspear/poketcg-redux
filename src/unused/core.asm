@@ -567,7 +567,7 @@ OpenActivePokemonScreen:
 
 ; triggered by selecting the "Pkmn Power" item in the duel menu
 DuelMenu_PkmnPower:
-	call Func_6431
+	call DisplayPlayAreaScreenToUsePkmnPower
 	jp c, DuelMainInterface
 	call UseAttackOrPokemonPower
 	jp DuelMainInterface
@@ -6048,11 +6048,11 @@ Func_6423:
 	jr nz, .asm_6428
 	ret
 
-Func_6431:
+DisplayPlayAreaScreenToUsePkmnPower:
 	xor a
 	ld [wSelectedDuelSubMenuItem], a
 
-Func_6435:
+.asm_6435
 	call Func_64b0
 	ld hl, PlayAreaScreenMenuParameters_ActivePokemonIncluded
 	ld a, [wSelectedDuelSubMenuItem]
@@ -6091,11 +6091,11 @@ Func_6435:
 	jr nc, .asm_648c
 	ldtx hl, PokemonPowerSelectNotRequiredText
 	call DrawWideTextBox_WaitForInput
-	jp Func_6435
+	jp .asm_6435
 .asm_648c
 	ldtx hl, UseThisPokemonPowerText
 	call YesOrNoMenuWithText
-	jp c, Func_6435
+	jp c, .asm_6435
 	ldh a, [hTempCardIndex_ff98]
 	ldh [hTemp_ffa0], a
 	or a
@@ -6110,7 +6110,7 @@ Func_6435:
 	call GetCardIDFromDeckIndex
 	call LoadCardDataToBuffer1_FromCardID
 	call OpenCardPage_FromCheckPlayArea
-	jp Func_6435
+	jp .asm_6435
 
 Func_64b0:
 	call ZeroObjectPositionsAndToggleOAMCopy
