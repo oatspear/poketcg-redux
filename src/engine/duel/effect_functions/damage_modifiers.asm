@@ -69,14 +69,26 @@ Steamroller_AIEffect:
 	jp SetDefiniteAIDamage
 
 
+; 10 extra damage for each Water Energy
+HydroPump_DamageBoostEffect:
+  call GetNumAttachedWaterEnergy
+	call ATimes10
+	jp AddToDamage
+
+HydroPump_AIEffect:
+  call HydroPump_DamageBoostEffect
+	jp SetDefiniteAIDamage
+
+
 ; 20 extra damage for each Water Energy
-HydroPumpEffect:
+HydroCannon_DamageBoostEffect:
   call GetNumAttachedWaterEnergy
 	add a  ; x2
 	call ATimes10
-	; call AddToDamage ; add 10 * a to damage
-	call SetDefiniteDamage ; damage = 20 * Water Energy
-; set attack damage
+	jp AddToDamage
+
+HydroCannon_AIEffect:
+  call HydroCannon_DamageBoostEffect
 	jp SetDefiniteAIDamage
 
 

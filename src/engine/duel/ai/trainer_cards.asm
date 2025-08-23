@@ -2077,7 +2077,11 @@ AIDecide_ProfessorOak:
 	jr c, .check_hand
 
 ; no Neutralizing Gas in Play Area
+IF BLASTOISE_VARIANT == 2
+	ld a, BLASTOISE
+ELSE
 	ld a, WARTORTLE
+ENDC
 	call GetFirstPokemonWithAvailablePower
 	jr nc, .check_hand
 

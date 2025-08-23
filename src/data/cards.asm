@@ -1161,60 +1161,7 @@ NidokingCard:
 	tx NidokingDescription ; description
 	db 0
 
-ZubatCard:
-	db TYPE_PKMN_DARKNESS ; type
-	gfx ZubatCardGfx ; gfx
-	tx ZubatName ; name
-	db CIRCLE ; rarity
-	db LABORATORY | FOSSIL ; sets
-	db ZUBAT
-	db 40 ; hp
-	db BASIC ; stage
-	dw NONE ; pre-evo name
-
-	; (D) Astonish 10
-	; Choose a random card from your opponent's hand.
-	; Your opponent reveals that cards and shuffles it into their deck.
-
-	; attack 1
-	energy COLORLESS, 1 ; energies
-	tx SupersonicName ; name
-	tx InflictConfusionDescription ; description
-	dw NONE ; description (cont)
-	db 0 ; damage
-	db RESIDUAL ; category
-	dw InflictConfusionEffectCommands ; effect commands
-	db INFLICT_CONFUSION ; flags 1
-	db NONE ; flags 2
-	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_SUPERSONIC ; animation
-
-	; attack 2
-	energy DARKNESS, 1, COLORLESS, 1 ; energies
-	tx SwarmName ; name
-	tx SwarmDescription ; description
-	tx SwarmDescriptionCont ; description (cont)
-	db 10 ; damage
-	db DAMAGE_PLUS ; category
-	dw SwarmEffectCommands ; effect commands
-	db NONE ; flags 1
-	db NONE ; flags 2
-	db NONE ; flags 3
-	db 3
-	db ATK_ANIM_HIT ; animation
-
-	db 0 ; retreat cost
-	db WR_LIGHTNING ; weakness
-	db WR_FIGHTING ; resistance
-	tx BatName ; category
-	db 41 ; Pokedex number
-	db 0
-	db 10 ; level
-	db 2, 7 ; length
-	dw 17 * 10 ; weight
-	tx ZubatDescription ; description
-	db 16
+INCLUDE "data/cards/zubat.asm"
 
 GolbatCard:
 	db TYPE_PKMN_DARKNESS ; type
@@ -2452,56 +2399,7 @@ CharmeleonCard:
 	tx CharmeleonDescription ; description
 	db 18
 
-CharizardCard:
-	db TYPE_PKMN_FIRE ; type
-	gfx CharizardCardGfx ; gfx
-	tx CharizardName ; name
-	db STAR ; rarity
-	db EVOLUTION | NONE ; sets
-	db CHARIZARD
-	db 110 ; hp
-	db STAGE2 ; stage
-	tx CharmeleonName ; pre-evo name
-
-	; attack 1
-	energy FIRE, 1, COLORLESS, 1 ; energies
-	tx HeatWaveName ; name
-	tx HeatWaveDescription ; description
-	dw NONE ; description (cont)
-	db 10 ; damage
-	db DAMAGE_NORMAL ; category
-	dw HeatWaveEffectCommands ; effect commands
-	db INFLICT_POISON ; flags 1
-	db NONE ; flags 2
-	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_BIG_FLAME ; animation
-
-	; attack 2
-	energy FIRE, 2, COLORLESS, 1 ; energies
-	tx FireBlastName ; name
-	tx Discard2EnergiesDescription ; description
-	dw NONE ; description (cont)
-	db 110 ; damage
-	db DAMAGE_NORMAL ; category
-	dw Discard2EnergiesEffectCommands ; effect commands
-	db NONE ; flags 1
-	db DISCARD_ENERGY ; flags 2
-	db NONE ; flags 3
-	db 6
-	db ATK_ANIM_FIRE_SPIN ; animation
-
-	db 2 ; retreat cost
-	db WR_WATER ; weakness
-	db WR_FIGHTING ; resistance
-	tx FlameName ; category
-	db 6 ; Pokedex number
-	db 0
-	db 76 ; level
-	db 5, 7 ; length
-	dw 200 * 10 ; weight
-	tx CharizardDescription ; description
-	db 0
+INCLUDE "data/cards/charizard.asm"
 
 VulpixCard:
 	db TYPE_PKMN_FIRE ; type
@@ -3345,56 +3243,7 @@ WartortleCard:
 	tx WartortleDescription ; description
 	db 18
 
-BlastoiseCard:
-	db TYPE_PKMN_WATER ; type
-	gfx BlastoiseCardGfx ; gfx
-	tx BlastoiseName ; name
-	db STAR ; rarity
-	db EVOLUTION | NONE ; sets
-	db BLASTOISE
-	db 110 ; hp
-	db STAGE2 ; stage
-	tx WartortleName ; pre-evo name
-
-	; attack 1
-	energy WATER, 2 ; energies
-	tx HydroPumpName ; name
-	tx HydroPumpDescription ; description
-	dw NONE ; description (cont)
-	db 20 ; damage
-	db DAMAGE_X ; category
-	dw HydroPumpEffectCommands ; effect commands
-	db NONE ; flags 1
-	db ATTACHED_ENERGY_BOOST ; flags 2
-	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_HYDRO_PUMP ; animation
-
-	; attack 2
-	energy WATER, 2, COLORLESS, 1 ; energies
-	tx AquaLauncherName ; name
-	tx AquaLauncherDescription ; description
-	tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
-	db 0 ; damage
-	db RESIDUAL ; category
-	dw AquaLauncherEffectCommands ; effect commands
-	db DAMAGE_TO_OPPONENT_BENCH ; flags 1
-	db NULLIFY_OR_WEAKEN_ATTACK ; flags 2
-	db NONE ; flags 3
-	db 3
-	db ATK_ANIM_PROTECT ; animation
-
-	db 2 ; retreat cost
-	db WR_LIGHTNING ; weakness
-	db NONE ; resistance
-	tx ShellfishName ; category
-	db 9 ; Pokedex number
-	db 0
-	db 52 ; level
-	db 5, 3 ; length
-	dw 189 * 10 ; weight
-	tx BlastoiseDescription ; description
-	db 0
+INCLUDE "data/cards/blastoise.asm"
 
 PsyduckCard:
 	db TYPE_PKMN_WATER ; type
@@ -9022,7 +8871,7 @@ DoduoCard:
 	db CIRCLE ; rarity
 	db LABORATORY | NONE ; sets
 	db DODUO
-	db 50 ; hp
+	db 140 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
 

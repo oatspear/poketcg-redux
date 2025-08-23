@@ -60,6 +60,10 @@ HandleDefenderDamageReduction_Abilities:
 	jp z, ReduceDamageBy20_DE ; Exoskeleton
 	cp KAKUNA
 	jp z, ReduceDamageBy20_DE ; Exoskeleton
+IF BLASTOISE_VARIANT == 1
+	cp BLASTOISE
+	jp z, ReduceDamageBy20_DE ; Solid Shell
+ENDC
 	cp CLOYSTER
 	jp z, ReduceDamageBy20_DE ; Exoskeleton
 	cp SHELLDER
@@ -1283,12 +1287,16 @@ UpdateSubstatusConditions_EndOfTurn:
 	; res ABILITY_FLAG_SWIFT_SWIM_F, [hl]
 	ret
 
-; return carry if turn holder has Wartortle and its Rain Dance Pkmn Power is active
+; return carry if turn holder has an active Rain Dance Pkmn Power
 IsRainDanceActive:
 	call ArePokemonPowersDisabled
 	ccf
-	ret nc ; return if no Pkmn Power-capable Wartortle found in turn holder's play area
+	ret nc ; Powers are disabled
+IF BLASTOISE_VARIANT == 2
+	ld a, BLASTOISE
+ELSE
 	ld a, WARTORTLE
+ENDC
 	jp GetFirstPokemonWithAvailablePower
 
 

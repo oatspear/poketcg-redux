@@ -1,5 +1,18 @@
 ;
 
+
+; 20 extra damage for each Water Energy
+HydroPumpEffect:
+  call GetNumAttachedWaterEnergy
+	add a  ; x2
+	call ATimes10
+	; call AddToDamage ; add 10 * a to damage
+	call SetDefiniteDamage ; damage = 20 * Water Energy
+; set attack damage
+	jp SetDefiniteAIDamage
+
+
+
 SwallowUp_DamageBoostEffect:
 	call CheckDefendingPokemonHasLessHp
 	ld a, 50

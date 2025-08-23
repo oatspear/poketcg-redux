@@ -792,8 +792,11 @@ PlayEnergyCard:
 	jp DuelMainInterface
 
 .rain_dance_active
+IF BLASTOISE_VARIANT == 2
+	call HasAlivePokemonInPlayArea
+ELSE
 	call HasAlivePokemonInBench
-	; call HasAlivePokemonInPlayArea
+ENDC
 	call OpenPlayAreaScreenForSelection ; choose card to play energy card on
 	jp c, DuelMainInterface ; exit if no card was chosen
 ; set rain dance played this turn

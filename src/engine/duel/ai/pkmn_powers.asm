@@ -1252,7 +1252,11 @@ HandleAIRainDanceEnergy:
 	call ArePokemonPowersDisabled
 	ret c  ; Pokémon Powers are disabled
 
+IF BLASTOISE_VARIANT == 2
+	ld a, BLASTOISE
+ELSE
 	ld a, WARTORTLE
+ENDC
 	call GetFirstPokemonWithAvailablePower
 	ret nc  ; no Power-capable Pokémon
 

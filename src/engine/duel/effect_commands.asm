@@ -427,9 +427,22 @@ RestEffectCommands:
 	db  $00
 
 HydroPumpEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, HydroPumpEffect
-	dbw EFFECTCMDTYPE_AI, HydroPumpEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, HydroPump_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AI, HydroPump_AIEffect
 	db  $00
+
+IF BLASTOISE_VARIANT == 2
+HydroCannonEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, HydroPump_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, ReduceDamageTakenBy20Effect
+	dbw EFFECTCMDTYPE_AI, HydroPump_AIEffect
+	db  $00
+ELSE
+HydroCannonEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, HydroCannon_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AI, HydroCannon_AIEffect
+	db  $00
+ENDC
 
 WaterGunEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, WaterGunEffect

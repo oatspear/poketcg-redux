@@ -187,6 +187,7 @@
 - Increased HP from 100 to 110.
 - **Relentless Flames**: removed.
 - **Fire Blast**: reduced damage from 120 to 110.
+- New attack: **Flame Cloak** (R): 20 damage; attach (R) from discard pile to self.
 - New attack: **Heat Wave** (R)(C): 10 damage; inflict Burn on all of the opponent's Pokémon.
 
 #### Rapidash
@@ -215,7 +216,12 @@
 
 #### Blastoise
 
-- **Hydro Pump**: cost increased from (W) to (WW).
+- Increased HP from 110 to 120.
+- **Hydro Pump**: cost increased from (W) to (CC).
+- **Hydro Pump**: base damage increased from zero to 10.
+- **Hydro Pump**: renamed to **Hydro Cannon**.
+- **Aqua Launcher**: removed.
+- New Poké-Body: **Solid Shell**: reduces all damage taken from attacks by 20.
 
 #### Kingler
 

@@ -289,16 +289,16 @@ RainDanceName:
 	done
 
 RainDanceDescription:
+	; text "As often as you like during your"
+	; line "turn, your may attach a Basic"
+	; line "<WATER> Energy card from your hand"
+	; line "to 1 of your Benched Pokémon."
+	; done
 	text "As often as you like during your"
 	line "turn, your may attach a Basic"
 	line "<WATER> Energy card from your hand"
-	line "to 1 of your Benched Pokémon."
+	line "to 1 of your Pokémon."
 	done
-;	text "You may attach 1 extra <WATER> Energy"
-;	line "to 1 of your Pokémon each turn."
-;	line "(This doesn't use up your 1 Energy"
-;	line "card attachment for the turn.)"
-;	done
 
 IcyWindName:
 	text "Icy Wind"
@@ -309,8 +309,19 @@ HydroPumpName:
 	done
 
 HydroPumpDescription:
-	text "This attack does 20 damage for each"
-	line "<WATER> Energy attached to this Pokémon."
+	text "This attack does 10 more damage for"
+	line "each <WATER> Energy attached to this"
+	line "Pokémon."
+	done
+
+HydroCannonName:
+	text "Hydro Cannon"
+	done
+
+HydroCannonDescription:
+	text "This attack does 20 more damage for"
+	line "each <WATER> Energy attached to this"
+	line "Pokémon."
 	done
 
 HeadacheName:
@@ -1446,6 +1457,10 @@ ClairvoyantSenseDescription:
 	line "hand to 1 of your Benched Pokémon."
 	line "If you attached Energy to a Pokémon"
 	line "in this way, draw 2 cards."
+	done
+
+SolidShellName:
+	text "Solid Shell"
 	done
 
 Exoskeleton10Description:

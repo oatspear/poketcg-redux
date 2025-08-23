@@ -2431,8 +2431,10 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer RainDanceName                                      ; 0x092f
 	textpointer RainDanceDescription                               ; 0x0930
 	textpointer IcyWindName
-	textpointer HydroPumpName                                      ; 0x0932
-	textpointer HydroPumpDescription                               ; 0x0933
+	textpointer HydroPumpName
+	textpointer HydroPumpDescription
+	textpointer HydroCannonName
+	textpointer HydroCannonDescription
 	textpointer HeadacheName                                       ; 0x0937
 	textpointer UnableToUseItemsDescription
 	textpointer HyperBeamName                                      ; 0x093d
@@ -2652,6 +2654,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer DragonArrowDescription
 	textpointer ClairvoyantSenseName
 	textpointer ClairvoyantSenseDescription
+	textpointer SolidShellName
 	textpointer Exoskeleton10Description
 	textpointer WaveSplashName
 	textpointer WaveSplashDescription
