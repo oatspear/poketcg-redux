@@ -2166,6 +2166,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PoliwhirlDescription
 	textpointer PoliwrathName
 	textpointer PoliwrathDescription
+	textpointer PolitoedName
+	textpointer PolitoedDescription
 	textpointer TentacoolName
 	textpointer TentacoolDescription
 	textpointer TentacruelName
@@ -2691,6 +2693,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer CounterDescription
 	textpointer HeatWaveName
 	textpointer HeatWaveDescription
+	textpointer PowerfulSplashName
+	textpointer PowerfulSplashDescription
 
 ; ------------------------------------------------------------------------------
 ; text12.asm

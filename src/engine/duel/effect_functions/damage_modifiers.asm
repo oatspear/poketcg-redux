@@ -458,6 +458,57 @@ Wildfire_AIEffect:
 	jp SetDefiniteAIDamage
 
 
+PowerfulSplash_DamageBoostEffect:
+	ld c, 0
+; search Play Area for Water Energy cards
+	ld a, DUELVARS_CARD_LOCATIONS
+	call GetTurnDuelistVariable
+.loop_deck
+	ld a, [hl]
+	and CARD_LOCATION_PLAY_AREA
+	jr z, .next
+	push hl
+	ld a, l
+	call GetCardIDFromDeckIndex  ; preserves bc
+	call GetCardType  ; preserves bc
+	pop hl
+	cp TYPE_ENERGY_WATER
+	jr nz, .next
+	inc c
+.next
+	inc l
+	ld a, l
+	cp DECK_SIZE
+	jr c, .loop_deck
+
+; count Water-type Pokémon on the Bench
+	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+	call GetTurnDuelistVariable
+	dec a
+	ld b, a  ; PLAY_AREA_* of the last Pokémon on the Bench
+	jr z, .tally
+.loop_bench
+	ld a, b
+	push bc
+	call GetPlayAreaCardColor
+	pop bc
+	cp WATER
+	jr nz, .next_bench
+	inc c
+.next_bench
+	dec b
+	jr nz, .loop_bench
+
+.tally
+	ld a, c
+	call ATimes10
+	jp AddToDamage
+
+PowerfulSplash_AIEffect:
+	call PowerfulSplash_DamageBoostEffect
+	jp SetDefiniteAIDamage
+
+
 ; ------------------------------------------------------------------------------
 ; Based on Trainer Cards
 ; ------------------------------------------------------------------------------

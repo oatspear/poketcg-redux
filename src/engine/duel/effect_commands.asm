@@ -426,6 +426,11 @@ RestEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Rest_HealEffect
 	db  $00
 
+PowerfulSplashEffectCommands:
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PowerfulSplash_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AI, PowerfulSplash_AIEffect
+	db  $00
+
 HydroPumpEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, HydroPump_DamageBoostEffect
 	dbw EFFECTCMDTYPE_AI, HydroPump_AIEffect

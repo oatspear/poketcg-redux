@@ -295,9 +295,9 @@ RainDanceDescription:
 	; line "to 1 of your Benched Pokémon."
 	; done
 	text "As often as you like during your"
-	line "turn, your may attach a Basic"
-	line "<WATER> Energy card from your hand"
-	line "to 1 of your Pokémon."
+	line "turn, your may attach a Basic <WATER>"
+	line "Energy card from your hand to 1 of"
+	line "your Pokémon."
 	done
 
 IcyWindName:
@@ -1643,4 +1643,15 @@ HeatWaveName:
 HeatWaveDescription:
 	text "Each of your opponent's Pokémon"
 	line "is now Burned."
+	done
+
+PowerfulSplashName:
+	text "Powerful Splash"
+	done
+
+PowerfulSplashDescription:
+	text "This attack does 10 more damage for"
+	line "each <WATER> Energy attached to each of"
+	line "your Pokémon and for each <WATER> Pokémon"
+	line "on your Bench."
 	done

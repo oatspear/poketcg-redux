@@ -43,6 +43,14 @@
 
 ### New Cards
 
+#### Politoed
+- Stage 2, 130 HP, Water Pokémon, evolves from Poliwhirl.
+- Weakness: Lightning.
+- Resistance: none.
+- Retreat Cost: 2.
+- Poké-Power: **Rain Dance**: you may attach any number of Water Energy from the hand on your turns.
+- Attack 2: **Powerful Splash** (WCC): 10 damage; +10 damage for each Water Energy on your Play Area and for each Water Pokémon on your Bench.
+
 #### X Attack
 
 - Pokémon Tool Trainer card.

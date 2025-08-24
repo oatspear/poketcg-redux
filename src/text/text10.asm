@@ -582,6 +582,16 @@ PoliwrathDescription:
 	line "overtakes the best human swimmers."
 	done
 
+PolitoedName:
+	text "Politoed"
+	done
+
+PolitoedDescription:
+	text "Whenever three or more of these get"
+	line "together, they sing in a loud voice"
+	line "that sounds like bellowing."
+	done
+
 TentacoolName:
 	text "Tentacool"
 	done

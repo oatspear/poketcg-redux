@@ -1735,10 +1735,6 @@ MoltresLv35CardGfx::
 
 SECTION "Card Gfx 4", ROMX
 
-MoltresLv37CardGfx::
-	INCBIN "gfx/cards/moltres2.2bpp"
-	INCBIN "gfx/cards/moltres2.pal"
-
 SquirtleCardGfx::
 	INCBIN "gfx/cards/squirtle.2bpp"
 	INCBIN "gfx/cards/squirtle.pal"
@@ -1770,6 +1766,10 @@ PoliwhirlCardGfx::
 PoliwrathCardGfx::
 	INCBIN "gfx/cards/poliwrath.2bpp"
 	INCBIN "gfx/cards/poliwrath.pal"
+
+PolitoedCardGfx::
+	INCBIN "gfx/cards/politoed.2bpp"
+	INCBIN "gfx/cards/politoed.pal"
 
 TentacoolCardGfx::
 	INCBIN "gfx/cards/tentacool.2bpp"
@@ -2250,16 +2250,20 @@ DragoniteLv45CardGfx::
 	INCBIN "gfx/cards/dragonite3.2bpp"
 	INCBIN "gfx/cards/dragonite3.pal"
 
+MoltresLv37CardGfx::
+	INCBIN "gfx/cards/moltres2.2bpp"
+	INCBIN "gfx/cards/moltres2.pal"
+
 ProfessorOakCardGfx::
 	INCBIN "gfx/cards/professoroak.2bpp"
 	INCBIN "gfx/cards/professoroak.pal"
 
+
+SECTION "Card Gfx 10", ROMX
+
 ImposterProfessorOakCardGfx::
 	INCBIN "gfx/cards/imposterprofessoroak.2bpp"
 	INCBIN "gfx/cards/imposterprofessoroak.pal"
-
-
-SECTION "Card Gfx 10", ROMX
 
 BillCardGfx::
 	INCBIN "gfx/cards/bill.2bpp"
@@ -2341,12 +2345,12 @@ ItemFinderCardGfx::
 	INCBIN "gfx/cards/itemfinder.2bpp"
 	INCBIN "gfx/cards/itemfinder.pal"
 
+
+SECTION "Card Gfx 11", ROMX
+
 DevolutionSprayCardGfx::
 	INCBIN "gfx/cards/devolutionspray.2bpp"
 	INCBIN "gfx/cards/devolutionspray.pal"
-
-
-SECTION "Card Gfx 11", ROMX
 
 UltraBallCardGfx::
 	INCBIN "gfx/cards/ultraball.2bpp"
@@ -2432,11 +2436,11 @@ CeruleanGymCardGfx::
 	INCBIN "gfx/cards/ceruleangym.2bpp"
 	INCBIN "gfx/cards/ceruleangym.pal"
 
+SECTION "Card Gfx 12", ROMX
+
 VermilionGymCardGfx::
 	INCBIN "gfx/cards/vermiliongym.2bpp"
 	INCBIN "gfx/cards/vermiliongym.pal"
-
-SECTION "Card Gfx 12", ROMX
 
 CeladonGymCardGfx::
 	INCBIN "gfx/cards/celadongym.2bpp"
