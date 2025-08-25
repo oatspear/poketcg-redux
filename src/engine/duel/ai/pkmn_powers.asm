@@ -1252,6 +1252,11 @@ HandleAIRainDanceEnergy:
 	call ArePokemonPowersDisabled
 	ret c  ; Pokémon Powers are disabled
 
+IF POLITOED_VARIANT == 0
+	ld a, POLITOED
+	call GetFirstPokemonWithAvailablePower
+	jr c, .got_rain_dance
+ENDC
 IF BLASTOISE_VARIANT == 2
 	ld a, BLASTOISE
 ELSE
@@ -1261,6 +1266,7 @@ ENDC
 	ret nc  ; no Power-capable Pokémon
 
 ; store the Pokémon's Play Area location and deck index
+.got_rain_dance
 	ld [wAIPokemonPowerPlayAreaLocation], a
 	add DUELVARS_ARENA_CARD
 	call GetTurnDuelistVariable

@@ -792,7 +792,7 @@ PlayEnergyCard:
 	jp DuelMainInterface
 
 .rain_dance_active
-IF BLASTOISE_VARIANT == 2
+IF RAIN_DANCE_ATTACHES_TO_ACTIVE
 	call HasAlivePokemonInPlayArea
 ELSE
 	call HasAlivePokemonInBench

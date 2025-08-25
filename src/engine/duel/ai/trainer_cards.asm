@@ -2077,6 +2077,11 @@ AIDecide_ProfessorOak:
 	jr c, .check_hand
 
 ; no Neutralizing Gas in Play Area
+IF POLITOED_VARIANT == 0
+	ld a, POLITOED
+	call GetFirstPokemonWithAvailablePower
+	jr c, .got_rain_dance
+ENDC
 IF BLASTOISE_VARIANT == 2
 	ld a, BLASTOISE
 ELSE
@@ -2086,6 +2091,7 @@ ENDC
 	jr nc, .check_hand
 
 ; at least one Wartortle in AI Play Area
+.got_rain_dance
 	ld a, WATER_ENERGY
 	farcall LookForCardIDInHand
 	jr nc, .check_hand

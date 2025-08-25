@@ -1292,6 +1292,11 @@ IsRainDanceActive:
 	call ArePokemonPowersDisabled
 	ccf
 	ret nc ; Powers are disabled
+IF POLITOED_VARIANT == 0
+	ld a, POLITOED
+	call GetFirstPokemonWithAvailablePower
+	ret c
+ENDC
 IF BLASTOISE_VARIANT == 2
 	ld a, BLASTOISE
 ELSE
