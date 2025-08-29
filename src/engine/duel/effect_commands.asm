@@ -844,9 +844,9 @@ MischiefEffectCommands:
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Mischief_PlayerSelectEffect
 	db  $00
 
-CurseEffectCommands:
+SurpriseBiteEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, CheckPokemonPowerCanBeUsed_StoreTrigger
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Curse_DamageEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SurpriseBite_DamageEffect
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, DamageTargetPokemon_PlayerSelectEffect
 	db  $00
 

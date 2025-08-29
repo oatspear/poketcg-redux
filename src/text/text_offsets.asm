@@ -2564,8 +2564,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer DreamEaterDescription
 	textpointer MischiefName
 	textpointer MischiefDescription
-	textpointer CurseName
-	textpointer CurseDescription
 	textpointer PainAmplifierName                                  ; 0x0aa6
 	textpointer PainAmplifierDescription                           ; 0x0aa7
 	textpointer BenchBarrierName
@@ -2981,6 +2979,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer VoltSwitchName
 	textpointer VoltSwitchDescription
 	textpointer SurpriseBiteName
+	textpointer SurpriseBiteDescription
 	textpointer PhoenixFireName
 	textpointer ConcentrationName
 	textpointer LuckyFindName

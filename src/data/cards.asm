@@ -1178,11 +1178,11 @@ GolbatCard:
 	; attack 1
 	energy 0 ; energies
 	tx SurpriseBiteName ; name
-	tx CurseDescription ; description
+	tx SurpriseBiteDescription ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKE_POWER ; category
-	dw CurseEffectCommands ; effect commands
+	dw SurpriseBiteEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -7431,12 +7431,12 @@ HaunterLv17Card:
 
 	; attack 1
 	energy 0 ; energies
-	tx CurseName ; name
-	tx CurseDescription ; description
+	tx FixmeText ; name
+	tx FixmeText ; description
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKE_POWER ; category
-	dw CurseEffectCommands ; effect commands
+	dw PassivePowerEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3

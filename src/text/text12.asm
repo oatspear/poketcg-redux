@@ -1420,6 +1420,12 @@ SurpriseBiteName:
 	text "Surprise Bite"
 	done
 
+SurpriseBiteDescription:
+	text "Once during your turn, you may"
+	line "put 1 damage counter on 1 of"
+	line "your opponent's Pokémon."
+	done
+
 PhoenixFireName:
 	text "Phoenix Fire"
 	done

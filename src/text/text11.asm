@@ -983,16 +983,6 @@ MischiefDescription:
 	line "your opponent's Pokémon."
 	done
 
-CurseName:
-	text "Curse"
-	done
-
-CurseDescription:
-	text "Once during your turn, you may"
-	line "put 1 damage counter on 1 of"
-	line "your opponent's Pokémon."
-	done
-
 PainAmplifierName:
 	text "Pain Amplifier"
 	done

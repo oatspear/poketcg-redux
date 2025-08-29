@@ -865,11 +865,11 @@ Mischief_DamageTransferEffect:
 	ld e, a   ; location
 	ld d, 10  ; damage
 	call HealPlayAreaCardHP
-	call Curse_DamageEffect
+	call SurpriseBite_DamageEffect
 	jp ExchangeRNG
 
 
-Curse_DamageEffect:
+SurpriseBite_DamageEffect:
 	call SetUsedPokemonPowerThisTurn_RestoreTrigger
 	; fallthrough
 
