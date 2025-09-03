@@ -963,33 +963,11 @@ ConvertSpecialTrainerCardToPokemon:
 	ld a, d
 	cp $00 ; MYSTERIOUS_FOSSIL >> 8
 	ret nz
-.start_ram_data_overwrite
 	push de
-	ld [hl], TYPE_PKMN_COLORLESS
-	ld bc, CARD_DATA_HP
-	add hl, bc
-	ld de, .trainer_to_pkmn_data
-	ld c, CARD_DATA_UNKNOWN2 - CARD_DATA_HP
-.loop
-	ld a, [de]
-	inc de
-	ld [hli], a
-	dec c
-	jr nz, .loop
+	ld de, MYSTERIOUS_FOSSIL_PKMN
+	call LoadSpecialCardDataToHL_FromAltCardID
 	pop de
 	ret
-
-.trainer_to_pkmn_data
-	db 20                 ; CARD_DATA_HP
-	ds $07                ; CARD_DATA_ATTACK1_NAME - (CARD_DATA_HP + 1)
-	tx DiscardName        ; CARD_DATA_ATTACK1_NAME
-	tx DiscardDescription ; CARD_DATA_ATTACK1_DESCRIPTION
-	ds $03                ; CARD_DATA_ATTACK1_DESCRIPTION (cont), CARD_DATA_ATTACK1_DAMAGE
-	db POKE_POWER         ; CARD_DATA_ATTACK1_CATEGORY
-	dw TrainerCardAsPokemonEffectCommands ; CARD_DATA_ATTACK1_EFFECT_COMMANDS
-	ds $18                ; CARD_DATA_RETREAT_COST - (CARD_DATA_ATTACK1_EFFECT_COMMANDS + 2)
-	db UNABLE_RETREAT     ; CARD_DATA_RETREAT_COST
-	ds $0d                ; PKMN_CARD_DATA_LENGTH - (CARD_DATA_RETREAT_COST + 1)
 
 
 ; input:

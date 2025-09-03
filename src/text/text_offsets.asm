@@ -2358,6 +2358,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer DragonairDescription
 	textpointer DragoniteName
 	textpointer DragoniteDescription
+	textpointer MysteriousFossilPokemonDescription
 
 ; ------------------------------------------------------------------------------
 ; text11.asm
@@ -2469,7 +2470,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer BlizzardName                                       ; unused
 	textpointer DamageOpponentBench10Description
 	textpointer OnlyWorksOnEvolvedPokemonText
-	; textpointer GnawName
 	textpointer SkillDiveName
 	textpointer PoisonPaybackName
 	textpointer PoisonPaybackDescription

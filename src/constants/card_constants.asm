@@ -247,6 +247,7 @@ DEF TOOL_IDS_END      EQU STADIUM_IDS_START - 1
 ; special cards and alternative forms
 	const_def 1
 	const GRASSY_TERRAIN              ; $01
+	const MYSTERIOUS_FOSSIL_PKMN      ; $02
 DEF NUM_CARDS_ALT EQU const_value - 1
 
 ; card variants

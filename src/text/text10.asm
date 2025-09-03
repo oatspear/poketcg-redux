@@ -1544,3 +1544,9 @@ DragoniteDescription:
 	line "Pokémon. Its intelligence is said"
 	line "to match that of humans."
 	done
+
+MysteriousFossilPokemonDescription:
+	text "A fossil from a Pokémon that is"
+	line "thought to be extinct. Its true"
+	line "form is unknown."
+	done
