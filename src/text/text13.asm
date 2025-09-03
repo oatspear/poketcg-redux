@@ -261,6 +261,24 @@ SeepingToxinsDescription:
 	line "opponent's Poisoned Benched Pokémon."
 	done
 
+GrassyTerrainName:
+	text "Grassy Terrain"
+	done
+
+GrassyTerrainDescription:
+	text "Remove a <GRASS> Energy from this"
+	line "Pokémon and play it as if it was a"
+	line "Stadium card that reads:"
+	done
+
+GrassyTerrainStadiumDescription:
+	text "At the end of each turn, heal 10"
+	line "damage from each Active Pokémon."
+	line "The attacks of any <GRASS> Pokémon do 10"
+	line "more damage to the opponent's Active"
+	line "Pokémon."
+	done
+
 FixmeText:
 	text "FIXME"
 	done

@@ -2199,7 +2199,7 @@ WeezingCard:
 
 TangelaLv12Card:
 	db TYPE_PKMN_GRASS ; type
-	gfx TangelaLv12CardGfx ; gfx
+	gfx TangelaCardGfx ; gfx
 	tx TangelaName ; name
 	db CIRCLE ; rarity
 	db COLOSSEUM | GB ; sets

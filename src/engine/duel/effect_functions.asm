@@ -247,7 +247,6 @@ SyncShuffleDeck:
 
 INCLUDE "engine/duel/effect_functions/checks.asm"
 
-
 HyperHypnosis_PreconditionCheck:
 	call CheckPokemonPowerCanBeUsed_StoreTrigger
 	ret c
@@ -6427,6 +6426,14 @@ PokemonTool_AttachToolEffect:
 	ret
 
 
+GrassyTerrain_PreconditionCheck:
+	call CreateListOfGrassEnergyAttachedToArena
+	ldtx hl, NoGrassEnergyText
+	ret c
+	ld a, GRASS_ENERGY
+	jr _CheckStadiumCardAlreadyInPlay
+
+
 ; 1. A player may play only 1 Stadium card during their turn.
 ; 2. If a Stadium card is already in play, any Stadium cards
 ; 	 with the same name cannot be played.
@@ -6435,8 +6442,10 @@ StadiumCard_PreconditionCheck:
 	and PLAYED_STADIUM_THIS_TURN
 	scf
 	ret nz  ; already played
-
 	ld a, [wLoadedCard1ID]
+	; fallthrough to _CheckStadiumCardAlreadyInPlay
+
+_CheckStadiumCardAlreadyInPlay:
 	ld e, a
 	ld d, 0
 	call CheckStadiumIDInPlayArea
@@ -6445,13 +6454,27 @@ StadiumCard_PreconditionCheck:
 	ret
 
 
+GrassyTerrainEffect:
+	call CreateListOfGrassEnergyAttachedToArena
+	ret c  ; no Grass Energy
+	ld a, [wDuelTempList]
+	jr _PutStadiumCardInPlayEffect
+
+
 StadiumCard_PutInPlayEffect:
+	ldh a, [hTempCardIndex_ff9f]
+	call RemoveCardFromHand  ; preserves af, hl, bc, de
+	; fallthrough to _PutStadiumCardInPlayEffect
+
+; input:
+;   a: deck index of the Energy card
+_PutStadiumCardInPlayEffect:
+	push af
 ; discard previous Stadium, if any
 	call PutStadiumCardInDiscardPile  ; sets hl to duel var
 ; store the Stadium and put it in play
-	ldh a, [hTempCardIndex_ff9f]
+	pop af
 	ld [hl], a
-	call RemoveCardFromHand  ; preserves af, hl, bc, de
 	call GetTurnDuelistVariable  ; preserves bc, de
 	ld [hl], CARD_LOCATION_STADIUM
 ; discard previous opponent Stadium, if any

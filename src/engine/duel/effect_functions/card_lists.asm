@@ -351,6 +351,12 @@ CreatePokemonAndBasicEnergyCardListFromDiscardPile:
 	ret
 
 
+; creates in wDuelTempList list of attached Grass Energy cards
+; that are attached to the Turn Duelist's Arena card.
+CreateListOfGrassEnergyAttachedToArena:
+	ld a, TYPE_ENERGY_GRASS
+	jr CreateListOfMatchingEnergyAttachedToArena
+
 ; creates in wDuelTempList list of attached Psychic Energy cards
 ; that are attached to the Turn Duelist's Arena card.
 CreateListOfPsychicEnergyAttachedToArena:

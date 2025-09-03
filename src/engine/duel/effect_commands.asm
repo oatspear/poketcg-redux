@@ -2006,3 +2006,8 @@ StadiumCardEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, StadiumCard_PreconditionCheck
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, StadiumCard_PutInPlayEffect
 	db  $00
+
+GrassyTerrainEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, GrassyTerrain_PreconditionCheck
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, GrassyTerrainEffect
+	db  $00

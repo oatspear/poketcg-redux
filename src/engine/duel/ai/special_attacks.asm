@@ -62,7 +62,7 @@ HandleSpecialAIAttacks:
 	cp EXEGGCUTE
 	jp z, .NutritionSupport
 	cp TANGELA
-	jp z, .Ingrain
+	jp z, .EnergyToStadium
 	cp DRATINI
 	jp z, .DragonDance
 	cp HORSEA
@@ -257,12 +257,20 @@ HandleSpecialAIAttacks:
 ; 	ld a, $82
 ; 	ret
 
-.Ingrain:
-	call CreateEnergyCardListFromHand
-	ret nc
-; encourage the attack if there are no energies in hand
+.EnergyToStadium:
+	ld a, DUELVARS_STADIUM_CARD
+	call GetTurnDuelistVariable
+	cp $ff
+	jp nz, .zero_score  ; already has a Stadium
 	ld a, $82
 	ret
+
+; .Ingrain:
+; 	call CreateEnergyCardListFromHand
+; 	ret nc
+; ; encourage the attack if there are no energies in hand
+; 	ld a, $82
+; 	ret
 
 .Mend:
 	ld e, FIGHTING_ENERGY

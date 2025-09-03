@@ -162,8 +162,7 @@ OpenInPlayAreaScreen:
 	cp -1
 	ret z
 
-	call GetCardIDFromDeckIndex
-	call LoadCardDataToBuffer1_FromCardID
+	call PlayAreaScreen_LoadCardDataToBuffer1_FromDeckIndex
 	jr .display_card_name
 
 .opponent_side
@@ -175,8 +174,7 @@ OpenInPlayAreaScreen:
 	ret z
 
 	call SwapTurn
-	call GetCardIDFromDeckIndex
-	call LoadCardDataToBuffer1_FromCardID
+	call PlayAreaScreen_LoadCardDataToBuffer1_FromDeckIndex
 	call SwapTurn
 
 .display_card_name
@@ -325,8 +323,7 @@ OpenInPlayAreaScreen_TurnHolderStadium:
 	call GetTurnDuelistVariable
 	cp $ff
 	ret z
-	call GetCardIDFromDeckIndex
-	call LoadCardDataToBuffer1_FromCardID
+	call PlayAreaScreen_LoadCardDataToBuffer1_FromDeckIndex
 	xor a
 	ld [wCurPlayAreaY], a
 	bank1call OpenCardPage_FromCheckPlayArea
@@ -336,6 +333,16 @@ OpenInPlayAreaScreen_NonTurnHolderStadium:
 	call SwapTurn
 	call OpenInPlayAreaScreen_TurnHolderStadium
 	jp SwapTurn
+
+
+PlayAreaScreen_LoadCardDataToBuffer1_FromDeckIndex:
+	push af
+	call GetCardIDFromDeckIndex
+	call LoadCardDataToBuffer1_FromCardID
+	pop af
+	ld hl, wLoadedCard1
+	jp ConvertSpecialCardsToAltForms
+
 
 OpenInPlayAreaScreen_TextTable:
 ; note that for bench slots, the entries are

@@ -80,6 +80,31 @@ LoadCardDataToHL_FromCardID:
 	pop hl
 	ret
 
+LoadSpecialCardDataToHL_FromAltCardID:
+	push hl
+	push de
+	push bc
+	push hl
+	call GetAltCardPointer
+	pop de
+	jr c, .done
+	ld a, BANK(AltCardPointers)
+	call BankpushROM2
+	ld b, PKMN_CARD_DATA_LENGTH
+.copy_card_data_loop
+	ld a, [hli]
+	ld [de], a
+	inc de
+	dec b
+	jr nz, .copy_card_data_loop
+	call BankpopROM
+	or a
+.done
+	pop bc
+	pop de
+	pop hl
+	ret
+
 ; return in a the type (TYPE_* constant) of the card with id at e
 GetCardType:
 	push hl
@@ -156,6 +181,36 @@ GetCardPointer:
 	ccf
 	jr c, .out_of_bounds
 	ld a, BANK(CardPointers)
+	call BankpushROM2
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	call BankpopROM
+	or a
+.out_of_bounds
+	pop bc
+	pop de
+	ret
+
+; return at hl the pointer to the data of the card with id at e
+; return carry if e was out of bounds, so no pointer was returned
+GetAltCardPointer:
+	push de
+	push bc
+	ld l, e
+	ld h, $0
+	add hl, hl
+	ld bc, AltCardPointers
+	add hl, bc
+	ld a, h
+	cp HIGH(AltCardPointers + 2 + (2 * NUM_CARDS_ALT))
+	jr nz, .nz
+	ld a, l
+	cp LOW(AltCardPointers + 2 + (2 * NUM_CARDS_ALT))
+.nz
+	ccf
+	jr c, .out_of_bounds
+	ld a, BANK(AltCardPointers)
 	call BankpushROM2
 	ld a, [hli]
 	ld h, [hl]

@@ -84,28 +84,30 @@ ROMX $0c
 ROMX $0d
 	"Cards"
 ROMX $0e
-	"Text 1"
+	"Cards 2"
 ROMX $0f
-	"Text 2"
+	"Text 1"
 ROMX $10
-	"Text 3"
+	"Text 2"
 ROMX $11
-	"Text 4"
+	"Text 3"
 ROMX $12
-	"Text 5"
+	"Text 4"
 ROMX $13
-	"Text 6"
+	"Text 5"
 ROMX $14
-	"Text 7"
+	"Text 6"
 ROMX $15
-	"Text 8"
+	"Text 7"
 ROMX $16
-	"Text 9"
+	"Text 8"
 ROMX $17
-	"Text 10"
+	"Text 9"
 ROMX $18
-	"Text 11"
+	"Text 10"
 ROMX $19
+	"Text 11"
+ROMX $1a
 	"Text 12"
 ROMX $1c
 	"SGB"

@@ -45,7 +45,7 @@ CardPointers:
 	dw ExeggutorCard
 	dw KoffingCard
 	dw WeezingCard
-	dw TangelaLv12Card
+	dw TangelaCard
 	dw ScytherCard
 	dw PinsirCard
 	dw CharmanderCard
@@ -2145,9 +2145,9 @@ WeezingCard:
 	tx WeezingDescription ; description
 	db 0
 
-TangelaLv12Card:
+TangelaCard:
 	db TYPE_PKMN_GRASS ; type
-	gfx TangelaLv12CardGfx ; gfx
+	gfx TangelaCardGfx ; gfx
 	tx TangelaName ; name
 	db CIRCLE ; rarity
 	db COLOSSEUM | GB ; sets
@@ -2157,13 +2157,13 @@ TangelaLv12Card:
 	dw NONE ; pre-evo name
 
 	; attack 1
-	energy COLORLESS, 1 ; energies
-	tx IngrainName ; name
-	tx Retrieve2BasicEnergiesDescription ; description
-	tx IngrainDescriptionCont ; description (cont)
+	energy GRASS, 1 ; energies
+	tx GrassyTerrainName ; name
+	tx GrassyTerrainDescription ; description
+	tx GrassyTerrainStadiumDescription ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category
-	dw IngrainEffectCommands ; effect commands
+	dw GrassyTerrainEffectCommands ; effect commands
 	db NONE ; flags 1
 	db HEAL_USER ; flags 2
 	db SPECIAL_AI_HANDLING ; flags 3

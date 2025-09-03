@@ -893,7 +893,7 @@ LoadCardDataToBuffer1_FromDeckIndex:
 	call LoadCardDataToBuffer1_FromCardID
 	pop af
 	ld hl, wLoadedCard1
-	call ConvertSpecialTrainerCardToPokemon
+	call ConvertSpecialCardsToAltForms
 	ld a, e
 	pop bc
 	pop de
@@ -910,7 +910,7 @@ LoadCardDataToBuffer2_FromDeckIndex:
 	call LoadCardDataToBuffer2_FromCardID
 	pop af
 	ld hl, wLoadedCard2
-	call ConvertSpecialTrainerCardToPokemon
+	call ConvertSpecialCardsToAltForms
 	ld a, e
 	pop bc
 	pop de
@@ -920,22 +920,44 @@ LoadCardDataToBuffer2_FromDeckIndex:
 
 ; given the deck index of a turn holder's card in register a,
 ; and a pointer in hl to the wLoadedCard* buffer where the card data is loaded,
-; check if the card is Mysterious Fossil, and, if so, convert it
-; to a Pokemon card in the wLoadedCard* buffer, using .trainer_to_pkmn_data.
-ConvertSpecialTrainerCardToPokemon:
+; check if the card has an alternative form, and, if so, convert it
+; to the alternative card in the wLoadedCard* buffer.
+; input:
+;   a: deck index
+;   hl: wLoadedCard* buffer
+;   de: card ID
+ConvertSpecialCardsToAltForms:
 	ld c, a
 	ld a, [hl]
 	cp TYPE_TRAINER
-	ret nz  ; return if the card is not Item TRAINER type
-	push hl
-	ldh a, [hWhoseTurn]
-	ld h, a
-	ld l, c
-	ld a, [hl]
-	and CARD_LOCATION_PLAY_AREA
-	pop hl
-	ret z ; return if the card is not in the arena or bench
+	jr z, ConvertSpecialTrainerCardToPokemon
+	cp TYPE_ENERGY
+	ret c  ; not a special card
+
+; energy cards
+	ld a, c
+	call IsCardInStadiumArea
+	ret z  ; not in the stadium area
 	ld a, e
+	cp GRASS_ENERGY
+	ret nz
+	push de
+	ld de, GRASSY_TERRAIN
+	call LoadSpecialCardDataToHL_FromAltCardID
+	pop de
+	ret
+
+
+
+; given the deck index of a turn holder's card in register a,
+; and a pointer in hl to the wLoadedCard* buffer where the card data is loaded,
+; check if the card is Mysterious Fossil, and, if so, convert it
+; to a Pokemon card in the wLoadedCard* buffer, using .trainer_to_pkmn_data.
+ConvertSpecialTrainerCardToPokemon:
+	ld a, c  ; deck index
+	call IsCardInPlayArea
+	ret z  ; not in the arena or bench
+	ld a, e  ; card ID
 	cp MYSTERIOUS_FOSSIL
 	ret nz
 	ld a, d
@@ -968,6 +990,36 @@ ConvertSpecialTrainerCardToPokemon:
 	ds $18                ; CARD_DATA_RETREAT_COST - (CARD_DATA_ATTACK1_EFFECT_COMMANDS + 2)
 	db UNABLE_RETREAT     ; CARD_DATA_RETREAT_COST
 	ds $0d                ; PKMN_CARD_DATA_LENGTH - (CARD_DATA_RETREAT_COST + 1)
+
+
+; input:
+;   a: deck index of the card to check
+; output:
+;   z: set if not in play area
+IsCardInPlayArea:
+	push hl
+	ld l, a
+	ldh a, [hWhoseTurn]
+	ld h, a
+	ld a, [hl]
+	and CARD_LOCATION_PLAY_AREA
+	pop hl
+	ret
+
+
+; input:
+;   a: deck index of the card to check
+; output:
+;   z: set if not in stadium area
+IsCardInStadiumArea:
+	push hl
+	ld l, a
+	ldh a, [hWhoseTurn]
+	ld h, a
+	ld a, [hl]
+	and CARD_LOCATION_STADIUM
+	pop hl
+	ret
 
 
 ; evolve a turn holder's Pokemon card in the play area slot determined by hTempPlayAreaLocation_ff9d

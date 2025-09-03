@@ -2684,8 +2684,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer QuiverDanceDescriptionCont
 	textpointer Attach1EnergyFromDeckToThisPokemonDescription
 	textpointer UTurnName
-	textpointer IngrainName
-	textpointer IngrainDescriptionCont
+	; textpointer IngrainName
+	; textpointer IngrainDescriptionCont
 	textpointer SupersonicName
 	textpointer CounterName
 	textpointer CounterDescription
@@ -3059,6 +3059,9 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer EnergyBallDescription
 	textpointer SeepingToxinsName
 	textpointer SeepingToxinsDescription
+	textpointer GrassyTerrainName
+	textpointer GrassyTerrainDescription
+	textpointer GrassyTerrainStadiumDescription
 	textpointer FixmeText
 
 	; unused
