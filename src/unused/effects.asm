@@ -659,7 +659,7 @@ HandleSleepCheck:
 	push hl
 	ldtx de, PokemonsSleepCheckText
 
-	call TossCoin
+	bank1call TossCoin
 	ld a, DUEL_ANIM_SLEEP
 	ldtx hl, IsStillAsleepText
 	jr nc, .tails
@@ -1349,7 +1349,7 @@ CardCheckIfHeads8CardsIfTails1CardText: ; 37f24 (d:7f24)
 
 GamblerEffect: ; 2f3f9 (b:73f9)
 	ldtx de, CardCheckIfHeads8CardsIfTails1CardText
-	; call TossCoin_BankB
+	; bank1call TossCoin
 	ld a, 1
 	ldh [hTemp_ffa0], a
 ; discard Gambler card from hand
@@ -1609,7 +1609,7 @@ Heal_RemoveDamageEffect:
 	ld a, 1
 	ldh [hAIPkmnPowerEffectParam], a
 	; ldtx de, IfHeadsHealIsSuccessfulText
-	; call TossCoin_BankB
+	; bank1call TossCoin
 	; ldh [hAIPkmnPowerEffectParam], a
 	; jr nc, .done
 
@@ -4816,7 +4816,7 @@ ThunderstormEffect: ; 2e429 (b:6429)
 	call .DisplayText
 	ld de, $0
 	call SwapTurn
-	call TossCoin_BankB
+	bank1call TossCoin
 	call SwapTurn
 	push af
 	call GetNextPositionInTempList
@@ -5036,7 +5036,7 @@ CorrosiveAcidEffectCommands:
 
 DiscardOpponentEnergyIfHeads_50PercentEffect:
 	ldtx de, IfHeadsDiscard1EnergyFromTargetText
-	call TossCoin_BankB
+	bank1call TossCoin
 	ldh [hEnergyTransEnergyCard], a
 	or a  ; reset carry, otherwise heads cancels the attack
 	ret
@@ -5521,7 +5521,7 @@ ParalysisCheckText: ; 37c15 (d:7c15)
 
 Quickfreeze_Paralysis50PercentEffect: ; 2d2f3 (b:52f3)
 	ldtx de, ParalysisCheckText
-	call TossCoin_BankB
+	bank1call TossCoin
 	jr c, .heads
 
 ; tails
@@ -5871,7 +5871,7 @@ Thunderpunch_AIEffect: ; 2e399 (b:6399)
 
 Thunderpunch_ModifierEffect: ; 2e3a1 (b:63a1)
 	ldtx de, IfHeadPlus10IfTails10ToYourselfText
-	call TossCoin_BankB
+	bank1call TossCoin
 	ldh [hTemp_ffa0], a
 	ret nc ; return if got tails
 	ld a, 10
@@ -5899,7 +5899,7 @@ Fly_AIEffect: ; 2e4f4 (b:64f4)
 
 Fly_Success50PercentEffect: ; 2e4fc (b:64fc)
 	ldtx de, SuccessCheckIfHeadsAttackIsSuccessfulText
-	call TossCoin_BankB
+	bank1call TossCoin
 	jr c, .heads
 	xor a ; ATK_ANIM_NONE
 	ld [wLoadedAttackAnimation], a
@@ -6046,7 +6046,7 @@ TripleAttackX20X10_MultiplierEffect: ; 2e4de (b:64de)
 	call LoadTxRam3
 	ldtx de, DamageCheckIfHeadsXDamageText
 	ld a, 3
-	call TossCoinATimes_BankB
+	bank1call TossCoinATimes
 	; tails = 10, heads = 20
 	; result = (tails + 2 * heads) = coins + heads
 	add 3
@@ -6143,7 +6143,7 @@ Heads10BonusDamage_DamageBoostEffect:
 	ld hl, 10
 	call LoadTxRam3
 	ldtx de, DamageCheckIfHeadsPlusDamageText
-	call TossCoin_BankB
+	bank1call TossCoin
 	ret nc ; return if tails
 	ld a, 10
 	jp AddToDamage
@@ -6853,11 +6853,11 @@ CheckRainDanceScenario:  ; unreferenced
 GetDamageBonusPerHeads:
   cp 2
   jr nc, .multiple
-  call TossCoin_BankB  ; preserves hl
+  bank1call TossCoin  ; preserves hl
   jr .post
 
 .multiple
-	call TossCoinATimes_BankB  ; preserves hl
+	bank1call TossCoinATimes  ; preserves hl
 
 .post
 ; number of heads is in a
@@ -6889,11 +6889,11 @@ IfHeadsPlusDamage_DamageBoostEffect:
   ldtx de, DamageCheckIfHeadsPlusDamageText
   cp 2
   jr nc, .multiple
-  call TossCoin_BankB  ; preserves hl
+  bank1call TossCoin  ; preserves hl
   jr .post
 
 .multiple
-	call TossCoinATimes_BankB  ; preserves hl
+	bank1call TossCoinATimes  ; preserves hl
 
 .post
 ; number of heads is in a
@@ -7815,7 +7815,7 @@ done
 
 TailWagEffect: ; 2e94e (b:694e)
 	ldtx de, IfHeadsOpponentCannotAttackText
-	call TossCoin_BankB
+	bank1call TossCoin
 	jp nc, SetWasUnsuccessful
 	ld a, ATK_ANIM_LURE
 	ld [wLoadedAttackAnimation], a
@@ -8212,7 +8212,7 @@ Wail_FillBenchEffect: ; 2e335 (b:6335)
 
 PayDayEffect: ; 2ebe8 (b:6be8)
 	ldtx de, IfHeadsDraw1CardFromDeckText
-	call TossCoin_BankB
+	bank1call TossCoin
 	ret nc ; tails
 	ldtx hl, Draw1CardFromTheDeckText
 	call DrawWideTextBox_WaitForInput
@@ -8676,7 +8676,7 @@ DancingEmbers_MultiplierEffect: ; 2d6ab (b:56ab)
 	call LoadTxRam3
 	ldtx de, DamageCheckIfHeadsXDamageText
 	ld a, 8
-	call TossCoinATimes_BankB
+	bank1call TossCoinATimes
 	call ATimes10
 	call SetDefiniteDamage
 	ret
@@ -8691,7 +8691,7 @@ TrapCheckText:
 ; If heads, defending Pokemon can't retreat next turn
 UnableToRetreat50PercentEffect:
 	ldtx de, TrapCheckText
-	call TossCoin_BankB
+	bank1call TossCoin
 	ret nc
 	; fallthrough to UnableToRetreatEffect
 
@@ -9157,7 +9157,7 @@ BigEggsplosion_MultiplierEffect:
 	call LoadTxRam3
 	ld a, [wTotalAttachedEnergies]
 	ldtx de, DamageCheckIfHeadsXDamageText
-	call TossCoinATimes_BankB
+	bank1call TossCoinATimes
 ; fallthrough
 
 ; set damage to 20*a. Also return result in hl
@@ -9433,7 +9433,7 @@ IfHeadsNoDamageNextTurnText: ; 37f56 (d:7f56)
 
 WithdrawEffect: ; 2d120 (b:5120)
 	ldtx de, IfHeadsNoDamageNextTurnText
-	call TossCoin_BankB
+	bank1call TossCoin
 	jp nc, SetWasUnsuccessful
 	ld a, ATK_ANIM_PROTECT
 	ld [wLoadedAttackAnimation], a
@@ -9454,7 +9454,7 @@ ThunderJolt_Recoil50PercentEffect: ; 2e51a (b:651a)
 	ld hl, 10
 	call LoadTxRam3
 	ldtx de, IfTailsDamageToYourselfTooText
-	call TossCoin_BankB
+	bank1call TossCoin
 	ldh [hTemp_ffa0], a
 	ret
 
@@ -9504,7 +9504,7 @@ LeekSlap_SetUsedThisDuelFlag: ; 2eb2c (b:6b2c)
 
 LeekSlap_NoDamage50PercentEffect: ; 2eb34 (b:6b34)
 	ldtx de, DamageCheckIfTailsNoDamageText
-	call TossCoin_BankB
+	bank1call TossCoin
 	ret c
 	xor a ; 0 damage
 	jp SetDefiniteDamage
@@ -9513,7 +9513,7 @@ LeekSlap_NoDamage50PercentEffect: ; 2eb34 (b:6b34)
 
 LeerEffect: ; 2e21d (b:621d)
 	ldtx de, IfHeadsOpponentCannotAttackText
-	call TossCoin_BankB
+	bank1call TossCoin
 	jp nc, SetWasUnsuccessful
 	ld a, ATK_ANIM_LEER
 	ld [wLoadedAttackAnimation], a
@@ -9523,7 +9523,7 @@ LeerEffect: ; 2e21d (b:621d)
 
 BoneAttackEffect: ; 2e30f (b:630f)
 	ldtx de, IfHeadsOpponentCannotAttackText
-	call TossCoin_BankB
+	bank1call TossCoin
 	ret nc
 	ld a, SUBSTATUS2_UNABLE_ATTACK
 	call ApplySubstatus2ToDefendingCard
@@ -9538,7 +9538,7 @@ IfHeadsDoNotReceiveDamageOrEffectText: ; 38124 (e:4124)
 
 SeadraAgilityEffect: ; 2d08b (b:508b)
 	ldtx de, IfHeadsDoNotReceiveDamageOrEffectText
-	call TossCoin_BankB
+	bank1call TossCoin
 	ret nc ; return if tails
 	ld a, ATK_ANIM_AGILITY_PROTECT
 	ld [wLoadedAttackAnimation], a
@@ -9896,7 +9896,7 @@ FurySwipes_MultiplierEffect:
 .loop_coin_toss
 	ldtx de, FlipUntilFailAppears10DamageForEachHeadsText
 	xor a
-	call TossCoinATimes_BankB
+	bank1call TossCoinATimes
 	jr nc, .tails
 	ld hl, hTemp_ffa0
 	inc [hl] ; increase heads count

@@ -169,7 +169,7 @@ HandleNShieldAndTransparency:
 ; 	xor a
 ; 	ld [wDuelDisplayedScreen], a
 ; 	ldtx de, TransparencyCheckText
-; 	call TossCoin
+; 	bank1call TossCoin
 ; 	jr nc, .done
 ; 	ld a, NO_DAMAGE_OR_EFFECT_TRANSPARENCY
 ; 	ld [wNoDamageOrEffect], a

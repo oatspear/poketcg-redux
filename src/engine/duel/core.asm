@@ -7427,6 +7427,7 @@ OppAction_UseMetronomeAttack:
 OppAction_NoAction:
 	ret
 
+
 ; load the text ID of the card name with deck index given in a to TxRam2
 ; also loads the card to wLoadedCard1
 LoadCardNameToTxRam2:
@@ -9174,6 +9175,41 @@ UpdateDamageTakenLastTurn:
 	ld a, [wDealtDamage + 1]
 	ld [hl], a
 	ret
+
+
+; function that executes a single coin toss during a duel.
+; text at de is printed in a text box during the coin toss.
+; returns: - carry, and 1 in a and in wCoinTossNumHeads if heads
+;          - nc, and 0 in a and in wCoinTossNumHeads if tails
+; preserves: hl
+TossCoin:
+	push hl
+	ld hl, wCoinTossScreenTextID
+	ld [hl], e
+	inc hl
+	ld [hl], d
+	ld a, 1
+	call _TossCoin
+	ld hl, wDuelDisplayedScreen
+	ld [hl], 0
+	pop hl
+	ret
+
+
+; function that executes one or more consecutive coin tosses during a duel (a = number of coin tosses),
+; displaying each result ([O] or [X]) starting from the top left corner of the screen.
+; text at de is printed in a text box during the coin toss.
+; returns: the number of heads in a and in wCoinTossNumHeads, and carry if at least one heads
+TossCoinATimes:
+	push hl
+	ld hl, wCoinTossScreenTextID
+	ld [hl], e
+	inc hl
+	ld [hl], d
+	call _TossCoin
+	pop hl
+	ret
+
 
 _TossCoin:
 	ld [wCoinTossTotalNum], a
