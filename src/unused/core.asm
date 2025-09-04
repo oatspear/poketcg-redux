@@ -9819,7 +9819,7 @@ HandleConfusionDamageToSelf:
 	ld a, ATK_ANIM_CONFUSION_HIT
 	ld [wLoadedAttackAnimation], a
 	ld a, CONFUSION_DAMAGE
-	call DealConfusionDamageToSelf
+	call DealDamageToSelf
 	call DrawDuelMainSceneAndPrintFailureText
 	call HandleDestinyBond_ClearKnockedOutPokemon_TakePrizes_CheckGameOutcome
 	call ClearNonTurnTemporaryDuelvars

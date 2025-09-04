@@ -4846,7 +4846,7 @@ ThunderstormEffect: ; 2e429 (b:6429)
 	jr z, .skip_recoil
 	; deal number of tails times 10 to self
 	call ATimes10
-	call DealRecoilDamageToSelf
+	bank1call DealRecoilDamageToSelf
 .skip_recoil
 
 ; deal damage for Bench Pokemon that got heads
@@ -6282,7 +6282,7 @@ Selfdestruct40Bench10Effect:
 Selfdestruct50Bench10Effect:
 	ld a, 50
 .recoil
-	call DealRecoilDamageToSelf
+	bank1call DealRecoilDamageToSelf
 	jr Earthquake10Effect
 
 

@@ -7658,6 +7658,84 @@ HandleOnEvolvePokemonEffects:
 	ret
 
 
+; when playing a Pokemon card, initializes some variables according to the
+; card played, and checks if the played card has Pokemon Power to show it to
+; the player, and possibly to use it if it triggers when the card is played.
+; FIXME: this can be split into two functions, one for initializing variables,
+; and another for handling the Pokemon Power.
+OnPokemonPlayedInitVariablesAndPowers:
+	; ldh a, [hTempCardIndex_ff98]
+	call ClearChangedTypesIfWeezing
+	ldh a, [hTempCardIndex_ff98]
+	ld d, a
+	ld e, $00
+	call CopyAttackDataAndDamage_FromDeckIndex
+	call Func_16f6
+	ldh a, [hTempCardIndex_ff98]
+	ldh [hTempCardIndex_ff9f], a
+	call GetCardIDFromDeckIndex
+	ld a, e
+	ld [wTempTurnDuelistCardID], a
+	ld a, [wLoadedAttackCategory]
+	and ABILITY
+	ret z
+; this Pokémon has an ability
+	call DisplayUsePokemonPowerScreen
+	ldh a, [hTempCardIndex_ff98]
+	call LoadCardDataToBuffer1_FromDeckIndex
+	call LoadCard1NameToRamText
+	ld a, [wLoadedAttackCategory]
+	cp POKE_POWER
+	jr z, .try_use_pokemon_power
+	ldtx hl, HavePokeBodyText
+	jr .done
+
+.try_use_pokemon_power
+	ldtx hl, HavePokePowerText
+	call DrawWideTextBox_WaitForInput
+; check for Poké-Powers enabled
+	call ArePokemonPowersDisabled
+	jr nc, .use_pokemon_power
+.unable_to_use
+	; bank1call DisplayUsePokemonPowerScreen
+	ldtx hl, UnableToUsePokePowerDueToDisableEffectText
+.done
+	call DrawWideTextBox_WaitForInput
+	jp ExchangeRNG
+
+.use_pokemon_power
+	call ExchangeRNG
+	ld hl, wLoadedAttackEffectCommands
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	ld a, EFFECTCMDTYPE_PKMN_POWER_TRIGGER
+	call CheckMatchingCommand
+	ret c ; return if command not found
+	call DrawDuelMainScene
+	ldh a, [hTempCardIndex_ff9f]
+	call LoadCardDataToBuffer1_FromDeckIndex
+	ld de, wLoadedCard1Name
+	ld hl, wTxRam2
+	ld a, [de]
+	inc de
+	ld [hli], a
+	ld a, [de]
+	ld [hli], a
+	ld de, wLoadedAttackName
+	ld a, [de]
+	inc de
+	ld [hli], a
+	ld a, [de]
+	ld [hl], a
+	ldtx hl, WillUseThePokemonPowerText
+	call DrawWideTextBox_WaitForInput
+	call ExchangeRNG
+	call ResetAttackAnimationIsPlaying
+	ld a, EFFECTCMDTYPE_PKMN_POWER_TRIGGER
+	jp TryExecuteEffectCommandFunction
+
+
 ; input:
 ;   [hTempPlayAreaLocation_ffa1]: PLAY_AREA_* of the Pokémon that switched in
 ;                                 (now with the previous Active Pokémon)
@@ -8252,6 +8330,53 @@ ENDC
 	jr nz, .loop
 	jp SwapTurn
 ENDC
+
+
+; Make turn holder deal A damage to self due to recoil (e.g. Take Down, Selfdestruct)
+; display recoil animation
+DealRecoilDamageToSelf:
+	push af
+	ld a, ATK_ANIM_RECOIL_HIT
+	ld [wLoadedAttackAnimation], a
+	pop af
+;	fallthrough
+
+; Make turn holder deal A damage to self due to confusion
+; display animation at wLoadedAttackAnimation
+; FIXME: can split into two functions, one for logic another for animation
+DealDamageToSelf:
+	ld hl, wDamage
+	ld [hli], a
+	ld [hl], 0  ; wDamageFlags
+	ld a, [wNoDamageOrEffect]
+	push af
+	xor a
+	ld [wNoDamageOrEffect], a
+	call ResetAttackAnimationIsPlaying
+	ld a, [wTempNonTurnDuelistCardID]
+	push af
+	ld a, [wTempTurnDuelistCardID]
+	ld [wTempNonTurnDuelistCardID], a
+	call ApplyDamageModifiers_DamageToSelf
+	ld a, [wRecoilDamage]
+	add e
+	cp MAX_DAMAGE
+	jr c, .damage_ok
+	ld a, MAX_DAMAGE
+.damage_ok
+	ld [wRecoilDamage], a
+	ld a, [wDamageEffectiveness]
+	ld c, a
+	ld b, $0
+	ld a, DUELVARS_ARENA_CARD_HP
+	call GetTurnDuelistVariable
+	call PlayAttackAnimation_DealAttackDamageSimple
+	call PrintKnockedOutIfHLZero
+	pop af
+	ld [wTempNonTurnDuelistCardID], a
+	pop af
+	ld [wNoDamageOrEffect], a
+	ret
 
 
 DrawDuelMainSceneForTurnHolder:
@@ -10603,6 +10728,65 @@ OneByteNumberToTxSymbol:
 	ld [hli], a ; second digit
 	ld [hl], SYM_SPACE
 	pop hl
+	ret
+
+
+; save duel state to SRAM
+; called between each two-player turn, just after player draws card (ROM bank 1 loaded)
+SaveDuelStateToSRAM:
+	ld a, $2
+	call BankswitchSRAM
+	; save duel data to sCurrentDuel
+	call SaveDuelData
+	xor a
+	call BankswitchSRAM
+	call EnableSRAM
+	ld hl, s0a008
+	ld a, [hl]
+	inc [hl]
+	call DisableSRAM
+	; select hl = SRAM3:(a000 + $400 * [s0a008] & $3)
+	; save wDuelTurns, non-turn holder's arena card ID, turn holder's arena card ID
+	and $3
+	add HIGH($a000) / 4
+	ld l, $0
+	ld h, a
+	add hl, hl
+	add hl, hl
+	ld a, $3
+	call BankswitchSRAM
+	push hl
+	ld a, DUELVARS_ARENA_CARD
+	call GetTurnDuelistVariable
+	call GetCardIDFromDeckIndex
+	ld a, e
+	ld [wTempTurnDuelistCardID], a
+	call SwapTurn
+	ld a, DUELVARS_ARENA_CARD
+	call GetTurnDuelistVariable
+	call GetCardIDFromDeckIndex
+	ld a, e
+	ld [wTempNonTurnDuelistCardID], a
+	call SwapTurn
+	pop hl
+	push hl
+	call EnableSRAM
+	ld a, [wDuelTurns]
+	ld [hli], a
+	ld a, [wTempNonTurnDuelistCardID]
+	ld [hli], a
+	ld a, [wTempTurnDuelistCardID]
+	ld [hli], a
+	; save duel data to SRAM3:(a000 + $400 * [s0a008] & $3) + $0010
+	pop hl
+	ld de, $0010
+	add hl, de
+	ld e, l
+	ld d, h
+	call DisableSRAM
+	call SaveDuelDataToDE
+	xor a
+	call BankswitchSRAM
 	ret
 
 

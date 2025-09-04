@@ -4,11 +4,11 @@
 
 Recoil10Effect:
 	ld a, 10
-	jp DealRecoilDamageToSelf
+	jr TakeRecoilDamageEffect
 
 Recoil20Effect:
 	ld a, 20
-	jp DealRecoilDamageToSelf
+	jr TakeRecoilDamageEffect
 
 
 Recoil30UnlessActiveThisTurnEffect:
@@ -18,15 +18,20 @@ Recoil30UnlessActiveThisTurnEffect:
 
 Recoil30Effect:
 	ld a, 30
-	jp DealRecoilDamageToSelf
+	jr TakeRecoilDamageEffect
 
 Recoil40Effect:
 	ld a, 40
-	jp DealRecoilDamageToSelf
+	jr TakeRecoilDamageEffect
 
 Recoil50Effect:
 	ld a, 50
-	jp DealRecoilDamageToSelf
+	jr TakeRecoilDamageEffect
+
+
+TakeRecoilDamageEffect:
+	bank1call DealRecoilDamageToSelf
+	ret
 
 
 ; ------------------------------------------------------------------------------
