@@ -116,6 +116,12 @@
 - Stadium Trainer card.
 - Each Pokémon with a Pokémon Power takes 10 damage at the end of each turn.
 
+#### Grassy Terrain (uncollectible)
+
+- Stadium Trainer card.
+- At the end of each turn, heal 10 damage from the turn holder's Active Pokémon.
+- Attacks of Grass Pokémon do 10 more damage to the Defending Pokémon.
+
 ### Removed Cards
 
 - PlusPower
@@ -161,6 +167,11 @@
 #### Exeggutor
 
 - **Energy Burst**: cost increased from (C) to (CC).
+
+#### Tangela
+
+- **Ingrain**: removed.
+- New attack: **Grassy Terrain** (G): remove 1 (G) and play it as a **Grassy Terrain** stadium.
 
 #### Scyther
 

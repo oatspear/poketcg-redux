@@ -272,11 +272,11 @@ GrassyTerrainDescription:
 	done
 
 GrassyTerrainStadiumDescription:
-	text "At the end of each turn, heal 10"
-	line "damage from each Active Pokémon."
-	line "The attacks of any <GRASS> Pokémon do 10"
-	line "more damage to the opponent's Active"
-	line "Pokémon."
+	text "At the end of each player's turns,"
+	line "heal 10 damage from that player's"
+	line "Active Pokémon. The attacks of all"
+	line "<GRASS> Pokémon do 10 more damage to the"
+	line "opponent's Active Pokémon."
 	done
 
 FixmeText:

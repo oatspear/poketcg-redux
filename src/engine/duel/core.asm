@@ -7873,6 +7873,9 @@ HandleLeftovers:
 	ld a, e
 	cp LEFTOVERS
 	ret nz  ; not Leftovers
+	; fallthrough to BetweenTurns_Heal10DamageFromActivePokemon
+
+BetweenTurns_Heal10DamageFromActivePokemon:
 	ld e, PLAY_AREA_ARENA
 	call GetCardDamageAndMaxHP  ; preserves: hl, b, de
 	or a
@@ -7885,6 +7888,13 @@ HandleLeftovers:
 	ld e, PLAY_AREA_ARENA
 	farcall HealPlayAreaCardHP.damaged  ; preserves bc
 	ret
+
+
+HandleEndOfTurnEffect_GrassyTerrain:
+	ld de, GRASS_ENERGY
+	call CheckStadiumIDInPlayArea
+	ret c  ; none found
+	jr BetweenTurns_Heal10DamageFromActivePokemon
 
 
 ; plays a healing animation for a play area Pokémon
@@ -8167,106 +8177,6 @@ HandleEndOfTurnEffect_RocketHeadquarters:
 	jr nz, .loop
 	ret
 
-
-; unreferenced
-;PreprocessHealingNectar:
-;	ld a, GLOOM  ; Healing Nectar
-;	call GetFirstPokemonMatchingID
-;	ret nc  ; no ability-capable Gloom was found
-;
-;	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
-;	call GetTurnDuelistVariable
-;	dec a
-;	ret z  ; no Pokémon on the bench
-;	ld d, a
-;	ld e, PLAY_AREA_BENCH_1
-;	ld hl, hTempList
-;	ld c, 0
-;
-;.loop_play_area
-;	call GetCardDamageAndMaxHP
-;	ld [hl], a  ; store damage in hTempList
-;	or a
-;	jr z, .next ; no damage, skip
-;	inc c  ; store total damaged Pokémon
-;.next
-;	inc hl
-;	inc e
-;	dec d
-;	jr nz, .loop_play_area
-;
-;	ld [hl], $ff  ; terminating byte
-;	xor a
-;	cp c  ; set carry if there are some damaged Pokémon
-;	ret
-
-; unreferenced
-; go through every Pokemon in the Bench and heal 10 damage
-; if it has a Grass Energy attached.
-;HandleHealingNectar:
-;	ld a, GLOOM  ; Healing Nectar
-;	call GetFirstPokemonMatchingID
-;	ret nc  ; no ability-capable Gloom was found
-;
-;	ld hl, hTempList
-;	ld e, PLAY_AREA_BENCH_1
-;
-;.loop_play_area
-;; check its attached energies
-;	call GetPlayAreaCardAttachedEnergies
-; call HandleEnergyColorOverride
-;	ld a, [wAttachedEnergies + GRASS]
-;	or a
-;	jr z, .next_pkmn ; no Grass energy, skip Pokemon
-;; check its damage
-;	ld a, e
-;	ldh [hTempPlayAreaLocation_ff9d], a
-;	call GetCardDamageAndMaxHP
-;	or a
-;	jr z, .next_pkmn ; if no damage, skip Pokemon
-;
-;; code based on HealPlayAreaCardHP
-;	push de
-;	ld e, 10
-;	ld d, $00
-;
-;; play heal animation
-;	push de
-;	call ResetAttackAnimationIsPlaying
-;	ld a, ATK_ANIM_HEALING_WIND_PLAY_AREA
-;	ld [wLoadedAttackAnimation], a
-;	ldh a, [hTempPlayAreaLocation_ff9d]
-;	ld b, a
-;	ld c, $01
-;	ldh a, [hWhoseTurn]
-;	ld h, a
-;	call PlayAttackAnimation
-;	call WaitAttackAnimation
-;	pop hl
-;
-;; print Pokemon card name and damage healed
-;	push hl
-;	call LoadTxRam3
-;	ldh a, [hTempPlayAreaLocation_ff9d]
-;	add DUELVARS_ARENA_CARD
-;	call LoadCardNameAndLevelFromVarToRam2
-;	ldtx hl, PokemonHealedDamageText
-;	call DrawWideTextBox_WaitForInput
-;	pop de
-;
-;; heal the target Pokemon
-;	ldh a, [hTempPlayAreaLocation_ff9d]
-;	add DUELVARS_ARENA_CARD_HP
-;	call GetTurnDuelistVariable
-;	add e
-;	ld [hl], a
-;
-;	pop de
-;.next_pkmn
-;	inc e
-;	dec d
-;	jr nz, .loop_play_area
-;	ret
 
 ClearStatusFromBenchedPokemon:
 	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA

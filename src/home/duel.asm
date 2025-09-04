@@ -2461,6 +2461,7 @@ CheckToolIDAttachedToPlayArea:
 	ret
 
 
+; TODO: good candidate to move to effect functions 2
 ; input:
 ;   b: PLAY_AREA_* of the attacking Pokémon
 HandleDamageBoostingStadiums:
@@ -2468,23 +2469,36 @@ HandleDamageBoostingStadiums:
 	ld de, CERULEAN_GYM
 	call CheckStadiumIDInPlayArea  ; preserves: bc, de
 	pop de
-	jr c, .vermilion_gym
+	jr c, .vermilion_gym  ; not in play
 	push de
 	farcall CheckPokemonHasSurplusEnergy
 	pop de
 	ret c  ; no surplus energy
 	jr .add_to_damage
 .vermilion_gym
-	ld a, b
-	or a  ; cp PLAY_AREA_ARENA
-	ret nz  ; not active spot
 	push de
 	ld de, VERMILION_GYM
 	call CheckStadiumIDInPlayArea  ; preserves: bc, de
 	pop de
-	ret c  ; not in play
+	jr c, .grassy_terrain  ; not in play
+	ld a, b
+	or a  ; cp PLAY_AREA_ARENA
+	ret nz  ; not active spot
 	farcall CheckEnteredActiveSpotThisTurn  ; preserves: bc, de
 	ret c  ; not active this turn
+	jr .add_to_damage
+.grassy_terrain
+	push de
+	ld de, GRASS_ENERGY
+	call CheckStadiumIDInPlayArea  ; preserves: bc, de
+	pop de
+	push bc
+	ld a, b
+	call GetPlayAreaCardColor  ; preserves de
+	pop bc
+	cp GRASS
+	ret nz  ; not a Grass Pokémon
+	; jr .add_to_damage
 .add_to_damage
 	ld hl, 10
 	jp AddToDamage_DE  ; preserves: bc
