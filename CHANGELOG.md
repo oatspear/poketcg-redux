@@ -2,6 +2,10 @@
 
 ## Version 0.13.0
 
+### Weakness and Resistance
+- Weakness grants +20 damage if the base damage is 20 or more. Otherwise, it grants +10 damage.
+- Resistance reduces damage by 20 if the base damage is 30 or more. Otherwise, it ensures a minimum of 10 damage.
+
 ### Paralysis, Drowsiness and Confusion Status
 
 - All three Crowd Control conditions are now a coin flip before the afflicted Pokémon attacks.
