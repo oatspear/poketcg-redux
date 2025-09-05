@@ -725,11 +725,10 @@ DoTheWave_AIEffect:
 Swarm_DamageBoostEffect:
 	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
 	call GetTurnDuelistVariable
-	cp 4
+	cp MAX_BENCH_POKEMON
 	ret c
 .bonus
-	ld a, 10
-	jp AddToDamage
+	jp DoubleDamage_DamageBoostEffect
 
 Swarm_AIEffect:
   call Swarm_DamageBoostEffect.bonus

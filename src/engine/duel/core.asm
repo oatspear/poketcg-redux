@@ -9875,11 +9875,9 @@ PlayAttackAnimation_DealAttackDamage:
 	pop hl
 .skip_draw_huds
 	call PrintKnockedOutIfHLZero
-	jr nc, .after_damage
-; Knocked Out Defending Pokémon
-	ld a, DUELVARS_MISC_TURN_FLAGS
-	call GetTurnDuelistVariable
-	set TURN_FLAG_KO_OPPONENT_POKEMON_F, [hl]
+	; jr nc, .after_damage
+; Knocked Out Defending Pokémon?
+	call c, SetFlag_KnockedOutOpponentPokemon
 .after_damage
 	ld a, DUELVARS_ARENA_CARD_FLAGS
 	call GetTurnDuelistVariable

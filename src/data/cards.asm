@@ -1162,7 +1162,60 @@ NidokingCard:
 	tx NidokingDescription ; description
 	db 0
 
-INCLUDE "data/cards/zubat.asm"
+ZubatCard:
+	db TYPE_PKMN_DARKNESS ; type
+	gfx ZubatCardGfx ; gfx
+	tx ZubatName ; name
+	db CIRCLE ; rarity
+	db LABORATORY | FOSSIL ; sets
+	db ZUBAT
+	db 40 ; hp
+	db BASIC ; stage
+	dw NONE ; pre-evo name
+
+	; (D) Astonish 10
+	; Choose a random card from your opponent's hand.
+	; Your opponent reveals that cards and shuffles it into their deck.
+
+	; attack 1
+	energy COLORLESS, 1 ; energies
+	tx SupersonicName ; name
+	tx InflictConfusionDescription ; description
+	dw NONE ; description (cont)
+	db 0 ; damage
+	db RESIDUAL ; category
+	dw InflictConfusionEffectCommands ; effect commands
+	db INFLICT_CONFUSION ; flags 1
+	db NONE ; flags 2
+	db NONE ; flags 3
+	db 0
+	db ATK_ANIM_SUPERSONIC ; animation
+
+	; attack 2
+	energy COLORLESS, 2 ; energies
+	tx SwarmName ; name
+	tx SwarmDescription ; description
+	tx SwarmDescriptionCont ; description (cont)
+	db 10 ; damage
+	db DAMAGE_PLUS ; category
+	dw SwarmEffectCommands ; effect commands
+	db NONE ; flags 1
+	db NONE ; flags 2
+	db NONE ; flags 3
+	db 3
+	db ATK_ANIM_HIT ; animation
+
+	db 0 ; retreat cost
+	db WR_LIGHTNING ; weakness
+	db WR_FIGHTING ; resistance
+	tx BatName ; category
+	db 41 ; Pokedex number
+	db 0
+	db 10 ; level
+	db 2, 7 ; length
+	dw 17 * 10 ; weight
+	tx ZubatDescription ; description
+	db 16
 
 GolbatCard:
 	db TYPE_PKMN_DARKNESS ; type
@@ -1171,18 +1224,18 @@ GolbatCard:
 	db DIAMOND ; rarity
 	db LABORATORY | FOSSIL ; sets
 	db GOLBAT
-	db 70 ; hp
+	db 80 ; hp
 	db STAGE1 ; stage
 	tx ZubatName ; pre-evo name
 
 	; attack 1
 	energy 0 ; energies
-	tx SurpriseBiteName ; name
-	tx SurpriseBiteDescription ; description
-	tx PokemonPowerDescriptionCont ; description (cont)
+	tx SneakyBiteName ; name
+	tx SneakyBiteDescription ; description
+	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_POWER ; category
-	dw SurpriseBiteEffectCommands ; effect commands
+	dw SneakyBiteEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -1190,14 +1243,14 @@ GolbatCard:
 	db ATK_ANIM_PKMN_POWER_1 ; animation
 
 	; attack 2
-	energy DARKNESS, 1, COLORLESS, 1 ; energies
-	tx PoisonDrainName ; name
+	energy COLORLESS, 2 ; energies
+	tx LeechLifeName ; name
 	tx LeechLifeDescription ; description
-	tx InflictPoisonDescription ; description (cont)
+	dw NONE ; description (cont)
 	db 20 ; damage
 	db DAMAGE_NORMAL ; category
-	dw PoisonDrainEffectCommands ; effect commands
-	db INFLICT_POISON ; flags 1
+	dw LeechLifeEffectCommands ; effect commands
+	db NONE ; flags 1
 	db HEAL_USER ; flags 2
 	db NONE ; flags 3
 	db 2

@@ -2978,8 +2978,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer DynamotorDescription
 	textpointer VoltSwitchName
 	textpointer VoltSwitchDescription
-	textpointer SurpriseBiteName
-	textpointer SurpriseBiteDescription
+	textpointer SneakyBiteName
+	textpointer SneakyBiteDescription
 	textpointer PhoenixFireName
 	textpointer ConcentrationName
 	textpointer LuckyFindName
@@ -3067,7 +3067,6 @@ TextOffsets:: ; 34000 (d:4000)
 	; unused
 	; textpointer NightAmbushName
 	; textpointer NightAmbushDescription
-	; textpointer SurpriseBiteDescription
 	; textpointer VampiricAuraName
 	; textpointer VampiricAuraDescription
 	; textpointer SwordsDanceName

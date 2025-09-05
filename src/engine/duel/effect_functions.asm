@@ -864,28 +864,8 @@ Mischief_DamageTransferEffect:
 	ld e, a   ; location
 	ld d, 10  ; damage
 	call HealPlayAreaCardHP
-	call SurpriseBite_DamageEffect
+	call Curse_DamageEffect
 	jp ExchangeRNG
-
-
-SurpriseBite_DamageEffect:
-	call SetUsedPokemonPowerThisTurn_RestoreTrigger
-	; fallthrough
-
-Put1DamageCounterOnTarget_DamageEffect:
-	; input e: PLAY_AREA_* of the target
-	ldh a, [hTempPlayAreaLocation_ffa1]
-	ld e, a
-	call SwapTurn
-	call Put1DamageCounterOnTarget
-	call SwapTurn
-	ret nc
-; Knocked Out Defending Pokémon
-	ld a, DUELVARS_MISC_TURN_FLAGS
-	call GetTurnDuelistVariable
-	set TURN_FLAG_KO_OPPONENT_POKEMON_F, [hl]
-	bank1call ClearKnockedOutPokemon_TakePrizes_CheckGameOutcome
-	ret
 
 
 ; input:

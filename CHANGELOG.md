@@ -151,7 +151,6 @@
 #### Paras
 
 - **Swarm**: increased cost from (G) to (GC).
-- **Swarm**: gets bonus damage with 4 or more Benched Pokémon, instead of 5.
 - **Swarm**: searches the deck for a Basic Pokémon before doing damage.
 
 #### Weepinbell
@@ -392,17 +391,17 @@
 #### Zubat
 
 - **Surprise Bite**: removed.
-- **Swarm**: increased cost from (D) to (DC).
-- **Swarm**: gets bonus damage with 4 or more Benched Pokémon, instead of 5.
+- **Swarm**: increased cost from (D) to (CC).
 - **Swarm**: searches the deck for a Basic Pokémon before doing damage.
 - New attack: **Supersonic** (C): inflict Confusion.
 
 #### Golbat
 
+- HP increased from 70 to 80.
 - **Vampiric Aura**: removed.
 - **Night Ambush**: removed.
-- New Pokémon Power: **Surprise Bite**: once per turn, put 1 damage counter on 1 of the opponent's Pokémon.
-- New attack: **Poison Drain** (DC): 20 damage; inflict Poison; heal damage equal to damage done.
+- New Pokémon Power: **Sneaky Bite**: when played, put 1 damage counter and 1 poison counter on 1 of the opponent's Pokémon.
+- New attack: **Leech Life** (CC): 20 damage; heal damage equal to damage done.
 
 #### Weezing
 

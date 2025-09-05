@@ -42,9 +42,15 @@ InflictDamageOverTimeStatusEffect:
 	call SwapTurn
 	bank1call InflictDamageOverTimeStatus
 	call SwapTurn
+	jr c, .knock_out
 	or a
-	jp z, SetNoEffectFromStatus
-; affected by status
+	ret nz  ; affected, but no KO
+	jp SetNoEffectFromStatus
+
+.knock_out  ; affected by status
+	ld a, DUELVARS_MISC_TURN_FLAGS
+	call GetTurnDuelistVariable
+	set TURN_FLAG_KO_OPPONENT_POKEMON_F, [hl]
 	ret
 
 
@@ -128,6 +134,32 @@ SelfInflictCrowdControlStatusEffect:
 ; ------------------------------------------------------------------------------
 ; Play Area Status Effects
 ; ------------------------------------------------------------------------------
+
+
+; input e: PLAY_AREA_* of the target Pokémon
+; preserves: de
+PoisonEffect_OpponentPlayArea:
+	call SwapTurn
+	call PoisonEffect_PlayArea
+	call SwapTurn
+; Knocked Out a Pokémon
+	ld a, DUELVARS_MISC_TURN_FLAGS
+	call GetTurnDuelistVariable
+	set TURN_FLAG_KO_OPPONENT_POKEMON_F, [hl]
+	ret
+
+
+; input e: PLAY_AREA_* of the target Pokémon
+; preserves: de
+BurnEffect_OpponentPlayArea:
+	call SwapTurn
+	call BurnEffect_PlayArea
+	call SwapTurn
+; Knocked Out a Pokémon
+	ld a, DUELVARS_MISC_TURN_FLAGS
+	call GetTurnDuelistVariable
+	set TURN_FLAG_KO_OPPONENT_POKEMON_F, [hl]
+	ret
 
 
 ; input e: PLAY_AREA_* of the target Pokémon
@@ -239,7 +271,13 @@ PoisonAllOpponentPokemonEffect:
 	ld c, POISONED
 	call SwapTurn
 	call InflictDamageOverTimeStatusEffect_AllBenchedPokemon
-	jp SwapTurn
+	call SwapTurn
+	ret nc
+; Knocked Out at least one Pokémon
+	ld a, DUELVARS_MISC_TURN_FLAGS
+	call GetTurnDuelistVariable
+	set TURN_FLAG_KO_OPPONENT_POKEMON_F, [hl]
+	ret
 
 
 BurnAllOpponentPokemonEffect:
@@ -248,7 +286,13 @@ BurnAllOpponentPokemonEffect:
 	ld c, BURNED
 	call SwapTurn
 	call InflictDamageOverTimeStatusEffect_AllBenchedPokemon
-	jp SwapTurn
+	call SwapTurn
+	ret nc
+; Knocked Out at least one Pokémon
+	ld a, DUELVARS_MISC_TURN_FLAGS
+	call GetTurnDuelistVariable
+	set TURN_FLAG_KO_OPPONENT_POKEMON_F, [hl]
+	ret
 
 
 ; assumes:
@@ -256,25 +300,36 @@ BurnAllOpponentPokemonEffect:
 ; input:
 ;   a: ATK_ANIM_* to play
 ;   c: status condition to inflict (POISONED, BURNED)
+; output:
+;   a: number of Pokémon that were Knocked Out
+;   carry: set if a Pokémon was Knocked Out
 InflictDamageOverTimeStatusEffect_AllBenchedPokemon:
 	ld [wLoadedAttackAnimation], a
 	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
 	call GetTurnDuelistVariable
 	ld d, a
 	ld e, PLAY_AREA_ARENA
-	ld b, $ff
+	ld b, 0  ; KO counter
 	jr .next
 .loop_play_area
+	push bc
+	ld b, $ff
 	; input b: mask of status conditions to preserve on the target
 	; input c: status condition to inflict (POISONED, BURNED)
 	; input e: PLAY_AREA_* of the target Pokémon
 	bank1call InflictDamageOverTimeStatus
 	; TODO error message
+	pop bc
+	jr nc, .next
+	inc b
 .next
 	inc e
 	dec d
-	ret z
-	jr .loop_play_area
+	jr nz, .loop_play_area
+	ld a, b
+	cp 1
+	ccf  ; carry if >= 1
+	ret
 
 
 ; assumes:

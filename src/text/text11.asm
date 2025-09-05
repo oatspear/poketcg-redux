@@ -1174,9 +1174,8 @@ SwarmName:
 	done
 
 SwarmDescription:
-	text "If you have 4 or more Pokémon"
-	line "on your Bench, this attack"
-	line "does 10 more damage."
+	text "If your Bench is full, double this"
+	line "attack's base damage."
 	done
 
 SwarmDescriptionCont:

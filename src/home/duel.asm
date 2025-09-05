@@ -2654,11 +2654,8 @@ ENDC
 ; Knocked Out the target Pokémon
 	ld a, [wIsDamageToSelf]
 	or a
-	jr nz, .after_damage
-; Knocked Out an opponent
-	ld a, DUELVARS_MISC_TURN_FLAGS
-	call GetNonTurnDuelistVariable
-	set TURN_FLAG_KO_OPPONENT_POKEMON_F, [hl]
+	; jr nz, .after_damage
+	call z, SetFlag_KnockedOutOpponentPokemon
 .after_damage
 	pop de
 .skip_knocked_out
@@ -2666,6 +2663,14 @@ ENDC
 	pop bc
 	pop de
 	pop hl
+	ret
+
+
+; Knocked Out an opponent
+SetFlag_KnockedOutOpponentPokemon:
+	ld a, DUELVARS_MISC_TURN_FLAGS
+	call GetTurnDuelistVariable
+	set TURN_FLAG_KO_OPPONENT_POKEMON_F, [hl]
 	ret
 
 

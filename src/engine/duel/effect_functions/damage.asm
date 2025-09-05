@@ -319,9 +319,75 @@ PutDamageCounters_NoAnim_Unchecked:
 	ret
 
 
+; Put 1 damage counter and 1 Poison counter on a selected target.
+SneakyBite_DamageEffect:
+; store trigger, just to reuse code below
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	ldh [hTemp_ffa0], a
+; check duelist type
+	ld a, DUELVARS_DUELIST_TYPE
+	call GetTurnDuelistVariable
+	cp DUELIST_TYPE_LINK_OPP
+	jr z, .link_opp
+	and DUELIST_TYPE_AI_OPP
+	jr nz, .ai_opp
+
+; player
+	call MayDamageTargetPokemon_PlayerSelectEffect
+	call SerialSend8Bytes
+	jr .damage
+
+.link_opp
+	call SerialRecv8Bytes
+	jr .damage
+
+.ai_opp
+; AI just selects the Active Pokémon
+	xor a  ; PLAY_AREA_ARENA
+	ldh [hTempPlayAreaLocation_ffa1], a
+	; fallthrough
+
+.damage
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	ld e, a
+	call PoisonEffect_OpponentPlayArea
+	; jr Curse_DamageEffect
+	; fallthrough
+
+
+Curse_DamageEffect:
+	call SetUsedPokemonPowerThisTurn_RestoreTrigger
+	; fallthrough
+
+Put1DamageCounterOnTarget_DamageEffect:
+	; input e: PLAY_AREA_* of the target
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	ld e, a
+	call SwapTurn
+	call Put1DamageCounterOnTarget
+	call SwapTurn
+	ret nc
+; Knocked Out Defending Pokémon
+	call SetFlag_KnockedOutOpponentPokemon
+	bank1call ClearKnockedOutPokemon_TakePrizes_CheckGameOutcome
+	ret
+
+
 ; ------------------------------------------------------------------------------
 ; Targeted Damage - Player Selection
 ; ------------------------------------------------------------------------------
+
+
+MayDamageTargetPokemon_PlayerSelectEffect:
+	ld a, $ff
+	ldh [hTempPlayAreaLocation_ffa1], a
+	ldtx hl, ChoosePokemonToGiveDamageText
+	call DrawWideTextBox_WaitForInput
+	call SwapTurn
+	call HandlePlayerSelectionPokemonInPlayArea_AllowCancel
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	ldh [hTempPlayAreaLocation_ffa1], a
+	jp SwapTurn
 
 
 ; can choose any Pokémon in Play Area

@@ -69,6 +69,30 @@ CheckDamageToMrMime:
 
 
 
+HandleAISurpriseBiteZubat:
+	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+	call GetNonTurnDuelistVariable
+	dec a  ; do not count Arena
+	or a
+	ret z  ; no Bench Pokemon
+	ld d, a
+	call SwapTurn
+	ld e, PLAY_AREA_BENCH_1
+.loop_bench
+	call GetCardDamageAndMaxHP  ; preserves de
+	cp 1
+	jr c, .found
+	inc e  ; next PLAY_AREA_*
+	dec d  ; decrement counter
+	ret z  ; no valid target
+	jr .loop_bench
+.found
+	ld a, e
+	ldh [hTempPlayAreaLocation_ffa1], a
+	call SwapTurn
+	jp HandleAIDecideToUsePokemonPower
+
+
 
 HandleAIDualTypeFighting:
 	ld a, c

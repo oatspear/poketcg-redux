@@ -484,14 +484,8 @@ HandleAIPkmnPowers:
 	jr .next_1
 .check_battle_frenzy
 	cp NIDORINO
-	jr nz, .check_surprise_bite
-	call HandleAIBattleFrenzy
-	jr .next_1
-	jr .next_1
-.check_surprise_bite
-	cp ZUBAT
 	jr nz, .check_curse
-	call HandleAISurpriseBite
+	call HandleAIBattleFrenzy
 	jr .next_1
 .check_curse
 	cp HAUNTER_LV17
@@ -951,30 +945,6 @@ HandleAIShift:
 .false
 	or a
 	ret
-
-
-HandleAISurpriseBite:
-	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
-	call GetNonTurnDuelistVariable
-	dec a  ; do not count Arena
-	or a
-	ret z  ; no Bench Pokemon
-	ld d, a
-	call SwapTurn
-	ld e, PLAY_AREA_BENCH_1
-.loop_bench
-	call GetCardDamageAndMaxHP  ; preserves de
-	cp 1
-	jr c, .found
-	inc e  ; next PLAY_AREA_*
-	dec d  ; decrement counter
-	ret z  ; no valid target
-	jr .loop_bench
-.found
-	ld a, e
-	ldh [hTempPlayAreaLocation_ffa1], a
-	call SwapTurn
-	jp HandleAIDecideToUsePokemonPower
 
 
 ; checks whether AI uses Curse.

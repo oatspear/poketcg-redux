@@ -1416,14 +1416,16 @@ VoltSwitchDescription:
 	line "new Active Pokémon."
 	done
 
-SurpriseBiteName:
-	text "Surprise Bite"
+SneakyBiteName:
+	text "Sneaky Bite"
 	done
 
-SurpriseBiteDescription:
-	text "Once during your turn, you may"
-	line "put 1 damage counter on 1 of"
-	line "your opponent's Pokémon."
+SneakyBiteDescription:
+	text "When you play this Pokémon from your"
+	line "hand to evolve 1 of your Pokémon"
+	line "during your turn, you may put 1"
+	line "damage counter and 1 Poison counter"
+	line "on 1 of your opponent's Pokémon."
 	done
 
 PhoenixFireName:

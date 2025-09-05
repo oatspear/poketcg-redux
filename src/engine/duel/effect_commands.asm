@@ -145,6 +145,7 @@ LeechLifeEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, LeechLifeEffect
 	db  $00
 
+; unused
 PoisonDrainEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, PoisonDrainEffect
 	db  $00
@@ -844,9 +845,15 @@ MischiefEffectCommands:
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Mischief_PlayerSelectEffect
 	db  $00
 
-SurpriseBiteEffectCommands:
+SneakyBiteEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, PassivePowerEffect
+	dbw EFFECTCMDTYPE_PKMN_POWER_TRIGGER, SneakyBite_DamageEffect
+	db  $00
+
+; unused
+CurseEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, CheckPokemonPowerCanBeUsed_StoreTrigger
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, SurpriseBite_DamageEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Curse_DamageEffect
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, DamageTargetPokemon_PlayerSelectEffect
 	db  $00
 
