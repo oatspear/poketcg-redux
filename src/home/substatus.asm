@@ -416,7 +416,7 @@ CheckPokemonPowerReadyState:
 ; preserves: hl, bc, de
 IsNeutralizingGasActive:
 	ld a, WEEZING
-	jr IsActiveSpotAbilityActive  ; preserves: hl, bc, de
+	jr IsActiveSpotPokeBodyEnabled  ; preserves: hl, bc, de
 
 ; preserves: hl, bc, de
 ArePokeBodiesDisabled:
@@ -445,7 +445,7 @@ ArePokemonPowersDisabled:
 ;   a: 0 if not found; 1 if found
 ;   carry: set iff found and the Ability is enabled
 ; preserves: hl, bc, de
-IsActiveSpotAbilityActive:
+IsActiveSpotPokeBodyEnabled:
 	push hl
 	push bc
 	ld c, a
@@ -543,7 +543,7 @@ IsPrehistoricPowerActive:
 ; preserves: hl, bc, de
 IsOpponentActiveSpotAuraActive:
 	call SwapTurn  ; preserves af
-	call IsActiveSpotAbilityActive  ; preserves: hl, bc, de
+	call IsActiveSpotPokeBodyEnabled  ; preserves: hl, bc, de
 	call SwapTurn
 	ret nc  ; the opponent does not have the Ability
 ; check for Neutralizing Gas on the turn holder's side

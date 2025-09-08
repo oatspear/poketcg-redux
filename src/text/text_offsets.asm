@@ -2741,7 +2741,9 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer RoutDescription
 	textpointer ToxicNeedleName
 	textpointer ToxicNeedleDescriptionCont
+IF DOUBLE_POISON_EXISTS
 	textpointer ToxicDescription
+ENDC
 	textpointer ToxicWasteName
 	textpointer ToxicWasteDescriptionCont
 	textpointer LeechLifeName

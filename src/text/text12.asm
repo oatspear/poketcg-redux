@@ -211,11 +211,13 @@ ToxicNeedleDescriptionCont:
 	line "Conditions, it is now Paralyzed."
 	done
 
+IF DOUBLE_POISON_EXISTS
 ToxicDescription:
 	text "The Defending Pokémon is now Badly"
 	line "Poisoned. It takes 20 Poison damage"
 	line "instead of 10."
 	done
+ENDC
 
 ToxicWasteName:
 	text "Toxic Waste"

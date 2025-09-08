@@ -7794,6 +7794,8 @@ HandleEndOfTurnEffect_Affliction:
 	jp SwapTurn
 
 
+IF POISON_STACKS
+
 HandleEndOfTurnEffect_SeepingToxins:
 	ld a, MUK
 	call IsOpponentActiveSpotAuraActive  ; preserves: bc, de
@@ -7823,6 +7825,40 @@ HandleEndOfTurnEffect_SeepingToxins:
 	dec c
 	jr nz, .loop_play_area
 	jp SwapTurn
+
+ELSE
+
+HandleEndOfTurnEffect_SeepingToxins:
+	ld a, MUK
+	call IsOpponentActiveSpotAuraActive  ; preserves: bc, de
+	ret nc  ; none found
+; Seeping Toxins
+	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+	call GetTurnDuelistVariable
+	ld c, a  ; loop counter
+	ld d, 10  ; damage
+	ld e, PLAY_AREA_ARENA  ; target
+	ld l, DUELVARS_ARENA_CARD_STATUS
+	jr .next  ; skip arena
+.loop_play_area
+	ld a, [hli]
+	and POISONED
+	jr z, .next
+	push hl
+	push bc
+	push de
+	call ShowBetweenTurnsTransitionAtMostOnce
+	pop de
+	pop bc
+	pop hl
+	call ApplyDirectDamage_RegularAnim  ; preserves: hl, de, bc
+.next
+	inc e
+	dec c
+	jr nz, .loop_play_area
+	jp SwapTurn
+
+ENDC
 
 
 HandleEndOfTurnEffect_StatusConditions:
@@ -8315,7 +8351,7 @@ HandlePoisonDamage:
 .not_double_poisoned
 	ld l, a
 	call SwapTurn
-	ld a, MUK
+	ld a, POISON_BOOST_POKEMON_ID
 	call CountPokemonIDInPlayArea  ; preserves: hl, bc, de
 	call SwapTurn
 	jr nc, .got_poison_boost  ; none found

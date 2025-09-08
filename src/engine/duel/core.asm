@@ -7770,7 +7770,6 @@ ENDC
 	call nc, HandleEndOfTurnEffect_Affliction
 	call HandleEndOfTurnEffect_StatusConditions
 	call HandleEndOfTurnEffect_BenchStatusConditions
-	call HandleEndOfTurnEffect_SeepingToxins
 	call HandleEndOfTurnEffect_SaffronGym
 	call HandleEndOfTurnEffect_RocketHeadquarters
 
@@ -8035,37 +8034,6 @@ HandleEndOfTurnEffect_Affliction:
 	jp SwapTurn
 
 
-HandleEndOfTurnEffect_SeepingToxins:
-	ld a, MUK
-	call IsOpponentActiveSpotAuraActive  ; preserves: bc, de
-	ret nc  ; none found
-; Seeping Toxins
-	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
-	call GetTurnDuelistVariable
-	ld c, a  ; loop counter
-	ld d, 10  ; damage
-	ld e, PLAY_AREA_ARENA  ; target
-	ld l, DUELVARS_ARENA_CARD_STATUS
-	jr .next  ; skip arena
-.loop_play_area
-	ld a, [hli]
-	and POISONED
-	jr z, .next
-	push hl
-	push bc
-	push de
-	call ShowBetweenTurnsTransitionAtMostOnce
-	pop de
-	pop bc
-	pop hl
-	call ApplyDirectDamage_RegularAnim  ; preserves: hl, de, bc
-.next
-	inc e
-	dec c
-	jr nz, .loop_play_area
-	jp SwapTurn
-
-
 HandleEndOfTurnEffect_StatusConditions:
 	ld a, DUELVARS_ARENA_CARD
 	call GetTurnDuelistVariable
@@ -8107,8 +8075,8 @@ ENDC
 HandleEndOfTurnEffect_BenchStatusConditions:
 ; calculate how much Poison damage to deal
 	call SwapTurn
-	ld a, MUK
-	call IsActiveSpotAbilityActive  ; preserves: hl, bc, de
+	ld a, POISON_BOOST_POKEMON_ID
+	call IsActiveSpotPokeBodyEnabled  ; preserves: hl, bc, de
 	call SwapTurn
 	ld a, PSN_DAMAGE
 	jr nc, .no_poison_boost
@@ -8118,8 +8086,8 @@ HandleEndOfTurnEffect_BenchStatusConditions:
 
 ; calculate how much Burn damage to deal
 	call SwapTurn
-	ld a, MUK
-	call IsActiveSpotAbilityActive  ; preserves: hl, bc, de
+	ld a, BURN_BOOST_POKEMON_ID
+	call IsActiveSpotPokeBodyEnabled  ; preserves: hl, bc, de
 	call SwapTurn
 	ld a, BURN_DAMAGE
 	jr nc, .no_burn_boost
@@ -8457,7 +8425,7 @@ HandlePoisonDamage:
 	call ShowBetweenTurnsTransitionAtMostOnce
 .poison_boost
 	call SwapTurn
-	ld a, MUK
+	ld a, POISON_BOOST_POKEMON_ID
 	call CountPokemonIDInPlayArea  ; preserves: hl, bc, de
 	call SwapTurn
 	call c, ATimes10  ; some found, preserves hl, bc, de
@@ -8486,7 +8454,7 @@ HandleBurnDamage:
 	call ShowBetweenTurnsTransitionAtMostOnce
 .burn_boost
 	call SwapTurn
-	ld a, MUK
+	ld a, BURN_BOOST_POKEMON_ID
 	call CountPokemonIDInPlayArea  ; preserves: hl, bc, de
 	call SwapTurn
 	call c, ATimes10  ; some found
