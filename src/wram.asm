@@ -725,6 +725,7 @@ wLoadedAttack:: ; cca6
 ; doubles as "wAIAverageDamage" when complementing wAIMinDamage and wAIMaxDamage
 ; ~~little-endian~~  capped at 250
 ; second byte may have UNAFFECTED_BY_WEAKNESS_F and other flags set/unset
+; can also serve as a buffer for amounts of damage to deal/heal outside of attacks
 wDamage:: ; ccb9
 	ds $1
 wDamageFlags:: ; ccba
@@ -1125,6 +1126,7 @@ wEndOfTurnPowerVariables::
 wGarbageEaterDamageToHeal:: ; cdc0
 	ds $1
 
+; reusable
 wLastPlayedCardType:: ; cdc1
 wAlreadyDisplayedBetweenTurnsScreen:: ; cdc1
 	ds $1

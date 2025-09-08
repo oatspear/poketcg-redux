@@ -162,14 +162,14 @@ HealUserHP_NoAnimation:
 ; heals up to the amount of damage in register d for card in
 ; Play Area location in e.
 ; plays healing animation and prints text with card's name.
-; uses: a, de, hl
-; preserves: bc
 ; (no longer) uses: [hTempPlayAreaLocation_ff9d]
 ; input:
 ;	   d: amount of HP to heal
 ;	   e: PLAY_AREA_* of card to heal
 ; output:
 ;    carry: set if not damaged
+; uses: a, de, hl
+; preserves: bc
 HealPlayAreaCardHP:
 ; check its damage
 	; ld d, a

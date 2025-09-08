@@ -422,7 +422,8 @@
 - **Toxic Waste**: increased cost from (DC) to (DDC).
 - **Toxic Waste**: no longer does bonus damage depending on discarded Item cards.
 - **Toxic Waste**: does 10 more damage for every 10 cards in both discard piles combined.
-- New Pokémon Power: **Seeping Toxins**: the opponent's Poisoned Pokémon take 10 more damage from Poison; if Active, Benched Pokémon also take 10 Poison damage.
+- **Toxic Waste**: inflicts Poison on both Active Pokémon.
+- New Pokémon Power: **Black Sludge**: the user does not take damage from Status conditions; heals 20 damage at the end of the player's turns if afflicted by status.
 
 ### Colorless Changes
 

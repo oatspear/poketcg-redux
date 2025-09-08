@@ -2741,19 +2741,12 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer RoutDescription
 	textpointer ToxicNeedleName
 	textpointer ToxicNeedleDescriptionCont
-IF DOUBLE_POISON_EXISTS
-	textpointer ToxicDescription
-ENDC
-	textpointer ToxicWasteName
-	textpointer ToxicWasteDescriptionCont
 	textpointer LeechLifeName
 	textpointer LeechLifeDescription
 	textpointer SproutName
 	textpointer SproutDescription
 	textpointer AromatherapyName
 	textpointer Heal20DamageFromAllDescription
-	; textpointer HealingNectarName                                ; unreferenced
-	; textpointer HealingNectarDescription                         ; unreferenced
 	textpointer SilverWhirlwindName
 	textpointer SilverWhirlwindDescription
 	textpointer MoveAllEnergiesToBenchedPokemonDescription
@@ -3059,11 +3052,26 @@ ENDC
 	textpointer GrassKnotDescription
 	textpointer EnergyBallName
 	textpointer EnergyBallDescription
-	textpointer SeepingToxinsName
-	textpointer SeepingToxinsDescription
 	textpointer GrassyTerrainName
 	textpointer GrassyTerrainDescription
 	textpointer GrassyTerrainStadiumDescription
+
+; Conditional Text -------------------------------------------------------------
+
+IF DOUBLE_POISON_EXISTS
+	textpointer ToxicDescription
+ENDC
+
+IF MUK_VARIANT == 1
+	textpointer BlackSludgeName
+	textpointer BlackSludgeDescription
+	textpointer ToxicWasteName
+	textpointer ToxicWasteDescription
+ELSE
+	textpointer SeepingToxinsName
+	textpointer SeepingToxinsDescription
+ENDC
+
 	textpointer FixmeText
 
 	; unused

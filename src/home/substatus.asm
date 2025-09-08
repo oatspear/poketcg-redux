@@ -372,7 +372,7 @@ CheckCannotUsePokeBody:
 	xor a  ; PLAY_AREA_ARENA
 	; fallthrough
 
-CheckCannotUsePokeBody_PlayArea:
+CheckCannotUsePokeBody_PlayArea:  ; FIXME probably safe to remove
 	call ArePokeBodiesDisabled
 	; ret nc
 	; ldtx hl, UnableToUsePokeBodyText
@@ -469,6 +469,39 @@ IsActiveSpotPokeBodyEnabled:
 .nope
 	xor a  ; reset carry
 .done
+	pop bc
+	pop hl
+	ret
+
+
+; input:
+;   a: ID of the Pokémon to check
+;   e: PLAY_AREA_* of the location to check
+; output:
+;   a: 0 if not found; 1 if found
+;   carry: set iff found
+; preserves: hl, bc, de
+IsPokemonIDAtPlayAreaLocation:
+	push hl
+	push bc
+	push de
+	ld c, a
+; check whether it is the correct Pokémon
+	ld a, DUELVARS_ARENA_CARD
+	add e
+	call GetTurnDuelistVariable
+	call GetCardIDFromDeckIndex  ; preserves bc
+	ld a, e
+	cp c
+	jr nz, .nope
+.yup
+	ld a, 1
+	scf
+	jr .done
+.nope
+	xor a  ; reset carry
+.done
+	pop de
 	pop bc
 	pop hl
 	ret

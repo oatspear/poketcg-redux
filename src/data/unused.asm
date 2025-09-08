@@ -80,7 +80,7 @@ tx VampiricAuraDescription ; description
 tx PokemonPowerDescriptionCont ; description (cont)
 db 0 ; damage
 db POKEMON_POWER ; category
-dw PassivePowerEffectCommands ; effect commands
+dw PassiveAbilityEffectCommands ; effect commands
 db NONE ; flags 1
 db NONE ; flags 2
 db NONE ; flags 3
@@ -115,7 +115,7 @@ tx NoxiousScalesDescription ; description
 tx PokemonPowerDescriptionCont ; description (cont)
 db 0 ; damage
 db POKEMON_POWER ; category
-dw PassivePowerEffectCommands ; effect commands
+dw PassiveAbilityEffectCommands ; effect commands
 db INFLICT_POISON | INFLICT_CONFUSION ; flags 1
 db NONE ; flags 2
 db NONE ; flags 3
@@ -213,7 +213,7 @@ tx StrikeBack20Description ; description
 tx PokemonPowerDescriptionCont ; description (cont)
 db 0 ; damage
 db POKEMON_POWER ; category
-dw PassivePowerEffectCommands ; effect commands
+dw PassiveAbilityEffectCommands ; effect commands
 db NONE ; flags 1
 db NONE ; flags 2
 db NONE ; flags 3
@@ -478,7 +478,7 @@ tx DarkRetributionDescription ; description
 tx PokemonPowerDescriptionCont ; description (cont)
 db 0 ; damage
 db POKEMON_POWER ; category
-dw PassivePowerEffectCommands ; effect commands
+dw PassiveAbilityEffectCommands ; effect commands
 db NONE ; flags 1
 db NONE ; flags 2
 db NONE ; flags 3
@@ -534,7 +534,7 @@ tx DraconicEvolutionDescription ; description
 tx PokemonPowerDescriptionCont ; description (cont)
 db 0 ; damage
 db POKEMON_POWER ; category
-dw PassivePowerEffectCommands ; effect commands
+dw PassiveAbilityEffectCommands ; effect commands
 db NONE ; flags 1
 db NONE ; flags 2
 db NONE ; flags 3
@@ -748,7 +748,7 @@ tx LethargySporesDescription ; description
 tx PokemonPowerDescriptionCont ; description (cont)
 db 0 ; damage
 db POKEMON_POWER ; category
-dw PassivePowerEffectCommands ; effect commands
+dw PassiveAbilityEffectCommands ; effect commands
 db INFLICT_SLEEP ; flags 1
 db NONE ; flags 2
 db NONE ; flags 3
@@ -904,7 +904,7 @@ tx ClairvoyanceDescription ; description
 tx PokemonPowerDescriptionCont ; description (cont)
 db 0 ; damage
 db POKEMON_POWER ; category
-dw PassivePowerEffectCommands ; effect commands
+dw PassiveAbilityEffectCommands ; effect commands
 db NONE ; flags 1
 db NONE ; flags 2
 db NONE ; flags 3
@@ -1162,7 +1162,7 @@ tx PrehistoricPowerDescription ; description
 tx PokemonPowerDescriptionCont ; description (cont)
 db 0 ; damage
 db POKEMON_POWER ; category
-dw PassivePowerEffectCommands ; effect commands
+dw PassiveAbilityEffectCommands ; effect commands
 db NONE ; flags 1
 db NONE ; flags 2
 db NONE ; flags 3
@@ -1344,7 +1344,7 @@ tx SplashingAttacksDescription ; description
 tx PokemonPowerDescriptionCont ; description (cont)
 db 0 ; damage
 db POKEMON_POWER ; category
-dw PassivePowerEffectCommands ; effect commands
+dw PassiveAbilityEffectCommands ; effect commands
 db NONE ; flags 1
 db NONE ; flags 2
 db NONE ; flags 3
@@ -2135,7 +2135,7 @@ MeowthLv14Card:
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKEMON_POWER ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3

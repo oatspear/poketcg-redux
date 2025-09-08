@@ -104,6 +104,22 @@ InflictCrowdControlStatusEffect:
 ; Self-Inflicted Status Effects
 ; ------------------------------------------------------------------------------
 
+SelfPoisonEffect:
+	ld a, ATK_ANIM_SELF_POISON
+	ld c, POISONED
+	; jr SelfInflictDamageOverTimeStatusEffect
+	; fallthrough
+
+; input:
+;   a: ATK_ANIM_* to play
+;   c: Damage Over Time status (POISONED, BURNED)
+SelfInflictDamageOverTimeStatusEffect:
+	ld [wLoadedAttackAnimation], a
+	ld b, $ff
+	ld e, PLAY_AREA_ARENA
+	bank1call InflictDamageOverTimeStatus
+	ret
+
 
 SelfConfusionEffect:
 	ld a, ATK_ANIM_SELF_CONFUSION
@@ -383,6 +399,11 @@ ParalysisIfDamagedSinceLastTurnEffect:
 	bit DAMAGED_SINCE_LAST_TURN_F, a
 	ret z
 	jp ParalysisEffect
+
+
+PoisonAndSelfPoisonEffect:
+	call PoisonEffect
+	jp SelfPoisonEffect
 
 
 PoisonConfusionEffect:

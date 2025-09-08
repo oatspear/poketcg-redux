@@ -46,7 +46,7 @@ EffectCommands:
 ; EFFECTCMDTYPE_AI_SELECTION (for anything not involving switching the defending Pokemon), to handle selections involving the AI.
 
 
-PassivePowerEffectCommands:
+PassiveAbilityEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, PassivePowerEffect
 	db  $00
 
@@ -235,11 +235,7 @@ TerrorStrikeEffectCommands:
 
 ToxicWasteEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ToxicWaste_DamageBoostEffect
-IF DOUBLE_POISON_EXISTS
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DoublePoisonEffect
-ELSE
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, PoisonEffect
-ENDC
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, PoisonAndSelfPoisonEffect
 	dbw EFFECTCMDTYPE_AI, ToxicWaste_AIEffect
 	db  $00
 

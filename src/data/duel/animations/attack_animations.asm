@@ -140,7 +140,7 @@ PointerTable_AttackAnimation:
 	dw AttackAnimation_EnergyConversion    ; ATK_ANIM_ENERGY_CONVERSION
 	dw AttackAnimation_Leer                ; ATK_ANIM_LEER
 	dw AttackAnimation_ConfusionHit        ; ATK_ANIM_CONFUSION_HIT
-	dw AttackAnimation_55e0                ; ATK_ANIM_118
+	dw AttackAnimation_SelfPoison          ; ATK_ANIM_SELF_POISON
 	dw AttackAnimation_Burn                ; ATK_ANIM_BURN
 	dw AttackAnimation_BenchHit            ; ATK_ANIM_BENCH_HIT
 	dw AttackAnimation_Heal                ; ATK_ANIM_HEAL
@@ -877,6 +877,10 @@ AttackAnimation_Burn:
 
 AttackAnimation_Poison:
 	anim_opponent       DUEL_ANIM_POISON
+	anim_end
+
+AttackAnimation_SelfPoison:
+	anim_player         DUEL_ANIM_POISON
 	anim_end
 
 AttackAnimation_Confusion:

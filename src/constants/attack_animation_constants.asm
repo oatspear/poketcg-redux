@@ -120,7 +120,7 @@
 	const ATK_ANIM_ENERGY_CONVERSION      ; $73
 	const ATK_ANIM_LEER                   ; $74
 	const ATK_ANIM_CONFUSION_HIT          ; $75
-	const ATK_ANIM_118                    ; $76
+	const ATK_ANIM_SELF_POISON            ; $76
 	const ATK_ANIM_BURN                   ; $77
 	const ATK_ANIM_BENCH_HIT              ; $78
 	const ATK_ANIM_HEAL                   ; $79

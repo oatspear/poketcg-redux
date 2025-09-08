@@ -248,19 +248,6 @@ EnergyBallDescription:
 	line "<GRASS> Energy attached to this Pokémon."
 	done
 
-SeepingToxinsName:
-	text "Seeping Toxins"
-	done
-
-SeepingToxinsDescription:
-	text "When your opponent's Active Pokémon"
-	line "takes damage from Poison, put 1 more"
-	line "damage counter on it. While this is"
-	line "your Active Pokémon, also put 1 more"
-	line "damage counter on each of your"
-	line "opponent's Poisoned Benched Pokémon."
-	done
-
 GrassyTerrainName:
 	text "Grassy Terrain"
 	done
@@ -279,6 +266,58 @@ GrassyTerrainStadiumDescription:
 	line "opponent's Active Pokémon."
 	done
 
+IF DOUBLE_POISON_EXISTS
+ToxicDescription:
+	text "The Defending Pokémon is now Badly"
+	line "Poisoned. It takes 20 Poison damage"
+	line "instead of 10."
+	done
+ENDC
+
+
+IF MUK_VARIANT == 1
+
+BlackSludgeName:
+	text "Black Sludge"
+	done
+
+BlackSludgeDescription:
+	text "This Pokémon does not take damage"
+	line "from Special Conditions. If this"
+	line "Pokémon remains affected by any"
+	line "Special Conditions at the end of"
+	line "your turns, heal 20 damage from it."
+	done
+
+ToxicWasteName:
+	text "Toxic Waste"
+	done
+
+ToxicWasteDescription:
+	text "This attack does 10 more damage for"
+	line "every 10 cards in both discard piles"
+	line "combined. Both Active Pokémon are"
+	line "now Poisoned."
+	done
+
+ELSE
+
+SeepingToxinsName:
+	text "Seeping Toxins"
+	done
+
+SeepingToxinsDescription:
+	text "When your opponent's Active Pokémon"
+	line "takes damage from Poison, put 1 more"
+	line "damage counter on it. While this is"
+	line "your Active Pokémon, also put 1 more"
+	line "damage counter on each of your"
+	line "opponent's Poisoned Benched Pokémon."
+	done
+
+ENDC
+
+
 FixmeText:
 	text "FIXME"
 	done
@@ -286,6 +325,12 @@ FixmeText:
 ; ------------------------------------------------------------------------------
 ; Unused Text
 ; ------------------------------------------------------------------------------
+
+; ToxicWasteDescriptionCont:
+; 	text "If there are 10 or more Item cards"
+; 	line "in both discard piles combined,"
+; 	line "this attack does 30 more damage."
+; 	done
 
 ; PokedexDescription:
 ; 	text "Look at the top 5 cards of your"

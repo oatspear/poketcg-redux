@@ -18,7 +18,7 @@ BlastoiseCard:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_POWER ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -72,7 +72,7 @@ BlastoiseCard:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3

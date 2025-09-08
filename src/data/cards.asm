@@ -515,7 +515,7 @@ MetapodCard:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -670,7 +670,7 @@ KakunaCard:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -1439,7 +1439,7 @@ VileplumeCard:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -1661,7 +1661,7 @@ VenomothCard:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -1763,7 +1763,7 @@ WeepinbellCard:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -1897,7 +1897,7 @@ GrimerCard:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db HEAL_USER ; flags 2
 	db NONE ; flags 3
@@ -2116,7 +2116,7 @@ WeezingCard:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -2539,7 +2539,7 @@ NinetalesLv35Card:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -3215,7 +3215,7 @@ WartortleCard:
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKE_POWER ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -3319,7 +3319,7 @@ GolduckCard:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -3576,7 +3576,7 @@ TentacruelCard:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -3678,7 +3678,7 @@ DewgongCard:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -3729,7 +3729,7 @@ ShellderCard:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -3781,7 +3781,7 @@ CloysterCard:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -4647,7 +4647,7 @@ OmastarCard:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -5237,7 +5237,7 @@ MagnetonLv28Card:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -5403,7 +5403,7 @@ ElectrodeLv35Card:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -5682,7 +5682,7 @@ JolteonLv29Card:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -5950,7 +5950,7 @@ SandslashCard:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -6256,7 +6256,7 @@ MachokeCard:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -6409,7 +6409,7 @@ GravelerCard:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -6628,7 +6628,7 @@ MarowakLv26Card:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -7083,7 +7083,7 @@ AerodactylCard:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -7440,7 +7440,7 @@ HaunterLv17Card:
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKE_POWER ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -7491,7 +7491,7 @@ HaunterLv22Card:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -7695,7 +7695,7 @@ MrMimeCard:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -7848,7 +7848,7 @@ MewtwoLv60Card:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -7899,7 +7899,7 @@ MewLv8Card:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -8940,7 +8940,7 @@ DodrioCard:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -9055,7 +9055,7 @@ ChanseyCard:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db HEAL_USER ; flags 2
 	db NONE ; flags 3
@@ -9387,7 +9387,7 @@ SnorlaxCard:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -9514,7 +9514,7 @@ DragonairCard:
 	dw NONE ; description (cont)
 	db 0 ; damage
 	db POKE_BODY ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3

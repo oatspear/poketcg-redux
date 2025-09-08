@@ -7951,9 +7951,15 @@ HandleLeftovers:
 	ld a, e
 	cp LEFTOVERS
 	ret nz  ; not Leftovers
-	; fallthrough to BetweenTurns_Heal10DamageFromActivePokemon
+	; jr BetweenTurns_Heal10DamageFromActivePokemon
+	; fallthrough
 
 BetweenTurns_Heal10DamageFromActivePokemon:
+	ld a, 10
+	ld [wDamage], a
+	; fallthrough
+
+BetweenTurns_HealDamageFromActivePokemon:
 	ld e, PLAY_AREA_ARENA
 	call GetCardDamageAndMaxHP  ; preserves: hl, b, de
 	or a
@@ -7961,9 +7967,10 @@ BetweenTurns_Heal10DamageFromActivePokemon:
 ; heal damage
 	push af
 	call ShowBetweenTurnsTransitionAtMostOnce
-	pop af
-	ld d, 10
+	ld a, [wDamage]
+	ld d, a
 	ld e, PLAY_AREA_ARENA
+	pop af
 	farcall HealPlayAreaCardHP.damaged  ; preserves bc
 	ret
 
@@ -8045,11 +8052,15 @@ HandleEndOfTurnEffect_StatusConditions:
 	or a
 	ret z  ; no status
 ; has status condition
+	call HandleBlackSludge  ; preserves: hl, bc, de
+	jr c, .skip_damage_over_time
+	ld a, [hl]
 	call HandlePoisonDamage
 	ld a, [hl]
 	ret c  ; KO
 	call HandleBurnDamage
 	ret c  ; KO
+.skip_damage_over_time
 IF CC_IS_COIN_FLIP
 	; or a
 	ret
@@ -8104,6 +8115,13 @@ HandleEndOfTurnEffect_BenchStatusConditions:
 	jr .next
 
 .loop_play_area
+	ld a, [hl]
+	or a
+	jr z, .next  ; no status
+
+	call HandleBlackSludge_PlayArea  ; preserves: hl, bc, de
+	jr c, .next  ; skip damage over time
+
 	ld a, [hl]
 	and POISONED
 	jr z, .not_poisoned
@@ -8414,6 +8432,61 @@ PrintNonTurnDuelistCardIDText:
 	call LoadCard1NameToRamText
 	pop hl
 	jp DrawWideTextBox_PrintText
+
+
+; Heals damage if afflicted with damage over time status.
+; output:
+;   carry: set if Black Sludge is active
+; preserves: hl
+HandleBlackSludge:
+IF MUK_VARIANT == 1
+	call ArePokeBodiesDisabled  ; preserves: hl, bc, de
+	ccf
+	ret nc  ; disabled
+	ld a, MUK
+	ld e, PLAY_AREA_ARENA
+	call IsPokemonIDAtPlayAreaLocation  ; preserves: hl, bc, de
+	ret nc  ; not found
+; heal 20 damage
+	ld a, 20
+	ld [wDamage], a
+	push hl
+	call BetweenTurns_HealDamageFromActivePokemon
+	pop hl
+	scf
+ENDC
+	ret
+
+
+; Heals damage if afflicted with damage over time status.
+; input:
+;   e: PLAY_AREA_* of the Pokémon to check
+; output:
+;   carry: set if Black Sludge is active
+; preserves: hl, bc, de
+HandleBlackSludge_PlayArea:
+IF MUK_VARIANT == 1
+	call ArePokeBodiesDisabled  ; preserves: hl, bc, de
+	ccf
+	ret nc  ; disabled
+	ld a, MUK
+	call IsPokemonIDAtPlayAreaLocation  ; preserves: hl, bc, de
+	ret nc  ; not found
+; heal 20 damage
+	push hl
+	push bc
+	push de
+	call ShowBetweenTurnsTransitionAtMostOnce
+	pop de
+	pop bc
+	push de  ; e: PLAY_AREA_* of the Pokémon
+	ld d, 20
+	farcall HealPlayAreaCardHP  ; preserves: bc
+	pop de
+	pop hl
+	scf
+ENDC
+	ret
 
 
 HandlePoisonDamage:
