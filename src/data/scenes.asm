@@ -40,15 +40,11 @@ ScenePointers:
 ; dw 0-terminator
 
 Scene_TitleScreen:
-	dw SGBData_TitleScreen
-	dw NULL
 	db PALETTE_25, PALETTE_25, $00
 	db TILEMAP_TITLE_SCREEN, TILEMAP_TITLE_SCREEN, $00, $00
 	db $00
 
 Scene_ColosseumBooster:
-	dw SGBData_ColosseumBooster
-	dw NULL
 	db PALETTE_108, PALETTE_101, $01
 	db TILEMAP_COLOSSEUM, TILEMAP_COLOSSEUM, $80, $00
 	db SPRITE_BOOSTER_PACK_OAM
@@ -57,8 +53,6 @@ Scene_ColosseumBooster:
 	dw $00
 
 Scene_EvolutionBooster:
-	dw SGBData_EvolutionBooster
-	dw NULL
 	db PALETTE_108, PALETTE_102, $01
 	db TILEMAP_EVOLUTION, TILEMAP_EVOLUTION, $80, $00
 	db SPRITE_BOOSTER_PACK_OAM
@@ -67,8 +61,6 @@ Scene_EvolutionBooster:
 	dw $00
 
 Scene_MysteryBooster:
-	dw SGBData_MysteryBooster
-	dw NULL
 	db PALETTE_108, PALETTE_103, $01
 	db TILEMAP_MYSTERY, TILEMAP_MYSTERY, $80, $00
 	db SPRITE_BOOSTER_PACK_OAM
@@ -77,8 +69,6 @@ Scene_MysteryBooster:
 	dw $00
 
 Scene_LaboratoryBooster:
-	dw SGBData_LaboratoryBooster
-	dw NULL
 	db PALETTE_108, PALETTE_104, $01
 	db TILEMAP_LABORATORY, TILEMAP_LABORATORY, $80, $00
 	db SPRITE_BOOSTER_PACK_OAM
@@ -87,85 +77,61 @@ Scene_LaboratoryBooster:
 	dw $00
 
 Scene_CharizardIntro:
-	dw SGBData_CharizardIntro
-	dw NULL
 	db PALETTE_108, PALETTE_105, $01
 	db TILEMAP_CHARIZARD_INTRO, TILEMAP_CHARIZARD_INTRO, $80, $00
 	db $00
 
 Scene_ScytherIntro:
-	dw SGBData_ScytherIntro
-	dw NULL
 	db PALETTE_108, PALETTE_106, $01
 	db TILEMAP_SCYTHER_INTRO, TILEMAP_SCYTHER_INTRO, $80, $00
 	db $00
 
 Scene_AerodactylIntro:
-	dw SGBData_AerodactylIntro
-	dw NULL
 	db PALETTE_108, PALETTE_107, $01
 	db TILEMAP_AERODACTYL_INTRO, TILEMAP_AERODACTYL_INTRO, $80, $00
 	db $00
 
 Scene_GradientBlackAndRed:
-	dw NULL
-	dw NULL
 	db PALETTE_94, PALETTE_94, $00
 	db TILEMAP_SOLID_TILES_1, TILEMAP_SOLID_TILES_1, $01, $00
 	db $00
 
 Scene_GradientWhiteAndRed:
-	dw NULL
-	dw NULL
 	db PALETTE_95, PALETTE_95, $00
 	db TILEMAP_SOLID_TILES_1, TILEMAP_SOLID_TILES_1, $01, $00
 	db $00
 
 Scene_GradientBlackAndGreen:
-	dw NULL
-	dw NULL
 	db PALETTE_96, PALETTE_96, $00
 	db TILEMAP_SOLID_TILES_1, TILEMAP_SOLID_TILES_1, $01, $00
 	db $00
 
 Scene_GradientWhiteAndGreen:
-	dw NULL
-	dw NULL
 	db PALETTE_97, PALETTE_97, $00
 	db TILEMAP_SOLID_TILES_1, TILEMAP_SOLID_TILES_1, $01, $00
 	db $00
 
 Scene_ColorWheel:
-	dw NULL
-	dw NULL
 	db PALETTE_98, PALETTE_98, $00
 	db TILEMAP_SOLID_TILES_2, TILEMAP_SOLID_TILES_2, $01, $00
 	db $00
 
 Scene_ColorTest:
-	dw NULL
-	dw NULL
 	db PALETTE_99, PALETTE_99, $00
 	db TILEMAP_SOLID_TILES_3, TILEMAP_SOLID_TILES_3, $01, $00
 	db $00
 
 Scene_ColorPalette:
-	dw NULL
-	dw NULL
 	db PALETTE_110, PALETTE_110, $00
 	db TILEMAP_SOLID_TILES_4, TILEMAP_SOLID_TILES_4, $fc, $01
 	db $00
 
 Scene_GameBoyLinkConnecting:
-	dw SGBData_GameBoyLink
-	dw NULL
 	db PALETTE_111, PALETTE_111, $00
 	db TILEMAP_GAMEBOY_LINK_CONNECTING, TILEMAP_GAMEBOY_LINK_CONNECTING, $90, $00
 	db $00
 
 Scene_GameBoyLinkTransmitting:
-	dw SGBData_GameBoyLink
-	dw NULL
 	db PALETTE_111, PALETTE_111, $00
 	db TILEMAP_GAMEBOY_LINK, TILEMAP_GAMEBOY_LINK, $90, $00
 	db SPRITE_DUEL_52
@@ -174,8 +140,6 @@ Scene_GameBoyLinkTransmitting:
 	dw $00
 
 Scene_GameBoyLinkNotConnected:
-	dw SGBData_GameBoyLink
-	dw NULL
 	db PALETTE_111, PALETTE_111, $00
 	db TILEMAP_GAMEBOY_LINK, TILEMAP_GAMEBOY_LINK, $90, $00
 	db SPRITE_DUEL_52
@@ -184,8 +148,6 @@ Scene_GameBoyLinkNotConnected:
 	dw $00
 
 Scene_GameBoyPrinterTransmitting:
-	dw SGBData_GameBoyPrinter
-	dw LoadScene_SetGameBoyPrinterAttrBlk
 	db PALETTE_112, PALETTE_112, $00
 	db TILEMAP_GAMEBOY_PRINTER, TILEMAP_GAMEBOY_PRINTER, $90, $00
 	db SPRITE_DUEL_53
@@ -194,8 +156,6 @@ Scene_GameBoyPrinterTransmitting:
 	dw $00
 
 Scene_GameBoyPrinterNotConnected:
-	dw SGBData_GameBoyPrinter
-	dw LoadScene_SetGameBoyPrinterAttrBlk
 	db PALETTE_112, PALETTE_112, $00
 	db TILEMAP_GAMEBOY_PRINTER, TILEMAP_GAMEBOY_PRINTER, $90, $00
 	db SPRITE_DUEL_53
@@ -204,8 +164,6 @@ Scene_GameBoyPrinterNotConnected:
 	dw $00
 
 Scene_CardPop:
-	dw SGBData_CardPop
-	dw LoadScene_SetCardPopAttrBlk
 	db PALETTE_113, PALETTE_113, $00
 	db TILEMAP_CARD_POP, TILEMAP_CARD_POP, $80, $00
 	db SPRITE_DUEL_54
@@ -214,8 +172,6 @@ Scene_CardPop:
 	dw $00
 
 Scene_CardPopError:
-	dw SGBData_CardPop
-	dw LoadScene_SetCardPopAttrBlk
 	db PALETTE_113, PALETTE_113, $00
 	db TILEMAP_CARD_POP, TILEMAP_CARD_POP, $80, $00
 	db SPRITE_DUEL_54
@@ -224,22 +180,16 @@ Scene_CardPopError:
 	dw $00
 
 Scene_Nintendo:
-	dw NULL
-	dw NULL
 	db PALETTE_27, PALETTE_27, $00
 	db TILEMAP_NINTENDO, TILEMAP_NINTENDO, $00, $00
 	db $00
 
 Scene_Companies:
-	dw NULL
-	dw NULL
 	db PALETTE_28, PALETTE_28, $00
 	db TILEMAP_COMPANIES, TILEMAP_COMPANIES, $00, $00
 	db $00
 
 Scene_Copyright:
-	dw NULL
-	dw NULL
 	db PALETTE_26, PALETTE_26, $00
 	db TILEMAP_COPYRIGHT, TILEMAP_COPYRIGHT, $00, $00
 	db $00

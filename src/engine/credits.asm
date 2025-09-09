@@ -35,7 +35,8 @@ PlayCreditsSequence:
 
 Func_1d705:
 	call DisableLCD
-	farcall Func_10a9b
+	xor a
+	ld [wd317], a
 	call Func_3ca0
 	farcall InitMenuScreen
 	call Func_1d7ee

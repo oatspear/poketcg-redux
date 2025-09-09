@@ -57,22 +57,6 @@ AdjustCoordinatesForBGScroll:
 ; The name's text id must be at hl when this function is called.
 ; Mostly used to print text boxes for talked-to NPCs, but occasionally used in duels as well.
 DrawLabeledTextBox:
-	ld a, [wConsole]
-	cp CONSOLE_SGB
-	jr nz, .draw_textbox
-	ld a, [wTextBoxFrameType]
-	or a
-	jr z, .draw_textbox
-; Console is SGB and frame type is != 0.
-; The text box will be colorized so a SGB command needs to be sent as well
-	push de
-	push bc
-	call .draw_textbox
-	pop bc
-	pop de
-	jp ColorizeTextBoxSGB
-
-.draw_textbox
 	push de
 	push bc
 	push hl
@@ -129,16 +113,6 @@ DrawLabeledTextBox:
 	call ProcessText
 	pop bc
 	pop de
-	ld a, [wConsole]
-	cp CONSOLE_CGB
-	jr z, .cgb
-; DMG or SGB
-	inc e
-	call DECoordToBGMap0Address
-	; top border done, draw the rest of the text box
-	jr ContinueDrawingTextBoxDMGorSGB
-
-.cgb
 	call DECoordToBGMap0Address
 	push de
 	call CopyCurrentLineAttrCGB ; BG Map attributes for current line, which is the top border
@@ -147,16 +121,6 @@ DrawLabeledTextBox:
 	; top border done, draw the rest of the text box
 	jp ContinueDrawingTextBoxCGB
 
-; Draws a bxc text box at de to print menu data in the overworld.
-; Also used to print a text box during a duel.
-; When talking to NPCs, DrawLabeledTextBox is used instead.
-DrawRegularTextBox:
-	ld a, [wConsole]
-	cp CONSOLE_CGB
-	jr z, DrawRegularTextBoxCGB
-	cp CONSOLE_SGB
-	jp z, DrawRegularTextBoxSGB
-;	fallthrough
 
 DrawRegularTextBoxDMG:
 	call DECoordToBGMap0Address
@@ -164,11 +128,6 @@ DrawRegularTextBoxDMG:
 	ld a, SYM_BOX_TOP
 	lb de, SYM_BOX_TOP_L, SYM_BOX_TOP_R
 	call CopyLine
-;	fallthrough
-
-; continue drawing a labeled or regular textbox on DMG or SGB:
-; body and bottom line of either type of textbox
-ContinueDrawingTextBoxDMGorSGB:
 	dec c
 	dec c
 .draw_text_box_body_loop
@@ -218,8 +177,10 @@ CopyLine:
 	add sp, BG_MAP_WIDTH
 	ret
 
-; DrawRegularTextBox branches here on CGB console
-DrawRegularTextBoxCGB:
+; Draws a bxc text box at de to print menu data in the overworld.
+; Also used to print a text box during a duel.
+; When talking to NPCs, DrawLabeledTextBox is used instead.
+DrawRegularTextBox:
 	call DECoordToBGMap0Address
 	; top line (border) of the text box
 	ld a, SYM_BOX_TOP
@@ -271,65 +232,3 @@ CopyCurrentLineAttrCGB:
 	call CopyLine
 	call BankswitchVRAM0
 	ret
-
-; DrawRegularTextBox branches here on SGB console
-DrawRegularTextBoxSGB:
-	push bc
-	push de
-	call DrawRegularTextBoxDMG
-	pop de
-	pop bc
-	ld a, [wTextBoxFrameType]
-	or a
-	ret z
-;	fallthrough
-
-ColorizeTextBoxSGB:
-	push bc
-	push de
-	ld hl, wTempSGBPacket
-	ld de, AttrBlkPacket_TextBox
-	ld c, SGB_PACKET_SIZE
-.copy_sgb_command_loop
-	ld a, [de]
-	inc de
-	ld [hli], a
-	dec c
-	jr nz, .copy_sgb_command_loop
-	pop de
-	pop bc
-	ld hl, wTempSGBPacket + 4
-	; set X1, Y1 to d, e
-	ld [hl], d
-	inc hl
-	ld [hl], e
-	inc hl
-	; set X2, Y2 to d+b-1, e+c-1
-	ld a, d
-	add b
-	dec a
-	ld [hli], a
-	ld a, e
-	add c
-	dec a
-	ld [hli], a
-	ld a, [wTextBoxFrameType]
-	and $80
-	jr z, .send_packet
-	; reset ATTR_BLK_CTRL_INSIDE if bit 7 of wTextBoxFrameType is set.
-	; appears to be irrelevant, as the inside of a textbox uses the white color,
-	; which is the same in all four SGB palettes.
-	ld a, ATTR_BLK_CTRL_LINE
-	ld [wTempSGBPacket + 2], a
-.send_packet
-	ld hl, wTempSGBPacket
-	call SendSGB
-	ret
-
-AttrBlkPacket_TextBox:
-	sgb ATTR_BLK, 1 ; sgb_command, length
-	db 1 ; number of data sets
-	; Control Code, Color Palette Designation, X1, Y1, X2, Y2
-	db ATTR_BLK_CTRL_INSIDE + ATTR_BLK_CTRL_LINE, 0 << 0 + 1 << 2, 0, 0, 0, 0 ; data set 1
-	ds 6 ; data set 2
-	ds 2 ; data set 3

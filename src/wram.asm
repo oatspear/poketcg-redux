@@ -852,7 +852,6 @@ wSkipDelayAllowed:: ; ccf2
 SECTION "WRAM0 2", WRAM0
 
 ; on CGB, attributes of the text box borders. (values 0-7 seem to be used, which only affect palette)
-; on SGB, colorize text box border with SGB1 if non-0
 wTextBoxFrameType:: ; ccf3
 	ds $1
 
@@ -2185,7 +2184,8 @@ wBGMapHeight:: ; d130
 wCurTilemap:: ; d131
 	ds $1
 
-wCurMapSGBPals:: ; d132
+; unused
+wd132:: ; d132
 	ds $1
 
 UNION
@@ -2275,6 +2275,7 @@ wd291:: ; d291
 wWriteBGMapToSRAM:: ; d292
 	ds $1
 
+; unused
 wd293:: ; d293
 	ds $1
 
@@ -2539,7 +2540,8 @@ wd417:: ; d417
 wDebugMenuSelection:: ; d418
 	ds $1
 
-wDebugSGBBorder:: ; d419
+; unused
+wd419:: ; d419
 	ds $1
 
 wDebugBoosterSelection:: ; d41a
@@ -2806,11 +2808,9 @@ wd61e:: ; d61e
 wd61f:: ; d61f
 	ds $1
 
-wSceneSGBPacketPtr:: ; d620
-	ds $2
-
-wSceneSGBRoutinePtr:: ; d622
-	ds $2
+; unused
+wd620:: ; d620
+	ds $4
 
 ; whether there exists valid save data
 wHasSaveData:: ; d624

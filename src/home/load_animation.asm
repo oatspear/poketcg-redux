@@ -276,9 +276,9 @@ DrawPortrait:
 	ld [wCurTilemap], a
 	ldh a, [hBankROM]
 	push af
-	ld a, BANK(Func_12fc6)
+	ld a, BANK(_DrawPortrait)
 	call BankswitchROM
-	call Func_12fc6
+	call _DrawPortrait
 	pop af
 	call BankswitchROM
 	ret

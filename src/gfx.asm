@@ -25,14 +25,7 @@ DuelGraphics::
 DuelCardHeaderGraphics::
 INCBIN "gfx/duel/card_headers.2bpp"
 
-DuelDmgSgbSymbolGraphics::
-; INCBIN "gfx/duel/dmg_sgb_symbols.2bpp"
-; INCBIN "gfx/duel/dmg_sgb_symbols2.2bpp"
-INCBIN "gfx/duel/dmg_sgb_symbols3.2bpp"
-
 DuelCgbSymbolGraphics::
-; INCBIN "gfx/duel/cgb_symbols.2bpp", $0, $808
-; INCBIN "gfx/duel/cgb_symbols2.2bpp", $0, $798
 INCBIN "gfx/duel/cgb_symbols3.2bpp", $0, $808
 
 SECTION "Gfx 2", ROMX
@@ -359,11 +352,6 @@ Duel56Gfx::
 	dw $1
 	INCBIN "gfx/duel/anims/56.2bpp"
 
-AnimData12::
-	frame_table AnimFrameTable3
-	frame_data 2, 8, 0, 0
-	frame_data 0, 0, 0, 0
-
 SECTION "Gfx 4", ROMX
 
 OverworldMapTiles::
@@ -485,11 +473,6 @@ AnimData3::
 	frame_table AnimFrameTable0
 	frame_data 8, 16, 0, 0
 	frame_data 9, 16, 0, 0
-	frame_data 0, 0, 0, 0
-
-AnimData11::
-	frame_table AnimFrameTable3
-	frame_data 1, 8, 0, 0
 	frame_data 0, 0, 0, 0
 
 SECTION "Gfx 6", ROMX

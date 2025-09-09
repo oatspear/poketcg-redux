@@ -31,7 +31,6 @@ ReloadMapAfterTextClose:
 
 LoadMapTilesAndPals:
 	farcall LoadMapHeader
-	farcall SetSGB2AndSGB3MapPalette
 	lb bc, 0, 0
 	call LoadTilemap_ToSRAM
 
@@ -1517,11 +1516,11 @@ Func_80cd7:
 	db SPRITE_OW_LASS2,    SPRITE_ANIM_RED_NPC_UP       ; $25
 	db SPRITE_OW_LASS3,    SPRITE_ANIM_GREEN_NPC_UP     ; $26
 	db SPRITE_OW_SWIMMER,  SPRITE_ANIM_YELLOW_NPC_UP    ; $27
-	db SPRITE_OW_CLERK,    SPRITE_ANIM_CGB_CLERK_NPC_UP ; $28
+	db SPRITE_OW_CLERK,    SPRITE_ANIM_CLERK_NPC_UP     ; $28
 	db SPRITE_OW_GAL,      SPRITE_ANIM_YELLOW_NPC_UP    ; $29
 	db SPRITE_OW_WOMAN,    SPRITE_ANIM_RED_NPC_UP       ; $2a
 	db SPRITE_OW_GRANNY,   SPRITE_ANIM_YELLOW_NPC_UP    ; $2b
-	db SPRITE_OW_AMY,      SPRITE_ANIM_CGB_AMY_LAYING   ; $2c
+	db SPRITE_OW_AMY,      SPRITE_ANIM_AMY_LAYING       ; $2c
 
 SpriteNullAnimationPointer:
 	dw SpriteNullAnimationFrame

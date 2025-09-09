@@ -372,7 +372,8 @@ AskToContinueFromDiaryWithDuelData:
 
 DrawPlayerPortraitAndPrintNewGameText:
 	call DisableLCD
-	farcall Func_10a9b
+	xor a
+	ld [wd317], a
 	farcall InitMenuScreen
 	call Func_3ca0
 	ld hl, HandleAllSpriteAnimations

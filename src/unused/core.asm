@@ -1286,15 +1286,15 @@ OpenAttackPage:
 	call FinishQueuedAnimations
 	ld de, v0Tiles1 + $20 tiles
 	call LoadLoaded1CardGfx
-	call SetOBP1OrSGB3ToCardPalette
-	call SetBGP6OrSGB3ToCardPalette
+	call SetOBP1ToCardPalette
+	call SetBGP6ToCardPalette
 	call FlushAllPalettesOrSendPal23Packet
 	lb de, $38, $30 ; X Position and Y Position of top-left corner
 	; lb de, $28, $30 ; X Position and Y Position of top-left corner
 	call PlaceCardImageOAM
 	lb de, 6, 4
 	; lb de, 4, 4
-	call ApplyBGP6OrSGB3ToCardImage
+	call ApplyBGP6ToCardImage
 	ldh a, [hCurMenuItem]
 	ld [wSelectedDuelSubMenuItem], a
 	add a
@@ -2641,13 +2641,13 @@ DrawDuelMainScene:
 	call GetTurnDuelistVariable
 	ld de, v0Tiles1 + $50 tiles
 	call LoadPlayAreaCardGfx
-	call SetBGP7OrSGB2ToCardPalette
+	call SetBGP7ToCardPalette
 	call SwapTurn
 	ld a, DUELVARS_ARENA_CARD
 	call GetTurnDuelistVariable
 	ld de, v0Tiles1 + $20 tiles
 	call LoadPlayAreaCardGfx
-	call SetBGP6OrSGB3ToCardPalette
+	call SetBGP6ToCardPalette
 	call FlushAllPalettesOrSendPal23Packet
 	call SwapTurn
 ; next, draw the Pokemon in the arena
@@ -2661,7 +2661,7 @@ DrawDuelMainScene:
 	lb de, 0, 5
 	lb bc, 8, 6
 	call FillRectangle
-	call ApplyBGP7OrSGB2ToCardImage
+	call ApplyBGP7ToCardImage
 .place_opponent_arena_pkmn
 	call SwapTurn
 	ld a, DUELVARS_ARENA_CARD
@@ -2673,7 +2673,7 @@ DrawDuelMainScene:
 	lb de, 12, 1
 	lb bc, 8, 6
 	call FillRectangle
-	call ApplyBGP6OrSGB3ToCardImage
+	call ApplyBGP6ToCardImage
 .place_other_elements
 	call SwapTurn
 	ld hl, DuelEAndHPTileData
@@ -3102,7 +3102,7 @@ DrawCardListScreenLayout:
 	lb de, 12, 12
 	lb bc, 8, 6
 	call FillRectangle
-	call ApplyBGP6OrSGB3ToCardImage
+	call ApplyBGP6ToCardImage
 	call Func_5744
 	ld a, [wDuelTempList]
 	cp $ff
@@ -3464,8 +3464,8 @@ OpenCardPage:
 	call LoadDuelCardSymbolTiles
 	ld de, v0Tiles1 + $20 tiles
 	call LoadLoaded1CardGfx
-	call SetOBP1OrSGB3ToCardPalette
-	call SetBGP6OrSGB3ToCardPalette
+	call SetOBP1ToCardPalette
+	call SetBGP6ToCardPalette
 	call FlushAllPalettesOrSendPal23Packet
 IF NEW_CARD_PAGE_LAYOUT
 	ld a, [wLoadedCard1Type]
@@ -3481,7 +3481,7 @@ ENDC
 	call PlaceCardImageOAM
 	lb de, 6, 4
 .done_gfx
-	call ApplyBGP6OrSGB3ToCardImage
+	call ApplyBGP6ToCardImage
 	; display the initial card page for the card at wLoadedCard1
 	xor a
 	ld [wCardPageNumber], a
@@ -3655,7 +3655,7 @@ LoadSelectedCardGfx:
 	call LoadCardDataToBuffer1_FromCardID
 	ld de, v0Tiles1 + $20 tiles
 	call LoadLoaded1CardGfx
-	call SetBGP6OrSGB3ToCardPalette
+	call SetBGP6ToCardPalette
 	jp FlushAllPalettesOrSendPal23Packet
 
 
@@ -3957,7 +3957,7 @@ LoadLoaded1CardGfx:
 	lb bc, $30, TILE_SIZE
 	jp LoadCardGfx
 
-SetBGP7OrSGB2ToCardPalette:
+SetBGP7ToCardPalette:
 	ld a, [wConsole]
 	or a ; CONSOLE_DMG
 	ret z
@@ -3978,7 +3978,7 @@ SetBGP7OrSGB2ToCardPalette:
 	jr nz, .copy_pal_loop
 	ret
 
-SetBGP6OrSGB3ToCardPalette:
+SetBGP6ToCardPalette:
 	ld a, [wConsole]
 	or a ; CONSOLE_DMG
 	ret z
@@ -3991,9 +3991,9 @@ SetSGB3ToCardPalette:
 	ld hl, wCardPalette + 2
 	ld de, wTempSGBPacket + 9 ; Pal Packet color #4 (PAL23's SGB3)
 	ld b, 6
-	jr SetBGP7OrSGB2ToCardPalette.copy_pal_loop
+	jr SetBGP7ToCardPalette.copy_pal_loop
 
-SetOBP1OrSGB3ToCardPalette:
+SetOBP1ToCardPalette:
 	ld a, %11100100
 	ld [wOBP0], a
 	ld a, [wConsole]
@@ -4047,7 +4047,7 @@ FlushAllPalettesOrSendPal23Packet:
 	call SendSGB
 	ret
 
-ApplyBGP6OrSGB3ToCardImage:
+ApplyBGP6ToCardImage:
 	ld a, [wConsole]
 	or a ; CONSOLE_DMG
 	ret z
@@ -4064,7 +4064,7 @@ SendCardAttrBlkPacket:
 	call CreateCardAttrBlkPacket
 	jp SendSGB
 
-ApplyBGP7OrSGB2ToCardImage:
+ApplyBGP7ToCardImage:
 	ld a, [wConsole]
 	or a ; CONSOLE_DMG
 	ret z
@@ -4084,9 +4084,9 @@ Func_5a81:
 	cp CONSOLE_SGB
 	jr z, .sgb
 	lb de, 0, 5
-	call ApplyBGP7OrSGB2ToCardImage
+	call ApplyBGP7ToCardImage
 	lb de, 12, 1
-	jp ApplyBGP6OrSGB3ToCardImage
+	jp ApplyBGP6ToCardImage
 
 .sgb
 	ld a, 2 << 0 + 2 << 2 ; Data Set #1: Color Palette Designation
@@ -4652,10 +4652,10 @@ IF NEW_CARD_PAGE_LAYOUT
 ENDC
 	lb de, 6, 4
 IF NEW_CARD_PAGE_LAYOUT
-	jp nc, ApplyBGP6OrSGB3ToCardImage
+	jp nc, ApplyBGP6ToCardImage
 	lb de, 1, 3
 ENDC
-	jp ApplyBGP6OrSGB3ToCardImage
+	jp ApplyBGP6ToCardImage
 
 
 CardPageRetreatWRNumberTextData:
@@ -5033,7 +5033,7 @@ DisplayEnergyOrTrainerCardPage:
 .not_trainer_card
 	; colorize the card image
 	lb de, 6, 4
-	call ApplyBGP6OrSGB3ToCardImage
+	call ApplyBGP6ToCardImage
 	; display the card type header
 	ld a, $e0
 	lb hl, 1, 8
@@ -5127,12 +5127,12 @@ DrawLargePictureOfCard:
 	call LoadCardTypeHeaderTiles
 	ld de, v0Tiles1 + $20 tiles
 	call LoadLoaded1CardGfx
-	call SetBGP6OrSGB3ToCardPalette
+	call SetBGP6ToCardPalette
 	call FlushAllPalettesOrSendPal23Packet
 	ld hl, LargeCardTileData
 	call WriteDataBlocksToBGMap0
 	lb de, 6, 3
-	jp ApplyBGP6OrSGB3ToCardImage
+	jp ApplyBGP6ToCardImage
 
 LargeCardTileData:
 	db  5,  0, $d0, $d4, $d4, $d4, $d4, $d4, $d4, $d4, $d4, $d1, 0 ; top border

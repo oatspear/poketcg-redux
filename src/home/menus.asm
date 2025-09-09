@@ -217,10 +217,6 @@ DrawCardSymbol:
 	dec d
 	dec d
 	dec e
-	ld a, [wConsole]
-	cp CONSOLE_CGB
-	jr nz, .tiles
-	; CGB-only attrs (palette)
 	push hl
 	inc hl
 	ld a, [hl]
@@ -230,7 +226,6 @@ DrawCardSymbol:
 	call FillRectangle
 	call BankswitchVRAM0
 	pop hl
-.tiles
 	ld a, [hl]
 	lb hl, 1, 2
 	lb bc, 2, 2

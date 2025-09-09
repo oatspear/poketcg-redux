@@ -33,19 +33,8 @@ NoOp:
 
 ; sets wConsole and, if CGB, selects WRAM bank 1 and switches to double speed mode
 DetectConsole:
-	ld b, CONSOLE_CGB
-	cp GBC
-	jr z, .got_console
-	call DetectSGB
-	ld b, CONSOLE_DMG
-	jr nc, .got_console
-	call InitSGB
-	ld b, CONSOLE_SGB
-.got_console
-	ld a, b
+	ld a, CONSOLE_CGB
 	ld [wConsole], a
-	cp CONSOLE_CGB
-	ret nz
 	ld a, $01
 	ldh [rSVBK], a
 	call SwitchToCGBDoubleSpeed
@@ -63,9 +52,6 @@ SetupPalettes:
 	ld [hl], a ; wOBP1
 	xor a
 	ld [wFlushPaletteFlags], a
-	ld a, [wConsole]
-	cp CONSOLE_CGB
-	ret nz
 	ld de, wBackgroundPalettesCGB
 	ld c, 16
 .copy_pals_loop
@@ -91,8 +77,6 @@ InitialPalette:
 ; clear VRAM tile data ([wTileMapFill] should be an empty tile)
 SetupVRAM:
 	call FillTileMap
-	call CheckForCGB
-	jr c, .vram0
 	call BankswitchVRAM1
 	call .vram0
 	call BankswitchVRAM0
@@ -120,9 +104,6 @@ FillTileMap:
 	ld a, c
 	or b
 	jr nz, .vram0_loop
-	ld a, [wConsole]
-	cp CONSOLE_CGB
-	ret nz
 	call BankswitchVRAM1
 	ld hl, v1BGMap0
 	ld bc, v1BGMap1 - v1BGMap0

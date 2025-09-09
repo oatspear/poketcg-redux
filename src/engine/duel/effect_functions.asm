@@ -1905,14 +1905,14 @@ HandleColorChangeScreen: ; 2c588 (b:4588)
 	ld l, a
 	lb bc, $30, TILE_SIZE
 	call LoadCardGfx
-	bank1call SetBGP6OrSGB3ToCardPalette
-	bank1call FlushAllPalettesOrSendPal23Packet
+	bank1call SetBGP6ToCardPalette
+	call FlushAllPalettes
 	ld a, $a0
 	lb hl, 6, 1
 	lb de, 9, 2
 	lb bc, 8, 6
 	call FillRectangle
-	bank1call ApplyBGP6OrSGB3ToCardImage
+	bank1call ApplyBGP6ToCardImage
 
 ; print card name and level at the top
 	ld a, 16

@@ -109,8 +109,6 @@ ROMX $19
 	"Text 11"
 ROMX $1a
 	"Text 12"
-ROMX $1c
-	"SGB"
 ROMX $1d
 	"Gfx 1"
 ROMX $1e
