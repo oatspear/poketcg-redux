@@ -206,7 +206,7 @@ INCLUDE "data/overworld_map/overworld_warps.asm"
 
 OverworldMap_InitVolcanoSprite:
 	ld a, SPRITE_OW_MAP_OAM
-	farcall CreateSpriteAndAnimBufferEntry
+	call CreateSpriteAndAnimBufferEntry
 	ld c, SPRITE_ANIM_COORD_X
 	call GetSpriteAnimBufferProperty
 	ld a, $80
@@ -220,8 +220,7 @@ OverworldMap_InitVolcanoSprite:
 	ld b, SPRITE_ANIM_CGB_VOLCANO_SMOKE
 .not_cgb
 	ld a, b
-	farcall StartNewSpriteAnimation
-	ret
+	jp StartNewSpriteAnimation
 
 OverworldMap_InitCursorSprite:
 	ld a, [wOverworldMapSelection]

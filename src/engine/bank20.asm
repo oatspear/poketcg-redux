@@ -1199,7 +1199,7 @@ Func_80baa:
 	ld [wCurTilemap], a
 
 	push bc
-	farcall LoadTilemap ; unnecessary farcall
+	call LoadTilemap
 	pop bc
 	srl b
 	ld a, c
@@ -1346,12 +1346,12 @@ Func_80cd7:
 	ld [wd4ca], a
 	ld [wd4cb], a
 	ld a, PALETTE_0
-	farcall SetBGPAndLoadedPal
+	call SetBGPAndLoadedPal
 	xor a
 	ld [wd4ca], a
 	ld [wd4cb], a
 	ld a, PALETTE_29
-	farcall LoadPaletteData
+	call LoadPaletteData
 	ld a, SOUTH
 	ld [wLoadNPCDirection], a
 	ld a, $01
