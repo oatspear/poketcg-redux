@@ -1288,6 +1288,11 @@ ContinueFromDiaryText: ; 3ef50 (f:6f50)
 	text "CONTINUE FROM DIARY?"
 	done
 
+ExclusiveToGameBoyColorsText:
+	text "This game is exclusive"
+	line "to the Game Boy Color."
+	done
+
 IsCrazyAboutPokemonAndPokemonCardCollectingText: ; 3efc3 (f:6fc3)
 	text "<RAMNAME> is crazy about Pokémon"
 	line "and Pokémon card collecting!"

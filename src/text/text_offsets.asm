@@ -766,6 +766,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer AllDataWasDeletedText                              ; 0x0375
 	textpointer DataExistsWhenPowerWasTurnedOFFDuringDuelText      ; 0x0376
 	textpointer ContinueFromDiaryText                              ; 0x0377
+	textpointer ExclusiveToGameBoyColorsText
 	textpointer IsCrazyAboutPokemonAndPokemonCardCollectingText    ; 0x0379
 	textpointer DebugMenuText                                      ; 0x037a
 	textpointer Text037b                                           ; 0x037b
