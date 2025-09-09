@@ -2671,7 +2671,7 @@ GetMad_MoveDamageCountersEffect:
 		bank1call DrawWholeScreenTextBox
 		xor a
 		ldh [hCurSelectionItem], a
-		bank1call Func_61a1
+		bank1call SetupPlayAreaScreen
 	.loop_player
 		xor a
 		ldh [hTemp_ffa0], a
@@ -5710,7 +5710,7 @@ DamageSwap_SelectAndSwapEffect: ; 2dba2 (b:5ba2)
 	cp DUELIST_TYPE_PLAYER
 	jr z, .player
 ; non-player
-	bank1call Func_61a1
+	bank1call SetupPlayAreaScreen
 	bank1call PrintPlayAreaCardList_EnableLCD
 	ret
 
@@ -5719,7 +5719,7 @@ DamageSwap_SelectAndSwapEffect: ; 2dba2 (b:5ba2)
 	bank1call DrawWholeScreenTextBox
 	xor a
 	ldh [hCurSelectionItem], a
-	bank1call Func_61a1
+	bank1call SetupPlayAreaScreen
 
 .start
 	bank1call PrintPlayAreaCardList_EnableLCD
@@ -7455,7 +7455,7 @@ Curse_PlayerSelectEffect: ; 2d834 (b:5834)
 	call SwapTurn
 	xor a
 	ldh [hCurSelectionItem], a
-	bank1call Func_61a1
+	bank1call SetupPlayAreaScreen
 .start
 	bank1call PrintPlayAreaCardList_EnableLCD
 	push af
@@ -7556,7 +7556,7 @@ Curse_TransferDamageEffect: ; 2d8bb (b:58bb)
 	jr z, .vs_player
 
 ; vs. opponent
-	bank1call Func_61a1
+	bank1call SetupPlayAreaScreen
 .vs_player
 ; transfer the damage counter to the targets that were selected.
 	ldh a, [hPlayAreaEffectTarget]
@@ -7917,7 +7917,7 @@ Gigashock_PlayerSelectEffect: ; 2e60d (b:660d)
 	xor a
 	ldh [hCurSelectionItem], a
 	ld [wce72], a
-	bank1call Func_61a1
+	bank1call SetupPlayAreaScreen
 .start
 	bank1call PrintPlayAreaCardList_EnableLCD
 	push af

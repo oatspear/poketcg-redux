@@ -5549,7 +5549,7 @@ Func_6186:
 
 ;
 Func_2c10b:
-	call Func_61a1
+	call SetupPlayAreaScreen
 	call PrintPlayAreaCardList_EnableLCD
 	; jr Func_6194
 	; fallthrough
@@ -5561,7 +5561,7 @@ Func_6194:
 	ld d, 0
 	jp SetCursorParametersForTextBox_Default
 
-Func_61a1:
+SetupPlayAreaScreen:
 	xor a
 	ld [wExcludeArenaPokemon], a
 	ld a, [wDuelDisplayedScreen]

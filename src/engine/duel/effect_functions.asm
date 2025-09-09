@@ -764,7 +764,7 @@ StrangeBehavior_SelectAndSwapEffect:
 	jr z, .player
 
 ; not player
-	bank1call Func_61a1
+	bank1call SetupPlayAreaScreen
 	bank1call PrintPlayAreaCardList_EnableLCD
 	ret
 
@@ -774,7 +774,7 @@ StrangeBehavior_SelectAndSwapEffect:
 
 	xor a
 	ldh [hCurSelectionItem], a
-	bank1call Func_61a1
+	bank1call SetupPlayAreaScreen
 .loop
 	call Move1DamageCounterToRecipient_PlayerSelectEffect
 	ret z  ; B was pressed
@@ -2310,14 +2310,14 @@ EnergyTrans_TransferEffect: ; 2cb77 (b:4b77)
 	cp DUELIST_TYPE_PLAYER
 	jr z, .player
 ; not player
-	bank1call Func_61a1
+	bank1call SetupPlayAreaScreen
 	bank1call PrintPlayAreaCardList_EnableLCD
 	ret
 
 .player
 	xor a
 	ldh [hCurSelectionItem], a
-	bank1call Func_61a1
+	bank1call SetupPlayAreaScreen
 
 .draw_play_area
 	bank1call PrintPlayAreaCardList_EnableLCD
@@ -4091,7 +4091,8 @@ SelectUpTo2Benched_PlayerSelectEffect:
 	xor a
 	ldh [hCurSelectionItem], a
 	ld [wce72], a
-	bank1call Func_61a1
+	bank1call SetDefaultConsolePalettes
+	bank1call SetupPlayAreaScreen
 .start
 	bank1call PrintPlayAreaCardList_EnableLCD
 	push af
