@@ -265,13 +265,6 @@ AerodactylIntroTilemap::
 	db TRUE ; cgb mode
 	INCBIN "data/maps/tiles/aerodactyl_intro_cgb.bin"
 
-JapaneseTitleScreenTilemap::
-	db $14 ; width
-	db $12 ; height
-	dw NULL
-	db TRUE ; cgb mode
-	INCBIN "data/maps/tiles/japanese_title_screen_cgb.bin"
-
 SolidTiles1Tilemap::
 	db $14 ; width
 	db $12 ; height
@@ -292,13 +285,6 @@ SolidTiles3Tilemap::
 	dw NULL
 	db TRUE ; cgb mode
 	INCBIN "data/maps/tiles/solid_tiles_3.bin"
-
-JapaneseTitleScreen2Tilemap::
-	db $14 ; width
-	db $12 ; height
-	dw NULL
-	db TRUE ; cgb mode
-	INCBIN "data/maps/tiles/japanese_title_screen_2_cgb.bin"
 
 SolidTiles4Tilemap::
 	db $08 ; width
@@ -570,10 +556,6 @@ AerodactylIntroGfx::
 	dw 96
 	INCBIN "gfx/titlescreen/booster_packs/aerodactylintro.2bpp"
 
-JapaneseTitleScreenGfx::
-	dw 97
-	INCBIN "gfx/titlescreen/japanese_title_screen_cgb.2bpp"
-
 CompaniesGfx::
 	dw 49
 	INCBIN "gfx/companies.2bpp"
@@ -589,10 +571,6 @@ AnimData5::
 	frame_data 0, 0, 0, 0
 
 SECTION "Gfx 8", ROMX
-
-JapaneseTitleScreen2Gfx::
-	dw 315
-	INCBIN "gfx/titlescreen/japanese_title_screen_2_cgb.2bpp"
 
 TitleScreenGfx::
 	dw 212
