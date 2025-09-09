@@ -427,20 +427,13 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer WaterAndFightingDeckName                           ; 0x0210
 	textpointer GrassAndPsychicDeckName                            ; 0x0211
 	textpointer RetreatCostText                                    ; 0x0212
-	textpointer Text0213                                           ; 0x0213
-	textpointer Text0214                                           ; 0x0214
 	textpointer FeetText                                           ; 0x0215
 	textpointer InchesText                                         ; 0x0216
 	textpointer YourDiscardPileText                                ; 0x0217
 	textpointer OpponentsDiscardPileText                           ; 0x0218
 	textpointer DeckText                                           ; 0x0219
-	textpointer Text021a                                           ; 0x021a
-	textpointer Text021b                                           ; 0x021b
-	textpointer Text021c                                           ; 0x021c
 	textpointer EndText                                            ; 0x021d
 	textpointer WhatIsYourNameText                                 ; 0x021e
-	textpointer Text021f                                           ; 0x021f
-	textpointer Text0220                                           ; 0x0220
 	textpointer PlayerNameKeyboardText                             ; 0x0221
 	textpointer DeckNameKeyboardText                               ; 0x0222
 	textpointer NewDeckText                                        ; 0x0223
@@ -449,7 +442,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ChangeNameText                                     ; 0x0226
 	textpointer SelectDeckText                                     ; 0x0227
 	textpointer CancelText                                         ; 0x0228
-	textpointer Text0229                                           ; 0x0229
 	textpointer ChosenAsDuelingDeckText                            ; 0x022a
 	textpointer Deck1Text                                          ; 0x022b
 	textpointer Deck2Text                                          ; 0x022c
@@ -476,11 +468,9 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer YourPokemonText                                    ; 0x023f
 	textpointer YourDiscardPileText2                               ; 0x0240
 	textpointer YourHandText                                       ; 0x0241
-	textpointer Text0242                                           ; 0x0242
 	textpointer OpponentsPokemonText                               ; 0x0243
 	textpointer OpponentsDiscardPileText2                          ; 0x0244
 	textpointer OpponentsHandText                                  ; 0x0245
-	textpointer Text0246                                           ; 0x0246
 	textpointer DuelistsPlayAreaText                               ; 0x0247
 	textpointer YourPlayAreaText                                   ; 0x0248
 	textpointer OppPlayAreaText                                    ; 0x0249
@@ -507,11 +497,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer DeleteADeckText                                    ; 0x025e
 	textpointer BuildADeckText                                     ; 0x025f
 	textpointer ChooseADeckToSaveText                              ; 0x0260
-	textpointer Text0261                                           ; 0x0261
-	textpointer Text0262                                           ; 0x0262
 	textpointer SavedTheConfigurationForText                       ; 0x0263
-	textpointer Text0264                                           ; 0x0264
-	textpointer Text0265                                           ; 0x0265
 	textpointer DoYouReallyWishToDeleteText                        ; 0x0266
 	textpointer DeletedTheConfigurationForText                     ; 0x0267
 	textpointer YouMayOnlyCarry4DecksText                          ; 0x0268
@@ -535,7 +521,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PrintThisCardYesNoText                             ; 0x0274
 	textpointer PleaseChooseDeckConfigurationToPrintText           ; 0x0275
 	textpointer PrintThisDeckText                                  ; 0x0276
-	textpointer Text0277                                           ; 0x0277
 	textpointer PrintMenuItemsText                                 ; 0x0278
 	textpointer WhatWouldYouLikeToPrintText                        ; 0x0279
 	textpointer PleaseSetTheContrastText                           ; 0x027a
@@ -550,7 +535,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ReceivedTheseCardsFromText                         ; 0x0283
 	textpointer PleaseChooseADeckConfigurationToSendText           ; 0x0284
 	textpointer PleaseChooseASaveSlotText                          ; 0x0285
-	textpointer Text0286                                           ; 0x0286
 	textpointer ReceivedADeckConfigurationFromText                 ; 0x0287
 	textpointer FightingMachineText                                ; 0x0288
 	textpointer RockMachineText                                    ; 0x0289
@@ -702,11 +686,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer WeaknessDescriptionText                            ; 0x031b
 	textpointer ResistanceDescriptionText                          ; 0x031c
 	textpointer RetreatingDescriptionText                          ; 0x031d
-	textpointer Text031e                                           ; 0x031e
-	textpointer Text031f                                           ; 0x031f
-	textpointer Text0320                                           ; 0x0320
-	textpointer Text0321                                           ; 0x0321
-	textpointer Text0322                                           ; 0x0322
 	textpointer OverworldMapMasonLaboratoryText                    ; 0x0323
 	textpointer OverworldMapIshiharasHouseText                     ; 0x0324
 	textpointer OverworldMapFightingClubText                       ; 0x0325
@@ -732,7 +711,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer FireClubMapNameText                                ; 0x0339
 	textpointer ChallengeHallMapNameText                           ; 0x033a
 	textpointer PokemonDomeMapNameText                             ; 0x033b
-	textpointer Text033c                                           ; 0x033c
 	textpointer PauseMenuOptionsText                               ; 0x033d
 	textpointer DebugPauseMenuOptionsText                          ; 0x033e
 	textpointer PlayerStatusNameText                               ; 0x033f
@@ -749,11 +727,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ConfigMenuMessageSpeedText                         ; 0x0349
 	textpointer ConfigMenuDuelAnimationText                        ; 0x034a
 	textpointer ConfigMenuExitText                                 ; 0x034b
-	textpointer Text034c                                           ; 0x034c
-	textpointer Text034d                                           ; 0x034d
-	textpointer Text034e                                           ; 0x034e
-	textpointer Text034f                                           ; 0x034f
-	textpointer Text0350                                           ; 0x0350
 	textpointer Text0351                                           ; 0x0351
 	textpointer TurnedPCOnText                                     ; 0x0352
 	textpointer TurnedPCOffText                                    ; 0x0353
@@ -810,15 +783,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer CheckedCardsInBoosterPackText                      ; 0x0389
 	textpointer Text038a                                           ; 0x038a
 	textpointer WonTheMedalText                                    ; 0x038b
-	textpointer Text038c                                           ; 0x038c
-	textpointer Text038d                                           ; 0x038d
-	textpointer Text038e                                           ; 0x038e
-	textpointer Text038f                                           ; 0x038f
-	textpointer Text0390                                           ; 0x0390
-	textpointer Text0391                                           ; 0x0391
-	textpointer Text0392                                           ; 0x0392
-	textpointer Text0393                                           ; 0x0393
-	textpointer Text0394                                           ; 0x0394
 	textpointer OpponentTitleAndNameText                           ; 0x0395
 	textpointer OpponentDeckNameText                               ; 0x0396
 	textpointer FightingClubMemberText                             ; 0x0397

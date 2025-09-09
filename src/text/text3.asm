@@ -48,11 +48,6 @@ PrintThisDeckText: ; 3c11d (f:411d)
 	text "Print this Deck?"
 	done
 
-Text0277: ; 3c12f (f:412f)
-	text "Print the card list?"
-	line "      Yes     No"
-	done
-
 PrintMenuItemsText: ; 3c156 (f:4156)
 	text "Pokémon Cards"
 	line "Deck Configuration"
@@ -123,10 +118,6 @@ PleaseChooseADeckConfigurationToSendText: ; 3c389 (f:4389)
 
 PleaseChooseASaveSlotText: ; 3c3b7 (f:43b7)
 	text "Please choose a Save Slot."
-	done
-
-Text0286: ; 3c3d3 (f:43d3)
-	text "Receive configuration."
 	done
 
 ReceivedADeckConfigurationFromText: ; 3c3eb (f:43eb)
@@ -910,46 +901,6 @@ RetreatingDescriptionText: ; 3e3c8 (f:63c8)
 	line "of the retreating Pokémon."
 	done
 
-Text031e: ; 3e4ed (f:64ed)
-	text "Modify Deck"
-	line "Card List"
-	line "Album List"
-	line "Deck Save Machine"
-	line "Printing Menu"
-	line "Auto Deck Machine"
-	line "Gift Center"
-	line "Name Input"
-	done
-
-Text031f: ; 3e558 (f:6558)
-	text "Fighting Machine"
-	line "Rock Machine"
-	line "Water Machine"
-	line "Lightning Machine"
-	line "Grass Machine"
-	line "Psychic Machine"
-	line "Science Machine"
-	line "Fire Machine"
-	line "Auto Machine"
-	line "Legendary Machine"
-	done
-
-Text0320: ; 3e5f1 (f:65f1)
-	text "Send a Card"
-	line "Receive a Card"
-	line "Give Deck Instructions"
-	line "Receive Deck Instructions"
-	done
-
-Text0321: ; 3e63e (f:663e)
-	text "Lecture Duel"
-	done
-
-Text0322: ; 3e64c (f:664c)
-	text "First Strike Deck"
-	line ""
-	done
-
 OverworldMapMasonLaboratoryText: ; 3e660 (f:6660)
 	text "  Mason Laboratory  "
 	done
@@ -1050,10 +1001,6 @@ PokemonDomeMapNameText: ; 3e7f6 (f:67f6)
 	text "Pokémon Dome"
 	done
 
-Text033c: ; 3e804 (f:6804)
-	text "??'s House"
-	done
-
 PauseMenuOptionsText: ; 3e810 (f:6810)
 	text "Status"
 	line "Diary"
@@ -1139,30 +1086,6 @@ ConfigMenuDuelAnimationText: ; 3e96c (f:696c)
 
 ConfigMenuExitText: ; 3e9a0 (f:69a0)
 	text "   Exit Settings"
-	done
-
-Text034c: ; 3e9b2 (f:69b2)
-	text "Duel           [<RAMTEXT>]"
-	line "SELECT         [<RAMTEXT>]"
-	line "Receive many cards"
-	line "To Pokémon Dome 1"
-	line "To Pokémon Dome 2"
-	done
-
-Text034d: ; 3ea10 (f:6a10)
-	text "Normal Duel"
-	done
-
-Text034e: ; 3ea1d (f:6a1d)
-	text "Skip"
-	done
-
-Text034f: ; 3ea23 (f:6a23)
-	text "Normal"
-	done
-
-Text0350: ; 3ea2b (f:6a2b)
-	text "Freeze Screen"
 	done
 
 Text0351: ; 3ea3a (f:6a3a)
@@ -1485,47 +1408,6 @@ Text038a: ; 3f373 (f:7373)
 WonTheMedalText: ; 3f39b (f:739b)
 	text "<RAMNAME>"
 	line "Won the <RAMTEXT> Medal!"
-	done
-
-Text038c: ; 3f3af (f:73af)
-	text "Substitute screen for sending"
-	line "cards by Link cable."
-	done
-
-Text038d: ; 3f3e3 (f:73e3)
-	text "Substitute screen for receiving"
-	line "cards by Link cable."
-	done
-
-Text038e: ; 3f419 (f:7419)
-	text "Substitute screen for sending"
-	line "a Deck design."
-	done
-
-Text038f: ; 3f447 (f:7447)
-	text "Substitute screen for receiving"
-	line "a Deck design."
-	done
-
-Text0390: ; 3f477 (f:7477)
-	text "????"
-	done
-
-Text0391: ; 3f47d (f:747d)
-	text "Ending Screen"
-	line "THE END"
-	done
-
-Text0392: ; 3f494 (f:7494)
-	text "Was the data transfer successful?"
-	done
-
-Text0393: ; 3f4b7 (f:74b7)
-	text "(Person transferring data to)"
-	done
-
-Text0394: ; 3f4d6 (f:74d6)
-	text "(Name of Deck transferring)"
 	done
 
 OpponentTitleAndNameText: ; 3f4f3 (f:74f3)

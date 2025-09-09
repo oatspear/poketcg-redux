@@ -1017,14 +1017,6 @@ RetreatCostText: ; 3b76e (e:776e)
 	text "Retreat Cost"
 	done
 
-Text0213: ; 3b77c (e:777c)
-	textfw3 "SWITCH TO UPPER"
-	done
-
-Text0214: ; 3b799 (e:7799)
-	textfw3 "SWITCH TO LOWER"
-	done
-
 FeetText: ; 3b7b6 (e:77b6)
 	textfw3 "'"
 	done
@@ -1045,56 +1037,12 @@ DeckText: ; 3b7e8 (e:77e8)
 	text "Deck"
 	done
 
-Text021a: ; 3b7ee (e:77ee)
-	hiragana "ひらがナ"
-	done
-
-Text021b: ; 3b7f4 (e:77f4)
-	textfw0 "カタカナ"
-	done
-
-Text021c: ; 3b7f9 (e:77f9)
-	textfw3 "ABC"
-	done
-
 EndText: ; 3b800 (e:7800)
 	text "End"
 	done
 
 WhatIsYourNameText: ; 3b805 (e:7805)
 	text "What is your name?"
-	done
-
-Text021f: ; 3b819 (e:7819)
-	hiragana "あ か さ た な は ま や ら"
-	line ""
-	textfw0 "い き し ち に ひ み ゆ り"
-	line ""
-	textfw0 "う く す つ ぬ ふ む よ る"
-	line ""
-	textfw0 "え け せ て ね へ め わ れ"
-	line ""
-	textfw0 "お こ そ と の ほ も ん ろ"
-	line ""
-	textfw0 "ゃ ゅ ょ っ を "
-	textfw3 "゛ ゜ "
-	textfw0 "—"
-	done
-
-Text0220: ; 3b886 (e:7886)
-	textfw0 "ア カ サ タ ナ ハ マ ヤ ラ"
-	line ""
-	textfw0 "イ キ シ チ ニ ヒ ミ ユ リ"
-	line ""
-	textfw0 "ウ ク ス ツ ヌ フ ム ヨ ル"
-	line ""
-	textfw0 "エ ケ セ テ ネ ヘ メ ワ レ"
-	line ""
-	textfw0 "オ コ ソ ト ノ ホ モ ン ロ"
-	line ""
-	textfw0 "ャ ュ ョ ッ ヲ "
-	textfw3 "゛ ゜ "
-	textfw0 "—"
 	done
 
 PlayerNameKeyboardText: ; 3b8f2 (e:78f2)
@@ -1155,10 +1103,6 @@ SelectDeckText: ; 3ba3c (e:7a3c)
 
 CancelText: ; 3ba49 (e:7a49)
 	text "Cancel"
-	done
-
-Text0229: ; 3ba51 (e:7a51)
-	text "as"
 	done
 
 ChosenAsDuelingDeckText: ; 3ba55 (e:7a55)
@@ -1269,10 +1213,6 @@ YourHandText: ; 3bc2b (e:7c2b)
 	text "Your Hand"
 	done
 
-Text0242: ; 3bc36 (e:7c36)
-	text "To Your Play Area"
-	done
-
 OpponentsPokemonText: ; 3bc49 (e:7c49)
 	text "Opponent's Pokémon"
 	done
@@ -1283,10 +1223,6 @@ OpponentsDiscardPileText2: ; 3bc5d (e:7c5d)
 
 OpponentsHandText: ; 3bc76 (e:7c76)
 	text "Opponent Hand"
-	done
-
-Text0246: ; 3bc85 (e:7c85)
-	text "To Opponent's Play Area"
 	done
 
 DuelistsPlayAreaText: ; 3bc9e (e:7c9e)
@@ -1394,28 +1330,10 @@ ChooseADeckToSaveText: ; 3be2c (e:7e2c)
 	text "Choose a Deck to Save."
 	done
 
-Text0261: ; 3be44 (e:7e44)
-	text "You may only Save 60 Decks."
-	line "Please Delete a Deck first."
-	done
-
-Text0262: ; 3be7d (e:7e7d)
-	text "for"
-	done
-
 SavedTheConfigurationForText: ; 3be82 (e:7e82)
 	text "Saved the configuration for"
 	line ""
 	text "<RAMTEXT>! "
-	done
-
-Text0264: ; 3bea4 (e:7ea4)
-	text "No Deck is saved."
-	done
-
-Text0265: ; 3beb7 (e:7eb7)
-	text "Please choose a Deck "
-	line "configuration to delete."
 	done
 
 DoYouReallyWishToDeleteText: ; 3bee7 (e:7ee7)
