@@ -98,7 +98,7 @@
 #### Fuchsia Gym
 
 - Stadium Trainer card.
-- Whenever a Pokémon card is played from the hand, put 1 damage counter and 1 Poison counter on that Pokémon.
+- Whenever a Pokémon card is played from the hand, Poison that Pokémon and put 1 damage counter on it.
 
 #### Saffron Gym
 
@@ -404,7 +404,7 @@
 - HP increased from 70 to 80.
 - **Vampiric Aura**: removed.
 - **Night Ambush**: removed.
-- New Pokémon Power: **Sneaky Bite**: when played, put 1 damage counter and 1 poison counter on 1 of the opponent's Pokémon.
+- New Pokémon Power: **Sneaky Bite**: when played, Poison 1 of the opponent's Pokémon and put 1 damage counter on it.
 - New attack: **Leech Life** (CC): 20 damage; heal damage equal to damage done.
 
 #### Weezing

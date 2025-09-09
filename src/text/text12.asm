@@ -1407,9 +1407,9 @@ SneakyBiteName:
 SneakyBiteDescription:
 	text "When you play this Pokémon from your"
 	line "hand to evolve 1 of your Pokémon"
-	line "during your turn, you may put 1"
-	line "damage counter and 1 Poison counter"
-	line "on 1 of your opponent's Pokémon."
+	line "during your turn, you may Poison"
+	line "1 of your opponent's Pokémon and"
+	line "put 1 damage counter on it."
 	done
 
 PhoenixFireName:

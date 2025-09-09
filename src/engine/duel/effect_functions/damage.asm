@@ -319,7 +319,7 @@ PutDamageCounters_NoAnim_Unchecked:
 	ret
 
 
-; Put 1 damage counter and 1 Poison counter on a selected target.
+; Put 1 damage counter and Poison a selected target.
 SneakyBite_DamageEffect:
 ; store trigger, just to reuse code below
 	ldh a, [hTempPlayAreaLocation_ff9d]

@@ -593,8 +593,8 @@ FuchsiaGymDescription:
 	text "Whenever any player plays a Pokémon"
 	line "from their hand to put on their"
 	line "Bench or to evolve 1 of their"
-	line "Pokémon, put 1 damage counter and"
-	line "1 Poison counter on that Pokémon."
+	line "Pokémon, Poison that Pokémon and put"
+	line "1 damage counter on it."
 	done
 
 SaffronGymName:
