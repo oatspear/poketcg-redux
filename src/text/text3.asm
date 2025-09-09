@@ -1288,12 +1288,6 @@ ContinueFromDiaryText: ; 3ef50 (f:6f50)
 	text "CONTINUE FROM DIARY?"
 	done
 
-YouCanAccessCardPopOnlyWithGameBoyColorsText: ; 3ef66 (f:6f66)
-	text "You can access Card Pop! only"
-	line "with two Game Boy Colors."
-	line "Please play using a Game Boy Color."
-	done
-
 IsCrazyAboutPokemonAndPokemonCardCollectingText: ; 3efc3 (f:6fc3)
 	text "<RAMNAME> is crazy about Pokémon"
 	line "and Pokémon card collecting!"

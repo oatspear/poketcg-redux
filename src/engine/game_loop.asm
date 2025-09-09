@@ -15,6 +15,12 @@ GameLoop:
 	ld a, 1
 	ld [wUppercaseHalfWidthLetters], a
 	ei
+
+; disclaimer for GB
+	ld a, [wConsole]
+	cp CONSOLE_CGB
+	jp nz, CGBDisclaimer
+
 	ldh a, [hKeysHeld]
 	cp A_BUTTON | B_BUTTON
 	jr z, .ask_erase_backup_ram
@@ -51,4 +57,19 @@ SetupResetBackUpRamScreen:
 	call SetupText
 	ret
 
-	ret ; stray ret
+; shows disclaimer in case player is not playing in CGB
+; return carry if disclaimer was shown
+CGBDisclaimer:
+	call SetupResetBackUpRamScreen
+	call EmptyScreen
+	lb de, 0, 11
+	lb bc, 20, 7
+	call DrawRegularTextBox
+	lb de, 4, 13
+	call InitTextPrinting
+	ldtx hl, ExclusiveToGameBoyColorsText
+	call PrintTextNoDelay
+	call EnableLCD
+.loop
+	call DoFrame
+	jr .loop
