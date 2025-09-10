@@ -1888,6 +1888,7 @@ HandleColorChangeScreen: ; 2c588 (b:4588)
 	call EmptyScreen
 	call ZeroObjectPositions
 	call LoadDuelCardSymbolTiles
+	bank1call SetDefaultConsolePalettes
 
 ; load card data
 	pop af
@@ -1899,20 +1900,15 @@ HandleColorChangeScreen: ; 2c588 (b:4588)
 
 ; draw card gfx
 	ld de, v0Tiles1 + $20 tiles ; destination offset of loaded gfx
-	ld hl, wLoadedCard1Gfx
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	lb bc, $30, TILE_SIZE
-	call LoadCardGfx
-	bank1call SetBGP6ToCardPalette
+	call LoadLoadedCard1Gfx
+	bank1call SetBGP5ToCardPalette
 	call FlushAllPalettes
 	ld a, $a0
 	lb hl, 6, 1
 	lb de, 9, 2
 	lb bc, 8, 6
 	call FillRectangle
-	bank1call ApplyBGP6ToCardImage
+	bank1call ApplyCardCGBAttributes
 
 ; print card name and level at the top
 	ld a, 16
@@ -2028,12 +2024,12 @@ ShiftMenuData: ; 2c6a1 (b:46a1)
 
 ColorTileAndBGP: ; 2c6ae (b:46ae)
 	; tile, BG
-	db $e4, $02
-	db $e0, $01
-	db $eC, $02
-	db $e8, $01
-	db $f0, $03
-	db $f4, $03
+	db $e4, $3
+	db $e0, $2
+	db $eC, $3
+	db $e8, $2
+	db $f0, $4
+	db $f4, $4
 
 ShiftListItemToColor: ; 2c6ba (b:46ba)
 	db GRASS

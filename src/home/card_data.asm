@@ -223,12 +223,16 @@ GetAltCardPointer:
 	ret
 
 ; input:
-; hl = card_gfx_index
+; wLoadedCard1 = card with gfx to load
 ; de = where to load the card gfx to
 ; bc are supposed to be $30 (number of tiles of a card gfx) and TILE_SIZE respectively
 ; card_gfx_index = (<Name>CardGfx - CardGraphics) / 8  (using absolute ROM addresses)
 ; also copies the card's palette to wCardPalette
-LoadCardGfx:
+LoadLoadedCard1Gfx:
+	ld hl, wLoadedCard1Gfx
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
 	ldh a, [hBankROM]
 	push af
 	push hl
@@ -246,18 +250,32 @@ LoadCardGfx:
 	add hl, hl
 	res 7, h
 	set 6, h ; $4000 ≤ hl ≤ $7fff
-	call CopyGfxData
-	ld b, CGB_PAL_SIZE
+	push de
 	ld de, wCardPalette
+	ld b, 3 palettes
 .copy_card_palette
 	ld a, [hli]
 	ld [de], a
 	inc de
 	dec b
 	jr nz, .copy_card_palette
+
+	; de = wCardAttrMap
+	ld b, $30
+.copy_card_attrmap
+	ld a, [hli]
+	ld [de], a
+	inc de
+	dec b
+	jr nz, .copy_card_attrmap
+
+	pop de
+	lb bc, $30, TILE_SIZE
+	call CopyGfxData
 	pop af
 	call BankswitchROM
 	ret
+
 
 ; identical to CopyFontsOrDuelGraphicsTiles
 CopyFontsOrDuelGraphicsTiles2:

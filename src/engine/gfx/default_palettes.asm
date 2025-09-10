@@ -9,8 +9,8 @@ Func_12871:
 	ldh [hSCY], a
 	ldh [hWX], a
 	ldh [hWY], a
-	call SetWindowOff
-	ret
+	jp SetWindowOff
+
 
 ; same as SetDefaultConsolePalettes
 ; but forces all wBGP, wOBP0 and wOBP1
@@ -23,7 +23,7 @@ SetDefaultPalettes:
 	ld [wBGP], a
 	ld [wOBP0], a
 	ld [wOBP1], a
-	ld a, 4
+	ld a, $1
 	ld [wTextBoxFrameType], a
 	bank1call SetDefaultConsolePalettes
 	call FlushAllPalettes

@@ -1285,7 +1285,7 @@ OpenAttackPage:
 	call EmptyScreen
 	call FinishQueuedAnimations
 	ld de, v0Tiles1 + $20 tiles
-	call LoadLoaded1CardGfx
+	call LoadLoadedCard1Gfx
 	call SetOBP1ToCardPalette
 	call SetBGP6ToCardPalette
 	call FlushAllPalettesOrSendPal23Packet
@@ -3463,7 +3463,7 @@ OpenCardPage:
 	; load the graphics and display the card image of wLoadedCard1
 	call LoadDuelCardSymbolTiles
 	ld de, v0Tiles1 + $20 tiles
-	call LoadLoaded1CardGfx
+	call LoadLoadedCard1Gfx
 	call SetOBP1ToCardPalette
 	call SetBGP6ToCardPalette
 	call FlushAllPalettesOrSendPal23Packet
@@ -3654,7 +3654,7 @@ LoadSelectedCardGfx:
 	call GetCardInDuelTempList
 	call LoadCardDataToBuffer1_FromCardID
 	ld de, v0Tiles1 + $20 tiles
-	call LoadLoaded1CardGfx
+	call LoadLoadedCard1Gfx
 	call SetBGP6ToCardPalette
 	jp FlushAllPalettesOrSendPal23Packet
 
@@ -3949,7 +3949,7 @@ LoadPlayAreaCardGfx:
 ;	fallthrough
 
 ; load the graphics (tiles and palette) of the card loaded in wLoadedCard1 to de
-LoadLoaded1CardGfx:
+LoadLoadedCard1Gfx:
 	ld hl, wLoadedCard1Gfx
 	ld a, [hli]
 	ld h, [hl]
@@ -5126,7 +5126,7 @@ DrawLargePictureOfCard:
 	ld a, e
 	call LoadCardTypeHeaderTiles
 	ld de, v0Tiles1 + $20 tiles
-	call LoadLoaded1CardGfx
+	call LoadLoadedCard1Gfx
 	call SetBGP6ToCardPalette
 	call FlushAllPalettesOrSendPal23Packet
 	ld hl, LargeCardTileData
