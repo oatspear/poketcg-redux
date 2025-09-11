@@ -14,7 +14,7 @@ rom_obj := \
 RGBDS ?=
 RGBASM  ?= $(RGBDS)rgbasm0.7
 RGBFIX  ?= $(RGBDS)rgbfix0.7
-RGBGFX  ?= $(RGBDS)rgbgfx0.7
+RGBGFX  ?= $(RGBDS)rgbgfx0.9.4
 RGBLINK ?= $(RGBDS)rgblink0.7
 
 
