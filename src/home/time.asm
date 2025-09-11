@@ -69,6 +69,8 @@ IncrementPlayTimeCounter:
 ; setup timer to 16384/68 ≈ 240.94 Hz
 SetupTimer:
 	ld b, -68 ; Value for Normal Speed
+	call CheckForCGB
+	jr c, .set_timer
 	ldh a, [rKEY1]
 	and $80
 	jr z, .set_timer
@@ -80,4 +82,12 @@ SetupTimer:
 	ldh [rTAC], a
 	ld a, TAC_START | TAC_16384_HZ
 	ldh [rTAC], a
+	ret
+
+; return carry if not CGB
+CheckForCGB::
+	ld a, [wConsole]
+	cp CONSOLE_CGB
+	ret z
+	scf
 	ret

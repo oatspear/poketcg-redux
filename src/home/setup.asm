@@ -33,12 +33,18 @@ NoOp:
 
 ; sets wConsole and, if CGB, selects WRAM bank 1 and switches to double speed mode
 DetectConsole:
-	ld a, CONSOLE_CGB
+	ld b, CONSOLE_CGB
+	cp GBC
+	jr z, .got_console
+	ld b, CONSOLE_DMG
+.got_console
+	ld a, b
 	ld [wConsole], a
+	cp CONSOLE_CGB
+	ret nz
 	ld a, $01
 	ldh [rSVBK], a
-	call SwitchToCGBDoubleSpeed
-	ret
+	jp SwitchToCGBDoubleSpeed
 
 ; initialize the palettes (both monochrome and color)
 SetupPalettes:
@@ -52,6 +58,9 @@ SetupPalettes:
 	ld [hl], a ; wOBP1
 	xor a
 	ld [wFlushPaletteFlags], a
+	ld a, [wConsole]
+	cp CONSOLE_CGB
+	ret nz
 	ld de, wBackgroundPalettesCGB
 	ld c, 16
 .copy_pals_loop
@@ -65,8 +74,7 @@ SetupPalettes:
 	jr nz, .copy_bytes_loop
 	dec c
 	jr nz, .copy_pals_loop
-	call FlushAllCGBPalettes
-	ret
+	jp FlushAllCGBPalettes
 
 InitialPalette:
 	rgb 28, 28, 24
@@ -77,6 +85,8 @@ InitialPalette:
 ; clear VRAM tile data ([wTileMapFill] should be an empty tile)
 SetupVRAM:
 	call FillTileMap
+	call CheckForCGB
+	jr c, .vram0
 	call BankswitchVRAM1
 	call .vram0
 	call BankswitchVRAM0
@@ -104,6 +114,9 @@ FillTileMap:
 	ld a, c
 	or b
 	jr nz, .vram0_loop
+	ld a, [wConsole]
+	cp CONSOLE_CGB
+	ret nz
 	call BankswitchVRAM1
 	ld hl, v1BGMap0
 	ld bc, v1BGMap1 - v1BGMap0
