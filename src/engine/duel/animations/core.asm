@@ -503,25 +503,25 @@ Func_1cb5e:
 
 	ld a, PALETTE_37
 	farcall LoadPaletteData
-	call Func_1cba6
+	call DrawDamageAnimationNumbers
 
 	ld hl, wDuelAnimSetScreen
-	bit 0, [hl]
-	call nz, Func_1cc3e
+	bit 0, [hl]  ; weakness
+	call nz, DrawDamageAnimationWeakness
 
-	ld a, $12
-	ld [wd4b8], a
-	bit 1, [hl]
-	call nz, Func_1cc4e
+	ld a, 18
+	ld [wd4b8], a  ; wDamageCharAnimDelay
+	bit 1, [hl]  ; resistance
+	call nz, DrawDamageAnimationResistance
 
 	bit 2, [hl]
-	call nz, Func_1cc66
+	call nz, DrawDamageAnimationArrow
 
 	xor a
 	ld [wDuelAnimSetScreen], a
 	ret
 
-Func_1cba6:
+DrawDamageAnimationNumbers:
 	call Func_1cc03
 	xor a
 	ld [wd4b7], a
@@ -534,7 +534,7 @@ Func_1cba6:
 	ld a, [hl]
 	or a
 	jr z, .asm_1cbbc
-	call Func_1cbcc
+	call CreateDamageCharSprite
 
 .asm_1cbbc
 	pop de
@@ -548,7 +548,7 @@ Func_1cba6:
 	jr c, .asm_1cbb3
 	ret
 
-Func_1cbcc:
+CreateDamageCharSprite:
 	push af
 	ld a, SPRITE_DUEL_4
 	farcall CreateSpriteAndAnimBufferEntry
@@ -589,28 +589,28 @@ Func_1cc03:
 
 	ld de, wDecimalChars
 	ld bc, -100
-	call .Func_1cc2f
+	call .ConvertDigitToCharTile
 	ld bc, -10
-	call .Func_1cc2f
+	call .ConvertDigitToCharTile
 
 	ld a, l
-	add $4f
+	add SPRITE_ANIM_79 ; 0 char
 	ld [de], a
 	ld hl, wDecimalChars
 	ld c, 2
-.asm_1cc23
+.loop_check_zeroes
 	ld a, [hl]
-	cp $4f
-	jr nz, .asm_1cc2e
+	cp SPRITE_ANIM_79 ; 0 char
+	jr nz, .done
 	ld [hl], $00
 	inc hl
 	dec c
-	jr nz, .asm_1cc23
-.asm_1cc2e
+	jr nz, .loop_check_zeroes
+.done
 	ret
 
-.Func_1cc2f
-	ld a, $4e
+.ConvertDigitToCharTile
+	ld a, SPRITE_ANIM_79 - 1
 .loop
 	inc a
 	add hl, bc
@@ -626,35 +626,35 @@ Func_1cc03:
 	ld h, a
 	ret
 
-Func_1cc3e:
+DrawDamageAnimationWeakness:
 	push hl
 	ld a, $03
 	ld [wd4b7], a
 	ld de, wAnimationQueue + 4
 	ld a, SPRITE_ANIM_91
-	call Func_1cbcc
+	call CreateDamageCharSprite
 	pop hl
 	ret
 
-Func_1cc4e:
+DrawDamageAnimationResistance:
 	push hl
 	ld a, $04
 	ld [wd4b7], a
 	ld de, wAnimationQueue + 5
 	ld a, SPRITE_ANIM_90
-	call Func_1cbcc
+	call CreateDamageCharSprite
 	ld a, [wd4b8]
 	add $12
 	ld [wd4b8], a
 	pop hl
 	ret
 
-Func_1cc66:
+DrawDamageAnimationArrow:
 	push hl
 	ld a, $05
 	ld [wd4b7], a
 	ld de, wAnimationQueue + 6
 	ld a, SPRITE_ANIM_89
-	call Func_1cbcc
+	call CreateDamageCharSprite
 	pop hl
 	ret
