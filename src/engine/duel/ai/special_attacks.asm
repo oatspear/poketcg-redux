@@ -67,7 +67,7 @@ HandleSpecialAIAttacks:
 	jp z, .DragonDance
 	cp HORSEA
 	jp z, .DragonDance
-	cp RED_GYARADOS
+	cp GYARADOS_SHINY
 	jp z, .HyperBeam
 	cp DRAGONITE_LV45
 	jp z, .HyperBeam

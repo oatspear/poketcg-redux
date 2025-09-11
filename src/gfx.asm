@@ -1646,7 +1646,7 @@ GyaradosCardGfx::
 	INCBIN "gfx/cards/gyarados.attrmap"
 	INCBIN "gfx/cards/gyarados.2bpp"
 
-RedGyaradosCardGfx::
+GyaradosShinyCardGfx::
 	INCBIN "gfx/cards/gyarados_shiny.pal"
 	INCBIN "gfx/cards/gyarados_shiny.attrmap"
 	INCBIN "gfx/cards/gyarados_shiny.2bpp"
@@ -1882,7 +1882,7 @@ AlakazamCardGfx::
 	INCBIN "gfx/cards/alakazam.attrmap"
 	INCBIN "gfx/cards/alakazam.2bpp"
 
-SlowpokeLv9CardGfx::
+SlowpokeCardGfx::
 	INCBIN "gfx/cards/slowpoke.pal"
 	INCBIN "gfx/cards/slowpoke.attrmap"
 	INCBIN "gfx/cards/slowpoke.2bpp"
@@ -1907,7 +1907,7 @@ MrMimeCardGfx::
 	INCBIN "gfx/cards/mr_mime.attrmap"
 	INCBIN "gfx/cards/mr_mime.2bpp"
 
-GastlyLv17CardGfx::
+GastlyCardGfx::
 	INCBIN "gfx/cards/gastly.pal"
 	INCBIN "gfx/cards/gastly.attrmap"
 	INCBIN "gfx/cards/gastly.2bpp"
@@ -1994,7 +1994,7 @@ DodrioCardGfx::
 	INCBIN "gfx/cards/dodrio.attrmap"
 	INCBIN "gfx/cards/dodrio.2bpp"
 
-JigglypuffLv13CardGfx::
+JigglypuffCardGfx::
 	INCBIN "gfx/cards/jigglypuff.pal"
 	INCBIN "gfx/cards/jigglypuff.attrmap"
 	INCBIN "gfx/cards/jigglypuff.2bpp"
@@ -2004,7 +2004,7 @@ WigglytuffLv36CardGfx::
 	INCBIN "gfx/cards/wigglytuff1.attrmap"
 	INCBIN "gfx/cards/wigglytuff1.2bpp"
 
-MeowthLv15CardGfx::
+MeowthCardGfx::
 	INCBIN "gfx/cards/meowth.pal"
 	INCBIN "gfx/cards/meowth.attrmap"
 	INCBIN "gfx/cards/meowth.2bpp"
@@ -2111,7 +2111,7 @@ ImakuniCardGfx::
 	INCBIN "gfx/cards/imakuni.attrmap"
 	INCBIN "gfx/cards/imakuni.2bpp"
 
-PokemonTraderCardGfx::
+PokemonTraderCardGfx::  ; unused
 	INCBIN "gfx/cards/pokemon_trader.pal"
 	INCBIN "gfx/cards/pokemon_trader.attrmap"
 	INCBIN "gfx/cards/pokemon_trader.2bpp"

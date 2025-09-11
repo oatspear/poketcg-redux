@@ -89,7 +89,7 @@ CardPointers:
 	dw StarmieCard
 	dw MagikarpCard
 	dw GyaradosCard
-	dw RedGyaradosCard
+	dw GyaradosShinyCard
 	dw LaprasCard
 	dw VaporeonLv29Card
 	dw VaporeonLv42Card
@@ -142,7 +142,7 @@ CardPointers:
 	dw AbraCard
 	dw KadabraCard
 	dw AlakazamCard
-	dw SlowpokeLv9Card
+	dw SlowpokeCard
 	dw SlowbroCard
 	dw GastlyCard
 	dw HaunterLv17Card
@@ -169,7 +169,7 @@ CardPointers:
 	dw JigglypuffCard
 	dw WigglytuffLv28Card
 	dw WigglytuffLv36Card
-	dw MeowthLv15Card
+	dw MeowthCard
 	dw PersianCard
 	dw FarfetchdCard
 	dw DoduoCard
@@ -4473,13 +4473,13 @@ GyaradosCard:
 	tx GyaradosDescription ; description
 	db 0
 
-RedGyaradosCard:
+GyaradosShinyCard:
 	db TYPE_PKMN_WATER ; type
-	gfx RedGyaradosCardGfx ; gfx
+	gfx GyaradosShinyCardGfx ; gfx
 	tx GyaradosName ; name
 	db STAR ; rarity
 	db COLOSSEUM | GB ; sets
-	db RED_GYARADOS
+	db GYARADOS_SHINY
 	db 80 ; hp
 	db STAGE1 ; stage
 	tx MagikarpName ; pre-evo name
@@ -7413,9 +7413,9 @@ AlakazamCard:
 	tx AlakazamDescription ; description
 	db 0
 
-SlowpokeLv9Card:
+SlowpokeCard:
 	db TYPE_PKMN_PSYCHIC ; type
-	gfx SlowpokeLv9CardGfx ; gfx
+	gfx SlowpokeCardGfx ; gfx
 	tx SlowpokeName ; name
 	db CIRCLE ; rarity
 	db LABORATORY | FOSSIL ; sets
@@ -7517,7 +7517,7 @@ SlowbroCard:
 
 GastlyCard:
 	db TYPE_PKMN_DARKNESS ; type
-	gfx GastlyLv17CardGfx ; gfx
+	gfx GastlyCardGfx ; gfx
 	tx GastlyName ; name
 	db DIAMOND ; rarity
 	db LABORATORY | FOSSIL ; sets
@@ -8639,7 +8639,7 @@ ClefableCard:
 
 JigglypuffCard:
 	db TYPE_PKMN_PSYCHIC ; type
-	gfx JigglypuffLv13CardGfx ; gfx
+	gfx JigglypuffCardGfx ; gfx
 	tx JigglypuffName ; name
 	db CIRCLE ; rarity
 	db EVOLUTION | GB ; sets
@@ -8822,9 +8822,9 @@ WigglytuffLv36Card:
 	tx WigglytuffDescription ; description
 	db 0
 
-MeowthLv15Card:
+MeowthCard:
 	db TYPE_PKMN_COLORLESS ; type
-	gfx MeowthLv15CardGfx ; gfx
+	gfx MeowthCardGfx ; gfx
 	tx MeowthName ; name
 	db CIRCLE ; rarity
 	db MYSTERY | JUNGLE ; sets

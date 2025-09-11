@@ -195,7 +195,7 @@ CheckIfEnergyIsUseful:
 	ld a, [wTempCardID]
 
 ; Dragon Rage users benefit from all kinds of energy
-	cp RED_GYARADOS
+	cp GYARADOS_SHINY
 	jr z, .set_carry
 	cp DRAGONITE_LV41
 	jr z, .set_carry
