@@ -44,13 +44,13 @@ PolitoedCard:
 	db 2 ; retreat cost
 	db WR_LIGHTNING ; weakness
 	db NONE ; resistance
-	tx TadpoleName ; category
-	db 62 ; Pokedex number
+	tx FrogName ; category
+	db 186 ; Pokedex number
 	db 0
-	db 48 ; level
-	db 4, 3 ; length
-	dw 119 * 10 ; weight
-	tx PoliwrathDescription ; description
+	db 52 ; level
+	db 3, 7 ; length
+	dw 74 * 10 ; weight
+	tx PolitoedDescription ; description
 	db 0
 
 ENDC

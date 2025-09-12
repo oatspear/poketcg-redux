@@ -1315,6 +1315,10 @@ TadpoleName:
 	text "Tadpole"
 	done
 
+FrogName:
+	text "Frog"
+	done
+
 PsiName:
 	text "Psi"
 	done

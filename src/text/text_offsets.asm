@@ -1949,6 +1949,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PuppyName
 	textpointer LegendaryName
 	textpointer TadpoleName
+	textpointer FrogName
 	textpointer PsiName
 	textpointer SuperpowerName
 	textpointer FlycatcherName
