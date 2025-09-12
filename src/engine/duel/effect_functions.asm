@@ -903,7 +903,7 @@ VoltSwitchEffect:
 ; ------------------------------------------------------------------------------
 
 AssassinsReturnEffect:
-	call Deal90DamageToTarget_DamageEffect
+	call Deal40DamageToTarget_DamageEffect
 	jp Fly_ReturnToHandEffect
 
 

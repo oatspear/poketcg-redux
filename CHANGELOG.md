@@ -54,6 +54,14 @@
 - Poké-Power: **Rain Dance**: you may attach any number of Water Energy from the hand on your turns.
 - Attack 2: **Powerful Splash** (WCC): 10 damage; +10 damage for each Water Energy on your Play Area and for each Water Pokémon on your Bench.
 
+#### Crobat
+- Stage 2, 110 HP, Darkness Pokémon, evolves from Golbat.
+- Weakness: Lightning.
+- Resistance: Fighting.
+- Retreat Cost: 2.
+- Poké-Power: **Night Ambush**: when played from the hand to evolve, choose up to 2 of the opponent's Pokémon to Poison and put 1 damage counter.
+- Attack 2: **Assassin's Return** (CC): does 40 damage to 1 of the opponent's Pokémon; returns to the hand with all attached cards.
+
 #### X Attack
 
 - Pokémon Tool Trainer card.

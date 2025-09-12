@@ -1396,6 +1396,7 @@ MetronomeEffectCommands:
 	db  $00
 
 FlyEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckBenchIsNotEmpty
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Fly_ReturnToHandEffect
 	db  $00
 
@@ -1602,6 +1603,7 @@ Deal40ToAnyPokemonEffectCommands:
 	db  $00
 
 AssassinsReturnEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckBenchIsNotEmpty
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, DamageTargetPokemon_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, AssassinsReturnEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, DamageTargetPokemon_AISelectEffect

@@ -48,7 +48,7 @@ Prank_AISelectEffect:
 
 
 AssassinsFlight_AIEffect:
-	ld a, 90
+	ld a, 40
 	ld [wDamage], a
 	jp SetDefiniteAIDamage
 

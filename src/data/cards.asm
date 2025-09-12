@@ -1298,7 +1298,7 @@ CrobatCard:
 	energy COLORLESS, 2 ; energies
 	tx AssassinsReturnName ; name
 	tx AssassinsReturnDescription ; description
-	dw NONE ; description (cont)
+	tx FlyDescription ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category
 	dw AssassinsReturnEffectCommands ; effect commands

@@ -1546,10 +1546,8 @@ AssassinsReturnName:
 	done
 
 AssassinsReturnDescription:
-	text "This attack does 90 damage to 1 of"
+	text "This attack does 40 damage to 1 of"
 	line "your opponent's Pokémon."
 	line "(Don't apply Weakness and Resistance"
 	line "for Benched Pokémon.)"
-	line "Put this Pokémon into your hand."
-	line "(Discard all cards attached to it.)"
 	done
