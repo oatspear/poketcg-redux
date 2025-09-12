@@ -2342,6 +2342,11 @@ SurfingPikachuLv13CardGfx::
 
 SECTION "Card Gfx 13", ROMX
 
+CrobatCardGfx::
+	INCBIN "gfx/cards/crobat.pal"
+	INCBIN "gfx/cards/crobat.attrmap"
+	INCBIN "gfx/cards/crobat.2bpp"
+
 PikachuLv16CardGfx::
 	INCBIN "gfx/cards/pikachu2.pal"
 	INCBIN "gfx/cards/pikachu2.attrmap"

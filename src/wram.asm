@@ -998,14 +998,19 @@ wCoinTossNumTails:: ; cd9f
 wCoinTossNumTossed:: ; cd9f
 	ds $1
 
-wOverkillDamage:: ; cd9a
+wOverkillDamage:: ; cda0
 	ds $1
 
-wPlayAreaFilterFunctionPointer:: ; cd9b
+wPlayAreaFilterFunctionPointer:: ; cda1
 	ds $2
 
-; unused free space
-	ds $2
+; bitmask, bit zero = arena
+wPlayAreaMarkedLocations:: ; cda3
+	ds $1
+
+; SYM_* constant
+wPlayAreaMarkingSymbol:: ; cda4
+	ds $1
 
 wAIDuelVars::
 ; saves the prizes that the AI already used Peek on

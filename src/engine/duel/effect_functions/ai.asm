@@ -47,6 +47,12 @@ Prank_AISelectEffect:
 ; ------------------------------------------------------------------------------
 
 
+AssassinsFlight_AIEffect:
+	ld a, 90
+	ld [wDamage], a
+	jp SetDefiniteAIDamage
+
+
 Solarbeam_AIEffect:
 	ld c, TRUE
 	call Helper_CreateEnergyCardListFromHand

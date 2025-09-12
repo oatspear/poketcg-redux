@@ -1558,3 +1558,14 @@ GeneticName:
 NewSpeciesName:
 	text "New Species"
 	done
+
+
+CrobatName:
+	text "Crobat"
+	done
+
+CrobatDescription:
+	text "Having four wings enables it to fly"
+	line "faster and more quietly. It turns"
+	line "active when the night comes."
+	done

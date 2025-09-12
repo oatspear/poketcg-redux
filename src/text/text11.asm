@@ -1092,8 +1092,8 @@ FlyName:
 	done
 
 FlyDescription:
-	text "Return this Pokémon and all cards"
-	line "attached to it to your hand."
+	text "Put this Pokémon and all cards"
+	line "attached to it into your hand."
 	done
 
 CycloneName:
@@ -1643,4 +1643,17 @@ PowerfulSplashDescription:
 	line "each <WATER> Energy attached to each of"
 	line "your Pokémon and for each <WATER> Pokémon"
 	line "on your Bench."
+	done
+
+NightAmbushName:
+	text "Night Ambush"
+	done
+
+NightAmbushDescription:
+	text "When you play this Pokémon from your"
+	line "hand to evolve 1 of your Pokémon"
+	line "during your turn, you may choose up"
+	line "to 2 of your opponent's Pokémon. Put"
+	line "1 damage counter on each of them."
+	line "Those Pokémon are now Poisoned."
 	done

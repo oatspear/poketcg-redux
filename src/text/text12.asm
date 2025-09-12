@@ -126,11 +126,6 @@ OverrunName:
 	text "Overrun"
 	done
 
-Damage1BenchedPokemon30Description:
-	text "This attack does 30 damage to 1 of"
-	line "your opponent's Benched Pokémon."
-	done
-
 NoWeaknessResistanceForBenchDescriptionCont:
 	text "Don't apply Weakness and Resistance"
 	line "for Benched Pokémon."
@@ -1544,4 +1539,17 @@ AcidDescription:
 	text "If the Defending Pokémon was already"
 	line "Burned, discard 1 Energy attached"
 	line "to it."
+	done
+
+AssassinsReturnName:
+	text "Assassin's Return"
+	done
+
+AssassinsReturnDescription:
+	text "This attack does 90 damage to 1 of"
+	line "your opponent's Pokémon."
+	line "(Don't apply Weakness and Resistance"
+	line "for Benched Pokémon.)"
+	line "Put this Pokémon into your hand."
+	line "(Discard all cards attached to it.)"
 	done

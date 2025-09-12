@@ -846,6 +846,11 @@ SneakyBiteEffectCommands:
 	dbw EFFECTCMDTYPE_PKMN_POWER_TRIGGER, SneakyBite_DamageEffect
 	db  $00
 
+NightAmbushEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, PassivePowerEffect
+	dbw EFFECTCMDTYPE_PKMN_POWER_TRIGGER, NightAmbush_DamageEffect
+	db  $00
+
 ; unused
 CurseEffectCommands:
 	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, CheckPokemonPowerCanBeUsed_StoreTrigger
@@ -854,7 +859,7 @@ CurseEffectCommands:
 	db  $00
 
 Put1DamageCounterOnTargetEffectCommands:
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Put1DamageCounterOnTarget_DamageEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Put1DamageCounterOnSelectedTarget_DamageEffect
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, DamageTargetPokemon_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, DamageTargetPokemon_AISelectEffect
 	dbw EFFECTCMDTYPE_AI, Put1DamageCounterOnTarget_AIEffect
@@ -1594,6 +1599,13 @@ Deal40ToAnyPokemonEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, Deal40DamageToTarget_DamageEffect
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, DamageTargetPokemon_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, DamageTargetPokemon_AISelectEffect
+	db  $00
+
+AssassinsReturnEffectCommands:
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, DamageTargetPokemon_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, AssassinsReturnEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, DamageTargetPokemon_AISelectEffect
+	dbw EFFECTCMDTYPE_AI, AssassinsFlight_AIEffect
 	db  $00
 
 LickingShotEffectCommands:

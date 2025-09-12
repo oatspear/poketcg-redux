@@ -29,6 +29,7 @@ CardPointers:
 	dw NidokingCard
 	dw ZubatCard
 	dw GolbatCard
+	dw CrobatCard
 	dw OddishCard
 	dw GloomCard
 	dw VileplumeCard
@@ -1266,6 +1267,57 @@ GolbatCard:
 	db 5, 3 ; length
 	dw 121 * 10 ; weight
 	tx GolbatDescription ; description
+	db 0
+
+CrobatCard:
+	db TYPE_PKMN_DARKNESS ; type
+	gfx CrobatCardGfx ; gfx
+	tx CrobatName ; name
+	db STAR ; rarity
+	db LABORATORY | FOSSIL ; sets
+	db CROBAT
+	db 110 ; hp
+	db STAGE2 ; stage
+	tx GolbatName ; pre-evo name
+
+	; attack 1
+	energy 0 ; energies
+	tx NightAmbushName ; name
+	tx NightAmbushDescription ; description
+	dw NONE ; description (cont)
+	db 0 ; damage
+	db POKE_POWER ; category
+	dw NightAmbushEffectCommands ; effect commands
+	db NONE ; flags 1
+	db NONE ; flags 2
+	db NONE ; flags 3
+	db 0
+	db ATK_ANIM_PKMN_POWER_1 ; animation
+
+	; attack 2
+	energy COLORLESS, 2 ; energies
+	tx AssassinsReturnName ; name
+	tx AssassinsReturnDescription ; description
+	dw NONE ; description (cont)
+	db 0 ; damage
+	db RESIDUAL ; category
+	dw AssassinsReturnEffectCommands ; effect commands
+	db DAMAGE_TO_OPPONENT_BENCH ; flags 1
+	db NONE ; flags 2
+	db NONE ; flags 3
+	db 2
+	db ATK_ANIM_AGILITY_NO_HIT ; animation
+
+	db 2 ; retreat cost
+	db WR_LIGHTNING ; weakness
+	db WR_FIGHTING ; resistance
+	tx BatName ; category
+	db 169 ; Pokedex number
+	db 0
+	db 45 ; level
+	db 5, 11 ; length
+	dw 165 * 10 ; weight
+	tx CrobatDescription ; description
 	db 0
 
 OddishCard:

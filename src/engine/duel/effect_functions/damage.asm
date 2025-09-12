@@ -171,6 +171,10 @@ Deal50DamageToTarget_DamageEffect:
 	ld de, 50
 	jr DealDamageToTarget_DE_DamageEffect
 
+Deal90DamageToTarget_DamageEffect:
+	ld de, 90
+	jr DealDamageToTarget_DE_DamageEffect
+
 Deal30DamageToTarget_DamageEffect:
 	ld de, 30
 	; jr DealDamageToTarget_DE_DamageEffect
@@ -319,7 +323,7 @@ PutDamageCounters_NoAnim_Unchecked:
 	ret
 
 
-; Put 1 damage counter and Poison a selected target.
+; Poison and put 1 damage counter on a selected target.
 SneakyBite_DamageEffect:
 ; store trigger, just to reuse code below
 	ldh a, [hTempPlayAreaLocation_ff9d]
@@ -349,6 +353,8 @@ SneakyBite_DamageEffect:
 
 .damage
 	ldh a, [hTempPlayAreaLocation_ffa1]
+	cp $ff
+	ret z
 	ld e, a
 	call PoisonEffect_OpponentPlayArea
 	; jr Curse_DamageEffect
@@ -359,10 +365,14 @@ Curse_DamageEffect:
 	call SetUsedPokemonPowerThisTurn_RestoreTrigger
 	; fallthrough
 
-Put1DamageCounterOnTarget_DamageEffect:
-	; input e: PLAY_AREA_* of the target
+Put1DamageCounterOnSelectedTarget_DamageEffect:
 	ldh a, [hTempPlayAreaLocation_ffa1]
 	ld e, a
+	; fallthrough
+
+; input:
+;   e: PLAY_AREA_* of the target
+Put1DamageCounterOnTarget_DamageEffect:	
 	call SwapTurn
 	call Put1DamageCounterOnTarget
 	call SwapTurn
@@ -371,6 +381,62 @@ Put1DamageCounterOnTarget_DamageEffect:
 	call SetFlag_KnockedOutOpponentPokemon
 	bank1call ClearKnockedOutPokemon_TakePrizes_CheckGameOutcome
 	ret
+
+
+; Poison and put 1 damage counter on up to 2 targets
+NightAmbush_DamageEffect:
+; store trigger, just to reuse code below
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	ldh [hTemp_ffa0], a
+; check duelist type
+	ld a, DUELVARS_DUELIST_TYPE
+	call GetTurnDuelistVariable
+	cp DUELIST_TYPE_LINK_OPP
+	jr z, .link_opp
+	and DUELIST_TYPE_AI_OPP
+	jr nz, .ai_opp
+
+; player
+	call MayDamageTargetPokemon_PlayerSelectEffect
+	jr c, .send
+	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+	call GetNonTurnDuelistVariable
+	cp 2
+	call nc, MayDamageAnotherTargetPokemon_PlayerSelectEffect
+.send
+	call SerialSend8Bytes
+	jr .damage
+
+.link_opp
+	call SerialRecv8Bytes
+	jr .damage
+
+.ai_opp
+; AI just selects the Active Pokémon
+	xor a  ; PLAY_AREA_ARENA
+	ldh [hTempPlayAreaLocation_ffa1], a
+	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+	call GetNonTurnDuelistVariable
+	cp 2
+	jr c, .damage  ; no Bench
+	ld a, PLAY_AREA_BENCH_1
+	ldh [hPlayAreaEffectTarget], a
+	; fallthrough
+
+.damage
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	cp $ff
+	ret z
+	ld e, a
+	call PoisonEffect_OpponentPlayArea
+	call Curse_DamageEffect
+; second target
+	ldh a, [hPlayAreaEffectTarget]
+	cp $ff
+	ret z
+	ld e, a
+	call PoisonEffect_OpponentPlayArea  ; preserves: de
+	jp Put1DamageCounterOnTarget_DamageEffect
 
 
 ; ------------------------------------------------------------------------------
@@ -385,8 +451,36 @@ MayDamageTargetPokemon_PlayerSelectEffect:
 	call DrawWideTextBox_WaitForInput
 	call SwapTurn
 	call HandlePlayerSelectionPokemonInPlayArea_AllowCancel
-	ldh a, [hTempPlayAreaLocation_ff9d]
 	ldh [hTempPlayAreaLocation_ffa1], a
+	jp SwapTurn
+
+
+; uses the new wPlayAreaMarkedLocations and wPlayAreaMarkingSymbol variables
+; it should clean up after itself
+MayDamageAnotherTargetPokemon_PlayerSelectEffect:
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	call GetPowerOf2
+	ld [wPlayAreaMarkedLocations], a
+	ld a, SYM_HP_NOK
+	ld [wPlayAreaMarkingSymbol], a
+	ld a, $ff
+	ldh [hPlayAreaEffectTarget], a
+	ldtx hl, ChoosePokemonToGiveDamageText
+	call DrawWideTextBox_WaitForInput
+	call SwapTurn
+.loop
+	call HandlePlayerSelectionPokemonInPlayArea_AllowCancel
+	jr c, .done
+	ld e, a
+	ldh [hPlayAreaEffectTarget], a
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	cp e
+	jr z, .loop
+	or a  ; reset carry
+.done
+	ld a, 0  ; preserve carry
+	ld [wPlayAreaMarkedLocations], a
+	ld [wPlayAreaMarkingSymbol], a
 	jp SwapTurn
 
 

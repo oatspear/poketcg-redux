@@ -2011,6 +2011,9 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer GeneticName
 	textpointer NewSpeciesName
 
+	textpointer CrobatName
+	textpointer CrobatDescription
+
 ; ------------------------------------------------------------------------------
 ; text10.asm
 ; ------------------------------------------------------------------------------
@@ -2545,7 +2548,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer DevolutionBeamName                                 ; 0x0ad4
 	textpointer DevolutionBeamDescription                          ; 0x0ad5
 	textpointer SlicingWindName                                    ; 0x0adf
-	; textpointer Discard1EnergyDeal30ToAnyPokemonDescription
 	textpointer Deal30ToAnyPokemonDescription
 	textpointer Deal40ToAnyPokemonDescription
 	textpointer FlyName
@@ -2658,6 +2660,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer HeatWaveDescription
 	textpointer PowerfulSplashName
 	textpointer PowerfulSplashDescription
+	textpointer NightAmbushName
+	textpointer NightAmbushDescription
 
 ; ------------------------------------------------------------------------------
 ; text12.asm
@@ -2688,7 +2692,6 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer RapidSpinName
 	textpointer BothPlayersSwitchDescription
 	textpointer OverrunName
-	textpointer Damage1BenchedPokemon30Description
 	textpointer NoWeaknessResistanceForBenchDescriptionCont
 	textpointer Discard1CardFromOpponentsDeckDescription
 	textpointer Discard2CardsFromOpponentsDeckDescription
@@ -2966,6 +2969,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer LickingShotDescription
 	textpointer AcidName
 	textpointer AcidDescription
+	textpointer AssassinsReturnName
+	textpointer AssassinsReturnDescription
 
 ; ------------------------------------------------------------------------------
 ; text13.asm

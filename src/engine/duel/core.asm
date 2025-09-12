@@ -5489,8 +5489,6 @@ SetupPlayAreaScreen:
 ; also print the play area locations (ACT/BPx indicators) for each of the six slots.
 ; return the value of wNumPlayAreaItems (as returned from PrintPlayAreaCardList) in a.
 PrintPlayAreaCardList_EnableLCD:
-	ld a, PLAY_AREA_CARD_LIST
-	ld [wDuelDisplayedScreen], a
 	call PrintPlayAreaCardList
 	call EnableLCD
 	ld a, [wNumPlayAreaItems]
@@ -5508,14 +5506,13 @@ PrintPlayAreaCardList:
 	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
 	call GetTurnDuelistVariable
 	ld c, a
-	ld b, $00
+	ld b, PLAY_AREA_ARENA
 .print_cards_info_loop
 	; for each Pokemon card in play area, print its information (and location)
 	push hl
 	push bc
 	ld a, b
 	ld [wCurPlayAreaSlot], a
-	ld a, b
 	add a
 	add b
 	ld [wCurPlayAreaY], a
@@ -5524,6 +5521,15 @@ PrintPlayAreaCardList:
 	call GetTurnDuelistVariable
 	call SetNextElementOfList
 	call PrintPlayAreaCardInformationAndLocation
+; check whether this location should include special markings
+	ld a, [wCurPlayAreaSlot]
+	call GetPowerOf2
+	ld hl, wPlayAreaMarkedLocations
+	and [hl]
+	jr z, .next_card_info
+	ld a, [wCurPlayAreaY]
+	call DrawSymbolOnPlayAreaCardLocation.a_times_3
+.next_card_info
 	pop bc
 	pop hl
 	inc b
@@ -5564,6 +5570,19 @@ PrintPlayAreaCardList:
 	dec b
 	jr nz, .shift_back_loop
 	ret
+
+
+DrawSymbolOnPlayAreaCardLocation:
+	ld c, a
+	add a
+	add c
+.a_times_3
+	add 2
+	; a = 3*a + 2
+	ld c, a
+	ld b, 0
+	ld a, [wPlayAreaMarkingSymbol]
+	jp WriteByteToBGMap0
 
 
 ; input:
