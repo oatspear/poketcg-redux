@@ -4086,13 +4086,13 @@ SelectUpTo2Benched_PlayerSelectEffect:
 ; init number of items in list and cursor position
 	xor a
 	ldh [hCurSelectionItem], a
-	ld [wce72], a
+	ld [wCurMultiBenchSelectionItem], a
 	bank1call SetDefaultConsolePalettes
 	bank1call SetupPlayAreaScreen
 .start
 	bank1call PrintPlayAreaCardList_EnableLCD
 	push af
-	ld a, [wce72]
+	ld a, [wCurMultiBenchSelectionItem]
 	ld hl, BenchSelectionMenuParameters
 	call InitializeMenuParameters
 	pop af
@@ -4108,7 +4108,7 @@ SelectUpTo2Benched_PlayerSelectEffect:
 	cp -1
 	jr z, .try_cancel
 
-	ld [wce72], a
+	ld [wCurMultiBenchSelectionItem], a
 	call .CheckIfChosenAlready
 	jr nc, .not_chosen
 	; play SFX
@@ -4174,7 +4174,7 @@ SelectUpTo2Benched_PlayerSelectEffect:
 	pop af
 
 	dec a
-	ld [wce72], a
+	ld [wCurMultiBenchSelectionItem], a
 	jp .start
 
 ; returns carry if Bench Pokemon

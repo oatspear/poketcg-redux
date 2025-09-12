@@ -1540,7 +1540,7 @@ wPrinterStatus:: ; ce6f
 wSerialDataPtr:: ; ce70
 	ds $2
 
-wce72:: ; ce72
+wCurMultiBenchSelectionItem:: ; ce72
 	ds $1
 
 ; card index and its attack index chosen
