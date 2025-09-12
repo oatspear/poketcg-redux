@@ -96,3 +96,18 @@ CompareDEtoBC:
 	ld a, e
 	cp c
 	ret
+
+
+PowersOf2:
+	db $01, $02, $04, $08, $10, $20, $40, $80
+
+; uses the PowersOf2 table to return in a the a-th power of 2
+; input: a = 0-7
+; preserves: bc
+GetPowerOf2:
+	ld e, a
+	ld d, 0
+	ld hl, PowersOf2
+	add hl, de
+	ld a, [hl]
+	ret

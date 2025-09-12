@@ -369,11 +369,7 @@ IsPokemonToolID:
 ; return in the z flag whether turn holder's prize a (0-7) has been drawn or not
 ; z: drawn, nz: not drawn
 CheckPrizeTaken:
-	ld e, a
-	ld d, 0
-	ld hl, PowersOf2
-	add hl, de
-	ld a, [hl]
+	call GetPowerOf2
 	ld e, a
 	cpl
 	ld d, a
@@ -382,8 +378,6 @@ CheckPrizeTaken:
 	and e
 	ret
 
-PowersOf2:
-	db $01, $02, $04, $08, $10, $20, $40, $80
 
 ; fill wDuelTempList with the turn holder's discard pile cards (their 0-59 deck indexes)
 ; return carry if the turn holder has no cards in the discard pile
@@ -2819,11 +2813,8 @@ CheckLoadedAttackFlag:
 	push bc
 	ld c, a ; %fffffbbb
 	and $07
-	ld e, a
-	ld d, $00
-	ld hl, PowersOf2
-	add hl, de
-	ld b, [hl]
+	call GetPowerOf2
+	ld b, a
 	ld a, c
 	rra
 	rra
