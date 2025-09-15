@@ -1525,6 +1525,8 @@ PrintAndLoadAttacksToDuelTempList:
 	inc c
 	push hl
 	push bc
+	ld hl, wLoadedCard1Atk1Category
+	call EstimatePlayerDamageForAttackMenu
 	ld hl, wLoadedCard1Atk1EnergyCost  ; wLoadedCard1Atk1Name
 	call HandleModifiedAttackCost_PointToAttackName
 	pop bc
@@ -1547,6 +1549,8 @@ PrintAndLoadAttacksToDuelTempList:
 	inc c
 	push hl
 	push bc
+	ld hl, wLoadedCard1Atk2Category
+	call EstimatePlayerDamageForAttackMenu
 	ld hl, wLoadedCard1Atk2EnergyCost  ; wLoadedCard1Atk2Name
 	call HandleModifiedAttackCost_PointToAttackName
 	pop bc
@@ -1587,6 +1591,31 @@ CheckAttackSlotEmptyOrPokemonPower:
 .return_no_atk_found
 	scf
 	jr .return
+
+
+; input:
+;   hl: pointer to attack struct category
+EstimatePlayerDamageForAttackMenu:
+	; ld a, [hl]
+	; and POKE_POWER
+	; ret nz  ; abilities do not print damage
+	ld a, [hl]  ; move hl to damage field
+	and RESIDUAL
+	ret nz  ; residual does not print damage
+	ld a, DAMAGE_NORMAL
+	ld [hld], a  ; point to damage
+	; ld de, CARD_DATA_ATTACK1_DAMAGE - CARD_DATA_ATTACK1_CATEGORY
+	; add hl, de
+	xor a  ; PLAY_AREA_ARENA
+	ldh [hTempPlayAreaLocation_ff9d], a
+	ld [wDamageFlags], a
+	push hl
+	ld a, EFFECTCMDTYPE_AI
+	call TryExecuteEffectCommandFunction
+	pop hl
+	farcall _CalculateDamage_VersusDefendingPokemon
+	ret
+
 
 ; check if the arena pokemon card has enough energy attached to it
 ; in order to use the selected attack.
