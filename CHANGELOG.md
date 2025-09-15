@@ -58,9 +58,9 @@
 - Stage 2, 110 HP, Darkness Pokémon, evolves from Golbat.
 - Weakness: Lightning.
 - Resistance: Fighting.
-- Retreat Cost: 2.
+- Retreat Cost: 1.
 - Poké-Power: **Night Ambush**: when played from the hand to evolve, choose up to 2 of the opponent's Pokémon to Poison and put 1 damage counter.
-- Attack 2: **Assassin's Return** (CC): does 40 damage to 1 of the opponent's Pokémon; returns to the hand with all attached cards.
+- Attack 2: **Assassin's Return** (CC): inflicts Poison and does 80 damage to 1 of the opponent's Pokémon; returns to the hand but discards all attached cards.
 
 #### X Attack
 

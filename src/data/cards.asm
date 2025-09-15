@@ -1298,17 +1298,17 @@ CrobatCard:
 	energy COLORLESS, 2 ; energies
 	tx AssassinsReturnName ; name
 	tx AssassinsReturnDescription ; description
-	tx FlyDescription ; description (cont)
+	tx AssassinsReturnDescriptionCont ; description (cont)
 	db 0 ; damage
 	db RESIDUAL ; category
 	dw AssassinsReturnEffectCommands ; effect commands
-	db DAMAGE_TO_OPPONENT_BENCH ; flags 1
+	db DAMAGE_TO_OPPONENT_BENCH | INFLICT_POISON ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
 	db 2
 	db ATK_ANIM_AGILITY_NO_HIT ; animation
 
-	db 2 ; retreat cost
+	db 1 ; retreat cost
 	db WR_LIGHTNING ; weakness
 	db WR_FIGHTING ; resistance
 	tx BatName ; category

@@ -311,10 +311,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer ChooseUpToNFromDiscardPileText                     ; 0x0169
 	textpointer ChooseAPokemonToSwitchWithActivePokemonText        ; 0x016a
 	textpointer PokemonAndAllAttachedCardsWereReturnedToDeckText   ; 0x016b
-	textpointer PokemonWasReturnedFromArenaToHandText              ; 0x016c
-	textpointer PokemonWasReturnedFromBenchToHandText              ; 0x016d
-	textpointer PokemonWasReturnedToDeckText                       ; 0x016e
-	textpointer WasPlacedInTheHandText                             ; 0x016f
+	textpointer PokemonWasReturnedToDeckText
+	textpointer WasPlacedInTheHandText
 	textpointer TheCardYouReceivedText                             ; 0x0170
 	textpointer YouReceivedTheseCardsText                          ; 0x0171
 	textpointer ChooseTheCardToPutBackText                         ; 0x0172
@@ -2971,6 +2969,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer AcidDescription
 	textpointer AssassinsReturnName
 	textpointer AssassinsReturnDescription
+	textpointer AssassinsReturnDescriptionCont
 
 ; ------------------------------------------------------------------------------
 ; text13.asm

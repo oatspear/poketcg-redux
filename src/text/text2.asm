@@ -509,22 +509,12 @@ PokemonAndAllAttachedCardsWereReturnedToDeckText: ; 39987 (e:5987)
 	line "cards were returned to the Deck."
 	done
 
-PokemonWasReturnedFromArenaToHandText: ; 399bc (e:59bc)
-	text "<RAMTEXT> was returned"
-	line "from the Arena to the Hand."
-	done
-
-PokemonWasReturnedFromBenchToHandText: ; 399e8 (e:59e8)
-	text "<RAMTEXT> was returned"
-	line "from the Bench to the Hand."
-	done
-
-PokemonWasReturnedToDeckText: ; 39a14 (e:5a14)
+PokemonWasReturnedToDeckText:
 	text "<RAMTEXT> was returned"
 	line "to the Deck."
 	done
 
-WasPlacedInTheHandText: ; 39a31 (e:5a31)
+WasPlacedInTheHandText:
 	text "<RAMTEXT> was placed"
 	line "in the Hand."
 	done

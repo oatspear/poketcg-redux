@@ -1546,8 +1546,15 @@ AssassinsReturnName:
 	done
 
 AssassinsReturnDescription:
-	text "This attack does 40 damage to 1 of"
-	line "your opponent's Pokémon."
+	text "This attack does 80 damage to 1 of"
+	line "your opponent's Pokémon. That"
+	line "Pokémon is now Poisoned."
 	line "(Don't apply Weakness and Resistance"
 	line "for Benched Pokémon.)"
+	line ""
+	done
+
+AssassinsReturnDescriptionCont:
+	text "Put this Pokémon into your hand."
+	line "(Discard all cards attached to it.)"
 	done

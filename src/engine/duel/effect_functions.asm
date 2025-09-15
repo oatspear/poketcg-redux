@@ -903,8 +903,19 @@ VoltSwitchEffect:
 ; ------------------------------------------------------------------------------
 
 AssassinsReturnEffect:
-	call Deal40DamageToTarget_DamageEffect
-	jp Fly_ReturnToHandEffect
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	cp $ff
+	ret z
+	ld e, a
+	call PoisonEffect_OpponentPlayArea
+	call Deal80DamageToTarget_DamageEffect
+	; ld a, DUELVARS_ARENA_CARD_HP
+	; call GetTurnDuelistVariable
+	; or a
+	; ret z  ; Knocked Out
+	xor a  ; PLAY_AREA_ARENA
+	ldh [hTempPlayAreaLocation_ffa1], a
+	jp ReturnPokemonToHandEffect
 
 
 AcidEffect:
@@ -3461,14 +3472,8 @@ BounceEnergy_BounceEffect:
 	call PutCardInDiscardPile
 	call MoveDiscardPileCardToHand
 	call AddCardToHand
-	ld d, a
-.display_card
-	call IsPlayerTurn  ; preserves bc, de
-	ld a, d
-	ret c
 	ldtx hl, WasPlacedInTheHandText
-	bank1call DisplayCardDetailScreen
-	ret
+	jp ShowCardDetailsIfOpponentsTurn
 
 
 Bounce2Energies_BounceEffect:
@@ -3492,9 +3497,9 @@ BounceOpponentEnergy_BounceEffect:
 	call PutCardInDiscardPile
 	call MoveDiscardPileCardToHand
 	call AddCardToHand
-	ld d, a
 	call SwapTurn
-	jr BounceEnergy_BounceEffect.display_card
+	ldtx hl, WasPlacedInTheHandText
+	jp ShowCardDetailsIfOpponentsTurn
 
 
 DiscardEnergy_DiscardEffect:
@@ -4614,7 +4619,7 @@ ReturnPokemonAndAttachedCardsToHandEffect:
 ; preserves: bc, de
 ReturnPokemonAndAttachedCardsToHand:
 	push de
-	or CARD_LOCATION_ARENA
+	or CARD_LOCATION_PLAY_AREA
 	ld e, a
 	ld a, DUELVARS_CARD_LOCATIONS
 	call GetTurnDuelistVariable
@@ -5868,15 +5873,8 @@ AddDeckCardToHandAndShuffleEffect:
 AddDeckCardToHandEffect:
 	call SearchCardInDeckAndSetToJustDrawn  ; preserves af, hl, bc, de
 	call AddCardToHand  ; preserves af, hl bc, de
-	push de
-	ld d, a
-	call IsPlayerTurn  ; preserves bc, de
-	ld a, d
-	pop de
-	ret c
 	ldtx hl, WasPlacedInTheHandText
-	bank1call DisplayCardDetailScreen
-	ret
+	jp ShowCardDetailsIfOpponentsTurn
 
 
 ; adds all the cards in hTempList to the turn holder's hand
@@ -5943,16 +5941,10 @@ SelectedCard_AddToHandFromDiscardPile:
 
 ; move the card with deck index given in a from the discard pile to the hand
 AddDiscardPileCardToHandEffect:
-	ld d, a
 	call MoveDiscardPileCardToHand  ; preserves de
 	call AddCardToHand  ; preserves de
-	call IsPlayerTurn  ; preserves de
-	ret c
-; display card on screen
-	ld a, d
 	ldtx hl, WasPlacedInTheHandText
-	bank1call DisplayCardDetailScreen
-	ret
+	jp ShowCardDetailsIfOpponentsTurn
 
 
 ; moves all the cards in hTempList from the discard pile to the turn holder's hand
@@ -6693,13 +6685,11 @@ PokemonNurse_ReturnToHandEffect:
 ; if card was in Bench, simply return Pokémon to hand
 	ldh a, [hTempPlayAreaLocation_ffa1]
 	or a
-	jr nz, ScoopUpFromBench
-	; fallthrough
+	jr nz, ScoopUpFromPlayAreaLocation
 
 ; if Pokemon was in Arena, then switch it with the selected Bench card first
 ; this avoids a bug that occurs when arena is empty before
 ; calling ShiftAllPokemonToFirstPlayAreaSlots
-ScoopUpFromArena:
 	ldh a, [hTemp_ffa0]
 	ld e, a
 ; this eventually calls ClearAllArenaEffectsAndSubstatus
@@ -6707,35 +6697,43 @@ ScoopUpFromArena:
 
 ; after switching, scoop up the benched Pokémon as normal
 	ldh a, [hTemp_ffa0]
-	call ReturnBenchedPokemonToHand
-
-; if card was not played by Player, show detail screen
-	call IsPlayerTurn
-	ret c
-
-	ldtx hl, PokemonWasReturnedFromArenaToHandText
-	ldh a, [hTempCardIndex_ff98]
-	bank1call DisplayCardDetailScreen
-	ret
-
-
-ScoopUpFromBench:
-	ldh a, [hTempPlayAreaLocation_ffa1]
-	call ReturnBenchedPokemonToHand
-
-; if card was not played by Player, show detail screen
-	call IsPlayerTurn
-	ret c
-
-	ldtx hl, PokemonWasReturnedFromBenchToHandText
-	ldh a, [hTempCardIndex_ff98]
-	bank1call DisplayCardDetailScreen
-	ret
-
+	; fallthrough
 
 ; input:
 ;   a: PLAY_AREA_* of the benched Pokémon to scoop up
-ReturnBenchedPokemonToHand:
+ScoopUpFromPlayAreaLocation:
+	call ReturnPokemonToHand_DiscardAttachedCards
+; shift Pokemon slots (necessary for Trainer cards)
+; also necessary for pre-attack effects like Pokémon Powers
+	call ShiftAllPokemonToFirstPlayAreaSlots
+; if card was not played by Player, show detail screen
+	ldh a, [hTempCardIndex_ff98]
+	ldtx hl, WasPlacedInTheHandText
+	jp ShowCardDetailsIfOpponentsTurn
+
+
+; assume:
+;   call to SwapTurn if necessary
+; input:
+;   [hTempPlayAreaLocation_ffa1]: PLAY_AREA_* of the Pokémon to return to the hand
+ReturnPokemonToHandEffect:
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	add DUELVARS_ARENA_CARD
+	call GetTurnDuelistVariable
+	call LoadCardDataToBuffer2_FromDeckIndex  ; preserves: hl, bc, de
+	call LoadCard2NameToRamText  ; preserves: bc, de
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	call ReturnPokemonToHand_DiscardAttachedCards
+; text variable is already loaded at this point
+	xor a  ; REFRESH_DUEL_SCREEN
+	ld [wDuelDisplayedScreen], a
+	ldtx hl, WasPlacedInTheHandText
+	jp DrawWideTextBox_WaitForInput
+
+
+; input:
+;   a: PLAY_AREA_* of the Pokémon to scoop up
+ReturnPokemonToHand_DiscardAttachedCards:
 ; store chosen card location to Scoop Up
 	ld d, a
 	or CARD_LOCATION_PLAY_AREA
@@ -6770,15 +6768,11 @@ ReturnBenchedPokemonToHand:
 ; The Pokémon has been moved to hand.
 ; MovePlayAreaCardToDiscardPile will discard other cards that were attached.
 	ld e, d
-	call MovePlayAreaCardToDiscardPile
-
+	jp MovePlayAreaCardToDiscardPile
 ; clear status from Pokémon location
 ; handled by EmptyPlayAreaSlot, called by MovePlayAreaCardToDiscardPile
 ;	ldh a, [hTempPlayAreaLocation_ffa1]
 ;	call ClearStatusFromTarget_NoAnim
-
-; finally, shift Pokemon slots (necessary for Trainer cards)
-	jp ShiftAllPokemonToFirstPlayAreaSlots
 
 
 ; return carry if no other cards in hand,
@@ -7189,11 +7183,20 @@ SuperRod_PlayerSelectEffect:
 ; input:
 ;   hl: pointer to text to display
 SelectedCard_ShowDetailsIfOpponentsTurn:
+	ldh a, [hTemp_ffa0]
+	; jr ShowCardDetailsIfOpponentsTurn
+	; fallthrough
+
+; input:
+;   a: deck index
+;   hl: pointer to text to display
+ShowCardDetailsIfOpponentsTurn:
 	push hl
-	call IsPlayerTurn
+	ld d, a
+	call IsPlayerTurn  ; preserves: bc, de
 	pop hl
 	ret c
-	ldh a, [hTemp_ffa0]
+	ld a, d
 	bank1call DisplayCardDetailScreen
 	ret
 
