@@ -55,7 +55,7 @@
 - Attack 2: **Powerful Splash** (WCC): 10 damage; +10 damage for each Water Energy on your Play Area and for each Water Pokémon on your Bench.
 
 #### Crobat
-- Stage 2, 110 HP, Darkness Pokémon, evolves from Golbat.
+- Stage 2, 100 HP, Darkness Pokémon, evolves from Golbat.
 - Weakness: Lightning.
 - Resistance: Fighting.
 - Retreat Cost: 1.

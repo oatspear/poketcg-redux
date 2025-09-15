@@ -1276,7 +1276,7 @@ CrobatCard:
 	db STAR ; rarity
 	db LABORATORY | FOSSIL ; sets
 	db CROBAT
-	db 110 ; hp
+	db 100 ; hp
 	db STAGE2 ; stage
 	tx GolbatName ; pre-evo name
 
