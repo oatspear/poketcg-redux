@@ -42,6 +42,8 @@
 - Cards are sold for half their cost.
 - Common cards cost 2 points, Uncommon cards cost 8 points, Rare cards cost 24 points, Promotional cards cost 50 points.
 - Implemented a new card page layout.
+- The Attack menu shows the modified energy cost of each attack, if applicable.
+- The Attack menu shows the estimated damage versus the Defending Pokémon, instead of the attack's base damage.
 
 ### User Interface
 
