@@ -688,6 +688,11 @@ PlayTrainerCard:
 	and PLAYED_SUPPORTER_THIS_TURN
 	jr nz, .cant_use
 
+	ldtx hl, YouCannotUseSupporterCardsDuringTheFirstTurnText
+	ld a, [wDuelTurns]
+	or a
+	jr z, .cant_use
+
 	ld a, PLAYED_SUPPORTER_THIS_TURN
 	or b
 	ld [wOncePerTurnActionsBackup], a
@@ -1231,10 +1236,7 @@ DuelMenu_Attack:
 	ld a, [wDuelTurns]
 	or a
 	jr nz, .not_first_turn
-	ld a, [wOncePerTurnActions]
-	and PLAYED_SUPPORTER_THIS_TURN
-	jr z, .not_first_turn
-	ldtx hl, MayOnlyUseOneSupporterCardText
+	ldtx hl, YouCannotUseAttacksDuringTheFirstTurnText
 	jr .alert_cant_attack_and_cancel_menu
 
 .not_first_turn
@@ -7014,6 +7016,9 @@ OppAction_PlayTrainerCard:
 	ret
 
 .supporter_card
+	ld a, [wDuelTurns]
+	or a
+	ret z  ; unable to play during the first turn
 	ld a, [wOncePerTurnActions]
 	or PLAYED_SUPPORTER_THIS_TURN
 	ld [wOncePerTurnActions], a
@@ -7056,12 +7061,9 @@ OppAction_BeginUseAttack:
 ; either attack or Supporter
 	ld a, [wDuelTurns]
 	or a
-	jr nz, .not_first_turn
-	ld a, [wOncePerTurnActions]
-	and PLAYED_SUPPORTER_THIS_TURN
-	jr nz, .failed
+	jr z, .failed
 
-.not_first_turn
+; not the first turn of the game
 IF CC_IS_COIN_FLIP
 	ld a, DUELVARS_ARENA_CARD_STATUS
 	call GetTurnDuelistVariable

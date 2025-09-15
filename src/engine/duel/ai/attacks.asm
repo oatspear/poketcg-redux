@@ -33,6 +33,10 @@ AIProcessAndTryToUseAttack:
 ; AI will use it if wAIExecuteProcessedAttack is 0.
 ; in either case, return carry if an attack is chosen to be used.
 AIProcessAttacks:
+	ld a, [wDuelTurns]
+	or a
+	ret z  ; first turn, unable to attack
+
 ; if AI used Pluspower, load its attack index
 	ld a, [wPreviousAIFlags]
 	and AI_FLAG_USED_PLUSPOWER

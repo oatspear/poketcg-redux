@@ -211,6 +211,8 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer PrinterPacketErrorText                             ; 0x00db
 	textpointer PrintingWasInterruptedText                         ; 0x00dc
 	textpointer CardPopCannotBePlayedWithTheGameBoyText            ; 0x00dd
+	textpointer YouCannotUseAttacksDuringTheFirstTurnText
+	textpointer YouCannotUseSupporterCardsDuringTheFirstTurnText
 	textpointer YouMayDiscard1EnergyToHealBurnText
 	textpointer AlreadyRetreatedThisTurnText                       ; 0x00f4
 	textpointer PokemonsConfusionCheckText

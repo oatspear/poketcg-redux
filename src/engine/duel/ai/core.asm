@@ -648,10 +648,13 @@ CheckIfCardCanBePlayed:
 ; card type in stored in a
 	cp TYPE_TRAINER_SUPPORTER
 	jr nz, .not_supporter_card
+	ld a, [wDuelTurns]
+	or a
+	jr z, .unable_to_play_supporter  ; first turn of the game
 	ld a, [wOncePerTurnActions]
 	and PLAYED_SUPPORTER_THIS_TURN
 	jr z, .can_play
-; supporter already played
+.unable_to_play_supporter
 	scf
 	ret
 .not_supporter_card

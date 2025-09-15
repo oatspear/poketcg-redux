@@ -1,3 +1,13 @@
+YouCannotUseAttacksDuringTheFirstTurnText:
+	text "You can't use attacks during the"
+	line "first turn of the game."
+	done
+
+YouCannotUseSupporterCardsDuringTheFirstTurnText:
+	text "You can't use Supporter cards during"
+	line "the first turn of the game."
+	done
+
 YouMayDiscard1EnergyToHealBurnText:
 	text "You may discard an Energy"
 	line "to heal the Burn status."

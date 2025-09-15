@@ -2,6 +2,9 @@
 
 ## Version 0.13.0
 
+### Game Rules
+- Just as in standard Pokémon TCG, players are unable to use attacks or Supporters during the first turn of the game.
+
 ### Weakness and Resistance
 - Weakness always grants +20 damage.
 
