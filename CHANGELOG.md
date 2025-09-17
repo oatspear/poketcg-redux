@@ -1,53 +1,541 @@
 # Pokémon TCG Rebalanced
 
+## Version 0.13.0
+
+### Game Rules
+- Just as in standard Pokémon TCG, players are unable to use attacks or Supporters during the first turn of the game.
+
+### Weakness and Resistance
+- Weakness always grants +20 damage.
+
+### Paralysis, Drowsiness and Confusion Status
+
+- All three Crowd Control conditions are now a coin flip before the afflicted Pokémon attacks.
+- On heads, the attack goes through. On tails, the attack fails.
+- These status conditions make all incoming attacks do Weakness damage.
+- These status conditions are cleansed at the end of a turn upon taking attack damage.
+- These status conditions are cleansed if the player ends the turn without attacking.
+- Reapplying the same status condition on a Pokémon already affected with it replaces the status with **Flinched**.
+
+### Flinched
+
+- New status condition that works similarly to Paralysis in the original game: a Flinched Pokémon is unable to attack or retreat for a turn.
+- Flinch is cleansed at the end of the owner's turn, since the Pokémon is either Benched or unable to attack.
+- If a Flinched Pokémon takes attack damage from an opponent, that attack does Weakness damage, just like with lower Crowd Control status.
+
+### Poison and Burn Status
+
+- These damage over time conditions work in the same way.
+- The affected Pokémon receives 1 damage counter for each DoT status on it at the end of the owner's turns.
+- The affected Pokémon takes DoT damage even if Benched, but those conditions are removed afterwards.
+- Reapplying the same status condition on a Pokémon already affected with it puts 1 damage counter instantly on that Pokémon.
+
+### Pokémon Powers
+- Classified some Pokémon Powers as Poké-Bodies, which are always passive abilities that cannot be turned off with status conditions.
+
+### Quality of Life
+
+- Player decks no longer discount cards from the available collection. Each card copy can go into multiple decks at the same time.
+- The Challenge Hall is now always available.
+- Players are unable to modify or switch decks between Challenge Hall matches.
+- The **Card Album** PC menu can now be used to buy or sell cards.
+- Cards are sold for half their cost.
+- Common cards cost 2 points, Uncommon cards cost 8 points, Rare cards cost 24 points, Promotional cards cost 50 points.
+- Implemented a new card page layout.
+- The Attack menu shows the modified energy cost of each attack, if applicable.
+- The Attack menu shows the estimated damage versus the Defending Pokémon, instead of the attack's base damage.
+
+### User Interface
+
+- Promotional cards now display a white star rarity icon.
+
+### New Cards
+
+#### Politoed
+- Stage 2, 130 HP, Water Pokémon, evolves from Poliwhirl.
+- Weakness: Lightning.
+- Resistance: none.
+- Retreat Cost: 2.
+- Poké-Power: **Rain Dance**: you may attach any number of Water Energy from the hand on your turns.
+- Attack 2: **Powerful Splash** (WCC): 10 damage; +10 damage for each Water Energy on your Play Area and for each Water Pokémon on your Bench.
+
+#### Crobat
+- Stage 2, 100 HP, Darkness Pokémon, evolves from Golbat.
+- Weakness: Lightning.
+- Resistance: Fighting.
+- Retreat Cost: 1.
+- Poké-Power: **Night Ambush**: when played from the hand to evolve, choose up to 2 of the opponent's Pokémon to Poison and put 1 damage counter.
+- Attack 2: **Assassin's Return** (CC): inflicts Poison and does 80 damage to 1 of the opponent's Pokémon; returns to the hand but discards all attached cards.
+
+#### X Attack
+
+- Pokémon Tool Trainer card.
+- The holder's attacks do 10 more damage to the Defending Pokémon.
+
+#### X Defense
+
+- Pokémon Tool Trainer card.
+- The holder takes 10 less damage from attacks.
+
+#### Pokémon Center
+
+- Stadium Trainer card.
+- After playing a Supporter card, the player heals 10 damage from each of their Pokémon.
+
+#### Viridian Forest
+
+- Stadium Trainer card.
+- After evolving a Pokémon, heal 20 damage from that Pokémon.
+
+#### Pewter Gym
+
+- Stadium Trainer card.
+- If a Pokémon has any attached energies, it takes 10 less damage from attacks and recoil.
+
+#### Cerulean Gym
+
+- Stadium Trainer card.
+- If a Pokémon has surplus energy, its attacks do 10 more damage to the Defending Pokémon.
+
+#### Vermilion Gym
+
+- Stadium Trainer card.
+- If a Pokémon moved into the Active Spot this turn, its attacks do 10 more damage to the Defending Pokémon.
+
+#### Celadon Gym
+
+- Stadium Trainer card.
+- Status are not removed when evolving or devolving.
+
+#### Fuchsia Gym
+
+- Stadium Trainer card.
+- Whenever a Pokémon card is played from the hand, Poison that Pokémon and put 1 damage counter on it.
+
+#### Saffron Gym
+
+- Stadium Trainer card.
+- At the end of each turn, the player with more cards in their hand moves 1 damage counter from their Active Pokémon to the opponent's Active Pokémon.
+
+#### Cinnabar Gym
+
+- Stadium Trainer card.
+- When an attack does damage to the Defending Pokémon, the opponent discards the top card of their deck.
+
+#### Viridian Gym
+
+- Stadium Trainer card.
+- All attack costs can be paid with any type of energy.
+
+#### Rocket Headquarters
+
+- Stadium Trainer card.
+- Each Pokémon with a Pokémon Power takes 10 damage at the end of each turn.
+
+#### Grassy Terrain (uncollectible)
+
+- Stadium Trainer card.
+- At the end of each turn, heal 10 damage from the turn holder's Active Pokémon.
+- Attacks of Grass Pokémon do 10 more damage to the Defending Pokémon.
+
+### Removed Cards
+
+- PlusPower
+- Defender
+- Gambler
+- Pokémon Center
+
+### Grass Changes
+
+#### Venusaur Lv64
+
+- This is now a regular promotional card, instead of a phantom card.
+
+#### Gloom
+
+- **Foul Odor**: removed.
+- New attack: **Pollen Spray** (G): inflicts Drowsiness and Poison.
+
+#### Vileplume
+
+- Added Resistance to Darkness.
+- **Hay Fever**: activates on any Trainer card.
+- **Hay Fever**: also inflicts Burn.
+- **Pollen Burst**: removed.
+- New attack: **Giga Drain** (G): 10 damage for each attached energy; heal damage equal to damage done.
+
+#### Paras
+
+- **Swarm**: increased cost from (G) to (GC).
+- **Swarm**: searches the deck for a Basic Pokémon before doing damage.
+
+#### Weepinbell
+- **Acidic Drain**: removed.
+- New attack: **Acid** (GC): 20 damage; inflict Burn; if already Burned, discard 1 energy from the Defending Pokémon.
+
+#### Victreebel
+- **Frangrance Trap**: removed.
+- **Swallow Up**: removed.
+- New Pokémon Power: **Fragrance Trap**: Once per turn, discard an attached energy to switch in 1 of the opponent's Benched Pokémon.
+- New attack: **Acidic Drain** (GGC): 30 damage; heal the same amount as the damage dealt; inflict Poison and Burn.
+
+#### Exeggutor
+
+- **Energy Burst**: cost increased from (C) to (CC).
+
+#### Tangela
+
+- **Ingrain**: removed.
+- New attack: **Grassy Terrain** (G): remove 1 (G) and play it as a **Grassy Terrain** stadium.
+
+#### Scyther
+
+- **Swords Dance**: removed.
+- **U-turn**: removed.
+- New attack: **Agility** (G): 10 damage; immune next turn if this attack Knocks Out the Defending Pokémon.
+- New attack: **Fury Cutter** (GC): 20 damage; double damage next turn.
+
+#### Pinsir
+
+- Reduced HP from 70 to 60.
+- **Rend**: removed.
+- **Guillotine**: cost increased from (CC) to (CCC).
+- **Guillotine**: Knocks Out the Defending Pokémon if it has less HP remaining than the user.
+- New attack: **Overhead Throw** (GC): 40 damage; 20 damage to 1 of the user's Benched Pokémon.
+
+### Fire Changes
+
+#### Charmander
+
+- **Ember**: removed.
+- New attack: **Flare** (RC): 20 damage; inflict Burn if damaged.
+
+#### Charmeleon
+
+- Increased HP from 70 to 80.
+- **Firestarter**: removed.
+- New attack: **Flame Cloak** (C): 10 damage; attach (R) from discard pile to self.
+
+#### Charizard
+
+- Increased HP from 100 to 110.
+- **Relentless Flames**: removed.
+- **Fire Blast**: reduced damage from 120 to 110.
+- New attack: **Flame Cloak** (R): 20 damage; attach (R) from discard pile to self.
+- New attack: **Heat Wave** (R)(C): 10 damage; inflict Burn on all of the opponent's Pokémon.
+
+#### Rapidash
+- Increased HP from 70 to 80.
+- **Heat Boost**: reworked.
+- New Pokémon Power: **Heat Boost**: once per turn, attach (R) from the discard pile to the Active Pokémon and put 1 damage counter on it.
+
+#### Flareon Lv28
+
+- **Scorching Column**: removed.
+- New attack: **Quick Attack** (CC): 10 damage; +40 damage if active this turn.
+
+#### Moltres Lv35
+
+- **Flare**: removed.
+- **Wildfire**: always discards all attached (R) energy.
+- **Wildfire**: base damage reduced from 10 to 0.
+- **Wildfire**: inflicts Burn.
+- New attack: **Phoenix Fire** (R): attach (R) from the discard pile to self; heal 20 damage.
+
+### Water Changes
+
+#### Wartortle
+
+- **Rain Dance**: can only attach energies to Benched Pokémon.
+
+#### Blastoise
+
+- Increased HP from 110 to 120.
+- **Hydro Pump**: cost increased from (W) to (CC).
+- **Hydro Pump**: base damage increased from zero to 10.
+- **Hydro Pump**: renamed to **Hydro Cannon**.
+- **Aqua Launcher**: removed.
+- New Poké-Body: **Solid Shell**: reduces all damage taken from attacks by 20.
+
+#### Kingler
+
+- **Guillotine**: cost increased from (CC) to (CCC).
+- **Guillotine**: Knocks Out the Defending Pokémon if it has less HP remaining than the user.
+
+#### Seadra
+
+- **Scald**: damage increased from 10 to 20.
+
+#### Starmie
+
+- **Energy Burst**: cost increased from (C) to (CC).
+
+#### Magikarp
+
+- **Ascension**: cost reduced from (WC) to (W).
+
+#### Articuno Lv35
+
+- **Freeze**: renamed to **Gather Mists**.
+- **Sheer Cold**: removed.
+- New attack: **Snowstorm** (W): discard all attached (W); 10 damage for each discarded energy to the Defending Pokémon and to 1 Benched Pokémon; inflicts Drowsiness if either target has less energies than the discarded amount.
+
+### Lightning Changes
+
+#### Raichu Lv40
+
+- Increased HP from 70 to 80.
+- **Volt Switch**: removed.
+- New attack: **Agility** (LC): 20 damage; immune next turn if the attack scores a KO.
+
+#### Raichu Lv45
+
+- **Swift**: removed.
+- **Thunderbolt**: reduced cost from (LLC) to (LC).
+- **Thunderbolt**: reduced damage from 100 to 70.
+- New Pokémon Power: **Static**: while Active, inflicts Paralysis whenever the opponent plays Item cards.
+
+#### Raichu Lv35
+
+- **Lightning Haste**: attaches the energy to a Benched Pokémon, instead of the Active Pokémon.
+- **Lightning Haste**: no longer puts damage counters on the target Pokémon.
+- **Discharge**: always inflicts Paralysis.
+
+#### Electrode Lv35
+
+- **Desperate Blast**: reduced damage from 5 damage counters to 4 damage counters.
+
+#### Electrode Lv42
+
+- **Energy Generator**: removed.
+- New Pokémon Power: **Dynamotor**: once per turn, attach (L) from discard pile to 1 Benched Pokémon.
+
+#### Jolteon Lv29
+
+- **Energy Jolt**: removed.
+- **Discharge**: removed.
+- New Pokémon Power: **Volt Switch**: if 1 (L) is used to pay for Retreat, it is attached to the new Active Pokémon.
+- New attack: **Quick Attack** (CC): 10 damage; +40 damage if active this turn.
+
+#### Zapdos Lv40
+
+- **Plasma**: removed.
+- **Thunderstorm**: removed.
+- New attack: **Thundercloud** (L): attach (L) from discard pile to the user; heal 20 damage.
+- New attack: **Thunder Spear** (L): discard all attached (L); 20 damage per discarded energy to 1 of the opponent's Pokémon.
+
+### Fighting Changes
+
+#### Primeape
+
+- **Get Mad**: removed.
+- **Rage Fist**: base damage reduced from 20 to 0.
+- **Rage Fist**: cost reduced from (FC) to (F).
+- New attack: **Close Combat** (FC): 50 damage; takes +30 damage from attacks until next turn.
+
+#### Machoke
+
+- **Chop Down**: removed.
+- New attack: **Strong-Arm Lariat** (FC): 30 damage; can optionally do double damage and become unable to attack next turn.
+
+#### Machamp
+
+- **Strike Back**: removed.
+- **Strong-Arm Lariat**: removed.
+- New attack: **Furious Fists** (FC): 10 damage; +10 damage for each damage counter on this Pokémon; 20 counter damage until next turn.
+- New attack: **Crowd Pummel** (FFC): 40 damage; the opponent switches their Active Pokémon; if there is a Stadium in play, does damage also to the new Defending Pokémon.
+
+#### Rhydon
+
+- **Horn Drill**: increased cost from (CC) to (FC).
+- **Horn Drill**: discards a Stadium in play.
+
+#### Hitmonchan
+
+- **Close Combat**: removed.
+- **Sky Uppercut**: removed.
+- New attack: **Counter** (F): 10 damage; if damaged in the previous turn, adds that much damage to the attack.
+- New attack: **Clean Hit** (FC): 20 damage; +10 damage versus evolved Pokémon.
+
+#### Hitmonlee
+
+- **High Jump Kick**: removed.
+- New attack: **Double Kick** (FC): 10 damage; hits twice.
+
+#### Kabutops
+
+- **Sharp Sickle**: renamed to **Reaping Claw**.
+
+### Psychic Changes
+
+#### Slowbro
+
+- **Spiral Drain**: removed.
+- New attack: **Psy Shift** (PC): moves up to 3 damage counters from the user to the Defending Pokémon.
+
+#### Mew Lv15
+
+- This is now a regular promotional card, instead of a phantom card.
+
+### Darkness Changes
+
+#### Nidorino
+
+- **Dark Retribution**: removed.
+- New Pokémon Power: **Battle Frenzy**: once per turn, attach 1 Basic Energy from the deck to 1 Pokémon and put 2 damage counters on it.
+
+#### Nidoking
+
+- **Land Crush**: increased cost from (DC) to (DCC).
+- **Vengeful Horn**: reduced cost from (DCC) to (DC).
+- **Vengeful Horn**: reduced base damage from 40 to 10.
+- **Vengeful Horn**: bonus damage only from damaged Benched Pokémon.
+- **Vengeful Horn**: inflicts Bad Poison.
+
+#### Ekans
+
+- **Poison Fang**: reduced cost from (DC) to (C).
+- **Poison Fang**: reduced damage from 20 to 10.
+
+#### Arbok
+
+- Increased HP from 70 to 80.
+- **Terror Strike**: increased cost from (D) to (DC).
+- **Deadly Poison**: reduced base damage from 30 to 20.
+- **Deadly Poison**: increased bonus damage from 20 to 30.
+
+#### Zubat
+
+- **Surprise Bite**: removed.
+- **Swarm**: increased cost from (D) to (CC).
+- **Swarm**: searches the deck for a Basic Pokémon before doing damage.
+- New attack: **Supersonic** (C): inflict Confusion.
+
+#### Golbat
+
+- HP increased from 70 to 80.
+- **Vampiric Aura**: removed.
+- **Night Ambush**: removed.
+- New Pokémon Power: **Sneaky Bite**: when played, Poison 1 of the opponent's Pokémon and put 1 damage counter on it.
+- New attack: **Leech Life** (CC): 20 damage; heal damage equal to damage done.
+
+#### Weezing
+
+- Increased HP from 80 to 90.
+- **Toxic Gas**: renamed to **Neutralizing Gas**.
+- **Neutralizing Gas**: only cancels the opponent's Pokémon Powers.
+- **Smog***: no longer deals damage to the Bench; instead, it Poisons all of the opponent's Pokémon.
+
+#### Muk
+
+- Increased HP from 80 to 90.
+- Increased Retreat Cost from 1 to 2.
+- **Overwhelm**: removed.
+- **Toxic Waste**: increased cost from (DC) to (DDC).
+- **Toxic Waste**: no longer does bonus damage depending on discarded Item cards.
+- **Toxic Waste**: does 10 more damage for every 10 cards in both discard piles combined.
+- **Toxic Waste**: inflicts Poison on both Active Pokémon.
+- New Pokémon Power: **Black Sludge**: the user does not take damage from Status conditions; heals 20 damage at the end of the player's turns if afflicted by status.
+
+### Colorless Changes
+
+#### Pidgeot Lv40
+
+- Reduced HP from 110 to 100.
+- Reduced Retreat Cost from 2 to 1.
+- **Whirlwind**: removed.
+- **Hurricane**: reworked.
+- New attack: **Cyclone** (CC): returns the Defending Pokémon and all attached cards to the opponent's hand.
+- New attack: **Hurricane** (CCC): 40 damage; optionally discards a Stadium in play; the opponent shuffles their hand into their deck and draws 4 cards.
+
+#### Doduo
+
+- **Double Hit**: increased cost from (C) to (CC).
+- **Double Hit**: always hits twice.
+
+#### Dodrio
+
+- Increased HP from 70 to 80.
+- **Triple Hit**: increased cost from (C) to (CCC).
+- **Triple Hit**: always hits thrice.
+
+#### Kangaskhan
+
+- **Parental Rush**: reduced cost from (CCC) to (CC).
+- **Parental Rush**: bonus damage only from damaged Benched Pokémon.
+
+#### Chansey
+
+- Reduced HP from 70 to 60.
+
+#### Dragonite Lv45
+
+- **Outrage**: reduced cost from (CCC) to (CC).
+
+### Trainer Changes
+
+#### Pokédex
+- Completely remade the effect.
+- Looks at the Prize cards and lets the player switch the Pokédex with a Pokémon card. Then, shuffles the prizes.
+
+
 ## Version 0.12.0
 
 ### New Cards
 
 #### Ultra Ball
+
 - Item Trainer card.
 - Discards 2 other cards from the hand in order to use it.
 - Add any Pokémon from the deck to the hand.
 
 #### Sitrus Berry
+
 - Pokémon Tool Trainer card.
 - At the end of each turn, if the holder has 2 or more damage counters on it, heals 20 damage and discards the tool.
 
 #### Lum Berry
+
 - Pokémon Tool Trainer card.
 - At the end of each turn, if the holder has status, heals all status and discards the tool.
 
 #### Leftovers
+
 - Pokémon Tool Trainer card.
 - At the end of the owner's turn, if the holder is in the Active Spot, heals 10 damage.
 
 #### Rocky Helmet
+
 - Pokémon Tool Trainer card.
 - Returns 10 damage back to an attacker.
 
 ### Removed Cards
+
 - Clefairy Doll
 
 ### Trainer Changes
 
 #### Recycle
+
 - Offers one of two options.
   1. Shuffle two Pokémon or Basic Energy cards from the discard pile into deck.
   2. Draw 1 card and put this card on the bottom of the deck.
 
-
 ## Version 0.11.0
 
 ### Removed Cards
+
 - Tangela Lv8
 
 ### Grass Changes
 
 #### Ivysaur
+
 - **Poison Whip**: removed.
 - New attack: **Solarbeam** (GC): 20 damage; you may attach a Basic Energy from the hand to the user; if you do, double the attack's damage.
 
 #### Venusaur Lv64
+
 - Increased HP from 100 to 120.
 - **Mega Drain**: reduced damage from 40 to 30.
 - **Mega Drain**: increased healing from 20 to 30.
@@ -55,6 +543,7 @@
 - **Double Edge**: increased damage from 60 to 80.
 
 #### Venusaur Lv67
+
 - Increased HP from 100 to 120.
 - **Pollen Frenzy**: removed.
 - **Solarbeam**: removed.
@@ -62,10 +551,12 @@
 - New attack: **Earthquake** (GGCC): 60 damage; does 20 damage to each player's Benched Pokémon.
 
 #### Caterpie
+
 - **String Shot**: no longer inflicts Paralysis.
 - **String Shot**: increases the cost of the Defending Pokémon's attacks by (C) during the opponent's next turn.
 
 #### Butterfree
+
 - Increased HP from 80 to 100.
 - **Healing Wind**: removed.
 - **Silver Whirlwind**: reduced cost from (GCC) to (G).
@@ -75,18 +566,21 @@
 - New attack: **Quiver Dance** (G): attach a Basic Energy from the deck to this Pokémon; heal 20 damage; doubles attack damage during the next turn.
 
 #### Beedrill
+
 - Increased HP from 80 to 100.
 - **Assassin Flight**: increased damage from 40 to 50.
 - **Toxic**: removed.
 - New attack: **Toxic Needle** (GC): 30 damage; inflicts Double Poison; inflicts Paralysis if the Defending Pokémon was not affected with any status.
 
 #### Oddish
+
 - **Sprout**: removed.
 - **Stun Spore**: removed coin flip.
 - **Stun Spore**: inflicts Paralysis if the user took damage since the player's last turn.
 - New attack: **Collect** (C): draw 2 cards.
 
 #### Gloom
+
 - Increased HP from 70 to 80.
 - **Heal**: removed.
 - **Foul Odor**: reduced cost from (GG) to (GC).
@@ -95,6 +589,7 @@
 - New Pokémon Power: **Aromatherapy**: once per turn, if the Pokémon has any attached Energies, heal 10 damage from each of the player's Pokémon.
 
 #### Vileplume
+
 - Increased HP from 100 to 110.
 - **Allergic Pollen**: removed.
 - **Petal Dance**: removed.
@@ -102,41 +597,48 @@
 - New attack: **Pollen Burst** (GGC): 80 damage; does -10 damage per damage counter on the user; inflicts Poison, Burn and Confusion if the user took damage since the player's last turn.
 
 #### Paras
+
 - **Spore**: removed.
 - **Slash**: removed.
 - New attack: **Nutrition Support** (C): attach 1 basic energy from the hand to 1 Pokémon.
 - New attack: **Swarm** (G): 10 damage; put 1 Basic Pokémon from deck onto play; if the Bench was full, +10 damage.
 
 #### Parasect
+
 - **Energy Spores**: removed.
 - **Fungal Growth**: reworked.
 - New attack: **Fungal Growth** (G): attach 1 Basic Energy from the hand to 1 Pokémon; inflict Drowsiness.
 - New attack: **Leech Life** (CC): 30 damage; heal the same amount of damage dealt.
 
 #### Venonat
+
 - Increased HP from 40 to 50.
 - **Leech Life**: removed.
 - New attack: **Bug Bite** (G): 10 damage; discards any Tools attached to the Defending Pokémon; does double damage if a Tool was discarded.
 
 #### Venomoth
+
 - **Assassin Flight**: removed.
 - **Venom Powder**: removed.
 - New Pokémon Power: **Noxious Scales**: when this Pokémon moves into the Active Spot, inflict Poison; if it has 3 or more attached energies, inflict Double Poison and Confusion.
 - New attack: **Baton Pass** (G): 20 damage; switch the user; move all energies attached to the user to the new Active Pokémon.
 
 #### Bellsprout
+
 - **Growth**: removed.
 - **Vine Whip**: removed.
 - New attack: **Pester** (C): 10 damage; +20 damage if the Defending Pokémon has status.
 - New attack: **Poison Whip** (GC): 20 damage; inflict Poison.
 
 #### Weepinbell
+
 - **Poison Lure**: removed.
 - **Acid**: removed.
 - New Pokémon Power: **Grass Knot**: when your Active Pokémon does damage to the Defending Pokémon with an attack, if it has any attached Grass Energies, increase the Defending Pokémon's Retreat Cost by 1.
 - New attack: **Acidic Drain** (GC): 20 damage; heal 10 damage; inflict Poison and Burn.
 
 #### Victreebel
+
 - Increased HP from 90 to 100.
 - **Razor Leaf**: removed.
 - **Flytrap**: removed.
@@ -144,16 +646,19 @@
 - New attack: **Swallow Up** (GCC): 30 damage; +50 damage if the Defending Pokémon has less HP than the user; heal 40 damage if the attack Knocks Out the Defending Pokémon.
 
 #### Exeggcute
+
 - **Leech Seed**: removed.
 - New attack: **Energy Ball** (G): 10 damage per attached Grass Energy.
 
 #### Tangela Lv12
+
 - **Nutrition Support**: removed.
 - **Grass Knot**: removed.
 - New attack: **Ingrain** (C): retrieve up to 2 Basic Energies from the discard pile; heal 10 damage for each retrieved Energy.
 - New attack: **Constrict** (GC): 10 damage; increase opponent's retreat cost by 1 and deal +10 damage for each (C) in retreat cost.
 
 #### Scyther
+
 - Reduced HP from 70 to 60.
 - Increased Retreat Cost from 0 to 1.
 - **Swords Dance**: increased base damage from zero to 10.
@@ -161,6 +666,7 @@
 - New attack: **U-Turn** (CC): 30 damage; switch the user.
 
 #### Pinsir
+
 - Increased HP from 60 to 70.
 - **Iron Grip**: removed.
 - **Guillotine**: reduced cost from (GGC) to (CC).
@@ -170,6 +676,7 @@
 ### Water Changes
 
 #### Tentacruel
+
 - **Jellyfish Sting**: base damage reduced from 30 to 10.
 - **Jellyfish Sting**: always inflicts both Poison and Confusion.
 - **Jellyfish Sting**: does +10 damage for each (C) in the Defending Pokémon's Retreat Cost.
@@ -177,27 +684,33 @@
 ### Darkness Changes
 
 #### Golbat
+
 - **Vampiric Aura**: leeches 10 damage by default, down from 20.
 - **Vampiric Aura**: leeches 20 damage against Poisoned Pokémon.
 
 ### Colorless Changes
 
 #### Pidgey
+
 - Increased HP from 40 to 50.
 
 #### Fearow
+
 - **Drill Peck**: reduced damage from 50 to 40.
 - **Drill Peck**: discards an Energy from the Defending Pokémon.
 
 #### Doduo
+
 - **Reckless Charge**: removed.
 - New attack: **Double Hit** (C): 10 damage; if the user has 2 or more Energies, does damage twice.
 
 #### Dodrio
+
 - **Rage**: removed.
 - New attack: **Triple Hit** (C): 10 damage; if the user has 2 Energies, does damage twice; if the user has 3 or more Energies, does damage thrice.
 
 #### Lickitung
+
 - Reduced HP from 70 to 60.
 - **Lick**: removed.
 - **Tongue Stretch**: removed.
@@ -205,37 +718,42 @@
 - New attack: **Glutton Frenzy** (CCC): 20 damage; discard an Energy from the Defending Pokémon; discard a random card from the opponent's hand.
 
 #### Snorlax
+
 - Increased HP from 70 to 80.
 - **Body Slam**: removed.
 - New attack: **Heavy Slam** (CCC): 50 damage; unable to attack next turn.
 
 #### Dragonair
+
 - **Draconic Evolution**: removed.
 - **Hyper Beam**: removed.
 - New Pokémon Power: **Elemental Mastery**: if your Active Pokémon has 2 or more colors of Energy, its attacks do +10 damage.
 - New attack: **Energy Hurricane** (CC): 20 damage; attach an Energy from the deck to 1 Pokémon.
 
 #### Dragonite Lv45
+
 - **Energy Hurricane**: removed.
 - New attack: **Hyper Beam** (CCC): 70 damage; discard 1 Energy from both Active Pokémon.
-
 
 ## Version 0.10.0
 
 ### Grass Changes
 
 #### Paras
+
 - **Scratch**: renamed to **Slash**.
 
 ### Fire Changes
 
 #### Charmander
+
 - **Scratch**: removed.
 - **Ember**: always discards 1 energy card attached to the Pokémon.
 - **Ember**: increased base damage from 20 to 30; no bonus damage.
 - New attack: **Flare** (C): 10 damage; must attach a Fire Energy from the discard pile to itself.
 
 #### Charizard
+
 - **Dragon Rage**: removed.
 - **Fire Spin**: renamed to **Fire Blast**.
 - **Fire Blast**: cost reduced from (CCCC) to (FFC).
@@ -243,23 +761,27 @@
 - New attack: **Relentless Flames** (FC): 30 damage; double damage if the opponent has taken more Prizes.
 
 #### Vulpix
+
 - **Ember**: removed.
 - **Confuse Ray**: increased cost from (F) to (FC).
 - New attack: **Singe** (F): inflicts Burn.
 
 #### Ninetales Lv32
+
 - **Lure**: removed.
 - **Fire Blast**: removed.
 - New attack: **Fire Spin** (F): does 10 damage for each attached Fire Energy; inflicts Burn; increases the Retreat Cost of the Defending Pokémon by 1.
 - New attack: **Hex** (CCC): 70 damage; unusable, unless the Defending Pokémon is affected by a Special Condition.
 
 #### Ninetales Lv35
+
 - **Combustion**: removed.
 - **Fire Fang**: reduced cost from (FFC) to (FC).
 - **Fire Fang**: reworked effect; discards an Energy attached to itself and inflicts Burn.
 - New Pokémon Power: **Cursed Flames**: when your Active Pokémon does damage to the Defending Pokémon with an attack, if it has any attached Fire Energies, discard the top card from the opponent's deck.
 
 #### Growlithe
+
 - Reduced HP from 60 to 50.
 - **Collect**: removed.
 - **Bite**: removed.
@@ -267,6 +789,7 @@
 - New attack: **Reckless Charge** (FC): 30 damage; does 10 recoil damage.
 
 #### Arcanine Lv45
+
 - Reduced HP from 90 to 80.
 - **Flamethrower**: removed.
 - **Reckless Charge**: increased cost from (CC) to (CCC).
@@ -275,6 +798,7 @@
 - New Pokémon Power: **Intimidating Roar**: once per turn, if Active, may force the opponent to switch their Active Pokémon.
 
 #### Ponyta
+
 - Increased HP from 40 to 50.
 - **Smash Kick**: removed.
 - **Flame Tail**: removed.
@@ -282,12 +806,14 @@
 - New attack: **Overrun** (FC): 20 damage; does 10 damage to 1 of the opponent's Benched Pokémon.
 
 #### Rapidash
+
 - **Strafe**: removed.
 - **Overrun**: removed.
 - New Pokémon Power: **Heat Boost**: if Active this turn, attacks cost (C) less.
 - New attack: **Inferno Onrush** (FCC): 60 damage; excess damage after a KO goes to the next Active Pokémon.
 
 #### Magmar Lv24
+
 - **Searing Spark**: reduced cost from (FC) to (F).
 - **Searing Spark**: reduced base damage from 20 to 10.
 - **Fire Punch**: reworked.
@@ -296,26 +822,30 @@
 ### Lightning Changes
 
 #### Electabuzz Lv35
+
 - **Thunder Punch**: reworked.
 - New attack: **Thunder Punch** (CC): 30 damage; discard an energy card attached to this Pokémon, unless it moved into the Active Spot this turn.
 
 ### Fighting Changes
 
 #### Geodude
+
 - **Mend**: attaches a Fighting Energy from the discard pile, instead of any Basic Energy.
 
 ### Darkness Changes
 
 #### Grimer
+
 - **Gather Toxins**: attaches a Darkness Energy from the discard pile, instead of any Basic Energy.
 
 ### Bug Fixes
-- **Primeape** - Exiting the damage counter selection menu for **Get Mad** returns HP to what it was before.
 
+- **Primeape** - Exiting the damage counter selection menu for **Get Mad** returns HP to what it was before.
 
 ## Version 0.9.0
 
 ### Removed Cards
+
 - Mewtwo Lv60 (Alternative Art)
 - Mew Lv23
 - Jigglypuff Lv12
@@ -324,6 +854,7 @@
 ### New Cards
 
 #### Gyarados (Red)
+
 - Stage 1, 80 HP, Water Pokémon, evolves from Magikarp.
 - Weakness: Lightning.
 - Resistance: Fightning.
@@ -332,24 +863,29 @@
 - Attack 2: **Hyper Beam** (CCC): 50 damage; discard an energy from both Active Pokémon.
 
 ### Core Mechanics Changes
+
 - Resistance now reduces damage taken by 20, down from 30.
 
 ### Status Conditions Changes
 
 #### Confusion
+
 - Confusion no longer clears immediately on Retreat.
 - Benched Pokémon recover from Confusion at the end of the owner's turn.
 
 #### Sleep
+
 - Replaced with **Drowsiness**.
 
 #### Drowsiness
+
 - New status condition.
 - A Drowsy Pokémon pays (C) more to Attack and to Retreat.
-- A Drowsy Pokémon's Abilities cannot be used.
+- A Drowsy Pokémon's Pokémon Power cannot be used.
 - Benched Pokémon recover from Drowsiness at the end of the owner's turn.
 
 #### Burn
+
 - New status condition.
 - A Burned Pokémon may discard an attached energy after attacking to heal the status condition.
 - A Burned Active Pokémon takes 20 damage at the end of the owner's turns.
@@ -358,15 +894,18 @@
 ### Grass Changes
 
 #### Bulbasaur
+
 - Increased HP from 40 to 50.
 - **Growl**: removed.
 - New attack: **Sprout** (C): searches the Deck for any Grass type card and adds it to the hand.
 
 #### Ivysaur
+
 - Increased HP from 60 to 80.
 - **Poison Whip**: reduced cost from (GCC) to (GC); increased damage from 20 to 30.
 
 #### Metapod
+
 - Reduced HP from 70 to 60.
 - Reduced Retreat Cost from 2 to 1.
 - **Harden**: removed.
@@ -374,79 +913,96 @@
 - New Pokémon Power: **Exoskeleton**: reduces damage taken by 20.
 
 #### Weedle
+
 - **Poison Sting**: always inflicts Poison.
 
 #### Kakuna
+
 - Reduced HP from 70 to 60.
 - Reduced Retreat Cost from 2 to 1.
 - **Poison Evolution**: reduced cost from (GC) to (G).
 
 #### Exeggcute
+
 - **Eggsplosion**: removed.
 - **Nutrition Support**: reduced cost from (G) to (C); attaches energy from the hand instead of the deck; removed healing effect.
 - New attack: **Leech Seed** (GC): 20 damage; heal 10 damage.
 
 #### Exeggutor
+
 - **Synthesis**: adds 2 Basic Energy cards from the deck to the hand, up from 1 Basic Energy card.
 - **Big Eggsplosion**: renamed to **Energy Burst**.
 
 #### Tangela Lv12
+
 - **Nutrition Support**: reduced cost from (G) to (C); attaches energy from the hand instead of the deck; removed healing effect.
 
 #### Pinsir
+
 - **Guillotine**: reworked.
 - New attack: **Guillotine** (GGC): Knocks Out the Defending Pokémon if it has 50 HP or less remaining.
 
 ### Fire Changes
 
 #### Charmeleon
+
 - **Flamethrower**: reduced cost from (FCC) to (FC).
 
 #### Arcanine Lv45
+
 - **Take Down**: renamed to **Reckless Charge**.
 
 #### Flareon Lv22
+
 - **Burn Out**: removed.
 - New attack: **Unstable Evolution** (CC): 50 damage; devolve the user and discard 1 energy attached to it.
 
 #### Moltres Lv35
+
 - **Flare**: increased cost from (C) to (F) and damage from 0 to 10.
 
 ### Water Changes
 
 #### Wartortle
+
 - **Rocket Shell**: reworked.
 - New attack: **Rocket Shell** (WC): 40 damage; put an Energy attached to the Pokémon back into the hand; reduces damage taken by 10.
 
 #### Blastoise
+
 - Reduced HP from 120 to 110.
 - **Hydro Pump**: reduced cost from (CCC) to (W); reduced base damage from 40 to 0; increased bonus damage from 10 per Water Energy to 20 per Water Energy.
 - **Aqua Launcher**: increased cost from (WC) to (WWC); increased damage from 30 to 50; increased damage reduction from 10 to 20.
 
 #### Psyduck
+
 - **Headache**: increased cost from (C) to (W).
 - **Amnesia**: removed.
 - New attack: **Rain Splash** (WC): 20 damage; +10 damage if the player attached an energy from the hand this turn.
 
 #### Golduck
+
 - **Aquatic Rescue**: removed.
 - **Energy Loop**: removed.
 - New Pokémon Power: **Swift Swim**: if Active this turn, attacks cost (C) less.
 - New attack: **Wave Splash** (WCC): 50 damage; put an Energy attached to the Pokémon back into the hand; does 10 damage to 2 of the opponent's Benched Pokémon.
 
 #### Poliwag
+
 - **Mud Splash**: removed.
 - **Rain Splash**: removed.
 - New attack: **Hypnosis** (C): inflcits Drowsiness.
 - New attack: **Muddy Water** (WC): 20 damage; does 10 damage to 2 of the opponent's Benched Pokémon.
 
 #### Poliwhirl
+
 - **Mud Sport**: removed.
 - **Rain Splash**: removed.
 - New Pokémon Power: **Water Absorb**: once per turn, attach a Water energy from the discard pile to itself.
 - New attack: **Wave Splash** (WC): 40 damage; put an Energy attached to the Pokémon back into the hand; does 10 damage to 2 of the opponent's Benched Pokémon.
 
 #### Poliwrath
+
 - Increased HP from 100 to 110.
 - **Drain Punch**: removed.
 - **Steamroller**: reworked.
@@ -454,15 +1010,18 @@
 - New attack: **Steamroller** (WWC): 30 damage; +10 damage for each attached energy (+20 for each Fighting energy); excess damage after a KO goes to the next Active Pokémon.
 
 #### Tentacool
+
 - **Poison Sting**: removed.
 - New attack: **Wicked Tentacle** (W): move an Energy from the Defending Pokémon to another Pokémon; inflicts Poison on both Pokémon.
 
 #### Tentacruel
+
 - **Wicked Tentacle**: removed.
 - **Jellyfish Sting**: increased damage from 20 to 30.
 - New Pokémon Power: **Dark Prison**: increases the Retreat Cost of the opponent's Pokémon with a Status Condition by 1.
 
 #### Seel
+
 - Reduced HP from 60 to 50.
 - Added Resistance to Fire.
 - **Find Ice**: removed.
@@ -471,6 +1030,7 @@
 - New attack: **Rest** (C): heal all damage and status from self; becomes Drowsy.
 
 #### Dewgong
+
 - Reduced Retreat Cost from 1 to zero.
 - **Deep Dive**: removed.
 - **Blizzard**: removed.
@@ -478,45 +1038,53 @@
 - New attack: **Aquatic Rescue** (WC): put up to 3 Pokémon or Supporter from discard pile into hand; does 10 damage for each selected Pokémon.
 
 #### Shellder
+
 - **Withdraw**: removed.
 - **Clamp**: removed.
 - New Pokémon Power: **Exoskeleton**: reduces damage taken by 10.
 - New attack: **Dredge** (W): 10 damage; put an Item from discard pile into hand.
 
 #### Cloyster
+
 - **Cold Crush**: removed.
 - New attack: **Icicle Spears** (WC): 20 damage; 10 damage to 1 of the opponent's Benched Pokémon; until next turn, do 20 damage back to attackers.
 
 #### Krabby
+
 - **Bubble**: removed.
 - **Guillotine**: removed.
 - New attack: **Bubble Jet** (W): 10 damage; 10 damage to 1 of the opponent's Benched Pokémon.
 - New attack: **Rend** (CC): 10 damage; +20 damage if the Defending Pokémon is damaged.
 
 #### Kingler
+
 - **Rend**: removed.
 - **Crabhammer**: reworked.
 - New attack: **Guillotine** (CC): Knocks Out the Defending Pokémon if it has 50 HP or less remaining.
 - New attack: **Crabhammer** (WWC): 40 damage; discard the top 2 cards of the opponent's deck.
 
 #### Horsea
+
 - **Aqua Burst**: removed.
 - **Dragon Dance**: attaches an energy from the deck instead of the hand.
 - New attack: **Water Gun** (W): 10 damage for each attached Water energy.
 
 #### Seadra
+
 - **Riptide**: removed.
 - **Sharpshooter**: removed.
 - New attack: **Scald** (W): 10 damage; inflicts Burn.
 - New attack: **Dragon Arrow** (W): discard any number of attached energies; 10 damage to 1 of the opponent's Pokémon, +20 damage for each discarded energy.
 
 #### Goldeen
+
 - **Flail**: removed.
 - **Horn Attack**: removed.
 - New Pokémon Power: **Energy Stream**: when played from the hand onto the Bench, add 1 basic energy from the deck to the hand.
 - New attack: **Water Sport** (W): 10 damage; +20 damage if this Pokémon has less energies than the opponent.
 
 #### Seaking
+
 - Reduced HP from 80 to 70.
 - **Rend**: removed.
 - **Waterfall**: removed.
@@ -524,48 +1092,58 @@
 - New attack: **Aqua Return** (WC): 80 damage; return this Pokémon and all attached cards to the deck.
 
 #### Staryu
+
 - **Core Regeneration**: removed.
 - New attack: **Collect** (C): draw 2 cards.
 
 #### Starmie
+
 - **Recover**: removed.
 - **Energy Spiral**: renamed to **Energy Burst**.
 - New Pokémon Power: **Energy Retrieval**: once per turn, discard a card from the hand and retrieve up to 2 basic energies from the discard pile.
 
 #### Magikarp
+
 - Increased HP from 30 to 40.
 
 #### Gyarados
+
 - Reduced HP from 100 to 90.
 - **Dragon Rage**: removed.
 - New attack: **Devastate** (WC): 70 damage; discard the top 4 cards of your deck.
 
 #### Lapras
+
 - **Transport**: tutor 2 Supporters instead of 1.
 - **Icy Wind**: removed.
 - New attack: **Aqua Return** (WC): 50 damage; return this Pokémon and all attached cards to the deck.
 
 #### Vaporeon Lv29
+
 - **Energy Swirl**: removed.
 - New attack: **Unstable Evolution** (CC): 50 damage; devolve the user and discard 1 energy attached to it.
 
 #### Vaporeon Lv42
+
 - **Hydro Pump**: removed.
 - New attack: **Water Pulse** (W): discard any number of attached (W); 20 damage for each discarded energy; inflicts Confusion if 2 or more were discarded.
 
 #### Omanyte
+
 - **Primordial Dream**: removed.
 - **Constrict**: removed.
 - New Pokémon Power: **Primal Guidance**: once per turn, search the deck for a Stage 1 or Stage 2 Pokémon that evolves from Mysterious Fossil and put it onto the Bench as a Basic Pokémon.
 - New attack: **Fossil Bind** (WC): 20 damage; the opponent is unable to use Items during their next turn.
 
 #### Omastar
+
 - Increased HP from 100 to 110.
 - Changed rarity from Uncommon to Rare.
 - **Primal Swirl**: increased damage by 10; also increased the Retreat Cost of the Defending Pokémon by 1.
 - New Pokémon Power: **Prehistoric Power**: while Active, the opponent cannot play Evolution cards from their hand.
 
 #### Articuno Lv35
+
 - **Freeze**: increased cost from (C) to (W); heals 20 HP.
 - **Sheer Cold**: reduced base damage from 10 to 0; increased damage bonus from 10 to 20 per discarded energy.
 - **Sheer Cold**: no longer discards an Energy from the Defending Pokémon; now inflicts Drowsiness.
@@ -573,29 +1151,36 @@
 ### Lightning Changes
 
 #### Surfing Pikachu
+
 - **Surf**: removed.
 - New attack: **Do the Wave** (CCC): 10 damage; +10 damage for each of the user's Benched Pokémon.
 
 #### Electrode Lv35
+
 - **Energy Spike**: attaches Energy only to Benched Pokémon.
 
 #### Jolteon Lv24
+
 - **Thunder Spear**: removed.
 - New attack: **Unstable Evolution** (CC): 50 damage; devolve the user and discard 1 energy attached to it.
 
 #### Zapdos Lv40
+
 - **Energize**: renamed to **Plasma**; increased cost from (C) to (L); increased damage from 0 to 10.
 
 ### Fighting Changes
 
 #### Sandshrew
+
 - **Sand Attack**: removed.
 - New attack: **Swift** (CC): 20 damage; unaffected by Weakness, Resistance or any other effects.
 
 #### Dugtrio
+
 - **Rototiller**: increased cost from (CC) to (FC); increased number of recovered cards from 3 to 4.
 
 #### Primeape
+
 - Increased HP from 70 to 80.
 - **Rage**: removed.
 - **Get Mad**: reworked.
@@ -603,24 +1188,29 @@
 - New attack: **Rage Fist** (FC): 20 damage; +10 damage for each Prize the opponent has taken.
 
 #### Machop
+
 - **Defensive Stance**: removed.
 - **Low Kick**: removed.
 - New attack: **Bulk Up** (C): add a Fighting Energy from deck to hand; reduce damage taken by 10.
 - New attack: **Karate Chop** (FC): 40 damage; -10 damage for each damage counter on the user.
 
 #### Machoke
+
 - **Karate Chop**: removed.
 - New attack: **Chop Down** (FF): 30 damage; double damage if the user has less HP than the Defending Pokémon.
 
 #### Machamp
+
 - **Chop Down**: removed.
 - New attack: **Strong-Arm Lariat** (FFC): 60 damage; can optionally do double damage and become unable to attack next turn.
 
 #### Hitmonlee
+
 - **Stretch Kick**: reduced cost from (CC) to (F).
 - **High Jump Kick**: reduced cost from (FCC) to (FC); reduced damage from 50 to 40.
 
 #### Kabuto
+
 - Increased HP from 60 to 70.
 - **Kabuto Armor**: removed.
 - **Primal Hunt**: removed.
@@ -628,6 +1218,7 @@
 - New attack: **Leech Life** (FC): 30 damage; heal the same amount of damage dealt.
 
 #### Kabutops
+
 - Increased HP from 100 to 110.
 - **Primal Scythe**: reworked.
 - **Sharp Sickle**: reworked.
@@ -635,6 +1226,7 @@
 - New attack: **Primal Scythe** (FCC): 60 damage; 10 damage to 2 Benched targets.
 
 #### Aerodactyl
+
 - Changed type from Fighting to Colorless.
 - **Prehistoric Power**: removed.
 - **Skill Dive**: reduced cost from (CCC) to (CC).
@@ -643,32 +1235,39 @@
 ### Psychic Changes
 
 #### Abra
+
 - **Teleport**: reduced cost from (P) to (C).
 - **Confuse Ray**: removed.
 - New attack: **Teleport Blast** (P): 20 damage; switch with another Pokémon.
 
 #### Kadabra
+
 - **Prophecy**: removed.
 - **Invade Mind**: removed.
 - New Pokémon Power: **Clairvoyant Sense**: attach a Psychic Energy from the hand to 1 Benched Pokémon; draw 2 cards.
 - New attack: **Energy Loop** (P): 30 damage; put an Energy attached to the Pokémon back into the hand.
 
 #### Alakazam
+
 - **Psychic**: increased base damage from 10 to 20.
 - **Mind Blast**: reduced cost from (PCC) to (PC); increased base damage from zero to 10; changed bonus damage from 20 per card in the opponent's hand to 10 per card in both players' hands.
 
 #### Slowpoke
+
 - **Rest**: heals all damage on the Pokémon, up from 30 damage.
 
 #### Slowbro
+
 - **Strange Behavior**: can only be used if this Pokémon has some energies attached to it.
 - **Spiral Drain**: increased cost from (CCC) to (PPC) and damage from 30 to 40.
 
 #### Drowzee
+
 - **Meditate**: reworked.
 - New attack: **Meditate** (P): 30 damage; fails if the player has less than 5 cards in hand.
 
 #### Hypno
+
 - Increased HP from 70 to 80.
 - **Dream Eater**: reworked.
 - **Hypnoblast**: removed.
@@ -676,12 +1275,14 @@
 - New attack: **Dream Eater** (PC): 60 damage; heal 20 damage; fails if the Defending Pokémon is not Asleep.
 
 #### Mr. Mime
+
 - Increased HP from 40 to 60.
 - **Invisible Wall**: removed.
 - **Hand Press**: increased base damage from 10 to 20.
 - New Pokémon Power: **Bench Barrier**: prevents damage done from the opponent's attacks to the player's Bench.
 
 #### Jynx
+
 - Reduced HP from 60 to 50.
 - **Mimic**: removed.
 - **Hand Press**: removed.
@@ -689,32 +1290,38 @@
 - New attack: **Sweet Kiss** (CC): 20 damage; inflicts Confusion.
 
 #### Clefairy
+
 - **Lead**: removed.
 - **Friend Tackle**: removed.
 - New attack: **Find A Friend** (C): add a Pokémon from the deck to the hand.
 - New attack: **Moonblast** (PC): 20 damage; reduces Defending Pokémon's damage by 10.
 
 #### Clefable
+
 - Increased HP from 70 to 80.
 - **Lunar Power**: removed.
 - New Pokémon Power: **Mischief**: once per turn, if this Pokémon has any attached energies, move 1 damage counter from 1 of the player's Pokémon to 1 of the opponent's Pokémon.
 
 #### Jigglypuff Lv13
+
 - **Call for Family**: removed.
 - **Light Steps**: removed.
 - New attack: **Friendship Song** (C): add a Supporter from the deck to the hand; heals 10 damage from all of the user's Pokémon.
 - New attack: **Lullaby** (P): inflicts Sleep.
 
 #### Wigglytuff Lv28
+
 - **Lullaby**: removed.
 - **Pester**: reduced cost from (PP) to (CC) and base damage from 30 to 20.
 - New attack: **Soothing Melody** (P): inflicts Sleep; heals 10 damage from all of the user's Pokémon.
 
 #### Wigglytuff Lv36
+
 - **Do the Wave**: removed.
 - New attack: **Friend Tackle** (CC): 20 damage; +20 damage if the user played a Supporter this turn.
 
 #### Mewtwo Lv53
+
 - Increased HP from 60 to 70.
 - **Barrier**: removed.
 - **Psychic**: removed.
@@ -722,6 +1329,7 @@
 - New attack: **Psyburn** (P): discard any number of attached (P); 20 damage for each discarded energy; discard 1 random card from the opponent's hand if they have 4 or more.
 
 #### Mewtwo Lv60
+
 - Increased HP from 70 to 90.
 - **Energy Absorption**: removed.
 - **Psyburn**: removed.
@@ -729,10 +1337,12 @@
 - New attack: **Psychic Nova** (PPC): 70 damage; discard the user's hand if the user has taken more Prizes.
 
 #### Mew Lv8
+
 - **Teleport Blast**: removed.
 - New attack: **Metronome** (CCC): copies one of the Defending Pokémon's attacks.
 
 #### Mew Lv15
+
 - **Clairvoyance**: removed.
 - **Metronome**: removed.
 - New Pokémon Power: **Mysterious Tail**: once per turn, if Active, you may put an Item card from the top 6 deck cards into the hand.
@@ -741,30 +1351,37 @@
 ### Darkness Changes
 
 #### Ekans
+
 - **Poison Fang**: increased base damage from 10 to 20.
 
 #### Arbok
+
 - **Deadly Poison**: increased base damage from 20 to 30.
 - **Terror Strike**: reduced cost from (DCC) to (D); reduced base damage from 30 to 10 and damage bonus from 20 to 10.
 
 #### Nidoran F
+
 - **Poison Sting**: always inflicts Poison.
 
 #### Nidoqueen
+
 - Increased HP from 110 to 120.
 - **Family Power**: increased cost from (CCC) to (DCC); increased base damage from 10 to 20; flattened damage bonus to 20 in all cases.
 
 #### Nidoran M
+
 - **Horn Attack**: removed.
 - **Retaliate**: removed.
 - New attack: **Collect** (C): draw 2 cards.
 - New attack: **Frustration** (D): 10 damage; +20 damage if the Defending Pokémon does not have any damage counters.
 
 #### Nidorino
+
 - **Vengeful Horn**: removed.
 - New attack: **Thrash** (DC): 50 damage; 20 damage to 1 of the user's Benched Pokémon.
 
 #### Nidoking
+
 - Increased HP from 100 to 110.
 - **Rout**: removed.
 - **Tail Swing**: removed.
@@ -772,99 +1389,119 @@
 - New attack: **Vengeful Horn** (DCC): 40 damage; +10 damage for each damaged Pokémon on the user's Bench.
 
 #### Zubat
+
 - **Supersonic**: removed.
 - **Pester**: removed.
 - New Pokémon Power: **Surprise Bite**: 10 damage to 1 of the opponent's Benched Pokémon that has no damage counters.
 - New attack: **Swarm** (D): 10 damage; put 1 Basic Pokémon from deck onto play; if the Bench was full, +10 damage.
 
 #### Golbat
+
 - **Leech Life**: removed.
 - New Pokémon Power: **Vampiric Aura**: the user's Pokémon with attached (D) Energy leech up to 20 damage when attacking.
 
 #### Grimer
+
 - **Gather Toxins**: reduced damage from 10 to zero.
 
 #### Muk
+
 - **Overwhelm**: increased cost from (CCC) to (DDC) and damage from 30 to 40.
 - **Overwhelm**: changed condition from 6 cards in the opponent's hand to 4 cards.
 - **Toxic**: removed.
 - New attack: **Toxic Waste** (DC): 10 damage; inflicts Double Poison; +30 damage if there are at least 10 Items in both discard piles.
 
 #### Koffing
+
 - **Foul Gas**: removed coin flip; always inflicts Poison and Confusion.
 
 #### Weezing
+
 - **Smog**: reworked.
 - New attack: **Smog** (DD): 10 damage; inflicts Poison; 10 damage to all of the opponent's Benched Pokémon.
 
 #### Gastly
+
 - **Energy Conversion**: removed.
 - New attack: **Destiny Bond** (DC): discard 1 energy; if this is Knocked Out with an attack next turn, Knock Out the opponent's Pokémon.
 
 #### Gengar
+
 - **Shadow Claw**: reduced cost from (DC) to (D) and damage from 40 to 30.
 - **Vengeance**: reduced cost from (DDC) to (DC).
 
 ### Colorless Changes
 
 #### Pidgeotto
+
 - **Whirlwind**: removed.
 - New attack: **Fly** (CC): 20 damage; returns the Pokémon and all attached cards to your hand.
 
 #### Pidgeot Lv40
+
 - Increased Retreat Cost from 1 to 2.
 - **Whirlwind**: reduced cost from (CC) to (C); reduced base damage from 40 to 20.
 - **Gale**: removed.
 - New attack: **Hurricane** (CCC): 40 damage; you may return 1 of the opponent's Pokémon and all attached cards to their hand.
 
 #### Rattata
+
 - **Scavenge**: removed.
 - New attack: **Lucky Find** (C): add an Item from deck to hand.
 
 #### Raticate
+
 - **Thief**: removed.
 - **Rend**: increased cost from (C) to (CC) and base damage from 10 to 30.
 - New Pokémon Power: **Quick Search**: once per turn, choose a card from the top 2 deck cards and add it to the hand.
 
 #### Doduo
+
 - **Double Edge**: renamed to **Reckless Charge**.
 
 #### Dodrio
+
 - **Retreat Aid**: now also affects itself.
 
 #### Chansey
+
 - Increased HP from 60 to 70.
 - **Natural Remedy**: removed.
 - New attack: **Light Steps** (C): 10 damage; able to move a Basic energy from the user to a Benched Pokémon.
 
 #### Tauros
+
 - **Take Down**: removed.
 - **Rampage**: reduced cost from (CCC) to (CC).
 - New attack: **Stampede** (C): 20 damage; 10 damage to 1 of the user's Benched Pokémon.
 
 #### Ditto
+
 - **Morph**: removed.
 - **Copy**: removed.
 - New Pokémon Power: **Transform**: switch this Pokémon with a Basic Pokémon from the discard pile.
 - New attack: **Energy Link** (C): 10 damage; attach a Basic Energy from the discard pile to this.
 
 #### Porygon
+
 - **Conversion Beam**: reduced cost from (CCC) to (CC).
 
 #### Dratini
+
 - **Wrap**: removed.
 - **Dragon Dance**: attaches an energy from the deck instead of the hand.
 - New attack: **Agility** (CC): 20 damage; immune next turn if this attack Knocks Out the Defending Pokémon.
 
 ### Game Menu Changes
+
 - Updated Glossary pages.
 - Updated the main Duel menu to display damaging status icons (Poison, Burn) right after the **Done** button, if applicable.
 - Disabled Sam's practice duel.
 
-
 ## Version 0.8.0
 
 ### Removed Cards
+
 - Pikachu Lv14
 - Pikachu Lv16 (Alternative Art)
 - Magnemite Lv13
@@ -875,6 +1512,7 @@
 ### New Cards
 
 #### Raichu Lv35
+
 - Stage 1, 70 HP, Lightning Pokémon, evolves from Pikachu.
 - Weakness: Fightning.
 - Retreat Cost: 1.
@@ -882,6 +1520,7 @@
 - Attack: **Discharge** (L): discard any number of attached (L); 20 damage for each discarded energy; inflicts Paralysis if 2 or more were discarded.
 
 #### Wigglytuff Lv28
+
 - Stage 1, 80 HP, Psychic Pokémon, evolves from Jigglypuff.
 - Weakness: Darkness.
 - Retreat Cost: 1.
@@ -889,6 +1528,7 @@
 - Attack 2: **Pester** (PP): 30 damage; double damage if opponent if affected with Status.
 
 #### Pokémon Nurse
+
 - Supporter Trainer card.
 - Returns 1 of the user's Pokémon in play to the user's hand. All cards attached to the Pokémon are discarded.
 
@@ -899,46 +1539,57 @@
 ### Grass Changes
 
 #### Paras
+
 - Added Resistance to **Water**.
 
 #### Parasect
+
 - Added Resistance to **Water**.
 
 #### Weepinbell
+
 - **Corrosive Acid**: removed coin flip.
 
 ### Fire Changes
 
 #### Charmander
+
 - **Ember**: reduced base damage from 30 to 20; optional energy discard for +10 damage.
 
 #### Vulpix
+
 - **Ember**: reduced base damage from 30 to 20; optional energy discard for +10 damage.
 
 #### Growlithe
+
 - **Fetch**: draws 2 cards.
 - **Flare**: removed.
 - New attack: **Bite** (FC): 20 damage.
 
 #### Arcanine Lv34
+
 - **Quick Attack**: base damage reduced from 20 to 10; bonus damage increased from 20 to 50.
 
 #### Rapidash
+
 - **Agility**: renamed to Strafe.
 
 #### Magmar Lv24
+
 - Increased HP from 60 to 70.
 - **Fire Punch**: reduced cost from (FC) to (F); reduced base damage from 20 to 10; if damaged, may discard an energy for +20 damage.
 - **Flamethrower**: removed.
 - New attack: **Searing Spark** (FC): 20 damage; optional +30 damage if an energy is discarded from benched Electabuzz.
 
 #### Magmar Lv31
+
 - **Smokescreen**: removed.
 - **Combustion**: removed.
 - New attack: **Incinerate** (F): 10 damage; discards any Tools attached to the Defending Pokémon; double damage if a tool was discarded.
 - New attack: **Flamethrower** (FFC): 50 damage; discard one energy.
 
 #### Flareon Lv22
+
 - Reduced HP from 80 to 70.
 - **Quick Attack**: removed.
 - **Rage**: removed.
@@ -946,14 +1597,17 @@
 - New attack: **Burn Out** (FC): 50 damage; 10 damage recoil; the user becomes Confused.
 
 #### Flareon Lv28
+
 - **Flamethrower**: removed.
 - New attack: **Scorching Column** (F): discard any number of attached (F); 20 damage for each discarded energy; inflicts Burn if 2 or more were discarded.
 
 #### Moltres Lv35
+
 - **Collect Fire**: renamed to **Flare**.
 - **Wildfire**: reduced cost from (FCC) to (F); changed base damage to 10; +10 damage per energy discarded.
 
 #### Moltres Lv37
+
 - Reduced HP from 100 to 90.
 - **Firegiver**: removed.
 - **Dive Bomb**: removed.
@@ -963,15 +1617,19 @@
 ### Water Changes
 
 #### Horsea
+
 - **Aqua Burst**: reduced base damage from 30 to 20; optional energy discard for +10 damage.
 
 #### Seadra
+
 - **Sharpshooter**: reduced cost from (WC) to (W); discards one Energy attached to this Pokémon.
 
 #### Dewgong
+
 - **Blizzard**: reduced cost from (WWCC) to (WWC) and base damage from 40 to 30.
 
 #### Vaporeon Lv29
+
 - Reduced HP from 80 to 70.
 - **Quick Attack**: removed.
 - **Bite**: removed.
@@ -979,12 +1637,14 @@
 - New attack: **Energy Swirl** (WC): 20 damage; return 1 Energy attached to the Defending Pokémon to the opponent's hand.
 
 #### Articuno Lv35
+
 - **Freeze Dry**: removed.
 - **Blizzard**: removed.
 - New attack: **Freeze** (C): attach (W) from the discard pile.
 - New attack: **Sheer Cold** (W): discard any number of attached (W); 10 base damage; +10 damage for each discarded energy; discard 1 Energy from the Defending Pokémon.
 
 #### Articuno Lv37
+
 - Reduced HP from 100 to 90.
 - **Quickfreeze**: removed.
 - **Ice Breath**: removed.
@@ -994,6 +1654,7 @@
 ### Lightning Changes
 
 #### Flying Pikachu
+
 - Increased HP from 40 to 50.
 - **Thunder Shock**: removed.
 - **Fly**: removed.
@@ -1001,28 +1662,33 @@
 - New attack: **Return** (C): 10 damage; draw until you have 5 cards in hand.
 
 #### Surfing Pikachu
+
 - **Surf**: reduced cost from (WC) to (C) and base damage from 20 to 10; double damage if attached energy this turn.
 - New Pokémon Power: **Wave Rider**: once per turn, draw cards until 3 in hand.
 
 #### Pikachu Lv12
+
 - **Gnaw**: removed.
 - **Volt Tackle**: removed.
 - New attack: **Rapid Charge** (C): add up to 2 Lightning Energy from deck to hand.
 - New attack: **Thundershock** (LC): 20 damage; does 20 recoil damage; inflicts Paralysis.
 
 #### Pikachu Lv16
+
 - **Growl**: removed.
 - **Thundershock**: removed.
 - New attack: **Quick Attack** (C): 10 damage; +10 damage if the Pokémon moved into the Active Spot this turn.
 - New attack: **Agility** (LL): 20 damage; immune to all damage and effects next turn if the attack Knocks Out the Defending Pokémon.
 
 #### Raichu Lv40
+
 - Reduced HP from 80 to 70.
 - **Agility**: removed.
 - New Pokémon Power: **Volt Switch**: if 1 (L) is used to pay for Retreat, it is attached to the new Active Pokémon.
 - **Thunder**: base damage increased from 60 to 70; does not take recoil if active this turn.
 
 #### Raichu Lv45
+
 - Reduced HP from 90 to 80.
 - **Energy Conversion**: removed.
 - **Gigashock**: removed.
@@ -1030,6 +1696,7 @@
 - New attack: **Thunderbolt** (LLC): 100 damage; discard all attached energies.
 
 #### Magnemite Lv15
+
 - Increased HP from 40 to 50.
 - Added Resistance to **Grass**.
 - **Tackle**: removed.
@@ -1037,6 +1704,7 @@
 - New attack: **Searching Magnet** (C): add an Item from deck to hand.
 
 #### Magneton Lv28
+
 - Increased HP from 60 to 80.
 - Added Resistance to **Grass**.
 - **Thunder Wave**: removed.
@@ -1045,6 +1713,7 @@
 - New attack: **Magnetic Blast** (LC): 30 damage; move an energy from the Defending Pokémon to the opponent's bench.
 
 #### Magneton Lv35
+
 - Added Resistance to **Grass**.
 - **Energy Spike**: removed.
 - **Sonicboom**: removed.
@@ -1052,34 +1721,40 @@
 - New attack: **Boosted Voltage** (CCC): 30 damage; if the user has an attached Tool, deal 10 damage to all of the opponent's Benched Pokémon.
 
 #### Voltorb
+
 - Increased HP from 40 to 50.
 - **Tackle**: removed.
 - **Self-desctruct**: recoil increased from 40 to 50.
 - New attack: **Energy Slide** (C): 10 damage; may move an attached Basic Energy to a Benched Pokémon.
 
 #### Electrode Lv35
+
 - **Spark**: removed.
 - **Explosion**: removed.
 - New Pokémon Power: **Desperate Blast**: if KOed from an attack while Active, deal 50 damage to the attacker.
 - New attack: **Energy Spike** (CC): 20 damage; attach an Energy from the deck to 1 Pokémon.
 
 #### Electrode Lv42
+
 - **Tackle**: removed.
 - New Pokémon Power: **Energy Generator**: attach a Basic Energy from the deck to 1 Pokémon and put 2 damage counters on it.
 
 #### Electabuzz Lv20
+
 - Increased HP from 60 to 70.
 - **Light Screen**: removed.
 - **Quick Attack**: reduced base damage from 20 to 10; bonus damage is now +30, instead of double.
 - New attack: **Overvoltage** (L): 10 damage; discards any Tools attached to the Defending Pokémon; double damage if a tool was discarded.
 
 #### Electabuzz Lv35
+
 - **Thunder Shock**: removed.
 - **Thunderpunch**: reworked.
 - New attack: **Ignited Voltage** (L): 10 damage; optional +30 damage if an energy is discarded from benched Magmar.
 - New attack: **Thunderpunch** (LC): 20 damage; if active this turn, may discard an energy for +30 damage.
 
 #### Jolteon Lv24
+
 - Reduced HP from 80 to 70.
 - **Jolt Essence**: removed.
 - **Stun Needle**: removed.
@@ -1087,10 +1762,12 @@
 - New Attack: **Thunder Spear** (LC): 30 damage to 1 of the opponent's Pokémon.
 
 #### Jolteon Lv29
+
 - **Thunderbolt**: removed.
 - New attack: **Discharge** (L): discard any number of attached (L); 20 damage for each discarded energy; inflicts Paralysis if 2 or more were discarded.
 
 #### Zapdos Lv40
+
 - Reduced HP from 80 to 70.
 - Increased Retreat Cost from 0 to 1.
 - **Thunderstorm**: reworked.
@@ -1098,10 +1775,12 @@
 - New attack: **Thunderstorm** (L): discard any number of attached (L); 10 damage for each discarded energy; 10 damage to all of the opponent's Benched Pokémon.
 
 #### Zapdos Lv64
+
 - Reduced HP from 90 to 70.
 - **Thunder**: does not take recoil if active this turn.
 
 #### Zapdos Lv68
+
 - Reduced HP from 100 to 90.
 - **Peal of Thunder**: removed.
 - **Big Thunder**: removed.
@@ -1111,92 +1790,110 @@
 ### Psychic Changes
 
 #### Slowpoke Lv9
+
 - **Amnesia**: removed.
 - **Confusion Wave**: removed.
 - New attack: **Rest** (C): heal 30 damage and status from self; falls asleep.
 - New attack: **Fishing Tail** (C): put a Pokémon or Basic Energy from discard pile into hand.
 
 #### Slowbro
+
 - **Spiral Drain**: reduced healing from 30 to 20.
 
 ### Colorless Changes
 
 #### Spearow
+
 - **Pluck**: double damage if a Tool was discarded from the opponent.
 
 #### Dragonair
+
 - **Draconic Evolution**: no longer removes status conditions; instead, heals 20 damage from the evolving Pokémon.
 
 ### Trainer Cards Changes
 
 #### Devolution Spray
+
 - Returns the highest Stage card of the selected Pokémon to the hand.
 
 #### Mr. Fuji
+
 - After shuffling a Pokémon into the deck, draws 1 card per Pokémon card shuffled.
 
 #### Scoop Up Net
-- Can only scoop Benched Basic Pokémon.
 
+- Can only scoop Benched Basic Pokémon.
 
 ## Version 0.7.0
 
 ### Water Changes
 
 #### Blastoise
+
 - **Hydro Pump**: reduced base damage from 50 to 40.
 
 #### Kingler
+
 - Increased HP from 70 to 80.
 - **Crabhammer**: reduced cost from (WWC) to (WCC).
 
 ### Lightning Changes
 
 #### Voltorb
+
 - **Self-destruct**: removed damage to Benched Pokémon.
 
 #### Electrode Lv35
+
 - **Self-destruct**: renamed to **Explosion**; reduced base damage from 100 to 80.
 
 #### Electrode Lv42
+
 - Reduced HP from 90 to 80.
 - **Self-destruct**: renamed to **Explosion**; reduced base damage from 100 to 80.
 
 ### Fighting Changes
 
 #### Mankey
+
 - **Karate Chop**: removed.
 - **Rage**: removed.
 - New attack: **Prank** (C): put a card from the opponent's discard pile on the top of their deck.
 - New attack: **Tantrum** (F): 30 damage; confuses the user.
 
 #### Primeape
+
 - **Tantrum**: removed.
 - **Rage**: reduced cost fro (CCC) to (CC) and base damage from 20 to 10.
 - New attack: **Get Mad** (F): move damage counters from Benched Pokémon to this Pokémon; immune to damage in the next turn if moved at least 4.
 
 #### Machop
+
 - **Low Kick**: reworked.
 - New attack: **Defensive Stance** (C): heal 20 damage; switch with a Benched Pokémon.
 - New attack: **Low Kick** (FC): 10 damage; increase retreat cost of Defending Pokémon by (C); +10 damage for each (C) on Defending Pokémon's retreat cost.
 
 #### Machoke
+
 - **Karate Chop**: increased cost from (F) to (FC) and base damage from 40 to 50.
 - **Seismic Toss**: removed.
 - New Pokémon Power: **Fighting Fury**: the user's Pokémon with attached (F) Energy deal 10 more damage when attacking.
 
 #### Machamp
+
 - Increased HP from 100 to 110.
 - **Submission**: removed.
 - **Strikes Back**: only returns damage to the attacker when this Pokémon is Active.
 - New attack: **Chop Down** (FFC): 50 damage; double damage if the user has less HP than the Defending Pokémon.
 
 #### Sandshrew
+
 - Increased HP from 40 to 50.
 - **Sand Attack**: increased cost from (F) to (FC) and base damage from 10 to 20.
 - New attack: **Excavate** (C): choose a card from the top 4 deck cards and add it to the hand.
 
 #### Sandslash
+
 - Increased HP from 70 to 80.
 - **Slash**: removed.
 - **Fury Swipes**: removed.
@@ -1204,65 +1901,77 @@
 - New attack: **Rapid Spin** (CC): 20 damage, both players switch Pokémon.
 
 #### Diglett
+
 - Increased HP from 30 to 40.
 - **Scratch**: removed.
 - **Dig**: renamed to **Dig Under**; increased cost from (F) to (CC).
 - New attack: **Landslide** (F): 30 damage; discards the top 2 cards from the user's deck.
 
 #### Dugtrio
+
 - **Slash**: removed.
 - **Earthquake**: reduced cost from (FFC) to (FCC); reduced base damage from 70 to 50.
 - New attack: **Rototiller** (CC): shuffle up to 3 cards from Discard Pile into Deck; 10 damage for each Pokémon or Energy card.
 
 #### Geodude
+
 - **Stone Barrage**: removed.
 - New attack: **Mend** (C): attach an energy from the discard pile; heal 10 damage.
 - New attack: **Rock Throw** (FC): 20 damage; damage is not affected by Resistance.
 
 #### Graveler
+
 - Increased HP from 60 to 70.
 - **Earthquake**: removed.
 - New Pokémon Power: **Stone Skin**: the user's Pokémon with attached (F) Energy take 10 less damage from attacks.
 - New attack: **Rock Slide** (FFC): 40 damage; 10 damage to 2 of the opponent's benched Pokémon.
 
 #### Golem
+
 - Increased HP from 90 to 110.
 - **Rock Slide**: removed.
 - **Self-destruct**: removed.
 - New attack: **Avalanche** (FFC): 10 damage for each (C) in the retreat cost of all the user's Pokémon.
-- New attack: **Explosion** (FFCC): 120 damage; 100 recoil; 20 damage to *all* benched Pokémon.
+- New attack: **Explosion** (FFCC): 120 damage; 100 recoil; 20 damage to _all_ benched Pokémon.
 
 #### Onix
+
 - Reduced HP from 80 to 70.
 - **Rock Head**: reduced cost from (FC) to (F) and base damage from 20 to 10.
 
 #### Cubone
+
 - **Call For Friend**: removed.
 - **Rage**: removed.
 - New attack: **Growl** (C): reduce damage dealt by the Defending Pokémon by 20.
 - New attack: **Retaliate** (F): 30 damage; can only be used when damaged.
 
 #### Marowak Lv26
+
 - **Bonemerang**: reworked.
 - New attack: **Bonemerang** (FC): 20 damage; deal 20 damage to 1 Pokémon in opponent's Bench.
 
 #### Marowak Lv32
+
 - **Bone Attack**: removed.
 - **Vengeance**: increased base damage from 10 to 20.
 - New Pokémon Power: **Crushing Charge**: discard the top card of your deck; attach it if it is a basic energy.
 
 #### Hitmonlee
+
 - Increased HP from 60 to 70.
 - **Stretch Kick**: increased cost from (F) to (CC).
 - **High Jump Kick**: reduced cost from (FFC) to (FCC); increased damage from 40 to 50; does 20 recoil damage.
 
 #### Hitmonchan
+
 - **Jab**: removed.
 - **Special Punch**: removed.
 - New attack: **Close Combat** (F): 40 damage; takes 40 more damage from attacks next turn.
 - New attack: **Sky Uppercut** (FFC): 40 damage; damage is not affected by Resistance.
 
 #### Rhyhorn
+
 - Decreased HP from 70 to 60.
 - **Horn Attack**: removed.
 - **Take Down**: removed.
@@ -1270,115 +1979,141 @@
 - New attack: **Overrun** (FCC): 20 damage; 20 damage to 1 benched Pokémon.
 
 #### Rhydon
+
 - **Horn Attack**: renamed to **Horn Drill**.
 - New attack: **Mountain Swing** (FFCC): 50 damage; discard the top 2 cards of both decks.
 
 #### Aerodactyl
+
 - **Fossil Fangs**: removed.
 - New attack: **Skill Dive** (CCC): 40 damage to any Pokémon.
 
 ### Psychic Changes
 
 #### Clefairy
+
 - **Moonblast**: removed.
 - New attack: **Friend Tackle** (CC): 10 damage; +20 damage if a Supporter was played on the same turn.
 
 #### Jigglypuff Lv12
+
 - Reduced HP from 50 to 40.
 - **Expand**: reduced cost from (CC) to (C).
 
 #### Jigglypuff Lv13
+
 - **Call For Friend**: removed.
 - New attack: **Call For Family** (C): put up to 2 Basic Pokémon from deck onto Bench.
 
 #### Jigglypuff Lv14
+
 - Reduced HP from 60 to 40.
 - **Punishing Slap**: removed.
 - New attack: **Pester** (C): 10 damage; double damage if opponent if affected with Status.
 
 #### Wigglytuff
+
 - **Do The Wave**: does 10 damage per Benched Pokémon (does not count Active Pokémon).
 
 ### Darkness Changes
 
 #### Nidoran (F)
+
 - **Call For Friend**: removed.
 - New attack: **Call For Family** (C): put up to 2 Basic Pokémon from deck onto Bench.
 
 #### Nidoqueen
+
 - Increased HP from 100 to 110.
 
 #### Nidorino
+
 - **Horn Drill**: removed.
 - **Den Protector**: renamed to **Vengeful Horn**; increased cost from (CC) to (DC).
 - New Pokémon Power: **Dark Retribution**: Active Pokémon with (D) Energy attached return 10 damage back to attackers.
 
 #### Zubat
+
 - **Supersonic**: reduced cost from (D) to (C); reduced base damage from 10 to zero; always inflicts Confusion.
 - **Bite**: removed.
 - New attack: **Pester** (D): 10 damage; double damage if the opponent is afflicted with Status.
 
 #### Koffing
+
 - **Self-destruction**: removed damage to benched Pokémon.
 
 #### Gastly Lv17
+
 - **Lick**: removed.
 - New attack: **Ominous Eyes**: put 1 damage counter on any of the opponent's Pokémon.
 
 ### Colorless Changes
 
 #### Pidgey
+
 - **Collect**: draws 2 cards instead of 1.
 
 #### Pidgeot Lv38
+
 - Increased HP from 100 to 110.
 - Increased Retreat Cost from 1 to 2.
 - **Twister**: increased base damage from 40 to 50.
 
 #### Pidgeot Lv40
+
 - Increased HP from 100 to 110.
 
 #### Raticate
+
 - **Finishing Bite**: removed.
 - **Super Fang**: removed.
 - New attack: **Thief** (C): 10 damage; choose a card from opponent's hand to put on the bottom of the deck.
 - New attack: **Rend** (C): 10 damage; +20 damage if the Defending Pokémon is damaged.
 
 #### Spearow
+
 - **Peck**: removed.
 - **Wing Attack**: removed.
 - New attack: **Pluck** (C): 10 damage; discards any Tools attached to the Defending Pokémon.
 - New attack: **Fury Attack** (CC): 10 damage; +20 damage if the opponent played a Supporter last turn.
 
 #### Fearow
+
 - **Drill Peck**: increased base damage from 40 to 50.
 
 #### Meowth Lv14
+
 - **Fury Swipes**: reworked.
 - New attack: **Fury Swipes** (C): flip a coin until tails; 10 damage per heads.
 
 #### Persian
+
 - Increased Retreat Cost from 0 to 1.
 
 #### Farfetch'd
+
 - Increased Retreat Cost from 0 to 1.
 - **Leek Slap**: reworked. The user is unable to attack next turn.
 
 #### Doduo
+
 - **Fury Attack**: removed.
 - New Pokémon Power: **Fleet Footed**: may draw 1 card per turn if in the Active Spot.
 - New attack: **Double-Edge** (C): 20 damage; 10 damage recoil.
 
 #### Dodrio
+
 - Increased Retreat Cost from 0 to 1.
 - **Rage**: reduced cost from (CCC) to (CC).
 
 #### Chansey
+
 - Reduced HP from 80 to 60.
 - Reduced Retreat Cost from 1 to 0.
 - **Natural Remedy**: reduced cost from (CCC) to (CC) and healing from 30 to 20.
 
 #### Kangaskhan
+
 - Reduced Retreat Cost from 2 to 1.
 - **Call For Friend**: removed.
 - **Comet Punch**: removed.
@@ -1386,58 +2121,67 @@
 - New attack: **Parental Rush** (CCC): 10 damage; +10 damage for each of the player's damaged Pokémon.
 
 #### Tauros
+
 - Increased HP from 60 to 70.
 - **Stomp**: removed.
 - **Rampage**: always inflicts Confusion on itself.
 - New attack: **Take Down** (C): 20 damage; 10 damage recoil.
 
 #### Eevee
+
 - **Take Down**: removed.
 - New Pokémon Power: **Rainbow Team**: attaches an Energy from discard pile to a benched Pokémon if all Pokémon are of a different color.
 
 ### Trainer Card Changes
+
 - **Mysterious Fossil**: reduced HP from 30 to 20.
 - **Clefairy Doll**: reduced HP from 30 to 20.
 - **PlusPower**: can only attach 1 per Pokémon; does not work if there is already another tool attached.
 - **Defender**: can only attach 1 per Pokémon; does not work if there is already another tool attached.
 
 ### NPC Changes
+
 - **Fire Club**: updated the deck list of Jonathan.
 
 ### Bug Fixes
-- **Dragonite Lv41** - *Speed Impact*: now reduces 20 damage per energy as stated in the description.
-- **Dragonair** - *Draconic Evolution*: now triggers when evolving a Pokémon using **Rare Candy**.
-- **Golduck** - *Aquatic Rescue*: now allows the selection of both Pokémon and Energies.
-- **Golduck** - *Aquatic Rescue*: menu text now displays the correct number of cards to choose.
-- **Wartortle** - *Rocket Shell*: no longer shuffles the deck if the effect does not trigger.
-- **Wartortle** - *Rocket Shell*: now counts energies attached with Rain Dance to trigger the effect.
-- **Poliwag** - *Rain Splash*: now counts energies attached with Rain Dance to trigger the effect.
-- **Poliwhirl** - *Rain Splash*: now counts energies attached with Rain Dance to trigger the effect.
-- **Seaking** - *Rend*: now properly applies the bonus damage versus damaged Pokémon.
-- Fixed an underflow error when dealing 10 damage to a Benched Pokémon with Exoskeleton or Battle Armor.
 
+- **Dragonite Lv41** - _Speed Impact_: now reduces 20 damage per energy as stated in the description.
+- **Dragonair** - _Draconic Evolution_: now triggers when evolving a Pokémon using **Rare Candy**.
+- **Golduck** - _Aquatic Rescue_: now allows the selection of both Pokémon and Energies.
+- **Golduck** - _Aquatic Rescue_: menu text now displays the correct number of cards to choose.
+- **Wartortle** - _Rocket Shell_: no longer shuffles the deck if the effect does not trigger.
+- **Wartortle** - _Rocket Shell_: now counts energies attached with Rain Dance to trigger the effect.
+- **Poliwag** - _Rain Splash_: now counts energies attached with Rain Dance to trigger the effect.
+- **Poliwhirl** - _Rain Splash_: now counts energies attached with Rain Dance to trigger the effect.
+- **Seaking** - _Rend_: now properly applies the bonus damage versus damaged Pokémon.
+- Fixed an underflow error when dealing 10 damage to a Benched Pokémon with Exoskeleton or Battle Armor.
 
 ## Version 0.6.0
 
 ### Grass Changes
 
 #### Vileplume
+
 - **Allergic Pollen**: only prevents the use of non-Supporter Trainer cards.
 
 ### Fire Changes
 
 #### Charmeleon
+
 - **Firestarter**: can be used once per Pokémon per turn, rather than once per turn.
 
 #### Charizard
+
 - **Energy Burn**: removed.
 - **Fire Spin**: reduced cost from (FFFF) to (CCCC).
 - New attack: **Dragon Rage** (CC): 30 damage, +10 for each type of Basic Energy attached.
 
 #### Flareon Lv22
+
 - Increased HP from 70 to 80.
 
 #### Flareon Lv28
+
 - Increased HP from 70 to 80.
 - **Quick Attack**: removed.
 - **Flamethrower**: reduced cost from (FFC) to (FF) and damage from 60 to 50.
@@ -1446,6 +2190,7 @@
 ### Water Changes
 
 #### Squirtle
+
 - Increased HP from 40 to 50.
 - **Withdraw**: removed.
 - **Bubble**: removed.
@@ -1453,21 +2198,25 @@
 - New attack: **Shell Press** (WC): 20 damage; reduce incoming damage by 10.
 
 #### Wartortle
+
 - Increased HP from 70 to 80.
 - **Rain Dance**: can attach unlimited Water Energy per turn.
 - **Bite**: removed.
 - New attack: **Rocket Shell** (WCC): 30 damage; reduce incoming damage by 10; add 1 Water Energy from deck to hand if attached energy on the same turn.
 
 #### Blastoise
+
 - **Aqua Launcher**: increased cost from (W) to (WC); reduces damage taken by 10.
 - **Hydro Pump**: base damage increased from 40 to 50.
 
 #### Psyduck
+
 - **Fury Swipes**: removed.
 - **Headache**: reduced cost from (P) to (C); only prevents the use of non-Supporter Trainer cards.
 - New attack: **Amnesia** (WC): 10 damage; disable 1 of the opponent's attacks.
 
 #### Golduck
+
 - Increased HP from 70 to 80.
 - **Amnesia**: removed.
 - **Hyper Beam**: removed.
@@ -1475,47 +2224,56 @@
 - New attack: **Energy Loop** (WCC): 60 damage; put an Energy attached to the Pokémon back into the hand.
 
 #### Poliwag
+
 - **Call for Friend**: removed.
 - **Water Gun**: removed.
 - New attack: **Mud Splash** (C): 10 damage; put 1 Basic Energy from discard pile into hand.
 - New attack: **Rain Splash** (W): 10 damage; double damage if attached energy on the same turn.
 
 #### Poliwhirl
+
 - **Absorb Water**: removed.
 - **Do The Wave**: removed.
 - New Pokémon Power: **Mud Sport**: retrieve 1 Water or Fighting Energy from discard pile to hand.
 - New attack: **Rain Splash** (CC): 20 damage; double damage if attached energy on the same turn.
 
 #### Poliwrath
+
 - **Dual Type Fighting**: removed.
 - **Aqua Punch**: removed.
 - New attack: **Steamroller** (CC): 20 damage; 20 damage to 1 Benched Pokémon; deals Fighting damage.
 - New attack: **Drain Punch** (CCCC): 70 damage; heal 20 damage.
 
 #### Tentacool
+
 - **Acid**: removed.
 - New attack: **Constrict** (CC): 10 damage; increase opponent's retreat cost by 1 and deal +10 damage for each (C) in retreat cost.
 
 #### Tentacruel
+
 - Increased HP from 60 to 80.
 - **Supersonic**: removed.
 - **Jellyfish Sting**: reduced cost from (WW) to (WC); inflicts Poison, or Confusion if already Poisoned.
 - New attack: **Wicked Tentacle** (C): move an Energy from the Defending Pokémon to another Pokémon; Poison the second Pokémon.
 
 #### Staryu
+
 - **Big Splash**: removed.
 - New attack: **Core Regeneration** (C): heal 10 damage; draw a card.
 
 #### Starmie
+
 - **Energy Splash**: removed.
 - New attack: **Energy Spiral** (C): 10 damage for each energy attached to both Active Pokémon.
 
 #### Seel
+
 - **Headbutt**: removed.
 - New attack: **Find Ice** (C): add up to 2 Water Energy from deck to hand.
 - New attack: **Energy Slide** (W): 10 damage; may move an attached Basic Energy to a Benched Pokémon.
 
 #### Dewgong
+
 - Added a Resistance to Fire.
 - **Ice Beam**: removed.
 - **Aurora Beam**: removed.
@@ -1523,30 +2281,36 @@
 - New attack: **Blizzard** (WWCC): 40 damage; 10 damage to all opponent Benched Pokémon.
 
 #### Shellder
+
 - **Supersonic**: removed.
 - New attack: **Clamp** (WC): 20 damage; flip a coin, if Heads inflicts Paralysis.
 
 #### Cloyster
+
 - **Clamp**: removed.
 - **Spike Cannon**: removed.
 - New Pokémon Power: **Exoskeleton**: reduces damage taken by 20.
 - New attack: **Cold Crush** (WC): 30 damage; discard an Energy from both Active Pokémon.
 
 #### Horsea
+
 - **Smokescreen**: removed.
 - **Water Gun**: removed.
 - New attack: **Dragon Dance** (C): attach an energy from hand to one Pokémon.
 - New attack: **Aqua Burst** (WC): 30 damage, discard 1 energy.
 
 #### Seadra
+
 - **Aqua Launcher**: renamed to **Water Arrow**.
 - **Twister**: removed.
 - New attack: **Riptide** (WC): 10 damage; retrieve up to 2 energies from discard; +20 damage for each.
 
 #### Seaking
+
 - **Waterfall**: reduced cost from (WCC) to (CCC).
 
 #### Lapras
+
 - Reduced HP from 80 to 70.
 - **Healing Melody**: removed.
 - **Surf**: removed.
@@ -1554,16 +2318,19 @@
 - New attack: **Icy Wind** (WCC): 20 damage; 10 damage to 1 Benched Pokémon.
 
 #### Vaporeon Lv29
+
 - Increased HP from 70 to 80.
 - **Bite**: reduced cost from (CCC) to (CC).
 
 #### Vaporeon Lv42
+
 - **Quick Attack**: removed.
 - **Water Gun**: removed.
 - New Pokémon Power: **Energy Soak**: until end of turn, changes all energies to Water energy.
 - New attack: **Hydro Pump** (CC): 20 damage; +10 damage for each attached Water energy.
 
 #### Omanyte
+
 - Increased HP from 40 to 70.
 - Increased Retreat Cost from 0 to 1.
 - **Harden**: removed.
@@ -1572,6 +2339,7 @@
 - New attack: **Constrict** (WC): 20 damage; increase opponent's retreat cost by 1 and deal +10 damage for each (C) in retreat cost.
 
 #### Omastar
+
 - Increased HP from 70 to 100.
 - Increased Retreat Cost from 1 to 2.
 - **Water Gun**: removed.
@@ -1580,34 +2348,39 @@
 - New attack: **Primal Swirl** (WCC): 40 damage, devolve the Defending Pokémon.
 
 #### Articuno Lv35
+
 - **Blizzard**: increased cost from (WWW) to (WWCC); reduced base damage from 40 to 20.
 
 ### Lightning Changes
 
 #### Jolteon Lv24
+
 - Increased HP from 70 to 80.
 - **Stun Needle**: increased base damage from 30 to 40.
 
 #### Jolteon Lv29
+
 - Increased HP from 70 to 80.
 - **Quick Attack**: removed.
 - **Pin Missile**: removed.
 - New Pokémon Power: **Energy Jolt**: until end of turn, changes all energies to Lightning energy.
 - New attack: **Thunderbolt** (LL): 60 damage; discards all attached energy.
 
-
 ### Fighting Changes
 
 #### Marowak Lv26
+
 - **Bonemerang**: damage changed from x30 per heads to x20 per heads and x10 per tails.
 
 #### Kabuto
+
 - Increased HP from 40 to 60.
 - Increased Retreat Cost from 0 to 1.
 - **Scratch**: removed.
 - New attack: **Primal Hunt** (FC): 20 damage, search deck for a Pokémon card and add to the hand.
 
 #### Kabutops
+
 - Increased HP from 70 to 100.
 - Increased Retreat Cost from 1 to 2.
 - **Sharp Sickle**: reworked.
@@ -1616,21 +2389,23 @@
 - New attack: **Sharp Sickle** (FCC): 50 damage; +30 damage versus Evolved Pokémon.
 
 #### Aerodactyl
+
 - Increased HP from 60 to 80.
 - **Prehistoric Power**: only works while in the Active Spot.
 - **Wing Attack**: removed.
 - New attack: **Fossil Fangs** (CCC): 40 damage; reduce Defending Pokémon's attack by 10.
 
-
 ### Colorless Changes
 
 #### Dragonair
+
 - Increased Retreat cost from 1 to 2.
 - **Dragon Rage**: removed.
 - **Hyper Beam**: increased damage from 20 to 30.
 - New Pokémon Power: **Draconic Evolution**: when evolving other Pokémon, remove status and effects from that Pokémon; may attach 1 Basic Energy from hand to that Pokémon.
 
 #### Dragonite Lv41
+
 - Increased HP from 100 to 120.
 - **Healing Wind**: removed.
 - **Slam**: removed.
@@ -1638,40 +2413,46 @@
 - New attack: **Speed Impact** (CCC): 100 damage, -20 for each Energy attached to the Defending Pokémon.
 
 #### Dragonite Lv45
+
 - Increased HP from 100 to 120.
 - Increased Retreat cost from 1 to 2.
 - **Dragon Claw**: removed.
 - **Energy Hurricane**: decreased cost from (WCC) to (CCC) and base damage from 60 to 50.
 - New attack: **Outrage** (CCC): 30 damage; discard 1 energy; +10 damage for each damage counter.
 
-
 ## Version 0.5.0
 
 ### Grass Changes
 
 #### Venonat
+
 - **Ultravision**: reduced cost from (G) to (C).
 
 #### Parasect
+
 - Increased HP from 60 to 70.
 
 ### Fire Changes
 
 #### Moltres Lv37
+
 - **Dive Bomb**: 40 base damage; no further effects.
 
 ### Water Changes
 
 #### Cloyster
+
 - **Spike Cannon**: reduced cost from (WW) to (CC); flip 2 coins, 20 damage per Heads; 10 damage per Tails.
 
 ### Fighting Changes
 
 #### Marowak Lv32
+
 - Increased HP from 70 to 80.
 - **Vengeance**: reduced base damage from 30 to 10; +10 bonus damage for each Pokémon (up to 5) in discard pile.
 
 #### Hitmonlee
+
 - **Rolling Kick**: removed.
 - **High Jump Kick**: increased cost from (FCC) to (FFC).
 - New attack: **Stretch Kick** (F): 20 damage to a Pokémon on the opponent's Bench.
@@ -1679,12 +2460,14 @@
 ### Darkness Changes
 
 #### Ekans
+
 - **Spit Poison**: removed.
 - **Wrap**: removed.
 - New attack: **Finishing Bite** (D): 30 damage; can only be used if the opponent has taken damage.
 - New attack: **Poison Fang** (DC): 10 damage; inflicts Poison.
 
 #### Arbok
+
 - Increased HP from 60 to 70.
 - **Terror Strike**: reworked.
 - **Poison Fang**: removed.
@@ -1692,10 +2475,12 @@
 - New attack: **Terror Strike** (DCC): 30 damage; +20 damage for each Pokémon Power in opponent's play area.
 
 #### Nidoran (F)
+
 - **Fury Swipes**: removed.
 - New attack: **Poison Sting** (D): 10 damage; flip a coin, Poison if Heads.
 
 #### Nidorina
+
 - Increased HP from 70 to 80.
 - **Supersonic**: removed.
 - **Double Kick**: removed.
@@ -1703,6 +2488,7 @@
 - New attack: **Poison Payback** (DC): 20 damage; +20 damage and inflicts Poison if user is damaged.
 
 #### Nidoqueen
+
 - Increased HP from 80 to 100.
 - **Boyfriends**: removed.
 - **Mega Punch**: removed.
@@ -1710,15 +2496,18 @@
 - New attack: **Family Power** (CCC): 10 damage; +10 damage for each Nidoran on Bench, +20 damage for each Nidorino or Nidorina, +30 for each Nidoking or Nidoqueen.
 
 #### Nidoran (M)
+
 - **Horn Hazard**: removed.
 - New attack: **Retaliate** (D): 30 damage; unusable, unless the user has taken damage.
 
 #### Nidorino
+
 - Increased HP from 60 to 70.
 - **Double Kick**: removed.
 - New attack: **Den Protector** (CC): 10 damage; +10 damage for each of the player's damaged Pokémon.
 
 #### Nidoking
+
 - Increased HP from 90 to 100.
 - **Thrash**: removed.
 - **Toxic**: removed.
@@ -1726,23 +2515,27 @@
 - New attack: **Tail Swing** (DCC): 50 damage; also does 20 damage to each of the opponent's benched Basic Pokémon.
 
 #### Zubat
+
 - **Leech Life**: removed.
 - **Supersonic**: increased cost from (C) to (D); added 10 base damage.
 - New attack: **Bite** (CC): 20 damage.
 
 #### Golbat
+
 - Increased HP from 60 to 70.
 - **Wing Attack**: removed.
 - **Leech Life**: increased cost from (DC) to (DCC) and base damage from 20 to 30.
 - New attack: **Night Ambush** (CC): 20 damage and inflict Poison to any of the opponent's Pokémon.
 
 #### Grimer
+
 - **Minimize**: removed.
 - **Nasty Goo**: removed.
 - New Pokémon Power: **Garbage Eater**: heals 10 damage after playing a non-Supporter Trainer.
 - New attack: **Gather Toxins** (C): attach an energy from Discard Pile; then, 10 damage and inflicts Poison.
 
 #### Muk
+
 - Increased HP from 70 to 80.
 - **Toxic Gas**: removed.
 - **Sludge**: removed.
@@ -1750,31 +2543,38 @@
 - New attack: **Overwhelm** (CCC): 30 damage; inflicts Paralysis and discards a card from opponent's hand if they have at least 6 cards in hand.
 
 #### Koffing
+
 - **Foul Gas**: reduced cost from (DC) to (D); reduced base damage from 10 to 0.
 - New attack: **Selfdestruct** (DC): 40 damage; 50 recoil; 10 damage to all Benched.
 
 #### Weezing
+
 - Increased HP from 60 to 80.
 - **Smog**: always inflicts Poison; also inflicts Smokescreen effect.
 - **Selfdestruct**: removed:
 - New Pokémon Power: **Toxic Gas**: disables other Pokémon Powers while in the Active spot.
 
 #### Gastly Lv8
+
 - **Sleeping Gas**: reduced cost from (D) to (C).
 
 #### Gastly Lv17
+
 - Reduced HP from 50 to 40.
 
 #### Haunter Lv17
+
 - Increased retreat cost from 0 to 1.
 - **Curse**: deal 10 damage to 1 Pokémon, instead of moving 1 damage counter.
 
 #### Haunter Lv22
+
 - **Nightmare**: increased cost from (D) to (DC) and base damage from 10 to 20.
 - **Pester**: removed.
 - New Pokémon Power: **Affliction**: at the end of turn, 10 damage to all of the opponent's Pokémon with Status.
 
 #### Gengar
+
 - HP increased from 90 to 100.
 - Retreat cost increased from 1 to 2.
 - **Confuse Ray**: removed.
@@ -1785,75 +2585,88 @@
 ### Colorless Changes
 
 #### Pidgeotto
+
 - Increased HP from 60 to 70.
 - **Wing Attack**: removed.
 - **Whirlwind**: increased damage from 20 to 30.
 - New Pokémon Power: **Courier**: after evolving, search deck for any card and add to hand.
 
 #### Pidgeot Lv38
+
 - Increased HP from 80 to 100.
 - **Slicing Wind**: increased cost from (C) to (CC); 20 base damage; 10 damage to all opponent's Bench.
 - **Twister**: increased damage from 30 to 40.
 
 #### Pidgeot Lv40
+
 - Increased HP from 80 to 100.
 - **Whirlwind**: increased cost from (C) to (CC) and base damage from 20 to 40.
 - **Hurricane**: renamed to **Gale**; reduced base damage from 30 to zero.
 
 #### Raticate
+
 - Increased HP from 60 to 70.
 - **Sneak Attack**: removed.
 - New attack: **Finishing Bite** (C): 40 damage; can only be used if the opponent has taken damage.
 
 #### Fearow
+
 - Increased HP from 70 to 80.
 - **Clutch**: removed.
 - New attack: **Skill Dive** (CC): 30 damage to any of the opponent's Pokémon.
 
 #### Persian
+
 - **Sneak Attack**: removed.
 - **Poison Claws**: removed.
 - New Pokémon Power: **Trade**: once per turn, discard 1 card from hand to draw 2 cards.
 - New attack: **Shadow Claw** (CC): 30 damage; may discard a card from hand to discard a random card from opponent's hand.
 
-
 ### Bug Fixes
+
 - **Strikes Back** no longer triggers when the Pokémon is Benched and affected with status.
 - Certain Pokémon Powers will now display the correct error message when their preconditions are not met.
-
 
 ## Version 0.4.0
 
 ### Changed
 
 #### Beedrill
+
 - **Toxic**: reduced cost from (GGC) to (GC); reduced damage from 40 to 30.
 
 #### Golduck
+
 - **Psyshock**: removed.
 - New attack: **Amnesia** (W): 10 damage; disables 1 of the Defender's attacks.
 
 #### Omanyte
+
 - **Clairvoyance**: removed.
 - New attack (temporary): **Harden** (C): prevents 30 or less damage.
 
 #### Abra
+
 - **Teleport**: draws 4 cards, down from 5 cards.
 - **Psyshock**: removed.
 - New attack: **Confuse Ray** (PC): 10 damage; inflicts Confusion.
 
 #### Kadabra
+
 - **Super Psy**: removed.
 - New attack: **Invade Mind** (PC): 10 damage; +10 damage for each Trainer in opponent's hand.
 
 #### Gengar
+
 - Reduced Retreat cost from 2 to 1.
 
 #### Mewtwo Lv53
+
 - **Barrier**: reduced cost from (PP) to (PC); discards all attached energies (at least 1).
 - **Psychic**: increased cost from (PC) to (CCC); increased base damage from 10 to 20.
 
 #### Mewtwo Lv60 (Alt)
+
 - Decreased HP from 70 to 60.
 - **Energy Absorption**: removed.
 - **Psyburn**: removed.
@@ -1861,18 +2674,22 @@
 - New attack: **Psyshock** (PC): 20 damage; +20 damage if opponent has at least 5 cards in hand.
 
 #### Mew Lv8
+
 - **Psyshock**: removed.
 - New attack: **Teleport Blast** (PC): 20 damage; switch with another Pokémon.
 
 #### Mew Lv15
+
 - **Mystery Attack**: removed.
 - New Pokémon Power: **Clairvoyance**: the opponent plays with their hand face up.
 - New attack: **Metronome** (CCC): copies one of the Defending Pokémon's attacks.
 
 #### Mew Lv23
+
 - **Devolution Beam**: reduced cost from (PP) to (PC).
 
 #### Clefairy
+
 - Increased HP from 40 to 50.
 - Reduced rarity from Rare to Uncommon.
 - **Sing**: removed.
@@ -1881,28 +2698,34 @@
 - New attack: **Moonblast** (PC): 20 damage; reduces Defending Pokémon's damage by 10.
 
 #### Clefable
+
 - **Moonblast**: removed.
 - **Metronome**: increased cost from (C) to (CC).
 - New attack: **Lunar Power** (C): cures a Pokémon from status and evolves it from the deck.
 
 #### Jigglypuff Lv12
+
 - **Punishing Slap**: removed.
 - New attack: **Expand** (CC): 10 damage; reduce damage taken by 10 during the next turn.
 
 #### Jigglypuff Lv13
+
 - **Expand**: removed.
 - New attack: **Light Steps** (P): 10 damage; may move an energy to another Pokémon.
 
 #### Jigglypuff Lv14
+
 - **Pound**: removed.
 - New attack: **Punishing Slap** (PC): 20 damage, +10 if any of the opponent's Pokémon has Darkness Energy.
 
 #### Ditto
+
 - **Pound**: removed.
 - **Morph**: reduced cost from (CCC) to (C); Basic Pokémon is chosen from Discard Pile, instead of random from deck.
 - New attack: **Copy** (CC): copies one of the Defending Pokémon's attacks.
 
 #### Dratini
+
 - **Pound**: removed.
 - New attack: **Wrap** (C): 10 damage; flip a coin, Paralysis if Heads.
 
@@ -1917,22 +2740,27 @@
 - Slight improvement on how AI handles healing attacks.
 
 #### Abra
+
 - **Teleport Blast**: removed.
 - New attack: **Teleport** (P): shuffle Pokémon and attached cards into deck; draw 5 cards.
 
 #### Kadabra
+
 - Increased HP from 60 to 70.
 - **Recover**: removed.
 - New Pokémon Power: **Prophecy**: reorder either player's top 3 deck cards.
 
 #### Alakazam
+
 - **Mind Blast**: deals 20 damage for each card in opponent's hand.
 
 #### Slowpoke Lv9
+
 - **Headbutt**: removed.
 - New attack: **Confusion Wave** (CC): 10 damage; inflicts Confusion on both Active Pokémon.
 
 #### Slowpoke Lv18
+
 - Increased HP from 40 to 50.
 - **Spacing Out**: removed.
 - **Scavenge**: removed.
@@ -1940,6 +2768,7 @@
 - New attack: **Fishing Tail** (C): put a Pokémon or Basic Energy from discard pile into hand.
 
 #### Slowbro
+
 - Increased HP from 70 to 80.
 - **Water Gun**: removed.
 - **Psyshock**: removed.
@@ -1947,24 +2776,30 @@
 - New attack: **Spiral Drain** (CCC): 30 damage; heals 30 damage from self.
 
 #### Gengar
+
 - **Dark Mind**: reduced cost from (DDC) to (DC) and direct damage from 60 to 40.
 
 #### Drowzee
+
 - **Pound**: removed.
 - New attack: **Meditate** (CC): 10 damage. +20 damage if player's hand has more than 5 cards.
 
 #### Hypno
+
 - **Hypnoblast**: reduced cost from (PPC) to (PCC).
 
 #### Mr. Mime
+
 - **Meditate**: removed.
 - New attack: **Hand Press** (PC): 10 damage. +20 damage if player's hand has more cards than the opponent's.
 
 #### Jynx
+
 - **Meditate**: removed.
 - New attack: **Hand Press** (PC): 10 damage. +20 damage if player's hand has more cards than the opponent's.
 
 ### Fixed
+
 - Item Finder now selects an Item card from the deck.
 - Scoop Up Net no longer crashes the game when selecting the Active Pokémon.
 - Some evolution-based decision functions no longer cause the game to freeze or run random code.
@@ -1974,35 +2809,42 @@
 ### Pokémon Cards
 
 #### Bulbasaur
+
 - New attack: **Growl** (C): reduces damage taken by 20.
 - **Leech Seed**: reduced cost from (GG) to (GC).
 
 #### Ivysaur
+
 - **Poison Powder**: removed.
 - **Vine Whip**: removed.
 - New Pokémon Power: **Energy Trans**.
 - New attack: **Poison Whip** (GCC): 20 damage, inflicts Poison.
 
 #### Venusaur Lv64
+
 - **Solar Power**: removed.
 - **Mega Drain**: reduced cost from (GGGG) to (GG); always heals 20 damage.
 - New attack: **Double Edge** (CCC): 60 damage, 20 recoil.
 
 #### Venusaur Lv67
+
 - **Energy Trans**: removed.
 - New attack: **Pollen Frenzy** (GC): 20 damage; if heads, inflicts Poison + Paralysis; if tails, inflicts Poison + Sleep.
 - **Solar Beam**: reduced cost from (GGGG) to (GGG); increased damage from 60 to 70.
 
 #### Caterpie
+
 - New Pokémon Power: **Adaptive Evolution**: can evolve on the first turn.
 
 #### Metapod
+
 - **Stiffen**: removed.
 - **Stun Spore**: removed.
 - New attack: **Harden** (C): prevents 30 or less damage.
 - New attack: **Hatch** (GC): heal 30 damage and status, search deck for Butterfree and evolve.
 
 #### Butterfree
+
 - Increased HP from 70 to 80.
 - **Whirlwind**: removed.
 - **Mega Drain**: removed.
@@ -2010,9 +2852,11 @@
 - New attack: **Silver Whirlwind** (GCC): 30 damage, opponent switches Pokémon; if heads, defending Pokémon is also Asleep, if tails it is Poisoned.
 
 #### Weedle
+
 - New Pokémon Power: **Adaptive Evolution**: can evolve on the first turn.
 
 #### Kakuna
+
 - Reduced HP from 80 to 70.
 - **Stiffen**: removed.
 - **Poison Powder**: removed.
@@ -2020,56 +2864,70 @@
 - New attack: **Poison Evolution** (GC): Poison the target; search deck for Beedrill and evolve.
 
 #### Beedrill
+
 - **Twineedle**: removed.
 - **Poison Sting**: removed.
 - New attack: **Assassin Flight** (C): 40 damage to a Benched Pokémon if the opponent's Active Pokémon has status.
 - New attack: **Toxic** (GGC): 40 damage, inflicts double poison.
 
 #### Ekans
+
 - **Spit Poison**: added 10 direct damage.
 
 #### Arbok
+
 - **Poison Fang**: reduced cost from (DDC) to (DC).
 
 #### Nidoran (F)
+
 - Reduced HP from 60 to 50.
 - **Call for Family**: replaced with **Call for Friend** (C): choose any Basic Pokémon from deck.
 - **Fury Swipes**: changed Energy cost from (D) to (DC); 20 direct damage. Flip a coin. If Heads, +10 damage.
 
 #### Nidorina
+
 - **Supersonic**: reduced cost from (D) to (C).
 
 #### Nidoqueen
+
 - **Mega Punch**: reduced cost from (DDCC) to (DCC).
 
 #### Nidoran (M)
+
 - New attack: **Horn Attack** (C): 10 damage
 
 #### Nidorino
+
 - **Double Kick**: reduced cost from (DCC) to (DC).
 - **Horn Drill**: reduced cost from (DDCC) to (DCC).
 
 #### Nidoking
+
 - **Thrash**: reduced cost from (DCC) to (DC).
 - **Toxic**: reduced cost from (DDD) to (DDC), increased damage from 20 to 40.
 
 #### Zubat
+
 - **Supersonic**: reduced cost from (CC) to (C).
 - **Leech Life**: reduced cost from (DC) to (D).
 
 #### Golbat
+
 - **Leech Life**: reduced cost from (DDC) to (DC).
 
 #### Oddish
+
 - **Sprout**: reduced cost from (G) to (C); searches the Deck for any Grass type card and adds it to the hand.
 
 #### Gloom
+
 - Increased HP from 60 to 70.
 - **Poison Powder**: removed.
 - **Foul Odor**: also Poisons the target.
 - New Pokémon Power: **Heal**: once per turn, heal 10 damage from one Pokémon.
 
 #### Vileplume
+
 - Increased HP from 80 to 100.
 - **Heal**: removed.
 - **Petal Dance**: reworked.
@@ -2077,36 +2935,43 @@
 - New attack: **Petal Dance** (GGC): 50 damage; heal 20 to all Pokémon; Vileplume is Confused.
 
 #### Paras
+
 - **Spore**: reduced cost from (GG) to (G).
 
 #### Parasect
+
 - **Spore**: removed.
 - **Slash**: removed.
 - New attack: **Energy Spores** (C): attach 2 energy from discard pile to any of your Pokémon.
 - New attack: **Fungal Growth** (GCC): 20 damage, inflicts sleep, heal same amount of damage from the user.
 
 #### Venonat
+
 - **Stun Spore**: removed.
 - **Leech Life**: reduced cost from (GC) to (G).
 - New attack: **Ultravision** (G): choose a card from the top 4 deck cards.
 
 #### Venomoth
+
 - **Shift**: removed.
 - **Venom Powder**: 20 damage, inflicts Poison and Confusion.
 - New attack: **Assassin Flight** (C): 40 damage to a benched Pokémon, only if opponent's Active Pokémon is affected by a Special Condition.
 
 #### Bellsprout
+
 - **Call for Friend**: removed.
 - **Vine Whip**: increased cost from (G) to (GC) and damage from 10 to 20.
 - New attack: **Growth** (C): attach an Energy from the hand to this Pokémon.
 
 #### Weepinbell
+
 - **Poison Powder**: removed.
 - **Razor Leaf**: removed.
 - New attack: **Poison Lure** (G): switch the Defending Pokémon and Poison the new Defending Pokémon.
 - New attack: **Corrosive Acid** (GC): 20 damage; if Heads, discard an Energy from the Defending Pokémon.
 
 #### Victreebel
+
 - Increased HP from 80 to 90.
 - **Lure**: removed.
 - **Acid**: removed.
@@ -2114,38 +2979,46 @@
 - New attack: **Flytrap** (GGC): 40 damage; heal 20 damage; opponent cannot retreat.
 
 #### Grimer
+
 - **Nasty Goo**: increased cost from (C) to (D).
 - **Minimize**: reduced cost from (D) to (C).
 
 #### Muk
+
 - **Sludge**: reduced cost from (DDD) to (DDC); increased damage from 30 to 40; inflicts Poison.
 
 #### Koffing
+
 - **Foul Gas**: reduced cost from (DD) to (DC).
 
 #### Weezing
+
 - **Smog**: reduced cost from (DD) to (DC).
 - **Self-destruct**: reduced cost from (DDC) to (DCC).
 
 #### Exeggcute
+
 - **Hypnosis**: removed.
 - **Leech Seed**: removed.
 - New attack: **Nutrition Support** (G): attach energy from deck to 1 Pokémon and heal 10 damage.
 - New attack: **Eggsplosion** (C): flip a coin for each energy; 10 damage for each Heads; heal 10 for each Tails.
 
 #### Exeggutor
+
 - Reduced Retreat Cost from (CC) to (C).
 - **Teleport**: removed.
 - **Big Eggsplosion**: deal 10 damage for each energy attached to both Active Pokémon.
 - New Pokémon Power: **Synthesis**: search deck for 1 basic energy and add to the hand.
 
 #### Tangela Lv8
+
 - Increased HP from 50 to 60.
 - **Bind**: reduced cost from (GC) to (CC) and damage from 20 to 10; inflicts Paralysis if opponent is Basic.
 - **Poison Powder**: removed.
 - New attack: **Panic Vine** (GCC): 10 damage; inflicts Confusion; opponent cannot retreat.
 
 #### Tangela Lv12
+
 - Increased HP from 50 to 60.
 - **Stun Spore**: removed.
 - **Poison Whip**: removed.
@@ -2153,107 +3026,131 @@
 - New attack: **Grass Knot** (GC): 10 damage, +20 damage for each energy in the opponent's retreat cost.
 
 #### Pinsir
+
 - **Iron Grip**: reduced cost from (GG) to (GC).
 - **Guillotine**: reduced cost from (GGCC) to (GCC) and damage from 50 to 40.
 
 #### Charmander
+
 - **Ember**: can discard any Energy card.
 
 #### Charmeleon
+
 - Reduced HP from 80 to 70.
 - **Slash**: removed.
 - **Flamethrower**: reduced cost from (FFC) to (FCC); can discard any Energy card.
 - New Pokémon Power: **Firestarter**: once per turn, attach a Fire Energy from the Discard Pile to one Pokémon.
 
 #### Charizard
+
 - Reduced HP from 120 to 100.
 
 #### Vulpix
+
 - **Confuse Ray**: reduced cost from (FF) to (F).
 - Added attack: **Ember** (FC) - 30 damage, discard 1 Energy card.
 
 #### Ninetales Lv32
+
 - **Lure**: reduced cost from (CC) to (F); the new Active Pokémon cannot retreat.
 - **Fire Blast**: reduced cost from (FFFF) to (FCC) and damage from 80 to 70; discard any 2 Energy cards.
 
 #### Ninetales Lv35
+
 - **Mix Up**: removed.
 - **Dancing Embers**: removed.
 - New attack: **Combustion** (FC): 20 damage, discard 2 cards from opponent's deck.
 - New attack: **Fire Fang** (FFC): 30 damage; discard 1 Energy from opponent.
 
 #### Growlithe
+
 - New attack: **Fetch** (C): draw 1 card.
 
 #### Arcanine Lv34
+
 - Increased HP from 70 to 80.
 - **Quick Attack**: reworked.
 - New attack: **Quick Attack** (CC): 20 damage, double damage if the Pokémon became Active this turn.
 - **Flames of Rage**: can discard any 2 Energy cards.
 
 #### Arcanine Lv45
+
 - Reduced HP from 100 to 90.
 - **Flamethrower**: can discard any Energy card; reduced cost from (FFC) to (FCC).
 - **Take Down**: reduced cost from (FFCC) to (CC), damage from 80 to 50 and recoil from 30 to 20.
 
 #### Rapidash
+
 - **Stomp**: removed.
 - **Agility**: reworked.
 - New attack: **Agility** (CC): 20 damage, switch this Pokémon with a Benched Pokémon.
 - New attack: **Overrun** (FFC): 30 damage, plus 30 to 1 Benched Pokémon.
 
 #### Magmar Lv24
+
 - Increased HP from 50 to 60.
 - **Fire Punch**: reduced cost from (FF) to (FC) and damage from 30 to 20.
 - **Flamethrower**: can discard any Energy card.
 
 #### Magmar Lv31
+
 - **Smog**: removed.
 - New attack: **Combustion** (FF): 20 damage, discard 1 card from opponent's deck.
 
 #### Flareon Lv22
+
 - Increased HP from 60 to 70.
 - **Bite**: removed.
 - **Rage**: reduced damage from 20+ to 10+.
 - New Pokémon Power: **Flare Essence**: changes the type of an evolved Active Pokémon to Fire.
 
 #### Flareon Lv28
+
 - **Quick Attack**: reworked.
 - New attack: **Quick Attack** (CC): 20 damage, double damage if the Pokémon became Active this turn.
 - **Flamethrower**: reduced cost from (FFCC) to (FFC); can discard any Energy card.
 
 #### Moltres Lv35
+
 - **Dive Bomb**: removed.
 - **Wildfire**: increased cost from (F) to (FCC); also deals 30 damage.
 - New attack: **Collect Fire** (C): attach (F) from discard pile.
 
 #### Moltres Lv37
+
 - **Dive Bomb**: reduced cost from (FFF) to (FFC).
 
 #### Squirtle
+
 - **Withdraw**: reduced cost from (WC) to (C); no coin flip; reduces incoming damage by 20.
 
 #### Wartortle
+
 - **Withdraw**: removed.
 - New Pokémon Power: **Rain Dance**: allows playing an additional Water Energy from hand per turn.
 
 #### Blastoise
+
 - Increased HP from 100 to 120.
 - **Rain Dance**: removed.
 - **Hydro Pump**: reduced cost from (WWW) to (CCC) and damage from 50 to 40; deals 10 bonus damage for each attached Water Energy (uncapped).
 - New attack: **Aqua Launcher** (W): deal 30 damage to one of the opponent's Pokémon.
 
 #### Psyduck
+
 - **Fury Swipes**: changed energy cost from (W) to (WC); 20 direct damage; flip a coin; if heads +10 damage.
 
 #### Golduck
+
 - **Psyshock**: increased damage from 10 to 20.
 
 #### Poliwag
+
 - New attack: **Call for Friend** (C): put 1 Basic Pokémon on Bench from deck.
 - **Water Gun**: 20 damage. No effects.
 
 #### Poliwhirl
+
 - Increased HP from 60 to 70.
 - **Amnesia**: removed.
 - **Doubleslap**: removed.
@@ -2261,6 +3158,7 @@
 - New attack: **Do the Wave** (CCC): 10 damage, +10 damage for each Benched Pokémon.
 
 #### Poliwrath
+
 - Increased HP from 90 to 100.
 - **Water Gun**: removed.
 - **Whirlpool**: removed.
@@ -2268,46 +3166,56 @@
 - New attack: **Aqua Punch** (CCC): 40 damage, +10 damage for each attached (W) or (F).
 
 #### Tentacool
+
 - Increased HP from 30 to 40.
 - **Cowardice**: replaced with **Poison Sting** (W) - 10 damage, flip a coin - if heads applies Poison.
 - **Acid**: increased cost from (W) to (WC) and added a coin flip - if heads the opponent cannot retreat.
 
 #### Tentacruel
+
 - **Supersonic**: reduced cost from (W) to (C).
 - **Jellyfish Sting**: increased damage from 10 to 20.
 
 #### Seel
+
 - **Headbutt**: reduced cost from (W) to (C).
 
 #### Dewgong
+
 - **Ice Beam**: reduced cost from (WWCC) to (WC) and damage from 30 to 20.
 
 #### Shellder
+
 - Increased HP from 30 to 40.
 - **Supersonic**: reduced cost from (W) to (C).
 - **Hide in Shell**: removed.
 - New attack: **Withdraw** (C): reduces incoming damage by 20.
 
 #### Cloyster
+
 - Increased HP from 50 to 60.
 - **Clamp**: reduced cost from (WW) to (WC), damage from 30 to 20 and removed failure on tails.
 
 #### Krabby
+
 - **Call for Family**: removed.
 - **Iron Grip**: removed.
 - New attack: **Bubble** (W): 10 damage; flip a coin, Paralysis if Heads.
 - New attack: **Guillotine** (CC): 20 damage.
 
 #### Kingler
+
 - Increased HP from 60 to 70.
 - **Flail**: removed.
 - New attack **Rend** (CC): 20 damage, +20 damage if the Defending Pokémon has taken damage.
 - **Crabhammer**: +40 damage if the Defending Pokémon is a Basic Pokémon.
 
 #### Horsea
+
 - New attack: **Water Gun** (W): 20 damage.
 
 #### Seadra
+
 - Increased HP from 60 to 70.
 - **Water Gun**: removed.
 - **Agility**: removed.
@@ -2315,82 +3223,99 @@
 - New attack: **Twister** (WWC): 40 damage, discard an Energy from the opponent.
 
 #### Goldeen
+
 - **Horn Attack**: increased cost from (W) to (CC) and damage from 10 to 20.
 - New attack: **Flail** (c): 10 damage times number of damage counters.
 
 #### Seaking
+
 - Increased HP from 70 to 80.
 - **Horn Attack**: removed.
 - New attack: **Rend** (CC): 20 damage, +20 if Defending Pokémon is damaged.
 - **Waterfall**: increased cost from (WC) to (WCC) and damage from 30 to 40; also switches Defending Pokémon.
 
 #### Staryu
+
 - **Slap**: removed.
 - New attack: **Rapid Spin** (C): 10 damage, both players switch Pokémon.
 - New attack: **Big Splash** (WC): 20 damage, draw 1 card.
 
 #### Starmie
+
 - Increased HP from 60 to 80.
 - **Recover**: reduced cost from (WW) to (C) and can discard any type of Energy.
 - **Star Freeze**: removed.
 - New attack: **Energy Splash** (WC): 30 damage, retrieves 2 Basic Energy from discard pile to hand.
 
 #### Magikarp
+
 - **Tackle**: removed.
 - **Flail**: reduced cost from (W) to (C).
 - New attack: **Ascension** (WC): search for Gyarados in the Deck and evolve Magikarp.
 
 #### Gyarados
+
 - **Dragon Rage**: reworked.
 - New attack: **Dragon Rage** (CC): 20 damage, +10 for each type of Basic Energy attached.
 - **Bubblebeam**: removed.
 - New attack: **Raging Storm** (WWCC): 50 damage, +50 damage if the opponent has taken more Prizes.
 
 #### Lapras
+
 - **Water Gun**: removed.
 - **Confuse Ray**: removed.
 - New attack: **Healing Melody** (C): Heal 10 damage from each of your Pokémon.
 - New attack: **Surf** (WWC): 40 damage.
 
 #### Vaporeon Lv29
+
 - Increased HP from 60 to 70.
 - **Focus Energy**: removed.
 - New Pokémon Power: **Vapor Essence**: changes the type of an evolved Active Pokémon to Water.
 
 #### Vaporeon Lv42
+
 - **Quick Attack**: reworked.
 - New attack: **Quick Attack** (CC): 20 damage, double damage if the Pokémon became Active this turn.
 - **Water Gun**: reduced cost from (WWC) to (Wc). 30 damage, no effects.
 
 #### Omanyte
+
 - **Water Gun** (W): 20 damage. No effects.
 
 #### Omastar
+
 - **Water Gun**: 30 damage, no effects.
 - **Spike Cannon**: reduced cost from (WW) to (CC).
 
 #### Articuno Lv35
+
 - **Freeze Dry**: reduced cost from (WWW) to (WC) and damage from 30 to 20.
 - **Blizzard**: reduced cost from (WWWW) to (WWW), base damage from 50 to 40, only damages opponent Bench.
 
 #### Articuno Lv37
+
 - **Ice Breath**: target Pokémon is no longer chosen at random.
 
 #### Pikachu Lv12
+
 - Increased HP from 40 to 50.
 - **Thunder Jolt**: renamed to **Volt Tackle**; always deals 10 recoil.
 
 #### Pikachu Lv14
+
 - Decreased HP from 50 to 40.
 - **Spark**: reduced cost from (LL) to (LC).
 - New attack: **Quick Attack** (C): 10 damage, double damage if the Pokémon became Active this turn.
 
 #### Pikachu Lv16
+
 - Reduced HP from 60 to 50.
 - **Growl**: damage reduction increased from 10 to 20.
 - **Thundershock**: reduced cost from (LL) to (LC).
 
 #### Pikachu Lv16 (Alt)
+
 - Reduced HP from 60 to 50.
 - **Growl**: removed.
 - **Thundershock**: removed.
@@ -2398,88 +3323,108 @@
 - New attack: **Swift** (CC): 20 damage, do not apply Weakness and Resistance.
 
 #### Surfing Pikachu
+
 - **Surf**: reduced cost from (WW) to (WC) and damage from 30 to 20.
 
 #### Raichu Lv40
+
 - **Agility**: reworked.
 - New attack: **Agility** (CC): 20 damage, switch this Pokémon with a Benched Pokémon.
 - **Thunder**: reduced cost from (LLLC) to (LLC).
 
 #### Raichu Lv45
+
 - **Gigashock**: reduced cost from (LLLL) to (LLC), increased base damage from 30 to 40 and reduced Bench targets from 3 to 2.
 - New attack: **Energy Conversion** (C): put 2 Basic Energy from discard pile into hand.
 
 #### Magnemite Lv13
+
 - **Self-destruct**: removed.
 - New attack: **Sonicboom** (CC): deal 20 damage without applying W/R.
 
 #### Magnemite Lv15
+
 - **Magnetic Storm**: removed.
 - New attack: **Spark** (LL): 20 direct damage, plus 10 to a benched Pokémon.
 
 #### Magneton Lv28
+
 - **Thunder Wave**: reduced cost from (LLC) to (LC) and damage from 30 to 20.
 - **Self-destruct**: removed.
 - New attack: **Chain Lightning** (LLL): 40 direct damage plus 10 to each same-colored Pokémon.
 
 #### Magneton Lv35
+
 - **Sonicboom**: increased cost from (LC) to (CCC) and damage from 20 to 40.
 - **Self-destruct**: removed.
 - New attack: **Energy Spike** (L): attach a basic Energy from the deck to a Pokémon.
 
 #### Voltorb
+
 - New attack: **Self-desctruct** (LC): 40 damage, 40 recoil, 10 damage to all benched.
 
 #### Electrode Lv35
+
 - **Sonicboom**: removed.
 - **Energy Spike**: removed.
 - New attack: **Spark** (L): 20 damage plus 10 damage to a benched Pokémon.
 - New attack: **Self-destruct** (LCC): 80 damage, 80 recoil, 20 damage to all benched.
 
 #### Electrode Lv42
+
 - **Tackle**: reduced cost from (CC) to (C).
 - **Chain Lightning**: removed.
 - New attack: **Self-destruct** (LLC): 100 damage, 100 recoil, 20 damage to all benched.
 
 #### Electabuzz Lv35
+
 - **Thunder Punch**: increased cost from (LC) to (LCC).
 
 #### Electabuzz Lv20
+
 - **Quick Attack**: reworked.
 - New attack: **Quick Attack** (CC): 20 damage, double damage if the Pokémon became Active this turn.
 
 #### Jolteon Lv24
+
 - Increased HP from 60 to 70.
 - **Double Kick**: removed.
 - **Stun Needle**: reduced cost from (CCCC) to (CCC).
 - New Pokémon Power: **Jolt Essence**: changes the type of an evolved Active Pokémon to Lightning.
 
 #### Jolteon Lv29
+
 - **Pin Missile**: 3 coin flips; 10 damage per tails and 20 per heads.
 - **Quick Attack**: reworked.
 - New attack: **Quick Attack** (CC): 20 damage, double damage if the Pokémon became Active this turn.
 
 #### Zapdos Lv40
+
 - **Thunderstorm**: reduced cost from (LLLL) to (LLL).
 - Retreat cost changed to zero.
 
 #### Zapdos Lv64
+
 - **Thunder**: reduced cost from (LLLC) to (LLC).
 - **Thunderbolt**: reduced cost from (LLLL) to (LL) and damage from 100 to 50.
 
 #### Sandslash
+
 - **Fury Swipes**: increased cost from (FF) to (FFC) and damage from 20x Heads to 20x Heads and 10x Tails.
 
 #### Diglett
+
 - **Mud Slap**: removed.
 - **Dig**: deals 20 to a benched Pokémon.
 - New attack: **Scratch** (C): 10 damage.
 
 #### Dugtrio
+
 - **Slash**: reduced cost from (FFC) to (CC) and damage from 40 to 20.
-- **Earthquake**: reduced cost from (FFFF) to (FFC); also does 10 damage to *all* benched Pokémon.
+- **Earthquake**: reduced cost from (FFFF) to (FFC); also does 10 damage to _all_ benched Pokémon.
 
 #### Mankey
+
 - Increased HP from 30 to 40.
 - **Peek**: removed.
 - **Scratch**: removed.
@@ -2487,35 +3432,42 @@
 - New attack: **Rage** (CC): deals 10 plus 10 for each damage counter.
 
 #### Primeape
+
 - **Fury Swipes**: removed.
 - **Tantrum**: reduced cost from (FFC) to (FF) and damage from 50 to 40.
 - New attack: **Rage** (CCC): 20 plus 10 for each damage counter.
 
 #### Machoke
+
 - **Karate Chop**: reduced cost from (FFC) to (F) and base damage from 50 to 40.
 - **Submission**: removed.
 - New attack: **Seismic Toss** (FCC): 50 damage.
 
 #### Machamp
+
 - **Strikes Back**: damage increased from 10 to 20.
 - **Seismic Toss**: removed.
 - New attack: **Submission** (FFC): 80 damage, 20 damage recoil.
 
 #### Geodude
+
 - **Stone Barrage**: reduced cost from (FC) to (F).
 
 #### Graveler
+
 - **Harden**: removed.
 - **Rock Throw**: reduced cost from (FFC) to (FC) and damage from 40 to 30.
-- New attack: **Earthquake** (FFC): 60 damage, plus 10 to *all* benched Pokémon.
+- New attack: **Earthquake** (FFC): 60 damage, plus 10 to _all_ benched Pokémon.
 
 #### Golem
+
 - Increased HP from 80 to 90.
 - **Avalanche**: removed.
 - **Self-destruct**: reduced cost from (FFFF) to (FCCC).
 - New attack: **Rock Slide** (FF): 40 damage, plus 10 to 2 of the opponent's benched Pokémon.
 
 #### Onix
+
 - Reduced HP from 90 to 80.
 - **Rock Throw**: removed.
 - **Harden**: removed.
@@ -2523,52 +3475,63 @@
 - New attack: **Rage** (FCC): 10 damage plus 10 for each damage counter.
 
 #### Cubone
+
 - **Snivel**: removed.
 - **Rage**: reduced cost from (FF) to (CC).
 - New attack: **Call for Friend** (C): put a Basic Pokémon from the deck on the bench.
 
 #### Marowak Lv26
+
 - **Call for Friend**: removed.
 - **Bonemerang**: reduced cost from (FF) to (FC).
 - New Pokémon Power: **Battle Armor**: takes 20 less damage from attacks.
 
 #### Marowak Lv32
+
 - **Wail**: removed.
 - **Bone Attack**: reduced cost from (FC) to (C); deals 20 to a Benched Pokémon.
 - New attack: **Vengeance**: 30 damage, +20 for each Basic Pokémon in discard, up to +60.
 
 #### Hitmonlee
+
 - **Stretch Kick**: removed.
 - New attack: **Rolling Kick** (FC): 20 damage; flip a coin for Paralysis.
 - **High Jump Kick**: reduced cost from (FFF) to (FCC) and damage from 50 to 40.
 
 #### Rhyhorn
+
 - **Leer**: removed.
 - **Horn Attack**: reduced cost from (FCC) to (C) and damage from 30 to 10.
 - New attack: **Take Down** (FCC): 40 damage, 10 damage recoil.
 
 #### Rhydon
+
 - **Horn Attack**: reduced cost from (FCC) to (CC).
 - **Ram**: reduced cost from (FFFF) to (FFC).
 
 #### Kabuto
+
 - Increased HP from 30 to 40.
 
 #### Kabutops
+
 - Increased HP from 60 to 70.
 - **Sharp Sickle**: reduced cost from (FF) to (F).
 - **Absorb**: renamed to **Mega Drain**, changed cost from (FFFF) to (WCC) and increased damage from 40 to 50.
 
 #### Abra
+
 - Increased HP from 30 to 40.
 - **Psyshock**: increased cost from (P) to (PC) and damage from 10 to 20.
 - New attack: **Teleportation Blast** (P): 10 damage, switch with a Benched Pokémon after attacking.
 
 #### Kadabra
+
 - **Recover**: reduced cost from (PP) to (C) and can discard any type of Energy.
 - **Super Psi**: reduced cost from (PPC) to (PC) and damage from 50 to 30.
 
 #### Alakazam
+
 - Increased HP from 80 to 100.
 - **Damage Swap**: removed.
 - **Confuse Ray**: removed.
@@ -2576,34 +3539,41 @@
 - New attack: **Mind Blast** (PCC): 10 damage; +10 for each card in player's hand.
 
 #### Slowpoke Lv9
+
 - Increased HP from 40 to 50.
 - **Amnesia**: reduced cost from (PP) to (P).
 
 #### Slowpoke Lv18
+
 - Reduced HP from 50 to 40.
 - **Spacing Out**: heals 20 if heads or 10 if tails.
 - **Scavenge**: reduced cost from (PP) to (P), no longer discards Energy, can only pick non-Supporter cards.
 
 #### Slowbro
+
 - Increased HP from 60 to 70.
 - **Strange Behaviour**: removed.
 - New attack: **Water Gun** (W): 20 damage.
 - **Psyshock**: reduced cost from (PP) to (PC) and increased damage from 20 to 30.
 
 #### Gastly Lv8
+
 - **Sleeping Gas**: inflicts Sleep without a coin flip.
 - **Destiny Bond**: discards any type of Energy.
 
 #### Gastly Lv17
+
 - **Energy Conversion**: reduced cost from (DD) to (C) and removed recoil.
 
 #### Haunter Lv17
+
 - Increased HP from 50 to 70.
 - **Transparency**: removed.
 - New power: **Curse**: once per turn, move 1 damage counter from one opponent Pokémon to another.
 - New attack: **Pain Amplifier** (D): deal 10 damage to each of the opponent's damaged Pokémon.
 
 #### Haunter Lv22
+
 - Increased HP from 60 to 70.
 - **Hypnosis**: removed.
 - **Dream Eater**: removed.
@@ -2611,16 +3581,19 @@
 - New attack: **Pester** (DC): 20 damage, double damage if opponent has status.
 
 #### Gengar
+
 - Increased HP from 80 to 90.
 - **Curse**: removed.
 - New attack: **Confuse Ray** (D): 20 damage, inflicts Confusion.
 - **Dark Mind**: reduced cost from (DDD) to (DDC); increased base damage from 30 to 60; damages up to 2 benched Pokémon.
 
 #### Drowzee
+
 - **Confuse Ray**: removed.
 - New attack: **Hypnosis** (P): inflicts Sleep.
 
 #### Hypno
+
 - Decreased HP from 90 to 70.
 - **Prophecy**: removed.
 - **Dark Mind**: removed.
@@ -2628,97 +3601,118 @@
 - New attack: **Hypnoblast** (PPC): 40 damage, inflicts Sleep.
 
 #### Mr. Mime
+
 - **Meditate**: 20 damage; +20 damage if there are at least 5 cards in hand.
 
 #### Jynx
+
 - Reduced HP from 70 to 60.
 - **Doubleslap**: removed.
 - **Meditate**: reduced cost from (PPC) to (PC); 20 damage; +20 damage if there are at least 5 cards in hand.
 - New attack: **Mimic** (C): shuffle hand into deck; draw as many cards as the opponent has in hand.
 
 #### Pidgey
+
 - **Whirlwind**: reduced cost from (CC) to (C).
 - New attack: **Collect** (C): draw 1 card.
 
 #### Pidgeotto
+
 - **Mirror Move**: removed.
 - New attack: **Wing Attack** (C): 20 damage.
 
 #### Pidgeot Lv38
+
 - **Slicing Wind**: reduced cost from (CCC) to (CC); target is no longer random.
 - **Gale**: removed.
 - New attack: **Twister** (CCC): 30 damage, discard an Energy attached to Defending Pokémon.
 
 #### Pidgeot Lv40
+
 - **Wing Attack**: removed.
 - New attack: **Whirlwind** (CCC): 50 damage, opponent switches Pokémon.
 
 #### Rattata
+
 - Increased HP from 30 to 40.
 - New attack: **Scavenge** (C): put a non-Supporter Trainer from discard pile into hand.
 
 #### Raticate
+
 - **Bite**: removed.
 - New attack: **Sneak Attack** (C): 20 damage, +10 if Darkness Energy is attached.
 - **Super Fang**: reduced cost from (CCC) to (CC).
 
 #### Spearow
+
 - **Peck**: +10 damage if opponent is Grass.
 - **Mirror Move**: removed.
 - New attack: **Wing Attack** (CC): 20 damage.
 
 #### Fearow
+
 - **Agility**: removed.
 - New attack: **Clutch** (CC): 20 damage, opponent cannot retreat.
 - **Drill Peck**: reduced cost from (CCCC) to (CCC).
 
 #### Clefairy
+
 - **Metronome**: reduced cost from (CCC) to (CC).
 
 #### Clefable
+
 - **Minimize**: removed.
 - New attack: **Moonblast** (PC): 30 damage, reduce opponent attack by 10.
 
 #### Jigglypuff Lv12
+
 - **First Aid**: removed.
 - **Double Edge**: removed.
 - New attack: **Healing Melody** (C): heal 10 to all of the player's Pokémon.
 - New attack: **Punishing Slap** (PC): 20 damage, plus 10 against Pokémon with Darkness Energy.
 
 #### Jigglypuff Lv13
+
 - **Friendship Song**: removed.
 - New attack: **Call for Friend** (C): can choose any Basic Pokémon from deck to put on Bench.
 
 #### Wigglytuff
+
 - **Lullaby**: removed.
 - New Pokémon Power: **Helping Hand**: when on the Bench, heal special conditions from the Active Pokémon.
 
 #### Meowth Lv14
+
 - **Cat Punch**: removed.
 - New Pokémon Power: **Lucky Tails**: if you toss Tails during your turn, draw a card at the end of turn.
 - New attack: **Fury Swipes** (CC): 20 damage. Flip a coin. If Heads, +10 damage.
 
 #### Meowth Lv15
+
 - **Pay Day**: reduced cost from (CC) to (C), draws a card without coin flip.
 - New attack: **Scavenge** (C): put a non-Supporter Trainer from discard pile into hand.
 
 #### Persian
+
 - **Scratch**: removed.
 - New attack: **Sneak Attack** (C): 20 damage, +10 if Darkness Energy is attached.
 - **Pounce**: removed.
 - New attack: **Poison Claws** (CC): 20 damage, inflicts Poison.
 
 #### Farfetch'd
+
 - **Pot Smash**: removed.
 - New Pokémon Power: **Cowardice**: discard all attached cards and return to hand.
 
 #### Lickitung
+
 - Reduced HP from 90 to 70.
 - **Tongue Wrap**: renamed to **Lick**.
 - **Supersonic**: removed.
 - New attack: **Tongue Stretch** (CC): deal 20 to one of the opponent's Benched Pokémon.
 
 #### Chansey
+
 - Reduced HP from 120 to 80.
 - **Scrunch**: removed.
 - **Double Edge**: removed.
@@ -2726,16 +3720,19 @@
 - New attack: **Natural Remedy** (CCC): heals a Pokémon for 30 and cures status.
 
 #### Kangaskhan
+
 - Reduced HP from 90 to 70.
 - **Comet Punch**: reduced cost from (CCCC) to (CCC); base damage 30; flip a coin, +10 damage if heads.
 
 #### Eevee
+
 - **Tail Wag**: removed.
 - **Quick Attack**: reworked.
 - New attack: **Quick Attack** (C): 10 damage, double damage if the Pokémon became Active this turn.
 - New attack: **Take Down** (CC): 30 damage, 10 recoil.
 
 #### Porygon
+
 - Increased HP from 30 to 50.
 - **Conversion 1**: removed.
 - **Conversion 2**: removed.
@@ -2743,21 +3740,26 @@
 - New attack: **Conversion Beam** (CCC): 20 damage, change foe's Weakness to the current type of self (except Colorless).
 
 #### Snorlax
+
 - Reduced HP from 90 to 70.
 - **Body Slam**: reduced cost from (CCCC) to (CCC).
 
 #### Dratini
+
 - New attack: **Dragon Dance** (C): attach an energy from hand to one Pokémon.
 
 #### Dragonair
+
 - **Slam**: removed.
 - New attack: **Dragon Rage** (CC): 10 damage, +10 for each type of Basic Energy attached.
 - **Hyper Beam**: reduced cost from (CCCC) to (CCC).
 
 #### Dragonite Lv41
+
 - **Slam**: increased damage from 30x to 40x.
 
 #### Dragonite Lv45
+
 - **Step In**: removed.
 - **Slam**: removed.
 - New attack: **Dragon Claw** (FC): 50 damage.
@@ -2766,70 +3768,90 @@
 ### Trainer Cards
 
 #### Imposter Professor Oak
+
 - Both players shuffle their hands and put them on the bottom of their decks. Then opponent draws 4, player draws 3 (or 5 if losing on Prizes).
 
 #### Lass
+
 - Shuffle hand into deck and draw 5 cards.
 
 #### Pokémon Trader
+
 - No longer a Supporter card.
 
 #### Pokémon Breeder
+
 - Chooses a Pokémon in play, removes status conditions and searches the deck for an evolution. If any is selected, the Pokémon evolves.
 
 #### Clefairy Doll
+
 - Increased HP from 10 to 30.
 
 #### Mysterious Fossil
+
 - Increased HP from 10 to 30.
 
 #### Pokéball
+
 - No coin flip; can only choose Basic Pokémon.
 
 #### Recycle
+
 - No coin flip; can only choose Pokémon or Basic Energy.
 
 #### Maintenance
+
 - Discard a card, put a non-Supporter Trainer from discard pile into hand.
 
 #### Pokémon Center
+
 - Heal 10 damage from each of your Pokémon, no Energy cost.
 
 #### Scoop Up
+
 - Renamed to **Scoop Up Net**.
 - Returns Pokémon and its evolutions, rather than Basic only.
 
 #### Computer Search
+
 - Looks at the top 7 deck cards; may pick a Supporter from those.
 
 #### Pokédex
+
 - Choose a Pokémon from the top 5 cards to add to the hand.
 - Reorder the remaining cards and put them back on the deck.
 
 #### Item Finder
+
 - No longer a Supporter card.
 - Discards 1 card from the hand. Searches deck for any Item card.
 
 #### Gust Of Wind
+
 - Renamed to **Boss's Orders**.
 
 #### Full Heal
+
 - Removes status and effects from any of the user's Pokémon, even if Benched.
 
 #### Super Energy Retrieval
+
 - Removed.
 
 #### Energy Removal
+
 - Renamed to **Rocket Grunts**.
 
 #### Super Energy Removal
+
 - Removed.
 
 #### Switch
+
 - No longer a Supporter card.
 
-
 #### New Trainer Cards
+
 - New card: **Energy Switch**: moves a Basic energy from 1 Pokémon to another.
 - New card: **Energy Recycler**: shuffles up to 4 Basic energy from discard pile into deck.
 - New card: **Rare Candy**: item card with the original Pokémon Breeder effect.
@@ -2854,15 +3876,16 @@
 
 - Added a menu option to reset the deck to 0 cards, to make editing easier.
 
-
 ## Version 0.1
 
 ### Added
+
 - Darkness type.
 - Card: Darkness Basic Energy.
 - Implemented Supporter Trainer cards.
 
 ### Changed
+
 - Changed Pokémon types, weaknesses and resistances to accommodate the new Darkness type and to better distribute weakness and resistance ratios per type.
 - **Ekans** and **Arbok**: changed type to Darkness and weakness to Fighting.
 - **Nidoran (F)**, **Nidorina**, **Nidoran (M)** and **Nidorino**: changed type to Darkness and weakness to Fighting.
@@ -2897,6 +3920,7 @@
 - Adjusted the retreat costs of many Pokémon to keep most Basic Pokémon at 0 cost, most Stage 1 at 1 COLORLESS and some Stage 2 or other heavy attackers at 2 COLORLESS.
 
 ### Fixed
+
 - AI wrongfully adds score twice for attaching energy to Arena card.
 - Cards in AI decks that are not supposed to be placed as Prize cards are ignored.
 - AI score modifiers for retreating are never used.
@@ -2910,4 +3934,5 @@
 - Challenge host uses wrong name for the first rival.
 
 ### To Do
+
 - Simplify custom logic (`OATS`) for card filters in `deck_configuration.asm`. Trainer filter already handles Trainer cards, no need to check for Trainer in Pokémon/Energy filters.

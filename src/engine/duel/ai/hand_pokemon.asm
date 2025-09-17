@@ -211,7 +211,7 @@ AIDecideEvolution:
 	jr z, .check_evolution_ko
 	ld a, 2
 	call SubFromAIScore
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
 	and PLAYED_ENERGY_THIS_TURN  ; or a
 	jr nz, .check_evolution_ko
 	call LookForEnergyNeededInHand
@@ -481,14 +481,13 @@ AIDecideSpecialEvolutions:
 	jr nz, .loop
 	ld a, 70
 	cp c
-	jr c, .check_weezing
+	jr c, .check_can_use_powers
 .lower_score
 	ld a, 10
-	call SubFromAIScore
-	ret
+	jp SubFromAIScore
 
-; if there's no Weezing, raise score
-.check_weezing
+; if Powers can be used, raise score
+.check_can_use_powers
 	call ArePokemonPowersDisabled
 	jr c, .lower_score
 	ld a, 10
@@ -508,7 +507,7 @@ AIDecideSpecialEvolutions:
 	ld a, [wTotalAttachedEnergies]
 	cp 3
 	jr c, .lower_score
-	jr .check_weezing
+	jr .check_can_use_powers
 
 ; determine AI score for the legendary cards
 ; Moltres, Zapdos and Articuno
@@ -564,7 +563,7 @@ AIDecidePlayLegendaryBirds:
 	call CopyAttackDataAndDamage_FromDeckIndex
 	call SwapTurn
 	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
+	cp POKE_BODY
 	jr z, .check_weezing_and_snorlax
 
 	; return if no space on the bench

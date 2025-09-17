@@ -1,3 +1,13 @@
+YouCannotUseAttacksDuringTheFirstTurnText:
+	text "You can't use attacks during the"
+	line "first turn of the game."
+	done
+
+YouCannotUseSupporterCardsDuringTheFirstTurnText:
+	text "You can't use Supporter cards during"
+	line "the first turn of the game."
+	done
+
 YouMayDiscard1EnergyToHealBurnText:
 	text "You may discard an Energy"
 	line "to heal the Burn status."
@@ -7,14 +17,19 @@ AlreadyRetreatedThisTurnText:
 	text "Already retreated this turn."
 	done
 
-ConfusionCheckDamageText: ; 3807c (e:407c)
-	text "Confusion check,"
-	line "If Tails, damage to yourself!"
+PokemonsConfusionCheckText:
+	text "Confusion check!"
+	line "If Tails, the attack fails."
 	done
 
 PokemonsSleepCheckText:
 	text "Sleep check!"
-	line "If Heads, wake up and attack."
+	line "If Tails, the attack fails."
+	done
+
+PokemonsParalysisCheckText:
+	text "Paralysis check!"
+	line "If Tails, the attack fails."
 	done
 
 UnableToRetreatDueToTrapText:
@@ -47,18 +62,18 @@ ReceivesDamageDueToStrikeBackText:
 	done
 
 NoDamageOrEffectDueToAgilityText:
-	text "No damage or effect on next Attack"
-	line "due to the effects of Agility."
+	text "Immune to damage or effects of"
+	line "attacks due to Agility."
 	done
 
-NoDamageOrEffectDueToNShieldText: ; 38494 (e:4494)
-	text "No damage or effect on next Attack"
-	line "due to the effects of N Shield."
+NoDamageOrEffectDueToNShieldText:
+	text "Immune to damage or effects of"
+	line "attacks due to N. Shield."
 	done
 
-NoDamageOrEffectDueToTransparencyText: ; 384d8 (e:44d8)
-	text "No damage or effect on next Attack"
-	line "due to the effects of Transparency"
+NoDamageOrEffectDueToShieldDustText:
+	text "Immune to damage or effects of"
+	line "attacks due to Shield Dust."
 	done
 
 PutInPlayWithTransformText:
@@ -149,11 +164,6 @@ Choose1BasicEnergyCardFromDiscardPileText:
 	line "from the Discard Pile."
 	done
 
-DiscardOppDeckAsManyFireEnergyCardsText:
-	text "Discard from the opponent's Deck as"
-	line "many cards as discarded <FIRE> Energy."
-	done
-
 ChooseAndDiscard2EnergyCardsText: ; 388ca (e:48ca)
 	text "Choose and Discard"
 	line "2 Energy cards."
@@ -240,11 +250,6 @@ Choose2EnergyCardsFromDiscardPileForHandText:
 ChooseAnEnergyCardText: ; 38d5a (e:4d5a)
 	text "Choose an Energy"
 	line "card."
-	done
-
-ChooseTheOrderOfTheCardsText: ; 38e70 (e:4e70)
-	text "Choose the order"
-	line "of the cards."
 	done
 
 ProcedureForRecycleText:
@@ -471,11 +476,6 @@ ChoosePokemonCardText: ; 397f1 (e:57f1)
 	line "a Pokémon card."
 	done
 
-RearrangeTheCardsAtTopOfDeckText:
-	text "Rearrange the cards at"
-	line "the top of the Deck."
-	done
-
 PleaseCheckTheOpponentsHandText: ; 39838 (e:5838)
 	text "Please check the opponent's"
 	line "Hand."
@@ -519,22 +519,12 @@ PokemonAndAllAttachedCardsWereReturnedToDeckText: ; 39987 (e:5987)
 	line "cards were returned to the Deck."
 	done
 
-PokemonWasReturnedFromArenaToHandText: ; 399bc (e:59bc)
-	text "<RAMTEXT> was returned"
-	line "from the Arena to the Hand."
-	done
-
-PokemonWasReturnedFromBenchToHandText: ; 399e8 (e:59e8)
-	text "<RAMTEXT> was returned"
-	line "from the Bench to the Hand."
-	done
-
-PokemonWasReturnedToDeckText: ; 39a14 (e:5a14)
+PokemonWasReturnedToDeckText:
 	text "<RAMTEXT> was returned"
 	line "to the Deck."
 	done
 
-WasPlacedInTheHandText: ; 39a31 (e:5a31)
+WasPlacedInTheHandText:
 	text "<RAMTEXT> was placed"
 	line "in the Hand."
 	done
@@ -609,11 +599,6 @@ ThereWasNoEffectText: ; 39b97 (e:5b97)
 	text "There was no effect!"
 	done
 
-ThereWasNoEffectFromToxicText: ; 39bad (e:5bad)
-	text "There was no effect"
-	line "from Toxic"
-	done
-
 ThereWasNoEffectFromPoisonText: ; 39bcd (e:5bcd)
 	text "There was no effect"
 	line "from Poison."
@@ -624,17 +609,10 @@ ThereWasNoEffectFromBurnText:
 	line "from Burn."
 	done
 
-IF SLEEP_WITH_COIN_FLIP
-ThereWasNoEffectFromSleepText:
-	text "There was no effect"
-	line "from Sleep."
-	done
-ELSE
 ThereWasNoEffectFromSleepText:
 	text "There was no effect"
 	line "from Drowsiness."
 	done
-ENDC
 
 ThereWasNoEffectFromParalysisText: ; 39c10 (e:5c10)
 	text "There was no effect"
@@ -646,9 +624,34 @@ ThereWasNoEffectFromConfusionText: ; 39c35 (e:5c35)
 	line "from Confusion."
 	done
 
-ThereWasNoEffectFromPoisonConfusionText: ; 39c5a (e:5c5a)
-	text "There was no effet"
-	line "from Poison, Confusion."
+ThereWasNoEffectFromFlinchText:
+	text "There was no effect"
+	line "from Flinch."
+	done
+
+IsNowPoisonedText:
+	text "<RAMTEXT> is now"
+	line "Poisoned."
+	done
+
+IsNowBurnedText:
+	text "<RAMTEXT> is now"
+	line "Burned."
+	done
+
+IsNowAsleepText:
+	text "<RAMTEXT> is now"
+	line "Drowsy."
+	done
+
+IsNowParalyzedText:
+	text "<RAMTEXT> is now"
+	line "Paralyzed."
+	done
+
+IsNowConfusedText:
+	text "<RAMTEXT> is now"
+	line "Confused."
 	done
 
 SortedCardsInDuelistsDeckText:
@@ -656,8 +659,8 @@ SortedCardsInDuelistsDeckText:
 	line "in <RAMNAME>'s Deck."
 	done
 
-Text0185: ; 39ca8 (e:5ca8)
-	text "Battle Center"
+DuelistPrizesText:
+	text "<RAMNAME>'s Prizes"
 	done
 
 PrizesCardsText: ; 39cb7 (e:5cb7)
@@ -1014,14 +1017,6 @@ RetreatCostText: ; 3b76e (e:776e)
 	text "Retreat Cost"
 	done
 
-Text0213: ; 3b77c (e:777c)
-	textfw3 "SWITCH TO UPPER"
-	done
-
-Text0214: ; 3b799 (e:7799)
-	textfw3 "SWITCH TO LOWER"
-	done
-
 FeetText: ; 3b7b6 (e:77b6)
 	textfw3 "'"
 	done
@@ -1042,56 +1037,12 @@ DeckText: ; 3b7e8 (e:77e8)
 	text "Deck"
 	done
 
-Text021a: ; 3b7ee (e:77ee)
-	hiragana "ひらがナ"
-	done
-
-Text021b: ; 3b7f4 (e:77f4)
-	textfw0 "カタカナ"
-	done
-
-Text021c: ; 3b7f9 (e:77f9)
-	textfw3 "ABC"
-	done
-
 EndText: ; 3b800 (e:7800)
 	text "End"
 	done
 
 WhatIsYourNameText: ; 3b805 (e:7805)
 	text "What is your name?"
-	done
-
-Text021f: ; 3b819 (e:7819)
-	hiragana "あ か さ た な は ま や ら"
-	line ""
-	textfw0 "い き し ち に ひ み ゆ り"
-	line ""
-	textfw0 "う く す つ ぬ ふ む よ る"
-	line ""
-	textfw0 "え け せ て ね へ め わ れ"
-	line ""
-	textfw0 "お こ そ と の ほ も ん ろ"
-	line ""
-	textfw0 "ゃ ゅ ょ っ を "
-	textfw3 "゛ ゜ "
-	textfw0 "—"
-	done
-
-Text0220: ; 3b886 (e:7886)
-	textfw0 "ア カ サ タ ナ ハ マ ヤ ラ"
-	line ""
-	textfw0 "イ キ シ チ ニ ヒ ミ ユ リ"
-	line ""
-	textfw0 "ウ ク ス ツ ヌ フ ム ヨ ル"
-	line ""
-	textfw0 "エ ケ セ テ ネ ヘ メ ワ レ"
-	line ""
-	textfw0 "オ コ ソ ト ノ ホ モ ン ロ"
-	line ""
-	textfw0 "ャ ュ ョ ッ ヲ "
-	textfw3 "゛ ゜ "
-	textfw0 "—"
 	done
 
 PlayerNameKeyboardText: ; 3b8f2 (e:78f2)
@@ -1154,10 +1105,6 @@ CancelText: ; 3ba49 (e:7a49)
 	text "Cancel"
 	done
 
-Text0229: ; 3ba51 (e:7a51)
-	text "as"
-	done
-
 ChosenAsDuelingDeckText: ; 3ba55 (e:7a55)
 	text "<RAMTEXT> was"
 	line "chosen as the dueling deck!"
@@ -1201,6 +1148,14 @@ SaveText: ; 3bab8 (e:7ab8)
 
 NameText: ; 3babe (e:7abe)
 	text "Name"
+	done
+
+BuyText:
+	text "Buy"
+	done
+
+SellText:
+	text "Sell"
 	done
 
 ThereIsOnly1DeckSoCannotBeDismantledText: ; 3bac4 (e:7ac4)
@@ -1258,10 +1213,6 @@ YourHandText: ; 3bc2b (e:7c2b)
 	text "Your Hand"
 	done
 
-Text0242: ; 3bc36 (e:7c36)
-	text "To Your Play Area"
-	done
-
 OpponentsPokemonText: ; 3bc49 (e:7c49)
 	text "Opponent's Pokémon"
 	done
@@ -1272,10 +1223,6 @@ OpponentsDiscardPileText2: ; 3bc5d (e:7c5d)
 
 OpponentsHandText: ; 3bc76 (e:7c76)
 	text "Opponent Hand"
-	done
-
-Text0246: ; 3bc85 (e:7c85)
-	text "To Opponent's Play Area"
 	done
 
 DuelistsPlayAreaText: ; 3bc9e (e:7c9e)
@@ -1383,28 +1330,10 @@ ChooseADeckToSaveText: ; 3be2c (e:7e2c)
 	text "Choose a Deck to Save."
 	done
 
-Text0261: ; 3be44 (e:7e44)
-	text "You may only Save 60 Decks."
-	line "Please Delete a Deck first."
-	done
-
-Text0262: ; 3be7d (e:7e7d)
-	text "for"
-	done
-
 SavedTheConfigurationForText: ; 3be82 (e:7e82)
 	text "Saved the configuration for"
 	line ""
 	text "<RAMTEXT>! "
-	done
-
-Text0264: ; 3bea4 (e:7ea4)
-	text "No Deck is saved."
-	done
-
-Text0265: ; 3beb7 (e:7eb7)
-	text "Please choose a Deck "
-	line "configuration to delete."
 	done
 
 DoYouReallyWishToDeleteText: ; 3bee7 (e:7ee7)
@@ -1431,7 +1360,31 @@ DismantledDeckText: ; 3bf63 (e:7f63)
 	text "<RAMTEXT>."
 	done
 
-Text026b: ; 3bf73 (e:7f73)
-	text "Please choose the Deck"
-	line "you wish to Build."
+CardCopiesOwnedText:
+	text "Owned: <RAMNUM>"
+	done
+
+CardCostText:
+	text "Cost: <RAMNUM>"
+	done
+
+PlayerCurrencyValueText:
+	text "Points: <RAMNUM>"
+	done
+
+ThereIsAlreadyAnEqualStadiumInPlayText:
+	text "There is already another Stadium"
+	line "card with the same name in play."
+	done
+
+EvolvesFromText:
+	text " Evolves from"
+	done
+
+ActivePokemonText:
+	text "Active Pokémon"
+	done
+
+BenchedPokemonText:
+	text "Benched Pokémon"
 	done

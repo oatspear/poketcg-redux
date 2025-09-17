@@ -33,6 +33,10 @@ AIProcessAndTryToUseAttack:
 ; AI will use it if wAIExecuteProcessedAttack is 0.
 ; in either case, return carry if an attack is chosen to be used.
 AIProcessAttacks:
+	ld a, [wDuelTurns]
+	or a
+	ret z  ; first turn, unable to attack
+
 ; if AI used Pluspower, load its attack index
 	ld a, [wPreviousAIFlags]
 	and AI_FLAG_USED_PLUSPOWER
@@ -199,8 +203,8 @@ GetAIScoreOfAttack:
 	ld a, [wSelectedAttack]
 	call EstimateDamage_VersusDefendingCard
 	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
-	jr z, .unusable
+	and ABILITY
+	jr nz, .unusable
 	and RESIDUAL
 	jr nz, .check_if_can_ko
 	ld a, ATTACK_FLAG1_ADDRESS | DAMAGE_TO_OPPONENT_BENCH_F
@@ -535,7 +539,7 @@ GetAIScoreOfAttack:
 
 ; encourage attack if it has an effect to draw a card.
 .check_draw_flag
-	ld a, ATTACK_FLAG1_ADDRESS | DRAW_CARD_F
+	ld a, ATTACK_FLAG3_ADDRESS | DRAW_CARD_F
 	call CheckLoadedAttackFlag
 	jr nc, .check_heal_flag
 	ld a, 1
@@ -604,7 +608,11 @@ GetAIScoreOfAttack:
 	call CheckLoadedAttackFlag
 	jr nc, .check_sleep
 	ld a, [wTempAI]
-	and DOUBLE_POISONED
+IF DOUBLE_POISON_EXISTS
+	and MAX_POISON
+ELSE
+	and POISONED
+ENDC
 	jr z, .add_poison_score
 	and $40 ; only double poisoned?
 	jr z, .check_sleep
@@ -618,20 +626,27 @@ GetAIScoreOfAttack:
 	ld a, 2
 	call AddToAIScore
 
-; encourage sleep-inducing attack if other Pokémon isn't asleep.
+; encourage sleep-inducing attack if other Pokémon is asleep.
+; otherwise, if other Pokémon is paralyzed or confused, discourage attack.
 .check_sleep
 	ld a, ATTACK_FLAG1_ADDRESS | INFLICT_SLEEP_F
 	call CheckLoadedAttackFlag
 	jr nc, .check_paralysis
 	ld a, [wTempAI]
 	and CNF_SLP_PRZ
-	cp ASLEEP
-	jr z, .check_paralysis
+	cp PARALYZED
+	jr z, .sub_slp_score
+	cp CONFUSED
+	jr z, .sub_slp_score
 	ld a, 1
 	call AddToAIScore
+	jr .check_paralysis
+.sub_slp_score
+	ld a, 1
+	call SubFromAIScore
 
-; encourage paralysis-inducing attack if other Pokémon isn't asleep.
-; otherwise, if other Pokémon is asleep, discourage attack.
+; encourage paralysis-inducing attack if other Pokémon is paralyzed.
+; otherwise, if other Pokémon is asleep or confused, discourage attack.
 .check_paralysis
 	ld a, ATTACK_FLAG1_ADDRESS | INFLICT_PARALYSIS_F
 	call CheckLoadedAttackFlag
@@ -640,6 +655,8 @@ GetAIScoreOfAttack:
 	and CNF_SLP_PRZ
 	cp ASLEEP
 	jr z, .sub_prz_score
+	cp CONFUSED
+	jr z, .sub_prz_score
 	ld a, 1
 	call AddToAIScore
 	jr .check_confusion
@@ -647,10 +664,8 @@ GetAIScoreOfAttack:
 	ld a, 1
 	call SubFromAIScore
 
-; encourage confuse-inducing attack if other Pokémon isn't asleep
-; or confused already.
-; otherwise, if other Pokémon is asleep or confused,
-; discourage attack instead.
+; encourage confuse-inducing attack if other Pokémon is confused.
+; otherwise, if other Pokémon is asleep or paralyzed, discourage attack.
 .check_confusion
 	ld a, ATTACK_FLAG1_ADDRESS | INFLICT_CONFUSION_F
 	call CheckLoadedAttackFlag
@@ -659,10 +674,8 @@ GetAIScoreOfAttack:
 	and CNF_SLP_PRZ
 	cp ASLEEP
 	jr z, .sub_cnf_score
-	ld a, [wTempAI]
-	and CNF_SLP_PRZ
-	cp CONFUSED
-	jr z, .check_if_confused
+	cp PARALYZED
+	jr z, .sub_cnf_score
 	ld a, 1
 	call AddToAIScore
 	jr .check_if_confused
@@ -670,13 +683,12 @@ GetAIScoreOfAttack:
 	ld a, 1
 	call SubFromAIScore
 
-; if this Pokémon is confused, subtract from score.
+; if this Pokémon is confused, asleep or paralyzed, subtract from score.
 .check_if_confused
 	ld a, DUELVARS_ARENA_CARD_STATUS
 	call GetTurnDuelistVariable
 	and CNF_SLP_PRZ
-	cp CONFUSED
-	jr nz, .handle_special_atks
+	jr z, .handle_special_atks
 	ld a, 1
 	call SubFromAIScore
 

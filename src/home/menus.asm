@@ -217,10 +217,6 @@ DrawCardSymbol:
 	dec d
 	dec d
 	dec e
-	ld a, [wConsole]
-	cp CONSOLE_CGB
-	jr nz, .tiles
-	; CGB-only attrs (palette)
 	push hl
 	inc hl
 	ld a, [hl]
@@ -230,7 +226,6 @@ DrawCardSymbol:
 	call FillRectangle
 	call BankswitchVRAM0
 	pop hl
-.tiles
 	ld a, [hl]
 	lb hl, 1, 2
 	lb bc, 2, 2
@@ -242,18 +237,18 @@ DrawCardSymbol:
 
 CardSymbolTable:
 ; starting tile number, cgb palette (grey, yellow/red, green/blue, pink/orange)
-	db $e0, $01 ; TYPE_ENERGY_FIRE
-	db $e4, $02 ; TYPE_ENERGY_GRASS
-	db $e8, $01 ; TYPE_ENERGY_LIGHTNING
-	db $ec, $02 ; TYPE_ENERGY_WATER
-	db $f0, $03 ; TYPE_ENERGY_PSYCHIC
-	db $f4, $03 ; TYPE_ENERGY_FIGHTING
+	db $e0, $02 ; TYPE_ENERGY_FIRE
+	db $e4, $03 ; TYPE_ENERGY_GRASS
+	db $e8, $02 ; TYPE_ENERGY_LIGHTNING
+	db $ec, $03 ; TYPE_ENERGY_WATER
+	db $f0, $04 ; TYPE_ENERGY_PSYCHIC
+	db $f4, $04 ; TYPE_ENERGY_FIGHTING
 	db $f8, $00 ; TYPE_ENERGY_DARKNESS
-	db $fc, $02 ; TYPE_ENERGY_DOUBLE_COLORLESS
-	db $d0, $02 ; TYPE_PKMN_*, Basic
-	db $d4, $02 ; TYPE_PKMN_*, Stage 1
-	db $d8, $01 ; TYPE_PKMN_*, Stage 2
-	db $dc, $02 ; TYPE_TRAINER
+	db $fc, $00 ; TYPE_ENERGY_DOUBLE_COLORLESS
+	db $d0, $03 ; TYPE_PKMN_*, Basic
+	db $d4, $03 ; TYPE_PKMN_*, Stage 1
+	db $d8, $02 ; TYPE_PKMN_*, Stage 2
+	db $dc, $03 ; TYPE_TRAINER
 
 ; copy the name and level of the card at wLoadedCard1 to wDefaultText
 ; a = length in number of tiles (the resulting string will be padded with spaces to match it)
@@ -502,16 +497,8 @@ YesOrNoMenu:
 	lb de, 7, 16 ; x, y
 	call PrintYesOrNoItems
 	lb de, 6, 16 ; x, y
-	jr HandleYesOrNoMenu
-
-; prints the YES / NO menu items at coordinates x,y = 3,16 and handles input
-; input: wDefaultYesOrNo. returns carry if "no" selected
-YesOrNoMenuWithText_LeftAligned:
-	call DrawNarrowTextBox_PrintTextNoDelay
-	lb de, 3, 16 ; x, y
-	call PrintYesOrNoItems
-	lb de, 2, 16 ; x, y
-;	fallthrough
+	; jr HandleYesOrNoMenu
+	;	fallthrough
 
 HandleYesOrNoMenu:
 	ld a, d

@@ -65,7 +65,7 @@ AIActionTable_InvincibleRonald:
 	db $00
 
 .list_prize
-	db GAMBLER
+	db ROCKET_HEADQUARTERS
 	db $00
 
 .store_list_pointers

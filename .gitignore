@@ -22,6 +22,7 @@
 *.1bpp
 *.2bpp
 *.pal
+*.attrmap
 
 # *disasm.py output file
 *disasm_output.asm

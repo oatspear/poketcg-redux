@@ -260,6 +260,13 @@ PokemonCenterName:
 	text "Pokémon Center"
 	done
 
+PokemonCenterDescription:
+	text "Once during each player's turn, if"
+	line "they played a Supporter card from"
+	line "their hand this turn, they heal 10"
+	line "damage from each of their Pokémon."
+	done
+
 PokeBallName:
 	text "Poké Ball"
 	done
@@ -319,11 +326,16 @@ PokedexName:
 	done
 
 PokedexDescription:
-	text "Look at the top 5 cards of your"
-	line "deck. You may reveal a Pokémon card"
-	line "you find there and put it into your"
-	line "hand. Put the other cards back on"
-	line "the top of your deck in any order."
+	text "Look at your Prize cards. You may"
+	line "reveal a Pokémon you find there, put"
+	line "it into your hand, and put this card"
+	line "in its place. (If you don't reveal a"
+	line "Pokémon card, discard this card.)"
+	line "Then, shuffle your Prize cards."
+	done
+
+ChooseAnyPokemonFromPrizesText:
+	text "Choose any Pokémon from your Prizes."
 	done
 
 ItemFinderName:
@@ -425,16 +437,6 @@ PokemonFluteDescription:
 	line "it onto their Bench."
 	done
 
-GamblerName: ; 648ed (19:48ed)
-	text "Gambler"
-	done
-
-GamblerDescription: ; 648f6 (19:48f6)
-	text "Shuffle your hand into your deck."
-	line "Flip a coin. If heads, draw 8 cards."
-	line "If tails, draw 1 card."
-	done
-
 RecycleName:
 	text "Recycle"
 	done
@@ -459,28 +461,23 @@ SuperRodDescription:
 	done
 
 PlusPowerName:
-	text "PlusPower"
+	text "X Attack"
 	done
 
 PlusPowerDescription:
-	text "Attach this card to your Active"
-	line "Pokémon. At the end of your turn,"
-	line "discard this card. If this Pokémon's"
-	line "attack does damage to any Active"
-	line "Pokémon, the attack does 10 more"
-	line "damage to that Active Pokémon."
+	text "The attacks of the Pokémon this card"
+	line "is attached to do 10 more damage to"
+	line "your opponent's Active Pokémon."
 	done
 
 DefenderName:
-	text "Defender"
+	text "X Defense"
 	done
 
 DefenderDescription:
-	text "Attach this card to 1 of your"
-	line "Pokémon. At the end of your"
-	line "opponent's next turn, discard"
-	line "this card. Damage done to that"
-	line "Pokémon by attacks is reduced by 20."
+	text "The Pokémon this card is attached to"
+	line "takes 10 less damage from attacks"
+	line "from your opponent's Pokémon."
 	done
 
 SitrusBerryName:
@@ -542,4 +539,113 @@ YouMayAttachOnly1ToolPerPokemonText:
 	line "turn. You may attach only 1 Pokémon"
 	line "Tool to each Pokémon, and it stays"
 	line "attached."
+	done
+
+PewterGymName:
+	text "Pewter Gym"
+	done
+
+PewterGymDescription:
+	text "If a player's Pokémon has any"
+	line "Energies attached to it, it takes"
+	line "10 less damage from attacks, recoil"
+	line "and Confusion."
+	done
+
+CeruleanGymName:
+	text "Cerulean Gym"
+	done
+
+CeruleanGymDescription:
+	text "If a player's Active Pokémon has"
+	line "more Energies attached to it than"
+	line "its attack's cost, that Pokémon's"
+	line "attack does 10 more damage to the"
+	line "Defending Pokémon."
+	done
+
+VermilionGymName:
+	text "Vermilion Gym"
+	done
+
+VermilionGymDescription:
+	text "If a player's Active Pokémon moved"
+	line "into the Active Spot this turn, its"
+	line "attacks do 10 more damage to the"
+	line "Defending Pokémon."
+	done
+
+CeladonGymName:
+	text "Celadon Gym"
+	done
+
+CeladonGymDescription:
+	text "Special Conditions are not removed"
+	line "when Pokémon (both yours and your"
+	line "opponent's) evolve or devolve."
+	done
+
+FuchsiaGymName:
+	text "Fuchsia Gym"
+	done
+
+FuchsiaGymDescription:
+	text "Whenever any player plays a Pokémon"
+	line "from their hand to put on their"
+	line "Bench or to evolve 1 of their"
+	line "Pokémon, Poison that Pokémon and put"
+	line "1 damage counter on it."
+	done
+
+SaffronGymName:
+	text "Saffron Gym"
+	done
+
+SaffronGymDescription:
+	text "At the end of each turn, the player"
+	line "with more cards in their hand moves"
+	line "1 damage counter from their Active"
+	line "Pokémon to the opponent's Active"
+	line "Pokémon, if there are any."
+	done
+
+CinnabarGymName:
+	text "Cinnabar Gym"
+	done
+
+CinnabarGymDescription:
+	text "If a Pokémon's attack does damage"
+	line "to the opponent's Active Pokémon,"
+	line "the opponent discards the top card"
+	line "of their deck."
+	done
+
+ViridianGymName:
+	text "Viridian Gym"
+	done
+
+ViridianGymDescription:
+	text "All attack costs can be paid"
+	line "with Energies of any color."
+	done
+
+RocketHeadquartersName:
+	text "Rocket Headquarters"
+	done
+
+RocketHeadquartersDescription:
+	text "At the end of each turn, each"
+	line "player puts 1 damage counter on"
+	line "each of their Pokémon that has"
+	line "a Pokémon Power."
+	done
+
+ViridianForestName:
+	text "Viridian Forest"
+	done
+
+ViridianForestDescription:
+	text "Whenever a player's Pokémon evolves,"
+	line "that player heals 20 damage from"
+	line "the evolving Pokémon."
 	done

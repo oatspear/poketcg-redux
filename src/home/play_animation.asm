@@ -52,7 +52,7 @@ PlayDuelAnimation:
 
 .play_anim
 	call PlayLoadedDuelAnimation
-	jr .done
+	; jr .done
 
 .done
 	pop de

@@ -588,18 +588,18 @@ wPlacingInitialBenchPokemon:: ; cbfd
 	ds $1
 
 ; unused
-wcbfe:: ; cbfe
+wPracticeDuelAction:: ; cbfe
 	ds $1
 
-wcbff:: ; cbff
-	ds $1
-
-; unused
-wcc00:: ; cc00
+wDuelMainSceneSelectHotkeyAction:: ; cbff
 	ds $1
 
 ; unused
-wcc01:: ; cc01
+wPracticeDuelTurn:: ; cc00
+	ds $1
+
+; used to store a pointer to a text message parameter
+wDynamicTextPointer:: ; cc01
 	ds $2
 
 ; used to print a Pokemon card's length in feet and inches
@@ -639,22 +639,17 @@ wDuelInitialPrizes:: ; cc08
 wDuelType:: ; cc09
 	ds $1
 
-; unused
 ; set to 1 if the coin toss during the CheckReducedAccuracySubstatus check is heads
 wGotHeadsFromAccuracyCheck:: ; cc0a
 	ds $1
 
 ; OATS WRAM0 is full, so we must reuse this byte to implement SUPPORTER checks
 ; see duel_constants.asm
-wAlreadyPlayedEnergyOrSupporter:: ; cc0b
+wOncePerTurnActions:: ; cc0b
 	ds $1
 
-; set to 1 if the confusion check coin toss in AttemptRetreat is tails
-; wGotTailsFromConfusionCheckDuringRetreat:: ; cc0c
-;	ds $1
-
 ; turn flags for what the opponent did on their previous turn
-wOpponentPlayedEnergyOrSupporter:: ; cc0c
+wOpponentOncePerTurnActions:: ; cc0c
 	ds $1
 
 ; DUELIST_TYPE_* of the turn holder
@@ -684,8 +679,7 @@ wPlayerAttackingCardIndex:: ; cc11
 wPlayerAttackingCardID:: ; cc12
 	ds $1
 
-; unused
-wcc13:: ; cc13
+wOncePerTurnActionsBackup:: ; cc13
 	ds $1
 
 wNPCDuelistCopy:: ; cc14
@@ -731,6 +725,7 @@ wLoadedAttack:: ; cca6
 ; doubles as "wAIAverageDamage" when complementing wAIMinDamage and wAIMaxDamage
 ; ~~little-endian~~  capped at 250
 ; second byte may have UNAFFECTED_BY_WEAKNESS_F and other flags set/unset
+; can also serve as a buffer for amounts of damage to deal/heal outside of attacks
 wDamage:: ; ccb9
 	ds $1
 wDamageFlags:: ; ccba
@@ -768,9 +763,8 @@ wTempTurnDuelistCardID:: ; ccc3
 wTempNonTurnDuelistCardID:: ; ccc4
 	ds $1
 
-; potentially unused
-; the status condition of the defending Pokemon is loaded here after an attack
-wccc5:: ; ccc5
+; recoil damage accumulated by the current attack
+wRecoilDamage:: ; ccc5
 	ds $1
 
 ; *_ATTACK constants for selected attack
@@ -799,13 +793,9 @@ wAIAttackLogicFlags::
 wAllStagesIndices:: ; ccca
 	ds $3
 
-wEffectFunctionsFeedbackIndex:: ; cccd
-	ds $1
-
-; some array used in effect functions with wEffectFunctionsFeedbackIndex
-; as the index, used to return feedback. unknown length.
-wEffectFunctionsFeedback:: ; ccce
-	ds $18
+; unused free space
+wcccd:: ; cccd
+	ds $19
 
 ; this is 1 (non-0) if dealing damage to self due to confusion
 ; or a self-destruct type attack
@@ -834,11 +824,11 @@ wccec:: ; ccec
 wEffectFailed:: ; cced
 	ds $1
 
+; reusable
 wPreEvolutionPokemonCard:: ; ccee
 	ds $1
 
-; flag to determine whether DUELVARS_ARENA_CARD_LAST_TURN_DAMAGE
-; gets zeroed or gets updated with wDealtDamage
+; unused
 wccef:: ; ccef
 	ds $1
 
@@ -862,7 +852,6 @@ wSkipDelayAllowed:: ; ccf2
 SECTION "WRAM0 2", WRAM0
 
 ; on CGB, attributes of the text box borders. (values 0-7 seem to be used, which only affect palette)
-; on SGB, colorize text box border with SGB1 if non-0
 wTextBoxFrameType:: ; ccf3
 	ds $1
 
@@ -966,7 +955,8 @@ wListItemNameMaxLength:: ; cd1c
 wListFunctionPointer:: ; cd1d
 	ds $2
 
-	ds $78
+; unused?
+	ds $38
 
 ; in a card list, the Y position where the <sel_item>/<num_items> indicator is placed
 ; if wCardListIndicatorYPosition == $ff, no indicator is displayed
@@ -1008,11 +998,19 @@ wCoinTossNumTails:: ; cd9f
 wCoinTossNumTossed:: ; cd9f
 	ds $1
 
-wOverkillDamage:: ;cd9a
+wOverkillDamage:: ; cda0
 	ds $1
 
-; unused free space
-	ds $4
+wPlayAreaFilterFunctionPointer:: ; cda1
+	ds $2
+
+; bitmask, bit zero = arena
+wPlayAreaMarkedLocations:: ; cda3
+	ds $1
+
+; SYM_* constant
+wPlayAreaMarkingSymbol:: ; cda4
+	ds $1
 
 wAIDuelVars::
 ; saves the prizes that the AI already used Peek on
@@ -1132,6 +1130,8 @@ wEndOfTurnPowerVariables::
 wGarbageEaterDamageToHeal:: ; cdc0
 	ds $1
 
+; reusable
+wLastPlayedCardType:: ; cdc1
 wAlreadyDisplayedBetweenTurnsScreen:: ; cdc1
 	ds $1
 
@@ -1270,7 +1270,7 @@ wAlreadyRetreatedThisTurn:: ; ce03
 	ds $1
 
 ; used by AI to store information of Ivysaur, Charmeleon, Wartortle
-; while handling Energy Trans, Firestarter, Rain Dance logic.
+; while handling Energy Trans, Lightning Haste, Rain Dance logic.
 wAIPokemonPowerDeckIndex:: ; ce04
 	ds $1
 wAIPokemonPowerPlayAreaLocation:: ; ce05
@@ -1290,7 +1290,8 @@ wAISetupBasicPokemonCount:: ; ce06
 wMultiPurposeByte:: ; ce06
 	ds $1
 
-wce07:: ; ce07
+wAITrainerCardStorageByte:: ; ce07
+wMultiPurposeByte2:: ; ce07
 	ds $1
 
 wAITempVars:: ; ce08
@@ -1350,9 +1351,11 @@ wCurrentAIFlags:: ; ce21
 wEffectFunctionsBank:: ; ce22
 	ds $1
 
-; LoadCardGfx loads the card's palette here
+; LoadLoadedCard1Gfx loads the card's palette here
 wCardPalette:: ; ce23
-	ds CGB_PAL_SIZE
+	ds 3 palettes
+wCardAttrMap::
+	ds $30
 
 ; information about the text being currently processed, including font width,
 ; the rom bank, and the memory address of the next character to be printed.
@@ -1542,7 +1545,7 @@ wPrinterStatus:: ; ce6f
 wSerialDataPtr:: ; ce70
 	ds $2
 
-wce72:: ; ce72
+wCurMultiBenchSelectionItem:: ; ce72
 	ds $1
 
 ; card index and its attack index chosen
@@ -1550,6 +1553,7 @@ wce72:: ; ce72
 wMetronomeSelectedAttack:: ; ce73
 	ds $2
 
+; unused
 ; stores the amount of cards that are being ordered.
 wNumberOfCardsToOrder:: ; ce75
 	ds $1
@@ -1557,29 +1561,31 @@ wNumberOfCardsToOrder:: ; ce75
 wce76:: ; ce76
 	ds MAX_PLAY_AREA_POKEMON
 
-; used in CountPokemonIDInPlayArea
+; used in CountPokemonIDInPlayAreaMatchingFilter
 wTempPokemonID_ce7c:: ; ce7c
 	ds $1
 
 ; unused, unless we extend IDs to two bytes
 	ds $1
 
-wce7e:: ; ce7e
+wAttackAnimationIsPlaying:: ; ce7e
 	ds $1
 
-wce7f:: ; ce7f
+wDamageAnimAmount:: ; ce7f
 	ds $2
 
-wce81:: ; ce81
+wDamageAnimEffectiveness:: ; ce81
 	ds $1
 
-wce82:: ; ce82
+wDamageAnimPlayAreaLocation:: ; ce82
 	ds $1
 
-wce83:: ; ce83
+; unused
+wDamageAnimPlayAreaSide:: ; ce83
 	ds $1
 
-wce84:: ; ce84
+; unused
+wDamageAnimCardID:: ; ce84
 	ds $1
 
 ; buffer to store data that will be sent/received through IR
@@ -1589,7 +1595,7 @@ wIRDataBuffer:: ; ce85
 wVBlankFunctionTrampolineBackup:: ; ce8d
 	ds $2
 
-wce8f:: ; ce8f
+wTempPrinterSRAM:: ; ce8f
 	ds $1
 
 wPrinterHorizontalOffset:: ; ce90
@@ -1955,8 +1961,23 @@ wNamingScreenCursorX:: ; d006
 wNamingScreenNamePosition:: ; d007
 	ds $2
 
+UNION
+
 wd009:: ; d009
 	ds $4
+
+NEXTU
+
+wCardAlbumOwnedCopies:: ; d009
+	ds $1
+
+wCardAlbumCardCost:: ; d00a
+	ds $1
+
+wCardAlbumCardID:: ; d00b
+	ds $2
+
+ENDU
 
 ; pointers to all decks of current deck machine
 wMachineDeckPtrs:: ; d00d
@@ -2170,7 +2191,8 @@ wBGMapHeight:: ; d130
 wCurTilemap:: ; d131
 	ds $1
 
-wCurMapSGBPals:: ; d132
+; unused
+wd132:: ; d132
 	ds $1
 
 UNION
@@ -2260,6 +2282,7 @@ wd291:: ; d291
 wWriteBGMapToSRAM:: ; d292
 	ds $1
 
+; unused
 wd293:: ; d293
 	ds $1
 
@@ -2486,7 +2509,7 @@ wTotalNumCardsCollected:: ; d3cd
 	ds $1
 
 ; total number of cards to be collected
-; doesn't count the Phantom cards (VenusaurLv64 and MewLv15)
+; doesn't count the Phantom cards
 ; unless they have already been collected
 wTotalNumCardsToCollect:: ; d3ce
 	ds $1
@@ -2524,7 +2547,8 @@ wd417:: ; d417
 wDebugMenuSelection:: ; d418
 	ds $1
 
-wDebugSGBBorder:: ; d419
+; unused
+wd419:: ; d419
 	ds $1
 
 wDebugBoosterSelection:: ; d41a
@@ -2620,7 +2644,8 @@ wDuelAnimLocationParam:: ; d4b0
 wDuelAnimDamage:: ; d4b1
 	ds $2
 
-wd4b3:: ; d4b3
+wDuelAnimSetScreen:: ; d4b3
+wDuelAnimEffectiveness:: ; d4b3
 	ds $1
 
 ; stores the character symbols of some
@@ -2692,7 +2717,11 @@ wd4ca:: ; d4ca
 wd4cb:: ; d4cb
 	ds $1
 
-	ds $3
+wd4cc:: ; d4cc  unused
+	ds $1
+
+wPlayerCurrency:: ; d4cd
+	ds $2
 
 ; used as an index to manipulate a sprite from wSpriteAnimBuffer
 wWhichSprite:: ; d4cf
@@ -2786,11 +2815,9 @@ wd61e:: ; d61e
 wd61f:: ; d61f
 	ds $1
 
-wSceneSGBPacketPtr:: ; d620
-	ds $2
-
-wSceneSGBRoutinePtr:: ; d622
-	ds $2
+; unused
+wd620:: ; d620
+	ds $4
 
 ; whether there exists valid save data
 wHasSaveData:: ; d624

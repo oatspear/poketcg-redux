@@ -36,6 +36,9 @@ _AddStarterDeck:
 	inc de
 	ld l, a
 	res CARD_NOT_OWNED_F, [hl]
+; OATS needed in deck list patch
+	inc [hl]
+; ------------------------------
 	dec c
 	jr nz, .loop_main_cards
 
@@ -51,8 +54,8 @@ _AddStarterDeck:
 	dec c
 	jr nz, .loop_extra_cards
 
-IF DEBUG_FULL_COLLECTION_AT_START
 ; OATS DEBUG
+IF DEBUG_FULL_COLLECTION_AT_START
 ; add all cards to the initial collection
 	ld c, NUM_CARDS
 .loop_debug_collection
@@ -60,22 +63,23 @@ IF DEBUG_FULL_COLLECTION_AT_START
 	ld l, a
 	res CARD_NOT_OWNED_F, [hl]
 	ld a, [hl]
-	add 16
+	add 4
 	ld [hl], a
 	dec c
 	jr nz, .loop_debug_collection
+ENDC
 ; add a few extra energies
 	ld c, DARKNESS_ENERGY
 .loop_debug_energies
 	ld a, c
 	ld l, a
+	res CARD_NOT_OWNED_F, [hl]
 	ld a, [hl]
 	add 30
 	ld [hl], a
 	dec c
 	jr nz, .loop_debug_energies
 ; end OATS DEBUG
-ENDC
 
 	call DisableSRAM
 	ret
@@ -118,7 +122,11 @@ InitSaveData:
 ; marks all cards in Collection to not owned
 	call EnableSRAM
 	ld hl, sCardCollection
+IF ALL_CARDS_VISIBLE_IN_ALBUM
+	ld a, 0  ; seen, but not currently owned
+ELSE
 	ld a, CARD_NOT_OWNED
+ENDC
 .loop_collection
 	ld [hl], a
 	inc l
@@ -152,9 +160,10 @@ InitSaveData:
 	xor a
 	ld [sAnimationsDisabled], a
 	ld [sSkipDelayAllowed], a
-	ld [s0a004], a
 	ld [sTotalCardPopsDone], a
 	ld [sReceivedLegendaryCards], a
+	ld [sPlayerCurrency], a
+	ld [sPlayerCurrency + 1], a
 	farcall InitPromotionalCardAndDeckCounterSaveData
 	call DisableSRAM
 	ret

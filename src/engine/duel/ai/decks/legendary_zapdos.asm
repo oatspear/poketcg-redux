@@ -66,7 +66,7 @@ AIActionTable_LegendaryZapdos:
 	db $00
 
 .list_prize
-	db GAMBLER
+	db ROCKET_HEADQUARTERS
 	db ZAPDOS_LV68
 	db $00
 
@@ -98,7 +98,7 @@ AIDoTurn_LegendaryZapdos:
 	ld a, AI_TRAINER_CARD_PHASE_10
 	call AIProcessHandTrainerCards
 ; play Energy card if possible.
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
 	and PLAYED_ENERGY_THIS_TURN  ; or a
 	jr nz, .skip_energy_attach
 

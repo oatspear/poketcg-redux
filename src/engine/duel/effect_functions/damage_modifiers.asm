@@ -69,14 +69,26 @@ Steamroller_AIEffect:
 	jp SetDefiniteAIDamage
 
 
+; 10 extra damage for each Water Energy
+HydroPump_DamageBoostEffect:
+  call GetNumAttachedWaterEnergy
+	call ATimes10
+	jp AddToDamage
+
+HydroPump_AIEffect:
+  call HydroPump_DamageBoostEffect
+	jp SetDefiniteAIDamage
+
+
 ; 20 extra damage for each Water Energy
-HydroPumpEffect:
+HydroCannon_DamageBoostEffect:
   call GetNumAttachedWaterEnergy
 	add a  ; x2
 	call ATimes10
-	; call AddToDamage ; add 10 * a to damage
-	call SetDefiniteDamage ; damage = 20 * Water Energy
-; set attack damage
+	jp AddToDamage
+
+HydroCannon_AIEffect:
+  call HydroCannon_DamageBoostEffect
 	jp SetDefiniteAIDamage
 
 
@@ -150,6 +162,16 @@ SpeedImpact_DamageSubtractionEffect:
 
 SpeedImpact_AIEffect:
 	call SpeedImpact_DamageSubtractionEffect
+	jp SetDefiniteAIDamage
+
+
+GigaDrain_DamageBoostEffect:
+	ld e, PLAY_AREA_ARENA
+	call GetEnergyAttachedMultiplierDamage
+	jp AddToDamage
+
+GigaDrain_AIEffect:
+	call GigaDrain_DamageBoostEffect
 	jp SetDefiniteAIDamage
 
 
@@ -312,14 +334,54 @@ Thunderstorm_MultiplierEffect:
 	jp SetDefiniteDamage
 
 
-Wildfire_DamageBoostEffect:
+Wildfire_MultiplierEffect:
+Snowstorm_MultiplierEffect:
 	ldh a, [hTemp_ffa0]
 	call ATimes10
-	jp AddToDamage
+	jp SetDefiniteDamage
 
 
 Psyburn_MultiplierEffect:
-SheerCold_MultiplierEffect:
+	ldh a, [hTemp_ffa0]
+	ld e, a
+; check the number of cards in opponent's hand
+	ld a, DUELVARS_NUMBER_OF_CARDS_IN_HAND
+	call GetNonTurnDuelistVariable
+	sub 5
+	jr nc, .discard
+; not enough to discard
+	ld a, e
+	add a
+	cp (MAX_DAMAGE / 10) + 1
+	jr c, .capped
+	ld a, MAX_DAMAGE / 10
+	jr .capped
+
+.discard
+	inc a  ; number of cards in hand minus 4
+	ld c, a
+	sub e
+	jr nc, .only_discard
+; two's complement on a
+	cpl
+	inc a
+; add the excess to the number of energies
+	add e
+	jr .capped
+
+.only_discard
+	ld a, e
+	jr .capped
+
+.capped
+	call ATimes10
+	; ld d, 0
+	; ld e, a
+	; jp UpdateExpectedAIDamage
+	jp SetDefiniteDamage
+
+
+
 ScorchingColumn_MultiplierEffect:
 Discharge_MultiplierEffect:
 	ldh a, [hTemp_ffa0]
@@ -327,7 +389,10 @@ Discharge_MultiplierEffect:
 	call ATimes10
 	jp SetDefiniteDamage
 
+
+ThunderSpear_AIEffect:
 Discharge_AIEffect:
+	ld e, PLAY_AREA_ARENA
 	call GetPlayAreaCardAttachedEnergies
 	call HandleEnergyColorOverride
 	ld a, [wAttachedEnergies + LIGHTNING]
@@ -341,20 +406,20 @@ Discharge_AIEffect:
 
 
 Psyburn_AIEffect:
+	ldh a, [hTemp_ffa0]
+	push af
+	ld e, PLAY_AREA_ARENA
 	call GetPlayAreaCardAttachedEnergies
 	call HandleEnergyColorOverride
-	ld a, [wAttachedEnergies + PSYCHIC]
-	add a  ; x2
-	call ATimes10
-	; ld d, 0
-	; ld e, a
-	; jp UpdateExpectedAIDamage
-	call SetDefiniteDamage
+	ldh [hTemp_ffa0], a
+	call Psyburn_MultiplierEffect
+	pop af
+	ldh [hTemp_ffa0], a
 	jp SetDefiniteAIDamage
 
 
-SheerCold_AIEffect:
 WaterPulse_AIEffect:
+	ld e, PLAY_AREA_ARENA
 	call GetPlayAreaCardAttachedEnergies
 	call HandleEnergyColorOverride
 	ld a, [wAttachedEnergies + WATER]
@@ -367,7 +432,21 @@ WaterPulse_AIEffect:
 	jp SetDefiniteAIDamage
 
 
+Snowstorm_AIEffect:
+	ld e, PLAY_AREA_ARENA
+	call GetPlayAreaCardAttachedEnergies
+	call HandleEnergyColorOverride
+	ld a, [wAttachedEnergies + WATER]
+	call ATimes10
+	; ld d, 0
+	; ld e, a
+	; jp UpdateExpectedAIDamage
+	call SetDefiniteDamage
+	jp SetDefiniteAIDamage
+
+
 Wildfire_AIEffect:
+	ld e, PLAY_AREA_ARENA
 	call GetPlayAreaCardAttachedEnergies
 	call HandleEnergyColorOverride
 	ld a, [wAttachedEnergies + FIRE]
@@ -375,32 +454,58 @@ Wildfire_AIEffect:
 	; ld d, 0
 	; ld e, a
 	; jp UpdateExpectedAIDamage
-	call AddToDamage
+	; call AddToDamage
 	jp SetDefiniteAIDamage
 
 
-ScorchingColumn_AIEffect:
-	call GetPlayAreaCardAttachedEnergies
-	call HandleEnergyColorOverride
-	ld a, [wAttachedEnergies + FIRE]
-	add a  ; x2
-	call ATimes10
-	; ld d, 0
-	; ld e, a
-	; jp UpdateExpectedAIDamage
-	call SetDefiniteDamage
-	jp SetDefiniteAIDamage
+PowerfulSplash_DamageBoostEffect:
+	ld c, 0
+; search Play Area for Water Energy cards
+	ld a, DUELVARS_CARD_LOCATIONS
+	call GetTurnDuelistVariable
+.loop_deck
+	ld a, [hl]
+	and CARD_LOCATION_PLAY_AREA
+	jr z, .next
+	push hl
+	ld a, l
+	call GetCardIDFromDeckIndex  ; preserves bc
+	call GetCardType  ; preserves bc
+	pop hl
+	cp TYPE_ENERGY_WATER
+	jr nz, .next
+	inc c
+.next
+	inc l
+	ld a, l
+	cp DECK_SIZE
+	jr c, .loop_deck
 
+; count Water-type Pokémon on the Bench
+	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+	call GetTurnDuelistVariable
+	dec a
+	ld b, a  ; PLAY_AREA_* of the last Pokémon on the Bench
+	jr z, .tally
+.loop_bench
+	ld a, b
+	push bc
+	call GetPlayAreaCardColor
+	pop bc
+	cp WATER
+	jr nz, .next_bench
+	inc c
+.next_bench
+	dec b
+	jr nz, .loop_bench
 
-Thunderstorm_AIEffect:
-	call GetPlayAreaCardAttachedEnergies
-	call HandleEnergyColorOverride
-	ld a, [wAttachedEnergies + LIGHTNING]
+.tally
+	ld a, c
 	call ATimes10
-	; ld d, 0
-	; ld e, a
-	; jp UpdateExpectedAIDamage
-	call SetDefiniteDamage
+	jp AddToDamage
+
+PowerfulSplash_AIEffect:
+	call PowerfulSplash_DamageBoostEffect
 	jp SetDefiniteAIDamage
 
 
@@ -410,7 +515,7 @@ Thunderstorm_AIEffect:
 
 
 IfPlayedSupporter20BonusDamage_DamageBoostEffect:
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
 	and PLAYED_SUPPORTER_THIS_TURN
 	ret z  ; did not play Supporter
 	ld a, 20
@@ -423,7 +528,7 @@ IfPlayedSupporter20BonusDamage_AIEffect:
 
 
 IfOpponentPlayedSupporter20BonusDamage_DamageBoostEffect:
-	ld a, [wOpponentPlayedEnergyOrSupporter]
+	ld a, [wOpponentOncePerTurnActions]
 	and PLAYED_SUPPORTER_THIS_TURN
 	ret z  ; did not play Supporter
 	ld a, 20
@@ -548,15 +653,15 @@ DoubleDamageIfMorePrizes_AIEffect:
 
 
 ; +10 damage for each Prize the opponent has taken
-RageFist_DamageBoostEffect:
+RageFist_DamageMultiplierEffect:
 	call SwapTurn
 	call CountPrizesTaken
 	call SwapTurn
 	call ATimes10
-	jp AddToDamage
+	jp SetDefiniteDamage
 
 RageFist_AIEffect:
-	call RageFist_DamageBoostEffect
+	call RageFist_DamageMultiplierEffect
 	jp SetDefiniteAIDamage
 
 
@@ -581,24 +686,18 @@ Vengeance_AIEffect:
 	jp SetDefiniteAIDamage
 
 
-; +30 damage if 10 or more Items in both discard piles
+; +10 damage for every 10 cards in both discard piles
 ToxicWaste_DamageBoostEffect:
-	call CreateItemCardListFromDiscardPile
-	call CountCardsInDuelTempList
-	cp 10
-	jr nc, .enough
+	ld a, DUELVARS_NUMBER_OF_CARDS_IN_DISCARD_PILE
+	call GetTurnDuelistVariable
 	ld c, a
-	push bc
-	call SwapTurn
-	call CreateItemCardListFromDiscardPile
-	call CountCardsInDuelTempList
-	call SwapTurn
-	pop bc
+	ld a, DUELVARS_NUMBER_OF_CARDS_IN_DISCARD_PILE
+	call GetNonTurnDuelistVariable
 	add c
-	cp 10
-	ret c  ; not enough cards
-.enough
-  ld a, 30
+	call ADividedBy10
+	or a
+	ret z  ; not enough cards
+	call ATimes10
 	jp AddToDamage
 
 ToxicWaste_AIEffect:
@@ -624,13 +723,15 @@ DoTheWave_AIEffect:
 
 
 Swarm_DamageBoostEffect:
-	call CheckBenchIsNotFull
-	ret nc
-	ld a, 10
-	jp AddToDamage
+	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+	call GetTurnDuelistVariable
+	cp MAX_BENCH_POKEMON
+	ret c
+.bonus
+	jp DoubleDamage_DamageBoostEffect
 
 Swarm_AIEffect:
-  call Swarm_DamageBoostEffect
+  call Swarm_DamageBoostEffect.bonus
   jp SetDefiniteAIDamage
 
 
@@ -768,7 +869,7 @@ TerrorStrike_DamageBoostEffect:
   jr z, .done
   call LoadCardDataToBuffer2_FromDeckIndex
 	ld a, [wLoadedCard2Atk1Category]
-	cp POKEMON_POWER
+	cp POKE_POWER
   jr nz, .loop_play_area
   inc c
   jr .loop_play_area
@@ -812,36 +913,54 @@ Constrict_AIEffect:
 	jp SetDefiniteAIDamage
 
 
+; +10 vs evolved Pokémon
+Bonus10VersusEvolvedPokemon_DamageBoostEffect:
+	ld a, DUELVARS_ARENA_CARD_STAGE
+	call GetNonTurnDuelistVariable
+	and a
+	ret z  ; BASIC Pokémon
+	ld a, 10
+	jp AddToDamage
+
+Bonus10VersusEvolvedPokemon_AIEffect:
+  call Bonus10VersusEvolvedPokemon_DamageBoostEffect
+  jp SetDefiniteAIDamage
+
+
 ; ------------------------------------------------------------------------------
 ; Based on Status Conditions
 ; ------------------------------------------------------------------------------
 
 ; bonus damage for each status condition on the Defending Pokémon
 ReactivePoison_DamageBoostEffect:
-  ld a, DUELVARS_ARENA_CARD_STATUS
-  call GetNonTurnDuelistVariable
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetNonTurnDuelistVariable
 	or a
 	ret z  ; no status
 	ld bc, $00
 ; confusion, sleep, paralysis
-  and CNF_SLP_PRZ
-  jr z, .poison
-  ld b, 20
+	and CNF_SLP_PRZ
+	jr z, .poison
+	ld b, 20
 .poison
 	ld a, [hl]
-  and DOUBLE_POISONED
-  jr z, .burn
-  ld c, 20
+IF DOUBLE_POISON_EXISTS
+	and MAX_POISON
+ELSE
+	and POISONED
+ENDC
+	jr z, .burn
+	ld c, 20
 .burn
 	ld a, [hl]
-  and BURNED
+	and BURNED
 	ld a, 0
-  jr z, .tally
-  ld a, 20
+	jr z, .tally
+	ld a, 20
 .tally
 	add b
 	add c
-  jp AddToDamage
+	jp AddToDamage
 
 ReactivePoison_AIEffect:
   call ReactivePoison_DamageBoostEffect
@@ -860,54 +979,27 @@ Pester_AIEffect:
   jp SetDefiniteAIDamage
 
 
-; +20 damage if the Defending Pokémon is Poisoned
+; +30 damage if the Defending Pokémon is Poisoned
 DeadlyPoison_DamageBoostEffect:
-  ld a, DUELVARS_ARENA_CARD_STATUS
-  call GetNonTurnDuelistVariable
-  and DOUBLE_POISONED
-  ret z  ; not Poisoned
-  ld a, 20
-  jp AddToDamage
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetNonTurnDuelistVariable
+IF DOUBLE_POISON_EXISTS
+	and MAX_POISON
+ELSE
+	and POISONED
+ENDC
+	ret z  ; not Poisoned
+	ld a, 30
+	jp AddToDamage
 
 DeadlyPoison_AIEffect:
-  call DeadlyPoison_DamageBoostEffect
-  jp SetDefiniteAIDamage
+	call DeadlyPoison_DamageBoostEffect
+	jp SetDefiniteAIDamage
 
 
 ; ------------------------------------------------------------------------------
 ; Based on Damage Counters
 ; ------------------------------------------------------------------------------
-
-SwallowUp_DamageBoostEffect:
-	ld a, DUELVARS_ARENA_CARD_HP
-	call GetTurnDuelistVariable
-	ld e, a
-	ld a, DUELVARS_ARENA_CARD_HP
-	call GetNonTurnDuelistVariable
-	cp e
-	ld a, 50
-	jp c, AddToDamage
-	ret
-
-SwallowUp_AIEffect:
-	call SwallowUp_DamageBoostEffect
-	jp SetDefiniteAIDamage
-
-
-ChopDown_DamageBoostEffect:
-	ld a, DUELVARS_ARENA_CARD_HP
-	call GetNonTurnDuelistVariable
-	ld e, a
-	ld a, DUELVARS_ARENA_CARD_HP
-	call GetTurnDuelistVariable
-	cp e
-	jp c, DoubleDamage_DamageBoostEffect
-	ret
-
-ChopDown_AIEffect:
-	call ChopDown_DamageBoostEffect
-	jp SetDefiniteAIDamage
-
 
 KarateChop_DamageSubtractionEffect:
 	ld e, PLAY_AREA_ARENA
@@ -920,16 +1012,28 @@ KarateChop_AIEffect:
 
 
 ; double damage if user is damaged
-DoubleDamageIfUserIsDamaged_DamageBoostEffect:
+DoubleDamageIfDamaged_DamageBoostEffect:
 	ld e, PLAY_AREA_ARENA
 	call GetCardDamageAndMaxHP
   or a
   ret z  ; not damaged
 	jp DoubleDamage_DamageBoostEffect
 
-DoubleDamageIfUserIsDamaged_AIEffect:
-  call DoubleDamageIfUserIsDamaged_DamageBoostEffect
+DoubleDamageIfDamaged_AIEffect:
+  call DoubleDamageIfDamaged_DamageBoostEffect
   jp SetDefiniteAIDamage
+
+
+Counter_DamageBoostEffect:
+	ld a, DUELVARS_ARENA_CARD_LAST_TURN_DAMAGE
+	call GetTurnDuelistVariable
+	; or a
+	; ret z
+	jp AddToDamage
+
+Counter_AIEffect:
+	call Counter_DamageBoostEffect
+	jp SetDefiniteAIDamage
 
 
 ; add damage taken to damage output
@@ -968,12 +1072,14 @@ PsychicAssault_AIEffect:
   jp SetDefiniteAIDamage
 
 
-; +10 damage for each damaged Pokémon on turn holder's play area
+; +10 damage for each damaged Benched Pokémon on turn holder's play area
 VengefulHorn_DamageBoostEffect:
   ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
   call GetTurnDuelistVariable
+	dec a  ; discount arena
+	ret z  ; no Bench
   ld d, a
-  ld e, PLAY_AREA_ARENA
+  ld e, PLAY_AREA_BENCH_1
   ld c, 0
 .loop_play_area
   ; input in e

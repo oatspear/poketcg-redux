@@ -5,8 +5,14 @@ AIDecideWhetherToRetreat:
 	ld [wAIPlayEnergyCardForRetreat], a
 
 ; affected by unable to retreat substatus?
-	call CheckCantRetreatDueToAcid
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetTurnDuelistVariable
+	and CNF_SLP_PRZ
+	cp FLINCHED
+	jr z, .unable_to_retreat
+	call CheckCantRetreatDueToStatusOrEffect
 	jr nc, .able_to_retreat
+.unable_to_retreat
 	xor a
 	ld [wAIScore], a
 	ld [wAIRetreatScore], a
@@ -30,11 +36,15 @@ AIDecideWhetherToRetreat:
 	call GetTurnDuelistVariable
 	or a
 	jr z, .check_ko_1 ; no status
-	and DOUBLE_POISONED
+IF BURN_IS_DAMAGE_OVER_TIME
+	and PSN_BRN
+ELSE
+	and MAX_POISON
+ENDC
 	jr z, .check_other_status ; no poison
 	ld a, 2
 	call AddToAIScore
-; OATS any status condition allows for retreating
+
 .check_other_status
 	ld a, [hl]
 	and CNF_SLP_PRZ
@@ -370,8 +380,7 @@ AIDecideWhetherToRetreat:
 ; check for SANDSLASH with Spikes
 ; discourage switching if there is one
 	call AICheckPlayerSandslash
-	jr c, .check_evolve  ; Powers are disabled
-	jr z, .check_evolve  ; no Sandslash in the opponent's Play Area
+	jr nc, .check_evolve  ; no ability-capable Sandslash
 	ld a, 2
 	call SubFromAIScore
 
@@ -472,8 +481,8 @@ Func_15b54:
 
 ; player
 	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
-	ret z
+	and ABILITY
+	ret nz
 	jr .set_flag
 
 .opponent
@@ -487,18 +496,12 @@ Func_15b54:
 	ret
 
 
-; return carry if Pokémon Powers are disabled
-; return nz if there are Pokémon Power-capable Sandslash
-; preserves: bc, de
+; return carry if there are ability-capable Sandslash
+; preserves: hl, bc, de
 AICheckPlayerSandslash:
-	call ArePokemonPowersDisabled  ; preserves bc, de
-	ret c
 	call SwapTurn
-	ld a, SANDSLASH
-	call CountPokemonIDInPlayArea  ; preserves hl, bc, de
-	call SwapTurn
-	or a
-	ret
+	call IsSpikesActive
+	jp SwapTurn
 
 
 ; calculates AI score for bench Pokémon
@@ -711,9 +714,8 @@ AIDecideBenchPokemonToSwitchTo:
 	cp 20
 	jr nc, .add_hp_score  ; has at least 20 HP
 	call AICheckPlayerSandslash
-	jr c, .add_hp_score  ; Powers are disabled
-	jr z, .add_hp_score  ; no Sandslash in the opponent's Play Area
-	; zero score if the Pokémon is going to be KO'd by Spikes
+	jr nc, .add_hp_score  ; no ability-capable Sandslash
+; zero score if the Pokémon is going to be KO'd by Spikes
 	xor a
 	ld [wAIScore], a
 	jr .store_score
@@ -830,20 +832,17 @@ AITryToRetreat:
 ; the necessary energy for retreat cost
 
 ; check status
-; OATS status conditions no longer prevent retreat
-;	ld a, DUELVARS_ARENA_CARD_STATUS
-;	call GetTurnDuelistVariable
-;	and CNF_SLP_PRZ
-;	cp ASLEEP
-;	jp z, .check_id
-;	cp PARALYZED
-;	jp z, .check_id
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetTurnDuelistVariable
+	and CNF_SLP_PRZ
+	cp FLINCHED
+	jp z, .check_id
 
 ; if an energy card hasn't been played yet,
 ; checks if the Pokémon needs just one more energy to retreat
 ; if it does, check if there are any energy cards in hand
 ; and if there are, play that energy card
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
 	and PLAYED_ENERGY_THIS_TURN  ; or a
 	jr nz, .check_id
 	ld e, PLAY_AREA_ARENA
@@ -877,20 +876,17 @@ AITryToRetreat:
 	cp MYSTERIOUS_FOSSIL
 	jp z, .mysterious_fossil
 
-; if card is Asleep or Paralyzed, set carry and exit
+; if card is Flinched, set carry and exit
 ; else, load the status in hTemp_ffa0
 	pop af
 	ldh [hTempPlayAreaLocation_ffa1], a
 	ld a, DUELVARS_ARENA_CARD_STATUS
 	call GetTurnDuelistVariable
 	ld b, a
-; OATS status conditions no longer prevent retreat
-;	and CNF_SLP_PRZ
-;	cp ASLEEP
-;	jp z, .set_carry
-;	cp PARALYZED
-;	jp z, .set_carry
-;	ld a, b
+	and CNF_SLP_PRZ
+	cp FLINCHED
+	jp z, .set_carry
+	ld a, b
 	ldh [hTemp_ffa0], a
 	ld a, $ff
 	ldh [hTempRetreatCostCards], a

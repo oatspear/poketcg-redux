@@ -1,30 +1,15 @@
-IF SLEEP_WITH_COIN_FLIP
 Text05db:
 	text "Your Turn ends after you Attack."
 	line "If you do not have enough energy"
 	line "to attack, or if your Active Pokémon"
-	line "cannot move due to Paralysis or"
-	line "Sleep, you can end your turn by"
+	line "cannot move due to a Special"
+	line "Condition, you can end your turn by"
 	line "choosing the DONE command."
 	line "This will cause your turn to end"
 	line "and your opponent's turn to begin."
 	line "You should choose DONE if you are "
 	line "unable to do anything."
 	done
-ELSE
-Text05db:
-	text "Your Turn ends after you Attack."
-	line "If you do not have enough energy"
-	line "to attack, or if your Active Pokémon"
-	line "cannot move due to Paralysis,"
-	line "you can end your turn by choosing"
-	line "the DONE command."
-	line "This will cause your turn to end"
-	line "and your opponent's turn to begin."
-	line "You should choose DONE if you are "
-	line "unable to do anything."
-	done
-ENDC
 
 Text05dc: ; 4c141 (13:4141)
 	text "Generally, the win or loss of a "

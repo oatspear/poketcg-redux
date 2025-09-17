@@ -30,17 +30,6 @@ DefaultOWFrameset: ; 8055e (20:455e)
 	db -1 ; end
 
 OverworldMapOWFrameset: ; 80662 (20:4662)
-	db $3, $33, $33
-
-	ow_frame 7, $f3, 0, OverworldMapTiles, $73
-	ow_frame 7, $f4, 0, OverworldMapTiles, $74
-	ow_frame 7, $f3, 0, OverworldMapTiles, $74
-	ow_frame 7, $f4, 0, OverworldMapTiles, $75
-	ow_frame 7, $f3, 0, OverworldMapTiles, $75
-	ow_frame 7, $f4, 0, OverworldMapTiles, $73
-	db -1 ; end
-
-OverworldMapCGBOWFrameset: ; 80696 (20:4696)
 	db $3, $ab, $ab
 
 	ow_frame 4, $f3, 0, OverworldMapTiles, $73
@@ -86,27 +75,6 @@ DeckMachineRoomOWFrameset: ; 80786 (20:4786)
 	ow_frame 0, $dd, 0, MasonLaboratoryTilesetGfx, $5d
 	ow_frame 3, $de, 0, MasonLaboratoryTilesetGfx, $5e
 	ow_frame 0, $df, 0, MasonLaboratoryTilesetGfx, $5f
-	ow_frame 5, $e4, 0, MasonLaboratoryTilesetGfx, $64
-	ow_frame 0, $e5, 0, MasonLaboratoryTilesetGfx, $65
-	ow_frame 0, $e6, 0, MasonLaboratoryTilesetGfx, $66
-	ow_frame 0, $e7, 0, MasonLaboratoryTilesetGfx, $67
-	ow_frame 3, $dc, 0, MasonLaboratoryTilesetGfx, $60
-	ow_frame 0, $dd, 0, MasonLaboratoryTilesetGfx, $61
-	ow_frame 3, $de, 0, MasonLaboratoryTilesetGfx, $62
-	ow_frame 0, $df, 0, MasonLaboratoryTilesetGfx, $63
-	ow_frame 5, $e4, 0, MasonLaboratoryTilesetGfx, $68
-	ow_frame 0, $e5, 0, MasonLaboratoryTilesetGfx, $69
-	ow_frame 0, $e6, 0, MasonLaboratoryTilesetGfx, $6a
-	ow_frame 0, $e7, 0, MasonLaboratoryTilesetGfx, $6b
-	db -1 ; end
-
-DeckMachineRoomCGBOWFrameset: ; 8080a (20:480a)
-	db $3, $83, $83
-
-	ow_frame 3, $dc, 0, MasonLaboratoryTilesetGfx, $5c
-	ow_frame 0, $dd, 0, MasonLaboratoryTilesetGfx, $5d
-	ow_frame 3, $de, 0, MasonLaboratoryTilesetGfx, $5e
-	ow_frame 0, $df, 0, MasonLaboratoryTilesetGfx, $5f
 	ow_frame 5, $03, 1, MasonLaboratoryTilesetGfx, $83
 	ow_frame 0, $04, 1, MasonLaboratoryTilesetGfx, $84
 	ow_frame 0, $05, 1, MasonLaboratoryTilesetGfx, $85
@@ -122,27 +90,6 @@ DeckMachineRoomCGBOWFrameset: ; 8080a (20:480a)
 	db -1 ; end
 
 FireClubOWFrameset: ; 8088e (20:488e)
-	db $3, $83, $83
-
-	ow_frame 5, $9f, 0, FireClubTilesetGfx, $1f
-	ow_frame 0, $a0, 0, FireClubTilesetGfx, $20
-	ow_frame 0, $a1, 0, FireClubTilesetGfx, $21
-	ow_frame 0, $a2, 0, FireClubTilesetGfx, $22
-	ow_frame 6, $a3, 0, FireClubTilesetGfx, $23
-	ow_frame 0, $a4, 0, FireClubTilesetGfx, $24
-	ow_frame 0, $a5, 0, FireClubTilesetGfx, $25
-	ow_frame 0, $a6, 0, FireClubTilesetGfx, $26
-	ow_frame 5, $9f, 0, FireClubTilesetGfx, $27
-	ow_frame 0, $a0, 0, FireClubTilesetGfx, $28
-	ow_frame 0, $a1, 0, FireClubTilesetGfx, $29
-	ow_frame 0, $a2, 0, FireClubTilesetGfx, $2a
-	ow_frame 6, $a3, 0, FireClubTilesetGfx, $2b
-	ow_frame 0, $a4, 0, FireClubTilesetGfx, $2c
-	ow_frame 0, $a5, 0, FireClubTilesetGfx, $2d
-	ow_frame 0, $a6, 0, FireClubTilesetGfx, $2e
-	db -1 ; end
-
-FireClubCGBOWFrameset: ; 80912 (20:4912)
 	db $3, $83, $83
 
 	ow_frame 5, $bb, 0, FireClubTilesetGfx, $3b

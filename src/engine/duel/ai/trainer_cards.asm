@@ -154,9 +154,12 @@ _AIProcessHandTrainerCards:
 
 AICheckCanPlayTrainerInBuffer1:
 	ld a, [wLoadedCard1Type]
+	cp TYPE_TRAINER_STADIUM
+	jr z, .can_play_card
 	cp TYPE_TRAINER_SUPPORTER
 	jr nz, .not_supporter
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+; supporter
+	ld a, [wOncePerTurnActions]
 	and PLAYED_SUPPORTER_THIS_TURN
 	jr z, .can_play_card
 	scf
@@ -775,7 +778,8 @@ AIPlay_Pluspower:
 ; if active card cannot KO without the boost.
 ; outputs in a the attack to use.
 AIDecide_Pluspower1:
-	farcall PlusPower_PreconditionCheck
+	xor a  ; PLAY_AREA_ARENA
+	farcall CheckPokemonHasNoToolsAttached
 	jr c, .no_carry
 	xor a
 	ldh [hTempPlayAreaLocation_ff9d], a
@@ -873,7 +877,8 @@ AIDecide_Pluspower1:
 ; and has a minimum damage > 0.
 ; outputs in a the attack to use.
 AIDecide_Pluspower2:
-	farcall PlusPower_PreconditionCheck
+	xor a  ; PLAY_AREA_ARENA
+	farcall CheckPokemonHasNoToolsAttached
 	jr c, .no_carry
 	xor a
 	ldh [hTempPlayAreaLocation_ff9d], a
@@ -1193,8 +1198,8 @@ AIDecide_GustOfWind:
 	ld a, [wLoadedAttackCategory]
 
 	; skip if attack is a Power or has 0 damage
-	cp POKEMON_POWER
-	jr z, .no_damage
+	and ABILITY
+	jr nz, .no_damage
 	ld a, [wDamage]
 	or a
 	ret z
@@ -1777,9 +1782,9 @@ AIDecide_RareCandy:
 ; store this score to wce06
 	ld a, [hl]
 	ld [wce06], a
-; store this PLay Area location to wce07
+; store this PLay Area location to wAITrainerCardStorageByte
 	ld a, e
-	ld [wce07], a
+	ld [wAITrainerCardStorageByte], a
 
 .not_higher
 	inc e
@@ -1790,13 +1795,13 @@ AIDecide_RareCandy:
 ; that has been decided in wce1a,
 ; return the Play Area location of card
 ; to evolve in a and return carry
-	ld a, [wce07]
+	ld a, [wAITrainerCardStorageByte]
 	ld e, a
 	ld hl, wce0f
 	add hl, de
 	ld a, [hl]
 	ld [wce1a], a
-	ld a, [wce07]
+	ld a, [wAITrainerCardStorageByte]
 	scf
 	ret
 
@@ -1853,7 +1858,7 @@ AIDecide_RareCandy:
 	xor a
 	ld [wce06], a
 	ld a, $ff
-	ld [wce07], a
+	ld [wAITrainerCardStorageByte], a
 
 	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
 	call GetTurnDuelistVariable
@@ -1882,16 +1887,16 @@ AIDecide_RareCandy:
 ; store the score in wce06
 	ld a, b
 	ld [wce06], a
-; store this PLay Area location to wce07
+; store this PLay Area location to wAITrainerCardStorageByte
 	ld a, e
-	ld [wce07], a
+	ld [wAITrainerCardStorageByte], a
 
 .next_score
 	inc e
 	dec c
 	jr nz, .loop_score_2
 
-	ld a, [wce07]
+	ld a, [wAITrainerCardStorageByte]
 	cp $ff
 	jr z, .done
 
@@ -1905,7 +1910,7 @@ AIDecide_RareCandy:
 	add hl, de
 	ld a, [hl]
 	ld [wce1a], a
-	ld a, [wce07]
+	ld a, [wAITrainerCardStorageByte]
 	scf
 	ret
 
@@ -2071,12 +2076,22 @@ AIDecide_ProfessorOak:
 	call ArePokemonPowersDisabled
 	jr c, .check_hand
 
-; no Toxic Gas in Play Area
+; no Neutralizing Gas in Play Area
+IF POLITOED_VARIANT == 0
+	ld a, POLITOED
+	call GetFirstPokemonWithAvailablePower
+	jr c, .got_rain_dance
+ENDC
+IF BLASTOISE_VARIANT == 2
+	ld a, BLASTOISE
+ELSE
 	ld a, WARTORTLE
-	call CountPokemonIDInPlayArea
+ENDC
+	call GetFirstPokemonWithAvailablePower
 	jr nc, .check_hand
 
 ; at least one Wartortle in AI Play Area
+.got_rain_dance
 	ld a, WATER_ENERGY
 	farcall LookForCardIDInHand
 	jr nc, .check_hand
@@ -2358,7 +2373,7 @@ AIDecide_EnergyRetrieval:
 	; call ArePokemonPowersDisabled
 	; jr c, .start
 	; ld a, WARTORTLE
-	; call CountPokemonIDInPlayArea
+	; call GetFirstPokemonWithAvailablePower
 	; jp nc, .no_carry
 
 .start
@@ -3490,14 +3505,11 @@ AIDecide_ScoopUp:
 	jr c, .no_carry
 
 .cannot_ko
-; OATS status conditions no longer prevent retreat
-	; ld a, DUELVARS_ARENA_CARD_STATUS
-	; call GetTurnDuelistVariable
-	; and CNF_SLP_PRZ
-	; cp PARALYZED
-	; jr z, .cannot_retreat
-	; cp ASLEEP
-	; jr z, .cannot_retreat
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetTurnDuelistVariable
+	and CNF_SLP_PRZ
+	cp FLINCHED
+	jr z, .cannot_retreat
 
 ; doesn't have a status that prevents retreat.
 ; so check if it has enough energy to retreat.
@@ -4068,7 +4080,7 @@ AIDecide_Imakuni:
 	or a
 	ret
 
-AIPlay_Gambler:
+AIPlay_RocketHeadquarters:
 	ld a, [wCurrentAIFlags]
 	or AI_FLAG_MODIFIED_HAND
 	ld [wCurrentAIFlags], a
@@ -4105,10 +4117,10 @@ AIPlay_Gambler:
 	bank1call AIMakeDecision
 	ret
 
-; checks whether to play Gambler.
+; checks whether to play Rocket Headquarters.
 ; aside from Imakuni?, all other opponents only
 ; play this card if Player is running MewtwoLv53-only deck.
-AIDecide_Gambler:
+AIDecide_RocketHeadquarters:
 ; Imakuni? has his own routine
 	ld a, [wOpponentDeckID]
 	cp IMAKUNI_DECK_ID

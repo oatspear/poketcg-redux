@@ -1,61 +1,3 @@
-; save duel state to SRAM
-; called between each two-player turn, just after player draws card (ROM bank 1 loaded)
-SaveDuelStateToSRAM:
-	ld a, $2
-	call BankswitchSRAM
-	; save duel data to sCurrentDuel
-	call SaveDuelData
-	xor a
-	call BankswitchSRAM
-	call EnableSRAM
-	ld hl, s0a008
-	ld a, [hl]
-	inc [hl]
-	call DisableSRAM
-	; select hl = SRAM3:(a000 + $400 * [s0a008] & $3)
-	; save wDuelTurns, non-turn holder's arena card ID, turn holder's arena card ID
-	and $3
-	add HIGH($a000) / 4
-	ld l, $0
-	ld h, a
-	add hl, hl
-	add hl, hl
-	ld a, $3
-	call BankswitchSRAM
-	push hl
-	ld a, DUELVARS_ARENA_CARD
-	call GetTurnDuelistVariable
-	call GetCardIDFromDeckIndex
-	ld a, e
-	ld [wTempTurnDuelistCardID], a
-	call SwapTurn
-	ld a, DUELVARS_ARENA_CARD
-	call GetTurnDuelistVariable
-	call GetCardIDFromDeckIndex
-	ld a, e
-	ld [wTempNonTurnDuelistCardID], a
-	call SwapTurn
-	pop hl
-	push hl
-	call EnableSRAM
-	ld a, [wDuelTurns]
-	ld [hli], a
-	ld a, [wTempNonTurnDuelistCardID]
-	ld [hli], a
-	ld a, [wTempTurnDuelistCardID]
-	ld [hli], a
-	; save duel data to SRAM3:(a000 + $400 * [s0a008] & $3) + $0010
-	pop hl
-	ld de, $0010
-	add hl, de
-	ld e, l
-	ld d, h
-	call DisableSRAM
-	bank1call SaveDuelDataToDE
-	xor a
-	call BankswitchSRAM
-	ret
-
 ; copies the deck pointed to by de to wPlayerDeck or wOpponentDeck (depending on whose turn it is)
 CopyDeckData:
 	ld hl, wPlayerDeck
@@ -391,12 +333,33 @@ PutPlayAreaToolInDiscardPile:
 	ret
 
 
+; input: none
+; output:
+;		a: deck index of the previous Stadium card
+;		hl: pointing to DUELVARS_STADIUM_CARD variable
+;   carry: set if a Stadium was discarded
+; preserves: bc, de
+PutStadiumCardInDiscardPile:
+	ld a, DUELVARS_STADIUM_CARD
+	call GetTurnDuelistVariable
+	cp $ff
+	ret z  ; no stadium
+; reset duel variable
+	ld [hl], $ff
+; move stadium to discard pile
+	call PutCardInDiscardPile  ; preserves everything
+	scf
+	ret
+
+
 ; returns carry if the given ID is a Pokémon Tool
 ; input:
 ;   de: card ID
 IsPokemonToolID:
 	ld a, e
-	sub PLUSPOWER  ; first Tool ID
+	cp TOOL_IDS_END + 1  ; first Stadium ID
+	ret nc
+	sub TOOL_IDS_START  ; first Tool ID
 ; values below will set carry
 ; tools will not set carry
 	ccf
@@ -406,11 +369,7 @@ IsPokemonToolID:
 ; return in the z flag whether turn holder's prize a (0-7) has been drawn or not
 ; z: drawn, nz: not drawn
 CheckPrizeTaken:
-	ld e, a
-	ld d, 0
-	ld hl, PowersOf2
-	add hl, de
-	ld a, [hl]
+	call GetPowerOf2
 	ld e, a
 	cpl
 	ld d, a
@@ -419,8 +378,6 @@ CheckPrizeTaken:
 	and e
 	ret
 
-PowersOf2:
-	db $01, $02, $04, $08, $10, $20, $40, $80
 
 ; fill wDuelTempList with the turn holder's discard pile cards (their 0-59 deck indexes)
 ; return carry if the turn holder has no cards in the discard pile
@@ -872,7 +829,7 @@ LoadCardDataToBuffer1_FromDeckIndex:
 	call LoadCardDataToBuffer1_FromCardID
 	pop af
 	ld hl, wLoadedCard1
-	bank1call ConvertSpecialTrainerCardToPokemon
+	call ConvertSpecialCardsToAltForms
 	ld a, e
 	pop bc
 	pop de
@@ -889,12 +846,95 @@ LoadCardDataToBuffer2_FromDeckIndex:
 	call LoadCardDataToBuffer2_FromCardID
 	pop af
 	ld hl, wLoadedCard2
-	bank1call ConvertSpecialTrainerCardToPokemon
+	call ConvertSpecialCardsToAltForms
 	ld a, e
 	pop bc
 	pop de
 	pop hl
 	ret
+
+
+; given the deck index of a turn holder's card in register a,
+; and a pointer in hl to the wLoadedCard* buffer where the card data is loaded,
+; check if the card has an alternative form, and, if so, convert it
+; to the alternative card in the wLoadedCard* buffer.
+; input:
+;   a: deck index
+;   hl: wLoadedCard* buffer
+;   de: card ID
+ConvertSpecialCardsToAltForms:
+	ld c, a
+	ld a, [hl]
+	cp TYPE_TRAINER
+	jr z, ConvertSpecialTrainerCardToPokemon
+	cp TYPE_ENERGY
+	ret c  ; not a special card
+
+; energy cards
+	ld a, c
+	call IsCardInStadiumArea
+	ret z  ; not in the stadium area
+	ld a, e
+	cp GRASS_ENERGY
+	ret nz
+	push de
+	ld de, GRASSY_TERRAIN
+	call LoadSpecialCardDataToHL_FromAltCardID
+	pop de
+	ret
+
+
+
+; given the deck index of a turn holder's card in register a,
+; and a pointer in hl to the wLoadedCard* buffer where the card data is loaded,
+; check if the card is Mysterious Fossil, and, if so, convert it
+; to a Pokemon card in the wLoadedCard* buffer, using .trainer_to_pkmn_data.
+ConvertSpecialTrainerCardToPokemon:
+	ld a, c  ; deck index
+	call IsCardInPlayArea
+	ret z  ; not in the arena or bench
+	ld a, e  ; card ID
+	cp MYSTERIOUS_FOSSIL
+	ret nz
+	ld a, d
+	cp $00 ; MYSTERIOUS_FOSSIL >> 8
+	ret nz
+	push de
+	ld de, MYSTERIOUS_FOSSIL_PKMN
+	call LoadSpecialCardDataToHL_FromAltCardID
+	pop de
+	ret
+
+
+; input:
+;   a: deck index of the card to check
+; output:
+;   z: set if not in play area
+IsCardInPlayArea:
+	push hl
+	ld l, a
+	ldh a, [hWhoseTurn]
+	ld h, a
+	ld a, [hl]
+	and CARD_LOCATION_PLAY_AREA
+	pop hl
+	ret
+
+
+; input:
+;   a: deck index of the card to check
+; output:
+;   z: set if not in stadium area
+IsCardInStadiumArea:
+	push hl
+	ld l, a
+	ldh a, [hWhoseTurn]
+	ld h, a
+	ld a, [hl]
+	and CARD_LOCATION_STADIUM
+	pop hl
+	ret
+
 
 ; evolve a turn holder's Pokemon card in the play area slot determined by hTempPlayAreaLocation_ff9d
 ; into another turn holder's Pokemon card identifier by its deck index (0-59) in hTempCardIndex_ff98.
@@ -946,10 +986,19 @@ EvolvePokemonCard:
 	ld l, a
 	ld [hl], $00
 ; OATS evolution clears status conditions for all Play Area locations
-	ld a, e
+	push de
+	ld de, CELADON_GYM
+	call CheckStadiumIDInPlayArea  ; preserves: bc, de
+	pop de
+	ld a, e  ; location
+	jr c, .heal_status  ; not in play
+	or a
+	call z, ClearAllArenaEffectsAndSubstatus  ; preserves: hl, bc, de
+	jr .set_evolution_stage
+.heal_status
 	call ClearAllStatusAndEffectsFromTarget  ; preserves de
-; set the new evolution stage of the card
-; but take into account revived Stage 1 Pokémon without a Basic
+.set_evolution_stage
+	; take into account revived Stage 1 Pokémon without a Basic
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	add DUELVARS_ARENA_CARD_STAGE
 	call GetTurnDuelistVariable
@@ -1064,7 +1113,7 @@ CheckIfCanEvolveInto_BasicToStage2:
 	ret
 
 
-IF CLEAR_CONFUSION_ON_SWITCH
+IF CLEAR_STATUS_ON_SWITCH
 ; OATS similar to ClearAllArenaStatusAndEffects
 ; but does not remove POISONED, ASLEEP or PARALYZED.
 ClearStatusOnSwitch:
@@ -1073,17 +1122,34 @@ ClearStatusOnSwitch:
 	ld h, a
 	ld l, DUELVARS_ARENA_CARD_STATUS
 	ld a, [hl]
-	and CNF_SLP_PRZ
-	cp CONFUSED
-	jr nz, .skip_confusion
-; clear confusion, preserve poison nybble
-	ld a, [hl]
-	and PSN_DBLPSN_BRN
+	and PSN_BRN
 	ld [hl], a
-.skip_confusion
 	pop hl
 	jr ClearAllArenaEffectsAndSubstatus
 ENDC
+
+
+IF CLEAR_STATUS_ON_DAMAGE
+; input:
+;   a: PLAY_AREA_*
+;   h: turn holder duel variables
+; preserves: hl, bc, de
+ClearStatusOnDamage:
+	push hl
+	add DUELVARS_ARENA_CARD_STATUS
+	ld l, a
+	ld a, [hl]
+	and CNF_SLP_PRZ
+	jr z, .done
+; clear
+	ld a, [hl]
+	and PSN_BRN
+	ld [hl], a
+.done
+	pop hl
+	ret
+ENDC
+
 
 
 ; Clears the status, all substatuses, and temporary duelvars
@@ -1152,6 +1218,103 @@ ClearStatusFromTarget:
 	xor a
 	ld [hl], a ; NO_STATUS
 	ret
+
+
+; apply the status condition on c to the arena Pokemon
+; discard the arena Pokemon's status conditions not contained in the bitmask b
+; input:
+;   b: mask of status conditions to preserve on the target
+;   c: status condition to inflict to the target
+; preserves: bc, de
+UpdateArenaStatusCondition:
+	xor a  ; PLAY_AREA_ARENA
+	call UpdatePlayAreaStatusCondition  ; preserves: bc, de
+	ld l, DUELVARS_ARENA_CARD_LAST_TURN_STATUS
+	ld a, [hl]
+	and b
+	or c
+	ld [hl], a
+	ret
+
+
+; apply the status condition on c to the play area Pokémon
+; discard the play area Pokémon's status conditions not contained in the bitmask b
+; input:
+;   a: PLAY_AREA_*
+;   b: mask of status conditions to preserve on the target
+;   c: status condition to inflict to the target
+; preserves: bc, de
+UpdatePlayAreaStatusCondition:
+	add DUELVARS_ARENA_CARD_STATUS
+	call GetTurnDuelistVariable
+	and b  ; status conditions to preserve
+	or c  ; status condition to apply
+	ld [hl], a ; set status condition
+	ret
+
+
+; input:
+;   a: Crowd Control status (PARALYZED, CONFUSED, SLEEP, FLINCHED)
+; output:
+;   b: mask of status conditions to preserve on the target
+;	  c: status condition to apply to the target
+GetCrowdControlStatusMasks:
+	ld c, a	
+IF CC_UPGRADES_TO_FLINCH
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetTurnDuelistVariable
+	and CNF_SLP_PRZ
+	cp FLINCHED
+	jr z, .flinch
+	cp c
+	jr nz, .done
+.flinch
+	ld c, FLINCHED
+.done
+ENDC
+	ld b, PSN_BRN
+	ret
+
+
+; input:
+;   a: Damage Over Time status (POISONED, BURNED)
+; output:
+;   b: mask of status conditions to preserve on the target
+;	  c: status condition to apply to the target
+;   carry: set if the target already has the status
+GetDamageOverTimeStatusMasks:  ; FIXME unused
+	ld c, a
+	ld b, $ff
+IF REAPPLY_DOT_DOES_DAMAGE
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetTurnDuelistVariable  ; preserves: bc, de
+	and c
+	ret z
+; already has the status, deal damage
+	ld a, DOT_DAMAGE
+	ld [wDuelAnimDamage], a
+	xor a  ; ld a, d
+	ld [wDuelAnimDamage + 1], a
+	scf
+ENDC
+	ret
+
+
+IF REAPPLY_DOT_DOES_DAMAGE
+; input:
+;   c: damage over time status condition (POISONED, BURNED)
+; output:
+;   de: damage amount
+; preserves: hl, bc
+GetStatusBurstDamage:
+	ld de, DOT_DAMAGE
+	bit POISONED_F, c
+	ret nz
+	bit BURNED_F, c
+	ret nz
+	ld de, 0
+	ret
+ENDC
 
 
 ; unreferenced
@@ -1344,7 +1507,7 @@ ShiftTurnPokemonToFirstPlayAreaSlots:
 ; e is the play area location offset of the bench Pokemon (PLAY_AREA_*).
 SwapArenaWithBenchPokemon:
 ; OATS switching no longer clears all status conditions
-IF CLEAR_CONFUSION_ON_SWITCH
+IF CLEAR_STATUS_ON_SWITCH
 	call ClearStatusOnSwitch
 ELSE
 	call ClearAllArenaEffectsAndSubstatus
@@ -1555,72 +1718,6 @@ GetNonTurnDuelistVariable:
 	ld a, [hl]
 	ret
 
-; when playing a Pokemon card, initializes some variables according to the
-; card played, and checks if the played card has Pokemon Power to show it to
-; the player, and possibly to use it if it triggers when the card is played.
-OnPokemonPlayedInitVariablesAndPowers:
-	; ldh a, [hTempCardIndex_ff98]
-	call ClearChangedTypesIfWeezing
-	ldh a, [hTempCardIndex_ff98]
-	ld d, a
-	ld e, $00
-	call CopyAttackDataAndDamage_FromDeckIndex
-	call Func_16f6
-	ldh a, [hTempCardIndex_ff98]
-	ldh [hTempCardIndex_ff9f], a
-	call GetCardIDFromDeckIndex
-	ld a, e
-	ld [wTempTurnDuelistCardID], a
-	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
-	ret nz
-; this Pokémon has a Pokémon Power
-	bank1call DisplayUsePokemonPowerScreen
-	ldh a, [hTempCardIndex_ff98]
-	call LoadCardDataToBuffer1_FromDeckIndex
-	call LoadCard1NameToRamText
-	ldtx hl, HavePokemonPowerText
-	call DrawWideTextBox_WaitForInput
-	call ExchangeRNG
-; check for Toxic Gas
-	call ArePokemonPowersDisabled
-	jr nc, .use_pokemon_power
-.unable_to_use
-	; bank1call DisplayUsePokemonPowerScreen
-	ldtx hl, UnableToUsePkmnPowerDueToDisableEffectText
-	call DrawWideTextBox_WaitForInput
-	jp ExchangeRNG
-
-.use_pokemon_power
-	ld hl, wLoadedAttackEffectCommands
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	ld a, EFFECTCMDTYPE_PKMN_POWER_TRIGGER
-	call CheckMatchingCommand
-	ret c ; return if command not found
-	bank1call DrawDuelMainScene
-	ldh a, [hTempCardIndex_ff9f]
-	call LoadCardDataToBuffer1_FromDeckIndex
-	ld de, wLoadedCard1Name
-	ld hl, wTxRam2
-	ld a, [de]
-	inc de
-	ld [hli], a
-	ld a, [de]
-	ld [hli], a
-	ld de, wLoadedAttackName
-	ld a, [de]
-	inc de
-	ld [hli], a
-	ld a, [de]
-	ld [hl], a
-	ldtx hl, WillUseThePokemonPowerText
-	call DrawWideTextBox_WaitForInput
-	call ExchangeRNG
-	bank1call Func_7415
-	ld a, EFFECTCMDTYPE_PKMN_POWER_TRIGGER
-	jp TryExecuteEffectCommandFunction
 
 ; copies, given a card identified by register a (card ID):
 ; - e into wSelectedAttack and d into hTempCardIndex_ff9f
@@ -1701,149 +1798,52 @@ Func_16f6:
 	call SwapTurn
 	xor a
 	ld [wccec], a
-	ld [wEffectFunctionsFeedbackIndex], a
 	ld [wEffectFailed], a
 	ld [wIsDamageToSelf], a
-	ld [wccef], a
 	ld [wMetronomeEnergyCost], a
 	ld [wNoEffectFromWhichStatus], a
-	bank1call ClearNonTurnTemporaryDuelvars_CopyStatus
+	; ld [wccef], a
+	; jr ClearNonTurnTemporaryDuelvars
+	; fallthrough
+
+
+; clear the non-turn holder's duelvars starting at DUELVARS_ARENA_CARD_DISABLED_ATTACK_INDEX
+; these duelvars only last a two-player turn at most.
+; output:
+;   a: zero
+;   hl: cleared duelvars
+;   carry: reset
+ClearNonTurnTemporaryDuelvars:
+	ld a, DUELVARS_ARENA_CARD_DISABLED_ATTACK_INDEX
+	call GetNonTurnDuelistVariable
+	xor a
+	ld [hli], a
+	ld [hli], a
+	ld [hli], a
+	ld [hli], a
+	ld [hli], a
+	ld [hli], a
+	ld [hli], a
+	ld [hl], a
 	ret
 
-; Use an attack (from DuelMenu_Attack) or a Pokemon Power (from DuelMenu_PkmnPower)
-; Returns carry if the effect failed (e.g. smokescreen or prerequisites not met).
-UseAttackOrPokemonPower:
-	ld a, [wSelectedAttack]
-	ld [wPlayerAttackingAttackIndex], a
-	ldh a, [hTempCardIndex_ff9f]
-	ld [wPlayerAttackingCardIndex], a
-	ld a, [wTempCardID_ccc2]
-	ld [wPlayerAttackingCardID], a
-	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
-	jp z, UsePokemonPower
 
-	call Func_16f6
-	ld a, EFFECTCMDTYPE_INITIAL_EFFECT_1
-	call TryExecuteEffectCommandFunction
-	jp c, DrawWideTextBox_WaitForInput_ReturnCarry
-	ld a, EFFECTCMDTYPE_INITIAL_EFFECT_2
-	call TryExecuteEffectCommandFunction
-	ret c
-	call SendAttackDataToLinkOpponent
-	ld a, OPPACTION_USE_ATTACK
-	call SetOppAction_SerialSendDuelData
-	ld a, EFFECTCMDTYPE_DISCARD_ENERGY
-	call TryExecuteEffectCommandFunction
-	call CheckSelfConfusionDamage
-	jp c, HandleConfusionDamageToSelf
-	call DrawDuelMainScene_PrintPokemonsAttackText
-	call WaitForWideTextBoxInput
-	call ExchangeRNG
-	ld a, EFFECTCMDTYPE_REQUIRE_SELECTION
-	call TryExecuteEffectCommandFunction
-	ld a, OPPACTION_ATTACK_ANIM_AND_DAMAGE
-	call SetOppAction_SerialSendDuelData
-;	fallthrough
+; input:
+;   c: status condition
+; output:
+;   carry: reset
+; preserves: hl, bc, de
+SetNoEffectFromStatus:
+	; ld a, c
+	; ld [wNoEffectFromWhichStatus], a
+	ld a, [wNoEffectFromWhichStatus]
+	or c
+	ld [wNoEffectFromWhichStatus], a
+	; fallthrough
 
-PlayAttackAnimation_DealAttackDamage:
-	bank1call Func_7415
-	ld a, [wLoadedAttackCategory]
-	and RESIDUAL
-	jr nz, .deal_damage
-	call SwapTurn
-	call HandleNoDamageOrEffectSubstatus
-	call SwapTurn
-.deal_damage
-	xor a
-	ldh [hTempPlayAreaLocation_ff9d], a
-	ld a, EFFECTCMDTYPE_BEFORE_DAMAGE
-	call TryExecuteEffectCommandFunction
-	call ApplyDamageModifiers_DamageToTarget
-	call LastChanceToNegateFinalDamage
-	ld hl, wDealtDamage
-	ld [hl], e
-	inc hl
-	ld [hl], d
-
-	ld a, DUELVARS_ARENA_CARD_FLAGS
-	call GetNonTurnDuelistVariable
-	ld a, e
-	or a
-	jr z, .damage_flag
-	set DAMAGED_SINCE_LAST_TURN_F, [hl]
-.damage_flag
-
-	ld l, DUELVARS_ARENA_CARD_HP
-
-; register overkill damage
-	ld b, a  ; Defending Pokémon's HP
-	xor a
-	ld a, e  ; damage is limited to one byte
-	sub b
-	jr nc, .got_excess_damage  ; damage >= HP
-	xor a  ; no KO
-.got_excess_damage
-	ld [wOverkillDamage], a
-
-	ld b, PLAY_AREA_ARENA
-	ld a, [wDamageEffectiveness]
-	ld c, a
-	push de
-	push hl
-	call PlayAttackAnimation
-	call PlayInflictStatusAnimation
-	call WaitAttackAnimation
-	pop hl
-	pop de
-	call SubtractHP
-	ld a, [wDuelDisplayedScreen]
-	cp DUEL_MAIN_SCENE
-	jr nz, .skip_draw_huds
-	push hl
-	bank1call DrawDuelHUDs
-	pop hl
-.skip_draw_huds
-	call PrintKnockedOutIfHLZero
-	jr nc, .after_damage
-; Knocked Out Defending Pokémon
-	ld a, DUELVARS_MISC_TURN_FLAGS
-	call GetTurnDuelistVariable
-	set TURN_FLAG_KO_OPPONENT_POKEMON_F, [hl]
-.after_damage
-	ld a, [wTempNonTurnDuelistCardID]
-	push af
-	ld a, EFFECTCMDTYPE_AFTER_DAMAGE
-	call TryExecuteEffectCommandFunction
-; OATS introduce "on attack" triggered effects
-	bank1call HandleOnAttackEffects
-; --------------------------------------------
-	pop af
-	ld [wTempNonTurnDuelistCardID], a
-	call HandleStrikeBack_AfterDirectAttack
-	bank1call Func_6df1
-	call Func_1bb4
-	bank1call Func_7195
-	call HandleDestinyBond_ClearKnockedOutPokemon_TakePrizes_CheckGameOutcome
-	jr c, .done  ; duel finished
-
-; reset some variables to prepare for the next phase
-	xor a
-	ld [wEffectFunctionsFeedbackIndex], a
-; effects that happen after selecting a new Active Pokémon
-	ld a, [wTempNonTurnDuelistCardID]
-	push af
-	ld a, EFFECTCMDTYPE_AFTER_NEW_ACTIVE_POKEMON
-	call TryExecuteEffectCommandFunction
-	pop af
-	ld [wTempNonTurnDuelistCardID], a
-	; call HandleStrikeBack_AfterDirectAttack
-	bank1call Func_6df1
-	call Func_1bb4
-	bank1call Func_7195
-	call HandleDestinyBond_ClearKnockedOutPokemon_TakePrizes_CheckGameOutcome
-
-.done
+SetEffectFailedNoEffect:
+	ld a, EFFECT_FAILED_NO_EFFECT
+	ld [wEffectFailed], a
 	or a
 	ret
 
@@ -1859,48 +1859,6 @@ DrawWideTextBox_WaitForInput_ReturnCarry:
 	scf
 	ret
 
-ClearNonTurnTemporaryDuelvars_ResetCarry:
-	bank1call ClearNonTurnTemporaryDuelvars
-	or a
-	ret
-
-; called when attacker deals damage to itself due to confusion
-; display the corresponding animation and deal 10 damage to self
-HandleConfusionDamageToSelf:
-	bank1call DrawDuelMainScene
-	ld a, 1
-	ld [wIsDamageToSelf], a
-	ldtx hl, DamageToSelfDueToConfusionText
-	call DrawWideTextBox_PrintText
-	ld a, ATK_ANIM_CONFUSION_HIT
-	ld [wLoadedAttackAnimation], a
-	ld a, 10 ; damage
-	call DealConfusionDamageToSelf
-	call Func_1bb4
-	call HandleDestinyBond_ClearKnockedOutPokemon_TakePrizes_CheckGameOutcome
-	bank1call ClearNonTurnTemporaryDuelvars
-	or a
-	ret
-
-; use Pokemon Power
-UsePokemonPower:
-	bank1call Func_7415
-	ld a, EFFECTCMDTYPE_INITIAL_EFFECT_2
-	call TryExecuteEffectCommandFunction
-	jr c, DisplayUsePokemonPowerScreen_WaitForInput
-	ld a, EFFECTCMDTYPE_REQUIRE_SELECTION
-	call TryExecuteEffectCommandFunction
-	ret c
-	ld a, OPPACTION_USE_PKMN_POWER
-	call SetOppAction_SerialSendDuelData
-	call ExchangeRNG
-	ld a, OPPACTION_EXECUTE_PKMN_POWER_EFFECT
-	call SetOppAction_SerialSendDuelData
-	ld a, EFFECTCMDTYPE_BEFORE_DAMAGE
-	call TryExecuteEffectCommandFunction
-	bank1call HandleOnUsePokemonPowerEffects
-	ld a, OPPACTION_DUEL_MAIN_SCENE
-	jp SetOppAction_SerialSendDuelData
 
 ; called by UseAttackOrPokemonPower (on an attack only)
 ; in a link duel, it's used to send the other game data about the
@@ -1928,141 +1886,6 @@ SendAttackDataToLinkOpponent:
 	ldh [hTemp_ffa0], a
 	ret
 
-LastChanceToNegateFinalDamage:
-	ld a, [wLoadedAttackCategory]
-	bit RESIDUAL_F, a
-	ret nz
-	ld a, [wNoDamageOrEffect]
-	or a
-	ret nz
-	ld a, e
-	or d
-	jr nz, .attack_opponent
-	ld a, DUELVARS_ARENA_CARD_SUBSTATUS2
-	call GetNonTurnDuelistVariable
-	or a
-	jr nz, .attack_opponent
-	ld a, [wEffectFunctionsFeedbackIndex]
-	or a
-	ret z
-.attack_opponent
-	push de
-	call SwapTurn
-	xor a
-	ld [wTempPlayAreaLocation_cceb], a
-	; call HandleTransparency
-	call SwapTurn
-	pop de
-	ret nc  ; always returns here without Transparency
-	bank1call DrawDuelMainScene
-	ld a, DUELVARS_ARENA_CARD_SUBSTATUS2
-	call GetNonTurnDuelistVariable
-	ld [hl], $0
-	ld de, 0
-	ret
-
-; return carry and 1 into wGotTailsFromConfusionCheck if damage will be dealt to oneself due to confusion
-CheckSelfConfusionDamage:
-	xor a
-	ld [wGotTailsFromConfusionCheck], a
-	ld a, DUELVARS_ARENA_CARD_STATUS
-	call GetTurnDuelistVariable
-	and CNF_SLP_PRZ
-	cp CONFUSED
-	jr z, .confused
-	or a
-	ret
-.confused
-	ldtx de, ConfusionCheckDamageText
-	call TossCoin
-	jr c, .no_confusion_damage
-	ld a, 1
-	ld [wGotTailsFromConfusionCheck], a
-	scf
-	ret
-.no_confusion_damage
-	or a
-	ret
-
-; play the trainer card with deck index at hTempCardIndex_ff98.
-; a trainer card is like an attack effect, with its own effect commands.
-; return nc if the card was played, carry if it wasn't.
-; if the card was played and moved to discard, return 0 in a
-; if the card was cancelled in its initial effect, return 1 in a
-PlayTrainerCard:
-	ldh a, [hWhoseTurn]
-	ld h, a
-	ldh a, [hTempCardIndex_ff98]
-	ldh [hTempCardIndex_ff9f], a
-	call LoadNonPokemonCardEffectCommands
-	xor a
-	ld [wGarbageEaterDamageToHeal], a
-; OATS begin support trainer subtypes
-	ld a, [wLoadedCard1Type]
-	cp TYPE_TRAINER_SUPPORTER
-	jr nz, .not_supporter_card
-
-; Supporter Trainer
-	ldtx hl, MayOnlyUseOneSupporterCardText
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
-	and PLAYED_SUPPORTER_THIS_TURN
-	jr nz, .cant_use
-; try to execute effects that can prevent the card from being played
-; we can only set Supporter played after that
-	ld a, EFFECTCMDTYPE_INITIAL_EFFECT_1
-	call TryExecuteEffectCommandFunction
-	jr c, .cant_use
-	ld a, EFFECTCMDTYPE_INITIAL_EFFECT_2
-	call TryExecuteEffectCommandFunction
-	ld a, 1
-	jr c, .done
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
-	or PLAYED_SUPPORTER_THIS_TURN
-	ld [wAlreadyPlayedEnergyOrSupporter], a
-	jr .play_card
-
-.cant_use
-	call DrawWideTextBox_WaitForInput
-	scf
-	ret
-
-.not_supporter_card
-; OATS end support trainer subtypes
-	call CheckCantUseItemsThisTurn
-	jr c, .cant_use
-	ld a, 10
-	ld [wGarbageEaterDamageToHeal], a
-	ld a, EFFECTCMDTYPE_INITIAL_EFFECT_1
-	call TryExecuteEffectCommandFunction
-	jr c, .cant_use
-	ld a, EFFECTCMDTYPE_INITIAL_EFFECT_2
-	call TryExecuteEffectCommandFunction
-	ld a, 1
-	jr c, .done
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
-	or PLAYED_ITEM_THIS_TURN
-	ld [wAlreadyPlayedEnergyOrSupporter], a
-.play_card
-	ld a, OPPACTION_PLAY_TRAINER
-	call SetOppAction_SerialSendDuelData
-	call DisplayUsedTrainerCardDetailScreen
-	call ExchangeRNG
-	ld a, EFFECTCMDTYPE_DISCARD_ENERGY
-	call TryExecuteEffectCommandFunction
-	ld a, EFFECTCMDTYPE_REQUIRE_SELECTION
-	call TryExecuteEffectCommandFunction
-	ld a, OPPACTION_EXECUTE_TRAINER_EFFECTS
-	call SetOppAction_SerialSendDuelData
-	ld a, EFFECTCMDTYPE_BEFORE_DAMAGE
-	call TryExecuteEffectCommandFunction
-	ldh a, [hTempCardIndex_ff9f]
-	call MoveHandCardToDiscardPile
-	call ExchangeRNG
-	xor a
-.done
-	or a
-	ret
-
 
 ; loads the effect commands of a (trainer or energy) card with deck index (0-59) at hTempCardIndex_ff9f
 ; into wLoadedAttackEffectCommands. in practice, only used for trainer cards
@@ -2078,43 +1901,98 @@ LoadNonPokemonCardEffectCommands:
 	ld [de], a
 	ret
 
-; Make turn holder deal A damage to self due to recoil (e.g. Take Down, Selfdestruct)
-; display recoil animation
-DealRecoilDamageToSelf:
-	push af
-	ld a, ATK_ANIM_RECOIL_HIT
-	ld [wLoadedAttackAnimation], a
-	pop af
-;	fallthrough
 
-; Make turn holder deal A damage to self due to confusion
-; display animation at wLoadedAttackAnimation
-DealConfusionDamageToSelf:
-	ld hl, wDamage
-	ld [hli], a
-	ld [hl], 0  ; wDamageFlags
+
+; puts 2 damage counters on the target at location in e,
+; without counting as attack damage (does not trigger damage reduction, etc.)
+; assumes: call to SwapTurn if needed
+; inputs:
+;   e: PLAY_AREA_* of the target
+; output:
+;   carry: set if the target was Knocked Out
+Put2DamageCountersOnTarget:
+	ld d, 20
+	jr ApplyDirectDamage_RegularAnim
+
+
+; Puts 1 damage counter on the target at location in e,
+;   without counting as attack damage (does not trigger damage reduction, etc.)
+; inputs:
+;   e: PLAY_AREA_* of the target
+; output:
+;   carry: set if the target was Knocked Out
+; preserves: hl, e, bc
+Put1DamageCounterOnTarget:
+	ld d, 10
+	; fallthrough
+
+; Puts damage counters on the target at location in e,
+;   without counting as attack damage (does not trigger damage reduction, etc.)
+; This is a mix between DealDamageToPlayAreaPokemon_RegularAnim (bank 0)
+;   and HandlePoisonDamage (bank 1).
+; inputs:
+;   d: amount of damage to deal
+;   e: PLAY_AREA_* of the target
+; output:
+;   carry: set if the target was Knocked Out
+; preserves: hl, de, bc
+ApplyDirectDamage_RegularAnim:
+	ld a, ATK_ANIM_BENCH_HIT
+	ld [wLoadedAttackAnimation], a
+	; fallthrough
+
+ApplyDirectDamage:
+	push hl
+	push de
+	push bc
+	ld a, e
+	ld [wTempPlayAreaLocation_cceb], a
+	or a ; cp PLAY_AREA_ARENA
+	; jr nz, .bench
+	jr nz, .skip_no_damage_or_effect_check
+; arena
 	ld a, [wNoDamageOrEffect]
-	push af
+	or a
+	jr z, .skip_no_damage_or_effect_check
+	; jr .no_damage
+; .bench
+; 	call IsBodyguardActive
+; 	jr nc, .skip_no_damage_or_effect_check
+.no_damage
 	xor a
+	ld d, a
+.skip_no_damage_or_effect_check
 	ld [wNoDamageOrEffect], a
-	bank1call Func_7415
-	ld a, [wTempNonTurnDuelistCardID]
-	push af
-	ld a, [wTempTurnDuelistCardID]
-	ld [wTempNonTurnDuelistCardID], a
-	call ApplyDamageModifiers_DamageToSelf
-	ld a, [wDamageEffectiveness]
-	ld c, a
-	ld b, $0
-	ld a, DUELVARS_ARENA_CARD_HP
+	ld e, d
+	ld d, 0
+	push de
+	ld a, [wTempPlayAreaLocation_cceb]
+	add DUELVARS_ARENA_CARD
 	call GetTurnDuelistVariable
-	bank1call PlayAttackAnimation_DealAttackDamageSimple
-	call PrintKnockedOutIfHLZero
-	pop af
+	call GetCardIDFromDeckIndex
+	ld a, e
 	ld [wTempNonTurnDuelistCardID], a
+	pop de
+	ld a, [wTempPlayAreaLocation_cceb]
+	ld b, a
+	ld c, 0
+	add DUELVARS_ARENA_CARD_HP
+	ld l, a
+	push af
+	call ResetAttackAnimationIsPlaying
+	bank1call PlayAttackAnimation_DealAttackDamageSimple
 	pop af
-	ld [wNoDamageOrEffect], a
+	or a
+	jr z, .skip_knocked_out
+	call PrintKnockedOutIfHLZero
+	call WaitForWideTextBoxInput
+	scf  ; signal KO
+.skip_knocked_out
+	pop bc
+	pop de
+	pop hl
 	ret
+
 
 ; given a damage value at wDamage:
 ; - if the non-turn holder's arena card is weak to the turn holder's arena card color: double damage
@@ -2158,13 +2036,18 @@ ENDC
 	; ldh a, [hTempPlayAreaLocation_ff9d]  ; this is always PLAY_AREA_ARENA
 	xor a  ; PLAY_AREA_ARENA
 	call _DamageModifiers_HandleWeakness
-; 3. apply pluspower bonuses
+; 3. apply tool and stadium bonuses
 .apply_pluspower
 IF DEBUG_MODE
 	call Debug_Print_DE
 ENDC
-	ld b, CARD_LOCATION_ARENA
-	call ApplyAttachedPluspower
+	ld b, PLAY_AREA_ARENA  ; CARD_LOCATION_ARENA
+	call ApplyAttachedPluspower  ; preserves: bc
+	call HandleDamageBoostingStadiums
+IF BURN_BOOSTS_DAMAGE_TAKEN
+	xor a  ; PLAY_AREA_ARENA
+	call HandleBurnDamageBoost
+ENDC
 ; 4. cap damage at 250
 IF DEBUG_MODE
 	call Debug_Print_DE
@@ -2183,14 +2066,15 @@ ENDC
 	call SwapTurn
 	ld b, a
 	call _DamageModifiers_HandleResistance
-; 6. apply Defender reduction
+; 6. apply tool and stadium reduction
 .apply_defender
 IF DEBUG_MODE
 	call Debug_Print_DE
 ENDC
 	call SwapTurn
-	ld b, CARD_LOCATION_ARENA
-	call ApplyAttachedDefender
+	ld b, PLAY_AREA_ARENA  ; CARD_LOCATION_ARENA
+	call ApplyAttachedDefender  ; preserves: bc
+	call HandleDamageReducingStadiums
 ; 7. apply damage reduction effects
 IF DEBUG_MODE
 	call Debug_Print_DE
@@ -2227,11 +2111,7 @@ Debug_Print_DE:
 ENDC
 
 
-; given a damage value at wDamage:
-; - if the turn holder's arena card is weak to its own color: double damage
-; - if the turn holder's arena card resists its own color: reduce damage by 30
 ; return resulting damage in de
-; OATS we have to tinker with this to implement BURN
 ; OATS new logic for damage calculation:
 ;  1. apply damage bonus effects
 ;  2. apply weakness bonus
@@ -2253,18 +2133,26 @@ ApplyDamageModifiers_DamageToSelf:
 	ld b, a
 	xor a  ; PLAY_AREA_ARENA
 	call _DamageModifiers_HandleWeakness
-; 3. apply pluspower bonuses
-	ld b, CARD_LOCATION_ARENA
-	call ApplyAttachedPluspower
+; 3. apply tool and stadium bonuses
+	ld b, PLAY_AREA_ARENA  ; CARD_LOCATION_ARENA
+	call ApplyAttachedPluspower  ; preserves: bc
+	call HandleDamageBoostingStadiums
+IF BURN_BOOSTS_DAMAGE_TAKEN
+	call SwapTurn
+	xor a  ; PLAY_AREA_ARENA
+	call HandleBurnDamageBoost
+	call SwapTurn
+ENDC
 ; 4. cap damage at 250
 	call CapMaximumDamage_DE  ; preserves bc
 ; 5. apply resistance
 	call GetArenaCardResistance
 	ld b, a
 	call _DamageModifiers_HandleResistance
-; 6. apply Defender reduction
-	ld b, CARD_LOCATION_ARENA
-	call ApplyAttachedDefender
+; 6. apply tool and stadium reduction
+	ld b, PLAY_AREA_ARENA  ; CARD_LOCATION_ARENA
+	call ApplyAttachedDefender  ; preserves: bc
+	call HandleDamageReducingStadiums
 ; 7. apply damage reduction effects
 	; skip
 ; 8. cap damage at zero if negative
@@ -2294,14 +2182,20 @@ _DamageModifiers_Preamble:
 ;    a: PLAY_AREA_* of the attacker
 ;    b: target's Weakness (WR constant)
 ;   de: current damage
-; preserves:
-;   bc
+; preserves: bc
 _DamageModifiers_HandleWeakness:
 	call GetPlayAreaCardColor  ; preserves de
 	call TranslateColorToWR  ; preserves de
 	ld [wAttackerColorAsWR], a
 	and b
+IF STATUS_GRANTS_WEAKNESS
+	jr nz, .weak
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetNonTurnDuelistVariable  ; preserves de
+	and CNF_SLP_PRZ
+ENDC
 	ret z  ; not weak
+.weak
 	ld hl, wDamageEffectiveness
 	set WEAKNESS, [hl]
 	jp ApplyWeaknessToDamage_DE  ; preserves bc
@@ -2327,42 +2221,172 @@ _DamageModifiers_HandleResistance:
 	ret z  ; not resistant
 	ld hl, wDamageEffectiveness
 	set RESISTANCE, [hl]
-	jp ReduceDamageBy20_DE  ; preserves bc
+	jp ApplyResistanceToDamage_DE  ; preserves bc
 
 
 
-; if de > 0, increases de by 10 for each Pluspower found in location b
+; if de > 0, increases de by 10 if a Pluspower is found in location b
+; preserves: bc
 ApplyAttachedPluspower:
 	ld a, e
 	or d
 	ret z
 	push de
+	ld a, b
 	ld de, PLUSPOWER
-	call CountCardIDInLocation
+	call CheckToolIDAttachedToPlayArea  ; preserves: bc, de
 	pop de
-	call ATimes10
-	ld l, a
-	ld h, 0
-	jp AddToDamage_DE
+	ret c  ; no PlusPower
+	ld hl, 10
+	jp AddToDamage_DE  ; preserves: bc
 
-; reduces de by 20 for each Defender found in location b
+; reduces de by 10 if a Defender is found in location b
+; preserves: bc
 ApplyAttachedDefender:
 	ld a, e
 	or d
 	ret z
 	push de
+	ld a, b
 	ld de, DEFENDER
-	call CountCardIDInLocation
+	call CheckToolIDAttachedToPlayArea  ; preserves: bc, de
 	pop de
-	add a  ; x2
-	call ATimes10
-	ld l, a
-	ld h, 0
+	ret c  ; no Defender
+	ld hl, 10
+	jp SubtractFromDamage_DE  ; preserves: bc
+
+
+; input:
+;   a: PLAY_AREA_*
+;   de: ID of a Pokémon Tool
+; output:
+;   carry: set if not attached
+; preserves: bc, de
+CheckToolIDAttachedToPlayArea:
+	add DUELVARS_ARENA_CARD_ATTACHED_TOOL
+	call GetTurnDuelistVariable
+	cp $ff
+	jr z, .nope
+	push de
+	call GetCardIDFromDeckIndex  ; preserves hl, bc
+	ld a, e
+	pop de
+	cp e
+	ret z
+.nope
+	scf
+	ret
+
+
+; TODO: good candidate to move to effect functions 2
+; input:
+;   b: PLAY_AREA_* of the attacking Pokémon
+HandleDamageBoostingStadiums:
+	push de
+	ld de, CERULEAN_GYM
+	call CheckStadiumIDInPlayArea  ; preserves: bc, de
+	pop de
+	jr c, .vermilion_gym  ; not in play
+	push de
+	farcall CheckPokemonHasSurplusEnergy
+	pop de
+	ret c  ; no surplus energy
+	jr .add_to_damage
+.vermilion_gym
+	push de
+	ld de, VERMILION_GYM
+	call CheckStadiumIDInPlayArea  ; preserves: bc, de
+	pop de
+	jr c, .grassy_terrain  ; not in play
+	ld a, b
+	or a  ; cp PLAY_AREA_ARENA
+	ret nz  ; not active spot
+	farcall CheckEnteredActiveSpotThisTurn  ; preserves: bc, de
+	ret c  ; not active this turn
+	jr .add_to_damage
+.grassy_terrain
+	push de
+	ld de, GRASS_ENERGY
+	call CheckStadiumIDInPlayArea  ; preserves: bc, de
+	pop de
+	push bc
+	ld a, b
+	call GetPlayAreaCardColor  ; preserves de
+	pop bc
+	cp GRASS
+	ret nz  ; not a Grass Pokémon
+	; jr .add_to_damage
+.add_to_damage
+	ld hl, 10
+	jp AddToDamage_DE  ; preserves: bc
+
+
+; input:
+;   b: PLAY_AREA_* of the defending Pokémon
+HandleDamageReducingStadiums:
+	push de
+	ld de, PEWTER_GYM
+	call CheckStadiumIDInPlayArea  ; preserves: bc, de
+	pop de
+	ret c
+	ld a, b
+	push de
+	farcall IsEnergizedPokemon
+	pop de
+	ret nc  ; no energies
+	ld hl, 10
 	jp SubtractFromDamage_DE
 
 
+; input:
+;   de: ID of a Pokémon Stadium
+; output:
+;   carry: set if not in play
+; preserves: bc, de
+CheckStadiumIDInPlayArea:
+	call SwapTurn
+	call CheckStadiumIDInTurnHolderPlayArea
+	call SwapTurn
+	ret nc  ; found
+	; fallthrough
+
+; input:
+;   de: ID of a Pokémon Stadium
+; output:
+;   carry: set if not in play
+; preserves: bc, de
+CheckStadiumIDInTurnHolderPlayArea:
+	ld a, DUELVARS_STADIUM_CARD
+	call GetTurnDuelistVariable
+	cp $ff
+	jr z, .nope
+	push de
+	call GetCardIDFromDeckIndex  ; preserves hl, bc
+	ld a, e
+	pop de
+	cp e
+	ret z  ; found
+.nope
+	scf
+	ret
+
+
+IF BURN_BOOSTS_DAMAGE_TAKEN
+; input:
+;   a: PLAY_AREA_* of the target
+; preserves: bc
+HandleBurnDamageBoost:
+	add DUELVARS_ARENA_CARD_STATUS
+	call GetNonTurnDuelistVariable
+	bit BURNED_F, a
+	ret z ; quit if not burned
+	ld hl, 10
+	jp AddToDamage_DE
+ENDC
+
+
 HandleDamageBoostingPowers:
-	; call ArePokemonPowersDisabled  ; preserves de
+	; call ArePokeBodiesDisabled  ; preserves de
 	; ret c  ; Powers are disabled
 	push de
 	call IsFightingFuryActive
@@ -2382,7 +2406,7 @@ HandleDamageBoostingPowers:
 ; input:
 ;   a: PLAY_AREA_* of the target Pokémon
 HandleDamageReducingPowers:
-	; call ArePokemonPowersDisabled  ; preserves de
+	; call ArePokeBodiesDisabled  ; preserves de
 	; ret c  ; Powers are disabled
 	push de
 	call IsStoneSkinActive
@@ -2391,9 +2415,34 @@ HandleDamageReducingPowers:
 	jp ReduceDamageBy10_DE
 
 
+; unused unreferenced
+; subtract HP from a play area Pokémon
+; input:
+;	  d: damage to be dealt
+;   e: PLAY_AREA_* of the target Pokémon
+; output:
+;   z: set if HP was zero or becomes zero
+;   carry: set if HP is not zero after subtraction
+; preserves: bc, de
+; SubtractHPFromPlayAreaPokemon:
+; 	ld a, DUELVARS_ARENA_CARD_HP
+; 	add e
+; 	call GetTurnDuelistVariable
+; 	or a
+; 	ret z  ; already zero HP
+; ; set damage in de
+; 	push de
+; 	ld e, d
+; 	ld d, 0
+; 	call SubtractHP
+; 	pop de
+; 	ret
+
+
 ; hl: address to subtract HP from
 ; de: how much HP to subtract (damage to deal)
 ; returns carry if the HP does not become 0 as a result
+; preserves: hl, bc, de
 SubtractHP:
 	push hl
 	push de
@@ -2463,6 +2512,12 @@ PrintKnockedOut:
 	ret
 
 
+ResetAttackAnimationIsPlaying:
+	xor a
+	ld [wAttackAnimationIsPlaying], a
+	ret
+
+
 ; deal damage to turn holder's Pokemon card at play area location at b (PLAY_AREA_*).
 ; damage to deal is given in de.
 ; shows the defending player's play area screen when dealing the damage
@@ -2504,9 +2559,9 @@ DealDamageToPlayAreaPokemon:
 
 ; Pokémon Powers do not have damage modifiers
 	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
+	and ABILITY
 	ld a, [wTempPlayAreaLocation_cceb]
-	jr z, .got_damage
+	jr nz, .got_damage
 
 ; handle damage modifiers depending on play area location
 	; ld a, [wTempPlayAreaLocation_cceb]
@@ -2514,15 +2569,20 @@ DealDamageToPlayAreaPokemon:
 	jr z, .arena_target
 
 .bench_target
-; 1. apply Defender reduction
+; 1. apply tool and stadium reduction
 	; ld a, [wTempPlayAreaLocation_cceb]
-	or CARD_LOCATION_PLAY_AREA
+	; or CARD_LOCATION_PLAY_AREA
 	ld b, a
-	call ApplyAttachedDefender
+IF BURN_BOOSTS_DAMAGE_TAKEN
+	call HandleBurnDamageBoost  ; preserves bc
+	ld a, b
+ENDC
+	call ApplyAttachedDefender  ; preserves: bc
+	call HandleDamageReducingStadiums
 ; 2. apply damage reduction effects
 	ld a, [wTempPlayAreaLocation_cceb]
 	call HandleDamageReducingPowers
-	call HandleDamageReductionOrNoDamageFromPkmnPowerEffects.attack
+	call HandleDamageReductionOrNoDamageFromPokeBodyEffects.attack
 ; 3. cap damage at zero if negative
 	call CapMinimumDamage_DE
 	ld a, [wTempPlayAreaLocation_cceb]
@@ -2588,11 +2648,8 @@ DealDamageToPlayAreaPokemon:
 ; Knocked Out the target Pokémon
 	ld a, [wIsDamageToSelf]
 	or a
-	jr nz, .after_damage
-; Knocked Out an opponent
-	ld a, DUELVARS_MISC_TURN_FLAGS
-	call GetNonTurnDuelistVariable
-	set TURN_FLAG_KO_OPPONENT_POKEMON_F, [hl]
+	; jr nz, .after_damage
+	call z, SetFlag_KnockedOutOpponentPokemon
 .after_damage
 	pop de
 .skip_knocked_out
@@ -2603,12 +2660,13 @@ DealDamageToPlayAreaPokemon:
 	ret
 
 
-; draw duel main scene, then print the "<Pokemon Lvxx>'s <attack>" text
-; The Pokemon's name is the turn holder's arena Pokemon, and the
-; attack's name is taken from wLoadedAttackName.
-DrawDuelMainScene_PrintPokemonsAttackText:
-	bank1call DrawDuelMainScene
-;	fallthrough
+; Knocked Out an opponent
+SetFlag_KnockedOutOpponentPokemon:
+	ld a, DUELVARS_MISC_TURN_FLAGS
+	call GetTurnDuelistVariable
+	set TURN_FLAG_KO_OPPONENT_POKEMON_F, [hl]
+	ret
+
 
 ; print the "<Pokemon Lvxx>'s <attack>" text
 ; The Pokemon's name is the turn holder's arena Pokemon, and the
@@ -2618,8 +2676,8 @@ PrintPokemonsAttackText:
 	call LoadCardNameAndLevelFromVarToRam2
 	call LoadAttackNameToRam2b
 	ldtx hl, PokemonsAttackText
-	call DrawWideTextBox_PrintText
-	ret
+	jp DrawWideTextBox_PrintText
+
 
 ; OATS refactoring a common pattern into its own function.
 ; Loads Pokemon name and level into wDefaultText and then copies to wTxRam2,
@@ -2679,38 +2737,10 @@ LoadCard2NameToRamText:
 	jp LoadTxRam2
 
 
-Func_1bb4:
-	call Func_3b31
-	bank1call DrawDuelMainScene
-	call DrawDuelHUDs
-	xor a
-	ldh [hTempPlayAreaLocation_ff9d], a
-	call PrintNoEffectTextOrUnsuccessfulText
-	call WaitForWideTextBoxInput
-	jp ExchangeRNG
-
-
-; prints one of the ThereWasNoEffectFrom*Text if wEffectFailed contains EFFECT_FAILED_NO_EFFECT,
-; and prints WasUnsuccessfulText if wEffectFailed contains EFFECT_FAILED_UNSUCCESSFUL
-PrintNoEffectTextOrUnsuccessfulText:
-	ld a, [wEffectFailed]
-	or a
-	ret z
-	cp $1
-	jr z, .no_effect_from_status
-	ldh a, [hTempPlayAreaLocation_ff9d]
-	add DUELVARS_ARENA_CARD
-	call LoadCardNameAndLevelFromVarToRam2
-	call LoadAttackNameToRam2b
-	ldtx hl, WasUnsuccessfulText
-	call DrawWideTextBox_PrintText
-	scf
-	ret
-.no_effect_from_status
-	call PrintThereWasNoEffectFromStatusText
-	call DrawWideTextBox_PrintText
-	scf
-	ret
+LoadNumberToRamText:
+	ld l, a
+	ld h, 0
+	jp LoadTxRam3
 
 
 ; Returns and overwrites the retreat cost of the turn holder's arena
@@ -2783,11 +2813,8 @@ CheckLoadedAttackFlag:
 	push bc
 	ld c, a ; %fffffbbb
 	and $07
-	ld e, a
-	ld d, $00
-	ld hl, PowersOf2
-	add hl, de
-	ld b, [hl]
+	call GetPowerOf2
+	ld b, a
 	ld a, c
 	rra
 	rra

@@ -195,7 +195,7 @@ CheckIfEnergyIsUseful:
 	ld a, [wTempCardID]
 
 ; Dragon Rage users benefit from all kinds of energy
-	cp GYARADOS
+	cp GYARADOS_SHINY
 	jr z, .set_carry
 	cp DRAGONITE_LV41
 	jr z, .set_carry
@@ -342,7 +342,7 @@ CheckIfSelectedAttackIsUnusable:
 	call HandleCantAttackSubstatus
 	ret c
 ; OATS only paralysis guarantees a no-attack turn
-	bank1call CheckIfActiveCardParalyzed  ; CheckIfActiveCardParalyzedOrAsleep
+	bank1call CheckIfActiveCardIsUnableToAttack
 	ret c
 
 	ld a, DUELVARS_ARENA_CARD
@@ -389,10 +389,10 @@ CheckEnergyNeededForAttack:
 	or [hl]
 	jr z, .no_attack
 	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
-	jr nz, .is_attack
+	and ABILITY
+	jr z, .is_attack
 .no_attack
-	lb bc, 0, 0
+	ld bc, 0
 	ld e, c
 	scf
 	ret
@@ -606,7 +606,7 @@ CheckIfCardCanBePlayed:
 ; OATS end support trainer subtypes
 
 ; energy card
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
 	and PLAYED_ENERGY_THIS_TURN  ; or a
 	ret z
 	scf
@@ -648,14 +648,23 @@ CheckIfCardCanBePlayed:
 ; card type in stored in a
 	cp TYPE_TRAINER_SUPPORTER
 	jr nz, .not_supporter_card
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wDuelTurns]
+	or a
+	jr z, .unable_to_play_supporter  ; first turn of the game
+	ld a, [wOncePerTurnActions]
 	and PLAYED_SUPPORTER_THIS_TURN
 	jr z, .can_play
-; supporter already played
+.unable_to_play_supporter
 	scf
 	ret
 .not_supporter_card
 ; OATS end SUPPORTER check
+	cp TYPE_TRAINER_STADIUM
+	jr nz, .not_stadium_card
+; OATS begin check STADIUM can be played
+	jr .can_play
+; OATS end STADIUM check
+.not_stadium_card
 	call CheckCantUseItemsThisTurn
 	ret c
 .can_play
@@ -889,10 +898,10 @@ CheckEnergyNeededForAttackAfterDiscard:
 	or [hl]
 	jr z, .no_attack
 	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
-	jr nz, .is_attack
+	and ABILITY
+	jr z, .is_attack
 .no_attack
-	lb bc, 0, 0
+	ld bc, 0
 	ld e, c
 	scf
 	ret
@@ -2213,8 +2222,8 @@ CheckIfNoSurplusEnergyForAttack:
 	or [hl]
 	jr z, .not_attack
 	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
-	jr nz, .is_attack
+	and ABILITY
+	jr z, .is_attack
 .not_attack
 	scf
 	ret

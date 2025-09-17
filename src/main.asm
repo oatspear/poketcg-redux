@@ -17,6 +17,7 @@ INCLUDE "engine/menus/duel.asm"
 INCLUDE "engine/menus/deck_selection.asm"
 INCLUDE "engine/menus/deck_check.asm"
 INCLUDE "engine/menus/deck_configuration.asm"
+INCLUDE "engine/menus/cards.asm"
 INCLUDE "engine/menus/card_album.asm"
 INCLUDE "engine/menus/printer.asm"
 INCLUDE "engine/menus/deck_machine.asm"
@@ -116,9 +117,6 @@ INCLUDE "engine/promotional_card.asm"
 SECTION "Booster Pack Menu", ROMX
 INCLUDE "engine/menus/booster_pack.asm"
 
-SECTION "Unused Save Validation", ROMX
-INCLUDE "engine/unused_save_validation.asm"
-
 SECTION "Input Name", ROMX
 INCLUDE "engine/input_name.asm"
 
@@ -168,8 +166,8 @@ INCLUDE "data/decks.asm"
 SECTION "Cards", ROMX
 INCLUDE "data/cards.asm"
 
-SECTION "SGB", ROMX
-INCLUDE "engine/sgb.asm"
+SECTION "Cards 2", ROMX
+INCLUDE "data/cards2.asm"
 
 SECTION "Bank 20", ROMX
 INCLUDE "engine/bank20.asm"

@@ -61,36 +61,6 @@ CheckDeckSizeGreaterThan1:
 ; 	ret
 
 
-; input:
-;   wDataTableIndex: function index in CardTypeTest_FunctionTable
-; output:
-;   carry: set if there are no valid cards in deck
-;   a: deck index of the first valid card | $ff
-CheckThereIsCardTypeInDeck:
-	ld a, DUELVARS_CARD_LOCATIONS
-	call GetTurnDuelistVariable
-.loop_deck
-	ld a, [hl]
-	cp CARD_LOCATION_DECK
-	jr nz, .next_card
-	ld a, l
-	call DynamicCardTypeTest
-	jr nc, .next_card  ; not a card of the desired type
-; there are valid cards
-	ld a, l
-	ccf
-	ret
-.next_card
-	inc l
-	ld a, l
-	cp DECK_SIZE
-	jr c, .loop_deck
-; none in deck
-	ld a, $ff
-	scf
-	ret
-
-
 ; ------------------------------------------------------------------------------
 ; Prize Cards
 ; ------------------------------------------------------------------------------
@@ -454,6 +424,20 @@ CheckTriggeringPokemonIsOnTheBench:
 	ret
 
 
+; returns carry if there is no Stadium in play
+CheckSomeStadiumInPlay:
+	ld a, DUELVARS_STADIUM_CARD
+	call GetTurnDuelistVariable
+	cp $ff
+	ccf
+	ret nc
+	ld a, DUELVARS_STADIUM_CARD
+	call GetNonTurnDuelistVariable
+	cp $ff
+	ccf
+	ret
+
+
 ; ------------------------------------------------------------------------------
 ; Damage
 ; ------------------------------------------------------------------------------
@@ -577,7 +561,7 @@ StrangeBehavior_PreconditionCheck:
 StrangeBehavior_CheckDamage:
 ; can Pkmn Power be used?
 	ldh a, [hTempPlayAreaLocation_ff9d]
-	call CheckCannotUseDueToStatus_Anywhere
+	call CheckCannotUseDueToStatus_PlayArea
 	ret c
 ; does Play Area have any damage counters?
 	ldh a, [hTempPlayAreaLocation_ff9d]
@@ -634,16 +618,13 @@ CheckSomePokemonWithEnoughHP:
 
 
 ; output:
-;   carry: set if the Defending Pokémon has more than 30 HP remaining
-CheckDefendingPokemonHas30HpOrLess:
-	ld a, 30
+;   carry: set if the Defending Pokémon has more than 50 HP remaining
+CheckDefendingPokemonHasLessHp:
+	ld a, DUELVARS_ARENA_CARD_HP
+	call GetTurnDuelistVariable
+	sub 10
 	jr CheckDefendingPokemonHasLowHp
 
-; output:
-;   carry: set if the Defending Pokémon has more than 50 HP remaining
-CheckDefendingPokemonHas50HpOrLess:
-	ld a, 50
-	jr CheckDefendingPokemonHasLowHp
 
 ; output:
 ;   carry: set if the Defending Pokémon has more than 70 HP remaining
@@ -699,7 +680,7 @@ CheckPokemonPowerCanBeUsed:
 	jr nz, .already_used
 
 	ldh a, [hTempPlayAreaLocation_ff9d]
-	jp CheckCannotUseDueToStatus_Anywhere
+	jp CheckCannotUseDueToStatus_PlayArea
 
 .already_used
 	ldtx hl, OnlyOncePerTurnText
@@ -737,6 +718,17 @@ CheckDefendingPokemonIsAsleep:
 	cp ASLEEP
 	ret z ; return if asleep
 	ldtx hl, OpponentIsNotAsleepText
+	scf
+	ret
+
+
+; return carry if the Defending Pokémon is not burned
+CheckDefendingPokemonIsBurned:
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetNonTurnDuelistVariable
+	and BURNED
+	ret nz ; return if burned
+	ldtx hl, OpponentIsNotBurnedText
 	scf
 	ret
 
@@ -785,6 +777,19 @@ CheckDefendingPokemonAffectedByEffects:
 	ld [wTempNonTurnDuelistCardID], a
 	call HandleNoDamageOrEffectSubstatus
 	jp SwapTurn
+
+
+; output:
+;   carry: set if immune to attack effects
+; preserves: hl, bc, de
+CheckNotImmuneToAttackEffects:
+	ld a, [wLoadedAttackCategory]
+	and ABILITY
+	ret nz
+	ld a, [wNoDamageOrEffect]
+	cp 1
+	ccf  ; carry if non-zero
+	ret
 
 
 ; ------------------------------------------------------------------------------
@@ -913,19 +918,54 @@ CheckIfCardHasSpecificEnergyAttached:
 ; returns carry if the turn holder did not play any energy cards
 ; during their turn
 CheckPlayedEnergyThisTurn:
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
 	and PLAYED_ENERGY_THIS_TURN
 	ret nz  ; played energy
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
-	and USED_RAIN_DANCE_THIS_TURN
-	ret nz  ; played energy with Rain Dance
 	scf
+	ret
+
+
+; returns carry if the Active Pokémon has less than the number
+; of energies needed for the loaded attack, or exactly that
+; number of energies, disregarding color
+CheckPokemonHasSurplusEnergy:
+	ld e, PLAY_AREA_ARENA
+	call GetPlayAreaCardAttachedEnergies
+	call GetTotalAttackEnergyCost
+	inc a
+	ld c, a
+	ld a, [wTotalAttachedEnergies]
+	cp c
 	ret
 
 
 ; ------------------------------------------------------------------------------
 ; Card Types
 ; ------------------------------------------------------------------------------
+
+
+; input:
+;   wDuelTempList: populated list of cards to search
+;   wDataTableIndex: function index in CardTypeTest_FunctionTable
+; output:
+;   carry: set if there are no valid cards in prizes
+;   a: deck index of the first valid card | $ff
+CheckThereIsCardTypeInCardList:
+	ld hl, wDuelTempList
+.loop_card_list
+	ld a, [hli]
+	cp $ff
+	jr z, .no_cards
+	call DynamicCardTypeTest
+	jr nc, .loop_card_list  ; not a card of the desired type
+; there are valid cards
+	dec hl
+	ld a, [hl]
+	ccf
+	ret
+.no_cards
+	scf
+	ret
 
 
 ; input:

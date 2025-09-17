@@ -56,7 +56,7 @@ SaveGeneralSaveDataFromDE:
 	push de
 	farcall TryGiveMedalPCPacks
 	ld [wMedalCount], a
-	farcall OverworldMap_GetOWMapID
+	call OverworldMap_GetOWMapID
 	ld [wCurOverworldMap], a
 	pop de
 	push de
@@ -337,6 +337,10 @@ ValidateGeneralSaveDataFromDE:
 	add hl, de
 	ld a, [hli]
 	ld [wMedalCount], a
+	ld a, [hli]
+	ld [wPlayerCurrency], a
+	ld a, [hli]
+	ld [wPlayerCurrency + 1], a
 	ld a, [hl]
 	ld [wCurOverworldMap], a
 	pop bc
@@ -460,6 +464,7 @@ ENDM
 ; the saved values is SRAM are legal, within the given value range
 WRAMToSRAMMapper:
 	wram_sram_map wMedalCount,                        1, $00, $ff ; sMedalCount
+	wram_sram_map wPlayerCurrency,                    2, $00, $ff ; sPlayerCurrency
 	wram_sram_map wCurOverworldMap,                   1, $00, $ff ; sCurOverworldMap
 	wram_sram_map wPlayTimeCounter + 0,               1, $00, $ff ; sPlayTimeCounter
 	wram_sram_map wPlayTimeCounter + 1,               1, $00, $ff
@@ -490,7 +495,7 @@ WRAMToSRAMMapper:
 	wram_sram_map wNPCDuelistDirection,               1, $00, $ff ; sNPCDuelistDirection
 	wram_sram_map wMultichoiceTextboxResult_ChooseDeckToDuelAgainst, 1, $00, $ff ; sMultichoiceTextboxResult_ChooseDeckToDuelAgainst
 	wram_sram_map wd10e,                              1, $00, $ff ; sb84b
-	wram_sram_map .EmptySRAMSlot,                    15, $00, $ff ; sb84c
+	wram_sram_map .EmptySRAMSlot,                    13, $00, $ff ; sb84e
 	wram_sram_map .EmptySRAMSlot,                    16, $00, $ff ; sb85b
 	wram_sram_map .EmptySRAMSlot,                    16, $00, $ff ; sb86b
 	wram_sram_map wEventVars,                        64, $00, $ff ; sEventVars
@@ -523,8 +528,7 @@ _SaveGame:
 	ld [wOverworldMapSelection], a
 
 .save
-	call SaveAndBackupData
-	ret
+	jp SaveAndBackupData
 
 _AddCardToCollectionAndUpdateAlbumProgress:
 	ld [wCardToAddToCollection], a

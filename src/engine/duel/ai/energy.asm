@@ -67,7 +67,14 @@ RetrievePlayAreaAIScoreFromBackup:
 
 ; have AI decide whether to play energy card from hand
 ; and determine which card is best to attach it.
-AIProcessAndTryToPlayEnergy: ; 164e8 (5:64e8)
+AIProcessAndTryToPlayEnergy_SkipArena:
+	ld a, AI_ENERGY_FLAG_SKIP_ARENA_CARD
+	ld [wAIEnergyAttachLogicFlags], a
+	jr AIProcessAndTryToPlayEnergy.has_logic_flags
+
+; have AI decide whether to play energy card from hand
+; and determine which card is best to attach it.
+AIProcessAndTryToPlayEnergy:
 	xor a
 	ld [wAIEnergyAttachLogicFlags], a
 
@@ -144,14 +151,12 @@ AIProcessEnergyCards: ; 164fc (5:64fc)
 	ld a, 1
 	call AddToAIScore
 
-; if there's no Weezing in any Play Area
-; and there's Ivysaur in own Play Area,
-; add to AI score
+; if there's a capable Ivysaur in play, add to AI score
 .check_ivysaur
 	call ArePokemonPowersDisabled
 	jr c, .check_if_active
 	ld a, IVYSAUR
-	call CountPokemonIDInPlayArea
+	call GetFirstPokemonWithAvailablePower
 	jr nc, .check_if_active
 	ld a, 1
 	call AddToAIScore
@@ -196,7 +201,11 @@ AIProcessEnergyCards: ; 164fc (5:64fc)
 .has_20_hp
 	ld a, DUELVARS_ARENA_CARD_STATUS
 	call GetTurnDuelistVariable
-	and DOUBLE_POISONED
+IF DOUBLE_POISON_EXISTS
+	and MAX_POISON
+ELSE
+	and POISONED
+ENDC
 	jr z, .check_defending_can_ko
 .poison_will_ko
 	ld a, 10

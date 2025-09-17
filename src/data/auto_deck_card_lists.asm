@@ -329,7 +329,7 @@ RainDancerCardList:
 	card_item ENERGY_SWITCH,           1
 	card_item SWITCH,                  2
 	card_item POTION,                  2
-	card_item GAMBLER,                 1
+	card_item ROCKET_HEADQUARTERS,            1
 	deck_list_end
 
 CutePokemonCardList:
@@ -577,7 +577,7 @@ PsychicPowerCardList:
 	card_item ABRA,              3
 	card_item KADABRA,           2
 	card_item ALAKAZAM,          1
-	card_item SLOWPOKE_LV9,      2
+	card_item SLOWPOKE,          2
 	card_item SLOWBRO,           1
 	card_item GASTLY,            3
 	card_item HAUNTER_LV17,      1
@@ -627,7 +627,7 @@ DreamEaterHaunterCardList:
 ScavengingSlowbroCardList:
 	deck_list_start
 	card_item PSYCHIC_ENERGY,   23
-	card_item SLOWPOKE_LV9,      4
+	card_item SLOWPOKE,          4
 	card_item SLOWBRO,           3
 	card_item JYNX,              3
 	card_item MEWTWO_LV53,       2
@@ -646,7 +646,7 @@ StrangePowerCardList:
 	deck_list_start
 	card_item PSYCHIC_ENERGY,          25
 	card_item DOUBLE_COLORLESS_ENERGY,  1
-	card_item SLOWPOKE_LV9,             3
+	card_item SLOWPOKE,                 3
 	card_item SLOWBRO,                  2
 	card_item DROWZEE,                  4
 	card_item HYPNO,                    3
@@ -679,10 +679,10 @@ StrangePsyshockCardList:
 	card_item PROFESSOR_OAK,   2
 	card_item POKEMON_CENTER,  2
 	card_item ENERGY_REMOVAL,  3
-	card_item GIOVANNI,    3
+	card_item GIOVANNI,        3
 	card_item SCOOP_UP,        4
 	card_item SWITCH,          4
-	card_item GAMBLER,         1
+	card_item ROCKET_HEADQUARTERS,    1
 	deck_list_end
 
 LovelyNidoranCardList:
@@ -730,7 +730,7 @@ ScienceCorpsCardList:
 	card_item POTION,           1
 	card_item FULL_HEAL,        1
 	card_item MAINTENANCE,      1
-	card_item GAMBLER,          1
+	card_item ROCKET_HEADQUARTERS,     1
 	card_item RECYCLE,          1
 	deck_list_end
 
@@ -772,7 +772,7 @@ PoisonCardList:
 	card_item POKEMON_BREEDER,         1
 	card_item POTION,                  2
 	card_item FULL_HEAL,               2
-	card_item GAMBLER,                 1
+	card_item ROCKET_HEADQUARTERS,            1
 	deck_list_end
 
 WondersOfScienceCardList:
@@ -909,7 +909,7 @@ FireChargeCardList:
 	card_item POTION,                   3
 	card_item FULL_HEAL,                1
 	card_item RECYCLE,                  3
-	card_item GAMBLER,                  1
+	card_item ROCKET_HEADQUARTERS,             1
 	deck_list_end
 
 CharmanderAndFriendsCardList:
@@ -1127,7 +1127,7 @@ LegendaryZapdosCardList:
 	card_item SWITCH,            2
 	card_item PLUSPOWER,         3
 	card_item POTION,            3
-	card_item GAMBLER,           1
+	card_item ROCKET_HEADQUARTERS,      1
 	deck_list_end
 
 LegendaryArticunoCardList:
@@ -1145,7 +1145,7 @@ LegendaryArticunoCardList:
 	card_item ENERGY_RETRIEVAL,  3
 	card_item SWITCH,            3
 	card_item SCOOP_UP,          4
-	card_item GAMBLER,           1
+	card_item ROCKET_HEADQUARTERS,      1
 	deck_list_end
 
 LegendaryDragoniteCardList:
@@ -1166,9 +1166,9 @@ LegendaryDragoniteCardList:
 	card_item POKEMON_TRADER,           2
 	card_item POKEMON_BREEDER,          2
 	card_item ENERGY_RETRIEVAL,         1
-	card_item ENERGY_RECYCLER,   1
+	card_item ENERGY_RECYCLER,          1
 	card_item SWITCH,                   2
-	card_item GAMBLER,                  1
+	card_item ROCKET_HEADQUARTERS,             1
 	deck_list_end
 
 MysteriousPokemonCardList:

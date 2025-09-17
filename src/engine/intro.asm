@@ -1,6 +1,7 @@
 PlayIntroSequence:
 	call DisableLCD
-	farcall Func_10a9b
+	xor a
+	ld [wd317], a
 	farcall InitMenuScreen
 	call Func_3ca0
 	ld hl, HandleAllSpriteAnimations
@@ -61,13 +62,7 @@ PlayIntroSequence:
 	ld [hli], a ; x
 	ld a, 112
 	ld [hl], a ; y
-	ld c, SPRITE_ANIM_190
-	ld a, [wConsole]
-	cp CONSOLE_CGB
-	jr nz, .asm_1d3c5
-	ld c, SPRITE_ANIM_191
-.asm_1d3c5
-	ld a, c
+	ld a, SPRITE_ANIM_191
 	ld bc, 60
 	farcall Func_12ac9
 	ret

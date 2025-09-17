@@ -72,13 +72,7 @@ Func_c998:
 	ld a, [wd3d0]
 	or a
 	ret z
-	ld b, $4
-	ld a, [wConsole]
-	cp CONSOLE_CGB
-	jr nz, .not_cgb
-	ld b, $e
-.not_cgb
-	ld a, b
+	ld a, SPRITE_ANIM_BLUE_NPC_UP
 	ld [wNPCAnim], a
 	ld a, $0
 	ld [wNPCAnimFlags], a
@@ -1013,7 +1007,7 @@ ScriptCommand_ShowCardReceivedScreen:
 
 ScriptCommand_JumpIfCardOwned:
 	ld a, c
-	call GetCardCountInCollectionAndDecks
+	call GetCardCountInCollection
 	jr ScriptCommand_JumpIfCardInCollection.count_check
 
 ScriptCommand_JumpIfCardInCollection:
@@ -1214,7 +1208,7 @@ ScriptCommand_LoadMan1RequestedCardIntoTxRamSlot:
 
 ScriptCommand_JumpIfMan1RequestedCardOwned:
 	get_event_value EVENT_MAN1_REQUESTED_CARD_ID
-	call GetCardCountInCollectionAndDecks
+	call GetCardCountInCollection
 	jp c, ScriptCommand_JumpIfAnyEnergyCardsInCollection.fail
 	jp ScriptCommand_JumpIfAnyEnergyCardsInCollection.pass_try_jump
 
@@ -1276,25 +1270,15 @@ ScriptCommand_SetNextNPCAndScript:
 ScriptCommand_SetSpriteAttributes:
 	ld a, [wScriptNPC]
 	ld [wLoadedNPCTempIndex], a
-	push bc
-	call GetScriptArgs3AfterPointer
-	ld a, [wScriptNPC]
 	ld l, LOADED_NPC_FLAGS
 	call GetItemInLoadedNPCIndex
 	res NPC_FLAG_DIRECTIONLESS_F, [hl]
 	ld a, [hl]
-	or c
+	or b
 	ld [hl], a
-	pop bc
-	ld e, c
-	ld a, [wConsole]
-	cp CONSOLE_CGB
-	jr nz, .not_cgb
-	ld e, b
-.not_cgb
-	ld a, e
+	ld a, c
 	farcall SetNPCAnimation
-	jp IncreaseScriptPointerBy4
+	jp IncreaseScriptPointerBy3
 
 ScriptCommand_SetActiveNPCCoords:
 	ld a, [wScriptNPC]
@@ -1493,7 +1477,7 @@ ChallengeCupPrizeCards:
 	db ELECTABUZZ_LV20
 	tx ElectabuzzTradeCardName
 
-	db SLOWPOKE_LV9
+	db SLOWPOKE
 	tx SlowpokeTradeCardName
 
 	db MEWTWO_LV53
@@ -1508,8 +1492,8 @@ ChallengeCupPrizeCards:
 	db JIGGLYPUFF
 	tx JigglypuffTradeCardName
 
-	db ENERGY_RECYCLER
-	tx EnergyRecyclerTradeCardName
+	db MEW_LV15
+	tx MewLv15TradeCardName
 
 	db FLYING_PIKACHU
 	tx FlyingPikachuTradeCardName

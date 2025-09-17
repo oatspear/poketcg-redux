@@ -39,12 +39,12 @@ NumberText:
 	done
 
 PKMNPWRText: ; 36356 (d:6356)
-	text "PKMN PWR"
+	text "POKé PWR"
 	done
 
-; Text000b: ; 36360 (d:6360)
-; 	textfw0 "ポケモンカ—ド"
-; 	done
+PokeBodyText:
+	text "POKéBODY"
+	done
 
 LengthText: ; 36368 (d:6368)
 	text "Length"
@@ -70,6 +70,10 @@ SupporterText:
 	text "Supporter"
 	done
 
+StadiumText:
+	text "Stadium"
+	done
+
 MetresText: ; 36382 (d:6382)
 	textfw3 "m"
 	done
@@ -79,7 +83,7 @@ LbsText: ; 36385 (d:6385)
 	done
 
 PromostarRarityText: ; 3638b (d:638b)
-	textfw0 " "
+	textfw3 "☆"
 	done
 
 CircleRarityText: ; 3638d (d:638d)
@@ -154,52 +158,70 @@ NoPokemonOnTheBenchText: ; 3646e (d:646e)
 	text "No Pokémon on the Bench."
 	done
 
-UnableDueToParalysisText: ; 364a1 (d:64a1)
+UnableDueToParalysisText:
+IF CC_IS_COIN_FLIP
+	text "Unable to due to Flinch."
+ELSE
 	text "Unable to due to Paralysis."
-	done
-
-Received10DamageDueToPoisonText: ; 364be (d:64be)
-	text "<RAMTEXT> received"
-	line "10 damage due to Poison."
-	done
-
-Received20DamageDueToPoisonText: ; 364e3 (d:64e3)
-	text "<RAMTEXT> received"
-	line "20 damage due to Double Poison."
-	done
-
-Received20DamageDueToBurnText:
-	text "<RAMTEXT> received"
-	line "20 damage due to Burn."
-	done
-
-IF SLEEP_WITH_COIN_FLIP
-IsStillAsleepText:
-	text "<RAMTEXT> is"
-	line "still Asleep."
-	done
-ELSE
-IsStillAsleepText:
-	text "<RAMTEXT> is"
-	line "still Drowsy."
-	done
 ENDC
-
-IF SLEEP_WITH_COIN_FLIP
-IsCuredOfSleepText:
-	text "<RAMTEXT> is"
-	line "cured of Sleep."
 	done
-ELSE
+
+ReceivedDamageDueToPoisonText:
+	text "<RAMTEXT> received"
+	line "<RAMNUM> damage due to Poison."
+	done
+
+ReceivedDamageDueToBurnText:
+	text "<RAMTEXT> received"
+	line "<RAMNUM> damage due to Burn."
+	done
+
+PokemonFlinchedText:
+	text "<RAMTEXT> flinched!"
+	done
+
+AccuracyCheckText:
+	text "Accuracy check!"
+	line "If Tails, Attack is unsuccessful."
+	done
+
+AttackUnsuccessfulText:
+	text "Attack unsuccessful."
+	done
+
+IsLostInConfusionText:
+	text "<RAMTEXT> is"
+	line "lost in Confusion."
+	done
+
+IsFullyParalyzedText:
+	text "<RAMTEXT> is"
+	line "fully Paralyzed."
+	done
+
+IsFastAsleepText:
+	text "<RAMTEXT> is"
+	line "fast Asleep."
+	done
+
 IsCuredOfSleepText:
 	text "<RAMTEXT> is"
 	line "cured of Drowsiness."
 	done
-ENDC
 
-IsCuredOfParalysisText: ; 36539 (d:6539)
+IsCuredOfParalysisText:
 	text "<RAMTEXT> is"
 	line "cured of Paralysis."
+	done
+
+IsCuredOfConfusionText:
+	text "<RAMTEXT> is"
+	line "cured of Confusion."
+	done
+
+IsNoLongerFlinchingText:
+	text "<RAMTEXT> is"
+	line "no longer Flinching."
 	done
 
 IsCuredOfBurnText:
@@ -218,10 +240,6 @@ BetweenTurnsText: ; 36553 (d:6553)
 
 NoEnergyCardsText: ; 36576 (d:6576)
 	text "No Energy cards."
-	done
-
-IsThisOKText: ; 36588 (d:6588)
-	text "Is this OK?"
 	done
 
 YesOrNoText: ; 36595 (d:6595)
@@ -284,10 +302,15 @@ MayOnlyAttachOneEnergyCardText: ; 366d9 (d:66d9)
 	line "per turn."
 	done
 
-MayOnlyUseOneSupporterCardText: ; 366d9 (d:66d9)
+MayOnlyUseOneSupporterCardText:
 	; text "You may only use 1 Supporter card"
 	; line "per turn."
 	text "You already used a Supporter card"
+	line "this turn."
+	done
+
+MayOnlyUseOneStadiumCardText:
+	text "You already used a Stadium card"
 	line "this turn."
 	done
 
@@ -444,6 +467,10 @@ FinishedTurnWithoutAttackingText: ; 36a74 (d:6a74)
 
 DuelistTurnText: ; 36a9a (d:6a9a)
 	text "<RAMNAME>'s Turn."
+	done
+
+DuelistTurnEndsText:
+	text "<RAMNAME>'s turn ends."
 	done
 
 AttachedEnergyToPokemonText: ; 36aa5 (d:6aa5)
@@ -612,13 +639,18 @@ WasKnockedOutText: ; 36eaa (d:6eaa)
 	line "Knocked Out!"
 	done
 
-HavePokemonPowerText: ; 36ebe (d:6ebe)
+HavePokePowerText:
 	text "<RAMTEXT> has"
-	line "a Pokémon Power."
+	line "a Poké-Power."
 	done
 
-UnableToUsePkmnPowerDueToDisableEffectText:
-	text "Unable to use Pokémon Power due to"
+HavePokeBodyText:
+	text "<RAMTEXT> has"
+	line "a Poké-Body."
+	done
+
+UnableToUsePokePowerDueToDisableEffectText:
+	text "Unable to use Poké-Power due to"
 	line "a disabling effect."
 	done
 
@@ -838,17 +870,10 @@ OnlyOncePerTurnText: ; 378a7 (d:78a7)
 	text "Only once per turn."
 	done
 
-IF SLEEP_WITH_COIN_FLIP
-CannotUseDueToStatusText:
-	text "Cannot use due to Sleep, Paralysis,"
-	line "or Confusion."
-	done
-ELSE
 CannotUseDueToStatusText:
 	text "Cannot use due to Drowsiness,"
 	line "Paralysis or Confusion."
 	done
-ENDC
 
 CannotBeUsedInTurnWhichWasPlayedText: ; 378ef (d:78ef)
 	text "Cannot be used in the turn in"
@@ -876,15 +901,13 @@ ThereAreNoPokemonOnBenchText: ; 379ce (d:79ce)
 	text "There are no Pokémon on the Bench."
 	done
 
-IF SLEEP_WITH_COIN_FLIP
-OpponentIsNotAsleepText:
-	text "Opponent is not Asleep."
-	done
-ELSE
 OpponentIsNotAsleepText:
 	text "Opponent is not Drowsy."
 	done
-ENDC
+
+OpponentIsNotBurnedText:
+	text "Opponent is not Burned."
+	done
 
 UnableToUsePkmnPowerText:
 	text "Unable to use Pokémon Powers."
@@ -926,9 +949,4 @@ PrintingWasInterruptedText: ; 37b42 (d:7b42)
 CardPopCannotBePlayedWithTheGameBoyText: ; 37b5d (d:7b5d)
 	text "Card Pop! can only be played"
 	line "with a Game Boy Color."
-	done
-
-CardCheckIfHeads8CardsIfTails1CardText: ; 37f24 (d:7f24)
-	text "Card check!"
-	line "If Heads, 8 cards! If Tails, 1 card!"
 	done

@@ -12,10 +12,12 @@ _PauseMenu_Status:
 	call PrintLabels
 	lb bc, 1, 1
 	call DrawPauseMenuPlayerPortrait
-	lb bc, 12, 4
+	lb bc, 16, 4
+	call PrintPlayerCurrency
+	lb bc, 12, 6
 	call PrintAlbumProgress
-	lb bc, 13, 6
-	call PrintPlayTime
+	; lb bc, 13, 6
+	; call PrintPlayTime
 	call FlashWhiteScreen
 	ld a, A_BUTTON | B_BUTTON | START
 	call WaitUntilKeysArePressed
@@ -28,9 +30,12 @@ StatusScreenLabels:
 	tx PlayerStatusNameText
 
 	db 7, 4
-	tx PlayerStatusAlbumText
+	tx PlayerStatusCurrencyText
 
 	db 7, 6
-	tx PlayerStatusPlayTimeText
+	tx PlayerStatusAlbumText
+
+	; db 7, 6
+	; tx PlayerStatusPlayTimeText
 
 	db $ff

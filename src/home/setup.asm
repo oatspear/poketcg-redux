@@ -36,11 +36,7 @@ DetectConsole:
 	ld b, CONSOLE_CGB
 	cp GBC
 	jr z, .got_console
-	call DetectSGB
 	ld b, CONSOLE_DMG
-	jr nc, .got_console
-	call InitSGB
-	ld b, CONSOLE_SGB
 .got_console
 	ld a, b
 	ld [wConsole], a
@@ -48,8 +44,7 @@ DetectConsole:
 	ret nz
 	ld a, $01
 	ldh [rSVBK], a
-	call SwitchToCGBDoubleSpeed
-	ret
+	jp SwitchToCGBDoubleSpeed
 
 ; initialize the palettes (both monochrome and color)
 SetupPalettes:
@@ -79,8 +74,7 @@ SetupPalettes:
 	jr nz, .copy_bytes_loop
 	dec c
 	jr nz, .copy_pals_loop
-	call FlushAllCGBPalettes
-	ret
+	jp FlushAllCGBPalettes
 
 InitialPalette:
 	rgb 28, 28, 24

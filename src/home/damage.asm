@@ -41,24 +41,25 @@ CapMinimumDamage_DE:
 	ret
 
 
-; Weakness doubles damage if de <= 30.
-; Otherwise, it adds +30 damage.
+; Weakness doubles damage if de < 30.
+; Otherwise, it adds 20 damage.
 ; preserves: bc
 ApplyWeaknessToDamage_DE:
+IF WEAKNESS_IS_CAPPED
 	ld a, d
 	or a
-	jr nz, .add_30
+	jr nz, .add_20
+; d is zero
 	ld a, e
-	cp 30 + 1
-	jr nc, .add_30
-
-; double damage if de <= 30
+	cp 20
+	jr nc, .add_20  ; damage >= 20
+; double damage if de < 20
 	add e
 	ld e, a
-	ret  ; no overflow, a <= 60
-
-.add_30
-	ld hl, 30
+	ret  ; no overflow, a <= 40
+ENDC
+.add_20
+	ld hl, 20
 	; fallthrough
 
 ; Adds the value in hl to damage at de.
@@ -75,6 +76,25 @@ AddToDamage_DE:
 ReduceDamageBy10_DE:
 	ld hl, -10
 	jr AddToDamage_DE
+
+
+; Resistance subtracts 20 damage, but always ensures at least 10 damage.
+; preserves: bc
+ApplyResistanceToDamage_DE:
+IF RESISTANCE_IS_CAPPED
+	ld a, d
+	or a
+	jr nz, ReduceDamageBy20_DE  ; very high damage
+; d is zero
+	ld a, e
+	cp 30 + 1
+	jr nc, ReduceDamageBy20_DE  ; damage > 30
+; just set damage to 10 for damage <= 30
+	ld e, 10
+	ret
+ELSE
+	; fallthrough to ReduceDamageBy20_DE
+ENDC
 
 ; Subtract 20 from damage at de.
 ; preserves: bc

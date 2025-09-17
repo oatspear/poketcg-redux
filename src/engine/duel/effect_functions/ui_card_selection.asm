@@ -407,7 +407,7 @@ HandlePlayerSelectionFromDeckList:
 
 .try_cancel
 ; Player tried exiting screen, check if there are any cards to select
-	call CheckThereIsCardTypeInDeck
+	call CheckThereIsCardTypeInCardList
 	jr c, .none_in_deck
 ; cancelled selection, but there were valid options
 	xor a  ; ensure z flag
@@ -424,6 +424,106 @@ HandlePlayerSelectionFromDeckList:
 ForcePlayerSelectionFromDeckList:
 	call HandlePlayerSelectionFromDeckList.read_input
 	jr c, ForcePlayerSelectionFromDeckList
+	ret
+
+
+; ------------------------------------------------------------------------------
+; Choose Cards From Prizes
+; ------------------------------------------------------------------------------
+
+; Handles screen for the Player to choose a card from a list of Deck cards.
+; output:
+;   a: deck index of the selected card | $ff
+;   [hTempCardIndex_ff98]: deck index of the selected card | $ff
+HandlePlayerSelectionAnyCardFromPrizesToHand:
+	call CreatePrizeCardList
+	; fallthrough
+
+
+; Handles screen for the Player to choose a card from a list of Prize cards.
+; input:
+;   [wDuelTempList]: populated deck list
+; output:
+;   a: deck index of the selected card | $ff
+;   [hTempCardIndex_ff98]: deck index of the selected card | $ff
+HandlePlayerSelectionAnyCardFromPrizeListToHand:
+	ldtx hl, ChooseCardToPlaceInHandText
+	ldtx de, DuelistPrizesText
+	bank1call DisplayCardList_PrintText  ; no loop, use just one far call
+; if B was pressed, either there are no cards or Player does not want any
+	jr c, .no_cards
+	ldh a, [hTempCardIndex_ff98]
+	or a
+	ret
+
+.no_cards
+	ld a, $ff
+	ldh [hTempCardIndex_ff98], a
+	or a
+	ret
+
+
+HandlePlayerSelectionPokemonFromPrizes:
+; create the list of cards in prizes
+	call CreatePrizeCardList
+	; fallthrough
+
+; input:
+;   wDuelTempList: list of cards to search
+; output:
+;   a: deck index of the selected card | $ff
+;   [hTempCardIndex_ff98]: deck index of the selected card
+;   carry: set if there are no Pokémon or the Player cancelled the selection
+HandlePlayerSelectionPokemonFromPrizeList:
+	ld a, CARDTEST_POKEMON
+	ldtx hl, ChoosePokemonCardText
+	; jr HandlePlayerSelectionFromDeckList
+	; fallthrough
+
+; input:
+;   wDuelTempList: list of prize cards to search
+;   a: table index of a function to use as a test for the desired card type
+;   hl: text pointer with the card type to choose
+; output:
+;   a: deck index of the selected card | $ff
+;   [hTempCardIndex_ff98]: deck index of the selected card
+;   carry: set if there are no valid cards or the Player cancelled the selection
+HandlePlayerSelectionFromPrizeList:
+	ld [wDataTableIndex], a
+; handle input
+	push hl
+	bank1call InitAndDrawCardListScreenLayout_MenuTypeSelectCheck
+	pop hl
+	ldtx de, DuelistPrizesText
+	bank1call SetCardListHeaderText
+.read_input
+	bank1call DisplayCardList
+; if B was pressed, either there are no cards or Player does not want any
+	jr c, .try_cancel
+	ldh a, [hTempCardIndex_ff98]
+	call DynamicCardTypeTest
+	jr c, .got_valid_card  ; valid card choice
+	call PlaySFX_InvalidChoice
+	jr .read_input
+
+.got_valid_card
+	ldh a, [hTempCardIndex_ff98]
+	or a
+	ret
+
+.try_cancel
+; Player tried exiting screen, check if there are any cards to select
+	call CheckThereIsCardTypeInCardList
+	jr c, .no_cards
+; cancelled selection, but there were valid options
+	xor a  ; ensure z flag
+	ld a, $ff
+	scf
+	ret
+.no_cards
+	ld a, $ff
+	or a  ; ensure nz flag
+	scf
 	ret
 
 
@@ -621,29 +721,4 @@ HandleAttachedBasicEnergySelectionScreen:
 	bank1call DisplayEnergyDiscardScreen
 	bank1call HandleEnergyDiscardMenuInput
 	; ldh a, [hTempCardIndex_ff98]
-	ret
-
-
-; ------------------------------------------------------------------------------
-; Helper Functions
-; ------------------------------------------------------------------------------
-
-InitializeListForReordering:
-; wDuelTempList + 10 will be filled with numbers
-; from 1 to N (whatever the maximum order card is),
-; so that the first item in that list corresponds to the first card
-; the second item corresponds to the second card, etc.
-; and the number in the list corresponds to the ordering number.
-	call CountCardsInDuelTempList
-	ld b, a
-	ld a, 1
-; fill order list with zeroes
-	ldh [hCurSelectionItem], a
-	ld hl, wDuelTempList + 10
-	xor a
-.loop_init
-	ld [hli], a
-	dec b
-	jr nz, .loop_init
-	ld [hl], $ff ; terminating byte
 	ret

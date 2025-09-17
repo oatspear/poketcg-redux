@@ -85,7 +85,7 @@ SetupTimer:
 	ret
 
 ; return carry if not CGB
-CheckForCGB:
+CheckForCGB::
 	ld a, [wConsole]
 	cp CONSOLE_CGB
 	ret z

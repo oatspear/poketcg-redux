@@ -61,18 +61,12 @@ HandleTitleScreen:
 	jr nz, .continue_from_diary
 	call DeleteSaveDataForNewGame
 	jr c, HandleTitleScreen
-	jr .card_pop
+	jr .continue_duel
 .continue_from_diary
 	ld a, [wStartMenuChoice]
 	cp START_MENU_CONTINUE_FROM_DIARY
-	jr nz, .card_pop
-	call AskToContinueFromDiaryWithDuelData
-	jr c, HandleTitleScreen
-.card_pop
-	ld a, [wStartMenuChoice]
-	cp START_MENU_CARD_POP
 	jr nz, .continue_duel
-	call ShowCardPopCGBDisclaimer
+	call AskToContinueFromDiaryWithDuelData
 	jr c, HandleTitleScreen
 .continue_duel
 	call ResetDoFrameFunction
@@ -278,22 +272,19 @@ PrintStartMenuDescriptionText:
 	lb de, 1, 12
 	call InitTextPrinting
 	ldtx hl, WhenYouCardPopWithFriendText
-	call PrintTextNoDelay
-	ret
+	jp PrintTextNoDelay
 
 .ContinueDuel
 	lb de, 1, 12
 	call InitTextPrinting
 	ldtx hl, TheGameWillContinueFromThePointInTheDuelText
-	call PrintTextNoDelay
-	ret
+	jp PrintTextNoDelay
 
 .NewGame
 	lb de, 1, 12
 	call InitTextPrinting
 	ldtx hl, StartANewGameText
-	call PrintTextNoDelay
-	ret
+	jp PrintTextNoDelay
 
 .ContinueFromDiary
 	; get OW map name
@@ -324,10 +315,12 @@ PrintStartMenuDescriptionText:
 	ld d, a
 	ld a, [wTotalNumCardsToCollect]
 	ld e, a
-	lb bc, 9, 14
+	lb bc, 7, 14
 	farcall PrintAlbumProgress_SkipGetProgress
-	lb bc, 10, 16
+	lb bc, 8, 16
 	farcall PrintPlayTime_SkipUpdateTime
+	lb bc, 15, 12
+	farcall PrintPlayerCurrency
 	ret
 
 ; asks the player whether it's okay to delete
@@ -377,32 +370,10 @@ AskToContinueFromDiaryWithDuelData:
 	or a
 	ret
 
-; shows disclaimer for Card Pop!
-; in case player is not playing in CGB
-; return carry if disclaimer was shown
-ShowCardPopCGBDisclaimer:
-; return if playing in CGB
-	ld a, [wConsole]
-	cp CONSOLE_CGB
-	ret z
-
-	lb de, 0, 10
-	lb bc, 20, 8
-	call DrawRegularTextBox
-	lb de, 1,12
-	call InitTextPrinting
-	ldtx hl, YouCanAccessCardPopOnlyWithGameBoyColorsText
-	call PrintTextNoDelay
-	lb bc, SYM_CURSOR_D, SYM_BOX_BOTTOM
-	lb de, 18, 17
-	call SetCursorParametersForTextBox
-	call WaitForButtonAorB
-	scf
-	ret
-
 DrawPlayerPortraitAndPrintNewGameText:
 	call DisableLCD
-	farcall Func_10a9b
+	xor a
+	ld [wd317], a
 	farcall InitMenuScreen
 	call Func_3ca0
 	ld hl, HandleAllSpriteAnimations

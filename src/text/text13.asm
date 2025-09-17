@@ -17,22 +17,9 @@ DischargeDescription:
 	text "Discard 1 or more <LIGHTNING> Energy attached"
 	line "to this Pokémon to use this attack."
 	line "This attack does 20 damage for each"
-	line "Energy discarded this way."
-	line "If you discarded at least 2, the"
+	line "Energy discarded this way. The"
+	; line "If you discarded at least 2, the"
 	line "Defending Pokémon is now Paralyzed."
-	done
-
-ScorchingColumnName:
-	text "Scorching Column"
-	done
-
-ScorchingColumnDescription:
-	text "Discard 1 or more <FIRE> Energy attached"
-	line "to this Pokémon to use this attack."
-	line "This attack does 20 damage for each"
-	line "Energy discarded this way."
-	line "If you discarded at least 2, the"
-	line "Defending Pokémon is now Burned."
 	done
 
 WaterPulseName:
@@ -207,14 +194,16 @@ CursedFlamesDescription:
 	line "of your opponent's deck."
 	done
 
+DoubleKickName:
+	text "Double Kick"
+	done
+
 DoubleHitName:
 	text "Double Hit"
 	done
 
 DoubleHitDescription:
-	text "If this Pokémon has 2 or more"
-	line "Energies attached to it, this"
-	line "attack does damage to the"
+	text "This attack does damage to the"
 	line "Defending Pokémon twice."
 	done
 
@@ -224,10 +213,7 @@ TripleHitName:
 
 TripleHitDescription:
 	text "This attack does damage to the"
-	line "Defending Pokémon twice if this"
-	line "Pokémon has 2 Energies attached to"
-	line "it, or thrice if it has 3 or more"
-	line "Energies attached to it."
+	line "Defending Pokémon 3 times."
 	done
 
 ShiftName:
@@ -262,6 +248,76 @@ EnergyBallDescription:
 	line "<GRASS> Energy attached to this Pokémon."
 	done
 
+GrassyTerrainName:
+	text "Grassy Terrain"
+	done
+
+GrassyTerrainDescription:
+	text "Remove a <GRASS> Energy from this"
+	line "Pokémon and play it as if it was a"
+	line "Stadium card that reads:"
+	done
+
+GrassyTerrainStadiumDescription:
+	text "At the end of each player's turns,"
+	line "heal 10 damage from that player's"
+	line "Active Pokémon. The attacks of all"
+	line "<GRASS> Pokémon do 10 more damage to the"
+	line "opponent's Active Pokémon."
+	done
+
+IF DOUBLE_POISON_EXISTS
+ToxicDescription:
+	text "The Defending Pokémon is now Badly"
+	line "Poisoned. It takes 20 Poison damage"
+	line "instead of 10."
+	done
+ENDC
+
+
+IF MUK_VARIANT == 1
+
+BlackSludgeName:
+	text "Black Sludge"
+	done
+
+BlackSludgeDescription:
+	text "This Pokémon does not take damage"
+	line "from Special Conditions. If this"
+	line "Pokémon remains affected by any"
+	line "Special Conditions at the end of"
+	line "your turns, heal 20 damage from it."
+	done
+
+ToxicWasteName:
+	text "Toxic Waste"
+	done
+
+ToxicWasteDescription:
+	text "This attack does 10 more damage for"
+	line "every 10 cards in both discard piles"
+	line "combined. Both Active Pokémon are"
+	line "now Poisoned."
+	done
+
+ELSE
+
+SeepingToxinsName:
+	text "Seeping Toxins"
+	done
+
+SeepingToxinsDescription:
+	text "When your opponent's Active Pokémon"
+	line "takes damage from Poison, put 1 more"
+	line "damage counter on it. While this is"
+	line "your Active Pokémon, also put 1 more"
+	line "damage counter on each of your"
+	line "opponent's Poisoned Benched Pokémon."
+	done
+
+ENDC
+
+
 FixmeText:
 	text "FIXME"
 	done
@@ -269,6 +325,100 @@ FixmeText:
 ; ------------------------------------------------------------------------------
 ; Unused Text
 ; ------------------------------------------------------------------------------
+
+; ToxicWasteDescriptionCont:
+; 	text "If there are 10 or more Item cards"
+; 	line "in both discard piles combined,"
+; 	line "this attack does 30 more damage."
+; 	done
+
+; PokedexDescription:
+; 	text "Look at the top 5 cards of your"
+; 	line "deck. You may reveal a Pokémon card"
+; 	line "you find there and put it into your"
+; 	line "hand. Put the other cards back on"
+; 	line "the top of your deck in any order."
+; 	done
+
+; FragranceTrapDescription:
+; 	text "Before doing damage, switch in"
+; 	line "1 of your opponent's Benched"
+; 	line "Pokémon to the Active Spot."
+; 	done
+
+; FragranceTrapDescriptionCont:
+; 	text "The new Defending Pokémon is now"
+; 	line "Poisoned. If this Pokémon has 3 or"
+; 	line "more Energies attached to it, the"
+; 	line "new Defending Pokémon is now also"
+; 	line "Confused and Burned."
+; 	done
+
+; SurpriseBiteName:
+; 	text "Surprise Bite"
+; 	done
+
+; SurpriseBiteDescription:
+; 	text "Once during your turn, you may"
+; 	line "put 1 damage counter on 1 of"
+; 	line "your opponent's Pokémon."
+; 	done
+
+; SurpriseBiteDescription:
+; 	text "Once during your turn, you may"
+; 	line "put 1 damage counter on 1 of"
+; 	line "your opponent's Benched Pokémon"
+; 	line "that has no damage counters."
+; 	done
+
+; VampiricAuraName:
+; 	text "Vampiric Aura"
+; 	done
+; 
+; VampiricAuraDescription:
+; 	text "If your Active Pokémon has any"
+; 	line "attached <DARKNESS> Energy, its attacks"
+; 	line "that do damage to the Defending"
+; 	line "Pokémon also heal 10 damage from it"
+; 	line "(20 damage, if the Defending"
+; 	line "Pokémon is Poisoned)."
+; 	done
+
+; SwordsDanceName:
+; 	text "Swords Dance"
+; 	done
+
+; DoubleHitDescription:
+; 	text "If this Pokémon has 2 or more"
+; 	line "Energies attached to it, this"
+; 	line "attack does damage to the"
+; 	line "Defending Pokémon twice."
+; 	done
+
+; TripleHitDescription:
+; 	text "This attack does damage to the"
+; 	line "Defending Pokémon twice if this"
+; 	line "Pokémon has 2 Energies attached to"
+; 	line "it, or thrice if it has 3 or more"
+; 	line "Energies attached to it."
+; 	done
+
+; ScorchingColumnName:
+; 	text "Scorching Column"
+; 	done
+
+; ScorchingColumnDescription:
+; 	text "Discard 1 or more <FIRE> Energy attached"
+; 	line "to this Pokémon to use this attack."
+; 	line "This attack does 20 damage for each"
+; 	line "Energy discarded this way."
+; 	line "If you discarded at least 2, the"
+; 	line "Defending Pokémon is now Burned."
+; 	done
+
+; SpiralDrainName:
+; 	text "Spiral Drain"
+; 	done
 
 ; HayFeverDescription:
 ; 	text "While this is your Active Pokémon,"
@@ -374,15 +524,6 @@ FixmeText:
 ; 	line "Energies in your hand instead."
 ; 	done
 
-IF SLEEP_WITH_COIN_FLIP
-; DreamEaterDescription:
-; 	text "At the end of your turns, put 1"
-; 	line "damage counter on each of your"
-; 	line "opponent's Pokémon that is Asleep."
-; 	line "Heal 10 damage from this Pokémon"
-; 	line "for each Pokémon damaged this way."
-; 	done
-ELSE
 ; DreamEaterDescription:
 ; 	text "At the end of your turns, put 1"
 ; 	line "damage counter on each of your"
@@ -390,7 +531,6 @@ ELSE
 ; 	line "Heal 10 damage from this Pokémon"
 ; 	line "for each Pokémon damaged this way."
 ; 	done
-ENDC
 
 ; ProphecyName:
 ; 	text "Prophecy"

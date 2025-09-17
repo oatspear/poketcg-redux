@@ -1,3 +1,87 @@
+; return carry if the count in sCardCollection plus the count in each deck (sDeck*)
+; of the card with id given in a is 0 (if card not owned).
+; also return the count (total owned amount) in a.
+GetCardCountInCollectionAndDecks:
+	push hl
+	push de
+	push bc
+	call EnableSRAM
+	ld c, a
+	ld b, $0
+	ld hl, sDeck1Cards
+	ld d, NUM_DECKS
+.next_deck
+	ld a, [hl]
+	or a
+	jr z, .deck_done ; jump if deck empty
+	push hl
+	ld e, DECK_SIZE
+.next_card
+	ld a, [hli]
+	cp c
+	jr nz, .no_match
+	inc b ; this deck card matches card c
+.no_match
+	dec e
+	jr nz, .next_card
+	pop hl
+.deck_done
+	push de
+	ld de, sDeck2Cards - sDeck1Cards
+	add hl, de
+	pop de
+	dec d
+	jr nz, .next_deck
+; all decks done
+	ld h, HIGH(sCardCollection)
+	ld l, c
+	ld a, [hl]
+	bit CARD_NOT_OWNED_F, a
+	jr nz, .done
+	add b ; if card seen, add b to count
+.done
+	and CARD_COUNT_MASK
+	call DisableSRAM
+	pop bc
+	pop de
+	pop hl
+	or a
+	ret nz
+	scf
+	ret
+
+
+; if de > 0, increases de by 10 for each Pluspower found in location b
+ApplyAttachedPluspower:
+	ld a, e
+	or d
+	ret z
+	push de
+	ld de, PLUSPOWER
+	call CountCardIDInLocation
+	pop de
+	call ATimes10
+	ld l, a
+	ld h, 0
+	jp AddToDamage_DE
+
+; reduces de by 20 for each Defender found in location b
+ApplyAttachedDefender:
+	ld a, e
+	or d
+	ret z
+	push de
+	ld de, DEFENDER
+	call CountCardIDInLocation
+	pop de
+	add a  ; x2
+	call ATimes10
+	ld l, a
+	ld h, 0
+	jp SubtractFromDamage_DE
+
+
+
 ; move the turn holder's card with ID at de to the discard pile
 ; if it's currently in the play area.
 MoveCardToDiscardPileIfInPlayArea:
@@ -45,7 +129,7 @@ OppAction_BeginUseAttack:
 	ld a, [wDuelTurns]
 	or a
 	jr nz, .not_first_turn
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
 	and PLAYED_SUPPORTER_THIS_TURN
 	jr nz, .failed
 
@@ -125,7 +209,8 @@ UseAttackOrPokemonPower:
 	call TryExecuteEffectCommandFunction
 	call CheckSelfConfusionDamage
 	jp c, HandleConfusionDamageToSelf
-	call DrawDuelMainScene_PrintPokemonsAttackText
+	call DrawDuelMainScene
+	call PrintPokemonsAttackText
 	call WaitForWideTextBoxInput
 	call ExchangeRNG
 	ld a, EFFECTCMDTYPE_REQUIRE_SELECTION
@@ -133,46 +218,6 @@ UseAttackOrPokemonPower:
 	ld a, OPPACTION_ATTACK_ANIM_AND_DAMAGE
 	call SetOppAction_SerialSendDuelData
 ;	fallthrough
-
-
-
-;
-AttackUnsuccessfulText: ; 38197 (e:4197)
-	text "Attack unsuccessful."
-	done
-
-; return carry if the turn holder's attack was unsuccessful due to reduced accuracy effect
-HandleReducedAccuracySubstatus:
-	call CheckReducedAccuracySubstatus
-	ret nc
-	call TossCoin
-	ld [wGotHeadsFromAccuracyCheck], a
-	ccf
-	ret nc
-	ldtx hl, AttackUnsuccessfulText
-	call DrawWideTextBox_WaitForInput
-	scf
-	ret
-
-
-
-; return carry if the turn holder's arena card is under the effects of reduced accuracy
-CheckReducedAccuracySubstatus:
-	ld a, DUELVARS_ARENA_CARD_SUBSTATUS2
-	call GetTurnDuelistVariable
-	or a
-	ret z
-	ldtx de, AccuracyCheckText
-	cp SUBSTATUS2_ACCURACY
-	jr z, .card_is_affected
-	or a
-	ret
-.card_is_affected
-	ld a, [wGotHeadsFromAccuracyCheck]
-	or a
-	ret nz
-	scf
-	ret
 
 
 

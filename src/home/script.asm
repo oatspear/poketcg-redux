@@ -152,7 +152,7 @@ Func_3b21:
 	call BankswitchROM
 	ret
 
-Func_3b31:
+FinishQueuedAnimations:
 	ldh a, [hBankROM]
 	push af
 	ld a, BANK(Func_1cb18)

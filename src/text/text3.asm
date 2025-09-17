@@ -48,11 +48,6 @@ PrintThisDeckText: ; 3c11d (f:411d)
 	text "Print this Deck?"
 	done
 
-Text0277: ; 3c12f (f:412f)
-	text "Print the card list?"
-	line "      Yes     No"
-	done
-
 PrintMenuItemsText: ; 3c156 (f:4156)
 	text "Pokémon Cards"
 	line "Deck Configuration"
@@ -123,10 +118,6 @@ PleaseChooseADeckConfigurationToSendText: ; 3c389 (f:4389)
 
 PleaseChooseASaveSlotText: ; 3c3b7 (f:43b7)
 	text "Please choose a Save Slot."
-	done
-
-Text0286: ; 3c3d3 (f:43d3)
-	text "Receive configuration."
 	done
 
 ReceivedADeckConfigurationFromText: ; 3c3eb (f:43eb)
@@ -910,46 +901,6 @@ RetreatingDescriptionText: ; 3e3c8 (f:63c8)
 	line "of the retreating Pokémon."
 	done
 
-Text031e: ; 3e4ed (f:64ed)
-	text "Modify Deck"
-	line "Card List"
-	line "Album List"
-	line "Deck Save Machine"
-	line "Printing Menu"
-	line "Auto Deck Machine"
-	line "Gift Center"
-	line "Name Input"
-	done
-
-Text031f: ; 3e558 (f:6558)
-	text "Fighting Machine"
-	line "Rock Machine"
-	line "Water Machine"
-	line "Lightning Machine"
-	line "Grass Machine"
-	line "Psychic Machine"
-	line "Science Machine"
-	line "Fire Machine"
-	line "Auto Machine"
-	line "Legendary Machine"
-	done
-
-Text0320: ; 3e5f1 (f:65f1)
-	text "Send a Card"
-	line "Receive a Card"
-	line "Give Deck Instructions"
-	line "Receive Deck Instructions"
-	done
-
-Text0321: ; 3e63e (f:663e)
-	text "Lecture Duel"
-	done
-
-Text0322: ; 3e64c (f:664c)
-	text "First Strike Deck"
-	line ""
-	done
-
 OverworldMapMasonLaboratoryText: ; 3e660 (f:6660)
 	text "  Mason Laboratory  "
 	done
@@ -1050,10 +1001,6 @@ PokemonDomeMapNameText: ; 3e7f6 (f:67f6)
 	text "Pokémon Dome"
 	done
 
-Text033c: ; 3e804 (f:6804)
-	text "??'s House"
-	done
-
 PauseMenuOptionsText: ; 3e810 (f:6810)
 	text "Status"
 	line "Diary"
@@ -1075,6 +1022,10 @@ DebugPauseMenuOptionsText: ; 3e834 (f:6834)
 
 PlayerStatusNameText: ; 3e85f (f:685f)
 	text "Name <RAMNAME>"
+	done
+
+PlayerStatusCurrencyText:
+	text "Card Points "
 	done
 
 PlayerStatusAlbumText: ; 3e867 (f:6867)
@@ -1135,30 +1086,6 @@ ConfigMenuDuelAnimationText: ; 3e96c (f:696c)
 
 ConfigMenuExitText: ; 3e9a0 (f:69a0)
 	text "   Exit Settings"
-	done
-
-Text034c: ; 3e9b2 (f:69b2)
-	text "Duel           [<RAMTEXT>]"
-	line "SELECT         [<RAMTEXT>]"
-	line "Receive many cards"
-	line "To Pokémon Dome 1"
-	line "To Pokémon Dome 2"
-	done
-
-Text034d: ; 3ea10 (f:6a10)
-	text "Normal Duel"
-	done
-
-Text034e: ; 3ea1d (f:6a1d)
-	text "Skip"
-	done
-
-Text034f: ; 3ea23 (f:6a23)
-	text "Normal"
-	done
-
-Text0350: ; 3ea2b (f:6a2b)
-	text "Freeze Screen"
 	done
 
 Text0351: ; 3ea3a (f:6a3a)
@@ -1303,15 +1230,15 @@ WhenYouCardPopWithFriendText: ; 3ec74 (f:6c74)
 
 ContinueFromDiarySummaryText: ; 3ecb9 (f:6cb9)
 	text "  <RAMNAME>  <RAMTEXT>"
-	line "      Master Medals Won "
+	line " Medals     "
 	half2full
 	textfw0 "<RAMNUM>"
-	text ""
-	line "      Album           "
+	text "      Points          "
+	line " Album           "
 	half2full
 	textfw0 "/"
 	text ""
-	line "      Play time         "
+	line " Play time         "
 	half2full
 	textfw3 ":"
 	text ""
@@ -1361,10 +1288,9 @@ ContinueFromDiaryText: ; 3ef50 (f:6f50)
 	text "CONTINUE FROM DIARY?"
 	done
 
-YouCanAccessCardPopOnlyWithGameBoyColorsText: ; 3ef66 (f:6f66)
-	text "You can access Card Pop! only"
-	line "with two Game Boy Colors."
-	line "Please play using a Game Boy Color."
+ExclusiveToGameBoyColorsText:
+	text "This game is exclusive"
+	line "to the Game Boy Color."
 	done
 
 IsCrazyAboutPokemonAndPokemonCardCollectingText: ; 3efc3 (f:6fc3)
@@ -1389,7 +1315,6 @@ DebugMenuText: ; 3f147 (f:7147)
 	line "DUEL MODE"
 	line "CONTINUE FROM DIARY"
 	line "CGB TEST"
-	line "SGB FRAME"
 	line "STANDARD BG CHARACTER"
 	line "LOOK AT SPR"
 	line "V EFFECT"
@@ -1445,21 +1370,6 @@ DebugBoosterPackEnergyMenuText: ; 3f236 (f:7236)
 	line "4"
 	done
 
-Text0381: ; 3f23f (f:723f)
-	text "A                   TIME"
-	line "     TO      (Change with Start)"
-	line "            A+B: Stop Animation"
-	line "            Select: Exit"
-	done
-
-Text0382: ; 3f2b3 (f:72b3)
-	text "Left"
-	done
-
-Text0383: ; 3f2b9 (f:72b9)
-	text "Right"
-	done
-
 SPRText: ; 3f2c0 (f:72c0)
 	text "SPR_"
 	done
@@ -1496,47 +1406,6 @@ Text038a: ; 3f373 (f:7373)
 WonTheMedalText: ; 3f39b (f:739b)
 	text "<RAMNAME>"
 	line "Won the <RAMTEXT> Medal!"
-	done
-
-Text038c: ; 3f3af (f:73af)
-	text "Substitute screen for sending"
-	line "cards by Link cable."
-	done
-
-Text038d: ; 3f3e3 (f:73e3)
-	text "Substitute screen for receiving"
-	line "cards by Link cable."
-	done
-
-Text038e: ; 3f419 (f:7419)
-	text "Substitute screen for sending"
-	line "a Deck design."
-	done
-
-Text038f: ; 3f447 (f:7447)
-	text "Substitute screen for receiving"
-	line "a Deck design."
-	done
-
-Text0390: ; 3f477 (f:7477)
-	text "????"
-	done
-
-Text0391: ; 3f47d (f:747d)
-	text "Ending Screen"
-	line "THE END"
-	done
-
-Text0392: ; 3f494 (f:7494)
-	text "Was the data transfer successful?"
-	done
-
-Text0393: ; 3f4b7 (f:74b7)
-	text "(Person transferring data to)"
-	done
-
-Text0394: ; 3f4d6 (f:74d6)
-	text "(Name of Deck transferring)"
 	done
 
 OpponentTitleAndNameText: ; 3f4f3 (f:74f3)
@@ -1918,8 +1787,8 @@ DragoniteLegendaryCardName: ; 3f8cf (f:78cf)
 	text "<Lv>41 DRAGONITE"
 	done
 
-EnergyRecyclerTradeCardName: ; 3f8df (f:78df)
-	text "Energy Recycler"
+MewLv15TradeCardName: ; 3f8df (f:78df)
+	text "<Lv>15 MEW"
 	done
 
 FlyingPikachuTradeCardName: ; 3f8f7 (f:78f7)

@@ -78,7 +78,7 @@ AIActionTable_PowerfulRonald:
 	db $00
 
 .list_prize
-	db GAMBLER
+	db ROCKET_HEADQUARTERS
 	db ENERGY_REMOVAL
 	db $00
 

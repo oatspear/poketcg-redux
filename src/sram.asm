@@ -154,6 +154,9 @@ sGeneralSaveDataHeaderEnd::
 sMedalCount:: ; b808
 	ds $1
 
+sPlayerCurrency:: ; b84c
+	ds $2
+
 sCurOverworldMap:: ; b809
 	ds $1
 
@@ -235,8 +238,8 @@ sMultichoiceTextboxResult_ChooseDeckToDuelAgainst:: ; b84a
 sb84b:: ; b84b
 	ds $1
 
-sb84c:: ; b84c
-	ds $f
+sb84e:: ; b84e
+	ds $d
 
 sb85b:: ; b85b
 	ds $10

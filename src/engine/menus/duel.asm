@@ -351,11 +351,11 @@ YourOrOppPlayAreaArrowPositions:
 YourOrOppPlayAreaArrowPositions_PlayerPokemon:
 ; x and y coordinates to draw byte
 	db  5,  5
-	db  0, 10
-	db  4, 10
-	db  8, 10
+	db  3, 10
+	db  6, 10
+	db  9, 10
 	db 12, 10
-	db 16, 10
+	db 15, 10
 	db $ff
 
 YourOrOppPlayAreaArrowPositions_PlayerHand:
@@ -369,10 +369,10 @@ YourOrOppPlayAreaArrowPositions_PlayerDiscardPile:
 YourOrOppPlayAreaArrowPositions_OpponentPokemon:
 	db  5, 7
 	db  0, 3
-	db  4, 3
-	db  8, 3
+	db  3, 3
+	db  6, 3
+	db  9, 3
 	db 12, 3
-	db 16, 3
 	db $ff
 
 YourOrOppPlayAreaArrowPositions_OpponentHand:
@@ -462,9 +462,11 @@ _DrawYourOrOppPlayAreaScreen:
 	call DrawPlayArea_PrizeCards
 	lb de, 6, 2 ; coordinates of player's active card
 	call DrawYourOrOppPlayArea_ActiveCardGfx
-	lb de, 1, 9 ; coordinates of player's bench cards
-	ld c, 4 ; spacing
+	lb de, 4, 9 ; coordinates of player's bench cards
+	ld c, 3 ; spacing
 	call DrawPlayArea_BenchCards
+	lb de, 1, 9
+	call DrawPlayArea_StadiumCard
 	xor a
 	call DrawYourOrOppPlayArea_Icons
 	jr .done
@@ -475,8 +477,10 @@ _DrawYourOrOppPlayAreaScreen:
 	lb de, 6, 5 ; coordinates of opponent's active card
 	call DrawYourOrOppPlayArea_ActiveCardGfx
 	lb de, 1, 2 ; coordinates of opponent's bench cards
-	ld c, 4 ; spacing
+	ld c, 3 ; spacing
 	call DrawPlayArea_BenchCards
+	lb de, 16, 2
+	call DrawPlayArea_StadiumCard
 	ld a, $01
 	call DrawYourOrOppPlayArea_Icons
 
@@ -532,9 +536,12 @@ DrawInPlayAreaScreen:
 	call DrawPlayArea_PrizeCards
 
 ; player bench cards
-	lb de, 3, 15
+	lb de, 5, 15
 	ld c, 3
 	call DrawPlayArea_BenchCards
+; player stadium card
+	lb de, 1, 15
+	call DrawPlayArea_StadiumCard
 
 	ld hl, PlayAreaIconCoordinates.player2
 	call DrawInPlayArea_Icons
@@ -549,9 +556,12 @@ DrawInPlayAreaScreen:
 	call DrawPlayArea_PrizeCards
 
 ; opponent bench cards
-	lb de, 3, 0
+	lb de, 1, 0
 	ld c, 3
 	call DrawPlayArea_BenchCards
+; opponent stadium card
+	lb de, 17, 0
+	call DrawPlayArea_StadiumCard
 
 	call SwapTurn
 	ld hl, PlayAreaIconCoordinates.opponent2
@@ -624,14 +634,9 @@ DrawYourOrOppPlayArea_ActiveCardGfx:
 
 .draw
 	ld de, v0Tiles1 + $20 tiles ; destination offset of loaded gfx
-	ld hl, wLoadedCard1Gfx
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	lb bc, $30, TILE_SIZE
-	call LoadCardGfx
-	bank1call SetBGP6OrSGB3ToCardPalette
-	bank1call FlushAllPalettesOrSendPal23Packet
+	call LoadLoadedCard1Gfx
+	bank1call SetBGP2ToCardPalette
+	call FlushAllPalettes
 	pop de
 
 ; draw card gfx
@@ -639,7 +644,7 @@ DrawYourOrOppPlayArea_ActiveCardGfx:
 	lb hl, 6, 1
 	lb bc, 8, 6
 	call FillRectangle
-	bank1call ApplyBGP6OrSGB3ToCardImage
+	bank1call ApplyCardCGBAttributes
 	ret
 
 .no_pokemon
@@ -666,19 +671,21 @@ DrawInPlayArea_ActiveCardGfx:
 ; load card gfx
 	call LoadCardDataToBuffer1_FromDeckIndex
 	lb de, $8a, $00
-	ld hl, wLoadedCard1Gfx
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	lb bc, $30, TILE_SIZE
-	call LoadCardGfx
-	bank1call SetBGP6OrSGB3ToCardPalette
+	call LoadLoadedCard1Gfx
+	bank1call SetBGP2ToCardPalette
+; draw player arena card
+	ld a, $a0
+	lb de, 6, 9
+	lb hl, 6, 1
+	lb bc, 8, 6
+	call FillRectangle
+	bank1call ApplyCardCGBAttributes
 
 .opponent1
 	ld a, DUELVARS_ARENA_CARD
 	call GetNonTurnDuelistVariable
 	cp -1 ; no pokemon
-	jr z, .draw
+	jr z, .flush_pals
 
 	push af
 	ld a, [wArenaCardsInPlayArea]
@@ -690,48 +697,22 @@ DrawInPlayArea_ActiveCardGfx:
 	call SwapTurn
 	call LoadCardDataToBuffer1_FromDeckIndex
 	lb de, $95, $00
-	ld hl, wLoadedCard1Gfx
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	lb bc, $30, TILE_SIZE
-	call LoadCardGfx
-	bank1call SetBGP7OrSGB2ToCardPalette
-	call SwapTurn
-
-.draw
-	ld a, [wArenaCardsInPlayArea]
-	or a
-	ret z ; no arena cards in play
-
-	bank1call FlushAllPalettesOrSendPal23Packet
-	ld a, [wArenaCardsInPlayArea]
-	and %00000001 ; test player arena card bit
-	jr z, .opponent2
-
-; draw player arena card
-	ld a, $a0
-	lb de, 6, 9
-	lb hl, 6, 1
-	lb bc, 8, 6
-	call FillRectangle
-	bank1call ApplyBGP6OrSGB3ToCardImage
-
-.opponent2
-	ld a, [wArenaCardsInPlayArea]
-	and %00000010 ; test opponent arena card bit
-	ret z
-
-; draw opponent arena card
-	call SwapTurn
+	call LoadLoadedCard1Gfx
+	bank1call SetBGP5ToCardPalette
 	ld a, $50
 	lb de, 6, 2
 	lb hl, 6, 1
 	lb bc, 8, 6
 	call FillRectangle
-	bank1call ApplyBGP7OrSGB2ToCardImage
+	bank1call ApplyCardCGBAttributes
 	call SwapTurn
-	ret
+
+.flush_pals
+	ld a, [wArenaCardsInPlayArea]
+	or a
+	ret z  ; no arena cards in play
+	jp FlushAllPalettes
+
 
 ; draws prize cards depending on the turn
 ; loaded in wCheckMenuPlayAreaWhichDuelist
@@ -776,16 +757,12 @@ DrawPlayArea_PrizeCards:
 	lb bc, 2, 2 ; rectangle size
 	call FillRectangle
 
-	ld a, [wConsole]
-	cp CONSOLE_CGB
-	jr nz, .not_cgb
-	ld a, $02 ; blue colour
+	xor a  ; grey colour
 	lb bc, 2, 2
 	lb hl, 0, 0
 	call BankswitchVRAM1
 	call FillRectangle
 	call BankswitchVRAM0
-.not_cgb
 	pop bc
 	pop hl
 	jr .loop
@@ -913,38 +890,20 @@ DrawPlayArea_BenchCards:
 	sla a
 	add $e4
 ; a holds the correct stage gfx tile
-	ld b, a
-	push bc
-
 	lb hl, 1, 2
 	lb bc, 2, 2
 	call FillRectangle
 
-	ld a, [wConsole]
-	cp CONSOLE_CGB
-	pop bc
-	jr nz, .next
-
-	ld a, b
-	cp $ec ; tile offset of 2 stage
-	jr z, .two_stage
-	cp $f0 ; tile offset of 2 stage with no 1 stage
-	jr z, .two_stage
-
-	ld a, $02 ; blue colour
-	jr .palette
-.two_stage
-	ld a, $01 ; red colour
-.palette
+	xor a  ; grey colour
 	lb bc, 2, 2
 	lb hl, 0, 0
 	call BankswitchVRAM1
 	call FillRectangle
 	call BankswitchVRAM0
-
-.next ; adjust coordinates for next card
 	pop bc
 	pop hl
+
+; adjust coordinates for next card
 	ld a, d
 	add c
 	ld d, a
@@ -972,23 +931,51 @@ DrawPlayArea_BenchCards:
 	lb bc, 2, 2
 	call FillRectangle
 
-	ld a, [wConsole]
-	cp CONSOLE_CGB
-	jr nz, .not_cgb
-
-	ld a, $02 ; colour
+	ld a, $01 ; colour
 	lb bc, 2, 2
 	lb hl, 0, 0
 	call BankswitchVRAM1
 	call FillRectangle
 	call BankswitchVRAM0
-
-.not_cgb
 	pop bc
 	ld a, d
 	add c
 	ld d, a
 	jr .loop_2
+
+
+; draws filled or empty slot depending on the turn loaded in wCheckMenuPlayAreaWhichDuelist
+; input:
+;   de: coordinates to draw stadium
+DrawPlayArea_StadiumCard:
+	ld a, [wCheckMenuPlayAreaWhichDuelist]
+	ld h, a
+	ld l, DUELVARS_STADIUM_CARD
+	ld a, [hl]
+	cp $ff
+	jr z, .empty
+
+	ld a, $e4  ; gfx tile
+	lb hl, 1, 2
+	lb bc, 2, 2
+	call FillRectangle
+	jr .palette
+
+.empty
+	ld a, $f4 ; empty bench slot tile
+	lb hl, 1, 2
+	lb bc, 2, 2
+	call FillRectangle
+
+.palette
+	ld a, $01 ; colour
+	lb bc, 2, 2
+	lb hl, 0, 0
+	call BankswitchVRAM1
+	call FillRectangle
+	call BankswitchVRAM0
+	ret
+
 
 ; draws Your/Opp Play Area icons depending on value in a
 ; the icons correspond to Deck, Discard Pile, and Hand
@@ -1034,8 +1021,8 @@ DrawYourOrOppPlayArea_Icons:
 	ld a, [de]
 	ld b, a
 	ld a, $d8 ; discard pile icon
-	call DrawPlayArea_IconWithValue
-	ret
+	; jr DrawPlayArea_IconWithValue
+	; fallthrough
 
 ; draws the interface icon corresponding to the gfx tile in a
 ; also prints the number in decimal corresponding to the value in b
@@ -1056,18 +1043,13 @@ DrawPlayArea_IconWithValue:
 	lb bc, 2, 2
 	call FillRectangle
 
-	ld a, [wConsole]
-	cp CONSOLE_CGB
-	jr nz, .skip
-
-	ld a, $02
+	xor a  ; grey colour
 	lb bc, 2, 2
 	lb hl, 0, 0
 	call BankswitchVRAM1
 	call FillRectangle
 	call BankswitchVRAM0
 
-.skip
 ; adjust coordinate to the lower right
 	inc d
 	inc d

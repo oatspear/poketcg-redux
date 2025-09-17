@@ -7,7 +7,11 @@
 VampiricAura_LeechEffect:
 	ld a, DUELVARS_ARENA_CARD_STATUS
 	call GetNonTurnDuelistVariable
-	and POISONED | DOUBLE_POISONED
+IF DOUBLE_POISON_EXISTS
+	and MAX_POISON
+ELSE
+	and POISONED
+ENDC
 	jr z, Leech10DamageEffect
 	jr Leech20DamageEffect
 
@@ -66,19 +70,6 @@ Heal30DamageEffect:
 	jr ApplyAndAnimateHPRecovery
 
 
-SwallowUp_HealEffect:
-	ld a, DUELVARS_ARENA_CARD_HP
-	call GetNonTurnDuelistVariable
-	or a
-	ret nz  ; not Knocked Out
-	; jr Heal40DamageEffect
-	; fallthrough
-
-Heal40DamageEffect:
-	ld de, 40
-	jr ApplyAndAnimateHPRecovery
-
-
 ; to be used in effects that happen BEFORE_DAMAGE
 ; Heal30DamageEffect_PreserveAttackAnimation:
 ; 	ld a, [wLoadedAttackAnimation]
@@ -92,8 +83,8 @@ Heal40DamageEffect:
 HealADamageEffect:
 	ld d, 0
 	ld e, a
-	jr ApplyAndAnimateHPRecovery
-
+	; jr ApplyAndAnimateHPRecovery
+	; fallthrough
 
 ; applies HP recovery on Pokemon after an attack
 ; with HP recovery effect, and handles its animation.
@@ -171,14 +162,14 @@ HealUserHP_NoAnimation:
 ; heals up to the amount of damage in register d for card in
 ; Play Area location in e.
 ; plays healing animation and prints text with card's name.
-; uses: a, de, hl
-; preserves: bc
 ; (no longer) uses: [hTempPlayAreaLocation_ff9d]
 ; input:
 ;	   d: amount of HP to heal
 ;	   e: PLAY_AREA_* of card to heal
 ; output:
 ;    carry: set if not damaged
+; uses: a, de, hl
+; preserves: bc
 HealPlayAreaCardHP:
 ; check its damage
 	; ld d, a
@@ -227,6 +218,45 @@ HealPlayAreaCardHP:
 ; .skip_cap
 	; ld [hl], e ; apply new HP to arena card
 	; ret
+
+
+; Heal10DamagePerAttachedEnergyEffect:
+; 	ld e, PLAY_AREA_ARENA
+; 	call GetEnergyAttachedMultiplierDamage
+; 	jp HealADamageEffect
+
+
+; no animation
+; does not count as healing
+; input:
+;   d: damage to remove (tens, not units)
+;   e: PLAY_AREA_* of the target
+; output:
+;   d: amount of healed damage (<= input d)
+;   carry: set if no damage counters to remove
+; preserves: bc, e
+RemoveDamageCounters:
+; check its damage
+	push bc
+	call GetCardDamageAndMaxHP
+	pop bc
+	or a
+	jr nz, .damaged
+	ld d, 0
+	scf
+	ret
+
+.damaged
+	cp d
+	jr nc, .got_amount_to_heal  ; is damage higher than amount to heal?
+	ld d, a                     ; else, heal at most a damage
+.got_amount_to_heal
+	ld a, DUELVARS_ARENA_CARD_HP
+	add e
+	call GetTurnDuelistVariable
+	add d
+	ld [hl], a
+	ret
 
 
 Aromatherapy_HealEffect:

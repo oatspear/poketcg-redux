@@ -8,6 +8,12 @@ CreateSupporterCardListFromDiscardPile:
 	jr CreateTrainerCardListFromDiscardPile_
 
 
+CheckDiscardPileHasStadiumCards:
+CreateStadiumCardListFromDiscardPile:
+	ld c, TYPE_TRAINER_STADIUM
+	jr CreateTrainerCardListFromDiscardPile_
+
+
 CheckDiscardPileHasItemCards:
 CreateItemCardListFromDiscardPile:
 	ld c, TYPE_TRAINER
@@ -345,6 +351,12 @@ CreatePokemonAndBasicEnergyCardListFromDiscardPile:
 	ret
 
 
+; creates in wDuelTempList list of attached Grass Energy cards
+; that are attached to the Turn Duelist's Arena card.
+CreateListOfGrassEnergyAttachedToArena:
+	ld a, TYPE_ENERGY_GRASS
+	jr CreateListOfMatchingEnergyAttachedToArena
+
 ; creates in wDuelTempList list of attached Psychic Energy cards
 ; that are attached to the Turn Duelist's Arena card.
 CreateListOfPsychicEnergyAttachedToArena:
@@ -645,14 +657,12 @@ Helper_CreateEnergyCardListFromHand:
 
 ; Return in a the amount of times that the Pokemon card with a given ID
 ; is found in the turn holder's play area.
-; If the Pokemon is asleep, confused, or paralyzed (Pkmn Power-incapable),
-; it does not count.
 ; Also fills hTempList with the PLAY_AREA_* offsets of each occurrence.
 ; Set carry if the Pokemon card is at least found once.
 ; This is almost a duplicate of CountPokemonIDInPlayArea.
-; preserves: bc, de, hl
+; preserves: hl, bc, de
 ; input: a: Pokemon card ID to search
-ListPowerCapablePokemonIDInPlayArea:
+ListPokemonIDInPlayArea:
 	push hl
 	push de
 	push bc
@@ -677,12 +687,6 @@ ListPowerCapablePokemonIDInPlayArea:
 	ld a, [wTempPokemonID_ce7c]
 	cp e
 	jr nz, .skip
-; check if the Pokémon is affected with a status condition
-	ld a, DUELVARS_ARENA_CARD_STATUS - 1
-	add b  ; b starts at 1, we want a 0-based index
-	call GetTurnDuelistVariable
-	and CNF_SLP_PRZ
-	jr nz, .skip
 ; increment counter and add to the list
 	inc c
 	ld a, b
@@ -704,6 +708,41 @@ ListPowerCapablePokemonIDInPlayArea:
 	pop bc
 	pop de
 	pop hl
+	ret
+
+
+; ------------------------------------------------------------------------------
+; Prize Lists
+; ------------------------------------------------------------------------------
+
+
+; assume: this list is never empty (otherwise the game would have ended)
+CreatePrizeCardList:
+	ld a, DUELVARS_PRIZES
+	call GetTurnDuelistVariable
+	ld b, a
+	ld c, 0
+	ld l, DUELVARS_PRIZE_CARDS
+	ld de, wDuelTempList
+.loop
+	srl b
+	jr nc, .next
+; this position has a prize card
+	ld a, [hl]
+	ld [de], a
+	inc de
+	inc c
+.next
+	inc hl
+	inc b
+	dec b
+	jr nz, .loop
+
+.done
+	ld a, $ff ; terminating byte
+	ld [de], a
+	ld a, c
+	or a
 	ret
 
 

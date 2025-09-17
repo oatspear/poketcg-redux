@@ -206,22 +206,15 @@ INCLUDE "data/overworld_map/overworld_warps.asm"
 
 OverworldMap_InitVolcanoSprite:
 	ld a, SPRITE_OW_MAP_OAM
-	farcall CreateSpriteAndAnimBufferEntry
+	call CreateSpriteAndAnimBufferEntry
 	ld c, SPRITE_ANIM_COORD_X
 	call GetSpriteAnimBufferProperty
 	ld a, $80
 	ld [hli], a ; x
 	ld a, $10
 	ld [hl], a ; y
-	ld b, SPRITE_ANIM_SGB_VOLCANO_SMOKE
-	ld a, [wConsole]
-	cp CONSOLE_CGB
-	jr nz, .not_cgb
-	ld b, SPRITE_ANIM_CGB_VOLCANO_SMOKE
-.not_cgb
-	ld a, b
-	farcall StartNewSpriteAnimation
-	ret
+	ld a, SPRITE_ANIM_VOLCANO_SMOKE
+	jp StartNewSpriteAnimation
 
 OverworldMap_InitCursorSprite:
 	ld a, [wOverworldMapSelection]
@@ -232,13 +225,7 @@ OverworldMap_InitCursorSprite:
 	call CreateSpriteAndAnimBufferEntry
 	ld a, [wWhichSprite]
 	ld [wOverworldMapCursorSprite], a
-	ld b, SPRITE_ANIM_SGB_OWMAP_CURSOR
-	ld a, [wConsole]
-	cp CONSOLE_CGB
-	jr nz, .not_cgb
-	ld b, SPRITE_ANIM_CGB_OWMAP_CURSOR
-.not_cgb
-	ld a, b
+	ld a, SPRITE_ANIM_OWMAP_CURSOR
 	ld [wOverworldMapCursorAnimation], a
 	call StartNewSpriteAnimation
 	ld a, EVENT_MASON_LAB_STATE
@@ -251,7 +238,7 @@ OverworldMap_InitCursorSprite:
 .visited_lab
 	ret
 
-; play animation SPRITE_ANIM_SGB_OWMAP_CURSOR_FAST (non-cgb) or SPRITE_ANIM_CGB_OWMAP_CURSOR_FAST (cgb)
+; play animation SPRITE_ANIM_OWMAP_CURSOR_FAST
 ; to make the cursor blink faster after a selection is made
 OverworldMap_UpdateCursorAnimation:
 	ld a, [wOverworldMapCursorSprite]

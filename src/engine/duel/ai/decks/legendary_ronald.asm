@@ -78,7 +78,7 @@ AIActionTable_LegendaryRonald:
 	db ARTICUNO_LV37
 	db ZAPDOS_LV68
 	db DRAGONITE_LV41
-	db GAMBLER
+	db ROCKET_HEADQUARTERS
 	db $00
 
 .store_list_pointers
@@ -112,7 +112,7 @@ AIDoTurn_LegendaryRonald:
 	cp DECK_SIZE - 9
 	jr nc, .skip_moltres_1 ; skip if cards in deck <= 9
 	call ArePokemonPowersDisabled
-	jr c, .skip_moltres_1 ; skip if Weezing in play
+	jr c, .skip_moltres_1 ; skip if Poké-Powers are disabled
 	ld a, MOLTRES_LV37
 	call LookForCardIDInHandList_Bank5
 	jr nc, .skip_moltres_1 ; skip if no MoltresLv37 in hand
@@ -133,7 +133,7 @@ AIDoTurn_LegendaryRonald:
 	ld a, AI_TRAINER_CARD_PHASE_10
 	call AIProcessHandTrainerCards
 ; play Energy card if possible
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
 	and PLAYED_ENERGY_THIS_TURN  ; or a
 	jr nz, .skip_attach_energy_1
 	call AIProcessAndTryToPlayEnergy
@@ -166,7 +166,7 @@ AIDoTurn_LegendaryRonald:
 	cp DECK_SIZE - 9
 	jr nc, .skip_moltres_2 ; skip if cards in deck <= 9
 	call ArePokemonPowersDisabled
-	jr c, .skip_moltres_2 ; skip if Weezing in play
+	jr c, .skip_moltres_2 ; skip if Poké-Powers are disabled
 	ld a, MOLTRES_LV37
 	call LookForCardIDInHandList_Bank5
 	jr nc, .skip_moltres_2 ; skip if no MoltresLv37 in hand
@@ -184,7 +184,7 @@ AIDoTurn_LegendaryRonald:
 	call AIProcessRetreat
 	ld a, AI_TRAINER_CARD_PHASE_10
 	call AIProcessHandTrainerCards
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
 	and PLAYED_ENERGY_THIS_TURN  ; or a
 	jr nz, .skip_attach_energy_2
 	call AIProcessAndTryToPlayEnergy

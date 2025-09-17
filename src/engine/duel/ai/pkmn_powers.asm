@@ -19,11 +19,11 @@ HandleAIEnergyTrans:
 	ret z ; return if no Bench cards
 
 	ld a, IVYSAUR
-	call CountPokemonIDInPlayArea
+	call GetFirstPokemonWithAvailablePower
 	ret nc ; return if no Ivysaur found in own Play Area
 
 	call ArePokemonPowersDisabled
-	ret c ; return if Weezing found in any Play Area
+	ret c ; return if Poké-Powers cannot be used
 
 	ld a, [wAIEnergyTransRoutine]
 	cp AI_ENERGY_TRANS_RETREAT
@@ -375,7 +375,7 @@ AIEnergyTransTransferEnergyToBench:
 HandleAIPkmnPowers:
 	call ArePokemonPowersDisabled
 	ccf
-	ret nc ; return no carry if Weezing is in play
+	ret nc ; return no carry if Poké-Powers are disabled
 
 	farcall AIChooseRandomlyNotToDoAction
 	ccf
@@ -385,11 +385,6 @@ HandleAIPkmnPowers:
 	call GetTurnDuelistVariable
 	ld b, a
 	ld c, PLAY_AREA_ARENA
-; OATS check status of benched Pokemon too
-	; ld a, DUELVARS_ARENA_CARD_STATUS
-	; call GetTurnDuelistVariable
-	; and CNF_SLP_PRZ
-	; jr nz, .next_2
 
 .loop_play_area
 ; OATS check status of benched Pokemon too
@@ -413,7 +408,7 @@ HandleAIPkmnPowers:
 	ld e, FIRST_ATTACK_OR_PKMN_POWER
 	call CopyAttackDataAndDamage_FromDeckIndex
 	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
+	cp POKE_POWER
 	jr z, .execute_effect
 	pop bc
 	jp .next_3
@@ -484,19 +479,13 @@ HandleAIPkmnPowers:
 	jr .next_1
 .check_crushing_charge
 	cp MAROWAK_LV32
-	jr nz, .check_energy_generator
+	jr nz, .check_battle_frenzy
 	call HandleAICrushingCharge
 	jr .next_1
-.check_energy_generator
-	cp ELECTRODE_LV42
-	jr nz, .check_surprise_bite
-	call HandleAIEnergyGenerator
-	jr .next_1
-	jr .next_1
-.check_surprise_bite
-	cp ZUBAT
+.check_battle_frenzy
+	cp NIDORINO
 	jr nz, .check_curse
-	call HandleAISurpriseBite
+	call HandleAIBattleFrenzy
 	jr .next_1
 .check_curse
 	cp HAUNTER_LV17
@@ -739,7 +728,7 @@ HandleAICrushingCharge:
 	jp HandleAIDecideToUsePokemonPower
 
 
-HandleAIEnergyGenerator:
+HandleAIBattleFrenzy:  ; FIXME
 	ld a, CARD_LOCATION_DECK
 	call FindBasicEnergyCardsInLocation
 	ret c  ; no cards
@@ -958,30 +947,6 @@ HandleAIShift:
 	ret
 
 
-HandleAISurpriseBite:
-	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
-	call GetNonTurnDuelistVariable
-	dec a  ; do not count Arena
-	or a
-	ret z  ; no Bench Pokemon
-	ld d, a
-	call SwapTurn
-	ld e, PLAY_AREA_BENCH_1
-.loop_bench
-	call GetCardDamageAndMaxHP  ; preserves de
-	cp 1
-	jr c, .found
-	inc e  ; next PLAY_AREA_*
-	dec d  ; decrement counter
-	ret z  ; no valid target
-	jr .loop_bench
-.found
-	ld a, e
-	ldh [hTempPlayAreaLocation_ffa1], a
-	call SwapTurn
-	jp HandleAIDecideToUsePokemonPower
-
-
 ; checks whether AI uses Curse.
 HandleAICurse:
 	farcall DamageTargetPokemon_AISelectEffect
@@ -1030,7 +995,7 @@ HandleAITrade:
 ; handles AI logic for Cowardice
 HandleAICowardice:
 	call ArePokemonPowersDisabled
-	ret c  ; return if there's Weezing in play
+	ret c  ; return if Poké-Powers are disabled
 
 	farcall AIChooseRandomlyNotToDoAction
 	ret c  ; randomly return
@@ -1042,11 +1007,6 @@ HandleAICowardice:
 
 	ld b, a
 	ld c, PLAY_AREA_ARENA
-; OATS check status of benched Pokemon too
-	; ld a, DUELVARS_ARENA_CARD_STATUS
-	; call GetTurnDuelistVariable
-	; and CNF_SLP_PRZ
-	; jr nz, .next
 .loop
 ; OATS check status of benched Pokemon too
 	ld a, DUELVARS_ARENA_CARD_STATUS
@@ -1262,15 +1222,21 @@ HandleAIRainDanceEnergy:
 	call ArePokemonPowersDisabled
 	ret c  ; Pokémon Powers are disabled
 
-	; ld a, [wAlreadyPlayedEnergyOrSupporter]
-	; and USED_RAIN_DANCE_THIS_TURN
-	; ret nz  ; Rain Dance was used this turn
-
+IF POLITOED_VARIANT == 0
+	ld a, POLITOED
+	call GetFirstPokemonWithAvailablePower
+	jr c, .got_rain_dance
+ENDC
+IF BLASTOISE_VARIANT == 2
+	ld a, BLASTOISE
+ELSE
 	ld a, WARTORTLE
+ENDC
 	call GetFirstPokemonWithAvailablePower
 	ret nc  ; no Power-capable Pokémon
 
 ; store the Pokémon's Play Area location and deck index
+.got_rain_dance
 	ld [wAIPokemonPowerPlayAreaLocation], a
 	add DUELVARS_ARENA_CARD
 	call GetTurnDuelistVariable
@@ -1290,16 +1256,12 @@ HandleAIRainDanceEnergy:
 
 
 ; handles AI logic for attaching energy cards
-; with the Firestarter Pokémon Power.
-HandleAIFirestarterEnergy:
+; with the Lightning Haste Pokémon Power.
+HandleAIDynamotorEnergy:
 	call ArePokemonPowersDisabled
 	ret c  ; Pokémon Powers are disabled
 
-	; ld a, [wAlreadyPlayedEnergyOrSupporter]
-	; and USED_FIRESTARTER_THIS_TURN
-	; ret nz  ; Firestarter was used this turn
-
-	ld a, CHARMELEON
+	ld a, RAICHU_LV35
 	call GetFirstPokemonWithAvailablePower
 	ret nc  ; no Power-capable Pokémon
 

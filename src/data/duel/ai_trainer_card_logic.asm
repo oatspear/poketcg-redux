@@ -39,7 +39,7 @@ AITrainerCardLogic: ; 20000 (8:4000)
 	ai_trainer_card_logic AI_TRAINER_CARD_PHASE_13, LASS,                   AIDecide_Lass,                 AIPlay_Lass
 	ai_trainer_card_logic AI_TRAINER_CARD_PHASE_04, ITEM_FINDER,            AIDecide_ItemFinder,           AIPlay_ItemFinder
 	ai_trainer_card_logic AI_TRAINER_CARD_PHASE_01, IMAKUNI_CARD,           AIDecide_Imakuni,              AIPlay_Imakuni
-	ai_trainer_card_logic AI_TRAINER_CARD_PHASE_01, GAMBLER,                AIDecide_Gambler,              AIPlay_Gambler
+	ai_trainer_card_logic AI_TRAINER_CARD_PHASE_01, ROCKET_HEADQUARTERS,           AIDecide_RocketHeadquarters,          AIPlay_RocketHeadquarters
 	ai_trainer_card_logic AI_TRAINER_CARD_PHASE_05, REVIVE,                 AIDecide_Revive,               AIPlay_Revive
 	ai_trainer_card_logic AI_TRAINER_CARD_PHASE_13, POKEMON_FLUTE,          AIDecide_PokemonFlute,         AIPlay_PokemonFlute
 	ai_trainer_card_logic AI_TRAINER_CARD_PHASE_05, MYSTERIOUS_FOSSIL,      AIDecide_MysteriousFossil,     AIPlay_MysteriousFossil

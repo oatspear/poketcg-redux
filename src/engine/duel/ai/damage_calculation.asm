@@ -12,8 +12,8 @@ EstimateDamage_VersusDefendingCard:
 	ld d, a
 	call CopyAttackDataAndDamage_FromDeckIndex
 	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
-	jr nz, .is_attack
+	and ABILITY
+	jr z, .is_attack
 
 ; is a Pokémon Power
 ; set wDamage, wDamageFlags, wAIMinDamage and wAIMaxDamage to zero
@@ -141,7 +141,11 @@ _CalculateDamage_VersusDefendingPokemon:
 	jr nc, .vulnerable
 	; invulnerable to damage
 	ld de, $0
+IF STATUS_GRANTS_WEAKNESS
+	jp .done
+ELSE
 	jr .done
+ENDC
 .vulnerable
 	ldh a, [hTempPlayAreaLocation_ff9d]
 	or a
@@ -162,15 +166,27 @@ _CalculateDamage_VersusDefendingPokemon:
 	call TranslateColorToWR
 	ld [wAttackerColorAsWR], a
 	and b
+IF STATUS_GRANTS_WEAKNESS
+	jr nz, .weak
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetNonTurnDuelistVariable  ; preserves de
+	and CNF_SLP_PRZ
+ENDC
 	jr z, .apply_pluspower
+.weak
 	call ApplyWeaknessToDamage_DE
 
-; 3. apply pluspower bonuses
+; 3. apply tool and stadium bonuses
 .apply_pluspower
 	ldh a, [hTempPlayAreaLocation_ff9d]
-	add CARD_LOCATION_ARENA
+	; add CARD_LOCATION_ARENA
 	ld b, a
-	call ApplyAttachedPluspower
+	call ApplyAttachedPluspower  ; preserves: bc
+	call HandleDamageBoostingStadiums
+IF BURN_BOOSTS_DAMAGE_TAKEN
+	xor a  ; PLAY_AREA_ARENA
+	call HandleBurnDamageBoost
+ENDC
 ; 4. cap damage at 250
 	call CapMaximumDamage_DE
 ; 5. apply resistance
@@ -187,12 +203,13 @@ _CalculateDamage_VersusDefendingPokemon:
 	jr z, .apply_defender
 	call ReduceDamageBy20_DE  ; preserves bc
 
-; 6. apply Defender reduction
+; 6. apply tool and stadium reduction
 .apply_defender
 	; apply pluspower and defender boosts
 	call SwapTurn
-	ld b, CARD_LOCATION_ARENA
-	call ApplyAttachedDefender
+	ld b, PLAY_AREA_ARENA  ; CARD_LOCATION_ARENA
+	call ApplyAttachedDefender  ; preserves: bc
+	call HandleDamageReducingStadiums
 ; 7. apply damage reduction effects
 	ld a, [wDamageFlags]
 	bit UNAFFECTED_BY_POWERS_OR_EFFECTS_F, a
@@ -204,24 +221,6 @@ _CalculateDamage_VersusDefendingPokemon:
 	call HandleAttackerDamageReductionEffects
 ; 8. cap damage at zero if negative
 	call CapMinimumDamage_DE
-
-; OATS poison only does damage on the target's turn
-;	ld a, DUELVARS_ARENA_CARD_STATUS
-;	call GetTurnDuelistVariable
-;	and DOUBLE_POISONED
-;	jr z, .not_poisoned
-;	ld c, 20
-;	and DOUBLE_POISONED & (POISONED ^ $ff)
-;	jr nz, .add_poison
-;	ld c, 10
-;.add_poison
-;	ld a, c
-;	add e
-;	ld e, a
-;	ld a, $00
-;	adc d
-;	ld d, a
-;.not_poisoned
 	call SwapTurn
 
 ; is this enough damage to KO the Defending Pokémon?
@@ -252,8 +251,8 @@ EstimateDamage_FromDefendingPokemon: ; 1450b (5:450b)
 	call CopyAttackDataAndDamage_FromDeckIndex
 	call SwapTurn
 	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
-	jr nz, .is_attack
+	and ABILITY
+	jr z, .is_attack
 
 ; is a Pokémon Power
 ; set wDamage, wDamageFlags, wAIMinDamage and wAIMaxDamage to zero
@@ -390,13 +389,27 @@ CalculateDamage_FromDefendingPokemon: ; 1458c (5:458c)
 	call TranslateColorToWR
 	ld [wAttackerColorAsWR], a
 	and b
+IF STATUS_GRANTS_WEAKNESS
+	jr nz, .weak
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetNonTurnDuelistVariable  ; preserves de
+	and CNF_SLP_PRZ
+ENDC
 	jr z, .apply_pluspower
+.weak
 	call ApplyWeaknessToDamage_DE
 
-; 3. apply pluspower bonuses
+; 3. apply tool and stadium bonuses
 .apply_pluspower
-	ld b, CARD_LOCATION_ARENA
-	call ApplyAttachedPluspower
+	ld b, PLAY_AREA_ARENA  ; CARD_LOCATION_ARENA
+	call ApplyAttachedPluspower  ; preserves: bc
+	call HandleDamageBoostingStadiums
+IF BURN_BOOSTS_DAMAGE_TAKEN
+	call SwapTurn
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	call HandleBurnDamageBoost
+	call SwapTurn
+ENDC
 ; 4. cap damage at 250
 	call CapMaximumDamage_DE
 ; 5. apply resistance
@@ -413,13 +426,14 @@ CalculateDamage_FromDefendingPokemon: ; 1458c (5:458c)
 	and b
 	call nz, ReduceDamageBy20_DE
 
-; 6. apply Defender reduction
+; 6. apply tool and stadium reduction
 .apply_defender
 	call SwapTurn
 	ldh a, [hTempPlayAreaLocation_ff9d]
-	add CARD_LOCATION_ARENA
+	; add CARD_LOCATION_ARENA
 	ld b, a
-	call ApplyAttachedDefender
+	call ApplyAttachedDefender  ; preserves: bc
+	call HandleDamageReducingStadiums
 ; 7. apply damage reduction effects
 	ld a, [wDamageFlags]
 	bit UNAFFECTED_BY_POWERS_OR_EFFECTS_F, a
@@ -448,15 +462,23 @@ CalculateDamage_FromDefendingPokemon: ; 1458c (5:458c)
 ; OATS Poison only deals damage on the target's turn
 	ld a, DUELVARS_ARENA_CARD_STATUS
 	call GetTurnDuelistVariable
+IF DOUBLE_POISON_EXISTS
 	and DOUBLE_POISONED
+ELSE
+	and POISONED
+ENDC
 	jr z, .done
-	; ld c, 40
-	ld hl, 20
+IF DOUBLE_POISON_EXISTS
+	; ld c, DBLPSN_DAMAGE * 2
+	ld hl, DBLPSN_DAMAGE
 	and DOUBLE_POISONED & (POISONED ^ $ff)
 	jr nz, .add_poison
-	; ld c, 20
-	ld hl, 10
+	; ld c, PSN_DAMAGE * 2
+	ld hl, PSN_DAMAGE
 .add_poison
+ELSE
+	ld hl, PSN_DAMAGE
+ENDC
 	call AddToDamage_DE
 	call CapMaximumDamage_DE
 

@@ -9,7 +9,7 @@ LoadMap:
 	ld [wReloadOverworldCallbackPtr], a
 	ld [wReloadOverworldCallbackPtr + 1], a
 	ld [wMatchStartTheme], a
-	farcall Func_10a9b
+	ld [wd317], a
 	call WhiteOutDMGPals
 	call ZeroObjectPositions
 	xor a
@@ -272,6 +272,10 @@ Func_c1f8:
 	ld [wAnimationsDisabled], a
 	ld a, [sTextSpeed]
 	ld [wTextSpeed], a
+	ld a, [sPlayerCurrency]
+	ld [wPlayerCurrency], a
+	ld a, [sPlayerCurrency + 1]
+	ld [wPlayerCurrency + 1], a
 	call DisableSRAM
 	farcall InitPCPacks
 	ret
@@ -702,13 +706,7 @@ Func_c4b9:
 	ld [wd4cb], a
 	ld a, PALETTE_29
 	farcall LoadPaletteData
-	ld b, SPRITE_ANIM_LIGHT_NPC_UP
-	ld a, [wConsole]
-	cp CONSOLE_CGB
-	jr nz, .not_cgb
-	ld b, SPRITE_ANIM_RED_NPC_UP
-.not_cgb
-	ld a, b
+	ld a, SPRITE_ANIM_RED_NPC_UP
 	ld [wPlayerSpriteBaseAnimation], a
 
 	; load Player's sprite for overworld

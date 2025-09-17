@@ -220,14 +220,14 @@ Text04b0: ; 44b56 (11:4b56)
 	done
 
 Text04b1: ; 44c4d (11:4c4d)
-	text "Toxic Gas"
+	text "Neutralizing Gas"
 	done
 
 Text04b2: ; 44c58 (11:4c58)
-	text "Toxic Gas is very powerful!"
+	text "Neutralizing Gas is very powerful!"
 	line "It can block all Pokémon Powers!"
-	line "But be careful because it also"
-	line "blocks your own Pokémon's Powers!"
+	; line "But be careful because it also"
+	; line "blocks your own Pokémon's Powers!"
 	done
 
 Text04b3: ; 44cdd (11:4cdd)
@@ -579,26 +579,19 @@ Text04e4: ; 46331 (11:6331)
 	line "Psychic Energy cards to attack."
 	done
 
-IF SLEEP_WITH_COIN_FLIP
-Text04e5:
-	text "Sleep"
-	done
-ELSE
 Text04e5:
 	text "Drowsiness"
 	done
-ENDC
 
-IF SLEEP_WITH_COIN_FLIP
+IF CC_IS_COIN_FLIP
 Text04e6:
-	text "When a Pokémon is asleep,"
-	line "it is unable to attack or use"
-	line "Pokémon Power. A coin will be "
-	line "flipped before attacking."
-	line "If the coin comes up heads,"
-	line "the Pokémon will wake up. If it's"
-	line "tails, the Pokémon remains asleep."
-	line "Use Full Heal to wake it up!"
+	text "When a Pokémon is drowsy, it is"
+	line "unable to use Pokémon Powers."
+	line "A coin will be flipped before"
+	line "attacking. If the coin comes up"
+	line "heads, the Pokémon will attack."
+	line "If it's tails, the Pokémon remains"
+	line "asleep. Use Full Heal to wake it up!"
 	done
 ELSE
 Text04e6:
@@ -631,18 +624,6 @@ Text04e9: ; 46611 (11:6611)
 	text "Science Club Pokémon"
 	done
 
-IF SLEEP_WITH_COIN_FLIP
-Text04ea:
-	text "Characteristics of Pokémon used"
-	line "in the Science Club:"
-	line "Strong against Psychic Pokémon."
-	line "Weak against Fighting Pokémon."
-	line "Many cards have attacks with "
-	line "poison and sleep effects."
-	line "Require Darkness Energy cards"
-	line "to attack."
-	done
-ELSE
 Text04ea:
 	text "Characteristics of Pokémon used"
 	line "in the Science Club:"
@@ -653,7 +634,6 @@ Text04ea:
 	line "Require Darkness Energy cards"
 	line "to attack."
 	done
-ENDC
 
 Text04eb: ; 466f6 (11:66f6)
 	text "Confusion"

@@ -32,7 +32,7 @@ HandleAttackerDamageReductionEffects:
 	ret
 
 ; check if the defending card (turn holder's arena card) has any substatus that
-; reduces the damage dealt to it this turn. (SUBSTATUS1 or Pkmn Powers)
+; reduces the damage dealt to it this turn. (SUBSTATUS1 or abilities)
 ; damage is given in de as input and the possibly updated damage is also returned in de.
 HandleDefenderDamageReductionEffects:
 	ld a, [wNoDamageOrEffect]
@@ -43,16 +43,16 @@ HandleDefenderDamageReductionEffects:
 	ret
 .substatus1
 	call HandleDefenderDamageReduction_Substatus
-.pkmn_power
-	call CheckCannotUseDueToStatus
+.abilities
+	call CheckCannotUsePokeBody
 	ret c
-	; jr HandleDefenderDamageReduction_PokemonPowers
+	; jr HandleDefenderDamageReduction_Abilities
 	; fallthrough
 
-HandleDefenderDamageReduction_PokemonPowers:
+HandleDefenderDamageReduction_Abilities:
 	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
-	ret z
+	and ABILITY
+	ret nz
 	ld a, [wTempNonTurnDuelistCardID]
 	cp MAROWAK_LV26
 	jp z, ReduceDamageBy20_DE ; Battle Armor
@@ -60,6 +60,10 @@ HandleDefenderDamageReduction_PokemonPowers:
 	jp z, ReduceDamageBy20_DE ; Exoskeleton
 	cp KAKUNA
 	jp z, ReduceDamageBy20_DE ; Exoskeleton
+IF BLASTOISE_VARIANT == 1
+	cp BLASTOISE
+	jp z, ReduceDamageBy20_DE ; Solid Shell
+ENDC
 	cp CLOYSTER
 	jp z, ReduceDamageBy20_DE ; Exoskeleton
 	cp SHELLDER
@@ -106,22 +110,22 @@ HandleDefenderDamageReduction_Substatus:
 ; check for Invisible Wall, Kabuto Armor, NShield, or Transparency, in order to
 ; possibly reduce or make zero the damage at de.
 ; TODO FIXME this function can be refactored and eliminated
-HandleDamageReductionOrNoDamageFromPkmnPowerEffects:
+HandleDamageReductionOrNoDamageFromPokeBodyEffects:
 	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
-	ret z
+	and ABILITY
+	ret nz
 .attack
-	call ArePokemonPowersDisabled
+	call ArePokeBodiesDisabled
 	ret c
 	ld a, [wTempPlayAreaLocation_cceb]
 	or a
 	jr z, .not_bench
 	call IsBodyguardActive
 	jr c, .no_damage
-	call HandleDefenderDamageReduction_PokemonPowers
+	call HandleDefenderDamageReduction_Abilities
 .not_bench
 	push de ; push damage from call above, which handles Invisible Wall and Kabuto Armor
-	call HandleNoDamageOrEffectSubstatus.pkmn_power
+	call HandleNoDamageOrEffectSubstatus.abilities
 	; call nc, HandleTransparency
 	pop de ; restore damage
 	ret nc
@@ -165,7 +169,7 @@ HandleNShieldAndTransparency:
 ; 	xor a
 ; 	ld [wDuelDisplayedScreen], a
 ; 	ldtx de, TransparencyCheckText
-; 	call TossCoin
+; 	bank1call TossCoin
 ; 	jr nc, .done
 ; 	ld a, NO_DAMAGE_OR_EFFECT_TRANSPARENCY
 ; 	ld [wNoDamageOrEffect], a
@@ -215,8 +219,8 @@ HandleNoDamageOrEffectSubstatus:
 	xor a
 	ld [wNoDamageOrEffect], a
 	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
-	ret z
+	and ABILITY
+	ret nz
 .attack
 	ld a, DUELVARS_ARENA_CARD_SUBSTATUS1
 	call GetTurnDuelistVariable
@@ -224,14 +228,17 @@ HandleNoDamageOrEffectSubstatus:
 	ldtx hl, NoDamageOrEffectDueToAgilityText
 	cp SUBSTATUS1_AGILITY
 	jr z, .no_damage_or_effect
-	call CheckCannotUseDueToStatus
+; check whether abilities can be used
+	call CheckCannotUsePokeBody
 	ccf
 	ret nc
 
-.pkmn_power
+.abilities
 	ld a, [wTempNonTurnDuelistCardID]
 	cp MEW_LV8
 	jr z, .neutralizing_shield
+	; cp VENOMOTH
+	; jr z, .shield_dust
 	or a
 	ret
 
@@ -254,17 +261,58 @@ HandleNoDamageOrEffectSubstatus:
 	; ld a, [wLoadedCard2Stage]
 	ld a, DUELVARS_ARENA_CARD_STAGE
 	call GetNonTurnDuelistVariable
-	or a
+	or a  ; cp BASIC
 	ret z
 
 	ld e, NO_DAMAGE_OR_EFFECT_NSHIELD
 	ldtx hl, NoDamageOrEffectDueToNShieldText
 	jr .no_damage_or_effect
 
+; .shield_dust
+; 	ld a, [wIsDamageToSelf]
+; 	or a
+; 	ret nz
+;
+; ; prevent damage if attacked by a Pokémon with 2 or more status
+; 	ld a, DUELVARS_ARENA_CARD_STATUS
+; 	call GetNonTurnDuelistVariable
+; 	and PSN_BRN
+; 	ret z
+; 	and POISONED | BURNED
+; 	cp POISONED | BURNED
+; 	jr z, .shield_dust_active
+; 	ld a, [hl]
+; 	and CNF_SLP_PRZ
+; 	ret z
+;
+; .shield_dust_active
+; 	ld e, NO_DAMAGE_OR_EFFECT_SHIELD_DUST
+; 	ldtx hl, NoDamageOrEffectDueToNShieldText
+; 	jr .no_damage_or_effect
+
+
+; return carry if the turn holder's arena card is under the effects of reduced accuracy
+CheckReducedAccuracySubstatus:
+	ld a, DUELVARS_ARENA_CARD_SUBSTATUS2
+	call GetTurnDuelistVariable
+	or a
+	ret z
+	ldtx de, AccuracyCheckText
+	cp SUBSTATUS2_ACCURACY
+	jr z, .card_is_affected
+	or a
+	ret
+.card_is_affected
+	ld a, [wGotHeadsFromAccuracyCheck]
+	or a
+	ret nz
+	scf
+	ret
+
 
 ; return carry and return the appropriate text id in hl if the target has an
 ; special status or power that prevents any damage or effect done to it this turn
-; input: a = NO_DAMAGE_OR_EFFECT_*
+; input: wNoDamageOrEffect = NO_DAMAGE_OR_EFFECT_*
 CheckNoDamageOrEffect:
 	ld a, [wNoDamageOrEffect]
 	or a
@@ -293,22 +341,21 @@ CheckNoDamageOrEffect:
 NoDamageOrEffectTextIDTable:
 	tx NoDamageText                          ; NO_DAMAGE_OR_EFFECT_UNUSED
 	tx NoDamageOrEffectDueToAgilityText      ; NO_DAMAGE_OR_EFFECT_AGILITY
-	tx NoDamageOrEffectDueToTransparencyText ; NO_DAMAGE_OR_EFFECT_TRANSPARENCY
+	tx NoDamageOrEffectDueToShieldDustText   ; NO_DAMAGE_OR_EFFECT_SHIELD_DUST
 	tx NoDamageOrEffectDueToNShieldText      ; NO_DAMAGE_OR_EFFECT_NSHIELD
 
 
-; returns carry if turn holder's card in location a is paralyzed, asleep, confused,
-; and/or toxic gas in play, meaning that attack and/or pkmn power cannot be used
-; preserves: bc, de
-CheckCannotUseDueToStatus_Anywhere:
-	jr CheckCannotUseDueToStatus.status_check
-
 ; returns carry if turn holder's arena card is paralyzed, asleep, confused,
-; and/or toxic gas in play, meaning that attack and/or pkmn power cannot be used
+; and/or neutralizing gas in play, meaning that attack and/or pkmn power cannot be used
 ; preserves: bc, de
 CheckCannotUseDueToStatus:
 	xor a  ; PLAY_AREA_ARENA
-.status_check
+	; fallthrough
+
+; returns carry if turn holder's card in location a is paralyzed, asleep, confused,
+; and/or neutralizing gas in play, meaning that attack and/or pkmn power cannot be used
+; preserves: bc, de
+CheckCannotUseDueToStatus_PlayArea:
 	push bc
 	ld b, a
 	call CheckPokemonPowerReadyState
@@ -318,6 +365,17 @@ CheckCannotUseDueToStatus:
 	call ArePokemonPowersDisabled
 	ret nc
 	ldtx hl, UnableToUsePkmnPowerText
+	ret
+
+
+CheckCannotUsePokeBody:
+	xor a  ; PLAY_AREA_ARENA
+	; fallthrough
+
+CheckCannotUsePokeBody_PlayArea:  ; FIXME probably safe to remove
+	call ArePokeBodiesDisabled
+	; ret nc
+	; ldtx hl, UnableToUsePokeBodyText
 	ret
 
 
@@ -349,44 +407,45 @@ CheckPokemonPowerReadyState:
 	ret
 
 
-; Check whether Toxic Gas (Weezing) or other Pokémon Power cancelling
-; effects are currently active.
-; preserves: bc, de
-; outputs:
-;   a: 1 if Pokémon Powers cannot be used | 0
-;   carry: set if Pokémon Powers cannot be used
-ArePokemonPowersDisabled:
-	call IsOpponentToxicGasActive
-	; jr IsToxicGasActive
-	; fallthrough
-
-; Check whether Toxic Gas (Weezing) is found on the turn holder's Active Spot,
-; and whether it is Pokémon Power capable.
+; Check whether Neutralizing Gas is found on the turn holder's Active Spot,
+; and whether it is Ability capable.
 ; Returns carry if the Pokémon card is found
+; output:
+;   a: 0 if not found; 1 if found
+;   carry: set iff found and capable of using the Ability
+; preserves: hl, bc, de
+IsNeutralizingGasActive:
+	ld a, WEEZING
+	jr IsActiveSpotPokeBodyEnabled  ; preserves: hl, bc, de
+
+; preserves: hl, bc, de
+ArePokeBodiesDisabled:
+IsOpponentNeutralizingGasActive:
+	call SwapTurn
+	call IsNeutralizingGasActive
+	jp SwapTurn
+
+; Check whether Pokémon Powers are currently disabled.
+; Returns carry if Pokémon Powers cannot be used.
 ; output:
 ;   a: 0 if not found; 1 if found
 ;   carry: set iff found and capable of using the Power
 ; preserves: hl, bc, de
-IsToxicGasActive:
-	ld a, WEEZING
-	jr IsActiveSpotPokemonPowerActive
-
-IsOpponentToxicGasActive:
-	call SwapTurn
-	call IsToxicGasActive
-	jp SwapTurn
+ArePokemonPowersDisabled:
+	xor a
+	ret
 
 
 ; Check whether a given Pokémon is found in the turn holder's
-; Active Spot, and whether it is Pokémon Power capable.
+; Active Spot, and whether it is Ability capable.
 ; Returns carry if the Pokémon card is found.
 ; input:
 ;   a: ID of the Pokémon to check
 ; output:
 ;   a: 0 if not found; 1 if found
-;   carry: set iff found and capable of using the Power
+;   carry: set iff found and the Ability is enabled
 ; preserves: hl, bc, de
-IsActiveSpotPokemonPowerActive:
+IsActiveSpotPokeBodyEnabled:
 	push hl
 	push bc
 	ld c, a
@@ -399,10 +458,10 @@ IsActiveSpotPokemonPowerActive:
 	pop de
 	cp c
 	jr nz, .nope
-; check whether Pokémon Powers can be used at this location
-	ld b, PLAY_AREA_ARENA
-	call CheckPokemonPowerReadyState
-	jr c, .nope
+; check whether Poké-Bodies are enabled at this location
+	; ld b, PLAY_AREA_ARENA
+	; call CheckPokemonPowerReadyState
+	; jr c, .nope
 .yup
 	ld a, 1
 	scf
@@ -415,44 +474,87 @@ IsActiveSpotPokemonPowerActive:
 	ret
 
 
-; return carry if turn holder has Tentacruel and its Dark Prison Pkmn Power is active
-; preserves: bc, de
+; input:
+;   a: ID of the Pokémon to check
+;   e: PLAY_AREA_* of the location to check
+; output:
+;   a: 0 if not found; 1 if found
+;   carry: set iff found
+; preserves: hl, bc, de
+IsPokemonIDAtPlayAreaLocation:
+	push hl
+	push bc
+	push de
+	ld c, a
+; check whether it is the correct Pokémon
+	ld a, DUELVARS_ARENA_CARD
+	add e
+	call GetTurnDuelistVariable
+	call GetCardIDFromDeckIndex  ; preserves bc
+	ld a, e
+	cp c
+	jr nz, .nope
+.yup
+	ld a, 1
+	scf
+	jr .done
+.nope
+	xor a  ; reset carry
+.done
+	pop de
+	pop bc
+	pop hl
+	ret
+
+
+; return carry if turn holder has Sandslash and its Spikes ability is active
+; preserves: hl, bc, de
+IsSpikesActive:
+	call ArePokeBodiesDisabled  ; preserves: hl, bc, de
+	ccf
+	ret nc
+	ld a, SANDSLASH
+	jp GetFirstPokemonMatchingID  ; preserves: hl, bc, de
+
+
+; return carry if turn holder has Tentacruel and its Dark Prison ability is active
+; preserves: hl, bc, de
 IsDarkPrisonActive:
-	call ArePokemonPowersDisabled
+	call ArePokeBodiesDisabled  ; preserves: hl, bc, de
 	ccf
 	ret nc
 	ld a, TENTACRUEL
-	jp GetFirstPokemonWithAvailablePower
+	jp GetFirstPokemonMatchingID  ; preserves: hl, bc, de
 
 
-; return carry if turn holder has Mew and its Clairvoyance Pkmn Power is active
-; preserves: bc, de
+; return carry if turn holder has Mew and its Clairvoyance ability is active
+; preserves: hl, bc, de
 IsClairvoyanceActive:
 	or a
 	ret
-;	call ArePokemonPowersDisabled
+;	call ArePokeBodiesDisabled
 ;	ccf
 ;	ret nc
 ;	ld a, MEW_LV15
-;	jp GetFirstPokemonWithAvailablePower
+;	jp GetFirstPokemonMatchingID
 
 
-; return carry if turn holder has Mr. Mime and its Bench Barrier Pkmn Power is active
-; preserves: bc, de
+; return carry if turn holder has Mr. Mime and its Bench Barrier ability is active
+; preserves: hl, bc, de
 IsBodyguardActive:
-	call ArePokemonPowersDisabled  ; preserves: bc, de
+	call ArePokeBodiesDisabled  ; preserves: hl, bc, de
 	ccf
 	ret nc
 	ld a, [wIsDamageToSelf]
 	or a
 	ret nz  ; only prevents damage from the opponent
 	ld a, MR_MIME
-	jp GetFirstPokemonWithAvailablePower  ; preserves: hl, bc, de
+	jp GetFirstPokemonMatchingID  ; preserves: hl, bc, de
 
 
-; return carry if a Pokémon Power capable Vileplume
+; return carry if a Poké-Body capable Vileplume
 ; is found in the non-turn holder's Active Spot.
-; preserves: bc, de
+; preserves: hl, bc, de
 IsHayFeverActive:
 	ld a, VILEPLUME
 	jr IsOpponentActiveSpotAuraActive
@@ -460,25 +562,25 @@ IsHayFeverActive:
 
 ; return carry if a Pokémon Power capable Omastar
 ; is found in the non-turn holder's Active Spot.
-; preserves: bc, de
+; preserves: hl, bc, de
 IsPrehistoricPowerActive:
 	ld a, OMASTAR
 	jr IsOpponentActiveSpotAuraActive
 
 
-; return carry if a Pokémon Power capable Pokémon
+; return carry if an ability-capable Pokémon
 ; is found in the non-turn holder's Active Spot,
-; and the turn holder does not have Toxic Gas
+; and the turn holder does not have Neutralizing Gas
 ; input:
 ;   a: Pokémon ID of the aura to check
-; preserves: bc, de
+; preserves: hl, bc, de
 IsOpponentActiveSpotAuraActive:
 	call SwapTurn  ; preserves af
-	call IsActiveSpotPokemonPowerActive
+	call IsActiveSpotPokeBodyEnabled  ; preserves: hl, bc, de
 	call SwapTurn
-	ret nc  ; the opponent does not have the Pokémon Power
-; check for Toxic Gas on the turn holder's side
-	call IsToxicGasActive
+	ret nc  ; the opponent does not have the Ability
+; check for Neutralizing Gas on the turn holder's side
+	call IsNeutralizingGasActive  ; preserves: hl, bc, de
 	ccf
 	ret
 
@@ -535,11 +637,11 @@ IsVampiricAuraActive:
 ;   a: PLAY_AREA_* of the Pokémon benefiting from the Power
 ; output:
 ;   carry: set if Dark Retribution is active
-IsDarkRetributionActive:
-	ld b, a
-	ld c, DARKNESS
-	ld e, NIDORINO
-	jr IsSpecialEnergyPowerActive
+; IsDarkRetributionActive:
+; 	ld b, a
+; 	ld c, DARKNESS
+; 	ld e, NIDORINO
+; 	jr IsSpecialEnergyPowerActive
 
 
 ; returns carry if the turn holder's Pokémon in the given location
@@ -576,11 +678,11 @@ IsFightingFuryActive:
 ; output:
 ;   carry: set if the Power is active
 IsSpecialEnergyPowerActive:
-	call ArePokemonPowersDisabled  ; preserves bc, de
+	call ArePokeBodiesDisabled  ; preserves bc, de
 	ccf
 	ret nc
 	ld a, e
-	call GetFirstPokemonWithAvailablePower  ; preserves hl, bc, de
+	call GetFirstPokemonMatchingID  ; preserves hl, bc, de
 	ret nc  ; not found
 ; Feedback is returned in wAttachedEnergies and wTotalAttachedEnergies.
 	ld e, b
@@ -603,11 +705,11 @@ IsSpecialEnergyPowerActive:
 ;   carry: set if the Power is active
 ; preserves: bc, de
 IsElementalMasteryActive:
-	call ArePokemonPowersDisabled  ; preserves bc, de
+	call ArePokeBodiesDisabled  ; preserves bc, de
 	ccf
 	ret nc
 	ld a, DRAGONAIR
-	call GetFirstPokemonWithAvailablePower  ; preserves hl, bc, de
+	call GetFirstPokemonMatchingID  ; preserves hl, bc, de
 	ret nc  ; not found
 ; Feedback is returned in wAttachedEnergies and wTotalAttachedEnergies.
 	push de
@@ -646,34 +748,46 @@ IsUnableToEvolve:
 	ret
 
 
-; return, in a, the amount of times that the Pokemon card with a given ID is found in the
-; play area of both duelists. Also return carry if the Pokemon card is at least found once.
-; if the arena Pokemon is asleep, confused, or paralyzed (Pkmn Power-incapable), it doesn't count.
-; input: a = Pokemon card ID to search
-CountPokemonIDInBothPlayAreas:
-	push bc
-	ld [wTempPokemonID_ce7c], a
-	call CountPokemonIDInPlayArea
-	ld c, a
-	call SwapTurn
-	ld a, [wTempPokemonID_ce7c]
-	call CountPokemonIDInPlayArea
-	call SwapTurn
-	add c
-	or a
-	scf
-	jr nz, .found
-	or a
-.found
-	pop bc
-	ret
+; Return, in a, the amount of times that the Pokémon card with a given ID is found in the
+; turn holder's play area. Also return carry if the Pokémon card is at least found once.
+; If the Pokémon is asleep, confused, or paralyzed (Pkmn Power-incapable), it doesn't count.
+; input:
+;   a: Pokémon card ID to search
+; preserves: hl, bc, de
+CountPokemonIDWithAvailablePower:
+	push hl
+	ld hl, CheckPokemonPowerReadyState
+	ld a, l
+	ld [wPlayAreaFilterFunctionPointer], a
+	ld a, h
+	ld [wPlayAreaFilterFunctionPointer + 1], a
+	pop hl
+	jr CountPokemonIDInPlayAreaMatchingFilter
 
-; return, in a, the amount of times that the Pokemon card with a given ID is found in the
-; turn holder's play area. Also return carry if the Pokemon card is at least found once.
-; if the Pokemon is asleep, confused, or paralyzed (Pkmn Power-incapable), it doesn't count.
-; input: a = Pokemon card ID to search
+
+; Return, in a, the amount of times that the Pokémon card
+; with a given ID and matching the filter function
+; is found in the turn holder's play area.
+; Also return carry if the Pokémon card is at least found once.
+; input:
+;   a: Pokémon card ID to search
 ; preserves: hl, bc, de
 CountPokemonIDInPlayArea:
+	xor a  ; null filter
+	ld [wPlayAreaFilterFunctionPointer], a
+	ld [wPlayAreaFilterFunctionPointer + 1], a
+	; jr CountPokemonIDInPlayAreaMatchingFilter
+	; fallthrough
+
+; Return, in a, the amount of times that the Pokémon card
+; with a given ID and matching the filter function
+; is found in the turn holder's play area.
+; Also return carry if the Pokémon card is at least found once.
+; input:
+;   a: Pokémon card ID to search
+;   [wPlayAreaFilterFunctionPointer]: pointer to a filter function
+; preserves: hl, bc, de
+CountPokemonIDInPlayAreaMatchingFilter:
 	push hl
 	push de
 	push bc
@@ -696,9 +810,11 @@ CountPokemonIDInPlayArea:
 	ld a, [wTempPokemonID_ce7c]
 	cp e
 	jr nz, .skip
-; check if the Pokémon's Power can be used
+; check if the Pokémon matches the filter
 	dec b  ; zero-based index
-	call CheckPokemonPowerReadyState
+	or a  ; reset carry
+	ld hl, wPlayAreaFilterFunctionPointer
+	call CallIndirect  ; call [hl] if non-NULL
 	inc b  ; restore index
 	jr c, .skip
 	inc c
@@ -718,8 +834,8 @@ CountPokemonIDInPlayArea:
 	ret
 
 
-; Similar to CountPokemonIDInPlayArea, but returns the PLAY_AREA_* location of
-; the first Pokémon Power capable Pokémon with the given ID in play.
+; Returns the PLAY_AREA_* location of the first Pokémon Power
+; capable Pokémon with the given ID in play.
 ; If a Pokémon is Asleep, Confused, or Paralyzed (Power-incapable), it does not count.
 ; If a Pokémon's Power has been used this turn, it does not count.
 ; Returns $ff if no Pokémon is found.
@@ -730,6 +846,44 @@ CountPokemonIDInPlayArea:
 ;   carry: set if a Pokémon is found
 ; preserves: hl, bc, de
 GetFirstPokemonWithAvailablePower:
+	push hl
+	ld hl, CheckPokemonPowerReadyState
+	ld a, l
+	ld [wPlayAreaFilterFunctionPointer], a
+	ld a, h
+	ld [wPlayAreaFilterFunctionPointer + 1], a
+	pop hl
+	jr GetFirstPokemonMatchingFilter
+
+
+; Returns the PLAY_AREA_* location of the first
+; Pokémon with the given ID in play.
+; Returns $ff if no Pokémon is found.
+; input:
+;   a: Pokémon card ID to search
+; output:
+;   a: PLAY_AREA_* of the first Pokémon with given ID | $ff
+;   carry: set if a Pokémon is found
+; preserves: hl, bc, de
+GetFirstPokemonMatchingID:
+	xor a  ; null filter
+	ld [wPlayAreaFilterFunctionPointer], a
+	ld [wPlayAreaFilterFunctionPointer + 1], a
+	; jr GetFirstPokemonMatchingFilter
+	; fallthrough
+
+
+; Returns the PLAY_AREA_* location of the first Pokémon with the
+; given ID in play that passes the filter function.
+; Returns $ff if no Pokémon is found.
+; input:
+;   a: Pokémon card ID to search
+;   [wPlayAreaFilterFunctionPointer]: pointer to a filter function
+; output:
+;   a: PLAY_AREA_* of the first Pokémon with given ID | $ff
+;   carry: set if a Pokémon is found
+; preserves: hl, bc, de
+GetFirstPokemonMatchingFilter:
 	push hl
 	push de
 	push bc
@@ -751,9 +905,13 @@ GetFirstPokemonWithAvailablePower:
 	ld a, [wTempPokemonID_ce7c]
 	cp e
 	jr nz, .skip
-; check if this Pokémon's Power can be used
-	call CheckPokemonPowerReadyState
-	jr c, .skip
+; check if this Pokémon matches the filter
+	or a  ; reset carry
+	push hl
+	ld hl, wPlayAreaFilterFunctionPointer
+	call CallIndirect  ; call [hl] if non-NULL
+	pop hl
+	jr c, .skip  ; this carry flag only matters if the call happens
 ; found a valid Pokémon
 	ld a, b  ; get the PLAY_AREA_* offset
 	scf
@@ -781,7 +939,7 @@ GetFirstPokemonWithAvailablePower:
 GetAttackCostPenalty:
 	push hl
 	ld c, 0
-IF SLEEP_WITH_COIN_FLIP == 0
+IF CC_IS_COIN_FLIP == 0
 ; check for status
 	ld a, e
 	add DUELVARS_ARENA_CARD_STATUS
@@ -828,7 +986,7 @@ GetAttackCostDiscount:
 	cp RAPIDASH
 	jr nz, .bench
 .swift_swim
-	call CheckCannotUseDueToStatus  ; unable to use ability
+	call CheckCannotUsePokeBody  ; unable to use ability
 	jr c, .bench
 	ld a, DUELVARS_ARENA_CARD_SUBSTATUS3
 	call GetTurnDuelistVariable
@@ -853,9 +1011,53 @@ GetAttackCostDiscount:
 ;   hl: pointer to loaded attack struct energy cost
 ;   e: PLAY_AREA_* of the target
 ; output:
-;   updated colorless attack cost in the struct pointed by hl
+;   updated attack cost in the struct pointed by hl
 ; preserves: de
 OverwriteLoadedAttackCost:
+	push hl
+	push de
+	ld de, VIRIDIAN_GYM
+	call CheckStadiumIDInPlayArea  ; preserves: bc, de
+	pop de
+	pop hl
+	jr c, .colorless_modifiers  ; not in play
+
+; Viridian Gym
+	push hl
+	ld b, 0  ; total basic energy cost
+	ld c, NUM_TYPES / 2  ; loop counter
+.loop
+; first color
+	ld a, [hl]
+	swap a
+	and $0f
+	add b
+	ld b, a
+; second color
+	ld a, [hl]
+	and $0f
+	add b
+	ld b, a
+; erase colored cost
+	xor a
+	ld [hli], a
+	dec c
+	jr nz, .loop
+; write converted colorless cost
+IF (NUM_TYPES % 2) == 1
+	ld a, [hl]
+	swap a
+	add b
+	and $0f
+	swap a
+ELSE
+	dec hl
+	ld a, b
+ENDC
+	ld [hl], a
+	pop hl
+
+.colorless_modifiers
 ; skip to colorless energy
 	ld bc, (NUM_TYPES - 1) / 2
 	add hl, bc
@@ -922,8 +1124,15 @@ GetRetreatCostPenalty:
 .bench
 	add DUELVARS_ARENA_CARD_STATUS
 	call GetTurnDuelistVariable
+IF CC_IS_COIN_FLIP
+; Crowd Control status
+; 	and CNF_SLP_PRZ
+; 	jr z, .no_crowd_control
+; 	inc c
+; .no_crowd_control
+; 	ld a, [hl]
+ELSE
 ; Drowsiness status
-IF SLEEP_WITH_COIN_FLIP == 0
 	and CNF_SLP_PRZ
 	cp ASLEEP
 	jr nz, .not_drowsy
@@ -953,7 +1162,7 @@ ENDC
 GetRetreatCostDiscount:
 	or a
 	jr nz, .no_discount
-	call ArePokemonPowersDisabled  ; preserves bc, de
+	call ArePokeBodiesDisabled  ; preserves bc, de
 	jr c, .no_discount
 	ld a, DODRIO  ; Retreat Aid
 	jp CountPokemonIDInPlayArea  ; preserves hl, bc, de
@@ -962,12 +1171,21 @@ GetRetreatCostDiscount:
 	ret
 
 
-; return carry if the turn holder's arena Pokemon is affected by Acid and can't retreat
-CheckCantRetreatDueToAcid:
+; return carry if the turn holder's arena Pokemon can't retreat
+CheckCantRetreatDueToStatusOrEffect:
+IF CC_IS_COIN_FLIP
+	ld a, DUELVARS_ARENA_CARD_STATUS
+	call GetTurnDuelistVariable
+	and CNF_SLP_PRZ
+	cp FLINCHED
+	ldtx hl, UnableDueToParalysisText
+	jr z, .cant_retreat
+ENDC
 	ld a, DUELVARS_ARENA_CARD_SUBSTATUS2
 	call GetTurnDuelistVariable
 	or a
 	ret z
+	ldtx hl, UnableToRetreatDueToTrapText
 	cp SUBSTATUS2_UNABLE_RETREAT
 	jr z, .cant_retreat
 	cp SUBSTATUS2_PRIMAL_TENTACLE
@@ -975,9 +1193,48 @@ CheckCantRetreatDueToAcid:
 	or a
 	ret
 .cant_retreat
-	ldtx hl, UnableToRetreatDueToTrapText
 	scf
 	ret
+
+
+; assumes:
+;   - call SwapTurn if needed
+; input:
+;   e: PLAY_AREA_* of the target Pokémon
+; outputs:
+;   carry: set if able to apply status
+; preserves: bc, de
+CanBeAffectedByStatus:
+	ld a, DUELVARS_ARENA_CARD
+	add e
+	call GetTurnDuelistVariable
+	cp $ff
+	ret z  ; empty slot
+
+	push de
+	call GetCardIDFromDeckIndex
+	ld a, e
+	pop de
+	cp MYSTERIOUS_FOSSIL
+	ret z  ; cannot induce status
+; Snorlax's Thick Skinned prevents it from being statused...
+	cp SNORLAX
+	jr nz, .safeguard
+; ...unless already so, or if affected by Neutralizing Gas
+	ld a, e
+	call CheckCannotUsePokeBody_PlayArea  ; preserves bc, de
+	ret nc  ; Poké-Body is active
+
+.safeguard
+	ld a, e
+	push bc
+	push de
+	call IsSafeguardActive
+	pop de
+	pop bc
+	ccf
+	ret  ; nc if safeguarded
+
 
 ; return carry if the turn holder is affected by Headache and trainer cards can't be used
 CheckCantUseItemsThisTurn:
@@ -1059,22 +1316,26 @@ UpdateSubstatusConditions_EndOfTurn:
 	; res SUBSTATUS3_THIS_TURN_ROOTED, [hl]
 	ld l, DUELVARS_ARENA_CARD_SUBSTATUS2
 	ld [hl], $0
-	ld l, DUELVARS_ABILITY_FLAGS
-	ld [hl], $0
+	; ld l, DUELVARS_ABILITY_FLAGS
 	; res ABILITY_FLAG_SWIFT_SWIM_F, [hl]
 	ret
 
-; return carry if turn holder has Wartortle and its Rain Dance Pkmn Power is active
+; return carry if turn holder has an active Rain Dance Pkmn Power
 IsRainDanceActive:
-	; ld a, [wAlreadyPlayedEnergyOrSupporter]
-	; and USED_RAIN_DANCE_THIS_TURN
-	; ret nz ; return if Rain Dance was already used this turn
-	ld a, WARTORTLE
-	call CountPokemonIDInPlayArea
-	ret nc ; return if no Pkmn Power-capable Wartortle found in turn holder's play area
 	call ArePokemonPowersDisabled
 	ccf
-	ret
+	ret nc ; Powers are disabled
+IF POLITOED_VARIANT == 0
+	ld a, POLITOED
+	call GetFirstPokemonWithAvailablePower
+	ret c
+ENDC
+IF BLASTOISE_VARIANT == 2
+	ld a, BLASTOISE
+ELSE
+	ld a, WARTORTLE
+ENDC
+	jp GetFirstPokemonWithAvailablePower
 
 
 ; if the defending (non-turn) card's HP is 0 and the attacking (turn) card's HP
@@ -1156,8 +1417,8 @@ HandleStrikeBack_AgainstDamagingAttack:
 
 ; do not counter damage from Pokémon Powers
 	ld a, [wLoadedAttackCategory]
-	cp POKEMON_POWER
-	ret z
+	and ABILITY
+	ret nz
 
 ; do not counter damage while on the bench
 	ld a, [wTempPlayAreaLocation_cceb]  ; defending Pokemon's PLAY_AREA_*
@@ -1215,11 +1476,11 @@ ApplyCounterattackDamage:
 	call GetTurnDuelistVariable
 	pop de
 	push af
-	push hl
+	; push hl
 	call SubtractHP
 	ldtx hl, ReceivesDamageDueToStrikeBackText
 	call DrawWideTextBox_WaitForInput
-	pop hl
+	; pop hl
 	pop af
 	or a
 	ret z
@@ -1239,20 +1500,20 @@ ApplyCounterattackDamage:
 IsCounterattackActive:
 	ld de, 0
 
-; do not counter if the defender's Pokémon Power is disabled
-; ArePokemonPowersDisabled is called here
+; do not counter if the defender's ability is disabled
+; ArePokeBodiesDisabled is called here
 	; ld a, [wTempPlayAreaLocation_cceb]  ; defending Pokemon's PLAY_AREA_*
-	; call CheckCannotUseDueToStatus_Anywhere  ; preserves de
-	call CheckCannotUseDueToStatus  ; preserves de
+	; call CheckCannotUsePokeBody_PlayArea  ; preserves de
+	call CheckCannotUsePokeBody  ; preserves de
 	jr c, .dark_retribution
 
 ; Strike Back Pokémon
 	ld a, [wTempNonTurnDuelistCardID]
-	cp MACHAMP
-	; ld hl, 20  ; damage to return
-	; call z, AddToDamage_DE
-	ld de, 20  ; damage to return
-	jr z, .dark_retribution
+	; cp MACHAMP
+	; ; ld hl, 20  ; damage to return
+	; ; call z, AddToDamage_DE
+	; ld de, 20  ; damage to return
+	; jr z, .dark_retribution
 
 	cp MEWTWO_LV60
 	; ld hl, 10  ; damage to return
@@ -1269,16 +1530,29 @@ IsCounterattackActive:
 	call GetTurnDuelistVariable
 	or a
 	jr nz, .dark_retribution  ; not Knocked Out
-	ld de, 50  ; damage to return
+	ld de, 40  ; damage to return
+
+	; ld de, 30  ; damage to return
+	; push de
+	; ld e, PLAY_AREA_ARENA
+	; call GetPlayAreaCardAttachedEnergies  ; preserves: hl, bc, de
+	; call HandleEnergyColorOverride  ; preserves: de
+	; pop de
+	; ld a, [wTotalAttachedEnergies]
+	; or a
+	; jr z, .dark_retribution
+	; ld h, 0
+	; ld l, a
+	; call AddToDamage_DE
 
 .dark_retribution
-	push de
-	xor a  ; PLAY_AREA_ARENA
-	call IsDarkRetributionActive
-	pop de
-	jr nc, .rocky_helmet  ; not active
-	ld hl, 10
-	call AddToDamage_DE
+	; push de
+	; xor a  ; PLAY_AREA_ARENA
+	; call IsDarkRetributionActive
+	; pop de
+	; jr nc, .rocky_helmet  ; not active
+	; ld hl, 10
+	; call AddToDamage_DE
 
 .rocky_helmet
 	ld a, DUELVARS_ARENA_CARD_ATTACHED_TOOL

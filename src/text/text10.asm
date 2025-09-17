@@ -582,6 +582,16 @@ PoliwrathDescription:
 	line "overtakes the best human swimmers."
 	done
 
+PolitoedName:
+	text "Politoed"
+	done
+
+PolitoedDescription:
+	text "Whenever three or more of these get"
+	line "together, they sing in a loud voice"
+	line "that sounds like bellowing."
+	done
+
 TentacoolName:
 	text "Tentacool"
 	done
@@ -1533,4 +1543,10 @@ DragoniteDescription:
 	text "An extremely rarely seen marine"
 	line "Pokémon. Its intelligence is said"
 	line "to match that of humans."
+	done
+
+MysteriousFossilPokemonDescription:
+	text "A fossil from a Pokémon that is"
+	line "thought to be extinct. Its true"
+	line "form is unknown."
 	done

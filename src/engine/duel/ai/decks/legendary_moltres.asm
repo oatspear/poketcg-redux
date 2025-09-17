@@ -110,7 +110,7 @@ AIDoTurn_LegendaryMoltres:
 	cp DECK_SIZE - 9
 	jr nc, .skip_moltres ; skip if cards in deck <= 9
 	call ArePokemonPowersDisabled
-	jr c, .skip_moltres ; skip if Weezing in play
+	jr c, .skip_moltres ; skip if Poké-Powers are disabled
 	ld a, MOLTRES_LV37
 	call LookForCardIDInHandList_Bank5
 	jr nc, .skip_moltres ; skip if no MoltresLv37 in hand
@@ -131,7 +131,7 @@ AIDoTurn_LegendaryMoltres:
 	ld a, AI_TRAINER_CARD_PHASE_11
 	call AIProcessHandTrainerCards
 ; play Energy card if possible
-	ld a, [wAlreadyPlayedEnergyOrSupporter]
+	ld a, [wOncePerTurnActions]
 	and PLAYED_ENERGY_THIS_TURN  ; or a
 	jr nz, .skip_attach_energy
 

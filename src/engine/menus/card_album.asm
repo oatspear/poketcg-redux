@@ -28,11 +28,13 @@ CreateCardSetList:
 	jr nz, .loop_all_cards
 
 ; it's same set as input
+IF PHANTOM_CARDS_ENABLED
 	ld a, e
 	cp VENUSAUR_LV64
 	jp z, .SetVenusaurLv64OwnedFlag
 	cp MEW_LV15
 	jp z, .SetMewLv15OwnedFlag
+ENDC
 
 	push bc
 	push hl
@@ -119,6 +121,7 @@ CreateCardSetList:
 	jr .loop_find_double_colorless
 
 .skip_energy_cards
+IF PHANTOM_CARDS_ENABLED
 	ld a, [wOwnedPhantomCardFlags]
 	bit VENUSAUR_OWNED_PHANTOM_F, a
 	jr z, .check_mew
@@ -127,6 +130,7 @@ CreateCardSetList:
 	bit MEW_OWNED_PHANTOM_F, a
 	jr z, .find_first_owned
 	call .PlaceMewLv15InList
+ENDC
 
 .find_first_owned
 	dec l
@@ -155,6 +159,7 @@ CreateCardSetList:
 	ld [hl], a
 	ret
 
+IF PHANTOM_CARDS_ENABLED
 .SetMewLv15OwnedFlag
 	ld a, (1 << MEW_OWNED_PHANTOM_F)
 ;	fallthrough
@@ -206,6 +211,8 @@ CreateCardSetList:
 	push hl
 	ld e, MEW_LV15
 	jr .PlaceCardInList
+ENDC
+
 
 ; a = CARD_SET_* constant
 CreateCardSetListAndInitListCoords:
@@ -237,25 +244,30 @@ CreateCardSetListAndInitListCoords:
 	push af
 	cp CARD_SET_PROMOTIONAL
 	jr nz, .laboratory
-	lb de, 3, "FW3_P"
+	; lb de, 3, "FW3_P"
+	lb de, TX_HALFWIDTH, "P"
 	jr .got_prefix
 .laboratory
 	cp CARD_SET_LABORATORY
 	jr nz, .mystery
-	lb de, 3, "FW3_D"
+	; lb de, 3, "FW3_D"
+	lb de, TX_HALFWIDTH, "D"
 	jr .got_prefix
 .mystery
 	cp CARD_SET_MYSTERY
 	jr nz, .evolution
-	lb de, 3, "FW3_C"
+	; lb de, 3, "FW3_C"
+	lb de, TX_HALFWIDTH, "C"
 	jr .got_prefix
 .evolution
 	cp CARD_SET_EVOLUTION
 	jr nz, .colosseum
-	lb de, 3, "FW3_B"
+	; lb de, 3, "FW3_B"
+	lb de, TX_HALFWIDTH, "B"
 	jr .got_prefix
 .colosseum
-	lb de, 3, "FW3_A"
+	; lb de, 3, "FW3_A"
+	lb de, TX_HALFWIDTH, "A"
 
 .got_prefix
 	ld hl, wCurDeckName
@@ -265,10 +277,34 @@ CreateCardSetListAndInitListCoords:
 	pop af
 	ret
 
+
+BoosterNamesTextIDTable::
+	tx Item1ColosseumText        ; CARD_SET_COLOSSEUM
+	tx Item2EvolutionText        ; CARD_SET_EVOLUTION
+	tx Item3MysteryText          ; CARD_SET_MYSTERY
+	tx Item4LaboratoryText       ; CARD_SET_LABORATORY
+	tx Item5PromotionalCardText  ; CARD_SET_PROMOTIONAL
+
+
 ; prints the cards being shown in the Card Album screen
 ; for the corresponding Card Set
+; preserves: bc
 PrintCardSetListEntries:
 	push bc
+
+	; fix for font display glitch
+	ld a, [wSelectedCardSet]
+	add a
+	ld e, a
+	ld d, $0
+	ld hl, BoosterNamesTextIDTable
+	add hl, de
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	lb de, 1, 1
+	call InitTextPrinting_ProcessTextFromID
+
 	ld hl, wCardListCoords
 	ld e, [hl]
 	inc hl
@@ -317,11 +353,15 @@ PrintCardSetListEntries:
 	ld a, [hl]
 	cp CARD_NOT_OWNED
 	jr nz, .owned
+	xor a
+	ld [wCardAlbumOwnedCopies], a
 	ld hl, .EmptySlotText
 	ld de, wDefaultText
 	call CopyListFromHLToDE
 	jr .print_text
+
 .owned
+	ld [wCardAlbumOwnedCopies], a
 	ld a, 13
 	call CopyCardNameAndLevel
 .print_text
@@ -335,15 +375,8 @@ PrintCardSetListEntries:
 	call .AppendCardListIndex
 	call ProcessText
 	ld hl, wDefaultText
-	jr .asm_a76d
-
-	; this code is never reached
-	pop de
-	push hl
-	call InitTextPrinting
-	ld hl, Text_9a36
-
-.asm_a76d
+	call ProcessText
+	call .AppendCardListOwnedCount
 	call ProcessText
 	pop hl
 	ld a, b
@@ -379,6 +412,51 @@ PrintCardSetListEntries:
 	textfw0 "-------------"
 	done
 
+; input:
+;   a: number of copies owned by the player
+.AppendCardListOwnedCount
+	push bc
+	push de
+; --------------------------------------
+	; ld hl, wDefaultText
+	; ld [hl], TX_HALFWIDTH
+	; inc hl
+	; ld [hl], " "
+	; inc hl
+	; ld [hl], " "
+	; inc hl
+	; ld a, [wCardAlbumOwnedCopies]
+	; call .num_to_ram
+; --------------------------------------
+	ld a, [wCardAlbumOwnedCopies]
+	call CalculateOnesAndTensDigits
+	ld hl, wOnesAndTensPlace
+	ld a, [hli]
+	ld b, a
+	ld a, [hl]
+	; or a
+	; jr nz, .got_owned_count
+	; ld a, SYM_0
+; .got_owned_count
+	ld hl, wDefaultText
+	; ld [hl], TX_SYMBOL
+	; inc hl
+	; ld [hl], SYM_CROSS
+	; inc hl
+	ld [hl], TX_SYMBOL
+	inc hl
+	ld [hli], a ; tens place
+	ld [hl], TX_SYMBOL
+	inc hl
+	ld a, b
+	ld [hli], a ; ones place
+; --------------------------------------
+	ld [hl], TX_END
+	ld hl, wDefaultText
+	pop de
+	pop bc
+	ret
+
 ; gets the index in the card list and adds it to wCurDeckName
 .AppendCardListIndex
 	push bc
@@ -389,37 +467,42 @@ PrintCardSetListEntries:
 	ld a, [hl]
 	cp DOUBLE_COLORLESS_ENERGY + 1
 	jr c, .energy_card
+IF PHANTOM_CARDS_ENABLED
 	cp VENUSAUR_LV64
 	jr z, .phantom_card
 	cp MEW_LV15
 	jr z, .phantom_card
+ENDC
 
 	ld a, [wNumVisibleCardListEntries]
 	sub b
 	ld hl, wCardListVisibleOffset
 	add [hl]
 	inc a
-	call CalculateOnesAndTensDigits
-	ld hl, wOnesAndTensPlace
-	ld a, [hli]
-	ld b, a
-	ld a, [hl]
-	or a
-	jr nz, .got_index
-	ld a, SYM_0
-.got_index
+	; call CalculateOnesAndTensDigits
+	; ld hl, wOnesAndTensPlace
+	; ld a, [hli]
+	; ld b, a
+	; ld a, [hl]
+	; or a
+	; jr nz, .got_index
+	; ld a, SYM_0
+; .got_index
 	ld hl, wCurDeckName + 2 ; skip prefix
-	ld [hl], TX_SYMBOL
+	call .num_to_ram
+	ld [hl], " "
 	inc hl
-	ld [hli], a ; tens place
-	ld [hl], TX_SYMBOL
-	inc hl
-	ld a, b
-	ld [hli], a ; ones place
-	ld [hl], TX_SYMBOL
-	inc hl
-	xor a ; SYM_SPACE
-	ld [hli], a
+	; ld [hl], TX_HALFWIDTH ; TX_SYMBOL
+	; inc hl
+	; ld [hli], a ; tens place
+	; ld [hl], TX_HALFWIDTH ; TX_SYMBOL
+	; inc hl
+	; ld a, b
+	; ld [hli], a ; ones place
+	; ld [hl], TX_SYMBOL
+	; inc hl
+	xor a ; SYM_SPACE, TX_END
+	; ld [hli], a
 	ld [hl], a
 	ld hl, wCurDeckName
 	pop de
@@ -427,34 +510,39 @@ PrintCardSetListEntries:
 	ret
 
 .energy_card
-	call CalculateOnesAndTensDigits
-	ld hl, wOnesAndTensPlace
-	ld a, [hli]
+	; call CalculateOnesAndTensDigits
+	; ld hl, wOnesAndTensPlace
+	; ld a, [hli]
 	ld b, a
 	ld hl, wCurDeckName + 2
-	lb de, 3, "FW3_E"
+	; lb de, 3, "FW3_E"
+	lb de, TX_HALFWIDTH, "E"
 	ld [hl], d
 	inc hl
 	ld [hl], e
 	inc hl
-	ld [hl], TX_SYMBOL
-	inc hl
-	ld a, SYM_0
-	ld [hli], a
-	ld [hl], TX_SYMBOL
-	inc hl
+	; ld [hl], TX_SYMBOL
+	; inc hl
+	; ld a, SYM_0
+	; ld [hli], a
+	; ld [hl], TX_SYMBOL
+	; inc hl
 	ld a, b
-	ld [hli], a
-	ld [hl], TX_SYMBOL
+	call .num_to_ram
+	ld [hl], " "
 	inc hl
-	xor a ; SYM_SPACE
-	ld [hli], a
+	; ld [hli], a
+	; ld [hl], TX_SYMBOL
+	; inc hl
+	xor a ; SYM_SPACE, TX_END
+	; ld [hli], a
 	ld [hl], a
 	ld hl, wCurDeckName + 2
 	pop de
 	pop bc
 	ret
 
+IF PHANTOM_CARDS_ENABLED
 .phantom_card
 ; phantom cards get only "××" in their index number
 	ld hl, wCurDeckName + 2
@@ -470,6 +558,28 @@ PrintCardSetListEntries:
 	ld hl, wCurDeckName
 	pop de
 	pop bc
+	ret
+ENDC
+
+.num_to_ram
+	ld c, a
+	; cp 10
+	; jr c, .got_number
+	push bc
+	ld b, "0" - 1
+.first_digit_loop
+	inc b
+	sub 10
+	jr nc, .first_digit_loop
+	add 10
+	ld [hl], b ; first digit
+	inc hl
+	pop bc
+	ld c, a
+; .got_number
+	ld a, c
+	add "0"
+	ld [hli], a ; last (or only) digit
 	ret
 
 ; handles opening card page, and inputs when inside Card Album
@@ -623,9 +733,10 @@ GetFirstOwnedCardIndex:
 	ld [wFirstOwnedCardIndex], a
 	ret
 
+
 HandleCardAlbumScreen:
 	ld a, $01
-	ld [hffb4], a ; should be ldh
+	ldh [hffb4], a
 
 	xor a
 .album_card_list
@@ -635,7 +746,7 @@ HandleCardAlbumScreen:
 .loop_input_1
 	call DoFrame
 	call HandleMenuInput
-	jp nc, .loop_input_1 ; can be jr
+	jr nc, .loop_input_1
 	ldh a, [hCurMenuItem]
 	cp $ff
 	ret z
@@ -674,6 +785,7 @@ HandleCardAlbumScreen:
 .asm_a968
 	call .GetNumCardEntries
 	xor a
+.got_cursor_pos_in_card_list
 	ld hl, .CardSelectionParams
 	call InitCardSelectionParams
 	ld a, [wNumEntriesInCurFilter]
@@ -707,14 +819,7 @@ HandleCardAlbumScreen:
 	ld [wTempCardListNumCursorPositions], a
 	ld a, [wCardListCursorPos]
 	ld [wTempCardListCursorPos], a
-	ld c, a
-	ld a, [wCardListVisibleOffset]
-	add c
-	ld hl, wOwnedCardsCountList
-	ld c, a
-	ld b, $00
-	add hl, bc
-	ld a, [hl]
+	call CountOwnedCopiesOfAlbumCard
 	cp CARD_NOT_OWNED
 	jr z, .loop_input_3
 
@@ -744,7 +849,7 @@ HandleCardAlbumScreen:
 	ld [wTempCardListCursorPos], a
 	ld a, [hffb3]
 	cp $ff
-	jr nz, .open_card_page
+	jp nz, OpenCardAlbumExchangeMenu
 	ldh a, [hCurMenuItem]
 	jp .album_card_list
 
@@ -800,12 +905,15 @@ HandleCardAlbumScreen:
 	call InitTextPrinting
 
 ; print the total number of cards that are in the Card Set
+	call .CountOwnedCardsInSet  ; e: total cards in set
 	ld a, [wSelectedCardSet]
 	cp CARD_SET_PROMOTIONAL
 	jr nz, .check_laboratory
 ; promotional
 	ldtx hl, Item5PromotionalCardText
-	ld e, NUM_CARDS_PROMOTIONAL - 2 ; minus the phantom cards
+IF PHANTOM_CARDS_ENABLED
+	dec e
+	dec e  ; minus the phantom cards
 	ld a, [wOwnedPhantomCardFlags]
 	bit VENUSAUR_OWNED_PHANTOM_F, a
 	jr z, .check_owns_mew
@@ -814,33 +922,29 @@ HandleCardAlbumScreen:
 	bit MEW_OWNED_PHANTOM_F, a
 	jr z, .has_card_set_count
 	inc e
+ENDC
 	jr .has_card_set_count
 .check_laboratory
 	cp CARD_SET_LABORATORY
 	jr nz, .check_mystery
 	ldtx hl, Item4LaboratoryText
-	ld e, NUM_CARDS_LABORATORY
 	jr .has_card_set_count
 .check_mystery
 	cp CARD_SET_MYSTERY
 	jr nz, .check_evolution
 	ldtx hl, Item3MysteryText
-	ld e, NUM_CARDS_MYSTERY
 	jr .has_card_set_count
 .check_evolution
 	cp CARD_SET_EVOLUTION
 	jr nz, .colosseum
 	ldtx hl, Item2EvolutionText
-	ld e, NUM_CARDS_EVOLUTION
 	jr .has_card_set_count
 .colosseum
 	ldtx hl, Item1ColosseumText
-	ld e, NUM_CARDS_COLOSSEUM
 
 .has_card_set_count
 	push de
 	call ProcessTextFromID
-	call .CountOwnedCardsInSet
 	lb de, 14, 1
 	call InitTextPrinting
 
@@ -870,11 +974,17 @@ HandleCardAlbumScreen:
 .CountOwnedCardsInSet
 	ld hl, wOwnedCardsCountList
 	ld b, 0
+	ld e, 0
 .loop_card_count
 	ld a, [hli]
 	cp $ff
 	jr z, .got_num_owned_cards
+	inc e
+IF ALL_CARDS_VISIBLE_IN_ALBUM
+	or a
+ELSE
 	cp CARD_NOT_OWNED
+ENDC
 	jr z, .loop_card_count
 	inc b
 	jr .loop_card_count
@@ -957,3 +1067,298 @@ HandleCardAlbumScreen:
 	textitem 5,  9, Item4LaboratoryText
 	textitem 5, 11, Item5PromotionalCardText
 	db $ff
+
+
+; input:
+;   a: position of cursor (e.g. wCardListCursorPos, wTempCardListCursorPos)
+CountOwnedCopiesOfAlbumCard_ZeroNotOwned:
+	call CountOwnedCopiesOfAlbumCard
+	cp CARD_NOT_OWNED
+	ret nz
+	xor a
+	ret
+
+; input:
+;   a: position of cursor (e.g. wCardListCursorPos, wTempCardListCursorPos)
+CountOwnedCopiesOfAlbumCard:
+	ld c, a
+	ld a, [wCardListVisibleOffset]
+	add c
+	ld hl, wOwnedCardsCountList
+	ld c, a
+	ld b, $00
+	add hl, bc
+	ld a, [hl]
+	ret
+
+
+; ------------------------------------------------------------------------------
+; Card Exchange
+; ------------------------------------------------------------------------------
+
+
+OpenCardAlbumExchangeMenu:
+IF ALL_CARDS_VISIBLE_IN_ALBUM == 0
+	ld a, [wCardListCursorPos]
+	call CountOwnedCopiesOfAlbumCard
+	cp CARD_NOT_OWNED
+	jr z, HandleCardExchangeMenu.b_button
+ENDC
+	xor a
+	ld [wYourOrOppPlayAreaCurPosition], a
+	ld de, CardAlbumExchangeMenu_TransitionTable
+	ld hl, wMenuInputTablePointer
+	ld a, e
+	ld [hli], a
+	ld [hl], d
+	ld a, $ff
+	ld [wDuelInitialPrizesUpperBitsSet], a
+.skip_init
+	xor a
+	ld [wCheckMenuCursorBlinkCounter], a
+	; ld hl, HandleCardExchangeMenu
+	; jp hl
+	; fallthrough
+
+HandleCardExchangeMenu:
+	lb de, 0, 0
+	lb bc, 20, 6
+	call DrawRegularTextBox
+	call CardAlbum_PrintCardStats
+	ld hl, CardAlbumExchangeMenuData
+	call PlaceTextItems
+
+.do_frame
+	ld a, $1
+	ld [wVBlankOAMCopyToggle], a
+	call DoFrame
+	call YourOrOppPlayAreaScreen_HandleInput
+	jr nc, .do_frame
+	ld [wced6], a
+	cp $ff
+	jr nz, .asm_94b5
+.b_button
+	call HandleCardAlbumScreen.PrintCardCount
+	; xor a
+	; ld [wCardListVisibleOffset], a
+	call PrintCardSetListEntries
+	call EnableLCD
+	; ld a, [wNumEntriesInCurFilter]
+	; or a
+	call HandleCardAlbumScreen.GetNumCardEntries
+	ld a, [wCardListCursorPos]
+	jp HandleCardAlbumScreen.got_cursor_pos_in_card_list
+
+.asm_94b5
+	push af
+	call YourOrOppPlayAreaScreen_HandleInput.draw_cursor
+	ld a, $01
+	ld [wVBlankOAMCopyToggle], a
+	pop af
+	ld hl, .func_table
+	call JumpToFunctionInTable
+	ret c
+	; jr .b_button
+	jr OpenCardAlbumExchangeMenu.skip_init
+
+.func_table
+	dw CardAlbum_CheckCard ; Check
+	dw CardAlbum_BuyCard   ; Buy
+	dw CardAlbum_SellCard  ; Sell
+
+
+CardAlbumExchangeMenu_TransitionTable:
+	cursor_transition $18, $30, $00, $00, $00, $01, $02
+	cursor_transition $48, $30, $00, $01, $01, $02, $00
+	cursor_transition $70, $30, $00, $02, $02, $00, $01
+
+
+CardAlbumExchangeMenuData:
+	textitem  3, 4, CheckText
+	textitem  9, 4, BuyText
+	textitem 14, 4, SellText
+	db $ff
+
+
+CardAlbum_CheckCard:
+	call HandleCardAlbumScreen.open_card_page
+	scf
+	ret
+
+
+CardAlbum_BuyCard:
+	ld a, [wCardAlbumOwnedCopies]
+	; cp MAX_AMOUNT_OF_CARD
+	cp 4
+	ret nc  ; already has max copies
+
+	ld a, [wPlayerCurrency + 1]
+	ld d, a
+	ld a, [wPlayerCurrency]
+	ld e, a
+	ld a, [wCardAlbumCardCost]
+	ld l, a
+	ld h, 0
+	call SubtractFromDamage_DE  ; de = de - hl
+	ccf
+	ret nc  ; not enough points
+
+; discount card cost from point total
+	ld a, d
+	ld [wPlayerCurrency + 1], a
+	ld a, e
+	ld [wPlayerCurrency], a
+
+; add card to collection
+	ld a, [wCardAlbumCardID]
+	call AddCardToCollection
+	ld a, [wCardListCursorPos]
+	call CountOwnedCopiesOfAlbumCard  ; just to set hl
+	and CARD_COUNT_MASK
+	inc a
+	ld [hl], a
+	; jp PrintCardSetListEntries
+	or a  ; reset carry
+	ret
+
+
+CardAlbum_SellCard:
+	ld a, [wCardAlbumOwnedCopies]
+	cp 1
+	ccf
+	ret nc  ; no copies
+	cp 5
+	jr nc, .excess_copies
+
+; has between 1 and 4 copies
+	ld c, a  ; owned copies
+	ld a, [wCardAlbumCardID]
+	ld e, a
+	ld a, [wCardAlbumCardID + 1]
+	ld d, a
+	; call IsCardInAnyDeck  ; assume same bank
+	; ret nc  ; used in deck
+	call GetMaxCountOfCardInAllDecks  ; assume same bank
+	cp c  ; copies in deck == owned copies?
+	ret z  ; all copies are in being used
+	; fallthrough
+
+.excess_copies
+; increase sum by half the cost
+	ld a, [wCardAlbumCardCost]
+	srl a
+	or a
+	jr nz, .got_value
+	ld a, 1  ; min. 1 point
+.got_value
+	ld c, a
+	ld b, 0
+; add to currency
+	ld a, [wPlayerCurrency]
+	ld l, a
+	ld a, [wPlayerCurrency + 1]
+	ld h, a
+	add hl, bc
+	jr nc, .no_overflow
+; overflow
+	ld hl, $ffff
+.no_overflow
+	ld d, h
+	ld e, l
+	ld bc, MAX_CARD_POINTS + 1
+	call CompareDEtoBC
+	jr c, .capped
+	ld hl, MAX_CARD_POINTS
+.capped
+	ld a, h
+	ld [wPlayerCurrency + 1], a
+	ld a, l
+	ld [wPlayerCurrency], a
+
+; remove from collection
+	ld a, [wCardAlbumCardID]
+	call RemoveCardFromCollection
+	ld a, [wCardListCursorPos]
+	call CountOwnedCopiesOfAlbumCard  ; just to set hl
+	dec a
+	ld [hl], a
+	; jp PrintCardSetListEntries
+	or a  ; reset carry
+	ret
+
+
+CardAlbum_PrintCardStats:
+	ld a, [wCardListCursorPos]
+	call CountOwnedCopiesOfAlbumCard_ZeroNotOwned
+	ld [wCardAlbumOwnedCopies], a
+	ld l, a
+	ld h, $00
+	call LoadTxRam3
+	lb de, 2, 2
+	call InitTextPrinting
+	ldtx hl, CardCopiesOwnedText
+	call PrintTextNoDelay
+
+	call GetIDOfCurrentAlbumCard
+	call GetCardPointCost
+	ld [wCardAlbumCardCost], a
+	ld l, a
+	ld h, $00
+	call LoadTxRam3
+	lb de, 8, 2
+	call InitTextPrinting
+	ldtx hl, CardCostText
+	call PrintTextNoDelay
+
+	ld a, [wPlayerCurrency]
+	ld l, a
+	ld a, [wPlayerCurrency + 1]
+	ld h, a
+	call LoadTxRam3
+	lb de, 13, 2
+	call InitTextPrinting
+	ldtx hl, PlayerCurrencyValueText
+	jp PrintTextNoDelay
+
+
+; input:
+;   de: card ID
+; output:
+;   a, c: cost of the given card in points
+; preserves: hl, de
+GetCardPointCost:
+	ld a, e
+	call GetCardTypeRarityAndSet  ; preserves hl, de
+	ld a, b
+	ld c, 2
+	cp CIRCLE
+	jr z, .got_cost
+	ld c, 8
+	cp DIAMOND
+	jr z, .got_cost
+	ld c, 24
+	cp STAR
+	jr z, .got_cost
+; PROMOSTAR
+	ld c, 50
+.got_cost
+	ld a, c
+	ret
+
+
+GetIDOfCurrentAlbumCard:
+	ld a, [wCardListCursorPos]
+	call CountOwnedCopiesOfAlbumCard  ; just to set bc offset
+	; ld hl, wCurCardListPtr
+	; ld a, [hli]
+	; ld h, [hl]
+	; ld l, a
+	ld hl, wFilteredCardList
+	add hl, bc
+	ld a, [hl]
+	ld [wCardAlbumCardID], a
+	ld e, a
+	xor a
+	ld [wCardAlbumCardID + 1], a
+	ld d, a
+	ret

@@ -17,6 +17,8 @@ HandleSpecialAIAttacks:
 	jp z, .Staryu
 	cp SCYTHER
 	jp z, .SwordsDanceAndFocusEnergy
+	cp HITMONCHAN
+	jp z, .SwordsDanceAndFocusEnergy
 	cp MAGNETON_LV35
 	jp z, .JunkMagnet
 	; cp MEW_LV15
@@ -60,12 +62,12 @@ HandleSpecialAIAttacks:
 	cp EXEGGCUTE
 	jp z, .NutritionSupport
 	cp TANGELA
-	jp z, .Ingrain
+	jp z, .EnergyToStadium
 	cp DRATINI
 	jp z, .DragonDance
 	cp HORSEA
 	jp z, .DragonDance
-	cp RED_GYARADOS
+	cp GYARADOS_SHINY
 	jp z, .HyperBeam
 	cp DRAGONITE_LV45
 	jp z, .HyperBeam
@@ -81,13 +83,13 @@ HandleSpecialAIAttacks:
 	jr z, .Sprout
 	cp ARTICUNO_LV35
 	jp z, .Freeze
-	cp CHARMANDER
-	jp z, .Flare
+	cp CHARMELEON
+	jp z, .FlameCloak
 	cp MOLTRES_LV35
-	jp z, .Flare
+	jp z, .FlameCloak
 	; cp PONYTA
 	; jp z, .FlameCharge
-	cp ZAPDOS_LV64
+	cp ZAPDOS_LV40
 	jp z, .Energize
 	; cp JYNX
 	; jr z, .Mimic
@@ -184,7 +186,7 @@ HandleSpecialAIAttacks:
 ; - player is under No Damage substatus;
 ; - second attack is unusable;
 ; - second attack deals no damage;
-; if any are true, returns score of $80 + 5.
+; if any are true, returns score of $80 + 3.
 .SwordsDanceAndFocusEnergy:
 	ld a, [wAICannotDamage]
 	or a
@@ -197,9 +199,10 @@ HandleSpecialAIAttacks:
 	call EstimateDamage_VersusDefendingCard
 	ld a, [wDamage]
 	or a
-	jp nz, .zero_score
+	; jp nz, .zero_score
+	ret nz
 .swords_dance_focus_energy_success
-	ld a, $85
+	ld a, $83
 	ret
 
 
@@ -254,18 +257,26 @@ HandleSpecialAIAttacks:
 ; 	ld a, $82
 ; 	ret
 
-.Ingrain:
-	call CreateEnergyCardListFromHand
-	ret nc
-; encourage the attack if there are no energies in hand
+.EnergyToStadium:
+	ld a, DUELVARS_STADIUM_CARD
+	call GetTurnDuelistVariable
+	cp $ff
+	jp nz, .zero_score  ; already has a Stadium
 	ld a, $82
 	ret
+
+; .Ingrain:
+; 	call CreateEnergyCardListFromHand
+; 	ret nc
+; ; encourage the attack if there are no energies in hand
+; 	ld a, $82
+; 	ret
 
 .Mend:
 	ld e, FIGHTING_ENERGY
 	jr .accelerate_self_from_discard_got_energy
 
-.Flare:
+.FlameCloak:
 	ld e, FIRE_ENERGY
 .accelerate_self_from_discard_got_energy
 	ld a, CARD_LOCATION_DISCARD_PILE

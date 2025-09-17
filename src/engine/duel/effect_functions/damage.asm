@@ -4,11 +4,11 @@
 
 Recoil10Effect:
 	ld a, 10
-	jp DealRecoilDamageToSelf
+	jr TakeRecoilDamageEffect
 
 Recoil20Effect:
 	ld a, 20
-	jp DealRecoilDamageToSelf
+	jr TakeRecoilDamageEffect
 
 
 Recoil30UnlessActiveThisTurnEffect:
@@ -18,15 +18,20 @@ Recoil30UnlessActiveThisTurnEffect:
 
 Recoil30Effect:
 	ld a, 30
-	jp DealRecoilDamageToSelf
+	jr TakeRecoilDamageEffect
 
 Recoil40Effect:
 	ld a, 40
-	jp DealRecoilDamageToSelf
+	jr TakeRecoilDamageEffect
 
 Recoil50Effect:
 	ld a, 50
-	jp DealRecoilDamageToSelf
+	jr TakeRecoilDamageEffect
+
+
+TakeRecoilDamageEffect:
+	bank1call DealRecoilDamageToSelf
+	ret
 
 
 ; ------------------------------------------------------------------------------
@@ -166,6 +171,10 @@ Deal50DamageToTarget_DamageEffect:
 	ld de, 50
 	jr DealDamageToTarget_DE_DamageEffect
 
+Deal80DamageToTarget_DamageEffect:
+	ld de, 80
+	jr DealDamageToTarget_DE_DamageEffect
+
 Deal30DamageToTarget_DamageEffect:
 	ld de, 30
 	; jr DealDamageToTarget_DE_DamageEffect
@@ -187,6 +196,28 @@ DealDamageToTargetA_DE_DamageEffect:
 	; ld de, 30
 	call DealDamageToPlayAreaPokemon_RegularAnim
 	jp SwapTurn
+
+
+Snowstorm_DamageEffect:
+	ldh a, [hTemp_ffa0]
+	or a
+	ret z
+	call ATimes10
+	ld e, a
+	ld d, 0
+	jr DealDamageToTarget_DE_DamageEffect
+
+
+ThunderSpear_DamageEffect:
+	ld a, ATK_ANIM_THUNDER_PLAY_AREA
+	ld [wLoadedAttackAnimation], a
+	ldh a, [hTemp_ffa0]
+	add a
+	ret z
+	call ATimes10
+	ld e, a
+	ld d, 0
+	jr DealDamageToTarget_DE_DamageEffect
 
 
 LickingShot_DamageEffect:
@@ -258,109 +289,199 @@ DealDamageToFriendlyTarget_DE_DamageEffect:
 ; ------------------------------------------------------------------------------
 
 
-; puts 2 damage counters on the target at location in e,
-; without counting as attack damage (does not trigger damage reduction, etc.)
-; assumes: call to SwapTurn if needed
-; inputs:
+; input:
+;   d: damage to deal (direct damage)
 ;   e: PLAY_AREA_* of the target
-; output:
-;   carry: set if the target was Knocked Out
-Put2DamageCountersOnTarget:
-	ld d, 20
-	jr ApplyDirectDamage_RegularAnim
-
-
-; puts 1 damage counter on the target at location in e,
-; without counting as attack damage (does not trigger damage reduction, etc.)
-; assumes: call to SwapTurn if needed
-; inputs:
-;   e: PLAY_AREA_* of the target
-; output:
-;   carry: set if the target was Knocked Out
-Put1DamageCounterOnTarget:
-	ld d, 10
-	; jr ApplyDirectDamage_RegularAnim
-	; fallthrough
-
-
-; Puts damage counters on the target at location in e,
-;   without counting as attack damage (does not trigger damage reduction, etc.)
-; This is a mix between DealDamageToPlayAreaPokemon_RegularAnim (bank 0)
-;   and HandlePoisonDamage (bank 1).
-; inputs:
-;   d: amount of damage to deal
-;   e: PLAY_AREA_* of the target
-; output:
-;   carry: set if the target was Knocked Out
-; preserves:
-;   hl, de, bc
-ApplyDirectDamage_RegularAnim:
-	ld a, ATK_ANIM_BENCH_HIT
-	ld [wLoadedAttackAnimation], a
-	; fallthrough
-
-ApplyDirectDamage:
-	push hl
-	push de
-	push bc
+; preserves: hl, bc, de
+PutDamageCounters_NoAnim_Unchecked:
 	ld a, e
-	ld [wTempPlayAreaLocation_cceb], a
-	or a ; cp PLAY_AREA_ARENA
-	jr nz, .bench
+	or a  ; cp PLAY_AREA_ARENA
+	jr nz, .skip_no_damage_or_effect_check  ; .bench
 ; arena
 	ld a, [wNoDamageOrEffect]
 	or a
-	jr nz, .no_damage
-	jr .skip_no_damage_or_effect_check
-.bench
-	call IsBodyguardActive
-	jr nc, .skip_no_damage_or_effect_check
-.no_damage
-	ld d, 0
+	ret nz  ; no damage
+; .bench
+	; call IsBodyguardActive
+	; ccf
+	; ret nc  ; no damage
 .skip_no_damage_or_effect_check
 	xor a
 	ld [wNoDamageOrEffect], a
+	ld a, e
 	ld e, d
 	ld d, 0
-	push de
-	ld a, [wTempPlayAreaLocation_cceb]
-	add DUELVARS_ARENA_CARD
-	call GetTurnDuelistVariable
-	call GetCardIDFromDeckIndex
-	ld a, e
-	ld [wTempNonTurnDuelistCardID], a
-	pop de
-	ld a, [wTempPlayAreaLocation_cceb]
-	ld b, a
-	ld c, 0
 	add DUELVARS_ARENA_CARD_HP
 	call GetTurnDuelistVariable
-	push af
-	bank1call Func_7415
-	bank1call PlayAttackAnimation_DealAttackDamageSimple
-	; push hl
-	; call WaitForWideTextBoxInput
-	; pop hl
-	; push hl
-	; ldtx hl, Received10DamageDueToAfflictionText
-	; bank1call PrintNonTurnDuelistCardIDText
-	; pop hl
-	pop af
 	or a
-	jr z, .skip_knocked_out
-	call PrintKnockedOutIfHLZero
-	call WaitForWideTextBoxInput
+	ret z  ; already KO
+	call SubtractHP  ; preserves hl, bc, de
+	ld a, [hl]
+	or a
+	ret nz  ; no KO
 	scf  ; signal KO
-.skip_knocked_out
-	pop bc
-	pop de
-	pop hl
 	ret
+
+
+; Poison and put 1 damage counter on a selected target.
+SneakyBite_DamageEffect:
+; store trigger, just to reuse code below
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	ldh [hTemp_ffa0], a
+; check duelist type
+	ld a, DUELVARS_DUELIST_TYPE
+	call GetTurnDuelistVariable
+	cp DUELIST_TYPE_LINK_OPP
+	jr z, .link_opp
+	and DUELIST_TYPE_AI_OPP
+	jr nz, .ai_opp
+
+; player
+	call MayDamageTargetPokemon_PlayerSelectEffect
+	call SerialSend8Bytes
+	jr .damage
+
+.link_opp
+	call SerialRecv8Bytes
+	jr .damage
+
+.ai_opp
+; AI just selects the Active Pokémon
+	xor a  ; PLAY_AREA_ARENA
+	ldh [hTempPlayAreaLocation_ffa1], a
+	; fallthrough
+
+.damage
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	cp $ff
+	ret z
+	ld e, a
+	call PoisonEffect_OpponentPlayArea
+	; jr Curse_DamageEffect
+	; fallthrough
+
+
+Curse_DamageEffect:
+	call SetUsedPokemonPowerThisTurn_RestoreTrigger
+	; fallthrough
+
+Put1DamageCounterOnSelectedTarget_DamageEffect:
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	ld e, a
+	; fallthrough
+
+; input:
+;   e: PLAY_AREA_* of the target
+Put1DamageCounterOnTarget_DamageEffect:	
+	call SwapTurn
+	call Put1DamageCounterOnTarget
+	call SwapTurn
+	ret nc
+; Knocked Out Defending Pokémon
+	call SetFlag_KnockedOutOpponentPokemon
+	bank1call ClearKnockedOutPokemon_TakePrizes_CheckGameOutcome
+	ret
+
+
+; Poison and put 1 damage counter on up to 2 targets
+NightAmbush_DamageEffect:
+; store trigger, just to reuse code below
+	ldh a, [hTempPlayAreaLocation_ff9d]
+	ldh [hTemp_ffa0], a
+; check duelist type
+	ld a, DUELVARS_DUELIST_TYPE
+	call GetTurnDuelistVariable
+	cp DUELIST_TYPE_LINK_OPP
+	jr z, .link_opp
+	and DUELIST_TYPE_AI_OPP
+	jr nz, .ai_opp
+
+; player
+	call MayDamageTargetPokemon_PlayerSelectEffect
+	jr c, .send
+	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+	call GetNonTurnDuelistVariable
+	cp 2
+	call nc, MayDamageAnotherTargetPokemon_PlayerSelectEffect
+.send
+	call SerialSend8Bytes
+	jr .damage
+
+.link_opp
+	call SerialRecv8Bytes
+	jr .damage
+
+.ai_opp
+; AI just selects the Active Pokémon
+	xor a  ; PLAY_AREA_ARENA
+	ldh [hTempPlayAreaLocation_ffa1], a
+	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+	call GetNonTurnDuelistVariable
+	cp 2
+	jr c, .damage  ; no Bench
+	ld a, PLAY_AREA_BENCH_1
+	ldh [hPlayAreaEffectTarget], a
+	; fallthrough
+
+.damage
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	cp $ff
+	ret z
+	ld e, a
+	call PoisonEffect_OpponentPlayArea
+	call Curse_DamageEffect
+; second target
+	ldh a, [hPlayAreaEffectTarget]
+	cp $ff
+	ret z
+	ld e, a
+	call PoisonEffect_OpponentPlayArea  ; preserves: de
+	jp Put1DamageCounterOnTarget_DamageEffect
 
 
 ; ------------------------------------------------------------------------------
 ; Targeted Damage - Player Selection
 ; ------------------------------------------------------------------------------
+
+
+MayDamageTargetPokemon_PlayerSelectEffect:
+	ld a, $ff
+	ldh [hTempPlayAreaLocation_ffa1], a
+	ldtx hl, ChoosePokemonToGiveDamageText
+	call DrawWideTextBox_WaitForInput
+	call SwapTurn
+	call HandlePlayerSelectionPokemonInPlayArea_AllowCancel
+	ldh [hTempPlayAreaLocation_ffa1], a
+	jp SwapTurn
+
+
+; uses the new wPlayAreaMarkedLocations and wPlayAreaMarkingSymbol variables
+; it should clean up after itself
+MayDamageAnotherTargetPokemon_PlayerSelectEffect:
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	call GetPowerOf2
+	ld [wPlayAreaMarkedLocations], a
+	ld a, SYM_HP_NOK
+	ld [wPlayAreaMarkingSymbol], a
+	ld a, $ff
+	ldh [hPlayAreaEffectTarget], a
+	ldtx hl, ChoosePokemonToGiveDamageText
+	call DrawWideTextBox_WaitForInput
+	call SwapTurn
+.loop
+	call HandlePlayerSelectionPokemonInPlayArea_AllowCancel
+	jr c, .done
+	ld e, a
+	ldh [hPlayAreaEffectTarget], a
+	ldh a, [hTempPlayAreaLocation_ffa1]
+	cp e
+	jr z, .loop
+	or a  ; reset carry
+.done
+	ld a, 0  ; preserve carry
+	ld [wPlayAreaMarkedLocations], a
+	ld [wPlayAreaMarkingSymbol], a
+	jp SwapTurn
 
 
 ; can choose any Pokémon in Play Area
@@ -408,16 +529,6 @@ DamageTargetBenchedPokemon_PlayerSelectEffect:
 DamageFriendlyBenchedPokemonIfAny_PlayerSelectEffect:
 	call SwapTurn
 	call DamageTargetBenchedPokemonIfAny_PlayerSelectEffect
-	jp SwapTurn
-
-
-SurpriseBite_PlayerSelectEffect:
-	ldtx hl, ChoosePokemonInTheBenchToGiveDamageText
-	call DrawWideTextBox_WaitForInput
-	call SwapTurn
-	ld a, CARDTEST_FULL_HP_POKEMON
-	call HandlePlayerSelectionMatchingPokemonInBench_AllowCancel
-	ldh [hTempPlayAreaLocation_ffa1], a
 	jp SwapTurn
 
 
@@ -559,14 +670,10 @@ DamageFriendlyBenchedPokemon_AISelectEffect:
 ; ------------------------------------------------------------------------------
 
 SpikesDamageEffect:
-	call ArePokemonPowersDisabled
-	ret c  ; Powers are disabled
 	call SwapTurn
-	ld a, SANDSLASH
-	call CountPokemonIDInPlayArea
+	call IsSpikesActive
 	call SwapTurn
-	or a
-	ret z  ; no Sandslash in the opponent's Play Area
+	ret nc  ; Spikes is not active
 
 	; ld a, [wDuelDisplayedScreen]
 	; cp DUEL_MAIN_SCENE

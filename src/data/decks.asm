@@ -61,14 +61,14 @@ DeckPointers:
 UnnamedDeck:
 	; deck_list_start
 	; card_item PSYCHIC_ENERGY,         20
-	; card_item SLOWPOKE_LV9,            4
+	; card_item SLOWPOKE,                4
 	; card_item CLEFAIRY,                4
 	; card_item MEW_LV8,                 4
 	; card_item PIDGEOT_LV40,            2
 	; card_item PIDGEOTTO,               2
 	; card_item PIDGEY,                  4
 	; card_item IMAKUNI_CARD,            2
-	; card_item GAMBLER,                 2
+	; card_item ROCKET_HEADQUARTERS,            2
 	; card_item PROFESSOR_OAK,           2
 	; card_item ENERGY_REMOVAL,          2
 	; card_item ENERGY_RETRIEVAL,        2
@@ -108,7 +108,7 @@ UnnamedDeck:
 	; card_item EEVEE,                   4
 	; card_item TAUROS,                  4
 	; card_item ENERGY_SEARCH,           2
-	; card_item GAMBLER,                 2
+	; card_item ROCKET_HEADQUARTERS,            2
 	; card_item ITEM_FINDER,             2
 	; card_item IMPOSTER_PROFESSOR_OAK,  2
 	; card_item POKEMON_BREEDER,         2
@@ -162,7 +162,7 @@ UnnamedDeck:
 	; card_item PSYCHIC_ENERGY,   10
 	; card_item DARKNESS_ENERGY,  10
 	; card_item MANKEY,            4
-	; card_item SLOWPOKE_LV9,      4
+	; card_item SLOWPOKE,          4
 	; card_item SLOWBRO,           4
 	; card_item ABRA,              4
 	; card_item KADABRA,           4
@@ -192,7 +192,7 @@ UnnamedDeck:
 
 	; deck_list_start
 	; card_item PSYCHIC_ENERGY,  20
-	; card_item SLOWPOKE_LV9,     4
+	; card_item SLOWPOKE,         4
 	; card_item SLOWBRO,          4
 	; card_item CLEFAIRY,         4
 	; card_item SPEAROW,          4
@@ -207,7 +207,7 @@ UnnamedDeck:
 
 	; deck_list_start
 	; card_item PSYCHIC_ENERGY, 24
-	; card_item SLOWPOKE_LV9,    4
+	; card_item SLOWPOKE,        4
 	; card_item SLOWBRO,         4
 	; card_item CLEFAIRY,        4
 	; card_item MEW_LV15,        4
@@ -221,7 +221,7 @@ UnnamedDeck:
 
 	; deck_list_start
 	; card_item PSYCHIC_ENERGY,  24
-	; card_item SLOWPOKE_LV9,     4
+	; card_item SLOWPOKE,         4
 	; card_item CLEFAIRY,         4
 	; card_item MEW_LV15,         4
 	; card_item DROWZEE,          4
@@ -927,7 +927,7 @@ LegendaryZapdosDeck:
 	card_item SWITCH,            2
 	card_item PLUSPOWER,         3
 	card_item POTION,            3
-	card_item GAMBLER,           1
+	card_item ROCKET_HEADQUARTERS,      1
 	deck_list_end
 	tx LegendaryZapdosDeckName
 
@@ -946,7 +946,7 @@ LegendaryArticunoDeck:
 	card_item ENERGY_RETRIEVAL,  3
 	card_item SWITCH,            3
 	card_item SCOOP_UP,          4
-	card_item GAMBLER,           1
+	card_item ROCKET_HEADQUARTERS,      1
 	deck_list_end
 	tx LegendaryArticunoDeckName
 
@@ -968,9 +968,9 @@ LegendaryDragoniteDeck:
 	card_item POKEMON_TRADER,           2
 	card_item POKEMON_BREEDER,          2
 	card_item ENERGY_RETRIEVAL,         1
-	card_item ENERGY_RECYCLER,   1
+	card_item ENERGY_RECYCLER,          1
 	card_item SWITCH,                   2
-	card_item GAMBLER,                  1
+	card_item ROCKET_HEADQUARTERS,             1
 	deck_list_end
 	tx LegendaryDragoniteDeckName
 
@@ -1091,10 +1091,10 @@ StrangePsyshockDeck:
 	card_item PROFESSOR_OAK,   2
 	card_item POKEMON_CENTER,  2
 	card_item ENERGY_REMOVAL,  3
-	card_item GIOVANNI,    3
+	card_item GIOVANNI,        3
 	card_item SCOOP_UP,        4
 	card_item SWITCH,          4
-	card_item GAMBLER,         1
+	card_item ROCKET_HEADQUARTERS,    1
 	deck_list_end
 	tx StrangePsyshockDeckName
 
@@ -1141,7 +1141,7 @@ FireChargeDeck:
 	card_item POTION,                   3
 	card_item FULL_HEAL,                1
 	card_item RECYCLE,                  3
-	card_item GAMBLER,                  1
+	card_item ROCKET_HEADQUARTERS,             1
 	deck_list_end
 	tx FireChargeDeckName
 
@@ -1194,9 +1194,9 @@ PowerfulRonaldDeck:
 	card_item ENERGY_REMOVAL,          2
 	card_item SWITCH,                  1
 	card_item PLUSPOWER,               2
-	card_item GIOVANNI,            2
+	card_item GIOVANNI,                2
 	card_item FULL_HEAL,               1
-	card_item GAMBLER,                 1
+	card_item ROCKET_HEADQUARTERS,            1
 	deck_list_end
 	tx PowerfulRonaldDeckName
 
@@ -1219,9 +1219,9 @@ InvincibleRonaldDeck:
 	card_item ENERGY_RETRIEVAL,        2
 	card_item ENERGY_REMOVAL,          2
 	card_item SCOOP_UP,                2
-	card_item GIOVANNI,            2
+	card_item GIOVANNI,                2
 	card_item PLUSPOWER,               2
-	card_item GAMBLER,                 1
+	card_item ROCKET_HEADQUARTERS,            1
 	deck_list_end
 	tx InvincibleRonaldDeckName
 
@@ -1246,7 +1246,7 @@ LegendaryRonaldDeck:
 	card_item POKEMON_BREEDER,          2
 	card_item ENERGY_REMOVAL,           3
 	card_item SCOOP_UP,                 3
-	card_item GAMBLER,                  1
+	card_item ROCKET_HEADQUARTERS,             1
 	deck_list_end
 	tx LegendaryRonaldDeckName
 
@@ -1402,7 +1402,7 @@ WaterfrontPokemonDeck:
 	card_item SEAKING,           1
 	card_item STARYU,            2
 	card_item STARMIE,           1
-	card_item SLOWPOKE_LV9,      2
+	card_item SLOWPOKE,          2
 	card_item SLOWBRO,           1
 	card_item FARFETCHD,         1
 	card_item DRATINI,           2
@@ -1647,7 +1647,7 @@ StrangePowerDeck:
 	deck_list_start
 	card_item PSYCHIC_ENERGY,          22
 	card_item DOUBLE_COLORLESS_ENERGY,  3
-	card_item SLOWPOKE_LV9,             3
+	card_item SLOWPOKE,                 3
 	card_item SLOWBRO,                  2
 	card_item DROWZEE,                  4
 	card_item HYPNO,                    3
@@ -1793,7 +1793,7 @@ FireBlastDeck:
 ImakuniDeck:
 	deck_list_start
 	card_item PSYCHIC_ENERGY, 24
-	card_item SLOWPOKE_LV9,    4
+	card_item SLOWPOKE,        4
 	card_item SLOWBRO,         4
 	card_item DROWZEE,         4
 	card_item HYPNO,           4

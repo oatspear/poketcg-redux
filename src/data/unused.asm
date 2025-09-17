@@ -1,3 +1,520 @@
+
+energy FIRE, 1, COLORLESS, 1 ; energies
+tx HeatWaveName ; name
+tx HeatWaveDescription ; description
+dw NONE ; description (cont)
+db 10 ; damage
+db DAMAGE_NORMAL ; category
+dw HeatWaveEffectCommands ; effect commands
+db INFLICT_POISON ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_BIG_FLAME ; animation
+
+
+
+OverwhelmName:
+	text "Overwhelm"
+	done
+
+OverwhelmDescription:
+	text "If the opponent has 4 or more cards"
+	line "in their hand, they discard a random"
+	line "card from their hand and the"
+	line "Defending Pokémon is now Paralyzed."
+	done
+
+; attack 2
+energy DARKNESS, 2, COLORLESS, 1 ; energies
+tx OverwhelmName ; name
+tx OverwhelmDescription ; description
+dw NONE ; description (cont)
+db 40 ; damage
+db DAMAGE_NORMAL ; category
+dw OverwhelmEffectCommands ; effect commands
+db INFLICT_PARALYSIS ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_HIT_EFFECT ; animation
+
+
+NeutralizingGasDescription:
+	text "While this Pokémon is in the Active"
+	line "Spot, ignore all Pokémon Powers"
+	line "other than Neutralizing Gases."
+	done
+
+
+NightAmbushName:
+	text "Night Ambush"
+	done
+
+NightAmbushDescription:
+	text "This attack does 30 damage to 1"
+	line "of your opponent's Pokémon."
+	line "That Pokémon is now Poisoned."
+	; line "You may switch this Pokémon with"
+	; line "one of your Benched Pokémon."
+	done
+
+; attack 2
+energy DARKNESS, 1, COLORLESS, 1 ; energies
+tx NightAmbushName ; name
+tx NightAmbushDescription ; description
+tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
+db 0 ; damage
+db RESIDUAL ; category
+dw NightAmbushEffectCommands ; effect commands
+db INFLICT_POISON | DAMAGE_TO_OPPONENT_BENCH ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 2
+db ATK_ANIM_AGILITY_NO_HIT ; animation
+
+
+energy 0 ; energies
+tx VampiricAuraName ; name
+tx VampiricAuraDescription ; description
+tx PokemonPowerDescriptionCont ; description (cont)
+db 0 ; damage
+db POKEMON_POWER ; category
+dw PassiveAbilityEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_PKMN_POWER_1 ; animation
+
+
+FoulOdorName:
+	text "Foul Odor"
+	done
+
+; attack 2
+energy GRASS, 1 ; energies
+tx FoulOdorName ; name
+tx InflictPoisonDescription ; description
+tx StunSporeDescription ; description (cont)
+db 10 ; damage
+db DAMAGE_NORMAL ; category
+dw FoulOdorEffectCommands ; effect commands
+db INFLICT_POISON | INFLICT_PARALYSIS ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_FOUL_ODOR ; animation
+
+
+
+; attack 1
+energy 0 ; energies
+tx NoxiousScalesName ; name
+tx NoxiousScalesDescription ; description
+tx PokemonPowerDescriptionCont ; description (cont)
+db 0 ; damage
+db POKEMON_POWER ; category
+dw PassiveAbilityEffectCommands ; effect commands
+db INFLICT_POISON | INFLICT_CONFUSION ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 1
+db ATK_ANIM_POWDER_HIT ; animation
+
+
+; attack 2
+energy COLORLESS, 2 ; energies
+tx UTurnName ; name
+tx SwitchThisPokemonDescription ; description
+dw NONE ; description (cont)
+db 30 ; damage
+db DAMAGE_NORMAL ; category
+dw SwitchUserEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_QUICK_ATTACK ; animation
+
+
+; attack 1
+energy FIGHTING, 1 ; energies
+tx PowerUpPunchName ; name
+tx NextTurnDoubleDamageDescription ; description
+dw NONE ; description (cont)
+db 10 ; damage
+db DAMAGE_NORMAL ; category
+dw SwordsDanceEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db SPECIAL_AI_HANDLING ; flags 3
+db 0
+db ATK_ANIM_PUNCH ; animation
+
+
+; attack 2
+energy FIRE, 1 ; energies
+tx ScorchingColumnName ; name
+tx ScorchingColumnDescription ; description
+dw NONE ; description (cont)
+db 20 ; damage
+db DAMAGE_X ; category
+dw ScorchingColumnEffectCommands ; effect commands
+db INFLICT_BURN ; flags 1
+db ATTACHED_ENERGY_BOOST | DISCARD_ENERGY ; flags 2
+db NONE ; flags 3
+db 9
+db ATK_ANIM_BIG_FLAME ; animation
+
+
+; attack 2
+energy FIGHTING, 2, COLORLESS, 1 ; energies
+tx SkyUppercutName ; name
+tx UnaffectedByResistanceDescription ; description
+dw NONE ; description (cont)
+db 40 ; damage
+db DAMAGE_NORMAL ; category
+dw UnaffectedByResistanceEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_PUNCH ; animation
+
+
+; attack 1
+energy FIGHTING, 1 ; energies
+tx GetMadName ; name
+tx GetMadDescription ; description
+dw NONE ; description (cont)
+db 10 ; damage
+db DAMAGE_PLUS ; category
+dw GetMadEffectCommands ; effect commands
+db LOW_RECOIL ; flags 1
+db NONE ; flags 2
+db BOOST_IF_TAKEN_DAMAGE ; flags 3
+db 0
+db ATK_ANIM_HIT ; animation
+
+
+StrikeBack20Description:
+	text "If this is your Active Pokémon and"
+	line "it is damaged by an opponent's"
+	line "attack (even if this Pokémon is"
+	line "Knocked Out), put 2 damage counters"
+	line "on the Attacking Pokémon."
+	done
+
+; attack 1
+energy 0 ; energies
+tx StrikeBackName ; name
+tx StrikeBack20Description ; description
+tx PokemonPowerDescriptionCont ; description (cont)
+db 0 ; damage
+db POKEMON_POWER ; category
+dw PassiveAbilityEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_GLOW_EFFECT ; animation
+
+
+; attack 2
+energy FIGHTING, 2 ; energies
+tx ChopDownName ; name
+tx ChopDownDescription ; description
+dw NONE ; description (cont)
+db 30 ; damage
+db DAMAGE_PLUS ; category
+dw ChopDownEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_HIT ; animation
+
+
+
+
+SheerColdName:
+	text "Sheer Cold"
+	done
+
+SheerColdDescription:
+	text "Discard 1 or more <WATER> Energy attached"
+	line "to this Pokémon to use this attack."
+	line "This attack does 20 damage for"
+	line "each Energy discarded this way."
+	done
+
+IF SLEEP_WITH_COIN_FLIP
+	; attack 2
+	energy WATER, 1 ; energies
+	tx SheerColdName ; name
+	tx SheerColdDescription ; description
+	tx Discard1EnergyFromTargetDescription ; description (cont)
+	db 20 ; damage
+	db DAMAGE_X ; category
+	dw SheerColdEffectCommands ; effect commands
+	db NONE ; flags 1
+	db DISCARD_ENERGY | ATTACHED_ENERGY_BOOST ; flags 2
+	db NONE ; flags 3  | SPECIAL_AI_HANDLING
+	db 10
+	db ATK_ANIM_BLIZZARD ; animation
+ELSE
+	; attack 2
+	energy WATER, 1 ; energies
+	tx SheerColdName ; name
+	tx SheerColdDescription ; description
+	tx InflictSleepDescription ; description (cont)
+	db 20 ; damage
+	db DAMAGE_X ; category
+	dw SheerColdEffectCommands ; effect commands
+	db INFLICT_SLEEP ; flags 1
+	db ATTACHED_ENERGY_BOOST ; flags 2
+	db NONE ; flags 3  | SPECIAL_AI_HANDLING
+	db 10
+	db ATK_ANIM_BLIZZARD ; animation
+ENDC
+
+
+
+; attack 1
+energy LIGHTNING, 1 ; energies
+tx PlasmaName ; name
+tx Attach1LightningEnergyFromDiscardDescription ; description
+dw NONE ; description (cont)
+db 10 ; damage
+db DAMAGE_NORMAL ; category
+dw Attach1LightningEnergyFromDiscardEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db SPECIAL_AI_HANDLING ; flags 3
+db 0
+db ATK_ANIM_THUNDER_WAVE ; animation
+
+
+ThunderstormName:
+	text "Thunderstorm"
+	done
+
+ThunderstormDescription:
+	text "Discard 1 or more <LIGHTNING> Energy attached"
+	line "to this Pokémon to use this attack."
+	line "This attack does 10 damage for each"
+	line "Energy discarded this way."
+	line "It also does 10 damage to each of"
+	line "of your opponent's Benched Pokémon."
+	done
+
+; attack 2
+energy LIGHTNING, 1 ; energies
+tx ThunderstormName ; name
+tx ThunderstormDescription ; description
+tx NoWeaknessResistanceForBenchDescriptionCont ; description (cont)
+db 10 ; damage
+db DAMAGE_X ; category
+dw ThunderstormEffectCommands ; effect commands
+db DAMAGE_TO_OPPONENT_BENCH ; flags 1
+db DISCARD_ENERGY | ATTACHED_ENERGY_BOOST ; flags 2
+db NONE ; flags 3  | SPECIAL_AI_HANDLING
+db 10
+db ATK_ANIM_THUNDERSTORM ; animation
+
+
+
+
+; attack 1
+energy FIRE, 1 ; energies
+tx FlareName ; name
+tx Attach1FireEnergyFromDiscardDescription ; description
+dw NONE ; description (cont)
+db 10 ; damage
+db DAMAGE_NORMAL ; category
+dw Attach1FireEnergyFromDiscardEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db SPECIAL_AI_HANDLING ; flags 3
+db 1
+db ATK_ANIM_SMALL_FLAME ; animation
+
+
+
+PollenBurstName:
+	text "Pollen Burst"
+	done
+
+PollenBurstDescription:
+	text "The Defending Pokémon is now"
+	line "Poisoned and Burned."
+	line "If this Pokémon was damaged since"
+	line "your last turn, the Defending"
+	line "Pokémon is now also Paralyzed."
+	done
+
+; attack 1
+energy GRASS, 1 ; energies
+tx PollenBurstName ; name
+tx PollenBurstDescription ; description
+dw NONE ; description (cont)
+db 10 ; damage
+db DAMAGE_NORMAL ; category
+dw PollenBurstEffectCommands ; effect commands
+db INFLICT_POISON | INFLICT_PARALYSIS ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 1
+db ATK_ANIM_POWDER_HIT ; animation
+
+; attack 1
+energy GRASS, 1, COLORLESS, 1 ; energies
+tx PollenBurstName ; name
+tx KarateChopDescription ; description
+tx PollenBurstDescription ; description (cont)
+db 50 ; damage
+db DAMAGE_MINUS ; category
+dw PollenBurstEffectCommands ; effect commands
+db INFLICT_POISON | INFLICT_PARALYSIS ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 1
+db ATK_ANIM_POWDER_HIT ; animation
+
+
+
+
+
+GigaDrainDescription:
+	text "This attack does 10 damage for each"
+	line "energy attached to this Pokémon."
+	done
+
+; attack 1
+energy GRASS, 1 ; energies
+tx GigaDrainName ; name
+tx GigaDrainDescription ; description
+tx LeechLifeDescription ; description (cont)
+db 10 ; damage
+db DAMAGE_X ; category
+dw GigaDrainEffectCommands ; effect commands
+db NONE ; flags 1
+db HEAL_USER | ATTACHED_ENERGY_BOOST ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_DRAIN ; animation
+
+
+
+PollenBurstDescription:
+	text "If this Pokémon was damaged since"
+	line "your last turn, the Defending"
+	line "Pokémon is now Poisoned, Burned"
+	line "and Confused."
+	done
+
+; attack 2
+energy GRASS, 2, COLORLESS, 1 ; energies
+tx PollenBurstName ; name
+tx KarateChopDescription ; description
+tx PollenBurstDescription ; description (cont)
+db 80 ; damage
+db DAMAGE_MINUS ; category
+dw PollenBurstEffectCommands ; effect commands
+db INFLICT_POISON | INFLICT_PARALYSIS ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 1
+db ATK_ANIM_POWDER_HIT ; animation
+
+
+
+EnergyGeneratorName:
+	text "Energy Generator"
+	done
+
+EnergyGeneratorDescription:
+	text "Once during your turn, you may"
+	line "search your deck for a Basic Energy"
+	line "card and attach it to 1 of your"
+	line "Pokémon. Then, shuffle your deck"
+	line "and put 2 damage counters on that"
+	line "Pokémon."
+	done
+
+; attack 1
+energy 0 ; energies
+tx EnergyGeneratorName ; name
+tx EnergyGeneratorDescription ; description
+tx PokemonPowerDescriptionCont ; description (cont)
+db 0 ; damage
+db POKEMON_POWER ; category
+dw EnergyGeneratorEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_PKMN_POWER_1 ; animation
+
+
+
+DarkRetributionName:
+	text "Dark Retribution"
+	done
+
+DarkRetributionDescription:
+	text "When your Active Pokémon is damaged"
+	line "by an opponent's attack (even if it"
+	line "is Knocked Out), if it has any"
+	line "attached <DARKNESS> Energy, put 1 damage"
+	line "counter on the Attacking Pokémon."
+	done
+
+; attack 1
+energy 0 ; energies
+tx DarkRetributionName ; name
+tx DarkRetributionDescription ; description
+tx PokemonPowerDescriptionCont ; description (cont)
+db 0 ; damage
+db POKEMON_POWER ; category
+dw PassiveAbilityEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_PKMN_POWER_1 ; animation
+
+
+
+
+EnergyJoltName:
+	text "Energy Jolt"
+	done
+
+EnergyJoltDescription:
+	text "Once during your turn, you may use"
+	line "this Power. All Energies attached to"
+	line "your Pokémon count as <LIGHTNING> Energy."
+	done
+
+; attack 1
+energy 0 ; energies
+tx EnergyJoltName ; name
+tx EnergyJoltDescription ; description
+tx PokemonPowerDescriptionCont ; description (cont)
+db 0 ; damage
+db POKEMON_POWER ; category
+dw EnergyJoltEffectCommands ; effect commands
+db NONE ; flags 1
+db NONE ; flags 2
+db NONE ; flags 3
+db 0
+db ATK_ANIM_PKMN_POWER_1 ; animation
+
+
+
+
 DraconicEvolutionName:
 	text "Draconic Evolution"
 	done
@@ -17,7 +534,7 @@ tx DraconicEvolutionDescription ; description
 tx PokemonPowerDescriptionCont ; description (cont)
 db 0 ; damage
 db POKEMON_POWER ; category
-dw PassivePowerEffectCommands ; effect commands
+dw PassiveAbilityEffectCommands ; effect commands
 db NONE ; flags 1
 db NONE ; flags 2
 db NONE ; flags 3
@@ -43,7 +560,7 @@ db NONE ; flags 1
 db FLAG_2_BIT_6 ; flags 2
 db NONE ; flags 3
 db 2
-db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
+db ATK_ANIM_POWDER_HIT ; animation
 
 
 PetalDanceName:
@@ -107,7 +624,7 @@ db INFLICT_POISON | INFLICT_PARALYSIS | INFLICT_SLEEP ; flags 1
 db NONE ; flags 2
 db NONE ; flags 3
 db 0
-db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
+db ATK_ANIM_POWDER_HIT ; animation
 
 
 
@@ -231,12 +748,12 @@ tx LethargySporesDescription ; description
 tx PokemonPowerDescriptionCont ; description (cont)
 db 0 ; damage
 db POKEMON_POWER ; category
-dw PassivePowerEffectCommands ; effect commands
+dw PassiveAbilityEffectCommands ; effect commands
 db INFLICT_SLEEP ; flags 1
 db NONE ; flags 2
 db NONE ; flags 3
 db 1
-db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
+db ATK_ANIM_POWDER_HIT ; animation
 
 
 
@@ -289,7 +806,7 @@ db INFLICT_POISON | INFLICT_CONFUSION ; flags 1
 db NONE ; flags 2
 db NONE ; flags 3
 db 0
-db ATK_ANIM_POWDER_EFFECT_CHANCE ; animation
+db ATK_ANIM_POWDER_HIT ; animation
 
 
 
@@ -387,7 +904,7 @@ tx ClairvoyanceDescription ; description
 tx PokemonPowerDescriptionCont ; description (cont)
 db 0 ; damage
 db POKEMON_POWER ; category
-dw PassivePowerEffectCommands ; effect commands
+dw PassiveAbilityEffectCommands ; effect commands
 db NONE ; flags 1
 db NONE ; flags 2
 db NONE ; flags 3
@@ -494,9 +1011,9 @@ energy COLORLESS, 1 ; energies
 	db 0 ; damage
 	db RESIDUAL ; category
 	dw MimicEffectCommands ; effect commands
-	db DRAW_CARD ; flags 1
+	db NONE ; flags 1
 	db NONE ; flags 2
-	db SPECIAL_AI_HANDLING ; flags 3
+	db DRAW_CARD | SPECIAL_AI_HANDLING ; flags 3
 	db 0
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
@@ -645,7 +1162,7 @@ tx PrehistoricPowerDescription ; description
 tx PokemonPowerDescriptionCont ; description (cont)
 db 0 ; damage
 db POKEMON_POWER ; category
-dw PassivePowerEffectCommands ; effect commands
+dw PassiveAbilityEffectCommands ; effect commands
 db NONE ; flags 1
 db NONE ; flags 2
 db NONE ; flags 3
@@ -724,9 +1241,9 @@ dw NONE ; description (cont)
 db 0 ; damage
 db RESIDUAL ; category
 dw CoreRegenerationEffectCommands ; effect commands
-db DRAW_CARD ; flags 1
+db NONE ; flags 1
 db HEAL_USER ; flags 2
-db NONE ; flags 3
+db DRAW_CARD ; flags 3
 db 1
 db ATK_ANIM_GLOW_EFFECT ; animation
 
@@ -827,7 +1344,7 @@ tx SplashingAttacksDescription ; description
 tx PokemonPowerDescriptionCont ; description (cont)
 db 0 ; damage
 db POKEMON_POWER ; category
-dw PassivePowerEffectCommands ; effect commands
+dw PassiveAbilityEffectCommands ; effect commands
 db NONE ; flags 1
 db NONE ; flags 2
 db NONE ; flags 3
@@ -907,9 +1424,9 @@ dw NONE ; description (cont)
 db 0 ; damage
 db RESIDUAL ; category
 dw WaterReserveEffectCommands ; effect commands
-db DRAW_CARD ; flags 1
+db NONE ; flags 1
 db NONE ; flags 2
-db NONE ; flags 3
+db DRAW_CARD ; flags 3
 db 0
 db ATK_ANIM_GLOW_EFFECT ; animation
 
@@ -1552,7 +2069,7 @@ SlowpokeLv9Card:
 	tx SlowpokeName ; name
 	db PROMOSTAR ; rarity
 	db PROMOTIONAL | PRO ; sets
-	db SLOWPOKE_LV9
+	db SLOWPOKE
 	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
@@ -1618,7 +2135,7 @@ MeowthLv14Card:
 	tx PokemonPowerDescriptionCont ; description (cont)
 	db 0 ; damage
 	db POKEMON_POWER ; category
-	dw PassivePowerEffectCommands ; effect commands
+	dw PassiveAbilityEffectCommands ; effect commands
 	db NONE ; flags 1
 	db NONE ; flags 2
 	db NONE ; flags 3
@@ -1739,9 +2256,9 @@ PikachuAltLv16Card:
 	db 0 ; damage
 	db RESIDUAL ; category
 	dw Draw2CardsEffectCommands ; effect commands
-	db DRAW_CARD ; flags 1
+	db NONE ; flags 1
 	db NONE ; flags 2
-	db SPECIAL_AI_HANDLING ; flags 3
+	db DRAW_CARD | SPECIAL_AI_HANDLING ; flags 3
 	db 0
 	db ATK_ANIM_GLOW_EFFECT ; animation
 
