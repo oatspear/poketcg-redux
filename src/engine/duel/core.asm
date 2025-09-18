@@ -1758,7 +1758,7 @@ IF CC_IS_COIN_FLIP
 	or a
 	ret
 .flinched
-	ldtx hl, UnableDueToParalysisText
+	ldtx hl, UnableDueToFlinchText
 	scf
 	ret
 ELSE

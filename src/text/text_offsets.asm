@@ -42,7 +42,11 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer EnergyCardText                                     ; 0x0020
 	textpointer DeckPrinterText                                    ; 0x0021
 	textpointer NoPokemonOnTheBenchText                            ; 0x0023
-	textpointer UnableDueToParalysisText                           ; 0x0025
+IF CC_IS_COIN_FLIP
+	textpointer UnableDueToFlinchText
+ELSE
+	textpointer UnableDueToParalysisText
+ENDC
 	textpointer ReceivedDamageDueToPoisonText
 	textpointer ReceivedDamageDueToBurnText
 	textpointer PokemonFlinchedText
