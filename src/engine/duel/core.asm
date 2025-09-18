@@ -1645,7 +1645,7 @@ PrintAttackMenuSelectButtonHint:
 	ld a, [hl]
 	call LoadCardDataToBuffer2_FromDeckIndex
 	call LoadCard2NameToRamText
-	ld d, 4
+	ld d, 2
 	ld e, 17
 	ldtx hl, PressSelectToGoOneStageBelowText
 	; jp InitTextPrinting_ProcessTextFromID
