@@ -1497,7 +1497,7 @@ HandleDefendingPokemonAttackSelection:
 	ldh [hCurSelectionItem], a
 
 .start
-	bank1call PrintAndLoadAttacksToDuelTempList
+	bank1call PrintAndLoadAttacksFromActivePokemonToDuelTempList
 	push af
 	ldh a, [hCurSelectionItem]
 	ld hl, .menu_parameters
@@ -4800,10 +4800,6 @@ Metronome_CheckAttacks:
 ; does nothing for AI
 Metronome_AISelectEffect:
 	ret
-
-; Metronome1_UseAttackEffect:
-; 	ld a, 1 ; energy cost of this attack
-; 	jr HandlePlayerMetronomeEffect
 
 
 ; output:

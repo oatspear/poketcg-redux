@@ -1249,8 +1249,18 @@ DuelMenu_Attack:
 	jp PrintDuelMenuAndHandleInput
 
 .can_attack
+	xor a  ; PLAY_AREA_ARENA
+	ldh [hTempPlayAreaLocation_ff9d], a
+	call GetCardOneStageBelow  ; preload wAllStagesIndices
+.can_attack_set_current_arena_card
 	xor a
 	ld [wSelectedDuelSubMenuItem], a
+	ld a, DUELVARS_ARENA_CARD
+	call GetTurnDuelistVariable
+	ldh [hTempCardIndex_ff98], a
+	ld l, DUELVARS_ARENA_CARD_STAGE
+	ld a, [hl]
+	ld [wDuelAttackSubMenuSelectedStage], a
 .try_open_attack_menu
 	call PrintAndLoadAttacksToDuelTempList
 	or a
@@ -1261,26 +1271,25 @@ DuelMenu_Attack:
 
 .open_attack_menu
 	push af
+	call PrintAttackMenuSelectButtonHint
 	ld a, [wSelectedDuelSubMenuItem]
 	ld hl, AttackMenuParameters
 	call InitializeMenuParameters
 	pop af
 	ld [wNumMenuItems], a
-	ldh a, [hWhoseTurn]
-	ld h, a
-	ld l, DUELVARS_ARENA_CARD
-	ld a, [hl]
-	call LoadCardDataToBuffer1_FromDeckIndex
 
 .wait_for_input
 	call DoFrame
 	ldh a, [hKeysPressed]
-	and START
+	bit START_F, a
 	jr nz, .display_selected_attack_info
+	bit SELECT_F, a
+	jr nz, .choose_attacks_from_stage_below
 	call HandleMenuInput
 	jr nc, .wait_for_input
 	cp -1 ; was B pressed?
 	jp z, PrintDuelMenuAndHandleInput
+; A pressed
 	ld [wSelectedDuelSubMenuItem], a
 	call CheckIfEnoughEnergiesToAttack
 	jr nc, .enough_energy
@@ -1316,9 +1325,50 @@ ENDC
 	jr .try_open_attack_menu
 
 .display_selected_attack_info
+; use the temporary card index instead of hard-coding the arena card
+	; ldh a, [hWhoseTurn]
+	; ld h, a
+	; ld l, DUELVARS_ARENA_CARD
+	; ld a, [hl]
+	ldh a, [hTempCardIndex_ff98]
+	call LoadCardDataToBuffer1_FromDeckIndex
 	call OpenAttackPage
 	call DrawDuelMainScene
 	jp .try_open_attack_menu
+
+.choose_attacks_from_stage_below
+	ld a, [wDuelAttackSubMenuSelectedStage]
+	or a
+	jp z, .can_attack_set_current_arena_card  ; BASIC, roll over
+; go one stage below
+	dec a
+	ld [wDuelAttackSubMenuSelectedStage], a
+; get card from one stage below
+	ld e, a
+	ld d, $00
+	ld hl, wAllStagesIndices
+	add hl, de
+	ld a, [hl]
+	ldh [hTempCardIndex_ff98], a
+; reset menu cursor position
+	xor a
+	ld [wSelectedDuelSubMenuItem], a
+	jp .try_open_attack_menu
+
+; .rollover_to_highest_stage
+; 	ld hl, wAllStagesIndices + 2
+; 	ld e, STAGE2
+; 	ld a, [hld]
+; 	cp $ff
+; 	jr nz, .got_stage_below_index
+; 	dec e  ; STAGE1
+; 	ld a, [hld]
+; 	cp $ff
+; 	jr nz, .got_stage_below_index
+; 	dec e  ; BASIC
+; 	ld a, [hl]
+; 	jr .got_stage_below_index
+
 
 AttackMenuParameters:
 	db 1, 13 ; cursor x, cursor y
@@ -1338,11 +1388,12 @@ OpenAttackPage:
 	ld [wCardPageNumber], a
 	xor a
 	ld [wCurPlayAreaSlot], a
-	ld [wDuelDisplayedScreen], a  ; call EmptyScreen
+	call EmptyScreen
 	; call FinishQueuedAnimations
 ; this call is because the attack pages assume tiles are already loaded
 ; for example when switching pages from the Pokémon overview page
 	call LoadDuelCheckPokemonScreenTiles
+	call SetDefaultConsolePalettes
 	ldh a, [hCurMenuItem]
 	ld [wSelectedDuelSubMenuItem], a
 	add a
@@ -1504,11 +1555,25 @@ ENDC
 ;   if pokemon's first attack slot isn't empty or a Pokemon Power: <card_index>, 0
 ;   if pokemon's second attack slot isn't empty or a Pokemon Power: <card_index>, 1
 ; return the amount of non-empty, non-Pokemon Power attacks in a.
-PrintAndLoadAttacksToDuelTempList:
-	call DrawWideTextBox
+PrintAndLoadAttacksFromActivePokemonToDuelTempList:
 	ld a, DUELVARS_ARENA_CARD
 	call GetTurnDuelistVariable
 	ldh [hTempCardIndex_ff98], a
+	ld l, DUELVARS_ARENA_CARD_STAGE
+	ld a, [hl]
+	ld [wDuelAttackSubMenuSelectedStage], a
+	; jr PrintAndLoadAttacksToDuelTempList	
+	; fallthrough
+
+; given the card at hTempCardIndex_ff98, for each non-empty, non-Pokemon Power attack slot,
+; prints its information at lines 13 (first attack, if any), and 15 (second attack, if any)
+; also, copies zero, one, or both of the following to wDuelTempList, $ff terminated:
+;   if pokemon's first attack slot isn't empty or a Pokemon Power: <card_index>, 0
+;   if pokemon's second attack slot isn't empty or a Pokemon Power: <card_index>, 1
+; return the amount of non-empty, non-Pokemon Power attacks in a.
+PrintAndLoadAttacksToDuelTempList:
+	call DrawWideTextBox
+	ldh a, [hTempCardIndex_ff98]
 	call LoadCardDataToBuffer1_FromDeckIndex
 	ld c, 0
 	ld b, 13
@@ -1563,6 +1628,30 @@ PrintAndLoadAttacksToDuelTempList:
 .done
 	ld a, c
 	ret
+
+
+; input:
+;   [wDuelAttackSubMenuSelectedStage]: current attack menu stage
+;   [wAllStagesIndices]: populated list of card stages
+PrintAttackMenuSelectButtonHint:
+	ld a, [wDuelAttackSubMenuSelectedStage]
+	or a
+	ret z  ; BASIC
+	dec a
+	ld e, a
+	ld d, $00
+	ld hl, wAllStagesIndices
+	add hl, de
+	ld a, [hl]
+	call LoadCardDataToBuffer2_FromDeckIndex
+	call LoadCard2NameToRamText
+	ld d, 4
+	ld e, 17
+	ldtx hl, PressSelectToGoOneStageBelowText
+	; jp InitTextPrinting_ProcessTextFromID
+	call InitTextPrinting
+	jp PrintTextNoDelay
+
 
 ; given de = wLoadedCard*Atk*Name, return carry if the attack is an
 ; ability or if the attack slot is empty.
@@ -1758,7 +1847,7 @@ IF CC_IS_COIN_FLIP
 	or a
 	ret
 .flinched
-	ldtx hl, UnableDueToFlinchText
+	ldtx hl, UnableDueToFlinchingText
 	scf
 	ret
 ELSE

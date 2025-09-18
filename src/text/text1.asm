@@ -159,8 +159,8 @@ NoPokemonOnTheBenchText: ; 3646e (d:646e)
 	done
 
 IF CC_IS_COIN_FLIP
-UnableDueToFlinchText:
-	text "Unable to due to Flinch."
+UnableDueToFlinchingText:
+	text "Unable to due to Flinching."
 	done
 ELSE
 UnableDueToParalysisText:
@@ -252,8 +252,8 @@ DiscardName: ; 365a1 (d:65a1)
 	text "Discard"
 	done
 
-IncompleteText: ; 365aa (d:65aa)
-	text "Incomplete"
+PressSelectToGoOneStageBelowText:
+	text "[SEL: <RAMTEXT>]"
 	done
 
 UsedText: ; 365be (d:65be)

@@ -43,7 +43,7 @@ TextOffsets:: ; 34000 (d:4000)
 	textpointer DeckPrinterText                                    ; 0x0021
 	textpointer NoPokemonOnTheBenchText                            ; 0x0023
 IF CC_IS_COIN_FLIP
-	textpointer UnableDueToFlinchText
+	textpointer UnableDueToFlinchingText
 ELSE
 	textpointer UnableDueToParalysisText
 ENDC
@@ -65,7 +65,7 @@ ENDC
 	textpointer NoEnergyCardsText                                  ; 0x002d
 	textpointer YesOrNoText                                        ; 0x002f
 	textpointer DiscardName                                        ; 0x0030
-	textpointer IncompleteText                                     ; 0x0031
+	textpointer PressSelectToGoOneStageBelowText
 	textpointer UsedText                                           ; 0x0033
 	textpointer PokemonsAttackText                                 ; 0x0035
 	textpointer ResistanceLessDamageText                           ; 0x0036

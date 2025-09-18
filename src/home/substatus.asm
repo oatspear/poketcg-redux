@@ -982,8 +982,6 @@ GetAttackCostDiscount:
 	call GetTurnDuelistVariable
 	call _GetCardIDFromDeckIndex  ; preserves bc, de
 	cp GOLDUCK
-	jr z, .swift_swim
-	cp RAPIDASH
 	jr nz, .bench
 .swift_swim
 	call CheckCannotUsePokeBody  ; unable to use ability
@@ -1178,7 +1176,7 @@ IF CC_IS_COIN_FLIP
 	call GetTurnDuelistVariable
 	and CNF_SLP_PRZ
 	cp FLINCHED
-	ldtx hl, UnableDueToParalysisText
+	ldtx hl, UnableDueToFlinchingText
 	jr z, .cant_retreat
 ENDC
 	ld a, DUELVARS_ARENA_CARD_SUBSTATUS2
