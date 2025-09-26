@@ -4372,6 +4372,27 @@ HandleAIMudSport:
 	jp HandleAIDecideToUsePokemonPower
 
 
+; makes a list in wDuelTempList with the deck indices
+; of all Water and Fighting energy cards found in Turn Duelist's Discard Pile.
+CreateEnergyCardListFromDiscardPile_WaterFighting:
+; start with list of Water Energy
+	call CreateEnergyCardListFromDiscardPile_OnlyWater
+; go to the end of the list
+	ld hl, wDuelTempList
+.loop
+	ld a, [hli]
+	cp $ff
+	jr nz, .loop
+; store position in de
+	dec hl
+	ld e, l
+	ld d, h
+; append list of Fighting Energy
+	ld c, TYPE_ENERGY_FIGHTING
+	jr CreateEnergyCardListFromDiscardPile_DE
+
+
+
 
 
 
