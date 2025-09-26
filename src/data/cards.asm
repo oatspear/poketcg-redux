@@ -4735,7 +4735,7 @@ OmastarCard:
 
 RelicanthCard:
 	db TYPE_PKMN_WATER ; type
-	gfx FixmeCardGfx ; gfx
+	gfx RelicanthCardGfx ; gfx
 	tx RelicanthName ; name
 	db DIAMOND ; rarity
 	db MYSTERY | FOSSIL ; sets
