@@ -637,7 +637,7 @@ RocketHeadquartersDescription:
 	text "At the end of each turn, each"
 	line "player puts 1 damage counter on"
 	line "each of their Pokémon that has"
-	line "a Pokémon Power."
+	line "a Poké-Power."
 	done
 
 ViridianForestName:

@@ -497,7 +497,7 @@ PoisonPaybackDescription:
 DamagePerPokemonPowerDescription:
 	text "This attack does 10 more damage"
 	line "for each of your opponent's Pokémon"
-	line "that has a Pokémon Power."
+	line "that has a Poké-Power."
 	done
 
 Damage1BenchedPokemon20Description:
@@ -891,8 +891,8 @@ PrimalClawName:
 
 PrimalClawDescription:
 	text "After your opponent's Pokémon uses"
-	line "a Pokémon Power, put 1 damage"
-	line "counter on that Pokémon."
+	line "a Poké-Power, put 1 damage counter"
+	line "on that Pokémon."
 	done
 
 InflictConfusionDescription:

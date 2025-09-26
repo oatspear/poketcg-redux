@@ -317,20 +317,19 @@ MayOnlyUseOneStadiumCardText:
 	done
 
 UseThisPokemonPowerText: ; 36706 (d:6706)
-	text "Use this Pokémon Power?"
+	text "Use this Poké-Power?"
 	done
 
 PokemonPowerSelectNotRequiredText: ; 3671f (d:671f)
 	text "You do not need to select the"
-	line "Pokémon Power to use it."
+	line "Poké-Power to use it."
 	done
 
 DiscardDescription: ; 36757 (d:6757)
 	text "You may discard this card during"
 	line "your turn."
-	line "It will be counted as a Knock Out"
-	line "(This Discard is not"
-	line "a Pokémon Power)"
+	line "It will be counted as a Knock Out."
+	line "(This Discard is not a Poké-Power)"
 	done
 
 WillDrawNPrizesText: ; 367cc (d:67cc)
@@ -459,7 +458,7 @@ RetreatWasUnsuccessfulText: ; 36a34 (d:6a34)
 
 WillUseThePokemonPowerText: ; 36a53 (d:6a53)
 	text "<RAMTEXT> will use the"
-	line "Pokémon Power <RAMTEXT>."
+	line "Poké-Power <RAMTEXT>."
 	done
 
 FinishedTurnWithoutAttackingText: ; 36a74 (d:6a74)
@@ -912,7 +911,7 @@ OpponentIsNotBurnedText:
 	done
 
 UnableToUsePkmnPowerText:
-	text "Unable to use Pokémon Powers."
+	text "Unable to use Poké-Powers."
 	done
 
 BackUpIsBrokenText: ; 37a59 (d:7a59)

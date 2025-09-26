@@ -1176,12 +1176,12 @@ Text05d9: ; 4bc58 (12:7c58)
 
 Text05da: ; 4be3e (12:7e3e)
 	text "Some Pokémon have special"
-	line "abilities called Pokémon Powers."
-	line "Some Pokémon Powers are used as"
+	line "abilities called Poké-Powers."
+	line "Some Poké-Powers are used as"
 	line "soon as the Pokémon is played,"
 	line "while others must be used by"
 	line "choosing the PKMN Power command."
-	line "There are many different Pokémon"
+	line "There are many different Poké-Powers"
 	line "Powers, so read each card's text"
 	line "carefully."
 	done

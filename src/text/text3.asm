@@ -481,7 +481,7 @@ FlowerGardenDescriptionText: ; 3ccea (f:4cea)
 	done
 
 KaleidoscopeDescriptionText: ; 3cd1d (f:4d1d)
-	text "Uses Venomoth's Pokémon Power to"
+	text "Uses Venomoth's Poké-Power to"
 	line "change the opponent's Weakness."
 	done
 
@@ -536,7 +536,7 @@ PoisonDescriptionText: ; 3cf5d (f:4f5d)
 	done
 
 WondersOfScienceDescriptionText: ; 3cf99 (f:4f99)
-	text "Block Pokémon Powers with "
+	text "Block Poké-Bodies with "
 	line "Weezing and attack with Mewtwo!"
 	done
 
@@ -628,7 +628,7 @@ GlossaryMenuPage1Text: ; 3d333 (f:5333)
 	done
 
 GlossaryMenuPage2Text: ; 3d3e0 (f:53e0)
-	text "Energy Card         Pokémon Power "
+	text "Energy Card         Poké-Power    "
 	line "Trainer Card        Weakness       "
 	line "Basic Pokémon       Resistance"
 	line "Evolution Card      Retreat       "
@@ -697,7 +697,7 @@ AboutAttackingText: ; 3d5b9 (f:55b9)
 	done
 
 AboutPokemonPowerText: ; 3d5ca (f:55ca)
-	text "About Pokémon Power"
+	text "About Poké-Power"
 	done
 
 AboutWeaknessText: ; 3d5df (f:55df)
@@ -863,9 +863,9 @@ AttackingDescriptionText: ; 3e10a (f:610a)
 	done
 
 PokemonPowerDescriptionText: ; 3e1f7 (f:61f7)
-	text "Unlike Attacks, Pokémon Power"
+	text "Unlike Attacks, Poké-Power"
 	line "can be used by Active or Benched"
-	line "Pokémon. Some Pokémon Power are"
+	line "Pokémon. Some Poké-Powers are"
 	line "effective by just placing the"
 	line "Pokémon in the Play Area, but for"
 	line "some you must choose the"
@@ -1845,7 +1845,7 @@ Text0400: ; 3fa32 (f:7a32)
 	line "Attacking"
 	line "Retreating"
 	line "Evolving Pokémon"
-	line "Using Pokémon Power"
+	line "Using Poké-Power"
 	line "Ending Your Turn"
 	line "Win or Loss of a Duel"
 	line "Nothing to Ask"

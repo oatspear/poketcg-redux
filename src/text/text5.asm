@@ -199,7 +199,7 @@ Text04ad: ; 44a75 (11:4a75)
 Text04ae: ; 44a7d (11:4a7d)
 	text "You can create powerful combos by"
 	line "combining the abilities of 2 cards."
-	line "Pokémon Powers and Trainer Cards "
+	line "Poké-Powers and Trainer Cards "
 	line "are useful in creating combos! "
 	line "Find card combinations that will"
 	line "create your own powerful combos."
@@ -225,9 +225,7 @@ Text04b1: ; 44c4d (11:4c4d)
 
 Text04b2: ; 44c58 (11:4c58)
 	text "Neutralizing Gas is very powerful!"
-	line "It can block all Pokémon Powers!"
-	; line "But be careful because it also"
-	; line "blocks your own Pokémon's Powers!"
+	line "It can block all Poké-Bodies!"
 	done
 
 Text04b3: ; 44cdd (11:4cdd)
@@ -235,7 +233,7 @@ Text04b3: ; 44cdd (11:4cdd)
 	done
 
 Text04b4: ; 44ce9 (11:4ce9)
-	text "Blastoise's Pokémon Power, Rain "
+	text "Blastoise's Poké-Power, Rain "
 	line "Dance, is a great boon for your"
 	line "Water Pokémon! You can attach "
 	line "as many Water Energy cards as "
@@ -382,7 +380,7 @@ Text04c8: ; 456e4 (11:56e4)
 	text "It is difficult to create combos"
 	line "with a Fighting Pokémon, since"
 	line "not many Fighting Pokémon have "
-	line "Pokémon Power. However, their "
+	line "Poké-Powers. However, their "
 	line "strong attacks make up for this."
 	done
 
@@ -474,7 +472,7 @@ Text04d6: ; 45c6f (11:5c6f)
 	text "When a Pokémon is paralyzed, it"
 	line "is unable to do anything."
 	line "It cannot retreat, attack or use"
-	line "Pokémon Power, but the player may"
+	line "Poké-Powers, but the player may"
 	line "use any cards in his or her hand."
 	line "Paralysis lasts until the end of "
 	line "the paralyzed player's turn. "
@@ -586,7 +584,7 @@ Text04e5:
 IF CC_IS_COIN_FLIP
 Text04e6:
 	text "When a Pokémon is drowsy, it is"
-	line "unable to use Pokémon Powers."
+	line "unable to use Poké-Powers."
 	line "A coin will be flipped before"
 	line "attacking. If the coin comes up"
 	line "heads, the Pokémon will attack."
@@ -598,7 +596,7 @@ Text04e6:
 	text "When a Pokémon is drowsy,"
 	line "it needs more energy to attack"
 	line "or retreat, and it cannot use"
-	line "Pokémon Power. When it goes back"
+	line "Poké-Powers. When it goes back"
 	line "to the Bench, it will wake up at "
 	line "the end of the player's turn."
 	line "Use Full Heal to wake it up sooner!"
@@ -606,18 +604,18 @@ Text04e6:
 ENDC
 
 Text04e7: ; 464fe (11:64fe)
-	text "Pokémon Power"
+	text "Poké-Power"
 	done
 
 Text04e8: ; 4650d (11:650d)
 	text "Some Pokémon have special "
-	line "abilities called Pokémon Power."
+	line "abilities called Poké-Power."
 	line "They are very powerful abilities!"
 	line "They can be used before attacking, "
 	line "even if the Pokémon with the "
-	line "Pokémon Power is still on the Bench."
-	line "There are many different Pokémon "
-	line "Powers, so check your cards!"
+	line "Poké-Power is still on the Bench."
+	line "There are many different Poké-Powers"
+	line "so check your cards!"
 	done
 
 Text04e9: ; 46611 (11:6611)
