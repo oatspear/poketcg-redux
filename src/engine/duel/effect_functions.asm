@@ -2543,10 +2543,16 @@ HelpingHand_RemoveStatusEffect:
 
 
 
-HeadacheEffect: ; 2d00e (b:500e)
+HeadacheEffect:
 	ld a, DUELVARS_ARENA_CARD_SUBSTATUS3
 	call GetNonTurnDuelistVariable
-	set SUBSTATUS3_HEADACHE, [hl]
+	set SUBSTATUS3_HEADACHE_F, [hl]
+	ret
+
+DisableOpponentPokePowersEffect:
+	ld a, DUELVARS_ARENA_CARD_SUBSTATUS3
+	call GetNonTurnDuelistVariable
+	set SUBSTATUS3_POKE_POWERS_DISABLED_F, [hl]
 	ret
 
 

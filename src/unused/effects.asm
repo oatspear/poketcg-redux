@@ -5845,7 +5845,7 @@ QuickAttackEffectCommands:
 IfActiveThisTurnDoubleDamage_DamageBoostEffect:
 	ld a, DUELVARS_ARENA_CARD_SUBSTATUS3
 	call GetTurnDuelistVariable
-	bit SUBSTATUS3_THIS_TURN_ACTIVE, a
+	bit SUBSTATUS3_THIS_TURN_ACTIVE_F, a
 	ret z  ; did not move to active spot this turn
 	jp DoubleDamage_DamageBoostEffect
 
@@ -6422,7 +6422,7 @@ MountainBreak_AIEffect:
 HandleDamageBonusSubstatus:
 	ld a, DUELVARS_ARENA_CARD_SUBSTATUS3
 	call GetTurnDuelistVariable
-	bit SUBSTATUS3_THIS_TURN_DOUBLE_DAMAGE, a
+	bit SUBSTATUS3_THIS_TURN_DOUBLE_DAMAGE_F, a
 	ret z
 ; double damage at de
 	ld a, e
@@ -7626,7 +7626,7 @@ ClearChangedTypesIfWeezing:
 HandleDamageBonusSubstatus:
 	ld a, DUELVARS_ARENA_CARD_SUBSTATUS3
 	call GetTurnDuelistVariable
-	bit SUBSTATUS3_THIS_TURN_DOUBLE_DAMAGE, a
+	bit SUBSTATUS3_THIS_TURN_DOUBLE_DAMAGE_F, a
 	call nz, .double_damage_at_de
 	ld a, DUELVARS_ARENA_CARD_SUBSTATUS1
 	call GetTurnDuelistVariable

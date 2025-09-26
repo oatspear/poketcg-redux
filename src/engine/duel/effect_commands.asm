@@ -230,6 +230,7 @@ RoutEffectCommands:
 
 TerrorStrikeEffectCommands:
 	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, TerrorStrike_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, DisableOpponentPokePowersEffect
 	dbw EFFECTCMDTYPE_AI, TerrorStrike_AIEffect
 	db  $00
 
@@ -522,6 +523,10 @@ ThunderWaveEffectCommands:
 	dbw EFFECTCMDTYPE_AFTER_DAMAGE, ParalysisEffect
 	dbw EFFECTCMDTYPE_DISCARD_ENERGY, DiscardEnergy_DiscardEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, ThunderWave_AISelectEffect
+	db  $00
+
+WrapEffectCommands:
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, ParalysisIfMoreEvolvedThanOpponentEffect
 	db  $00
 
 CowardiceEffectCommands:

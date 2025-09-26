@@ -396,7 +396,7 @@ CheckPlayAreaPokemonMatchesStoredPattern:
 CheckEnteredActiveSpotThisTurn:
 	ld a, DUELVARS_ARENA_CARD_SUBSTATUS3
 	call GetTurnDuelistVariable
-	bit SUBSTATUS3_THIS_TURN_ACTIVE, a
+	bit SUBSTATUS3_THIS_TURN_ACTIVE_F, a
 	ret nz  ; moved to active spot this turn
 	scf
 	ret

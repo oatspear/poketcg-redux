@@ -12,6 +12,20 @@
 - Poké-Body: **Memory Dive**: your Pokémon can use attacks from their previous stages.
 - Attack 2: **Prehistoric Swirl** (CC): 10 damage; shuffle all discarded Mysterious Fossil into deck; +10 damage for each shuffled card.
 
+### Darkness Changes
+
+#### Ekans
+- **Finishing Bite**: removed.
+- **Poison Fang**: increased cost from (C) to (DC).
+- **Poison Fang**: increased damage from 10 to 20.
+- New attack: **Wrap** (C): 10 damage; inflicts Paralysis if the Defending Pokémon's evolution stage is equal to or less than the user's.
+
+#### Arbok
+- Increased HP from 80 to 90.
+- **Terror Strike**: now also disables the opponent's Pokémon Powers until the next turn.
+- **Deadly Poison**: increased cost from (DC) to (DDC).
+- **Deadly Poison**: increased bonus damage vs Poisoned Pokémon from 30 to 50.
+
 
 ## Version 0.13.0
 

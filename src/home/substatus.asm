@@ -6,7 +6,7 @@
 HandleDamageBonusSubstatus:
 	ld a, DUELVARS_ARENA_CARD_SUBSTATUS3
 	call GetTurnDuelistVariable
-	bit SUBSTATUS3_THIS_TURN_DOUBLE_DAMAGE, a
+	bit SUBSTATUS3_THIS_TURN_DOUBLE_DAMAGE_F, a
 	call nz, DoubleDE
 
 	ld a, DUELVARS_ARENA_CARD_SUBSTATUS1
@@ -181,7 +181,7 @@ HandleNShieldAndTransparency:
 HandleCantAttackSubstatus:
 	ld a, DUELVARS_ARENA_CARD_SUBSTATUS3
 	call GetTurnDuelistVariable
-	bit SUBSTATUS3_THIS_TURN_CANNOT_ATTACK, a
+	bit SUBSTATUS3_THIS_TURN_CANNOT_ATTACK_F, a
 	ret z
 	ldtx hl, UnableToAttackDueToEffectText
 	scf
@@ -432,6 +432,13 @@ IsOpponentNeutralizingGasActive:
 ;   carry: set iff found and capable of using the Power
 ; preserves: hl, bc, de
 ArePokemonPowersDisabled:
+	ld a, DUELVARS_ARENA_CARD_SUBSTATUS3
+	call GetTurnDuelistVariable
+	and SUBSTATUS3_POKE_POWERS_DISABLED
+	dec a  ; underflow to $ff if it was zero
+	cp $ff  ; carry set if it was non-zero
+	ld a, TRUE
+	ret c
 	xor a
 	ret
 
@@ -998,7 +1005,7 @@ GetAttackCostDiscount:
 	jr c, .bench
 	ld a, DUELVARS_ARENA_CARD_SUBSTATUS3
 	call GetTurnDuelistVariable
-	bit SUBSTATUS3_THIS_TURN_ACTIVE, a
+	bit SUBSTATUS3_THIS_TURN_ACTIVE_F, a
 	jr z, .bench
 	inc c
 	; ld a, e
@@ -1124,7 +1131,7 @@ GetRetreatCostPenalty:
 	inc c
 .rooted
 	ld l, DUELVARS_ARENA_CARD_SUBSTATUS3
-	bit SUBSTATUS3_THIS_TURN_ROOTED, [hl]
+	bit SUBSTATUS3_THIS_TURN_ROOTED_F, [hl]
 	jr z, .no_substatus
 	inc c
 .no_substatus
@@ -1249,7 +1256,7 @@ CheckCantUseItemsThisTurn:
 	ld a, DUELVARS_ARENA_CARD_SUBSTATUS3
 	call GetTurnDuelistVariable
 	or a
-	bit SUBSTATUS3_HEADACHE, [hl]
+	bit SUBSTATUS3_HEADACHE_F, [hl]
 	ret z
 	; jr nz, .unable
 	; call IsHayFeverActive
@@ -1286,7 +1293,7 @@ UpdateSubstatusConditions_StartOfTurn:
 ; clear active this turn flag to handle opponent gusting/repulsion
 	ld a, DUELVARS_ARENA_CARD_SUBSTATUS3
 	call GetTurnDuelistVariable
-	res SUBSTATUS3_THIS_TURN_ACTIVE, [hl]
+	res SUBSTATUS3_THIS_TURN_ACTIVE_F, [hl]
 	ld l, DUELVARS_ARENA_CARD_SUBSTATUS1
 	ld a, [hl]
 	ld [hl], $0
@@ -1299,12 +1306,12 @@ UpdateSubstatusConditions_StartOfTurn:
 
 ; .unable_to_attack
 	ld l, DUELVARS_ARENA_CARD_SUBSTATUS3
-	set SUBSTATUS3_THIS_TURN_CANNOT_ATTACK, [hl]
+	set SUBSTATUS3_THIS_TURN_CANNOT_ATTACK_F, [hl]
 	ret
 
 .double_damage
 	ld l, DUELVARS_ARENA_CARD_SUBSTATUS3
-	set SUBSTATUS3_THIS_TURN_DOUBLE_DAMAGE, [hl]
+	set SUBSTATUS3_THIS_TURN_DOUBLE_DAMAGE_F, [hl]
 	ret
 
 ; clears the SUBSTATUS2, Headache, and updates the double damage condition
@@ -1317,11 +1324,12 @@ UpdateSubstatusConditions_EndOfTurn:
 	ld [hl], $0
 	ld l, DUELVARS_ARENA_CARD_SUBSTATUS3
 	ld [hl], $0
-	; res SUBSTATUS3_HEADACHE, [hl]
-	; res SUBSTATUS3_THIS_TURN_ACTIVE, [hl]
-	; res SUBSTATUS3_THIS_TURN_DOUBLE_DAMAGE, [hl]
-	; res SUBSTATUS3_THIS_TURN_CANNOT_ATTACK, [hl]
-	; res SUBSTATUS3_THIS_TURN_ROOTED, [hl]
+	; res SUBSTATUS3_HEADACHE_F, [hl]
+	; res SUBSTATUS3_THIS_TURN_ACTIVE_F, [hl]
+	; res SUBSTATUS3_THIS_TURN_DOUBLE_DAMAGE_F, [hl]
+	; res SUBSTATUS3_THIS_TURN_CANNOT_ATTACK_F, [hl]
+	; res SUBSTATUS3_THIS_TURN_ROOTED_F, [hl]
+	; res SUBSTATUS3_POKE_POWERS_DISABLED_F, [hl]
 	ld l, DUELVARS_ARENA_CARD_SUBSTATUS2
 	ld [hl], $0
 	; ld l, DUELVARS_ABILITY_FLAGS

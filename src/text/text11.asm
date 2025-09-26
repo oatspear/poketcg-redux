@@ -1243,7 +1243,7 @@ DeadlyPoisonName:
 VenoshockDescription:
 	text "If the Defending Pokémon was"
 	line "already Poisoned, this attack"
-	line "does 30 more damage."
+	line "does 50 more damage."
 	done
 
 AfflictionName:

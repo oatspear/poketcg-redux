@@ -1001,7 +1001,7 @@ Pester_AIEffect:
   jp SetDefiniteAIDamage
 
 
-; +30 damage if the Defending Pokémon is Poisoned
+; +50 damage if the Defending Pokémon is Poisoned
 DeadlyPoison_DamageBoostEffect:
 	ld a, DUELVARS_ARENA_CARD_STATUS
 	call GetNonTurnDuelistVariable
@@ -1011,7 +1011,7 @@ ELSE
 	and POISONED
 ENDC
 	ret z  ; not Poisoned
-	ld a, 30
+	ld a, 50
 	jp AddToDamage
 
 DeadlyPoison_AIEffect:

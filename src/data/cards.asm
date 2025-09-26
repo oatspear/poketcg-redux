@@ -761,7 +761,7 @@ EkansCard:
 	gfx EkansCardGfx ; gfx
 	tx EkansName ; name
 	db CIRCLE ; rarity
-	db LABORATORY | FOSSIL ; sets
+	db LABORATORY | JUNGLE ; sets
 	db EKANS
 	db 40 ; hp
 	db BASIC ; stage
@@ -769,10 +769,24 @@ EkansCard:
 
 	; attack 1
 	energy COLORLESS, 1 ; energies
+	tx WrapName ; name
+	tx WrapDescription ; description
+	dw NONE ; description (cont)
+	db 10 ; damage
+	db DAMAGE_NORMAL ; category
+	dw WrapEffectCommands ; effect commands
+	db INFLICT_PARALYSIS ; flags 1
+	db NONE ; flags 2
+	db NONE ; flags 3
+	db 0
+	db ATK_ANIM_HIT ; animation
+
+	; attack 2
+	energy DARKNESS, 1, COLORLESS, 1 ; energies
 	tx PoisonFangName ; name
 	tx InflictPoisonDescription ; description
 	dw NONE ; description (cont)
-	db 10 ; damage
+	db 20 ; damage
 	db DAMAGE_NORMAL ; category
 	dw InflictPoisonEffectCommands ; effect commands
 	db INFLICT_POISON ; flags 1
@@ -780,20 +794,6 @@ EkansCard:
 	db NONE ; flags 3
 	db 0
 	db ATK_ANIM_POISON_FANG ; animation
-
-	; attack 2
-	energy DARKNESS, 1 ; energies
-	tx FinishingBiteName ; name
-	tx FinishingBiteDescription ; description
-	dw NONE ; description (cont)
-	db 30 ; damage
-	db DAMAGE_NORMAL ; category
-	dw FinishingBiteEffectCommands ; effect commands
-	db NONE ; flags 1
-	db NONE ; flags 2
-	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_HIT ; animation
 
 	db 0 ; retreat cost
 	db WR_FIGHTING ; weakness
@@ -812,14 +812,28 @@ ArbokCard:
 	gfx ArbokCardGfx ; gfx
 	tx ArbokName ; name
 	db DIAMOND ; rarity
-	db LABORATORY | FOSSIL ; sets
+	db LABORATORY | JUNGLE ; sets
 	db ARBOK
-	db 80 ; hp
+	db 90 ; hp
 	db STAGE1 ; stage
 	tx EkansName ; pre-evo name
 
 	; attack 1
 	energy DARKNESS, 1, COLORLESS, 1 ; energies
+	tx TerrorStrikeName ; name
+	tx DamagePerPokemonPowerDescription ; description
+	tx PokePowersDisabledNextTurnDescription ; description (cont)
+	db 10 ; damage
+	db DAMAGE_PLUS ; category
+	dw TerrorStrikeEffectCommands ; effect commands
+	db NONE ; flags 1
+	db NONE ; flags 2
+	db NONE ; flags 3
+	db 0
+	db ATK_ANIM_DARK_MIND ; animation
+
+	; attack 2
+	energy DARKNESS, 2, COLORLESS, 1 ; energies
 	tx DeadlyPoisonName ; name
 	tx InflictPoisonDescription ; description
 	tx VenoshockDescription ; description (cont)
@@ -831,20 +845,6 @@ ArbokCard:
 	db NONE ; flags 3
 	db 0
 	db ATK_ANIM_POISON_FANG ; animation
-
-	; attack 2
-	energy DARKNESS, 1, COLORLESS, 1 ; energies
-	tx TerrorStrikeName ; name
-	tx DamagePerPokemonPowerDescription ; description
-	dw NONE ; description (cont)
-	db 10 ; damage
-	db DAMAGE_PLUS ; category
-	dw TerrorStrikeEffectCommands ; effect commands
-	db NONE ; flags 1
-	db NONE ; flags 2
-	db NONE ; flags 3
-	db 0
-	db ATK_ANIM_DARK_MIND ; animation
 
 	db 1 ; retreat cost
 	db WR_FIGHTING ; weakness

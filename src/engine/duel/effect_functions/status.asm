@@ -400,6 +400,16 @@ ParalysisIfDamagedSinceLastTurnEffect:
 	ret z
 	jp ParalysisEffect
 
+ParalysisIfMoreEvolvedThanOpponentEffect:
+	ld a, DUELVARS_ARENA_CARD_STAGE
+	call GetNonTurnDuelistVariable
+	ld c, a
+	ld a, DUELVARS_ARENA_CARD_STAGE
+	call GetTurnDuelistVariable
+	cp c
+	ret c
+	jp ParalysisEffect
+
 
 PoisonAndSelfPoisonEffect:
 	call PoisonEffect

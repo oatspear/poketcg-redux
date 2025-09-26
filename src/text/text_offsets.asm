@@ -2980,6 +2980,7 @@ ENDC
 	textpointer MemoryDiveDescription
 	textpointer PrehistoricSwirlName
 	textpointer PrehistoricSwirlDescription
+	textpointer PokePowersDisabledNextTurnDescription
 
 ; ------------------------------------------------------------------------------
 ; text13.asm
@@ -3054,6 +3055,8 @@ ENDC
 	textpointer AssassinsReturnName
 	textpointer AssassinsReturnDescription
 	textpointer AssassinsReturnDescriptionCont
+	textpointer WrapName
+	textpointer WrapDescription
 
 	textpointer FixmeText
 

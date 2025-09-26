@@ -336,6 +336,16 @@ AssassinsReturnDescriptionCont:
 	line "(Discard all cards attached to it.)"
 	done
 
+WrapName:
+	text "Wrap"
+	done
+
+WrapDescription:
+	text "If the Defending Pokémon isn't of a"
+	line "higher stage of evolution than this"
+	line "Pokémon, it is now Paralyzed."
+	done
+
 
 FixmeText:
 	text "FIXME"

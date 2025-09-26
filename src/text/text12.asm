@@ -1562,3 +1562,8 @@ PrehistoricSwirlDescription:
 	line "This attack does 10 more damage for"
 	line "each card you shuffled this way."
 	done
+
+PokePowersDisabledNextTurnDescription:
+	text "During your opponent's next turn,"
+	line "they cannot use any Poké-Powers."
+	done
