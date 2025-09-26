@@ -480,6 +480,9 @@ wCardPageType:: ; cbd1
 ; when processing or displaying the play area Pokemon cards of a duelist,
 ; whether to account for only the benched Pokemon ($01) or also the arena Pokemon ($00).
 wExcludeArenaPokemon:: ; cbd2
+; when displaying the DuelMenu_Attack, determines whether the Active Pokémon
+; can access attacks from its previous stages of evolution
+wCanUsePreviousStageAttacks:: ; cbd2
 	ds $1
 
 wPlayAreaScreenLoaded:: ; cbd3

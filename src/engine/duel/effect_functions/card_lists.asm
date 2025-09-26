@@ -245,49 +245,9 @@ CreateEnergyCardListFromDiscardPile_DE:
 ; OATS additionally return
 ;   - c the total number of Basic Pokémon
 CreateBasicPokemonCardListFromDiscardPile:
-; gets hl to point at end of Discard Pile cards
-; and iterates the cards in reverse order.
-	ld a, DUELVARS_NUMBER_OF_CARDS_IN_DISCARD_PILE
-	call GetTurnDuelistVariable
-	ld b, a
-	add DUELVARS_DECK_CARDS
-	ld l, a
-	ld de, wDuelTempList
-	inc b
-	ld c, 0
-	jr .next_discard_pile_card
-
-.check_card
-	ld a, [hl]
-	call LoadCardDataToBuffer2_FromDeckIndex
-	ld a, [wLoadedCard2Type]
-	cp TYPE_ENERGY
-	jr nc, .next_discard_pile_card ; if not Pokemon card, skip
-	ld a, [wLoadedCard2Stage]
-	or a
-	jr nz, .next_discard_pile_card ; if not Basic stage, skip
-
-; write this card's index to wDuelTempList
-	inc c
-	ld a, [hl]
-	ld [de], a
-	inc de
-.next_discard_pile_card
-	dec l
-	dec b
-	jr nz, .check_card
-
-; done with the loop.
-	ld a, $ff ; terminating byte
-	ld [de], a
-	ld a, [wDuelTempList]
-	cp $ff
-	jr z, .set_carry
-	or a
-	ret
-.set_carry
-	scf
-	ret
+	call CreateDiscardPileCardList
+	ld a, CARDTEST_BASIC_POKEMON
+	jp FilterCardList
 
 
 ; makes list in wDuelTempList with all Pokémon cards
@@ -296,45 +256,9 @@ CreateBasicPokemonCardListFromDiscardPile:
 ; additionally return
 ;   - c the total number of Pokémon
 CreatePokemonCardListFromDiscardPile:
-; gets hl to point at end of Discard Pile cards
-; and iterates the cards in reverse order.
-	ld a, DUELVARS_NUMBER_OF_CARDS_IN_DISCARD_PILE
-	call GetTurnDuelistVariable
-	ld b, a
-	add DUELVARS_DECK_CARDS
-	ld l, a
-	ld de, wDuelTempList
-	inc b
-	ld c, 0
-	jr .next_discard_pile_card
-
-.check_card
-	ld a, [hl]
-	call LoadCardDataToBuffer2_FromDeckIndex
-	ld a, [wLoadedCard2Type]
-	cp TYPE_ENERGY
-	jr nc, .next_discard_pile_card ; if not Pokémon card, skip
-; write this card's index to wDuelTempList
-	inc c
-	ld a, [hl]
-	ld [de], a
-	inc de
-.next_discard_pile_card
-	dec l
-	dec b
-	jr nz, .check_card
-
-; done with the loop.
-	ld a, $ff ; terminating byte
-	ld [de], a
-	ld a, [wDuelTempList]
-	cp $ff
-	jr z, .set_carry
-	or a
-	ret
-.set_carry
-	scf
-	ret
+	call CreateDiscardPileCardList
+	ld a, CARDTEST_POKEMON
+	jp FilterCardList
 
 
 SuperRod_DiscardPileCheck:
@@ -602,52 +526,23 @@ CreateHandCardList_OnlyPsychicEnergy:
 	ret
 
 
-;
 ; makes a list in wDuelTempList with the deck indices
 ; of energy cards found in Turn Duelist's Hand.
-; if (c == 0), all energy cards are allowed;
-; if (c != 0), double colorless energy cards are not included.
 ; returns carry if no energy cards were found.
 Helper_CreateEnergyCardListFromHand:
 	call CreateHandCardList
 	ret c ; return if no hand cards
+	ld a, CARDTEST_ENERGY
+	jp FilterCardList
 
-	ld hl, wDuelTempList
-	ld e, l
-	ld d, h
-.loop_hand
-	ld a, [hl]
-	cp $ff
-	jr z, .done
-	call LoadCardDataToBuffer2_FromDeckIndex
-	ld a, [wLoadedCard2Type]
-	and TYPE_ENERGY
-	jr z, .next_hand_card
-; if (c != $00), then we dismiss Double Colorless energy cards found.
-	ld a, c
-	or a
-	jr z, .copy
-	ld a, [wLoadedCard2Type]
-	cp TYPE_ENERGY_DOUBLE_COLORLESS
-	jr nc, .next_hand_card
-.copy
-	ld a, [hl]
-	ld [de], a
-	inc de
-.next_hand_card
-	inc hl
-	jr .loop_hand
-
-.done
-	ld a, $ff ; terminating byte
-	ld [de], a
-	ld a, [wDuelTempList]
-	cp $ff
-	scf
-	ret z ; return carry if empty
-	; not empty
-	or a
-	ret
+; makes a list in wDuelTempList with the deck indices
+; of basic energy cards found in Turn Duelist's Hand.
+; returns carry if no energy cards were found.
+Helper_CreateBasicEnergyCardListFromHand:
+	call CreateHandCardList
+	ret c ; return if no hand cards
+	ld a, CARDTEST_BASIC_ENERGY
+	jp FilterCardList
 
 
 ; ------------------------------------------------------------------------------

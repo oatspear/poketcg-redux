@@ -1251,7 +1251,9 @@ DuelMenu_Attack:
 .can_attack
 	xor a  ; PLAY_AREA_ARENA
 	ldh [hTempPlayAreaLocation_ff9d], a
-	call GetCardOneStageBelow  ; preload wAllStagesIndices
+	call CheckPokemonCanUsePreviousStageAttacks
+	ld [wCanUsePreviousStageAttacks], a
+	call c, GetCardOneStageBelow  ; preload wAllStagesIndices
 .can_attack_set_current_arena_card
 	xor a
 	ld [wSelectedDuelSubMenuItem], a
@@ -1651,6 +1653,15 @@ PrintAttackMenuSelectButtonHint:
 	; jp InitTextPrinting_ProcessTextFromID
 	call InitTextPrinting
 	jp PrintTextNoDelay
+
+
+CheckPokemonCanUsePreviousStageAttacks:
+	; return carry if turn holder has Relicanth and its Memory Dive ability is active
+	call IsMemoryDiveActive  ; preserves: hl, bc, de
+	ld a, TRUE
+	ret c
+	xor a  ; FALSE
+	ret
 
 
 ; given de = wLoadedCard*Atk*Name, return carry if the attack is an

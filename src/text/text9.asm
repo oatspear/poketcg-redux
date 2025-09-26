@@ -1559,6 +1559,10 @@ NewSpeciesName:
 	text "New Species"
 	done
 
+LongevityName:
+	text "Longevity"
+	done
+
 
 CrobatName:
 	text "Crobat"

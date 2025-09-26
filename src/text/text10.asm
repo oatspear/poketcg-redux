@@ -793,6 +793,16 @@ OmastarDescription:
 	line "impossible for it to catch prey."
 	done
 
+RelicanthName:
+	text "Relicanth"
+	done
+
+RelicanthDescription:
+	text "A Pokémon that has been unchanged"
+	line "for 100 million years. It is a"
+	line "deep-sea dweller."
+	done
+
 ArticunoName:
 	text "Articuno"
 	done

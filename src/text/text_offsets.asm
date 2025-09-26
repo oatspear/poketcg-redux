@@ -2014,6 +2014,7 @@ ENDC
 	textpointer FreezeName
 	textpointer GeneticName
 	textpointer NewSpeciesName
+	textpointer LongevityName
 
 	textpointer CrobatName
 	textpointer CrobatDescription
@@ -2180,6 +2181,8 @@ ENDC
 	textpointer OmanyteDescription
 	textpointer OmastarName
 	textpointer OmastarDescription
+	textpointer RelicanthName
+	textpointer RelicanthDescription
 	textpointer ArticunoName
 	textpointer ArticunoDescription
 	textpointer PikachuName
@@ -2973,9 +2976,10 @@ ENDC
 	textpointer LickingShotDescription
 	textpointer AcidName
 	textpointer AcidDescription
-	textpointer AssassinsReturnName
-	textpointer AssassinsReturnDescription
-	textpointer AssassinsReturnDescriptionCont
+	textpointer MemoryDiveName
+	textpointer MemoryDiveDescription
+	textpointer PrehistoricSwirlName
+	textpointer PrehistoricSwirlDescription
 
 ; ------------------------------------------------------------------------------
 ; text13.asm
@@ -3046,6 +3050,10 @@ ELSE
 	textpointer SeepingToxinsName
 	textpointer SeepingToxinsDescription
 ENDC
+
+	textpointer AssassinsReturnName
+	textpointer AssassinsReturnDescription
+	textpointer AssassinsReturnDescriptionCont
 
 	textpointer FixmeText
 

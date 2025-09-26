@@ -355,21 +355,24 @@ DEF PRIZES_6    EQU $06
  	const CARDTEST_POKEMON                      ; $00
  	const CARDTEST_BASIC_POKEMON                ; $01
  	const CARDTEST_EVOLUTION_POKEMON            ; $02
- 	const CARDTEST_BASIC_ENERGY                 ; $03
-	const CARDTEST_POKEMON_OR_SUPPORTER         ; $04
- 	const CARDTEST_ENERGIZED_POKEMON            ; $05
- 	const CARDTEST_NON_ENERGIZED_POKEMON        ; $06
- 	const CARDTEST_MAGMAR                       ; $07
- 	const CARDTEST_ENERGIZED_MAGMAR             ; $08
- 	const CARDTEST_ELECTABUZZ                   ; $09
- 	const CARDTEST_ENERGIZED_ELECTABUZZ         ; $0a
- 	const CARDTEST_EVOLVES_INTO                 ; $0b
-	const CARDTEST_EVOLUTION_OF_PLAY_AREA       ; $0c
-	const CARDTEST_GRASS_CARD                   ; $0d
-	const CARDTEST_FULL_HP_POKEMON              ; $0e
-	const CARDTEST_DAMAGED_POKEMON              ; $0f
-	const CARDTEST_EVOLVED_POKEMON              ; $10
-	const CARDTEST_RESTORED_POKEMON             ; $11
+ 	const CARDTEST_ENERGY                       ; $03
+ 	const CARDTEST_BASIC_ENERGY                 ; $04
+ 	const CARDTEST_SPECIAL_ENERGY               ; $05
+	const CARDTEST_POKEMON_OR_SUPPORTER         ; $06
+ 	const CARDTEST_ENERGIZED_POKEMON            ; $07
+ 	const CARDTEST_NON_ENERGIZED_POKEMON        ; $08
+ 	const CARDTEST_MAGMAR                       ; $09
+ 	const CARDTEST_ENERGIZED_MAGMAR             ; $0a
+ 	const CARDTEST_ELECTABUZZ                   ; $0b
+ 	const CARDTEST_ENERGIZED_ELECTABUZZ         ; $0c
+ 	const CARDTEST_EVOLVES_INTO                 ; $0d
+	const CARDTEST_EVOLUTION_OF_PLAY_AREA       ; $0e
+	const CARDTEST_GRASS_CARD                   ; $0f
+	const CARDTEST_FULL_HP_POKEMON              ; $10
+	const CARDTEST_DAMAGED_POKEMON              ; $11
+	const CARDTEST_EVOLVED_POKEMON              ; $12
+	const CARDTEST_RESTORED_POKEMON             ; $13
+	const CARDTEST_MYSTERIOUS_FOSSIL            ; $14
 
 ; [wAIAttackLogicFlags] constants
 DEF AI_LOGIC_MIN_DAMAGE_CAN_KO_F     EQU 0

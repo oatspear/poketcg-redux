@@ -878,11 +878,19 @@ GastlyDestinyBondEffectCommands:
 	db  $00
 
 RiptideEffectCommands:
-	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Riptide_DamageBoostEffect
-	dbw EFFECTCMDTYPE_AFTER_DAMAGE, SelectedDiscardPileCards_ShuffleIntoDeckEffect
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Riptide_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, Recover4Energy_AISelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, Riptide_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, SelectedDiscardPileCards_ShuffleIntoDeckEffect
 	dbw EFFECTCMDTYPE_AI, Riptide_AIEffect
+	db  $00
+
+PrehistoricSwirlEffectCommands:
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, PrehistoricSwirl_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, PrehistoricSwirl_AISelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, PrehistoricSwirl_DamageBoostEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, SelectedDiscardPileCards_ShuffleIntoDeckEffect
+	dbw EFFECTCMDTYPE_AI, PrehistoricSwirl_AIEffect
 	db  $00
 
 WaterReserveEffectCommands:

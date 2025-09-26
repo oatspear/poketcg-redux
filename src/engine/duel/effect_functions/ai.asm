@@ -54,8 +54,7 @@ AssassinsFlight_AIEffect:
 
 
 Solarbeam_AIEffect:
-	ld c, TRUE
-	call Helper_CreateEnergyCardListFromHand
+	call Helper_CreateBasicEnergyCardListFromHand
 	ret c  ; no energies
 	call Solarbeam_DamageBoostEffect.got_energy
 	jp SetDefiniteAIDamage

@@ -992,7 +992,9 @@ CardTypeTest_FunctionTable:
 	dw CardTypeTest_Pokemon                ; CARDTEST_POKEMON
 	dw CardTypeTest_BasicPokemon           ; CARDTEST_BASIC_POKEMON
 	dw CardTypeTest_EvolutionPokemon       ; CARDTEST_EVOLUTION_POKEMON
+	dw CardTypeTest_Energy                 ; CARDTEST_ENERGY
 	dw CardTypeTest_BasicEnergy            ; CARDTEST_BASIC_ENERGY
+	dw CardTypeTest_SpecialEnergy          ; CARDTEST_SPECIAL_ENERGY
 	dw CardTypeTest_PokemonOrSupporter     ; CARDTEST_POKEMON_OR_SUPPORTER
 	dw CardTypeTest_IsEnergizedPokemon     ; CARDTEST_ENERGIZED_POKEMON
 	dw CardTypeTest_IsNonEnergizedPokemon  ; CARDTEST_NON_ENERGIZED_POKEMON
@@ -1007,6 +1009,7 @@ CardTypeTest_FunctionTable:
 	dw CardTypeTest_DamagedPokemon         ; CARDTEST_DAMAGED_POKEMON
 	dw CardTypeTest_EvolvedPokemon         ; CARDTEST_EVOLVED_POKEMON
 	dw CardTypeTest_RestoredPokemon        ; CARDTEST_RESTORED_POKEMON
+	dw CardTypeTest_IsMysteriousFossil     ; CARDTEST_MYSTERIOUS_FOSSIL
 
 
 CardTypeTest_Pokemon:
@@ -1067,6 +1070,24 @@ IsEvolutionPokemonCard:
 	ret
 
 
+CardTypeTest_Energy:
+	ld a, [wDynamicFunctionArgument]
+	; fallthrough
+
+; input:
+;   a: deck index of the card
+; output:
+;   carry: set if the given card is an Energy
+; preserves: hl, bc, de
+IsEnergyCard:
+	call LoadCardDataToBuffer2_FromDeckIndex  ; preserves hl, bc, de
+	ld a, [wLoadedCard2Type]
+	and TYPE_ENERGY
+	ret z  ; not an Energy card
+	scf
+	ret
+
+
 CardTypeTest_BasicEnergy:
 	ld a, [wDynamicFunctionArgument]
 	; fallthrough
@@ -1083,6 +1104,27 @@ IsBasicEnergyCard:
 	ret nc  ; not a Basic Energy card
 	and TYPE_ENERGY
 	ret z  ; not a Basic Energy card
+	scf
+	ret
+
+
+CardTypeTest_SpecialEnergy:
+	ld a, [wDynamicFunctionArgument]
+	; fallthrough
+
+; input:
+;   a: deck index of the card
+; output:
+;   carry: set if the given card is a Special Energy
+; preserves: hl, bc, de
+IsSpecialEnergyCard:
+	call LoadCardDataToBuffer2_FromDeckIndex  ; preserves hl, bc, de
+	ld a, [wLoadedCard2Type]
+	cp TYPE_ENERGY_DOUBLE_COLORLESS
+	ccf
+	ret nc  ; not a Special Energy card
+	and TYPE_ENERGY
+	ret z  ; not a Special Energy card
 	scf
 	ret
 
@@ -1404,6 +1446,28 @@ IsRestoredPokemonCard:
 ; must avoid accidental carry because of smaller ID number
 	or a
 	ret  ; not a Magmar card
+.found
+	scf
+	ret
+
+
+CardTypeTest_IsMysteriousFossil:
+	ld a, [wDynamicFunctionArgument]
+	; fallthrough
+
+; input:
+;   a: deck index of the card
+; output:
+;   carry: set if the given card is Mysterious Fossil
+; preserves: hl, bc, de
+IsMysteriousFossilCard:
+	call LoadCardDataToBuffer2_FromDeckIndex  ; preserves hl, bc, de
+	ld a, [wLoadedCard2ID]
+	cp MYSTERIOUS_FOSSIL
+	jr z, .found
+; must avoid accidental carry because of smaller ID number
+	or a
+	ret  ; not a Mysterious Fossil card
 .found
 	scf
 	ret

@@ -1541,20 +1541,24 @@ AcidDescription:
 	line "to it."
 	done
 
-AssassinsReturnName:
-	text "Assassin's Return"
+MemoryDiveName:
+	text "Memory Dive"
 	done
 
-AssassinsReturnDescription:
-	text "This attack does 80 damage to 1 of"
-	line "your opponent's Pokémon. That"
-	line "Pokémon is now Poisoned."
-	line "(Don't apply Weakness and Resistance"
-	line "for Benched Pokémon.)"
-	line ""
+MemoryDiveDescription:
+	text "Your Evolved Pokémon can use any"
+	line "attack from its previous Evolutions."
+	line "(You still need the necessary Energy"
+	line "to use each attack.)"
 	done
 
-AssassinsReturnDescriptionCont:
-	text "Put this Pokémon into your hand."
-	line "(Discard all cards attached to it.)"
+PrehistoricSwirlName:
+	text "Prehistoric Swirl"
+	done
+
+PrehistoricSwirlDescription:
+	text "Shuffle up to 4 Mysterious Fossil in"
+	line "your discard pile into your deck."
+	line "This attack does 10 more damage for"
+	line "each card you shuffled this way."
 	done

@@ -3116,6 +3116,14 @@ Recover4Energy_AISelectEffect:
 	jp PickFirstNCardsFromList_SelectEffect
 
 
+PrehistoricSwirl_AISelectEffect:
+	call CreateDiscardPileCardList
+	ld a, CARDTEST_MYSTERIOUS_FOSSIL
+	call FilterCardList
+	ld a, 4
+	jp PickFirstNCardsFromList_SelectEffect
+
+
 QueenPressEffect:
 	ld a, SUBSTATUS1_NO_DAMAGE_FROM_BASIC
 	jp ApplySubstatus1ToAttackingCard
@@ -5010,8 +5018,7 @@ AttachEnergyFromHand_HandCheck:
 	ldtx hl, NoCardsInHandText
 	cp 1
 	ret c ; return if no cards in hand
-	ld c, $01
-	call Helper_CreateEnergyCardListFromHand
+	call Helper_CreateBasicEnergyCardListFromHand
 	ldtx hl, NoEnergyCardsText
 	ret
 	; ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
@@ -5026,8 +5033,7 @@ Helper_SelectEnergyFromHand:
 	call DrawWideTextBox_WaitForInput
 
 ; create list with all Energy cards in hand
-	ld c, $01
-	call Helper_CreateEnergyCardListFromHand
+	call Helper_CreateBasicEnergyCardListFromHand
 	bank1call InitAndDrawCardListScreenLayout_MenuTypeSelectCheck
 
 ; handle Player selection (from hand)
@@ -5108,8 +5114,7 @@ AttachEnergyFromHand_AISelectEffect:
 	ret
 
 AttachEnergyFromHand_OnlyActive_AISelectEffect:
-	ld c, TRUE
-	call Helper_CreateEnergyCardListFromHand
+	call Helper_CreateBasicEnergyCardListFromHand
 ; pick the first card from the list
 	ld a, [wDuelTempList]
 	ldh [hEnergyTransEnergyCard], a
@@ -7257,6 +7262,13 @@ Rototiller_PlayerSelectEffect:
 	jr ChooseUpTo4Cards_PlayerDiscardPileSelection
 
 
+PrehistoricSwirl_PlayerSelectEffect:
+	call CreateDiscardPileCardList
+	ld a, CARDTEST_MYSTERIOUS_FOSSIL
+	call FilterCardList
+	jr ChooseUpTo4Cards_PlayerDiscardPileSelection
+
+
 Riptide_PlayerSelectEffect:
 	call CreateEnergyCardListFromDiscardPile_AllEnergy
 	; jr ChooseUpTo4Cards_PlayerDiscardPileSelection
@@ -7278,6 +7290,13 @@ ChooseUpToNCards_PlayerDiscardPileSelection:
 	ld l, a
 	ld a, $ff
 	ldh [hTempList], a
+	ld a, [wDuelTempList]
+	cp $ff
+	jr nz, .choose
+	ldtx hl, ThereAreNoCardsInTheDiscardPileText
+	jp DrawWideTextBox_WaitForInput
+
+.choose
 	xor a
 	ldh [hCurSelectionItem], a
 	ld h, a

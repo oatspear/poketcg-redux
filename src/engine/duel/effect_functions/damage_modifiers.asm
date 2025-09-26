@@ -317,6 +317,28 @@ Riptide_AIEffect:
 	jp SetDefiniteAIDamage
 
 
+; +10 for each selected fossil to recover from discard
+PrehistoricSwirl_DamageBoostEffect:
+	call TempListLength
+	call ATimes10
+	jp AddToDamage
+
+PrehistoricSwirl_AIEffect:
+	call CreateDiscardPileCardList
+	ret c  ; no boost
+	ld a, CARDTEST_MYSTERIOUS_FOSSIL
+	call FilterCardList
+	ret c  ; no boost
+	call CountCardsInDuelTempList
+	cp 4
+	jr c, .cap
+	ld a, 4
+.cap
+	call ATimes10
+	call AddToDamage
+	jp SetDefiniteAIDamage
+
+
 IfAttachedEnergy10BonusDamage_DamageBoostEffect:
 	call CheckPlayedEnergyThisTurn
 	ret c  ; no energy
@@ -673,7 +695,7 @@ RageFist_AIEffect:
 Vengeance_DamageBoostEffect:
 	call CreatePokemonCardListFromDiscardPile
 	ret c  ; return if there are no Pokémon in discard pile
-  ld a, c
+	call CountCardsInDuelTempList
   cp 5
   jr c, .cap
   ld a, 5

@@ -2,6 +2,16 @@
 
 ## Version 0.14.0
 
+### New Cards
+
+#### Relicanth
+- Basic, 70 HP, Water Pokémon.
+- Weakness: Grass.
+- Resistance: none.
+- Retreat Cost: 1.
+- Poké-Body: **Memory Dive**: your Pokémon can use attacks from their previous stages.
+- Attack 2: **Prehistoric Swirl** (CC): 10 damage; shuffle all discarded Mysterious Fossil into deck; +10 damage for each shuffled card.
+
 
 ## Version 0.13.0
 

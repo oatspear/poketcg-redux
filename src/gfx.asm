@@ -2411,3 +2411,8 @@ RareCandyCardGfx::
 	INCBIN "gfx/cards/rare_candy.pal"
 	INCBIN "gfx/cards/rare_candy.attrmap"
 	INCBIN "gfx/cards/rare_candy.2bpp"
+
+FixmeCardGfx::
+	INCBIN "gfx/cards/fixme.pal"
+	INCBIN "gfx/cards/fixme.attrmap"
+	INCBIN "gfx/cards/fixme.2bpp"

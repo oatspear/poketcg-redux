@@ -552,6 +552,16 @@ IsBodyguardActive:
 	jp GetFirstPokemonMatchingID  ; preserves: hl, bc, de
 
 
+; return carry if turn holder has Relicanth and its Memory Dive ability is active
+; preserves: hl, bc, de
+IsMemoryDiveActive:
+	call ArePokeBodiesDisabled  ; preserves: hl, bc, de
+	ccf
+	ret nc
+	ld a, RELICANTH
+	jp GetFirstPokemonMatchingID  ; preserves: hl, bc, de
+
+
 ; return carry if a Poké-Body capable Vileplume
 ; is found in the non-turn holder's Active Spot.
 ; preserves: hl, bc, de

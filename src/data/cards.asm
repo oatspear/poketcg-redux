@@ -97,6 +97,7 @@ CardPointers:
 	dw VaporeonLv42Card
 	dw OmanyteCard
 	dw OmastarCard
+	dw RelicanthCard
 	dw ArticunoLv35Card
 	dw ArticunoLv37Card
 	dw PikachuLv12Card
@@ -4730,6 +4731,57 @@ OmastarCard:
 	db 3, 3 ; length
 	dw 77 * 10 ; weight
 	tx OmastarDescription ; description
+	db 0
+
+RelicanthCard:
+	db TYPE_PKMN_WATER ; type
+	gfx FixmeCardGfx ; gfx
+	tx RelicanthName ; name
+	db DIAMOND ; rarity
+	db MYSTERY | FOSSIL ; sets
+	db RELICANTH
+	db 70 ; hp
+	db BASIC ; stage
+	dw NONE ; pre-evo name
+
+	; attack 1
+	energy 0 ; energies
+	tx MemoryDiveName ; name
+	tx MemoryDiveDescription ; description
+	dw NONE ; description (cont)
+	db 0 ; damage
+	db POKE_BODY ; category
+	dw PassiveAbilityEffectCommands ; effect commands
+	db NONE ; flags 1
+	db NONE ; flags 2
+	db NONE ; flags 3
+	db 0
+	db ATK_ANIM_GLOW_EFFECT ; animation
+
+	; attack 2
+	energy COLORLESS, 2 ; energies
+	tx PrehistoricSwirlName ; name
+	tx PrehistoricSwirlDescription ; description
+	dw NONE ; description (cont)
+	db 10 ; damage
+	db DAMAGE_PLUS ; category
+	dw PrehistoricSwirlEffectCommands ; effect commands
+	db NONE ; flags 1
+	db NONE ; flags 2
+	db NONE ; flags 3
+	db 0
+	db ATK_ANIM_WHIRLPOOL ; animation
+
+	db 1 ; retreat cost
+	db WR_GRASS ; weakness
+	db NONE ; resistance
+	tx LongevityName ; category
+	db 255 ; Pokedex number
+	db 0
+	db 35 ; level
+	db 3, 0 ; length
+	dw 51 * 10 ; weight
+	tx RelicanthDescription ; description
 	db 0
 
 ArticunoLv35Card:
