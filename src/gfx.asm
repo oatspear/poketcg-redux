@@ -2347,6 +2347,11 @@ CrobatCardGfx::
 	INCBIN "gfx/cards/crobat.attrmap"
 	INCBIN "gfx/cards/crobat.2bpp"
 
+RelicanthCardGfx::
+	INCBIN "gfx/cards/relicanth.pal"
+	INCBIN "gfx/cards/relicanth.attrmap"
+	INCBIN "gfx/cards/relicanth.2bpp"
+
 PikachuLv16CardGfx::
 	INCBIN "gfx/cards/pikachu2.pal"
 	INCBIN "gfx/cards/pikachu2.attrmap"
