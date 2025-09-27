@@ -3192,6 +3192,8 @@ ENDC
 	textpointer LeftoversDescription
 	textpointer RockyHelmetName
 	textpointer RockyHelmetDescription
+	textpointer MemoryCapsuleName
+	textpointer MemoryCapsuleDescription
 	textpointer AlreadyHasAToolAttachedText
 	textpointer YouMayAttachOnly1ToolPerPokemonText
 	textpointer PewterGymName

@@ -1249,11 +1249,15 @@ DuelMenu_Attack:
 	jp PrintDuelMenuAndHandleInput
 
 .can_attack
-	xor a  ; PLAY_AREA_ARENA
-	ldh [hTempPlayAreaLocation_ff9d], a
-	call CheckPokemonCanUsePreviousStageAttacks
+	xor a
 	ld [wCanUsePreviousStageAttacks], a
-	call c, GetCardOneStageBelow  ; preload wAllStagesIndices
+	ldh [hTempPlayAreaLocation_ff9d], a  ; PLAY_AREA_ARENA
+	call CheckPokemonCanUsePreviousStageAttacks
+	jr nc, .can_attack_set_current_arena_card
+; able to use previous stage attacks
+	ld a, TRUE
+	ld [wCanUsePreviousStageAttacks], a
+	call GetCardOneStageBelow  ; preload wAllStagesIndices
 .can_attack_set_current_arena_card
 	xor a
 	ld [wSelectedDuelSubMenuItem], a
@@ -1287,6 +1291,7 @@ DuelMenu_Attack:
 	jr nz, .display_selected_attack_info
 	bit SELECT_F, a
 	jr nz, .choose_attacks_from_stage_below
+.handle_normal_input
 	call HandleMenuInput
 	jr nc, .wait_for_input
 	cp -1 ; was B pressed?
@@ -1339,6 +1344,9 @@ ENDC
 	jp .try_open_attack_menu
 
 .choose_attacks_from_stage_below
+	ld a, [wCanUsePreviousStageAttacks]
+	or a
+	jr z, .handle_normal_input
 	ld a, [wDuelAttackSubMenuSelectedStage]
 	or a
 	jp z, .can_attack_set_current_arena_card  ; BASIC, roll over
@@ -1655,13 +1663,24 @@ PrintAttackMenuSelectButtonHint:
 	jp PrintTextNoDelay
 
 
+; return carry if the Pokemon can use previous stage attacks, nc if it can't.
+; input:
+;   a: PLAY_AREA_* of the Pokemon trying to use previous stage attacks
 CheckPokemonCanUsePreviousStageAttacks:
-	; return carry if turn holder has Relicanth and its Memory Dive ability is active
-	call IsMemoryDiveActive  ; preserves: hl, bc, de
-	ld a, TRUE
+; return carry if the Pokémon has the Memory Capsule tool attached
+	add DUELVARS_ARENA_CARD_ATTACHED_TOOL
+	call GetTurnDuelistVariable
+	cp $ff
+	jr z, .memory_dive  ; no tools
+	call GetCardIDFromDeckIndex  ; preserves hl, bc
+	ld a, e
+	sub MEMORY_CAPSULE
+	cp 1  ; carry set if exactly equal
 	ret c
-	xor a  ; FALSE
-	ret
+
+; return carry if turn holder has Relicanth and its Memory Dive ability is active
+.memory_dive
+	jp IsMemoryDiveActive  ; preserves: hl, bc, de
 
 
 ; given de = wLoadedCard*Atk*Name, return carry if the attack is an

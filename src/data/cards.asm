@@ -228,6 +228,7 @@ CardPointers:
 	dw LumBerryCard
 	dw LeftoversCard
 	dw RockyHelmetCard
+	dw MemoryCapsuleCard
 	dw PokemonCenterCard
 	dw ViridianForestCard
 	dw PewterGymCard
@@ -10286,6 +10287,17 @@ RockyHelmetCard:
 	db ROCKY_HELMET
 	dw PokemonToolEffectCommands ; effect commands
 	tx RockyHelmetDescription ; description
+	dw NONE ; description (cont)
+
+MemoryCapsuleCard:
+	db TYPE_TRAINER ; type
+	gfx FixmeCardGfx ; gfx
+	tx MemoryCapsuleName ; name
+	db DIAMOND ; rarity
+	db LABORATORY | NONE ; sets
+	db MEMORY_CAPSULE
+	dw PokemonToolEffectCommands ; effect commands
+	tx MemoryCapsuleDescription ; description
 	dw NONE ; description (cont)
 
 

@@ -226,17 +226,18 @@
 	const LUM_BERRY                   ; $e1
 	const LEFTOVERS                   ; $e2
 	const ROCKY_HELMET                ; $e3
-	const POKEMON_CENTER              ; $e4
-	const VIRIDIAN_FOREST             ; $e5
-	const PEWTER_GYM                  ; $e6
-	const CERULEAN_GYM                ; $e7
-	const VERMILION_GYM               ; $e8
-	const CELADON_GYM                 ; $e9
-	const FUCHSIA_GYM                 ; $ea
-	const SAFFRON_GYM                 ; $eb
-	const CINNABAR_GYM                ; $ec
-	const VIRIDIAN_GYM                ; $ed
-	const ROCKET_HEADQUARTERS         ; $ee
+	const MEMORY_CAPSULE              ; $e4
+	const POKEMON_CENTER              ; $e5
+	const VIRIDIAN_FOREST             ; $e6
+	const PEWTER_GYM                  ; $e7
+	const CERULEAN_GYM                ; $e8
+	const VERMILION_GYM               ; $e9
+	const CELADON_GYM                 ; $ea
+	const FUCHSIA_GYM                 ; $eb
+	const SAFFRON_GYM                 ; $ec
+	const CINNABAR_GYM                ; $ed
+	const VIRIDIAN_GYM                ; $ee
+	const ROCKET_HEADQUARTERS         ; $ef
 DEF NUM_CARDS EQU const_value - 1
 
 DEF ENERGY_IDS_START  EQU GRASS_ENERGY

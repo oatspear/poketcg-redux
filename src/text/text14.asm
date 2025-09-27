@@ -528,6 +528,19 @@ RockyHelmetDescription:
 	line "Attacking Pokémon."
 	done
 
+MemoryCapsuleName:
+	text "Memory Capsule"
+	done
+
+MemoryCapsuleDescription:
+	text "The Pokémon this card is attached to"
+	line "can use any attack from its previous"
+	line "evolutions. Those attacks do 10 more"
+	line "damage to the opponent's Active"
+	line "Pokémon. (The Energy cost of those"
+	line "attacks remains the same.)"
+	done
+
 AlreadyHasAToolAttachedText:
 	text "That Pokémon already has a Tool"
 	line "attached to it."

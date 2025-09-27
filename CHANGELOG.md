@@ -12,6 +12,10 @@
 - Poké-Body: **Memory Dive**: your Pokémon can use attacks from their previous stages.
 - Attack 2: **Prehistoric Swirl** (CC): 10 damage; shuffle all discarded Mysterious Fossil into deck; +10 damage for each shuffled card.
 
+#### Memory Capsule
+- Pokémon Tool Trainer card.
+- The holder can use attacks from its previous stages and those attacks do 10 more damage vs the Defending Pokémon.
+
 ### Darkness Changes
 
 #### Ekans
