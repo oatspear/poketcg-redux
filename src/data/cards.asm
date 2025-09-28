@@ -8983,7 +8983,7 @@ DoduoCard:
 	db CIRCLE ; rarity
 	db LABORATORY | NONE ; sets
 	db DODUO
-	db 140 ; hp
+	db 50 ; hp
 	db BASIC ; stage
 	dw NONE ; pre-evo name
 
