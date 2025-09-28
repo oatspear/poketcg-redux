@@ -49,6 +49,8 @@ CardPointers:
 	dw TangelaCard
 	dw ScytherCard
 	dw PinsirCard
+	dw LileepCard
+	dw CradilyCard
 	dw CharmanderCard
 	dw CharmeleonCard
 	dw CharizardCard
@@ -142,6 +144,8 @@ CardPointers:
 	dw RhydonCard
 	dw KabutoCard
 	dw KabutopsCard
+	dw AnorithCard
+	dw Armaldocard
 	dw AbraCard
 	dw KadabraCard
 	dw AlakazamCard
@@ -4587,6 +4591,7 @@ VaporeonLv42Card:
 	tx VaporeonDescription ; description
 	db 0
 
+LileepCard:
 OmanyteCard:
 	db TYPE_PKMN_WATER ; type
 	gfx OmanyteCardGfx ; gfx
@@ -4642,6 +4647,7 @@ OmanyteCard:
 	tx OmanyteDescription ; description
 	db 17
 
+CradilyCard:
 OmastarCard:
 	db TYPE_PKMN_WATER ; type
 	gfx OmastarCardGfx ; gfx
@@ -7026,6 +7032,7 @@ RhydonCard:
 	tx RhydonDescription ; description
 	db 0
 
+AnorithCard:
 KabutoCard:
 	db TYPE_PKMN_FIGHTING ; type
 	gfx KabutoCardGfx ; gfx
@@ -7093,6 +7100,7 @@ KabutoCard:
 	tx KabutoDescription ; description
 	db 19
 
+ArmaldoCard:
 KabutopsCard:
 	db TYPE_PKMN_FIGHTING ; type
 	gfx KabutopsCardGfx ; gfx
