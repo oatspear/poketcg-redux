@@ -2,6 +2,9 @@
 
 ## Version 0.14.0
 
+### Card Set Changes
+- The Fossil set icon is now attributed only to Fossil-related cards, such as Mysterious Fossil, Omanyte, Kabuto, etc.
+
 ### New Cards
 
 #### Relicanth

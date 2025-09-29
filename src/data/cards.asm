@@ -1175,7 +1175,7 @@ ZubatCard:
 	gfx ZubatCardGfx ; gfx
 	tx ZubatName ; name
 	db CIRCLE ; rarity
-	db LABORATORY | FOSSIL ; sets
+	db LABORATORY | NONE ; sets
 	db ZUBAT
 	db 40 ; hp
 	db BASIC ; stage
@@ -1230,7 +1230,7 @@ GolbatCard:
 	gfx GolbatCardGfx ; gfx
 	tx GolbatName ; name
 	db DIAMOND ; rarity
-	db LABORATORY | FOSSIL ; sets
+	db LABORATORY | NONE ; sets
 	db GOLBAT
 	db 80 ; hp
 	db STAGE1 ; stage
@@ -1281,7 +1281,7 @@ CrobatCard:
 	gfx CrobatCardGfx ; gfx
 	tx CrobatName ; name
 	db STAR ; rarity
-	db LABORATORY | FOSSIL ; sets
+	db LABORATORY | NONE ; sets
 	db CROBAT
 	db 100 ; hp
 	db STAGE2 ; stage
@@ -1943,7 +1943,7 @@ GrimerCard:
 	gfx GrimerCardGfx ; gfx
 	tx GrimerName ; name
 	db CIRCLE ; rarity
-	db LABORATORY | FOSSIL ; sets
+	db LABORATORY | NONE ; sets
 	db GRIMER
 	db 50 ; hp
 	db BASIC ; stage
@@ -2162,7 +2162,7 @@ WeezingCard:
 	gfx WeezingCardGfx ; gfx
 	tx WeezingName ; name
 	db DIAMOND ; rarity
-	db LABORATORY | FOSSIL ; sets
+	db LABORATORY | NONE ; sets
 	db WEEZING
 	db 90 ; hp
 	db STAGE1 ; stage
@@ -2942,7 +2942,7 @@ MagmarLv31Card:
 	gfx MagmarLv31CardGfx ; gfx
 	tx MagmarName ; name
 	db DIAMOND ; rarity
-	db LABORATORY | FOSSIL ; sets
+	db LABORATORY | NONE ; sets
 	db MAGMAR_LV31
 	db 70 ; hp
 	db BASIC ; stage
@@ -3095,7 +3095,7 @@ MoltresLv35Card:
 	gfx MoltresLv35CardGfx ; gfx
 	tx MoltresName ; name
 	db STAR ; rarity
-	db MYSTERY | FOSSIL ; sets
+	db MYSTERY | NONE ; sets
 	db MOLTRES_LV35
 	db 70 ; hp
 	db BASIC ; stage
@@ -3314,7 +3314,7 @@ PsyduckCard:
 	gfx PsyduckCardGfx ; gfx
 	tx PsyduckName ; name
 	db CIRCLE ; rarity
-	db LABORATORY | FOSSIL ; sets
+	db LABORATORY | NONE ; sets
 	db PSYDUCK
 	db 50 ; hp
 	db BASIC ; stage
@@ -3365,7 +3365,7 @@ GolduckCard:
 	gfx GolduckCardGfx ; gfx
 	tx GolduckName ; name
 	db DIAMOND ; rarity
-	db LABORATORY | FOSSIL ; sets
+	db LABORATORY | NONE ; sets
 	db GOLDUCK
 	db 80 ; hp
 	db STAGE1 ; stage
@@ -3571,7 +3571,7 @@ TentacoolCard:
 	gfx TentacoolCardGfx ; gfx
 	tx TentacoolName ; name
 	db CIRCLE ; rarity
-	db LABORATORY | FOSSIL ; sets
+	db LABORATORY | NONE ; sets
 	db TENTACOOL
 	db 40 ; hp
 	db BASIC ; stage
@@ -3622,7 +3622,7 @@ TentacruelCard:
 	gfx TentacruelCardGfx ; gfx
 	tx TentacruelName ; name
 	db DIAMOND ; rarity
-	db LABORATORY | FOSSIL ; sets
+	db LABORATORY | NONE ; sets
 	db TENTACRUEL
 	db 80 ; hp
 	db STAGE1 ; stage
@@ -3774,7 +3774,7 @@ ShellderCard:
 	gfx ShellderCardGfx ; gfx
 	tx ShellderName ; name
 	db CIRCLE ; rarity
-	db MYSTERY | FOSSIL ; sets
+	db MYSTERY | NONE ; sets
 	db SHELLDER
 	db 40 ; hp
 	db BASIC ; stage
@@ -3826,7 +3826,7 @@ CloysterCard:
 	gfx CloysterCardGfx ; gfx
 	tx CloysterName ; name
 	db DIAMOND ; rarity
-	db MYSTERY | FOSSIL ; sets
+	db MYSTERY | NONE ; sets
 	db CLOYSTER
 	db 60 ; hp
 	db STAGE1 ; stage
@@ -3878,7 +3878,7 @@ KrabbyCard:
 	gfx KrabbyCardGfx ; gfx
 	tx KrabbyName ; name
 	db CIRCLE ; rarity
-	db EVOLUTION | FOSSIL ; sets
+	db EVOLUTION | NONE ; sets
 	db KRABBY
 	db 50 ; hp
 	db BASIC ; stage
@@ -3929,7 +3929,7 @@ KinglerCard:
 	gfx KinglerCardGfx ; gfx
 	tx KinglerName ; name
 	db DIAMOND ; rarity
-	db EVOLUTION | FOSSIL ; sets
+	db EVOLUTION | NONE ; sets
 	db KINGLER
 	db 80 ; hp
 	db STAGE1 ; stage
@@ -3980,7 +3980,7 @@ HorseaCard:
 	gfx HorseaCardGfx ; gfx
 	tx HorseaName ; name
 	db CIRCLE ; rarity
-	db LABORATORY | FOSSIL ; sets
+	db LABORATORY | NONE ; sets
 	db HORSEA
 	db 40 ; hp
 	db BASIC ; stage
@@ -4032,7 +4032,7 @@ SeadraCard:
 	gfx SeadraCardGfx ; gfx
 	tx SeadraName ; name
 	db DIAMOND ; rarity
-	db LABORATORY | FOSSIL ; sets
+	db LABORATORY | NONE ; sets
 	db SEADRA
 	db 70 ; hp
 	db STAGE1 ; stage
@@ -4445,7 +4445,7 @@ LaprasCard:
 	gfx LaprasCardGfx ; gfx
 	tx LaprasName ; name
 	db STAR ; rarity
-	db MYSTERY | FOSSIL ; sets
+	db MYSTERY | NONE ; sets
 	db LAPRAS
 	db 70 ; hp
 	db BASIC ; stage
@@ -4798,7 +4798,7 @@ ArticunoLv35Card:
 	gfx ArticunoLv35CardGfx ; gfx
 	tx ArticunoName ; name
 	db STAR ; rarity
-	db MYSTERY | FOSSIL ; sets
+	db MYSTERY | NONE ; sets
 	db ARTICUNO_LV35
 	db 70 ; hp
 	db BASIC ; stage
@@ -5181,7 +5181,7 @@ RaichuLv45Card:
 	gfx RaichuLv45CardGfx ; gfx
 	tx RaichuName ; name
 	db STAR ; rarity
-	db MYSTERY | FOSSIL ; sets
+	db MYSTERY | NONE ; sets
 	db RAICHU_LV45
 	db 80 ; hp
 	db STAGE1 ; stage
@@ -5401,7 +5401,7 @@ MagnetonLv35Card:
 	gfx MagnetonLv35CardGfx ; gfx
 	tx MagnetonName ; name
 	db STAR ; rarity
-	db LABORATORY | FOSSIL ; sets
+	db LABORATORY | NONE ; sets
 	db MAGNETON_LV35
 	db 80 ; hp
 	db STAGE1 ; stage
@@ -5833,7 +5833,7 @@ ZapdosLv40Card:
 	gfx ZapdosLv40CardGfx ; gfx
 	tx ZapdosName ; name
 	db STAR ; rarity
-	db MYSTERY | FOSSIL ; sets
+	db MYSTERY | NONE ; sets
 	db ZAPDOS_LV40
 	db 70 ; hp
 	db BASIC ; stage
@@ -6050,7 +6050,7 @@ SandslashCard:
 	gfx SandslashCardGfx ; gfx
 	tx SandslashName ; name
 	db DIAMOND ; rarity
-	db EVOLUTION | FOSSIL ; sets
+	db EVOLUTION | NONE ; sets
 	db SANDSLASH
 	db 80 ; hp
 	db STAGE1 ; stage
@@ -6458,7 +6458,7 @@ GeodudeCard:
 	gfx GeodudeCardGfx ; gfx
 	tx GeodudeName ; name
 	db CIRCLE ; rarity
-	db EVOLUTION | FOSSIL ; sets
+	db EVOLUTION | NONE ; sets
 	db GEODUDE
 	db 50 ; hp
 	db BASIC ; stage
@@ -6509,7 +6509,7 @@ GravelerCard:
 	gfx GravelerCardGfx ; gfx
 	tx GravelerName ; name
 	db DIAMOND ; rarity
-	db EVOLUTION | FOSSIL ; sets
+	db EVOLUTION | NONE ; sets
 	db GRAVELER
 	db 70 ; hp
 	db STAGE1 ; stage
@@ -6560,7 +6560,7 @@ GolemCard:
 	gfx GolemCardGfx ; gfx
 	tx GolemName ; name
 	db DIAMOND ; rarity
-	db EVOLUTION | FOSSIL ; sets
+	db EVOLUTION | NONE ; sets
 	db GOLEM
 	db 120 ; hp
 	db STAGE2 ; stage
@@ -6830,7 +6830,7 @@ HitmonleeCard:
 	gfx HitmonleeCardGfx ; gfx
 	tx HitmonleeName ; name
 	db STAR ; rarity
-	db LABORATORY | FOSSIL ; sets
+	db LABORATORY | NONE ; sets
 	db HITMONLEE
 	db 70 ; hp
 	db BASIC ; stage
@@ -7389,7 +7389,7 @@ SlowpokeCard:
 	gfx SlowpokeCardGfx ; gfx
 	tx SlowpokeName ; name
 	db CIRCLE ; rarity
-	db LABORATORY | FOSSIL ; sets
+	db LABORATORY | NONE ; sets
 	db SLOWPOKE
 	db 50 ; hp
 	db BASIC ; stage
@@ -7440,7 +7440,7 @@ SlowbroCard:
 	gfx SlowbroCardGfx ; gfx
 	tx SlowbroName ; name
 	db DIAMOND ; rarity
-	db LABORATORY | FOSSIL ; sets
+	db LABORATORY | NONE ; sets
 	db SLOWBRO
 	db 80 ; hp
 	db STAGE1 ; stage
@@ -7491,7 +7491,7 @@ GastlyCard:
 	gfx GastlyCardGfx ; gfx
 	tx GastlyName ; name
 	db DIAMOND ; rarity
-	db LABORATORY | FOSSIL ; sets
+	db LABORATORY | NONE ; sets
 	db GASTLY
 	db 40 ; hp
 	db BASIC ; stage
@@ -7542,7 +7542,7 @@ HaunterLv17Card:
 	gfx HaunterLv17CardGfx ; gfx
 	tx HaunterName ; name
 	db STAR ; rarity
-	db LABORATORY | FOSSIL ; sets
+	db LABORATORY | NONE ; sets
 	db HAUNTER_LV17
 	db 70 ; hp
 	db STAGE1 ; stage
@@ -7644,7 +7644,7 @@ GengarCard:
 	gfx GengarCardGfx ; gfx
 	tx GengarName ; name
 	db STAR ; rarity
-	db EVOLUTION | FOSSIL ; sets
+	db EVOLUTION | NONE ; sets
 	db GENGAR
 	db 100 ; hp
 	db STAGE2 ; stage
@@ -7746,7 +7746,7 @@ HypnoCard:
 	gfx HypnoCardGfx ; gfx
 	tx HypnoName ; name
 	db STAR ; rarity
-	db LABORATORY | FOSSIL ; sets
+	db LABORATORY | NONE ; sets
 	db HYPNO
 	db 80 ; hp
 	db STAGE1 ; stage
@@ -9743,7 +9743,7 @@ DragoniteLv45Card:
 	gfx DragoniteLv45CardGfx ; gfx
 	tx DragoniteName ; name
 	db STAR ; rarity
-	db MYSTERY | FOSSIL ; sets
+	db MYSTERY | NONE ; sets
 	db DRAGONITE_LV45
 	db 120 ; hp
 	db STAGE2 ; stage
@@ -9915,7 +9915,7 @@ MrFujiCard:
 	gfx MrFujiCardGfx ; gfx
 	tx MrFujiName ; name
 	db DIAMOND ; rarity
-	db MYSTERY | FOSSIL ; sets
+	db MYSTERY | NONE ; sets
 	db MR_FUJI
 	dw MrFujiEffectCommands ; effect commands
 	tx MrFujiDescription ; description
@@ -10003,7 +10003,7 @@ EnergySearchCard:
 	gfx EnergySearchCardGfx ; gfx
 	tx EnergySearchName ; name
 	db CIRCLE ; rarity
-	db EVOLUTION | FOSSIL ; sets
+	db EVOLUTION | NONE ; sets
 	db ENERGY_SEARCH
 	dw EnergySearchEffectCommands ; effect commands
 	tx EnergySearchDescription ; description
@@ -10201,7 +10201,7 @@ RecycleCard:
 	gfx RecycleCardGfx ; gfx
 	tx RecycleName ; name
 	db CIRCLE ; rarity
-	db LABORATORY | FOSSIL ; sets
+	db LABORATORY | NONE ; sets
 	db RECYCLE
 	dw RecycleEffectCommands ; effect commands
 	tx RecycleDescription ; description
@@ -10430,7 +10430,7 @@ RocketHeadquartersCard:
 	gfx RocketHeadquartersCardGfx ; gfx
 	tx RocketHeadquartersName ; name
 	db CIRCLE ; rarity
-	db LABORATORY | FOSSIL ; sets
+	db LABORATORY | NONE ; sets
 	db ROCKET_HEADQUARTERS
 	dw StadiumCardEffectCommands ; effect commands
 	tx RocketHeadquartersDescription ; description
