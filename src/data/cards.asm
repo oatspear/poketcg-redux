@@ -87,6 +87,7 @@ CardPointers:
 	dw KinglerCard
 	dw HorseaCard
 	dw SeadraCard
+	dw KingdraCard
 	dw GoldeenCard
 	dw SeakingCard
 	dw StaryuCard
@@ -4025,6 +4026,7 @@ HorseaCard:
 	tx HorseaDescription ; description
 	db 19
 
+KingdraCard:
 SeadraCard:
 	db TYPE_PKMN_WATER ; type
 	gfx SeadraCardGfx ; gfx
