@@ -55,3 +55,12 @@ CopyDataHLtoDE:
 	or b
 	jr nz, CopyDataHLtoDE
 	ret
+
+; copies b bytes from hl to de
+CopyNBytesFromHLToDE:
+	ld a, [hli]
+	ld [de], a
+	inc de
+	dec b
+	jr nz, CopyNBytesFromHLToDE
+	ret

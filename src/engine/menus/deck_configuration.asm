@@ -3172,14 +3172,6 @@ HandleSendDeckConfigurationMenu:
 	or a
 	ret
 
-; copies b bytes from hl to de
-CopyNBytesFromHLToDE:
-	ld a, [hli]
-	ld [de], a
-	inc de
-	dec b
-	jr nz, CopyNBytesFromHLToDE
-	ret
 
 ; outputs in wTempCardCollection all the cards in sCardCollection
 ; plus the cards that are being used in built decks
