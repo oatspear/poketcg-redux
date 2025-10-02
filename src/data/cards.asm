@@ -146,7 +146,7 @@ CardPointers:
 	dw KabutoCard
 	dw KabutopsCard
 	dw AnorithCard
-	dw Armaldocard
+	dw ArmaldoCard
 	dw AbraCard
 	dw KadabraCard
 	dw AlakazamCard
