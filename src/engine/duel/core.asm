@@ -970,7 +970,7 @@ Func_4597:
 .Func_45a9
 	call HasAlivePokemonInPlayArea
 	ld a, $02
-	ld [wcbd4], a
+	ld [wPlayAreaSelectAction], a
 	call OpenPlayAreaScreenForViewing
 	ldh a, [hKeysPressed]
 	and B_BUTTON
@@ -5355,7 +5355,7 @@ _HasAlivePokemonInPlayArea:
 	inc c
 	xor a
 	ld [wPlayAreaScreenLoaded], a
-	ld [wcbd4], a
+	ld [wPlayAreaSelectAction], a
 	jr .next_pkmn
 .loop
 	ld a, [hli]
@@ -5418,6 +5418,7 @@ DisplayPlayAreaScreen:
 	pop af
 	ldh [hTempCardIndex_ff98], a
 	jr OpenPlayAreaScreenForSelection
+
 .asm_6061
 	call HandleMenuInput
 	jr nc, .asm_604c
@@ -5474,7 +5475,7 @@ DisplayPlayAreaScreen:
 PlayAreaScreenMenuParameters_ActivePokemonIncluded:
 	db 0, 0 ; cursor x, cursor y
 	db 3 ; y displacement between items
-	db 6 ; number of items
+	db MAX_PLAY_AREA_POKEMON ; number of items
 	db SYM_CURSOR_R ; cursor tile number
 	db SYM_SPACE ; tile behind cursor
 	dw PlayAreaScreenMenuFunction ; function pointer if non-0
@@ -5482,7 +5483,7 @@ PlayAreaScreenMenuParameters_ActivePokemonIncluded:
 PlayAreaScreenMenuParameters_ActivePokemonExcluded:
 	db 0, 3 ; cursor x, cursor y
 	db 3 ; y displacement between items
-	db 6 ; number of items
+	db MAX_PLAY_AREA_POKEMON ; number of items
 	db SYM_CURSOR_R ; cursor tile number
 	db SYM_SPACE ; tile behind cursor
 	dw PlayAreaScreenMenuFunction ; function pointer if non-0
@@ -5500,15 +5501,15 @@ PlayAreaScreenMenuFunction:
 	ret
 
 HandleExamineHandOrPlayAreaWhileChoosingPokemon:
-	ld a, [wcbd4]
+	ld a, [wPlayAreaSelectAction]
 	or a
 	ret z
 	ldh a, [hKeysPressed]
 	and SELECT
 	ret z
-	ld a, [wcbd4]
+	ld a, [wPlayAreaSelectAction]
 	cp $02
-	jr z, .asm_6121
+	jr z, .set_carry
 	xor a
 	ld [wCurrentDuelMenuItem], a
 .asm_60f2
@@ -5532,8 +5533,8 @@ HandleExamineHandOrPlayAreaWhileChoosingPokemon:
 .asm_6119
 	call HasAlivePokemonInBench
 	ld a, $01
-	ld [wcbd4], a
-.asm_6121
+	ld [wPlayAreaSelectAction], a
+.set_carry
 	scf
 	ret
 .a_pressed
@@ -5541,12 +5542,14 @@ HandleExamineHandOrPlayAreaWhileChoosingPokemon:
 	cp 2
 	jr z, .asm_6119
 	or a
-	jr z, .asm_6132
+	jr z, .examine_hand
 	call OpenDuelCheckMenu
 	jr .asm_60f2
-.asm_6132
+
+.examine_hand
 	call OpenTurnHolderHandScreen_Simple
 	jr .asm_60f2
+
 
 Func_6137:
 	ldh a, [hDPadHeld]
@@ -7267,7 +7270,7 @@ OppAction_ForceSwitchActive:
 	call SwapTurn
 	call HasAlivePokemonInBench
 	ld a, $01
-	ld [wcbd4], a
+	ld [wPlayAreaSelectAction], a
 .force_selection
 	call OpenPlayAreaScreenForSelection
 	jr c, .force_selection
@@ -8858,7 +8861,7 @@ ReplaceKnockedOutPokemon:
 	ldtx hl, SelectPokemonToPlaceInTheArenaText
 	call DrawWideTextBox_WaitForInput
 	ld a, $01
-	ld [wcbd4], a
+	ld [wPlayAreaSelectAction], a
 .select_pokemon
 	call OpenPlayAreaScreenForSelection
 	jr c, .select_pokemon
