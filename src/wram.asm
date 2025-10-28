@@ -488,7 +488,12 @@ wCanUsePreviousStageAttacks:: ; cbd2
 wPlayAreaScreenLoaded:: ; cbd3
 	ds $1
 
-wcbd4:: ; cbd4
+; determines what to do when player presses the Select button
+; while viewing the Play Area:
+; - if $0 or $2: no action
+; - if $1: menu is accessible where player can examine Hand or other screens
+; $2 is reserved for OpenVariousPlayAreaScreens_FromSelectPresses
+wPlayAreaSelectAction:: ; cbd4
 	ds $1
 
 ; low byte of the address of the next slot in the hTempRetreatCostCards array to be used

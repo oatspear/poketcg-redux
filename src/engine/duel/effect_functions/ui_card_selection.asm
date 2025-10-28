@@ -547,7 +547,7 @@ HandlePlayerSelectionPokemonInBench_AllowCancel:
 HandlePlayerSelectionPokemonInBench_AllowCancel_AllowExamine:
 	bank1call HasAlivePokemonInBench
 	ld a, $01
-	ld [wcbd4], a
+	ld [wPlayAreaSelectAction], a
 	jr HandlePlayerSelectionPokemonInPlayArea_AllowCancel.select
 
 
@@ -566,7 +566,7 @@ HandlePlayerSelectionPokemonInBench:
 HandlePlayerSelectionPokemonInBench_AllowExamine:
 	bank1call HasAlivePokemonInBench
 	ld a, $01
-	ld [wcbd4], a
+	ld [wPlayAreaSelectAction], a
 	jr HandlePlayerSelectionPokemonInPlayArea.loop_input
 
 

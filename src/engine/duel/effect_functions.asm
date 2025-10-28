@@ -1654,7 +1654,7 @@ DuelistSelectForcedSwitch:
 	call SwapTurn
 	bank1call HasAlivePokemonInBench
 	ld a, $01
-	ld [wcbd4], a
+	ld [wPlayAreaSelectAction], a
 .asm_2c4c0
 	bank1call OpenPlayAreaScreenForSelection
 	jr c, .asm_2c4c0
