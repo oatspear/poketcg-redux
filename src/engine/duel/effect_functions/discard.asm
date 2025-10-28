@@ -216,6 +216,14 @@ DiscardAllCardsFromHand:
 ; Discard Other Cards
 ; ------------------------------------------------------------------------------
 
+DiscardSelectedPokemon_DiscardEffect:
+  ldh a, [hTempPlayAreaLocation_ffa1]
+  cp $ff
+  ret z
+  ld e, a
+	call MovePlayAreaCardToDiscardPile
+	jp ShiftAllPokemonToFirstPlayAreaSlots
+
 
 DiscardOpponentTool_DiscardEffect:
 	call SwapTurn

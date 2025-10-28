@@ -1975,14 +1975,6 @@ PlayAreaSelectionMenuParameters: ; 2c6e0 (b:46e0)
 	db SYM_SPACE ; tile behind cursor
 	dw NULL ; function pointer if non-0
 
-BenchSelectionMenuParameters: ; 2c6e8 (b:46e8)
-	db 0, 3 ; cursor x, cursor y
-	db 3 ; y displacement between items
-	db MAX_PLAY_AREA_POKEMON ; number of items
-	db SYM_CURSOR_R ; cursor tile number
-	db SYM_SPACE ; tile behind cursor
-	dw NULL ; function pointer if non-0
-
 
 ; return carry if there are no Pokemon cards in the non-turn holder's bench
 ; return carry if there are no energies attached to the user
@@ -3984,220 +3976,11 @@ DiscardAllAttachedEnergiesOnTurnHolderSideEffect:
 
 
 SelectUpTo2Benched_PlayerSelectEffect:
-	call SwapTurn
-	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
-	call GetTurnDuelistVariable
-	cp 2
-	jr nc, .has_bench
-	call SwapTurn
-	ld a, $ff
-	ldh [hTempList], a
+	farcall EF2_SelectUpTo2Benched_PlayerSelectEffect
 	ret
 
-.has_bench
-	ldtx hl, ChooseUpTo2PokemonOnBenchToGiveDamageText
-	call DrawWideTextBox_WaitForInput
-
-; init number of items in list and cursor position
-	xor a
-	ldh [hCurSelectionItem], a
-	ld [wCurMultiBenchSelectionItem], a
-	bank1call SetDefaultConsolePalettes
-	bank1call SetupPlayAreaScreen
-.start
-	bank1call PrintPlayAreaCardList_EnableLCD
-	push af
-	ld a, [wCurMultiBenchSelectionItem]
-	ld hl, BenchSelectionMenuParameters
-	call InitializeMenuParameters
-	pop af
-
-; exclude Arena Pokemon from number of items
-	dec a
-	ld [wNumMenuItems], a
-
-.loop_input
-	call DoFrame
-	call HandleMenuInput
-	jr nc, .loop_input
-	cp -1
-	jr z, .try_cancel
-
-	ld [wCurMultiBenchSelectionItem], a
-	call .CheckIfChosenAlready
-	jr nc, .not_chosen
-	; play SFX
-	call PlaySFX_InvalidChoice
-	jr .loop_input
-
-.not_chosen
-; mark this Play Area location
-	ldh a, [hCurMenuItem]
-	inc a
-	ld b, SYM_HP_NOK
-	call DrawSymbolOnPlayAreaCursor
-; store it in the list of chosen Bench Pokemon
-	call GetNextPositionInTempList
-	ldh a, [hCurMenuItem]
-	inc a
-	ld [hl], a
-
-; check if 2 were chosen already
-	ldh a, [hCurSelectionItem]
-	ld c, a
-	cp 2
-	jr nc, .chosen ; check if already chose 2
-
-	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
-	call GetTurnDuelistVariable
-	dec a
-	cp c
-	jr nz, .start ; if sill more options available, loop back
-	; fallthrough if no other options available to choose
-
-.chosen
-	ldh a, [hCurMenuItem]
-	inc a
-	ldh [hTempPlayAreaLocation_ff9d], a
-	bank1call Func_2c10b
-	ldh a, [hKeysPressed]
-	and B_BUTTON
-	jr nz, .try_cancel
-	call SwapTurn
-	call GetNextPositionInTempList
-	ld [hl], $ff ; terminating byte
-	ret
-
-.try_cancel
-	ldh a, [hCurSelectionItem]
-	or a
-	jr z, .start ; none selected, can safely loop back to start
-
-; undo last selection made
-	dec a
-	ldh [hCurSelectionItem], a
-	ld e, a
-	ld d, $00
-	ld hl, hTempList
-	add hl, de
-	ld a, [hl]
-
-	push af
-	ld b, SYM_SPACE
-	call DrawSymbolOnPlayAreaCursor
-	call EraseCursor
-	pop af
-
-	dec a
-	ld [wCurMultiBenchSelectionItem], a
-	jp .start
-
-; returns carry if Bench Pokemon
-; in register a was already chosen.
-.CheckIfChosenAlready: ; 2e6af (b:66af)
-	inc a
-	ld c, a
-	ldh a, [hCurSelectionItem]
-	ld b, a
-	ld hl, hTempList
-	inc b
-	jr .next_check
-.check_chosen
-	ld a, [hli]
-	cp c
-	scf
-	ret z ; return if chosen already
-.next_check
-	dec b
-	jr nz, .check_chosen
-	or a
-	ret
-
-SelectUpTo2Benched_AISelectEffect: ; 2e6c3 (b:66c3)
-; if Bench has 2 Pokemon or less, no need for selection,
-; since AI will choose them all.
-	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
-	call GetNonTurnDuelistVariable
-	cp 3 + 1  ; 3 benched + arena
-	jr nc, .start_selection
-
-; select them all
-	ld hl, hTempList
-	ld b, PLAY_AREA_ARENA
-	jr .next_bench
-.select_bench
-	ld [hl], b
-	inc hl
-.next_bench
-	inc b
-	dec a
-	jr nz, .select_bench
-	ld [hl], $ff ; terminating byte
-	ret
-
-.start_selection
-; has more than 2 Bench cards, proceed to sort them
-; by lowest remaining HP to highest, and pick first 2.
-	call SwapTurn
-	dec a
-	ld c, a
-	ld b, PLAY_AREA_BENCH_1
-
-; first select all of the Bench Pokemon and write to list
-	ld hl, hTempList
-.loop_all
-	ld [hl], b
-	inc hl
-	inc b
-	dec c
-	jr nz, .loop_all
-	ld [hl], $00 ; end list with $00
-
-; then check each of the Bench Pokemon HP
-; sort them from lowest remaining HP to highest.
-	ld de, hTempList
-.loop_outer
-	ld a, [de]
-	add DUELVARS_ARENA_CARD_HP
-	call GetTurnDuelistVariable
-	ld c, a
-	ld l, e
-	ld h, d
-	inc hl
-
-.loop_inner
-	ld a, [hli]
-	or a
-	jr z, .next ; reaching $00 means it's end of list
-
-	push hl
-	add DUELVARS_ARENA_CARD_HP
-	call GetTurnDuelistVariable
-	pop hl
-	cp c
-	jr c, .loop_inner
-	; a Bench Pokemon was found with less HP
-	ld c, a ; store its HP
-
-; switch the two
-	dec hl
-	ld b, [hl]
-	ld a, [de]
-	ld [hli], a
-	ld a, b
-	ld [de], a
-	jr .loop_inner
-
-.next
-	inc de
-	ld a, [de]
-	or a
-	jr nz, .loop_outer
-
-; done
-	ld a, $ff ; terminating byte
-	ldh [hTempList + 3], a
-	call SwapTurn
+SelectUpTo2Benched_AISelectEffect:
+	farcall EF2_SelectUpTo2Benched_AISelectEffect
 	ret
 
 SelectUpTo2Benched_BenchDamageEffect:
@@ -4213,6 +3996,7 @@ SelectUpTo2Benched_BenchDamageEffect:
 	call DealDamageToPlayAreaPokemon_RegularAnim
 	pop hl
 	jr .loop_selection
+
 
 Sonicboom_UnaffectedByColorEffect:
 	ld hl, wDamageFlags
@@ -5416,6 +5200,32 @@ RocketGrunts_DiscardEffect:
 ; ------------------------------------------------------------------------------
 
 INCLUDE "engine/duel/effect_functions/ui_card_selection.asm"
+
+
+ChooseBenchedPokemonToDiscard_PlayerSelectEffect:
+	ldtx hl, ChoosePokemonToDiscardText
+	call DrawWideTextBox_WaitForInput
+	call HandlePlayerSelectionPokemonInBench_AllowCancel_AllowExamine
+	ldh [hTempPlayAreaLocation_ffa1], a
+	ret
+
+DarkRitual_PokemonToDiscard_PlayerSelectEffect:
+	xor a
+	ldh [hTemp_ffa0], a
+	call ChooseBenchedPokemonToDiscard_PlayerSelectEffect
+	ret c
+	add DUELVARS_ARENA_CARD_HP
+	call GetTurnDuelistVariable
+	call ADividedBy10  ; convert into damage counters
+	ldh [hTemp_ffa0], a
+	ret
+
+
+DarkRitual_PutDamageCounters_PlayerSelectEffect:
+	ldh a, [hTemp_ffa0]  ; damage counters
+	ld [wCurMultiPlayAreaSelectionItem], a
+	farcall EF2_PutDamageCountersInAnyWayYouLike_PlayerSelectEffect
+	ret
 
 
 Hurricane_PlayerSelectEffect:

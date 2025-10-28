@@ -7904,12 +7904,12 @@ Gigashock_PlayerSelectEffect: ; 2e60d (b:660d)
 ; init number of items in list and cursor position
 	xor a
 	ldh [hCurSelectionItem], a
-	ld [wCurMultiBenchSelectionItem], a
+	ld [wCurMultiPlayAreaSelectionItem], a
 	bank1call SetupPlayAreaScreen
 .start
 	bank1call PrintPlayAreaCardList_EnableLCD
 	push af
-	ld a, [wCurMultiBenchSelectionItem]
+	ld a, [wCurMultiPlayAreaSelectionItem]
 	ld hl, BenchSelectionMenuParameters
 	call InitializeMenuParameters
 	pop af
@@ -7925,7 +7925,7 @@ Gigashock_PlayerSelectEffect: ; 2e60d (b:660d)
 	cp -1
 	jr z, .try_cancel
 
-	ld [wCurMultiBenchSelectionItem], a
+	ld [wCurMultiPlayAreaSelectionItem], a
 	call .CheckIfChosenAlready
 	jr nc, .not_chosen
 	; play SFX
@@ -7990,7 +7990,7 @@ Gigashock_PlayerSelectEffect: ; 2e60d (b:660d)
 	pop af
 
 	dec a
-	ld [wCurMultiBenchSelectionItem], a
+	ld [wCurMultiPlayAreaSelectionItem], a
 	jr .start
 
 ; returns carry if Bench Pokemon

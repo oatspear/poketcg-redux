@@ -439,6 +439,28 @@ NightAmbush_DamageEffect:
 	jp Put1DamageCounterOnTarget_DamageEffect
 
 
+PutDamageCountersInAnyWayYouLike_DamageEffect:
+	call SwapTurn
+	ld a, DUELVARS_NUMBER_OF_POKEMON_IN_PLAY_AREA
+	call GetTurnDuelistVariable
+	ld c, a
+	ld e, PLAY_AREA_ARENA
+	ld hl, hTempList
+.loop
+	ld a, [hli]
+	or a
+	jr z, .next  ; no damage counters
+	call ATimes10
+	ld d, a  ; damage
+	; input e: PLAY_AREA_*
+	call ApplyDirectDamage_RegularAnim  ; preserves: hl, de, bc
+.next
+	inc e
+	dec c
+	jr nz, .loop
+	jp SwapTurn
+
+
 ; ------------------------------------------------------------------------------
 ; Targeted Damage - Player Selection
 ; ------------------------------------------------------------------------------

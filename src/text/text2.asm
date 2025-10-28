@@ -446,6 +446,10 @@ ChoosePokemonToReturnToTheHandText:
 	line "return to the Hand."
 	done
 
+ChoosePokemonToDiscardText:
+	text "Choose a Pokémon to discard."
+	done
+
 ChooseCardFromYourHandToSwitchText: ; 39775 (e:5775)
 	text "Choose a card from your"
 	line "Hand to Switch."

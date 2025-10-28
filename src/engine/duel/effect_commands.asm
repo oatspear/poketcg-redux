@@ -882,6 +882,17 @@ GastlyDestinyBondEffectCommands:
 	dbw EFFECTCMDTYPE_AI_SELECTION, DiscardEnergy_AISelectEffect
 	db  $00
 
+DarkRitualEffectCommands:
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_1, CheckBenchIsNotEmpty
+	dbw EFFECTCMDTYPE_INITIAL_EFFECT_2, DarkRitual_PokemonToDiscard_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_DISCARD_ENERGY, DiscardSelectedPokemon_DiscardEffect
+	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, DarkRitual_PutDamageCounters_PlayerSelectEffect
+	dbw EFFECTCMDTYPE_BEFORE_DAMAGE, ApplyDestinyBondEffect
+	dbw EFFECTCMDTYPE_AFTER_DAMAGE, ApplyDestinyBondEffect
+	dbw EFFECTCMDTYPE_AI, DiscardEnergy_AISelectEffect
+	dbw EFFECTCMDTYPE_AI_SELECTION, DiscardEnergy_AISelectEffect
+	db  $00
+
 RiptideEffectCommands:
 	dbw EFFECTCMDTYPE_REQUIRE_SELECTION, Riptide_PlayerSelectEffect
 	dbw EFFECTCMDTYPE_AI_SELECTION, Recover4Energy_AISelectEffect

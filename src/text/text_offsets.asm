@@ -302,6 +302,7 @@ ENDC
 	textpointer ChoosePokemonToPlaceInPlayText
 	textpointer ChoosePokemonToEvolveText
 	textpointer ChoosePokemonToReturnToTheHandText
+	textpointer ChoosePokemonToDiscardText
 	textpointer ChooseCardFromYourHandToSwitchText                 ; 0x015e
 	textpointer ChooseCardFromYourHandToAttachText                 ; 0x015e
 	textpointer ChooseCardToSwitchText                             ; 0x015f

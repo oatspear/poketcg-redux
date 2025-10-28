@@ -1554,21 +1554,21 @@ wPrinterStatus:: ; ce6f
 wSerialDataPtr:: ; ce70
 	ds $2
 
-wCurMultiBenchSelectionItem:: ; ce72
+wCurMultiPlayAreaSelectionItem:: ; ce72
+	ds $1
+
+; unused
+; how many play area Pokémon to select in a loop
+wMaxMultiPlayAreaSelectionItems:: ; ce73
 	ds $1
 
 ; card index and its attack index chosen
 ; to be used by Metronome.
-wMetronomeSelectedAttack:: ; ce73
+wMetronomeSelectedAttack:: ; ce74
 	ds $2
 
-; unused
-; stores the amount of cards that are being ordered.
-wNumberOfCardsToOrder:: ; ce75
-	ds $1
-
-wce76:: ; ce76
-	ds MAX_PLAY_AREA_POKEMON
+; unused free space
+	ds $6
 
 ; used in CountPokemonIDInPlayAreaMatchingFilter
 wTempPokemonID_ce7c:: ; ce7c
