@@ -983,8 +983,8 @@ Func_4597:
 ; return carry if unable, nc if able.
 CheckAbleToRetreat:
 ; OATS retreat only once per turn
-	ld a, [wAlreadyRetreatedThisTurn]
-	or a
+	ld a, [wOncePerTurnActions]
+	and RETREATED_THIS_TURN
 	ldtx hl, AlreadyRetreatedThisTurnText
 	jr nz, .done
 
@@ -6347,8 +6347,9 @@ AttemptRetreat:
 	ld e, a
 	call SwapArenaWithBenchPokemon
 ; retreat only once per turn
-	ld a, $01
-	ld [wAlreadyRetreatedThisTurn], a
+	ld a, [wOncePerTurnActions]
+	or RETREATED_THIS_TURN
+	ld [wOncePerTurnActions], a
 	xor a
 	; ld [wGotTailsFromConfusionCheckDuringRetreat], a
 	ret
@@ -9103,7 +9104,6 @@ InitVariablesToBeginTurn:
 	ld a, [wOncePerTurnActions]
 	ld [wOpponentOncePerTurnActions], a
 	xor a
-	ld [wAlreadyRetreatedThisTurn], a
 	ld [wOncePerTurnActions], a
 	; ld [wGotTailsFromConfusionCheckDuringRetreat], a
 	ld [wGotHeadsFromAccuracyCheck], a

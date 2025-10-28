@@ -1272,10 +1272,8 @@ wAISecondAttackDamage:: ; ce01
 wAIAttackIsNonDamaging:: ; ce02
 	ds $1
 
-; whether the turn holder already retreated this turn or not.
-;	- $0 has not retreated;
-;	- $1 has retreated.
-wAlreadyRetreatedThisTurn:: ; ce03
+; unused
+wce03:: ; ce03
 	ds $1
 
 ; used by AI to store information of Ivysaur, Charmeleon, Wartortle

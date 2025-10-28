@@ -431,8 +431,8 @@ ENDC
 
 ; handles AI retreating logic
 AIProcessRetreat:
-	ld a, [wAlreadyRetreatedThisTurn]
-	or a
+	ld a, [wOncePerTurnActions]
+	and RETREATED_THIS_TURN
 	ret nz ; return, already retreated this turn
 
 	call AIDecideWhetherToRetreat
@@ -442,10 +442,11 @@ AIProcessRetreat:
 	ret c ; return if no Bench Pokemon
 
 ; store Play Area to retreat to and
-; set wAlreadyRetreatedThisTurn to true
+; set RETREATED_THIS_TURN on wOncePerTurnActions
 	ld [wAIPlayAreaCardToSwitch], a
-	ld a, $01
-	ld [wAlreadyRetreatedThisTurn], a
+	ld a, [wOncePerTurnActions]
+	or RETREATED_THIS_TURN
+	ld [wOncePerTurnActions], a
 
 ; if AI can use Switch from hand, use it instead...
 	ld a, AI_TRAINER_CARD_PHASE_09
