@@ -10,3 +10,4 @@ It is **the first public repository** to implement features such as:
 - Card buy/sell system to reduce booster pack grinding
 - Granting you control of both players (for example, to test decks)
 - Watching AI vs AI duels
+- Custom status condition effects, including new status such as Burn and Flinch
